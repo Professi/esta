@@ -1,0 +1,4 @@
+<!-- TEMP PASSWORT ALERT -->
+				<div class="alert-box alert">
+					Sie benutzen ein temporäres Passwort! Bitte ändern Sie es schnellstmöglich.
+				</div>
