@@ -4,15 +4,15 @@
 	
 	<meta name="viewport" content="width=device-width">
 	<!-- Foundation Styles -->
-	<link rel="stylesheet" href="../css/foundation.min.css">
+	<link rel="stylesheet" href="css/foundation.min.css">
 	<!-- Symbole -->
-	<link rel="stylesheet" href="../css/icons.css">
+	<link rel="stylesheet" href="css/icons.css">
 	<!-- Overrides -->
-	<link rel="stylesheet" href="../css/app.css">
+	<link rel="stylesheet" href="css/app.css">
 	
 	<title>Elternsprechtag - Ihre Termine</title>
 	
-	<script src="../js/modernizr.foundation.js"></script>
+	<script src="js/modernizr.foundation.js"></script>
 </head>
 <body class="off-canvas hide-extras">
 	<div class="wrapper">
@@ -166,9 +166,9 @@
 		</div>
 	<!-- SKRIPTE -->
 		<!-- Einbinden der JS Files (Minified) -->
-		<script src="../js/foundation.min.js"></script>
+		<script src="js/foundation.min.js"></script>
 
 		<!-- Initialisieren der JS Plugins -->
-		<script src="../js/app.js"></script>
+		<script src="js/app.js"></script>
 </body>
 </html>

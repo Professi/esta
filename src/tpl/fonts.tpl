@@ -3,15 +3,15 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
 	
-	<link rel="stylesheet" href="../css/foundation.min.css">
+	<link rel="stylesheet" href="css/foundation.min.css">
 	
-	<link rel="stylesheet" href="../css/app.css">
+	<link rel="stylesheet" href="css/app.css">
 	
 	<link href='http://fonts.googleapis.com/css?family=Mr+Bedfort|Sail|Montez|Petit+Formal+Script|Clicker+Script|Sacramento|Merienda|Kaushan+Script' rel='stylesheet' type='text/css'>
 	
 	<title>Fonts</title>
 	
-	<script src="../js/modernizr.foundation.js"></script>
+	<script src="js/modernizr.foundation.js"></script>
 </head>
 <body style="background-color:#222;">
 	<div class="row">

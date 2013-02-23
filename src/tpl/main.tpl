@@ -12,7 +12,7 @@
 	
 	<title>Elternsprechtag - </title>
 	
-	<script src="../js/modernizr.foundation.js"></script>
+	<script src="js/modernizr.foundation.js"></script>
 </head>
 <body class="off-canvas hide-extras">
 	<div class="wrapper">
@@ -60,9 +60,9 @@
 	</div> 	<!-- /FOOTER -->
 	<!-- SKRIPTE -->
 		<!-- Einbinden der JS Files (Minified) -->
-		<script src="../js/foundation.min.js"></script>
+		<script src="js/foundation.min.js"></script>
 
 		<!-- Initialisieren der JS Plugins -->
-		<script src="../js/app.js"></script>
+		<script src="js/app.js"></script>
 </body>
 </html>

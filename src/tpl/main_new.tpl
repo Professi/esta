@@ -4,15 +4,15 @@
 	
 	<meta name="viewport" content="width=device-width">
 	<!-- Foundation Styles -->
-	<link rel="stylesheet" href="../css/foundation.min.css">
+	<link rel="stylesheet" href="css/foundation.min.css">
 	<!-- Symbole & Fonts -->
-	<link rel="stylesheet" href="../css/icons.css">
+	<link rel="stylesheet" href="css/icons.css">
 	<!-- Overrides -->
-	<link rel="stylesheet" href="../css/app.css">
+	<link rel="stylesheet" href="css/app.css">
 	
 	<title>Elternsprechtag - </title>
 	
-	<script src="./javascripts/modernizr.foundation.js"></script>
+	<script src="js/modernizr.foundation.js"></script>
 </head>
 <body class="off-canvas hide-extras">
 	<div class="wrapper">
@@ -47,7 +47,7 @@
 					</div>
 					<div class="six columns">
 						<ul class="link-list right">
-							<li><a href="impressum.html">Impressum</a></li>
+							<li><a href="impressum.tpl">Impressum</a></li>
 							<li><a href="#">Link 2</a></li>
 							<li><a href="#">Link 3</a></li>
 							<li><a href="#">Link 4</a></li>
@@ -61,16 +61,16 @@
 		<div id="MenuModal" class="reveal-modal [small]" style="padding:0;border-radius:5px;">
 			<ul class="nav-bar vertical" style="margin-bottom:0;">
 				<li class="active"><a href=""><span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span></a></li>
-				<li class=""><a href="./termine.html"><span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span></a></li>
-				<li class=""><a href="./error.html"><span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout</span></a></li>
+				<li class=""><a href="./termine.tpl"><span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span></a></li>
+				<li class=""><a href="./error.tpl"><span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout</span></a></li>
 			</ul>
 			<a class="close-reveal-modal" data-icon="&#xe014;" style="color:#fff;"></a>
 		</div>
 	<!-- SKRIPTE -->
 		<!-- Einbinden der JS Files (Minified) -->
-		<script src="../js/foundation.min.js"></script>
+		<script src="js/foundation.min.js"></script>
 
 		<!-- Initialisieren der JS Plugins -->
-		<script src="../js/app.js"></script>
+		<script src="js/app.js"></script>
 </body>
 </html>

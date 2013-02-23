@@ -1,0 +1,85 @@
+/* Artfully masterminded by ZURB  */
+
+/* -------------------------------------------------- 
+   Table of Contents
+-----------------------------------------------------
+:: Shared Styles
+:: Page Name 1
+:: Page Name 2
+*/
+
+
+/* -----------------------------------------
+   Shared Styles
+----------------------------------------- */
+
+.medium {
+	font-size: 80%;
+	line-height: inherit;
+}
+html, body {
+	height: 100%;
+}
+.wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -4em;
+}
+.footer, .push {
+	height: 4em;
+}
+
+.header {
+	font-family: 'Clicker Script', cursive;
+	color:#fff;
+	background-image:url(../img/tafel2.png);
+	padding: .1em 0 .1em .3em;
+	background-repeat: no-repeat;
+	height: 60px;
+}
+.nav-icons { 
+	color: #FFF;
+	font-size: 2em;
+	position: relative;
+	top: .2em
+}
+.nav-bar.vertical {
+/* 	position:fixed;
+	top:50%;
+	left:-1%; 
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px; */
+	border-radius: 5px;
+}
+.nav-bar.vertical > li:first-child {
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+}
+.nav-bar.vertical > li:last-child {
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+.nav-bar.vertical.sticky.fixed {
+	width: initial;
+	left: initial;
+}
+@media only screen and (max-width: 767px) {
+
+	.row.contain-to-grid.sticky {
+		width: 100%;
+	}
+}
+
+/* -----------------------------------------
+   Page Name 1
+----------------------------------------- */
+
+
+
+
+/* -----------------------------------------
+   Page Name 2
+----------------------------------------- */
+
+

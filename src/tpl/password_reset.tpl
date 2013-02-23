@@ -4,15 +4,15 @@
 	
 	<meta name="viewport" content="width=device-width">
 	
-	<link rel="stylesheet" href="../css/foundation.min.css">
+	<link rel="stylesheet" href="css/foundation.min.css">
 	
-	<link rel="stylesheet" href="../css/icons.css">
+	<link rel="stylesheet" href="css/icons.css">
 	
-	<link rel="stylesheet" href="../css/app.css">
+	<link rel="stylesheet" href="css/app.css">
 	
 	<title>Elternsprechtag - Passwort zurückgesetzt</title>
 	
-	<script src="../js/modernizr.foundation.js"></script>
+	<script src="js/modernizr.foundation.js"></script>
 </head>
 <body>
 	<div class="wrapper">

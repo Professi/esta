@@ -3,11 +3,11 @@
 <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
 	
-	<link rel="stylesheet" href="../css/foundation.min.css">
+	<link rel="stylesheet" href="css/foundation.min.css">
 	
-	<link rel="stylesheet" href="../css/icons.css">
+	<link rel="stylesheet" href="css/icons.css">
 	
-	<link rel="stylesheet" href="../css/app.css">
+	<link rel="stylesheet" href="css/app.css">
 	
 	<link href='http://fonts.googleapis.com/css?family=Clicker+Script' rel='stylesheet' type='text/css'>
 <title>Frame</title>

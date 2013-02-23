@@ -1,5 +1,8 @@
 <?php
-//Alle Config Sachen
+
+define("MAIN", "./tpl/main_new.tpl");
+$step = get_post('step');
+
 function get_post($variable) {
     $inhalt = "";
     if (isset($_GET[$variable]) && $_GET[$variable] != "")
@@ -17,6 +20,10 @@ function sendJSONHeader() {
 header('Cache-Control: no-cache, must-revalidate');
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 header('Content-type: application/json');
+
+
+
+
 }
 
 

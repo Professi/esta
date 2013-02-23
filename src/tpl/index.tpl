@@ -4,15 +4,15 @@
 	
 	<meta name="viewport" content="width=device-width">
 	
-	<link rel="stylesheet" href="../css/foundation.min.css">
+	<link rel="stylesheet" href="css/foundation.min.css">
 	
-	<link rel="stylesheet" href="../css/icons.css">
+	<link rel="stylesheet" href="css/icons.css">
 	
-	<link rel="stylesheet" href="../css/app.css">
+	<link rel="stylesheet" href="css/app.css">
 	
 	<title>Elternsprechtag - Login</title>
 	
-	<script src="../js/modernizr.foundation.js"></script>
+	<script src="js/modernizr.foundation.js"></script>
 </head>
 <body>
 	<div class="wrapper">
@@ -116,10 +116,10 @@
 		
 		<!-- SKRIPTE -->
 		<!-- Einbinden der JS Files (Minified) -->
-		<script src="../js/foundation.min.js"></script>
+		<script src="js/foundation.min.js"></script>
 
 		<!-- Initialisieren der JS Plugins -->
-		<script src="../js/app.js"></script>
+		<script src="js/app.js"></script>
 		<script> 
 ;(function (window, document, $) {
 
