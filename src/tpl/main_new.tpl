@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <head>
 	<meta charset="UTF-8">
-	
 	<meta name="viewport" content="width=device-width">
 	<!-- Foundation Styles -->
 	<link rel="stylesheet" href="css/foundation.min.css">
@@ -43,7 +42,9 @@
 			<div class="twelve columns"><hr />
 				<div class="row">
 					<div class="six columns">
+						
 						<p>&copy; Copyright no one at all. Go to town.</p>
+						
 					</div>
 					<div class="six columns">
 						<ul class="link-list right">
