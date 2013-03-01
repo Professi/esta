@@ -47,8 +47,8 @@
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=est',
 			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => 'test',
+			'username' => 'estdb',
+			'password' => 'qwertzuiop',
 			'charset' => 'utf8',
 		),
 		'errorHandler'=>array(
