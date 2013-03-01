@@ -46,12 +46,6 @@
 						<?php echo Yii::powered(); ?>
 							</div>
 							<div class="six columns">
-						<!--		<ul class="link-list right">
-									<li><a href="impressum.tpl">Impressum</a></li>
-									<li><a href="#">Link 2</a></li>
-									<li><a href="#">Link 3</a></li>
-									<li><a href="#">Link 4</a></li>
-								</ul> -->
 							<?php $this->widget('zii.widgets.CMenu',array(
 							'htmlOptions'=>array('class'=>'link-list right'),
 							'items'=>array(
@@ -66,19 +60,16 @@
 			</div> 	<!-- /FOOTER -->
 					<!-- MODALS -->
 				<div id="MenuModal" class="reveal-modal [small]" style="padding:0;border-radius:5px;">
-					<!--<ul class="nav-bar vertical" style="margin-bottom:0;">
-						<li class="active"><a href=""><span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span></a></li>
-						<li class=""><a href="./termine.tpl"><span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span></a></li>
-						<li class=""><a href="./error.tpl"><span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout ('.Yii::app()->user->name.')'</span></a></li>
-					</ul> -->
 					<?php $this->widget('zii.widgets.CMenu',array(
 					'htmlOptions'=>array('class'=>'nav-bar vertical','style'=>'margin-bottom:0;'),
 					'encodeLabel'=>false,
 					'items'=>array(
 						array('label'=>'Home', 'url'=>array('/site/index')),
+						array('label'=>'Rechteverwaltung', 'url'=>array('/rights'), 'visible'=>!Yii::app()->user->isGuest),
+						array('label'=>'Benutzerverwaltung', 'url'=>array('/user/admin'), 'visible'=>!Yii::app()->user->isGuest),
 						array('label'=>'<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span>','url'=>array(''),'visible'=>!Yii::app()->user->isGuest),
 						array('label'=>'<span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span>','url'=>array(''),'visible'=>!Yii::app()->user->isGuest),
-						array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+						array('label'=>'Login', 'url'=>array('/user/login'), 'visible'=>Yii::app()->user->isGuest),
 						array('label'=>'<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout ('.Yii::app()->user->name.')</span>', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest) ),
 						'activeCssClass'=> 'active'
 				)); ?> 

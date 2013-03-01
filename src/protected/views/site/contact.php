@@ -5,7 +5,7 @@
 
 $this->pageTitle=Yii::app()->name . ' - Kontakt';
 $this->breadcrumbs=array(
-	'Contact',
+	'contact',
 );
 ?>
 
@@ -63,7 +63,7 @@ Sollten Sie Fragen haben, füllen Sie bitte das nachfolgende Formular aus. Viele
 
 	<?php if(CCaptcha::checkRequirements()): ?>
 	<div class="row">
-		<?php echo $form->labelEx($model,'Sicherheitsabfrage'); ?>
+		<?php echo $form->labelEx($model,'Sicherheitsabfrage *'); ?>
 		<div>
 		<?php $this->widget('CCaptcha'); ?>
 		<?php echo $form->textField($model,'verifyCode'); ?>
