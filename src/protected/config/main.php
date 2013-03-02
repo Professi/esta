@@ -75,7 +75,10 @@ return array(
     'modules' => array(
         'rights' => array(
             'install' => false,
-            'cssFile'=>false,),
+            'cssFile'=>false,
+            'authenticatedName'=>'Eltern',
+            'enableBizRule'=>true,
+            'displayDescription'=>true),
         'user' => array(
             # encrypting method (php hash function)
             'hash' => 'md5',

@@ -44,8 +44,7 @@
     			'type'=>'raw',
     			'htmlOptions'=>array('class'=>'operation-column'),
     			'value'=>'$data->getAssignmentsText(CAuthItem::TYPE_OPERATION)',
-    		),
-	    )
+    		),	    )
 	)); ?>
 
 </div>
