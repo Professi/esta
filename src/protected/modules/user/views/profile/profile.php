@@ -2,15 +2,28 @@
 $this->breadcrumbs=array(
 	UserModule::t("Profile"),
 );
-$this->menu=array(
-	((UserModule::isAdmin())
-		?array('label'=>UserModule::t('Manage Users'), 'url'=>array('/user/admin'))
-		:array()),
-    array('label'=>UserModule::t('List User'), 'url'=>array('/user')),
-    array('label'=>UserModule::t('Edit'), 'url'=>array('edit')),
-    array('label'=>UserModule::t('Change password'), 'url'=>array('changepassword')),
-    array('label'=>UserModule::t('Logout'), 'url'=>array('/user/logout')),
-);
+$this->widget('zii.widgets.CMenu', array(
+    'htmlOptions' => array('class' => 'button-group'),
+    'activeCssClass' => 'disabled',
+    'items' => array(
+        ((UserModule::isAdmin()) ? array(
+            'label' => UserModule::t('Manage User'),
+            'url' => array('/user/admin')) : array()),
+        'itemOptions' => array('class' => 'button'),
+        array(
+            'label' => UserModule::t('List User'),
+            'url' => array('/user')),
+        array(
+            'label' => UserModule::t('Profile'),
+            'url' => array('/user/profile')),
+        array(
+            'label' => UserModule::t('Change password'),
+            'url' => array('changepassword')),
+        array(
+            'label' => UserModule::t('Logout'),
+            'url' => array('/user/logout')),
+    )
+));
 ?><h1><?php echo UserModule::t('Your profile'); ?></h1>
 
 <?php if(Yii::app()->user->hasFlash('profileMessage')): ?>

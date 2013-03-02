@@ -29,7 +29,7 @@ return array(
         ),
         'authManager' => array(
             'class' => 'RDbAuthManager'),
-        //	'defaultRoles'=>array('Authenticated','Guest'),
+        	'defaultRoles'=>array('Eltern','Gast'),
         // uncomment the following to enable URLs in path-format
         /*
           'urlManager'=>array(
@@ -44,6 +44,7 @@ return array(
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=estdb',
             'emulatePrepare' => true,
+            'enableProfiling' => true,
             'username' => 'estdb',
             'password' => 'qwertzuiop',
             'charset' => 'utf8',
@@ -57,13 +58,13 @@ return array(
             'routes' => array(
                 array(
                     'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute',
-                	'class'=>'CFileLogRoute',
-                'levels'=>'error',
+                   // 'class' => 'CFileLogRoute',
+                     //  'levels'=>'error,warning',
                 ),
             // uncomment the following to show log messages on web pages
-             array(
+             /*array(
               'class'=>'CWebLogRoute',
-              ), 
+              ),*/ 
             ),
         ),
         'cache' => array(
@@ -73,7 +74,8 @@ return array(
     ),
     'modules' => array(
         'rights' => array(
-            'install' => false),
+            'install' => false,
+            'cssFile'=>false,),
         'user' => array(
             # encrypting method (php hash function)
             'hash' => 'md5',

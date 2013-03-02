@@ -3,11 +3,20 @@ $this->breadcrumbs=array(
 	UserModule::t('Profile Fields')=>array('admin'),
 	UserModule::t('Manage'),
 );
-$this->menu=array(
-    array('label'=>UserModule::t('Create Profile Field'), 'url'=>array('create')),
-    array('label'=>UserModule::t('Manage Profile Field'), 'url'=>array('admin')),
-    array('label'=>UserModule::t('Manage Users'), 'url'=>array('/user/admin')),
-);
+$this->widget('zii.widgets.CMenu', array(
+    'htmlOptions' => array('class' => 'button-group'),
+    'activeCssClass' => 'disabled',
+    'items' => array(
+        array(
+            'label' => UserModule::t('Create Profile Field'),
+            'url' => array('create')),
+        array(
+            'label' => UserModule::t('Manage Profile Field'),
+            'url' => array('admin')),
+        array(
+            'label' => UserModule::t('Manage Users'),
+            'url' => array('/user/admin')),
+)));
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){

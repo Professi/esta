@@ -19,7 +19,9 @@
 
     $.fn.placeholder                ? $('input, textarea').placeholder() : null;
   });
-
+    $('.button-group > li > a').addClass('small button');
+    $('.button-group > li.disabled > a').addClass('disabled');
+    
   // UNCOMMENT THE LINE YOU WANT BELOW IF YOU WANT IE8 SUPPORT AND ARE USING .block-grids
   // $('.block-grid.two-up>li:nth-child(2n+1)').css({clear: 'both'});
   // $('.block-grid.three-up>li:nth-child(3n+1)').css({clear: 'both'});
