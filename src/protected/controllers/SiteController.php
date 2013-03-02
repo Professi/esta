@@ -65,7 +65,7 @@ class SiteController extends Controller
 					"Content-type: text/plain; charset=UTF-8";
 
 				mail(Yii::app()->params['adminEmail'],$subject,$model->body,$headers);
-				Yii::app()->user->setFlash('contact','Vielen Dank, dass Sie uns kontaktieren. Wir werden Ihnen so schnell wie möglich antworten.');
+				Yii::app()->user->setFlash('contact','Vielen Dank dass Sie uns kontaktieren. Wir werden Ihnen so schnell wie möglich antworten.');
 				$this->refresh();
 			}
 		}
