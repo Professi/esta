@@ -1,128 +1,127 @@
 <?
 
-class YumTranslationController extends YumController
-{
-	public function filters()
-	{
-		return array(
-				'accessControl', // perform access control for CRUD operations
-				);
-	}
+class YumTranslationController extends YumController {
 
-	public function accessRules()
-	{
-		return array(
-				array('allow', 
-					'actions'=>array('create','update', 'admin', 'delete'),
-					'expression' => Yii::app()->user->isAdmin()
-					),
-				array('deny',  // deny all users
-					'users'=>array('*'),
-					),
-				);
-	}
+    public function filters() {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+        );
+    }
 
-	public function actionCreate() {
-		$this->actionUpdate();	
-	}
+    public function accessRules() {
+        return array(
+            array('allow',
+                'actions' => array('create', 'update', 'admin', 'delete'),
+                'expression' => Yii::app()->user->isAdmin()
+            ),
+            array('deny', // deny all users
+                'users' => array('*'),
+            ),
+        );
+    }
 
-	public function actionUpdate($category = null, $message = null, $language = null)
-	{
-		$models = array();
-		foreach(Yum::getAvailableLanguages() as $language) {
-			$models[] = $this->loadModel($category, $message, $language);
-		}
+    public function actionCreate() {
+        $this->actionUpdate();
+    }
 
-		if(isset($_POST['YumTranslation'])) {
-			$category = $_POST['YumTranslation']['category'];
-			$message = $_POST['YumTranslation']['message'];
+    public function actionUpdate($category = null, $message = null, $language = null) {
+        $models = array();
+        foreach (Yum::getAvailableLanguages() as $language) {
+            $tmpModel = new YumTranslation();  // added
+            $tmpModel->category = $category; // added
+            $tmpModel->message = $message;  // added
+            $tmpModel->language = $language; // added
+            //$models[] = $this->loadModel($category, $message, $language); // changed
+            $models[] = $this->loadModel($tmpModel);
+        }
 
-			foreach($_POST as $key => $translation) {
-				if(substr($key, 0, 11) == 'translation') {
-					$lang = explode('_', $key, 2);
-					if(isset($lang[1])) {
-						$lang = $lang[1];
-						foreach(Yum::getAvailableLanguages() as $language) {
-							if($language == $lang) {
-								$model = YumTranslation::model()->find(
-										'category = :category and message = :message and language = :language ', array(
-											':category' => $category,
-											':message' => $message,
-											':language' => $lang));
-								if(!$model)
-									$model = new YumTranslation();
+        if (isset($_POST['YumTranslation'])) {
+            $category = $_POST['YumTranslation']['category'];
+            $message = $_POST['YumTranslation']['message'];
 
-								if($translation != '') {
-									$model->message = $message;
-									$model->category = $category;
-									$model->translation = $translation;
-									$model->language = $lang;	
-									$model->save();
-								}
-							}
-						}
-					}
-				}
-			}
-			Yum::setFlash('Translations have been saved');
-			$this->redirect(array('admin'));
-		}
+            foreach ($_POST as $key => $translation) {
+                if (substr($key, 0, 11) == 'translation') {
+                    $lang = explode('_', $key);
+                    if (isset($lang[1])) {
+                        $lang = $lang[1];
+                        foreach (Yum::getAvailableLanguages() as $language) {
+                            if ($language == $lang) {
+                                $model = YumTranslation::model()->find(
+                                        'category = :category and message = :message and language = :language ', array(
+                                    ':category' => $category,
+                                    ':message' => $message,
+                                    ':language' => $lang));
+                                if (!$model)
+                                    $model = new YumTranslation();
 
-		$this->render('update',array(
-					'models'=>$models,
-					));
-	}
+                                if ($translation != '') {
+                                    $model->message = $message;
+                                    $model->category = $category;
+                                    $model->translation = $translation;
+                                    $model->language = $lang;
+                                    $model->save();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Yum::setFlash('Translations have been saved');
+            $this->redirect(array('admin'));
+        }
 
-	public function actionDelete($id)
-	{
-		if(Yii::app()->request->isPostRequest)
-		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
+        $this->render('update', array(
+            'models' => $models,
+        ));
+    }
 
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-		}
-		else
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
-	}
+    public function actionDelete($id) {
+        if (Yii::app()->request->isPostRequest) {
+            // we only allow deletion via POST request
+            $this->loadModel($id)->delete();
 
-	public function actionAdmin()
-	{
-		$model=new YumTranslation('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['YumTranslation']))
-			$model->attributes=$_GET['YumTranslation'];
+            // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+            if (!isset($_GET['ajax']))
+                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        }
+        else
+            throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
+    }
 
-		$this->render('admin',array(
-					'model'=>$model,
-					));
-	}
+    public function actionAdmin() {
+        $model = new YumTranslation('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_GET['YumTranslation']))
+            $model->attributes = $_GET['YumTranslation'];
 
-	public function loadModel($category, $message, $language = null)
-	{
-		$model=YumTranslation::model()->find('category = :category and message = :message and language = :language', array(
-					':category' => $category,
-					':message' => $message,
-					':language' => $language));
+        $this->render('admin', array(
+            'model' => $model,
+        ));
+    }
 
-		if($model===null) {
-			$translation = new YumTranslation;
-			$translation->category = $category;
-			$translation->message = $message;
-			$translation->language = $language;
-			return $translation;
-		}
-		return $model;
-	}
+    public function loadModel($model = false) {
+        $newmodel = YumTranslation::model()->find('category = :category and message = :message and language = :language', array(
+            ':category' => $model->category,
+            ':message' => $model->message,
+            ':language' => $model->language));
 
-	protected function performAjaxValidation($model)
-	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='translation-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-	}
+        if ($newmodel === null) {
+            $translation = new YumTranslation;
+            $translation->category = $model->category;
+            $translation->message = $model->message;
+            $translation->language = $model->language;
+            return $translation;
+        }
+
+        return $newmodel;
+    }
+
+    protected function performAjaxValidation($model, $form) {
+        //if(isset($_POST['ajax']) && $_POST['ajax']==='translation-form')
+        if (isset($_POST['ajax']) && $_POST['ajax'] == $form) {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+    }
+
 }
