@@ -68,9 +68,7 @@
             'encodeLabel' => false,
             'items' => array(
                 array('label' => 'Home', 'url' => array('/site/index')),
-            //    array('label' => 'Rechteverwaltung', 'url' => array('/rights'), 'visible'=>!Yii::app()->user->isGuest&&Yii::app()->user->getIsSuperuser()),
                 array('label' => 'Benutzerverwaltung', 'url' => array('user/user/admin'), 'visible' => Yii::app()->user->isAdmin()),
-          
                 array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span>', 'url' => array(''), 'visible' => !Yii::app()->user->isGuest),
                 array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span>', 'url' => array(''), 'visible' => !Yii::app()->user->isGuest),
                 array('label' => 'Login', 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
