@@ -1,32 +1,26 @@
-<?php
-$this->breadcrumbs = array(
-    UserModule::t("Users"),
-);
-if (UserModule::isAdmin()) {
-    $this->layout = '//layouts/column2';
-    $this->widget('zii.widgets.CMenu', array(
-        'htmlOptions' => array('class' => 'button-group'),
-        'activeCssClass' => 'disabled',
-        'items' => array(
-            array('label' => UserModule::t('Manage Users'), 'url' => array('/user/admin')),
-            array('label' => UserModule::t('Manage Profile Field'), 'url' => array('profileField/admin')),
-    )));
-}
+<?
+$this->title = Yum::t('Users');
+$this->breadcrumbs=array(Yum::t("Users"));
 ?>
 
-<h1><?php echo UserModule::t("List User"); ?></h1>
+<? $this->widget('zii.widgets.grid.CGridView', array(
+			'dataProvider'=>$dataProvider,
+			'columns'=>array(
+		array(
+			'name' => 'username',
+			'type'=>'raw',
+			'value' => 'CHtml::link(CHtml::encode($data->username),
+				array("//profile/profile/view","id"=>$data->id))',
+			),
+		array(
+			'name' => 'createtime',
+			'value' => 'date(UserModule::$dateFormat,$data->createtime)',
+		),
+		array(
+			'name' => 'lastvisit',
+			'value' => 'date(UserModule::$dateFormat,$data->lastvisit)',
+		),
+	),
+)); ?>
 
-<?php
-$this->widget('zii.widgets.grid.CGridView', array(
-    'dataProvider' => $dataProvider,
-    'columns' => array(
-        array(
-            'name' => 'username',
-            'type' => 'raw',
-            'value' => 'CHtml::link(CHtml::encode($data->username),array("user/view","id"=>$data->id))',
-        ),
-        'create_at',
-        'lastvisit_at',
-    ),
-));
-?>
+

@@ -12,24 +12,17 @@ return array(
     'preload' => array('log'),
     // autoloading model and component classes
     'import' => array(
+          'application.modules.user.models.*',
         'application.models.*',
         'application.components.*',
-        'application.modules.rights.*',
-        'application.modules.rights.components.*',
-        'application.modules.user.models.*',
-        'application.modules.user.components.*',
     ),
 // application components
     'components' => array(
-        'user' => array(
-            'class' => 'NewWebUser',
-            // enable cookie-based authentication
-            'allowAutoLogin' => true,
-            'loginUrl' => ('/user/login'),
-        ),
-        'authManager' => array(
-            'class' => 'RDbAuthManager'),
-        	'defaultRoles'=>array('Eltern','Gast'),
+'user'=>array(
+      'class' => 'application.modules.user.components.YumWebUser',
+      'allowAutoLogin'=>true,
+      'loginUrl' => array('//user/user/login'),
+    ),
         // uncomment the following to enable URLs in path-format
         /*
           'urlManager'=>array(
@@ -48,6 +41,7 @@ return array(
             'username' => 'estdb',
             'password' => 'qwertzuiop',
             'charset' => 'utf8',
+            'tablePrefix' => '',
         ),
         'errorHandler' => array(
             // use 'site/error' action to display errors
@@ -73,37 +67,9 @@ return array(
         ),
     ),
     'modules' => array(
-        'rights' => array(
-            'install' => false,
-            'cssFile'=>false,
-            'authenticatedName'=>'Eltern',
-            'enableBizRule'=>true,
-            'displayDescription'=>true),
         'user' => array(
-            # encrypting method (php hash function)
-            'hash' => 'md5',
-            # send activation email
-            'sendActivationMail' => true,
-            # allow access for non-activated users
-            'loginNotActiv' => false,
-            # activate user on registration (only sendActivationMail = false)
-            'activeAfterRegister' => false,
-            # automatically login from registration
-            'autoLogin' => true,
-            # registration path
-            'registrationUrl' => array('/user/registration'),
-            # recovery password path
-            'recoveryUrl' => array('/user/recovery'),
-            # login form path
-            'loginUrl' => array('/user/login'),
-            # page after login
-            'returnUrl' => array('/user/profile'),
-            # page after logout
-            'returnLogoutUrl' => array('/user/login'),
-            'tableUsers' => 'users',
-            'tableProfiles' => 'profiles',
-            'tableProfileFields' => 'profiles_fields',
-        ),
+			'debug' => false,
+            ),
         'gii' => array(
             'class' => 'system.gii.GiiModule',
             'password' => 'test',
