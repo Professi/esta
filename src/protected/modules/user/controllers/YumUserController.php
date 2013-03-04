@@ -299,13 +299,13 @@ class YumUserController extends YumController {
 			//This is necesary for handling human stupidity.
 			if($user && ($user->id == Yii::app()->user->id)) {
 				Yum::setFlash('You can not delete your own admin account');
-				$this->redirect(array('//user/user/admin'));
+				$this->redirect(array(Yii::app()->homeUrl . '?r=user/user/admin'));
 			}
 
 			if($user->delete()) {
 				Yum::setFlash('The User has been deleted');
 				if(!Yii::app()->request->isAjaxRequest)
-					$this->redirect('//user/user/admin');
+					$this->redirect(Yii::app()->homeUrl . '?r=user/user/admin');
 			}
 		} else if(isset($_POST['confirmPassword'])) {
 			if(YumEncrypt::validate_password($_POST['confirmPassword'],

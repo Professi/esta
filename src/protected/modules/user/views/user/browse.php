@@ -1,4 +1,4 @@
-<?
+<?php
 $this->title = Yum::t('Browse users');
 $this->breadcrumbs=array(Yum::t('Browse users'));
 
