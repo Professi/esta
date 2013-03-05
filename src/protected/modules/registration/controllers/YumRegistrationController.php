@@ -82,13 +82,12 @@ class YumRegistrationController extends YumController {
 		if (isset($_POST['YumRegistrationForm'])) { 
 			$form->attributes = $_POST['YumRegistrationForm'];
 			$profile->attributes = $_POST['YumProfile'];
-
-			$form->validate();
+                        $form->username = $profile->email;
+                        $form->validate();
 			$profile->validate();
-
 			if(!$form->hasErrors() && !$profile->hasErrors()) {
 				$user = new YumUser;
-				$user->register($form->username, $form->password, $profile);
+                                $user->register($form->username, $form->password, $profile);
 				$user->profile = $profile;
 
 				$this->sendRegistrationEmail($user);

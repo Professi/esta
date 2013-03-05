@@ -1,5 +1,9 @@
 <?
 
+
+
+
+
 class YumFieldsController extends YumController
 {
 	public function accessRules()

@@ -13,6 +13,8 @@ return array(
     // autoloading model and component classes
     'import' => array(
         'application.modules.user.models.*',
+        'application.modules.role.models.*',
+        'application.modules.profile.models.*',
         'application.models.*',
         'application.components.*',
     ),
@@ -24,16 +26,14 @@ return array(
             'loginUrl' => array('//user/user/login'),
         ),
         // uncomment the following to enable URLs in path-format
-        /*
           'urlManager'=>array(
-          'urlFormat'=>'path',
+       //   'urlFormat'=>'path',
           'rules'=>array(
           '<controller:\w+>/<id:\d+>'=>'<controller>/view',
           '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
           '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
           ),
           ),
-         */
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=estdb',
             'emulatePrepare' => true,
@@ -72,21 +72,14 @@ return array(
         ),
     ),
     'modules' => array(
-'user' => array(
-                        'debug' => false,
+                'user' => array(
+                'debug' => false,
                 'userTable' => 'user',
                 'translationTable' => 'translation',
                         ),
                 'usergroup' => array(
                 'usergroupTable' => 'usergroup',
                 'usergroupMessageTable' => 'user_group_message',
-                ),
-                'membership' => array(
-                'membershipTable' => 'membership',
-                'paymentTable' => 'payment',
-                ),
-                'friendship' => array(
-                'friendshipTable' => 'friendship',
                 ),
                 'profile' => array(
                 'privacySettingTable' => 'privacysetting',
@@ -101,9 +94,10 @@ return array(
                 'actionTable' => 'action',
                 'permissionTable' => 'permission',
                 ),
-                'message' => array(
-                'messageTable' => 'message',
-                ),
+                'registration' => array(),
+                'role' => array(),
+                'usergroup' => array(),
+                'profile' => array(),
         'gii' => array(
             'class' => 'system.gii.GiiModule',
             'password' => 'test',

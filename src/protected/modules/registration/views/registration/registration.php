@@ -15,10 +15,7 @@
 <? echo Yum::requiredFieldNote(); ?>
 <? echo CHtml::errorSummary(array($form, $profile)); ?>
 
-<div class="row"> <?
-echo $activeform->labelEx($form,'username');
-echo $activeform->textField($form,'username');
-?> </div>
+    <?echo $activeform->hiddenField($form,'username',array('value'=>'empty')); ?>
 
 <div class="row"> <?
 echo $activeform->labelEx($profile,'email');
@@ -61,7 +58,7 @@ echo $activeform->textField($profile,'lastname');
 	
 	<div class="row submit">
 		<? echo CHtml::submitButton(Yum::t('Registration')); ?>
-	</div>
+        </div>
 
 <? $this->endWidget(); ?>
 </div><!-- form -->
