@@ -1,0 +1,42 @@
+<?php
+/* @var $this CPChildController */
+/* @var $model PChild */
+/* @var $form CActiveForm */
+?>
+
+<div class="form">
+
+<?php $form=$this->beginWidget('CActiveForm', array(
+	'id'=>'pchild-form',
+	'enableAjaxValidation'=>false,
+)); ?>
+
+	<p class="note">Fields with <span class="required">*</span> are required.</p>
+
+	<?php echo $form->errorSummary($model); ?>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'firstname'); ?>
+		<?php echo $form->textField($model,'firstname',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'firstname'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'lastname'); ?>
+		<?php echo $form->textField($model,'lastname',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'lastname'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'class'); ?>
+		<?php echo $form->textField($model,'class',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->error($model,'class'); ?>
+	</div>
+
+	<div class="row buttons">
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+	</div>
+
+<?php $this->endWidget(); ?>
+
+</div><!-- form -->

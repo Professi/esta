@@ -23,7 +23,7 @@ echo '<h2>'.Yum::t('Password recovery').'</h2>';
 		<? echo CHtml::activeLabel($form,'login_or_email'); ?>
 		<? echo CHtml::activeTextField($form,'login_or_email') ?>
 		<? echo CHtml::error($form,'login_or_email'); ?>
-		<p class="hint"><? echo Yum::t("Please enter your user name or email address."); ?></p>
+		<p class="hint"><? echo Yum::t("Bitte geben Sie ihre E-Mail Adresse ein."); ?></p>
 	</div>
 	
 	<div class="row submit">

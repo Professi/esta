@@ -1,18 +1,19 @@
 <?php
 
 /**
- * This is the model class for table "user".
+ * This is the model class for table "parent_child".
  *
- * The followings are the available columns in table 'user':
+ * The followings are the available columns in table 'parent_child':
  * @property integer $id
- * @property string $username
+ * @property integer $user_id
+ * @property integer $child_id
  */
-class User extends CActiveRecord
+class PParentChild extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return User the static model class
+	 * @return PParentChild the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -24,7 +25,7 @@ class User extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'user';
+		return 'parent_child';
 	}
 
 	/**
@@ -35,11 +36,11 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username', 'required'),
-			array('username', 'length', 'max'=>40),
+			array('user_id, child_id', 'required'),
+			array('user_id, child_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, username', 'safe', 'on'=>'search'),
+			array('id, user_id, child_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,7 +62,8 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'username' => 'Username',
+			'user_id' => 'User',
+			'child_id' => 'Child',
 		);
 	}
 
@@ -77,7 +79,8 @@ class User extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('username',$this->username,true);
+		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('child_id',$this->child_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
