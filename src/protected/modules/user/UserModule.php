@@ -118,7 +118,7 @@ class UserModule extends CWebModule {
         'rest' => array('class' => 'YumModule.controllers.YumRestController'),
         'csv' => array('class' => 'YumModule.controllers.YumCsvController'),
         'auth' => array('class' => 'YumModule.controllers.YumAuthController'),
-        'install' => array('class' => 'YumModule.controllers.YumInstallController'),
+       // 'install' => array('class' => 'YumModule.controllers.YumInstallController'),
         'statistics' => array('class' => 'YumModule.controllers.YumStatisticsController'),
         'translation' => array('class' => 'YumModule.controllers.YumTranslationController'),
         'user' => array('class' => 'YumModule.controllers.YumUserController'),

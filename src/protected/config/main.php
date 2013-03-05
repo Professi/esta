@@ -26,14 +26,14 @@ return array(
             'loginUrl' => array('//user/user/login'),
         ),
         // uncomment the following to enable URLs in path-format
-          'urlManager'=>array(
-       //   'urlFormat'=>'path',
-          'rules'=>array(
-          '<controller:\w+>/<id:\d+>'=>'<controller>/view',
-          '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-          '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-          ),
-          ),
+        'urlManager' => array(
+            //   'urlFormat'=>'path',
+            'rules' => array(
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+            ),
+        ),
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=estdb',
             'emulatePrepare' => true,
@@ -72,28 +72,29 @@ return array(
         ),
     ),
     'modules' => array(
-                'user' => array(
-                'debug' => false,
-                'userTable' => 'user',
-                'translationTable' => 'translation',
-                        ),
-                'usergroup' => array(
-                'usergroupTable' => 'usergroup',
-                ),
-                'profile' => array(
-                'profileFieldTable' => 'profile_field',
-                'profileTable' => 'profile',
-                ),
-                'role' => array(
-                'roleTable' => 'role',
-                'userRoleTable' => 'user_role',
-                'actionTable' => 'action',
-                'permissionTable' => 'permission',
-                ),
-                'registration' => array(),
-                'role' => array(),
-                'usergroup' => array(),
-                'profile' => array(),
+        'user' => array(
+            'debug' => false,
+            'userTable' => 'user',
+            'translationTable' => 'translation',
+        ),
+        'usergroup' => array(
+            'usergroupTable' => 'usergroup',
+        ),
+        'profile' => array(
+            'profileFieldTable' => 'profile_field',
+            'profileTable' => 'profile',
+            'privacySettingTable' => 'privacysetting',
+        ),
+        'role' => array(
+            'roleTable' => 'role',
+            'userRoleTable' => 'user_role',
+            'actionTable' => 'action',
+            'permissionTable' => 'permission',
+        ),
+        'registration' => array(),
+        'role' => array(),
+        'usergroup' => array(),
+        'profile' => array(),
         'gii' => array(
             'class' => 'system.gii.GiiModule',
             'password' => 'test',

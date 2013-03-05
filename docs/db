@@ -1,0 +1,71 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+
+ALTER TABLE `estdb`.`appointment` DROP COLUMN `parent_child_id` , DROP COLUMN `user_id` , DROP COLUMN `date_id` , ADD COLUMN `parent_child_id` INT(11) NOT NULL  AFTER `id` , ADD COLUMN `user_id` INT(10) UNSIGNED NOT NULL  AFTER `parent_child_id` , ADD COLUMN `date_id` INT(11) NOT NULL  AFTER `user_id` , 
+  ADD CONSTRAINT `fk_appointment_parent_child1`
+  FOREIGN KEY (`parent_child_id` )
+  REFERENCES `estdb`.`parent_child` (`id` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION, 
+  ADD CONSTRAINT `fk_appointment_user1`
+  FOREIGN KEY (`user_id` )
+  REFERENCES `estdb`.`user` (`id` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION, 
+  ADD CONSTRAINT `fk_appointment_date1`
+  FOREIGN KEY (`date_id` )
+  REFERENCES `estdb`.`date` (`id` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+, DROP PRIMARY KEY 
+, ADD PRIMARY KEY (`id`, `parent_child_id`, `user_id`, `date_id`) 
+, ADD INDEX `fk_appointment_parent_child1` (`parent_child_id` ASC) 
+, ADD INDEX `fk_appointment_user1` (`user_id` ASC) 
+, ADD INDEX `fk_appointment_date1` (`date_id` ASC) ;
+
+ALTER TABLE `estdb`.`date` CHANGE COLUMN `durationPerAppointment` `durationPerAppointment` INT(3) NOT NULL  ;
+
+ALTER TABLE `estdb`.`parent_child` DROP COLUMN `child_id` , DROP COLUMN `user_id` , ADD COLUMN `child_id` INT(11) NOT NULL  AFTER `id` , ADD COLUMN `user_id` INT(10) UNSIGNED NOT NULL  AFTER `child_id` , 
+  ADD CONSTRAINT `fk_parent_child_child1`
+  FOREIGN KEY (`child_id` )
+  REFERENCES `estdb`.`child` (`id` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION, 
+  ADD CONSTRAINT `fk_parent_child_user1`
+  FOREIGN KEY (`user_id` )
+  REFERENCES `estdb`.`user` (`id` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+, DROP PRIMARY KEY 
+, ADD PRIMARY KEY (`id`, `child_id`, `user_id`) 
+, DROP INDEX `id` 
+, ADD UNIQUE INDEX `id` (`id` ASC) 
+, ADD INDEX `fk_parent_child_child1` (`child_id` ASC) 
+, ADD INDEX `fk_parent_child_user1` (`user_id` ASC) ;
+
+ALTER TABLE `estdb`.`user` DROP COLUMN `notifyType` , DROP COLUMN `avatar` , DROP COLUMN `superuser` , DROP COLUMN `failedloginattempts` , DROP COLUMN `lastpasswordchange` , DROP COLUMN `lastaction` , DROP COLUMN `lastvisit` , ADD COLUMN `firstname` VARCHAR(45) NOT NULL  AFTER `createtime` , ADD COLUMN `lastname` VARCHAR(45) NOT NULL  AFTER `status` , ADD COLUMN `email` VARCHAR(45) NOT NULL  AFTER `lastname` 
+, DROP INDEX `superuser` ;
+
+ALTER TABLE `estdb`.`user_role` DROP COLUMN `role_id` , DROP COLUMN `user_id` , ADD COLUMN `user_id` INT(10) UNSIGNED NOT NULL  FIRST , ADD COLUMN `role_id` INT(10) UNSIGNED NOT NULL  AFTER `user_id` , 
+  ADD CONSTRAINT `fk_user_role_user`
+  FOREIGN KEY (`user_id` )
+  REFERENCES `estdb`.`user` (`id` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION, 
+  ADD CONSTRAINT `fk_user_role_role1`
+  FOREIGN KEY (`role_id` )
+  REFERENCES `estdb`.`role` (`id` )
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION
+, DROP PRIMARY KEY 
+, ADD PRIMARY KEY (`user_id`, `role_id`) 
+, ADD INDEX `fk_user_role_user` (`user_id` ASC) 
+, ADD INDEX `fk_user_role_role1` (`role_id` ASC) ;
+
+DROP TABLE IF EXISTS `estdb`.`profile` ;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
