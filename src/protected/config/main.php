@@ -79,14 +79,10 @@ return array(
                         ),
                 'usergroup' => array(
                 'usergroupTable' => 'usergroup',
-                'usergroupMessageTable' => 'user_group_message',
                 ),
                 'profile' => array(
-                'privacySettingTable' => 'privacysetting',
                 'profileFieldTable' => 'profile_field',
                 'profileTable' => 'profile',
-                'profileCommentTable' => 'profile_comment',
-                'profileVisitTable' => 'profile_visit',
                 ),
                 'role' => array(
                 'roleTable' => 'role',
