@@ -68,10 +68,13 @@
             'encodeLabel' => false,
             'items' => array(
                 array('label' => 'Home', 'url' => array('/site/index')),
-                array('label' => 'Benutzerverwaltung', 'url' => array('user/user/admin'), 'visible' => Yii::app()->user->isAdmin()),
                 array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span>', 'url' => array(''), 'visible' => !Yii::app()->user->isGuest),
                 array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span>', 'url' => array(''), 'visible' => !Yii::app()->user->isGuest),
-                array('label' => 'Login', 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
+                array('label' => 'Schülerverwaltung', 'url' => array('/cPChild/index'), 'visible' => !Yii::app()->user->isGuest),
+                array('label' => 'Datumsverwaltung', 'url' => array('/cPDate/index'), 'visible' => !Yii::app()->user->isGuest),
+                array('label' => 'Terminverwaltung', 'url' => array('/pAppointment/index'), 'visible' => !Yii::app()->user->isGuest),
+                array('label' => 'Elternkindverknüpfung', 'url' => array('/cPParentChild/index'), 'visible' => !Yii::app()->user->isGuest),
+                array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
                 array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout (' . Yii::app()->user->name . ')</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),
             'activeCssClass' => 'active'
         ));

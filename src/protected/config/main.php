@@ -12,19 +12,16 @@ return array(
     'preload' => array('log'),
     // autoloading model and component classes
     'import' => array(
-        'application.modules.user.models.*',
-        'application.modules.role.models.*',
-        'application.modules.profile.models.*',
         'application.models.*',
         'application.components.*',
     ),
 // application components
     'components' => array(
-        'user' => array(
-            'class' => 'application.modules.user.components.YumWebUser',
-            'allowAutoLogin' => true,
-            'loginUrl' => array('//user/user/login'),
-        ),
+//        'user' => array(
+//            'class' => 'application.modules.user.components.YumWebUser',
+//            'allowAutoLogin' => true,
+//            'loginUrl' => array('//user/user/login'),
+//        ),
         // uncomment the following to enable URLs in path-format
         'urlManager' => array(
             //   'urlFormat'=>'path',
@@ -72,29 +69,6 @@ return array(
         ),
     ),
     'modules' => array(
-        'user' => array(
-            'debug' => false,
-            'userTable' => 'user',
-            'translationTable' => 'translation',
-        ),
-        'usergroup' => array(
-            'usergroupTable' => 'usergroup',
-        ),
-        'profile' => array(
-            'profileFieldTable' => 'profile_field',
-            'profileTable' => 'profile',
-            'privacySettingTable' => 'privacysetting',
-        ),
-        'role' => array(
-            'roleTable' => 'role',
-            'userRoleTable' => 'user_role',
-            'actionTable' => 'action',
-            'permissionTable' => 'permission',
-        ),
-        'registration' => array(),
-        'role' => array(),
-        'usergroup' => array(),
-        'profile' => array(),
         'gii' => array(
             'class' => 'system.gii.GiiModule',
             'password' => 'test',
