@@ -27,8 +27,9 @@ return array(
             //   'urlFormat'=>'path',
             'rules' => array(
                 '<controller:\w+>/<id:\d+>' => '<controller>/view',
-                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>', // this is the rule you absolutely need for update to work
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                '<action>' => 'site/<action>'
             ),
         ),
         'db' => array(
@@ -81,7 +82,7 @@ return array(
     'params' => array(
         // this is used in contact page
         'adminEmail' => 'test@test.de',
-    ),
+        "salt" => '$2a$08$e9HOiJFfDhyvcBMin5G8CBTR98wK',)
 );
 
 
