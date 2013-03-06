@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 06. Mrz 2013 um 16:00
+-- Erstellungszeit: 06. Mrz 2013 um 16:47
 -- Server Version: 5.5.29
 -- PHP-Version: 5.4.6-1ubuntu1.1
 
@@ -28,15 +28,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `appointment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `parent_child_id` int(11) NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  `date_id` int(11) NOT NULL,
   `time` time NOT NULL,
-  PRIMARY KEY (`id`,`parent_child_id`,`user_id`,`date_id`),
+  `date_id` int(11) NOT NULL,
+  `parent_child_id` int(11) NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
+  KEY `fk_appointment_date1` (`date_id`),
   KEY `fk_appointment_parent_child1` (`parent_child_id`),
-  KEY `fk_appointment_user1` (`user_id`),
-  KEY `fk_appointment_date1` (`date_id`)
+  KEY `fk_appointment_user1` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -79,12 +79,12 @@ CREATE TABLE IF NOT EXISTS `date` (
 
 CREATE TABLE IF NOT EXISTS `parent_child` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
   `child_id` int(11) NOT NULL,
-  `user_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id`,`child_id`,`user_id`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
-  KEY `fk_parent_child_child1` (`child_id`),
-  KEY `fk_parent_child_user1` (`user_id`)
+  KEY `fk_parent_child_user1` (`user_id`),
+  KEY `fk_parent_child_child1` (`child_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -98,17 +98,7 @@ CREATE TABLE IF NOT EXISTS `role` (
   `title` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
-
---
--- Daten für Tabelle `role`
---
-
-INSERT INTO `role` (`id`, `title`, `description`) VALUES
-(0, 'Administration', 'Administration'),
-(1, 'Verwaltung', 'Verwaltung'),
-(2, 'Eltern', 'Eltern'),
-(3, 'Lehrer', 'Lehrkräfte');
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 -- --------------------------------------------------------
 
@@ -131,16 +121,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   KEY `status` (`status`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
---
--- Daten für Tabelle `user`
---
-
-INSERT INTO `user` (`id`, `username`, `password`, `activationKey`, `createtime`, `firstname`, `status`, `lastname`, `email`) VALUES
-(1, 'admin', '9ef83c6bcdd14d6fb478b5e9e0115bfe9b96782c0720758fde78a7613cbdcff20a8c0395da4c2a6ec71ab84a48f7656f441d45eaaba545cf8ebd51f430955398', '', 1362419867, '', 1, '', ''),
-(2, 'demo', '0baa41540b3b4fe5abaf39be2245904bc038a577ae21b5d325161efeb6ec8ce4664f31e791bbebdce50ab3485210ffb5c950dcbf2c866cc3ce85ef3e3bed76a2', '', 1362419867, '', -2, '', ''),
-(3, 'c.ehringfeld@t-onlin', '051a1dcb9ed33d56237ccd4af7cc0280057f68e83dfb0d78ddebc5fc9356461b1706f32456d1b27cb9c0d77bf3a332a7eab1b19160894073b79fa3ca3db360d6', 'adf3a57ea8ca142981007a3c53426e59b19b7566f64d8e37b83e4683d6142020612932f852488b2dbe4c2183215c1cc89f2e716eba0b41adadfc8e82de9a9cc1', 1362500376, '', 1, '', ''),
-(4, 'Demo_44398_0', '8156477cd03e09199b20e78492e6aa5d087be42648ca8b40ca917930acc36ea042146b961ca1340e2c1599a7daa30ebe804d60aefca8cdbd32c873ac0578a92e', '', 1362502596, '', 1, '', '');
-
 -- --------------------------------------------------------
 
 --
@@ -148,20 +128,13 @@ INSERT INTO `user` (`id`, `username`, `password`, `activationKey`, `createtime`,
 --
 
 CREATE TABLE IF NOT EXISTS `user_role` (
-  `user_id` int(10) unsigned NOT NULL,
+  `id` varchar(45) NOT NULL,
   `role_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`user_id`,`role_id`),
-  KEY `fk_user_role_user` (`user_id`),
-  KEY `fk_user_role_role1` (`role_id`)
+  `user_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_user_role_role1` (`role_id`),
+  KEY `fk_user_role_user1` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `user_role`
---
-
-INSERT INTO `user_role` (`user_id`, `role_id`) VALUES
-(2, 3),
-(4, 1);
 
 --
 -- Constraints der exportierten Tabellen
@@ -171,23 +144,23 @@ INSERT INTO `user_role` (`user_id`, `role_id`) VALUES
 -- Constraints der Tabelle `appointment`
 --
 ALTER TABLE `appointment`
+  ADD CONSTRAINT `fk_appointment_date1` FOREIGN KEY (`date_id`) REFERENCES `date` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_appointment_parent_child1` FOREIGN KEY (`parent_child_id`) REFERENCES `parent_child` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_appointment_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_appointment_date1` FOREIGN KEY (`date_id`) REFERENCES `date` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_appointment_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `parent_child`
 --
 ALTER TABLE `parent_child`
-  ADD CONSTRAINT `fk_parent_child_child1` FOREIGN KEY (`child_id`) REFERENCES `child` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_parent_child_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_parent_child_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_parent_child_child1` FOREIGN KEY (`child_id`) REFERENCES `child` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `user_role`
 --
 ALTER TABLE `user_role`
-  ADD CONSTRAINT `fk_user_role_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_user_role_role1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_user_role_role1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_user_role_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
