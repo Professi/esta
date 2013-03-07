@@ -17,4 +17,5 @@ if (!Yii::app()->user->isGuest) {
 <? } else { ?>
     <h1>Registrierung</h1>
 
-<?php } echo $this->renderPartial('_form', array('model' => $model)); ?>
+
+<? }echo $this->renderPartial('_form', array('model' => $model)); ?>

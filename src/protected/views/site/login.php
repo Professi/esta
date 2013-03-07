@@ -13,10 +13,18 @@ $this->breadcrumbs=array(
 
 <p>Willkommen zur Elternsprechtagsanwendung der Brühlwiesenschule in Hofheim. Bitte melden Sie sich an.</p>
 
+ <?php if (Yii::app()->user->hasFlash('success')) { ?>
+
+        <div class="flash-success">
+            <?php echo Yii::app()->user->getFlash('success') . "Sie sollten nun eine Aktivierungsmail erhalten in der Sie ihren Account aktivieren können."; ?>
+        </div>
+
+    <?php } ?>
+
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'login-form',
-	'enableClientValidation'=>true,
+	'enableClientValidation'=>false,
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
 	),

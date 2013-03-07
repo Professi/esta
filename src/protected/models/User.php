@@ -134,19 +134,25 @@ class User extends CActiveRecord {
     }
 
     public function behaviors() {
-        return array(
-            'CTimestampBehavior' => array(
-                'class' => 'zii.behaviors.CTimestampBehavior',
-                'createAttribute' => 'createtime',
-            )
-        );
+        if ($this->isNewRecord) {
+            return array(
+                'CTimestampBehavior' => array(
+                    'class' => 'zii.behaviors.CTimestampBehavior',
+                    'createAttribute' => 'createtime',
+                )
+            );
+        } else {
+            return array();
+        }
     }
 
     public function afterSave() {
-        $userRole = New UserRole();
-        $userRole->user_id = $this->id;
-        $userRole->role_id = Role::model()->findByAttributes(array('title' => 'Eltern'))->id;
-        $userRole->save();
+        if ($this->isNewRecord) {
+            $userRole = New UserRole();
+            $userRole->user_id = $this->id;
+            $userRole->role_id = Role::model()->findByAttributes(array('title' => 'Eltern'))->id;
+            $userRole->save();
+        }
         return parent::afterSave();
     }
 
@@ -159,7 +165,7 @@ class User extends CActiveRecord {
     public function beforeSave() {
         if ($this->isNewRecord) {
             if (Yii::app()->user->isGuest) {
-                $this->state = 1;
+                $this->state = 0;
             }
             $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);
             $this->username = $this->email;
