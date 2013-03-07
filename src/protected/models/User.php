@@ -75,12 +75,13 @@ class User extends CActiveRecord {
 
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return encrypted and salted password with bcrypt
+     * @return encrypted and salted password with sha512
      * @todo Unbedingt noch ändern in andere Verschlüsselung in Salt!
      */
 
     public static function encryptPassword($password, $salt) {
-        return md5($password);
+        $saltedPw = $salt . $password;
+        return hash('sha512', $saltedPw);
     }
 
     public function setAttributes($attributes, $safe = true) {
