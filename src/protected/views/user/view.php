@@ -27,7 +27,7 @@ $this->menu=array(
 		'activationKey',
 		'createtime',
 		'firstname',
-		'status',
+		'state',
 		'lastname',
 		'email',
 	),

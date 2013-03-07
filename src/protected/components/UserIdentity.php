@@ -21,18 +21,18 @@ class UserIdentity extends CUserIdentity {
                        $this->errorCode = self::ERROR_USERNAME_INVALID;
         } else if ($user->password !== User::encryptPassword($this->password, Yii::app()->params["salt"])) { // Invalid password!
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
-        } else if( $user->status === 1) {
+        } else if( $user->state === 1) {
             $this->errorCode = 3;
             $this->errorMessage = "Ihr Benutzerkonto wurde noch nicht aktiviert.";
-        } else if( $user->status === 2) {
+        } else if( $user->state === 2) {
             $this->errorCode = 4;
             $this->errorMessage = "Ihr Benutzerkonto wurde gesperrt.";
         }
         else {
             $this->errorCode = self::ERROR_NONE;
             $this->_id = $user->id;
-            $this->_roleId = UserRole::model()->findByAttributes(array('user_id'=>  $this->_id))->role_id;
-            $this->_state = $user->status;
+           // $this->_roleId = UserRole::model()->findByAttributes(array('user_id'=>  $this->_id))->role_id;
+           // $this->_state = $user->state;
         }
         return !$this->errorCode;
         //broken

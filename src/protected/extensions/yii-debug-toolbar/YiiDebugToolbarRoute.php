@@ -177,6 +177,9 @@ class YiiDebugToolbarRoute extends CLogRoute
     public function collectLogs($logger, $processLogs=false)
     {
         parent::collectLogs($logger, $processLogs);
+        if($this->logs == array()) {
+            $this->processLogs($this->logs);
+        }
     }
 
     protected function processLogs($logs)

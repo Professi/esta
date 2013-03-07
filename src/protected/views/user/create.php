@@ -2,18 +2,19 @@
 /* @var $this UserController */
 /* @var $model User */
 
-$this->breadcrumbs=array(
-	'Users'=>array('index'),
-	'Create',
+$this->breadcrumbs = array(
+    'Users' => array('index'),
+    'Create',
 );
-if(!Yii::app()->user->isGuest) {
-$this->menu=array(
-	array('label'=>'List User', 'url'=>array('index')),
-	array('label'=>'Manage User', 'url'=>array('admin')),
-);
-}
-?>
+if (!Yii::app()->user->isGuest) {
+    $this->menu = array(
+        array('label' => 'List User', 'url' => array('index')),
+        array('label' => 'Manage User', 'url' => array('admin')),
+    );
+    ?>
 
-<h1>Create User</h1>
+    <h1>Erstelle Benutzer</h1>
+<? } else { ?>
+    <h1>Registrierung</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php } echo $this->renderPartial('_form', array('model' => $model)); ?>

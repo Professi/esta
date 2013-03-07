@@ -10,7 +10,7 @@
  * @property string $activationKey
  * @property integer $createtime
  * @property string $firstname
- * @property integer $status
+ * @property integer $state
  * @property string $lastname
  * @property string $email
  *
@@ -49,14 +49,14 @@ class User extends CActiveRecord {
         return array(
             array('password, firstname, lastname, email', 'required'),
             array('email', "unique"),
-            array('status', 'numerical', 'integerOnly' => true),
+            array('state', 'numerical', 'integerOnly' => true),
             array('firstname, lastname, email', 'length', 'max' => 45),
             array('password', 'length', 'max' => 128),
             array('password', 'compare', "on" => "insert"),
             array('password_repeat', 'safe'), //allow bulk assignment 
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, username, firstname, status, lastname, email', 'safe', 'on' => 'search'),
+            array('id, username, firstname, state, lastname, email', 'safe', 'on' => 'search'),
         );
     }
 
@@ -76,7 +76,6 @@ class User extends CActiveRecord {
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return encrypted and salted password with sha512
-     * @todo Unbedingt noch ändern in andere Verschlüsselung in Salt!
      */
     public static function encryptPassword($password, $salt) {
         $saltedPw = $salt . $password;
@@ -106,7 +105,7 @@ class User extends CActiveRecord {
             'password' => 'Passwort',
             'password_repeat' => 'Passwort wiederholen',
             'firstname' => 'Vorname',
-            'status' => 'Status',
+            'state' => 'state',
             'lastname' => 'Nachname',
             'email' => 'E-Mail',
         );
@@ -125,7 +124,7 @@ class User extends CActiveRecord {
         $criteria->compare('id', $this->id, true);
         $criteria->compare('username', $this->username, true);
         $criteria->compare('firstname', $this->firstname, true);
-        $criteria->compare('status', $this->status);
+        $criteria->compare('state', $this->state);
         $criteria->compare('lastname', $this->lastname, true);
         $criteria->compare('email', $this->email, true);
 
@@ -152,15 +151,15 @@ class User extends CActiveRecord {
     }
 
     public function beforeDelete() {
-        $userRole = UserRole::model()->findByAttributes(array('user_id'=>  $this->id));
+        $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
         $userRole->delete();
         return parent::beforeDelete();
     }
 
-        public function beforeSave() {
+    public function beforeSave() {
         if ($this->isNewRecord) {
             if (Yii::app()->user->isGuest) {
-                $this->status = 1;
+                $this->state = 1;
             }
             $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);
             $this->username = $this->email;

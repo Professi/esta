@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 06. Mrz 2013 um 16:47
+-- Erstellungszeit: 07. Mrz 2013 um 18:05
 -- Server Version: 5.5.29
 -- PHP-Version: 5.4.6-1ubuntu1.1
 
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `date` (
   `durationPerAppointment` int(3) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -94,11 +94,21 @@ CREATE TABLE IF NOT EXISTS `parent_child` (
 --
 
 CREATE TABLE IF NOT EXISTS `role` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Daten für Tabelle `role`
+--
+
+INSERT INTO `role` (`id`, `title`, `description`) VALUES
+(0, 'Administration', NULL),
+(1, 'Verwaltung', NULL),
+(2, 'Lehrer', NULL),
+(3, 'Eltern', NULL);
 
 -- --------------------------------------------------------
 
@@ -113,13 +123,20 @@ CREATE TABLE IF NOT EXISTS `user` (
   `activationKey` varchar(128) NOT NULL DEFAULT '',
   `createtime` int(11) NOT NULL DEFAULT '0',
   `firstname` varchar(45) NOT NULL,
-  `status` int(1) NOT NULL DEFAULT '0',
+  `state` int(1) NOT NULL DEFAULT '0',
   `lastname` varchar(45) NOT NULL,
   `email` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
-  KEY `status` (`status`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+  KEY `status` (`state`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Daten für Tabelle `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`, `activationKey`, `createtime`, `firstname`, `state`, `lastname`, `email`) VALUES
+(1, 'admin@admin.de', 'cd613e9e5557f026ce9f11d91afc2dcca40c30cb608e756d4ad62edc50b1263098c80e161481d1b9a5e5413994072430f007b6d1c4633b0ff92c239c367954e1', 'c99375c5a0aa0267ec9342ac8d33de700ed13b8d', 1362647692, 'admin', 0, 'admin', 'admin@admin.de');
 
 -- --------------------------------------------------------
 
@@ -128,13 +145,22 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 CREATE TABLE IF NOT EXISTS `user_role` (
-  `id` varchar(45) NOT NULL,
-  `role_id` int(10) unsigned NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) unsigned NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   KEY `fk_user_role_role1` (`role_id`),
   KEY `fk_user_role_user1` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Daten für Tabelle `user_role`
+--
+
+INSERT INTO `user_role` (`id`, `role_id`, `user_id`) VALUES
+(1, 2, 1);
 
 --
 -- Constraints der exportierten Tabellen
@@ -152,8 +178,8 @@ ALTER TABLE `appointment`
 -- Constraints der Tabelle `parent_child`
 --
 ALTER TABLE `parent_child`
-  ADD CONSTRAINT `fk_parent_child_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_parent_child_child1` FOREIGN KEY (`child_id`) REFERENCES `child` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_parent_child_child1` FOREIGN KEY (`child_id`) REFERENCES `child` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_parent_child_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `user_role`

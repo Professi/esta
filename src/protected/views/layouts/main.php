@@ -68,8 +68,8 @@
             'encodeLabel' => false,
             'items' => array(
                 array('label' => 'Home', 'url' => array('/site/index')),
-                array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span>', 'url' => array(''), 'visible' => !Yii::app()->user->isGuest),
-                array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span>', 'url' => array(''), 'visible' => !Yii::app()->user->isGuest),
+                array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span>', 'url' => array('/Appointment/create'), 'visible' => !Yii::app()->user->isGuest),
+                array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span>', 'url' => array('/Appointment/index',), 'visible' => !Yii::app()->user->isGuest),
                 array('label' => 'Schülerverwaltung', 'url' => array('/Child/index'), 'visible' => !Yii::app()->user->isGuest),
                 array('label' => 'Datumsverwaltung', 'url' => array('/Date/index'), 'visible' => !Yii::app()->user->isGuest),
                 array('label' => 'Terminverwaltung', 'url' => array('/Appointment/index'), 'visible' => !Yii::app()->user->isGuest),

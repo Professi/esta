@@ -37,8 +37,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'status'); ?>
-		<?php echo $form->textField($model,'status'); ?>
+		<?php echo $form->label($model,'state'); ?>
+		<?php echo $form->textField($model,'state'); ?>
 	</div>
 
 	<div class="row">

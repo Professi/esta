@@ -50,9 +50,9 @@
     </div>
     <?php if (!Yii::app()->user->isGuest) { ?>
         <div class="row">
-            <?php echo $form->labelEx($model, 'status'); ?>
-            <?php echo $form->dropDownList($model, 'status', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt')); ?>
-            <?php echo $form->error($model, 'status'); ?>
+            <?php echo $form->labelEx($model, 'state'); ?>
+            <?php echo $form->dropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt')); ?>
+            <?php echo $form->error($model, 'state'); ?>
         </div>
 
         <?php echo $form->errorSummary($model); ?>

@@ -9,9 +9,9 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Login</h1>
+<h1>ESTA der BWS-Hofheim</h1>
 
-<p>Please fill out the following form with your login credentials:</p>
+<p>Willkommen zur Elternsprechtagsanwendung der Brühlwiesenschule in Hofheim. Bitte melden Sie sich an.</p>
 
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -22,7 +22,7 @@ $this->breadcrumbs=array(
 	),
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+	<p class="note">Felder mit <span class="required">*</span> werden benötigt.</p>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'email'); ?>
@@ -35,9 +35,6 @@ $this->breadcrumbs=array(
 		<?php echo $form->passwordField($model,'password'); ?>
 		<?php echo $form->error($model,'password'); ?>
             <p>Oder wollen Sie sich <?php echo CHtml::link('registrieren?','index.php?r=user/create'); ?> </p>
-		<p class="hint">
-			Hint: You may login with <kbd>demo</kbd>/<kbd>demo</kbd> or <kbd>admin</kbd>/<kbd>admin</kbd>.
-		</p>
 	</div>
 
 	<div class="row rememberMe">
