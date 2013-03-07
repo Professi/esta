@@ -75,18 +75,12 @@ class User extends CActiveRecord {
 
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return salt as md5 hash
-     */
-    public function hashSalt($salt) {
-        return md5($salt);
-    }
-
-    /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return encrypted and salted password with bcrypt
+     * @todo Unbedingt noch ändern in andere Verschlüsselung in Salt!
      */
-    public function encryptPassword($password, $salt) {
-        return crypt($password, $salt);
+
+    public static function encryptPassword($password, $salt) {
+        return md5($password);
     }
 
     public function setAttributes($attributes, $safe = true) {
@@ -110,7 +104,7 @@ class User extends CActiveRecord {
             'id' => 'ID',
             'username' => 'Benutzername',
             'password' => 'Passwort',
-            'password_repeat'=> 'Passwort wiederholen',
+            'password_repeat' => 'Passwort wiederholen',
             'firstname' => 'Vorname',
             'status' => 'Status',
             'lastname' => 'Nachname',
@@ -150,14 +144,15 @@ class User extends CActiveRecord {
     }
 
     public function beforeSave() {
-            $this->activationKey = sha1(mt_rand(10000, 99999).time().$this->email);
+        if ($this->isNewRecord) {
+            $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);
             $this->username = $this->email;
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
-        
-        if ($this->pwdChanged) {
-            $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
         }
-        
+//        if ($this->pwdChanged) {
+//            $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
+//        }
+
         return parent::beforeSave();
     }
 

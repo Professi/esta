@@ -8,19 +8,6 @@
 class UserIdentity extends CUserIdentity {
         private $_id;
     
-
-
-    /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return encrypted and salted password with bcrypt
-     */
-    public function encryptPassword($password, $salt, $user) {
-        echo crypt($password, $salt);
-        return crypt($password, $salt);
-        
-    }
-
-
     /**
      * Authenticates a user.
      * The example implementation makes sure if the username and password
@@ -32,8 +19,8 @@ class UserIdentity extends CUserIdentity {
     public function authenticate() {
         $user = User::model()->findByAttributes(array('email' => $this->username));
         if ($user === null) { // No user found!
-            $this->errorCode = self::ERROR_USERNAME_INVALID;
-        } else if ($user->password !== $this->encryptPassword($this->password, Yii::app()->params["salt"], $user)) { // Invalid password!
+                       $this->errorCode = self::ERROR_USERNAME_INVALID;
+        } else if ($user->password !== User::encryptPassword($this->password, Yii::app()->params["salt"])) { // Invalid password!
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
         } else {
             $this->errorCode = self::ERROR_NONE;
