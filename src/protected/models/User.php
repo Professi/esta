@@ -78,7 +78,6 @@ class User extends CActiveRecord {
      * @return encrypted and salted password with sha512
      * @todo Unbedingt noch ändern in andere Verschlüsselung in Salt!
      */
-
     public static function encryptPassword($password, $salt) {
         $saltedPw = $salt . $password;
         return hash('sha512', $saltedPw);
@@ -144,16 +143,30 @@ class User extends CActiveRecord {
         );
     }
 
- public function beforeSave() {
+    public function afterSave() {
+        $userRole = New UserRole();
+        $userRole->user_id = $this->id;
+        $userRole->role_id = Role::model()->findByAttributes(array('title' => 'Eltern'))->id;
+        $userRole->save();
+        return parent::afterSave();
+    }
+
+    public function beforeDelete() {
+        $userRole = UserRole::model()->findByAttributes(array('user_id'=>  $this->id));
+        $userRole->delete();
+        return parent::beforeDelete();
+    }
+
+        public function beforeSave() {
         if ($this->isNewRecord) {
-            if(Yii::app()->user->isGuest) {
-                $this->status=0; 
+            if (Yii::app()->user->isGuest) {
+                $this->status = 1;
             }
             $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);
             $this->username = $this->email;
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
         }
-        if ($this->pwdChanged&&!$this->isNewRecord) {
+        if ($this->pwdChanged && !$this->isNewRecord) {
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
         }
 

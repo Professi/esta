@@ -4,7 +4,7 @@
  * This is the model class for table "user_role".
  *
  * The followings are the available columns in table 'user_role':
- * @property string $id
+ * @property integer $id
  * @property string $role_id
  * @property string $user_id
  *
@@ -40,10 +40,8 @@ class UserRole extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, role_id, user_id', 'required'),
-			array('id', 'length', 'max'=>45),
-			array('role_id', 'length', 'max'=>10),
-			array('user_id', 'length', 'max'=>11),
+			array('role_id, user_id', 'required'),
+			array('role_id, user_id', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, role_id, user_id', 'safe', 'on'=>'search'),
@@ -86,7 +84,7 @@ class UserRole extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id,true);
+		$criteria->compare('id',$this->id);
 		$criteria->compare('role_id',$this->role_id,true);
 		$criteria->compare('user_id',$this->user_id,true);
 
