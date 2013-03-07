@@ -144,15 +144,18 @@ class User extends CActiveRecord {
         );
     }
 
-    public function beforeSave() {
+ public function beforeSave() {
         if ($this->isNewRecord) {
+            if(Yii::app()->user->isGuest) {
+                $this->status=0; 
+            }
             $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);
             $this->username = $this->email;
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
         }
-//        if ($this->pwdChanged) {
-//            $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
-//        }
+        if ($this->pwdChanged&&!$this->isNewRecord) {
+            $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
+        }
 
         return parent::beforeSave();
     }

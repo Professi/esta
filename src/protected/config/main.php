@@ -32,6 +32,10 @@ return array(
                 '<action>' => 'site/<action>'
             ),
         ),
+        'authManager' => array(
+            'class' => 'CDbAuthManager',
+            'connectionID' => 'db',
+        ),
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=estdb',
             'emulatePrepare' => true,
@@ -50,8 +54,8 @@ return array(
             'routes' => array(
                 array(
                     'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute',
-                 'class' => 'CFileLogRoute',
-                  'levels'=>'error,warning',
+                    'class' => 'CFileLogRoute',
+                    'levels' => 'error,warning',
                 ),
             // uncomment the following to show log messages on web pages
             /* array(
@@ -82,8 +86,7 @@ return array(
     'params' => array(
         // this is used in contact page
         'adminEmail' => 'test@test.de',
-        "salt" => 'e9HOiJFfDhyvcBMin5G8CBTR98wK',
-    'salt2'=>'$2a$08$e9HOiJFfDhyvcBMin5G8CBTR98wK',)
+        "salt" => 'e9HOiJFfDhyvcBMin5G8CBTR98wK',)
 );
 
 

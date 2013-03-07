@@ -9,13 +9,13 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List User', 'url'=>array('index')),
-	array('label'=>'Create User', 'url'=>array('create')),
-	array('label'=>'View User', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage User', 'url'=>array('admin')),
+	array('label'=>'List User', 'url'=>array('index'), 'visible'=>!Yii::app()->user->isGuest),
+	array('label'=>'Create User', 'url'=>array('create'), 'visible'=>!Yii::app()->user->isGuest),
+	array('label'=>'View User', 'url'=>array('view', 'id'=>$model->id),),
+	array('label'=>'Manage User', 'url'=>array('admin'), 'visible'=>!Yii::app()->user->isGuest),
 );
 ?>
 
-<h1>Update User <?php echo $model->id; ?></h1>
+<h1>Update User <?php echo $model->email; ?></h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

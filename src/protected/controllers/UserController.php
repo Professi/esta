@@ -14,7 +14,7 @@ class UserController extends Controller {
     public function filters() {
         return array(
             'accessControl', // perform access control for CRUD operations
-            'postOnly + delete', // we only allow deletion via POST request
+//            'postOnly + delete', // we only allow deletion via POST request
         );
     }
 
@@ -26,7 +26,7 @@ class UserController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update','index','view','delete'),
+                'actions' => array('create', 'update','index','view','delete','admin'),
                 'users' => array('@'),
             ),
             array('allow',
@@ -43,6 +43,7 @@ class UserController extends Controller {
         );
     }
 
+    
     /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
@@ -87,6 +88,7 @@ class UserController extends Controller {
         $model = $this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed
+        
         $this->performAjaxValidation($model);
 
         if (isset($_POST['User'])) {
