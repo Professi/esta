@@ -13,7 +13,7 @@
 
     <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/modernizr.foundation.js"></script>
 </head>
-<body class="off-canvas hide-extras">
+<body>
     <div class="wrapper">
         <!-- HEADER -->
         <div class="row contain-to-grid">
@@ -21,19 +21,24 @@
                 <h1 class="header">Elternsprechtag</h1>
             </div>
         </div>
-        <a href="" data-reveal-id="MenuModal">
-            <div class="row contain-to-grid sticky">
-                <div class="twelve columns text-center">
-                    <span class="" aria-hidden="true" data-icon="&#xe016;" style="font-size:2em;color:#fff;">&nbsp;Menü</span>
-                </div>
-            </div></a>
+		<div class="row contain-to-grid sticky" id="js_menu" style="visibility:hidden">
+			<div class="twelve columns text-center">
+				<a href="" data-reveal-id="MenuModal" >
+					<span class="menu-icon" aria-hidden="true" data-icon="&#xe016;">&nbsp;Menü</span>
+				</a>
+			</div>
+		</div>
         <div class="push"></div>
-        <div class="row">
-            <!-- CONTENT -->
-            <div class="twelve columns">
-                <?php echo $content; ?>
-            </div><!-- /CONTENT -->
-        </div><!-- /ROW MAIN LEVEL -->
+		<div class="row js_hide hide-for-small" id="nojs_menu">
+			<div class="three columns">
+				<ul class="nav-bar vertical" style="margin-bottom:0;">
+					<li class="active"><a href=""><span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span></a></li>
+					<li class=""><a href="./termine.html"><span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span></a></li>
+					<li class=""><a href="./error.html"><span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout</span></a></li>
+				</ul>
+			</div>
+		</div>
+			<?php echo $content; ?>
         <div class="push"></div>
     </div> <!-- /WRAPPER -->
     <!-- FOOTER -->
@@ -89,5 +94,7 @@
     <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/foundation.min.js"></script>
     <!-- Initialisieren der JS Plugins -->
     <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/app.js"></script>
+	<!--Einbinden eigener Funktionalitäten -->
+	<script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/custom.js"></script>
 </body>
 </html>

@@ -1,18 +1,3 @@
-/* Artfully masterminded by ZURB  */
-
-/* -------------------------------------------------- 
-   Table of Contents
------------------------------------------------------
-:: Shared Styles
-:: Page Name 1
-:: Page Name 2
-*/
-
-
-/* -----------------------------------------
-   Shared Styles
------------------------------------------ */
-
 .medium {
 	font-size: 80%;
 	line-height: inherit;
@@ -33,24 +18,30 @@ html, body {
 .header {
 	font-family: 'Clicker Script', cursive;
 	color:#fff;
-	background-image:url(../img/tafel2.png);
+	background-image:url(../images/tafel2.png);
 	padding: .1em 0 .1em .3em;
 	background-repeat: no-repeat;
 	height: 60px;
 }
 .nav-icons { 
 	color: #FFF;
-	font-size: 2em;
+	font-size: 20px;
 	position: relative;
 	top: .2em
 }
+#nojs_menu {
+	position: absolute;
+	float: left;
+}
+table {
+	width: 100%;
+}
+.js_show {
+	display: none;
+}
 .nav-bar.vertical {
-/* 	position:fixed;
-	top:50%;
-	left:-1%; 
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px; */
 	border-radius: 5px;
+	margin-bottom: 0;
 }
 .nav-bar.vertical > li:first-child {
 	border-top-right-radius: 5px;
@@ -64,22 +55,72 @@ html, body {
 	width: initial;
 	left: initial;
 }
+.menu-icon {
+	font-size: 2em;
+	color: #fff;
+}
+.error-icon {
+	font-size: 7em;
+}
+#MenuModal>a {
+	color:#fff;
+}
+.nav-menu {
+	padding: 0;
+	border-radius: 5px;
+}
+.table-text {
+	text-align: center;
+	font-style: italic;
+	font-size: 115%;
+} 
+.occupied {
+	background-color: black;
+	color: white;
+}
+.avaiable {
+	cursor: pointer;
+}
+
 @media only screen and (max-width: 767px) {
 
 	.row.contain-to-grid.sticky {
 		width: 100%;
 	}
+	.header {
+		padding-left: 0.2em;
+	}
+	.styled-select-parent {
+		left: .15em;
+	}
 }
-
-/* -----------------------------------------
-   Page Name 1
------------------------------------------ */
-
-
-
-
-/* -----------------------------------------
-   Page Name 2
------------------------------------------ */
-
-
+#small_buttons>div {
+	display: inline-block;
+	font-family: Courier;
+}
+#teacher_table>tr>td {
+	cursor: pointer;
+}
+.styled-select {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #ccc;
+	height: 2.3em;
+	margin-bottom: 1em;
+	background: url(../images/play.png) no-repeat right #f2f2f2;
+	background-size: 5%;
+}
+.styled-select select {
+   background: transparent;
+   padding: 5px;
+   border: 0;
+   border-radius: 0;
+   height: 2em;
+   -webkit-appearance: none;
+}
+.styled-select>span {
+	position: absolute;
+	right: .5em;
+	top: .65em;
+	color: #999;
+}
