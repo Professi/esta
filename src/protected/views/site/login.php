@@ -9,10 +9,16 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>ESTA der BWS-Hofheim</h1>
-
-<p>Willkommen zur Elternsprechtagsanwendung der Brühlwiesenschule in Hofheim. Bitte melden Sie sich an.</p>
-
+<div class="row">
+	<div class="twelve columns ">
+		<div class="panel">
+			<h4> Liebe Eltern,</h4>
+			<p> Willkommen auf der elektronischen Elternsprechtagsplattform der Brühlwiesenschule Hofheim.<br>
+				Melden Sie sich an oder registrieren Sie sich um ihre Termine einzusehen oder neue Termine zu vereinbaren.
+			</p>
+		</div>
+	</div>
+</div>
  <?php if (Yii::app()->user->hasFlash('success')) { ?>
 
         <div class="flash-success">
