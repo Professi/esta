@@ -30,6 +30,7 @@ $this->breadcrumbs=array(
 <?//        echo Yii::app()->user->getFlash('failed');
    // } 
 ?> </div> -->
+<div class="row">
 <div class="six columns centered">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'login-form',
@@ -49,7 +50,7 @@ $this->breadcrumbs=array(
 		<?php echo $form->error($model,'password'); ?>
 	
 		<?php echo $form->checkBox($model,'rememberMe'); ?>
-		<?php echo $form->label($model,'rememberMe'); ?>
+		Anmeldedaten merken<br>
 		<?php echo $form->error($model,'rememberMe'); ?>
 		
 		<?php echo CHtml::submitButton('Login', array('class'=>'button')); ?>
@@ -57,4 +58,5 @@ $this->breadcrumbs=array(
 	<p class="text-center"><?php echo CHtml::link('<b>Ben&ouml;tigen Sie einen neuen Zugang?<br>Klicken Sie hier.</b>','index.php?r=user/create'); ?> </p>
 
 <?php $this->endWidget(); ?>
+</div>
 </div>
