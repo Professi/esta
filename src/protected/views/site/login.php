@@ -43,17 +43,17 @@ $this->breadcrumbs=array(
 	<fieldset>
 		<legend>Login</legend>
 		
-		<?php echo $form->textField($model,'email', array('placeholder'=>'E-Mail'); ?>
+		<?php echo $form->textField($model,'email', array('placeholder'=>'E-Mail')); ?>
 		<?php echo $form->error($model,'email'); ?>
 	
-		<?php echo $form->passwordField($model,'password', array('placeholder'=>'Passwort'); ?>
+		<?php echo $form->passwordField($model,'password', array('placeholder'=>'Passwort')); ?>
 		<?php echo $form->error($model,'password'); ?>
 	
 		<?php echo $form->checkBox($model,'rememberMe'); ?>
 		<?php echo $form->label($model,'rememberMe'); ?>
 		<?php echo $form->error($model,'rememberMe'); ?>
 		
-		<?php echo CHtml::submitButton('Login', array('class'=>'button'); ?>
+		<?php echo CHtml::submitButton('Login', array('class'=>'button')); ?>
 	</fieldset>
 	<p class="text-center"><?php echo CHtml::link('<b>Ben&ouml;tigen Sie einen neuen Zugang?<br>Klicken Sie hier.</b>','index.php?r=user/create'); ?> </p>
 
