@@ -21,18 +21,21 @@
                 <h1 class="header">Elternsprechtag</h1>
             </div>
         </div>
+        				<?php 
+				if (!Yii::app()->user->isGuest) { ?>
 		<div class="row contain-to-grid sticky" id="js_menu" style="visibility:hidden">
 			<div class="twelve columns text-center">
 				<a href="" data-reveal-id="MenuModal" >
 					<span class="menu-icon" aria-hidden="true" data-icon="&#xe016;">&nbsp;Menü</span>
 				</a>
 			</div>
-		</div>
+                                </div> <? } ?>
         <div class="push"></div>
-		<div class="row hide-for-small" id="nojs_menu">
-			<div class="three columns">
 				<?php 
-				if (!Yii::app()->user->isGuest) {
+				if (!Yii::app()->user->isGuest) { ?>
+        <div class="row hide-for-small" id="nojs_menu">
+			<div class="three columns">
+
 
                                     $this->widget('zii.widgets.CMenu', array(
 						'htmlOptions' => array('class' => 'nav-bar vertical'),
@@ -81,7 +84,7 @@
         </div>
     </div> 	<!-- /FOOTER -->
     <!-- MODALS -->
-    <div id="MenuModal" class="reveal-modal [small]" style="padding:0;border-radius:5px;">
+    <div id="MenuModal" class="reveal-modal [small] nav-menu">
         <?php
 		
 			$this->widget('zii.widgets.CMenu', array(
