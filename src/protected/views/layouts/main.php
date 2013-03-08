@@ -32,7 +32,7 @@
 		<div class="row hide-for-small" id="nojs_menu">
 			<div class="three columns">
 				<?php 
-				if (!Yii::app->userIsGuest) {
+				
 					$this->widget('zii.widgets.CMenu', array(
 						'htmlOptions' => array('class' => 'nav-bar vertical'),
 						'encodeLabel' => false,
@@ -49,7 +49,7 @@
 							array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout (' . Yii::app()->user->name . ')</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),
 						'activeCssClass' => 'active'
 					));
-				} ?>
+				 ?>
 			</div>
 		</div>
 			<?php echo $content; ?>
@@ -82,7 +82,7 @@
     <!-- MODALS -->
     <div id="MenuModal" class="reveal-modal [small]" style="padding:0;border-radius:5px;">
         <?php
-		if (!Yii::app->userIsGuest) {
+		
 			$this->widget('zii.widgets.CMenu', array(
 				'htmlOptions' => array('class' => 'nav-bar vertical'),
 				'encodeLabel' => false,
@@ -99,7 +99,7 @@
 					array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout (' . Yii::app()->user->name . ')</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),
 				'activeCssClass' => 'active'
 			));
-        } ?> 
+         ?> 
         <a class="close-reveal-modal" data-icon="&#xe014;" style="color:#fff;"></a>
     </div>
     <!-- SKRIPTE -->
