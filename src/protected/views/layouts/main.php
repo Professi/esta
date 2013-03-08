@@ -29,7 +29,7 @@
 			</div>
 		</div>
         <div class="push"></div>
-		<div class="row hide-for-small js_hide" id="nojs_menu">
+		<div class="row hide-for-small" id="nojs_menu">
 			<div class="three columns">
 				<ul class="nav-bar vertical" style="margin-bottom:0;">
 					<li class="active"><a href=""><span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span></a></li>

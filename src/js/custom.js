@@ -1,6 +1,7 @@
 ;(function (window, document, $) {
 
 	$( '#js_menu' ).css( 'visibility', 'visible' );
+	$( '#nojs_menu' ).css( 'display', 'none' );
 	$( '.js_show' ).toggle();
 	$( '.js_hide' ).toggle();
 	
