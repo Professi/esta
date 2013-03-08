@@ -40,28 +40,22 @@ $this->breadcrumbs=array(
 	),
 )); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'email'); ?>
-		<?php echo $form->textField($model,'email'); ?>
+	<fieldset>
+		<legend>Login</legend>
+		
+		<?php echo $form->textField($model,'email', array('placeholder'=>'E-Mail'); ?>
 		<?php echo $form->error($model,'email'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password'); ?>
+	
+		<?php echo $form->passwordField($model,'password', array('placeholder'=>'Passwort'); ?>
 		<?php echo $form->error($model,'password'); ?>
-            <p>Oder wollen Sie sich <?php echo CHtml::link('registrieren?','index.php?r=user/create'); ?> </p>
-	</div>
-
-	<div class="row rememberMe">
+	
 		<?php echo $form->checkBox($model,'rememberMe'); ?>
 		<?php echo $form->label($model,'rememberMe'); ?>
 		<?php echo $form->error($model,'rememberMe'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton('Login'); ?>
-	</div>
+		
+		<?php echo CHtml::submitButton('Login', array('class'=>'button'); ?>
+	</fieldset>
+	<p class="text-center"><?php echo CHtml::link('<b>Ben&ouml;tigen Sie einen neuen Zugang?<br>Klicken Sie hier.</b>','index.php?r=user/create'); ?> </p>
 
 <?php $this->endWidget(); ?>
 </div><!-- form -->
