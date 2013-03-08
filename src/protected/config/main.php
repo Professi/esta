@@ -17,11 +17,11 @@ return array(
     ),
 // application components
     'components' => array(
-//        'user' => array(
-//            'class' => 'application.modules.user.components.YumWebUser',
-//            'allowAutoLogin' => true,
+        'user' => array(
+            'class' => 'WebUser',
+            'allowAutoLogin' => true,
 //            'loginUrl' => array('//user/user/login'),
-//        ),
+        ),
         // uncomment the following to enable URLs in path-format
         'urlManager' => array(
             //   'urlFormat'=>'path',

@@ -25,12 +25,13 @@ $this->breadcrumbs = array(
         <?php echo Yii::app()->user->getFlash('success') . "Sie sollten nun eine Aktivierungsmail erhalten in der Sie ihren Account aktivieren können."; ?>
     </div>
 
-<?php } //@TODO
-if (isset(Yii::app()->user->errorMsg)) {
+    <?php
+}
+if ($model->getError('error') !== NULL) {
     ?>
-    <div class="panel callout"
-    <? echo Yii::app()->user->errorMsg;
-    ?> </div> <? } ?>
+    <div class="panel callout">
+        <? echo $model->getError('error');
+        ?> </div> <? } ?>
 <div class="row">
     <div class="six columns centered">
         <?php
@@ -56,10 +57,10 @@ if (isset(Yii::app()->user->errorMsg)) {
             Anmeldedaten merken<br>
             <?php echo $form->error($model, 'rememberMe'); ?>
 
-<?php echo CHtml::submitButton('Login', array('class' => 'button')); ?>
+            <?php echo CHtml::submitButton('Login', array('class' => 'button')); ?>
         </fieldset>
         <p class="text-center"><?php echo CHtml::link('<b>Ben&ouml;tigen Sie einen neuen Zugang?<br>Klicken Sie hier.</b>', 'index.php?r=user/create'); ?> </p>
 
-<?php $this->endWidget(); ?>
+        <?php $this->endWidget(); ?>
     </div>
 </div>

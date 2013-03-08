@@ -40,7 +40,7 @@ class LoginForm extends CFormModel {
 
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return boolean Gibt zurück ob ein Benutzer authentisiert worden konnte
+     * @return boolean Gibt zurück ob ein Benutzer authentisiert werden konnte
      */
     public function authenticate() {
         $rc = false;
@@ -60,12 +60,12 @@ class LoginForm extends CFormModel {
                     $this->addError('password', UserIdentity::ERROR_MSG_PASSWORD_INVALID);
                     break;
                 default:
-                    // @Todo ändern
-                    $this->addError($identity->errorCode, $identity->errorMessage);
+                    $this->addError('error', $identity->errorMessage);
             }
         }
 
         return $rc;
     }
 
+    
 }
