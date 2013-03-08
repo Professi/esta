@@ -35,9 +35,7 @@
 				if (!Yii::app()->user->isGuest) { ?>
         <div class="row hide-for-small" id="nojs_menu">
 			<div class="three columns">
-
-
-                                    $this->widget('zii.widgets.CMenu', array(
+                          <?          $this->widget('zii.widgets.CMenu', array(
 						'htmlOptions' => array('class' => 'nav-bar vertical'),
 						'encodeLabel' => false,
 						'items' => array(
