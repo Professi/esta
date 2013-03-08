@@ -18,7 +18,7 @@ html, body {
 .header {
 	font-family: 'Clicker Script', cursive;
 	color:#fff;
-	background-image:url(../images/tafel2.png);
+	background-image:url(../img/tafel2.png);
 	padding: .1em 0 .1em .3em;
 	background-repeat: no-repeat;
 	height: 60px;
@@ -107,7 +107,7 @@ table {
 	border-color: #ccc;
 	height: 2.3em;
 	margin-bottom: 1em;
-	background: url(../images/play.png) no-repeat right #f2f2f2;
+	background: url(../img/play.png) no-repeat right #f2f2f2;
 	background-size: 5%;
 }
 .styled-select select {

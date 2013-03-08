@@ -31,11 +31,24 @@
         <div class="push"></div>
 		<div class="row hide-for-small" id="nojs_menu">
 			<div class="three columns">
-				<ul class="nav-bar vertical" style="margin-bottom:0;">
-					<li class="active"><a href=""><span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span></a></li>
-					<li class=""><a href="./termine.html"><span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span></a></li>
-					<li class=""><a href="./error.html"><span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout</span></a></li>
-				</ul>
+				<?php
+				$this->widget('zii.widgets.CMenu', array(
+					'htmlOptions' => array('class' => 'nav-bar vertical'),
+					'encodeLabel' => false,
+					'items' => array(
+						array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span>', 'url' => array('/Appointment/create'), 'visible' => !Yii::app()->user->isGuest),
+						array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span>', 'url' => array('/Appointment/index',), 'visible' => !Yii::app()->user->isGuest),
+						array('label' => 'Schülerverwaltung', 'url' => array('/Child/index'), 'visible' => !Yii::app()->user->isGuest),
+						array('label' => 'Datumsverwaltung', 'url' => array('/Date/index'), 'visible' => !Yii::app()->user->isGuest),
+						array('label' => 'Terminverwaltung', 'url' => array('/Appointment/index'), 'visible' => !Yii::app()->user->isGuest),
+						array('label' => 'Elternkindverknüpfung', 'url' => array('/ParentChild/index'), 'visible' => !Yii::app()->user->isGuest),
+						array('label' => 'Rollenverwaltung', 'url' => array('/Role/index'), 'visible' => !Yii::app()->user->isGuest),
+						array('label' => 'Benutzerverwaltung', 'url' => array('/User/index'), 'visible' => !Yii::app()->user->isGuest),
+						array('label' => 'Rollenzuweisung', 'url' => array('/UserRole/index'), 'visible' => !Yii::app()->user->isGuest),
+						array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout (' . Yii::app()->user->name . ')</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),
+					'activeCssClass' => 'active'
+				));
+				?>
 			</div>
 		</div>
 			<?php echo $content; ?>
@@ -69,10 +82,9 @@
     <div id="MenuModal" class="reveal-modal [small]" style="padding:0;border-radius:5px;">
         <?php
         $this->widget('zii.widgets.CMenu', array(
-            'htmlOptions' => array('class' => 'nav-bar vertical', 'style' => 'margin-bottom:0;'),
+            'htmlOptions' => array('class' => 'nav-bar vertical'),
             'encodeLabel' => false,
             'items' => array(
-                array('label' => 'Home', 'url' => array('/site/index')),
                 array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span>', 'url' => array('/Appointment/create'), 'visible' => !Yii::app()->user->isGuest),
                 array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span>', 'url' => array('/Appointment/index',), 'visible' => !Yii::app()->user->isGuest),
                 array('label' => 'Schülerverwaltung', 'url' => array('/Child/index'), 'visible' => !Yii::app()->user->isGuest),
@@ -82,7 +94,6 @@
                 array('label' => 'Rollenverwaltung', 'url' => array('/Role/index'), 'visible' => !Yii::app()->user->isGuest),
                 array('label' => 'Benutzerverwaltung', 'url' => array('/User/index'), 'visible' => !Yii::app()->user->isGuest),
                 array('label' => 'Rollenzuweisung', 'url' => array('/UserRole/index'), 'visible' => !Yii::app()->user->isGuest),
-                array('label' => 'Login', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
                 array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout (' . Yii::app()->user->name . ')</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),
             'activeCssClass' => 'active'
         ));
