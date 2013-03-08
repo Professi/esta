@@ -14,7 +14,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('createtime')); ?>:</b>
-	<?php echo CHtml::encode(date('c', $data->createtime)); ?>
+	<?php echo CHtml::encode(date(Yii::app()->params['dateTimeFormat'], $data->createtime)); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('firstname')); ?>:</b>

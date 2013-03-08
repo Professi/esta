@@ -86,7 +86,8 @@ return array(
     'params' => array(
         // this is used in contact page
         'adminEmail' => 'test@test.de',
-        "salt" => 'e9HOiJFfDhyvcBMin5G8CBTR98wK',)
+        'salt' => 'e9HOiJFfDhyvcBMin5G8CBTR98wK',
+        'dateTimeFormat' => 'd.m.Y H:i',)
 );
 
 

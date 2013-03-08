@@ -37,16 +37,17 @@
                     $this->widget('zii.widgets.CMenu', array(
                         'htmlOptions' => array('class' => 'nav-bar vertical'),
                         'encodeLabel' => false,
-                        'items' => array(
+                        'items' => array(//0=Administration 1=Verwaltung 2= Lehrer 3=Eltern
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span>', 'url' => array('/Appointment/create'), 'visible' => !Yii::app()->user->isGuest),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span>', 'url' => array('/Appointment/index',), 'visible' => !Yii::app()->user->isGuest),
-                            array('label' => 'Schülerverwaltung', 'url' => array('/Child/index'), 'visible' => !Yii::app()->user->isGuest),
-                            array('label' => 'Datumsverwaltung', 'url' => array('/Date/index'), 'visible' => !Yii::app()->user->isGuest),
-                            array('label' => 'Terminverwaltung', 'url' => array('/Appointment/index'), 'visible' => !Yii::app()->user->isGuest),
+                            array('label' => 'Schülerverwaltung', 'url' => array('/Child/index'), 'visible' => Yii::app()->user->checkAccess('0') || Yii::app()->user->checkAccess('1')),
+                            array('label' => 'Datumsverwaltung', 'url' => array('/Date/index'), 'visible' => Yii::app()->user->checkAccess('0')),
+                            array('label' => 'Terminverwaltung', 'url' => array('/Appointment/index'), 'visible' => Yii::app()->user->checkAccess('0') || Yii::app()->user->checkAccess('1')),
                             array('label' => 'Elternkindverknüpfung', 'url' => array('/ParentChild/index'), 'visible' => !Yii::app()->user->isGuest),
-                            array('label' => 'Rollenverwaltung', 'url' => array('/Role/index'), 'visible' => !Yii::app()->user->isGuest),
-                            array('label' => 'Benutzerverwaltung', 'url' => array('/User/index'), 'visible' => !Yii::app()->user->isGuest),
-                            array('label' => 'Rollenzuweisung', 'url' => array('/UserRole/index'), 'visible' => !Yii::app()->user->isGuest),
+                            array('label' => 'Rollenverwaltung', 'url' => array('/Role/index'), 'visible' => Yii::app()->user->checkAccess('0')),
+                            array('label' => 'Benutzerverwaltung', 'url' => array('/User/index'), 'visible' => Yii::app()->user->checkAccess('0') || Yii::app()->user->checkAccess('1')),
+                            array('label' => 'Rollenzuweisung', 'url' => array('/UserRole/index'), 'visible' => Yii::app()->user->checkAccess('0') || Yii::app()->user->checkAccess('1')),
+                            array('label' => 'Ihr Account', 'url' => array('/User/view&id=' . Yii::app()->user->getId()), 'visible' => !Yii::app()->user->isGuest),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout (' . Yii::app()->user->name . ')</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),
                         'activeCssClass' => 'active'
                     ));
@@ -54,7 +55,7 @@
 
                 </div>
             </div> <? } ?>
-<?php echo $content; ?>
+        <?php echo $content; ?>
         <div class="push"></div>
     </div> <!-- /WRAPPER -->
     <!-- FOOTER -->
