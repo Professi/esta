@@ -40,15 +40,13 @@ class UserIdentity extends CUserIdentity {
                 $this->errorCode = self::ERROR_NONE;
                 $this->_id = $user->id;
                 $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->_id));
-                $this->_roleId = $userRole->role_id;
-                $this->_state = $user->state;
-                $this->setState($this->_state, $userRole);
+                $this->setState('state', $user->state);
+                $this->setState('role',  $userRole->role_id);
             }
         }
         return $this->errorCode;
     }
-
-
+    
     public function getId() {
         return $this->_id;
     }
