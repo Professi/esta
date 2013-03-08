@@ -30,10 +30,10 @@ class UserIdentity extends CUserIdentity {
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
             $this->errorMessage = self::ERROR_MSG_PASSWORD_INVALID;
         } else {
-            if ($user->state === 0) {
+            if ($user->state == 0) {
                 $this->errorCode = self::ERROR_ACCOUNT_NOT_ACTIVATED;
                 $this->errorMessage = self::ERROR_MSG_ACCOUNT_NOT_ACTIVATED;
-            } else if ($user->state === 2) {
+            } else if ($user->state == 2) {
                 $this->errorCode = self::ERROR_ACCOUNT_BANNED;
                 $this->errorMessage = self::ERROR_MSG_ACCOUNT_BANNED;
             } else {
