@@ -21,18 +21,16 @@
                 <h1 class="header">Elternsprechtag</h1>
             </div>
         </div>
-        				<?php 
-				if (!Yii::app()->user->isGuest) { ?>
+        <?php	if (!Yii::app()->user->isGuest) { ?>
 		<div class="row contain-to-grid sticky" id="js_menu" style="visibility:hidden">
 			<div class="twelve columns text-center">
 				<a href="" data-reveal-id="MenuModal" >
 					<span class="menu-icon" aria-hidden="true" data-icon="&#xe016;">&nbsp;Menü</span>
 				</a>
 			</div>
-                                </div> <? } ?>
+        </div> <? } ?>
         <div class="push"></div>
-				<?php 
-				if (!Yii::app()->user->isGuest) { ?>
+		<?php	if (!Yii::app()->user->isGuest) { ?>
         <div class="row hide-for-small" id="nojs_menu">
 			<div class="three columns">
                           <?          $this->widget('zii.widgets.CMenu', array(
@@ -50,10 +48,10 @@
 							array('label' => 'Rollenzuweisung', 'url' => array('/UserRole/index'), 'visible' => !Yii::app()->user->isGuest),
 							array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout (' . Yii::app()->user->name . ')</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),
 						'activeCssClass' => 'active'
-					));
-                                } ?>
+					)); ?>
+                                
 			</div>
-		</div>
+		</div> <? } ?>
 			<?php echo $content; ?>
         <div class="push"></div>
     </div> <!-- /WRAPPER -->

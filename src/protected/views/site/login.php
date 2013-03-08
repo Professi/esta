@@ -40,8 +40,6 @@ $this->breadcrumbs=array(
 	),
 )); ?>
 
-	<p class="note">Felder mit <span class="required">*</span> werden benötigt.</p>
-
 	<div class="row">
 		<?php echo $form->labelEx($model,'email'); ?>
 		<?php echo $form->textField($model,'email'); ?>
