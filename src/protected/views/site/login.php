@@ -19,7 +19,11 @@ $this->breadcrumbs=array(
             <?php echo Yii::app()->user->getFlash('success') . "Sie sollten nun eine Aktivierungsmail erhalten in der Sie ihren Account aktivieren können."; ?>
         </div>
 
-    <?php } ?>
+    <?php } //else { ?>
+<!-- <div class="panel callout"
+<?//        echo Yii::app()->user->getFlash('failed');
+   // } 
+?> </div> -->
 
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(

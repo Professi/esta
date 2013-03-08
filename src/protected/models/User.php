@@ -105,9 +105,10 @@ class User extends CActiveRecord {
             'password' => 'Passwort',
             'password_repeat' => 'Passwort wiederholen',
             'firstname' => 'Vorname',
-            'state' => 'state',
+            'state' => 'Status',
             'lastname' => 'Nachname',
             'email' => 'E-Mail',
+            'createtime'=>"Registrierungsdatum"
         );
     }
 

@@ -13,16 +13,8 @@
 	<?php echo CHtml::encode($data->username); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('password')); ?>:</b>
-	<?php echo CHtml::encode($data->password); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('activationKey')); ?>:</b>
-	<?php echo CHtml::encode($data->activationKey); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('createtime')); ?>:</b>
-	<?php echo CHtml::encode($data->createtime); ?>
+	<?php echo CHtml::encode(date('c', $data->createtime)); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('firstname')); ?>:</b>
@@ -30,18 +22,19 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('state')); ?>:</b>
-	<?php echo CHtml::encode($data->state); ?>
+	<?php $state = "";
+        switch ($data->state) {
+            case 0:
+                $state = "Nicht aktiv";
+                break;
+            case 1:
+                $state = "Aktiv";
+                break;
+            case 2:
+                $sate = "Gesperrt";
+                break;
+        } 
+        
+        echo CHtml::encode($state); ?>
 	<br />
-
-	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('lastname')); ?>:</b>
-	<?php echo CHtml::encode($data->lastname); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('email')); ?>:</b>
-	<?php echo CHtml::encode($data->email); ?>
-	<br />
-
-	*/ ?>
-
 </div>

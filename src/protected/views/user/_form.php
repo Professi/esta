@@ -21,8 +21,6 @@
         <?php echo $form->error($model, 'email'); ?>
     </div>
 
-
-
     <div class="row">
         <?php echo $form->labelEx($model, 'firstname'); ?>
         <?php echo $form->textField($model, 'firstname', array('size' => 45, 'maxlength' => 45)); ?>
@@ -34,8 +32,6 @@
         <?php echo $form->textField($model, 'lastname', array('size' => 45, 'maxlength' => 45)); ?>
         <?php echo $form->error($model, 'lastname'); ?>
     </div>
-
-
 
     <div class="row">
         <?php echo $form->labelEx($model, 'password'); ?>
@@ -57,9 +53,6 @@
 
         <?php echo $form->errorSummary($model); ?>
     <?php } ?>
-
-
-
 
     <div class="row buttons">
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Erstellen' : 'Save'); ?>
