@@ -8,7 +8,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List UserRole', 'url'=>array('index')),
 	array('label'=>'Manage UserRole', 'url'=>array('admin')),
 );
 ?>

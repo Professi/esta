@@ -9,7 +9,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Role', 'url'=>array('index')),
 	array('label'=>'Create Role', 'url'=>array('create')),
 	array('label'=>'View Role', 'url'=>array('view', 'id'=>$model->id)),
 	array('label'=>'Manage Role', 'url'=>array('admin')),

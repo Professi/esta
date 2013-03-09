@@ -8,7 +8,6 @@ $this->breadcrumbs = array(
 );
 if (!Yii::app()->user->isGuest) {
     $this->menu = array(
-        array('label' => 'List User', 'url' => array('index')),
         array('label' => 'Manage User', 'url' => array('admin')),
     );
     ?>

@@ -8,7 +8,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Role', 'url'=>array('index')),
 	array('label'=>'Create Role', 'url'=>array('create')),
 );
 

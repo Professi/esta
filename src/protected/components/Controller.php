@@ -1,4 +1,9 @@
 <?php
+define('ADMIN', 0);
+define('MANAGEMENT', 1);
+define('TEACHER', 2);
+define('PARENTS', 3);
+
 /**
  * Controller is the customized base controller class.
  * All controller classes for this application should extend from this base class.
