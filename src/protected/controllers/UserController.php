@@ -121,15 +121,15 @@ class UserController extends Controller {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 
-    /**
-     * Lists all models.
-     */
-    public function actionIndex() {
-        $dataProvider = new CActiveDataProvider('User');
-        $this->render('index', array(
-            'dataProvider' => $dataProvider,
-        ));
-    }
+//    /**
+//     * Lists all models.
+//     */
+//    public function actionIndex() {
+//        $dataProvider = new CActiveDataProvider('User');
+//        $this->render('index', array(
+//            'dataProvider' => $dataProvider,
+//        ));
+//    }
 
     /**
      * Manages all models.

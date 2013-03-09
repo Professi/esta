@@ -22,6 +22,30 @@ return array(
             'allowAutoLogin' => true,
 //            'loginUrl' => array('//user/user/login'),
         ),
+        'clientScript' => array(
+            'coreScriptPosition'=>  CClientScript::POS_END,
+            'scriptMap' => array(
+                'jquery.js' => false,
+                'jquery.js.min' => false,
+                'jquery.cookie.js'=>false,
+                'jquery.ba-bbq.js'=>false,
+                'jquery.yiigridview.js'=>false,
+                'core.css' => false,
+                'styles.css' => false,
+                'pager.css' => false,
+                'default.css' => false,
+            ),
+            'packages'=>array(
+              'javascript'=>array(
+                  'baseUrl'=>'js/',
+                'js'=>array('modernizr.foundation.js','foundation.min.js','app.js','custom.js'),
+              ),
+                'css'=>array(
+                  'baseUrl'=>'css/',
+                    'css'=>array('foundation.min.css','icons.css','app.css')
+                ),
+            ),
+        ),
         // uncomment the following to enable URLs in path-format
         'urlManager' => array(
             //   'urlFormat'=>'path',

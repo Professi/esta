@@ -3,15 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
-    <!-- Foundation Styles -->
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/foundation.min.css" />
-    <!-- Symbole & Fonts -->
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/icons.css" />
-    <!-- Overrides -->
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/app.css" />
+    <?php Yii::app()->clientScript->registerPackage('css'); ?>
+    <?php Yii::app()->clientScript->registerPackage('javascript'); ?>
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
-
-    <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/modernizr.foundation.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -45,7 +39,7 @@
                             array('label' => 'Terminverwaltung', 'url' => array('/Appointment/index'), 'visible' => Yii::app()->user->checkAccess('0') || Yii::app()->user->checkAccess('1')),
                             array('label' => 'Elternkindverknüpfung', 'url' => array('/ParentChild/index'), 'visible' => !Yii::app()->user->isGuest),
                             array('label' => 'Rollenverwaltung', 'url' => array('/Role/index'), 'visible' => Yii::app()->user->checkAccess('0')),
-                            array('label' => 'Benutzerverwaltung', 'url' => array('/User/index'), 'visible' => Yii::app()->user->checkAccess('0') || Yii::app()->user->checkAccess('1')),
+                            array('label' => 'Benutzerverwaltung', 'url' => array('/User/admin'), 'visible' => Yii::app()->user->checkAccess('0') || Yii::app()->user->checkAccess('1')),
                             array('label' => 'Rollenzuweisung', 'url' => array('/UserRole/index'), 'visible' => Yii::app()->user->checkAccess('0') || Yii::app()->user->checkAccess('1')),
                             array('label' => 'Ihr Account', 'url' => array('/User/view&id=' . Yii::app()->user->getId()), 'visible' => !Yii::app()->user->isGuest),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout (' . Yii::app()->user->name . ')</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),
@@ -64,7 +58,7 @@
             <div class="twelve columns"><hr />
                 <div class="row">
                     <div class="six columns">
-                        <p>Copyright &copy; <?php echo date('Y'); ?> by no one at all. Go to town.<br/></p>
+                        <p>Copyright &copy; <?php echo date('Y'); ?> BWS Brühlwiesenschule Hofheim<br/></p>
                         <?php echo Yii::powered(); ?>
                     </div>
                     <div class="six columns">
@@ -85,12 +79,5 @@
     <!-- MODALS -->
     <div id="MenuModal" class="reveal-modal [small] nav-menu">
     </div>
-    <!-- SKRIPTE -->
-    <!-- Einbinden der JS Files (Minified) -->
-    <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/foundation.min.js"></script>
-    <!-- Initialisieren der JS Plugins -->
-    <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/app.js"></script>
-    <!--Einbinden eigener Funktionalitäten -->
-    <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/custom.js"></script>
 </body>
 </html>

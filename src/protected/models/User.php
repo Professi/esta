@@ -23,6 +23,7 @@ class User extends CActiveRecord {
 
     public $password_repeat = null;
     public $pwdChanged = false;
+    private $stateName = "";
 
     /**
      * Returns the static model of the specified AR class.
@@ -108,7 +109,7 @@ class User extends CActiveRecord {
             'state' => 'Status',
             'lastname' => 'Nachname',
             'email' => 'E-Mail',
-            'createtime'=>"Registrierungsdatum"
+            'createtime' => "Registrierungsdatum"
         );
     }
 
@@ -134,6 +135,11 @@ class User extends CActiveRecord {
         ));
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return array gibt für das Attribut createtime den aktuellen Timestamp zurück
+     * 
+     */
     public function behaviors() {
         if ($this->isNewRecord) {
             return array(
@@ -147,6 +153,11 @@ class User extends CActiveRecord {
         }
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return boolean Rückgabewert der Methode afterSave() CActiveRecord
+     * weist einem neuen Nutzer automatisch die Rolle "Eltern" zu
+     */
     public function afterSave() {
         if ($this->isNewRecord) {
             $userRole = New UserRole();
@@ -157,12 +168,22 @@ class User extends CActiveRecord {
         return parent::afterSave();
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return boolean Rückgabewert der Elternklassemethoden
+     * löscht den UserRole Eintrag
+     */
     public function beforeDelete() {
         $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
         $userRole->delete();
         return parent::beforeDelete();
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return boolean Rückgabewert der parent methode
+     *  verschlüsselt das Passwort und generiert einen Aktivierungsschlüssel, setzt die E-Mail Adresse als Username fest
+     */
     public function beforeSave() {
         if ($this->isNewRecord) {
             if (Yii::app()->user->isGuest) {
@@ -177,6 +198,28 @@ class User extends CActiveRecord {
         }
 
         return parent::beforeSave();
+    }
+
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param integer $stateId Status ID des Users
+     * @return string 0=NichtAktiv 1=Aktiv 2=Gesperrt
+     */
+    public function getStateName() {
+        switch ($this->state) {
+            case 0:
+                $this->stateName = 'Nicht aktiv';
+                break;
+            case 1:
+                $this->stateName = 'Aktiv';
+                break;
+            case 2:
+                $this->stateName = 'Gesperrt';
+                break;
+            default:
+                $this->stateName = $this->state;
+        }
+        return $this->stateName;
     }
 
 }
