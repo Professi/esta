@@ -68,9 +68,9 @@ class Child extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'firstname' => 'Firstname',
-			'lastname' => 'Lastname',
-			'class' => 'Class',
+			'firstname' => 'Vorname',
+			'lastname' => 'Nachname',
+			'class' => 'Klasse',
 		);
 	}
 

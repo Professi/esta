@@ -25,7 +25,7 @@ class UserController extends Controller {
      */
     public function accessRules() {
         return array(
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+            array('allow', 
                 'actions' => array('update','view'),
                 'users' => array('@'),
             ),
@@ -34,7 +34,7 @@ class UserController extends Controller {
                 'users' => array('*'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'users' => array('1'),
+                'roles' => array('1'),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
@@ -67,7 +67,7 @@ class UserController extends Controller {
             $model->setAttributes($_POST['User']);
             if ($model->save()) {
                 Yii::app()->user->setFlash("success", "Benutzer wurde erstellt.");
-                $this->redirect(array('index'));
+                $this->redirect(array('site/login'));
             } else {
                 Yii::app()->user->setFlash("error", "Benutzer konnte nicht erstellt werden.");
             }
@@ -186,7 +186,10 @@ class UserController extends Controller {
 
                 Yii::app()->user->setFlash("success", "Passwort wurde geändert.");
                 if ($user->save())
-                    $this->redirect("index");
+                    if(Yii::app()->user->checkAccess(1)) {
+                        $this->redirect('User/admin');
+                    }
+                    $this->redirect("User/view&id=" . Yii::app()->user->getId());
             }
         }
         $this->render("change", array("model" => $model));

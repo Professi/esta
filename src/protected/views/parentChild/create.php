@@ -8,8 +8,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List ParentChild', 'url'=>array('index')),
-	array('label'=>'Manage ParentChild', 'url'=>array('admin')),
+	array('label'=>'Liste der Schüler', 'url'=>array('index')),
+	array('label'=>'Elternkinderverknüpfungsverwaltung', 'url'=>array('admin'), 'visible'=>Yii::app()->user->checkAccess(1)),
 );
 ?>
 

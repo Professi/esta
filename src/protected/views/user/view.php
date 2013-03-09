@@ -8,10 +8,10 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Benutzer erstellen', 'url' => array('create')),
+    array('label' => 'Benutzer erstellen', 'url' => array('create'), 'visible'=>Yii::app()->user->isGuest || Yii::app()->user->checkAccess(1)),
     array('label' => 'Benutzer aktualisieren', 'url' => array('update', 'id' => $model->id)),
-    array('label' => 'Benutzer löschen', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => 'Are you sure you want to delete this item?')),
-    array('label' => 'Benutzer verwalten', 'url' => array('admin')),
+    array('label' => 'Benutzer löschen', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => 'Sind Sie sich sicher dass Sie diesen Benutzer löschen möchten?'), 'visible'=> Yii::app()->user->checkAccess(1)),
+    array('label' => 'Benutzer verwalten', 'url' => array('admin'), 'visible'=>Yii::app()->user->checkAccess(1)),
 );
 ?>
 
