@@ -40,7 +40,7 @@
                             array('label' => 'Elternkindverknüpfung', 'url' => array('/ParentChild/admin'), 'visible' => !Yii::app()->user->isGuest),
                             array('label' => 'Rollenverwaltung', 'url' => array('/Role/index'), 'visible' => Yii::app()->user->checkAccess('0')),
                             array('label' => 'Benutzerverwaltung', 'url' => array('/User/admin'), Yii::app()->user->checkAccess('1')),
-                            array('label' => 'Rollenzuweisung', 'url' => array('/UserRole/index'), Yii::app()->user->checkAccess('1')),
+                            array('label' => 'Rollenzuweisung', 'url' => array('/UserRole/admin'), Yii::app()->user->checkAccess('1')),
                             array('label' => 'Ihr Account', 'url' => array('/User/view&id=' . Yii::app()->user->getId()), 'visible' => !Yii::app()->user->isGuest),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout (' . Yii::app()->user->name . ')</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),
                         'activeCssClass' => 'active'
