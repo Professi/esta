@@ -20,11 +20,9 @@ $this->breadcrumbs = array(
     </div>
 </div>
 <?php if (Yii::app()->user->hasFlash('success')) { ?>
-
     <div class="flash-success">
         <?php echo Yii::app()->user->getFlash('success') . "Sie sollten nun eine Aktivierungsmail erhalten in der Sie ihren Account aktivieren können."; ?>
     </div>
-
     <?php
 }
 if ($model->getError('error') !== NULL) {

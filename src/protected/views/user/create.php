@@ -8,7 +8,7 @@ $this->breadcrumbs = array(
 );
 if (Yii::app()->user->checkAccess(1)) {
     $this->menu = array(
-        array('label' => 'Manage User', 'url' => array('admin')),
+        array('label' => 'Benutzer verwalten', 'url' => array('admin')),
     );
     ?>
 

@@ -51,7 +51,7 @@ class User extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('password, firstname, lastname, email, role, password_repeat', 'required'),
+            array('password, firstname, lastname, email', 'required'),
             array('email', "unique"),
             array('state', 'numerical', 'integerOnly' => true),
             array('firstname, lastname, email', 'length', 'max' => 45),
@@ -208,7 +208,6 @@ class User extends CActiveRecord {
         } else {
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
         }
-//        echo "test";
         return parent::beforeSave();
     }
 

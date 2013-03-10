@@ -9,7 +9,9 @@
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'user-form',
-        'enableAjaxValidation' => false,
+        //'enableAjaxValidation' => true,
+        //'enableClientValidation'=>true,
+       // 'clientOptions'=>array('validateOnSubmit'=>true),
     ));
     ?>
 
@@ -17,7 +19,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'email'); ?>
-        <?php if (Yii::app()->user->CheckAccess('1')) { ?>
+        <?php if (Yii::app()->user->CheckAccess('1') || Yii::app()->user->isGuest) { ?>
             <?php echo $form->textField($model, 'email', array('size' => 45, 'maxlength' => 45,));
         } else {
             ?>

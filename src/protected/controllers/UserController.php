@@ -89,20 +89,20 @@ class UserController extends Controller {
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
         // Uncomment the following line if AJAX validation is needed
-        $this->performAjaxValidation($model);
+        //  $this->performAjaxValidation($model);
         if (isset($_POST['User'])) {
             $model->setAttributes($_POST['User']);
+
             if ($model->save()) {
                 Yii::app()->user->setFlash("success", "Benutzer wurde aktualisiert.");
-                $this->redirect(array('view&id='.$id), false);
+                $this->redirect(array('view&id=' . $id), false);
             } else {
                 Yii::app()->user->setFlash("error", "Benutzer konnte nicht aktualisiert werden.");
             }
         }
-        else
-            $this->render('update', array(
-                'model' => $model,
-            ));
+        $this->render('update', array(
+            'model' => $model,
+        ));
     }
 
     /**

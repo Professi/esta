@@ -16,8 +16,11 @@ $this->menu = array(
 ?>
 
 <h1>Benutzerinformationen <?php echo $model->email; ?></h1>
-
-<?php
+<?php if (Yii::app()->user->hasFlash('success')) { ?>
+    <div class="panel callout">
+        <?php echo Yii::app()->user->getFlash('success'); ?>
+    </div>
+<?php }
 $this->widget('zii.widgets.CDetailView', array(
     'data' => $model,
     'attributes' => array(
