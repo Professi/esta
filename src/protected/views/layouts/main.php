@@ -39,7 +39,7 @@
                             array('label' => 'Terminverwaltung', 'url' => array('/Appointment/index'), 'visible' => Yii::app()->user->checkAccess('1')),
                             array('label' => 'Elternkindverknüpfungsverwaltung', 'url' => array('/ParentChild/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
                             array('label' => 'Ihre Kinder', 'url' => array('/ParentChild/index'), 'visible' => Yii::app()->user->checkAccess('3')),
-                            array('label' => 'Rollenverwaltung', 'url' => array('/Role/index'), 'visible' => Yii::app()->user->checkAccess('0')),
+                            array('label' => 'Rollenverwaltung', 'url' => array('/Role/admin'), 'visible' => Yii::app()->user->checkAccess('0')),
                             array('label' => 'Benutzerverwaltung', 'url' => array('/User/admin'), 'visible'=> Yii::app()->user->checkAccess('1')),
                             array('label' => 'Rollenzuweisung', 'url' => array('/UserRole/admin'), 'visible'=>Yii::app()->user->checkAccess('1')),
                             array('label' => 'Ihr Account', 'url' => array('/User/view&id=' . Yii::app()->user->getId()), 'visible' => !Yii::app()->user->isGuest),

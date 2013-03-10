@@ -23,7 +23,9 @@ class User extends CActiveRecord {
 
     public $password_repeat = null;
     public $pwdChanged = false;
-    private $stateName = "";
+    public $role;
+    public $roleName;
+    public $stateName;
 
     /**
      * Returns the static model of the specified AR class.
@@ -48,16 +50,16 @@ class User extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('password, firstname, lastname, email', 'required'),
+            array('password, firstname, lastname, email, role', 'required'),
             array('email', "unique"),
             array('state', 'numerical', 'integerOnly' => true),
             array('firstname, lastname, email', 'length', 'max' => 45),
-            array('password', 'length', 'max' => 128),
+            array('password', 'length', 'max' => 128, 'min' => 8),
             array('password', 'compare', "on" => "insert"),
             array('password_repeat', 'safe'), //allow bulk assignment 
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, username, firstname, state, lastname, email', 'safe', 'on' => 'search'),
+            array('id, username, firstname, state, lastname, email, role,roleName,stateName', 'safe', 'on' => 'search'),
         );
     }
 
@@ -70,7 +72,7 @@ class User extends CActiveRecord {
         return array(
             'appointments' => array(self::HAS_MANY, 'Appointment', 'user_id'),
             'parentChildren' => array(self::HAS_MANY, 'ParentChild', 'user_id'),
-            'userRoles' => array(self::HAS_MANY, 'UserRole', 'user_id'),
+            'userRoles' => array(self::HAS_ONE, 'UserRole', 'user_id'),
         );
     }
 
@@ -91,8 +93,9 @@ class User extends CActiveRecord {
     }
 
     public function setAttribute($name, $value) {
-        if ($name == "password")
+        if ($name == "password") {
             $this->pwdChanged = true;
+        }
         parent::setAttribute($name, $value);
     }
 
@@ -106,10 +109,13 @@ class User extends CActiveRecord {
             'password' => 'Passwort',
             'password_repeat' => 'Passwort wiederholen',
             'firstname' => 'Vorname',
-            'state' => 'Status',
+            'state' => 'Status ID',
+            'stateName' => 'Status',
             'lastname' => 'Nachname',
             'email' => 'E-Mail',
-            'createtime' => "Registrierungsdatum"
+            'createtime' => 'Registrierungsdatum',
+            'role' => 'RollenID',
+            'roleName' => 'Rolle'
         );
     }
 
@@ -122,16 +128,17 @@ class User extends CActiveRecord {
         // should not be searched.
 
         $criteria = new CDbCriteria;
-
         $criteria->compare('id', $this->id, true);
         $criteria->compare('username', $this->username, true);
         $criteria->compare('firstname', $this->firstname, true);
         $criteria->compare('state', $this->state);
         $criteria->compare('lastname', $this->lastname, true);
         $criteria->compare('email', $this->email, true);
-
+        $criteria->compare('stateName', $this->stateName, true);
+        $criteria->compare('roleName', $this->roleName, true);
         return new CActiveDataProvider($this, array(
-            'criteria' => $criteria,
+        'criteria' => $criteria,
+        'pagination' => array('pageSize' => 20),
         ));
     }
 
@@ -162,7 +169,11 @@ class User extends CActiveRecord {
         if ($this->isNewRecord) {
             $userRole = New UserRole();
             $userRole->user_id = $this->id;
-            $userRole->role_id = Role::model()->findByAttributes(array('title' => 'Eltern'))->id;
+            if (Yii::app()->user->isGuest) {
+                $userRole->role_id = Role::model()->findByAttributes(array('title' => 'Eltern'))->id;
+            } else {
+                $userRole->role_id = Role::model()->findByAttributes(array('id' => $this->role))->id;
+            }
             $userRole->save();
         }
         return parent::afterSave();

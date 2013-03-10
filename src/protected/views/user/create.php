@@ -6,7 +6,7 @@ $this->breadcrumbs = array(
     'Users' => array('index'),
     'Create',
 );
-if (!Yii::app()->user->isGuest) {
+if (Yii::app()->user->checkAccess(1)) {
     $this->menu = array(
         array('label' => 'Manage User', 'url' => array('admin')),
     );

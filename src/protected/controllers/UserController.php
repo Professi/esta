@@ -25,8 +25,8 @@ class UserController extends Controller {
      */
     public function accessRules() {
         return array(
-            array('allow', 
-                'actions' => array('update','view'),
+            array('allow',
+                'actions' => array('update', 'view'),
                 'users' => array('@'),
             ),
             array('allow',
@@ -42,7 +42,6 @@ class UserController extends Controller {
         );
     }
 
-    
     /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
@@ -67,7 +66,11 @@ class UserController extends Controller {
             $model->setAttributes($_POST['User']);
             if ($model->save()) {
                 Yii::app()->user->setFlash("success", "Benutzer wurde erstellt.");
-                $this->redirect(array('site/login'));
+                if (Yii::app()->user->checkAccess(1)) {
+                    $this->redirect(array('user/admin'));
+                } else {
+                    $this->redirect(array('site/login'));
+                }
             } else {
                 Yii::app()->user->setFlash("error", "Benutzer konnte nicht erstellt werden.");
             }
@@ -87,24 +90,22 @@ class UserController extends Controller {
         $model = $this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed
-        
+
         $this->performAjaxValidation($model);
 
         if (isset($_POST['User'])) {
             $model->setAttributes($_POST['User']);
             if ($model->save()) {
                 Yii::app()->user->setFlash("success", "Benutzer wurde aktualisiert.");
-                $this->redirect(array('index'));
-            }
-            else
+                $this->redirect(array('index'), false);
+            } else {
                 Yii::app()->user->setFlash("error", "Benutzer konnte nicht aktualisiert werden.");
-        }else {
-            $model->password = "";
+            }
         }
-
-        $this->render('update', array(
-            'model' => $model,
-        ));
+        else
+            $this->render('update', array(
+                'model' => $model,
+            ));
     }
 
     /**
@@ -148,11 +149,24 @@ class UserController extends Controller {
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
      * @param integer $id the ID of the model to be loaded
-     * @return User the loaded model
+     * @return User the loaded model with Role
      * @throws CHttpException
      */
     public function loadModel($id) {
         $model = User::model()->findByPk($id);
+        //lädt die Rolle
+        $model->role = UserRole::model()->findByAttributes(array('user_id' => $id))->role_id;
+        switch ($model->state) {
+            case 0:
+                $model->stateName = "Nicht aktiv";
+                break;
+            case 1:
+                $model->stateName = "Aktiv";
+                break;
+            case 2:
+                $model->stateName = "Gesperrt";
+                break;
+        }
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
@@ -177,19 +191,17 @@ class UserController extends Controller {
             $currentUserId = Yii::app()->user->id;
             $attributes["user_id"] = $currentUserId;
             $model->setAttributes($attributes);
-
             if ($model->validate()) {
-
                 $user = User::model()->findByPk($currentUserId);
                 $user->password = $_POST["PasswordChangeForm"]["password"];
                 $user->password_repeat = $_POST["PasswordChangeForm"]["password"];
 
                 Yii::app()->user->setFlash("success", "Passwort wurde geändert.");
                 if ($user->save())
-                    if(Yii::app()->user->checkAccess(1)) {
+                    if (Yii::app()->user->checkAccess(1)) {
                         $this->redirect('User/admin');
                     }
-                    $this->redirect("User/view&id=" . Yii::app()->user->getId());
+                $this->redirect("User/view&id=" . Yii::app()->user->getId());
             }
         }
         $this->render("change", array("model" => $model));

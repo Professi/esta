@@ -25,7 +25,7 @@ class ParentChildController extends Controller {
      */
     public function accessRules() {
         return array(
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
+            array('allow', 
                 'roles' => array('1'),
             ),
             array('allow',
