@@ -19,9 +19,11 @@
         <?php echo $form->labelEx($model, 'email'); ?>
         <?php if (Yii::app()->user->CheckAccess('1')) { ?>
             <?php echo $form->textField($model, 'email', array('size' => 45, 'maxlength' => 45,));
-        } else { ?>
+        } else {
+            ?>
             <?php echo $form->textField($model, 'email', array('readonly' => true));
-        } ?>
+        }
+        ?>
 <?php echo $form->error($model, 'email'); ?>
     </div>
 
@@ -39,6 +41,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'password'); ?>
+        <?php echo $form->hiddenField($model, 'oldPw'); ?>
 <?php echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 128)); ?>
 <?php echo $form->error($model, 'password'); ?>
     </div>

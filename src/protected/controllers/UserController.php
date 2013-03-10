@@ -27,13 +27,13 @@ class UserController extends Controller {
         return array(
             array('allow',
                 'actions' => array('update', 'view'),
-                'users' => array('@'),
+                'roles' => array('3', '2'),
             ),
             array('allow',
                 'actions' => array('create'),
-                'users' => array('*'),
+                'users' => array('?'),
             ),
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
+            array('allow',
                 'roles' => array('1'),
             ),
             array('deny', // deny all users
@@ -88,16 +88,13 @@ class UserController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-
         // Uncomment the following line if AJAX validation is needed
-
         $this->performAjaxValidation($model);
-
         if (isset($_POST['User'])) {
             $model->setAttributes($_POST['User']);
             if ($model->save()) {
                 Yii::app()->user->setFlash("success", "Benutzer wurde aktualisiert.");
-                $this->redirect(array('index'), false);
+                $this->redirect(array('view&id='.$id), false);
             } else {
                 Yii::app()->user->setFlash("error", "Benutzer konnte nicht aktualisiert werden.");
             }
@@ -155,6 +152,8 @@ class UserController extends Controller {
     public function loadModel($id) {
         $model = User::model()->findByPk($id);
         //lädt die Rolle
+        $model->password_repeat = $model->password;
+        $model->oldPw = $model->password;
         $model->role = UserRole::model()->findByAttributes(array('user_id' => $id))->role_id;
         switch ($model->state) {
             case 0:
@@ -184,7 +183,6 @@ class UserController extends Controller {
     }
 
     public function actionChange() {
-
         $model = new PasswordChangeForm();
         if (isset($_POST["PasswordChangeForm"])) {
             $attributes = $_POST["PasswordChangeForm"];
@@ -195,7 +193,6 @@ class UserController extends Controller {
                 $user = User::model()->findByPk($currentUserId);
                 $user->password = $_POST["PasswordChangeForm"]["password"];
                 $user->password_repeat = $_POST["PasswordChangeForm"]["password"];
-
                 Yii::app()->user->setFlash("success", "Passwort wurde geändert.");
                 if ($user->save())
                     if (Yii::app()->user->checkAccess(1)) {

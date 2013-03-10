@@ -23,9 +23,10 @@ class User extends CActiveRecord {
 
     public $password_repeat = null;
     public $pwdChanged = false;
-    public $role;
-    public $roleName;
-    public $stateName;
+    public $role = null;
+    public $roleName = null;
+    public $stateName = null;
+    public $oldPw = null;
 
     /**
      * Returns the static model of the specified AR class.
@@ -50,7 +51,7 @@ class User extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('password, firstname, lastname, email, role', 'required'),
+            array('password, firstname, lastname, email, role, password_repeat', 'required'),
             array('email', "unique"),
             array('state', 'numerical', 'integerOnly' => true),
             array('firstname, lastname, email', 'length', 'max' => 45),
@@ -137,8 +138,8 @@ class User extends CActiveRecord {
         $criteria->compare('stateName', $this->stateName, true);
         $criteria->compare('roleName', $this->roleName, true);
         return new CActiveDataProvider($this, array(
-        'criteria' => $criteria,
-        'pagination' => array('pageSize' => 20),
+            'criteria' => $criteria,
+            'pagination' => array('pageSize' => 20),
         ));
     }
 
@@ -203,11 +204,11 @@ class User extends CActiveRecord {
             $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);
             $this->username = $this->email;
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
-        }
-        if ($this->pwdChanged && !$this->isNewRecord) {
+        } else if (!$this->isNewRecord && $this->password == $this->oldPw) {
+        } else {
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
         }
-
+//        echo "test";
         return parent::beforeSave();
     }
 

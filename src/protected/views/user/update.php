@@ -9,9 +9,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create User', 'url'=>array('create'), 'visible'=>!Yii::app()->user->isGuest),
-	array('label'=>'View User', 'url'=>array('view', 'id'=>$model->id),),
-	array('label'=>'Manage User', 'url'=>array('admin'), 'visible'=>!Yii::app()->user->isGuest),
+	array('label'=>'Benutzer erstellen', 'url'=>array('create'), 'visible'=>Yii::app()->user->checkAccess('1')),
+	array('label'=>'Benutzer anzeigen', 'url'=>array('view', 'id'=>$model->id),),
+	array('label'=>'Benutzer verwalten', 'url'=>array('admin'), 'visible'=>Yii::app()->user->checkAccess('1')),
 );
 ?>
 
