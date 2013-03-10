@@ -24,6 +24,12 @@ class WebUser extends CWebUser {
         return ($operation === $this->getState('role'));
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param integer $operation1 Benötigte Rolle oder $operation2
+     * @param integer $operation2 Benötigte Rolle
+     * @return boolean Falls eine Operation mit der UserRolle übereinstimmt gibts true
+     */
     public function checkAccessRole($operation1, $operation2) {
         if (empty($this->id)) {
             return false;
@@ -31,6 +37,10 @@ class WebUser extends CWebUser {
         return ($operation1 === $this->getState('role') || $operation2 == $this->getState('role'));
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online,de>
+     * @return boolean selbsterklärend
+     */
     public function isAdmin() {
         if (empty($this->id)) {
             return false;
