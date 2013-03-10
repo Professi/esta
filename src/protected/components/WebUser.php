@@ -24,6 +24,22 @@ class WebUser extends CWebUser {
         return ($operation === $this->getState('role'));
     }
 
+    public function checkAccessRole($operation1, $operation2) {
+        if (empty($this->id)) {
+            return false;
+        }
+        return ($operation1 === $this->getState('role') || $operation2 == $this->getState('role'));
+    }
+
+    public function isAdmin() {
+        if (empty($this->id)) {
+            return false;
+        }
+        if ($this->getState("role") == 0) {
+            return true;   //Admin darf immer alles
+        }
+    }
+
 }
 
 ?>
