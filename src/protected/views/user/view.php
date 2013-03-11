@@ -15,7 +15,9 @@ $this->menu = array(
 );
 ?>
 
-<h1>Benutzerinformationen <?php echo $model->email; ?></h1>
+<div class="row">
+    <div class="twelve columns centered">
+<h4>Benutzerinformationen für <?php echo $model->email; ?> </h4>
 <?php if (Yii::app()->user->hasFlash('success')) { ?>
     <div class="panel callout">
         <?php echo Yii::app()->user->getFlash('success'); ?>
@@ -27,7 +29,11 @@ $this->widget('zii.widgets.CDetailView', array(
         'email',
         'firstname',
         'lastname',
+<<<<<<< .mine
+        array('label'=>'Status','value'=>$model->getStateName()),
+=======
           array('label'=>'Status','value' =>$model->getStateName()),
+>>>>>>> .r82
         array('label'=>'Rolle','value'=>Role::model()->findByAttributes(array('id'=>$model->role))->title),
         array('label'=>'Benutzerid','value'=>$model->id,'visible'=>Yii::app()->user->checkAccess('0')),
         array('label'=>'Benutzername','value'=>$model->username,'visible'=>Yii::app()->user->checkAccess('0')),
@@ -36,3 +42,5 @@ $this->widget('zii.widgets.CDetailView', array(
     ),
 ));
 ?>
+    </div>
+</div>
