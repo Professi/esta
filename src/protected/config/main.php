@@ -23,7 +23,7 @@ return array(
           //  'Username'=>'esta@h1963533.stratoserver.net',
           //  'Password'=>'test',
             'Mailer'=>'smtp',
-            'Port'=>26,
+            'Port'=>25,
             'SMTPAuth'=>false, 
         ),
         'user' => array(

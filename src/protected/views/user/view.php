@@ -33,7 +33,7 @@ $this->widget('zii.widgets.CDetailView', array(
         array('label'=>'Rolle','value'=>Role::model()->findByAttributes(array('id'=>$model->role))->title),
         array('label'=>'Benutzerid','value'=>$model->id,'visible'=>Yii::app()->user->checkAccess('0')),
         array('label'=>'Benutzername','value'=>$model->username,'visible'=>Yii::app()->user->checkAccess('0')),
-        array('label'=>'Passwort','value'=>$model->password,'visible'=>Yii::app()->user->checkAccess('0')),
+        //array('label'=>'Passwort','value'=>$model->password,'visible'=>Yii::app()->user->checkAccess('0')),
         array('label'=>'Registrierung am','value'=>date(Yii::app()->params['dateTimeFormat'],$model->createtime)),
     ),
 ));
