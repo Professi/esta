@@ -206,18 +206,44 @@ class UserController extends Controller {
     }
 
     public static function sendMail($to, $from, $name, $subject, $message) {
-        $mail = Yii::app()->Smtpmail;
-        $mail->SetFrom($from, $name);
-        $mail->Subject = $subject;
-        $mail->MsgHTML($message);
-        $mail->AddAddress($to, "");
-       //   public function Connect($host, $port = 0, $tval = 30) {
-        echo $mail->Connect("h1963533.stratoserver.net");
-        echo $mail->Connect("localhost");
+//        $mail = Yii::app()->Smtpmail;
+//        $mail->SetFrom($from, $name);
+//        $mail->Subject = $subject;
+//        $mail->MsgHTML($message);
+//        $mail->AddAddress($to, "");
+//       //   public function Connect($host, $port = 0, $tval = 30) {
+//        echo $mail->Connect("h1963533.stratoserver.net");
+//        echo $mail->Connect("localhost");
+//        if (!$mail->Send()) {
+//            echo "Mailversandfehler: " . $mail->ErrorInfo;
+//        } else {
+//            echo "Mail verschickt!";
+//        }
+        $mail = new PHPMailer();
+
+        //Absenderadresse der Email setzen
+        $mail->From = "est@h1963533.stratoserver.net";
+
+        //Name des Abenders setzen
+        $mail->FromName = "EST";
+
+        //Empfängeradresse setzen
+        $mail->AddAddress("c.ehringfeld@t-online.de");
+
+        //Betreff der Email setzen
+        $mail->Subject = "Die erste Mail";
+
+        //Text der EMail setzen
+        $mail->Body = "Hallo! \n\n Dies ist die erste Email mit PHPMailer!";
+
+        //EMail senden und überprüfen ob sie versandt wurde
         if (!$mail->Send()) {
-            echo "Mailversandfehler: " . $mail->ErrorInfo;
+            //$mail->Send() liefert FALSE zurück: Es ist ein Fehler aufgetreten
+            echo "Die Email konnte nicht gesendet werden";
+            echo "Fehler: " . $mail->ErrorInfo;
         } else {
-            echo "Mail verschickt!";
+            //$mail->Send() liefert TRUE zurück: Die Email ist unterwegs
+            echo "Die Email wurde versandt.";
         }
     }
 
