@@ -32,6 +32,10 @@ html, body {
 #nojs_menu {
 	position: absolute;
 	float: left;
+        font-size: 1em;
+}
+#nojs_menu>div>ul>li>a>.nav-icons {
+    font-size: 1em;
 }
 table {
 	width: 100%;

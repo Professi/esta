@@ -34,16 +34,17 @@
                         'items' => array(//0=Administration 1=Verwaltung 2= Lehrer 3=Eltern
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span>', 'url' => array('/Appointment/index',), 'visible' => !Yii::app()->user->isAdmin() && Yii::app()->user->checkAccessRole('2','3')),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span>', 'url' => array('/Appointment/create'), 'visible' => Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
-                            array('label' => 'Schülerverwaltung', 'url' => array('/Child/index'), 'visible' => Yii::app()->user->checkAccess('1')),
-                            array('label' => 'Datumsverwaltung', 'url' => array('/Date/admin'), 'visible' => Yii::app()->user->checkAccess('0')),
-                            array('label' => 'Terminverwaltung', 'url' => array('/Appointment/index'), 'visible' => Yii::app()->user->checkAccess('1')),
-                            array('label' => 'Eltern und Kinder', 'url' => array('/ParentChild/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
-                            array('label' => 'Ihre Kinder', 'url' => array('/ParentChild/index'), 'visible' => Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
-                            array('label' => 'Rollenverwaltung', 'url' => array('/Role/admin'), 'visible' => Yii::app()->user->checkAccess('0')),
-                            array('label' => 'Benutzerverwaltung', 'url' => array('/User/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
+                           
+                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Datumsverwaltung', 'url' => array('/Date/admin'), 'visible' => Yii::app()->user->checkAccess('0')),
+                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Terminverwaltung', 'url' => array('/Appointment/index'), 'visible' => Yii::app()->user->checkAccess('1')),
+                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Schülerverwaltung', 'url' => array('/Child/index'), 'visible' => Yii::app()->user->checkAccess('1')),
+                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Eltern und Kinder', 'url' => array('/ParentChild/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
+                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Ihre Kinder', 'url' => array('/ParentChild/index'), 'visible' => Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
+                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Rollenverwaltung', 'url' => array('/Role/admin'), 'visible' => Yii::app()->user->checkAccess('0')),
+                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Benutzerverwaltung', 'url' => array('/User/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
                  //           array('label' => 'Rollenzuweisung', 'url' => array('/UserRole/admin'), 'visible' => Yii::app()->user->checkAccess('1')), // wird nicht benötigt atm
-                            array('label' => 'Ihr Account', 'url' => array('/User/view&id=' . Yii::app()->user->getId()), 'visible' => !Yii::app()->user->isGuest),
-                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout (' . Yii::app()->user->name . ')</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),
+                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Ihr Account', 'url' => array('/User/view&id=' . Yii::app()->user->getId()), 'visible' => !Yii::app()->user->isGuest),
+                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),
                         'activeCssClass' => 'active'
                     ));
                     ?>
