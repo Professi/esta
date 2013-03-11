@@ -67,12 +67,16 @@
         <?php if (Yii::app()->user->checkAccess(1)) { ?>
 
             <?php echo $form->labelEx($model, 'state'); ?>
+                <div class="styled-select">
     <?php echo $form->dropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt')); ?>
     <?php echo $form->error($model, 'state'); ?>
+                </div>
+                
 
 
 
             <?php echo $form->labelEx($model, 'role'); ?>
+                <div class="styled-select">
             <?php
             if (Yii::app()->user->checkAccess(0)) {
                 echo $form->dropDownList($model, 'role', array('0' => 'Administrator', '1' => 'Verwaltung', '2' => 'Lehrer', '3' => 'Eltern'));
@@ -80,12 +84,14 @@
                 echo $form->dropDownList($model, 'role', array('2' => 'Lehrer', '3' => 'Eltern'));
                 ?>
             <?php echo $form->error($model, 'role'); ?>
-
+                
+                
 
             <?php echo $form->errorSummary($model); ?>
             <?php
-        }
-    }
+        } ?>
+                </div>
+    <?php }
     ?>
 
 
