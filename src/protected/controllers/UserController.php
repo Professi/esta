@@ -47,6 +47,7 @@ class UserController extends Controller {
      * @param integer $id the ID of the model to be displayed
      */
     public function actionView($id) {
+        self::sendMail("c.ehringfeld@t-online.de", "ESTA-BWS", "ESTA-BWS", "testESTA", "Dies ist eine Testmessage");
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
@@ -202,6 +203,19 @@ class UserController extends Controller {
             }
         }
         $this->render("change", array("model" => $model));
+    }
+
+    public static function sendMail($to, $from, $name, $subject, $message) {
+        $mail = Yii::app()->Smtpmail;
+        $mail->SetFrom($from, $name);
+        $mail->Subject = $subject;
+        $mail->MsgHTML($message);
+        $mail->AddAddress($to, "");
+        if (!$mail->Send()) {
+            echo "Mailversandfehler: " . $mail->ErrorInfo;
+        } else {
+            echo "Mail verschickt!";
+        }
     }
 
 }

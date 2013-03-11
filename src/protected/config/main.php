@@ -17,6 +17,15 @@ return array(
     ),
 // application components
     'components' => array(
+                'Smtpmail'=>array(
+            'class'=>'application.extensions.smtpmail.PHPMailer',
+            'Host'=>"h1963533.stratoserver.net",
+          //  'Username'=>'esta@h1963533.stratoserver.net',
+          //  'Password'=>'test',
+            'Mailer'=>'smtp',
+            'Port'=>26,
+            'SMTPAuth'=>false, 
+        ),
         'user' => array(
             'class' => 'WebUser',
             'allowAutoLogin' => true,
