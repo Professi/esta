@@ -205,6 +205,7 @@ class User extends CActiveRecord {
             $this->username = $this->email;
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
         } else if (!$this->isNewRecord && $this->password == $this->oldPw) {
+            
         } else {
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
         }
@@ -213,15 +214,14 @@ class User extends CActiveRecord {
 
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @param integer $stateId Status ID des Users
      * @return string 0=NichtAktiv 1=Aktiv 2=Gesperrt
      */
     public function getStateName() {
         switch ($this->state) {
-            case '0':
+            case 0:
                 $this->stateName = 'Nicht aktiv';
                 break;
-            case '1':
+            case 1:
                 $this->stateName = 'Aktiv';
                 break;
             case 2:
@@ -231,6 +231,34 @@ class User extends CActiveRecord {
                 $this->stateName = $this->state;
         }
         return $this->stateName;
+    }
+
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param integer $stateId Status ID des Users
+     */
+    static public function getFormattedState($state) {
+        switch ($state) {
+            case '0':
+                echo 'Nicht aktiv';
+                break;
+            case '1':
+                echo 'Aktiv';
+                break;
+            case '2':
+                echo 'Gesperrt';
+                break;
+        }
+    }
+
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param integer $role Rollen ID des Users
+     *  0 = Admin 1=Verwaltung 2=Lehrer 3= Eltern
+     */
+    static public function getFormattedRole($role) {
+        $role = Role::model()->findByAttributes(array('id' => $role));
+        echo $role->title;
     }
 
 }
