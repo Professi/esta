@@ -93,6 +93,9 @@ table {
 	.styled-select-parent {
 		left: .15em;
 	}
+	.errorMessage {
+		margin-bottom: 1em;
+	}
 }
 #small_buttons>div {
 	display: inline-block;
@@ -123,4 +126,10 @@ table {
 	right: .5em;
 	top: .65em;
 	color: #999;
+}
+.errorMessage {
+	background-color: #c60f13; 
+	color: #fff; 
+	padding-left: .5em;
+	margin-top: 1em;
 }

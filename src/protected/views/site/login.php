@@ -27,9 +27,13 @@ $this->breadcrumbs = array(
 }
 if ($model->getError('error') !== NULL) {
     ?>
-    <div class="panel callout">
+	<div class="row">
+	<div class="twelve columns centered">
+    <div class="alert-box alert">
         <? echo $model->getError('error');
         ?> </div> <? } ?>
+	</div>
+	</div>
 <div class="row">
     <div class="six columns centered">
         <?php
@@ -52,7 +56,7 @@ if ($model->getError('error') !== NULL) {
             <?php echo $form->error($model, 'password'); ?>
 
             <?php echo $form->checkBox($model, 'rememberMe'); ?>
-            Anmeldedaten merken<br>
+            Anmeldedaten merken<br><br>
             <?php echo $form->error($model, 'rememberMe'); ?>
 
             <?php echo CHtml::submitButton('Login', array('class' => 'button')); ?>
