@@ -12,9 +12,5 @@ if (Yii::app()->user->checkAccess(1)) {
     );
     ?>
 
-    <h1>Erstelle Benutzer</h1>
-<? } else { ?>
-    <h1>Registrierung</h1>
-
 
 <? }echo $this->renderPartial('_form', array('model' => $model)); ?>
