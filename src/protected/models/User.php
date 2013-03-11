@@ -218,10 +218,10 @@ class User extends CActiveRecord {
      */
     public function getStateName() {
         switch ($this->state) {
-            case 0:
+            case '0':
                 $this->stateName = 'Nicht aktiv';
                 break;
-            case 1:
+            case '1':
                 $this->stateName = 'Aktiv';
                 break;
             case 2:

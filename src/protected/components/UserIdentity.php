@@ -9,7 +9,7 @@ class UserIdentity extends CUserIdentity {
 
     const ERROR_MSG_USERNAME_INVALID = "Ungültige E-Mail Adresse";
     const ERROR_MSG_PASSWORD_INVALID = "Falsches Passwort";
-    const ERROR_MSG_ACCOUNT_NOT_ACTIVATED = "Ihr Benutzerkonto wurde noch nicht aktiviert. Bitte nutzen Sie den Aktivierungslink, der Ihnen per E-Mail zugesandt wurde.";
+    const ERROR_MSG_ACCOUNT_NOT_ACTIVATED = "Ihr Benutzerkonto wurde noch nicht aktiviert. Bitte nutzen Sie den Aktivierungslink, der Ihnen per E-Mail zugesandt wurde. Sollten Sie Probleme haben wenden Sie sich an folgende E-Mail Adresse ";
     const ERROR_MSG_ACCOUNT_BANNED = "Ihr Benutzerkonto wurde gesperrt. Bitte wenden Sie sich an die Schulverwaltung.";
     const ERROR_ACCOUNT_NOT_ACTIVATED = 3;
     const ERROR_ACCOUNT_BANNED = 4;
@@ -32,10 +32,10 @@ class UserIdentity extends CUserIdentity {
         } else {
             if ($user->state == 0) {
                 $this->errorCode = self::ERROR_ACCOUNT_NOT_ACTIVATED;
-                $this->errorMessage = self::ERROR_MSG_ACCOUNT_NOT_ACTIVATED;
+                $this->errorMessage = self::ERROR_MSG_ACCOUNT_NOT_ACTIVATED . Yii::app()->params['adminEmail'];
             } else if ($user->state == 2) {
                 $this->errorCode = self::ERROR_ACCOUNT_BANNED;
-                $this->errorMessage = self::ERROR_MSG_ACCOUNT_BANNED;
+                $this->errorMessage = self::ERROR_MSG_ACCOUNT_BANNED . Yii::app()->params['adminEmail'];
             } else {
                 $this->errorCode = self::ERROR_NONE;
                 $this->_id = $user->id;

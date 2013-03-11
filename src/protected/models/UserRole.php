@@ -56,8 +56,8 @@ class UserRole extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'role' => array(self::BELONGS_TO, 'Role', 'role_id'),
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			'role' => array(self::HAS_ONE, 'Role', 'role_id'),
+			'user' => array(self::HAS_ONE, 'User', 'user_id'),
 		);
 	}
 
@@ -68,8 +68,8 @@ class UserRole extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'role_id' => 'Role',
-			'user_id' => 'User',
+			'role_id' => 'RollenID',
+			'user_id' => 'UserID',
 		);
 	}
 

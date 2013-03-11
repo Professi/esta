@@ -59,6 +59,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name'=>'firstname',),
         'lastname',
         'state',
+        'userRoles.role_id.title',
       //  array('header'=>'Rolle','value'=>'$data->role'),
         //'username',
         array(
