@@ -17,12 +17,6 @@ return array(
     ),
 // application components
     'components' => array(
-//   'mailer' => array(
-//      'class' => 'application.extensions.mailer.EMailer',
-//      'pathViews' => 'application.views.email',
-//      'pathLayouts' => 'application.views.email.layouts'
-//   ),
-
         'user' => array(
             'class' => 'WebUser',
             'allowAutoLogin' => true,
@@ -117,7 +111,12 @@ return array(
         // this is used in contact page
         'adminEmail' => 'test@test.de',
         'salt' => 'e9HOiJFfDhyvcBMin5G8CBTR98wK',
-        'dateTimeFormat' => 'd.m.Y H:i',)
+        'dateTimeFormat' => 'd.m.Y H:i',
+        'emailHost'=>'localhost', //Sofern der SMTP Server auf dem selben Server läuft einfach localhost
+        'fromMailHost'=>'est@h1963533.stratoserver.net', //Absender der Mails
+        'fromMail'=>'ESTA-BWS', //Der Absendername bsp. BWS
+        'virtualHost'=>'/~est/est_trunk/'
+    )
 );
 
 

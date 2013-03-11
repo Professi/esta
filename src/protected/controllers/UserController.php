@@ -30,7 +30,7 @@ class UserController extends Controller {
                 'roles' => array('3', '2'),
             ),
             array('allow',
-                'actions' => array('create'),
+                'actions' => array('create', 'activate'),
                 'users' => array('?'),
             ),
             array('allow',
@@ -47,13 +47,31 @@ class UserController extends Controller {
      * @param integer $id the ID of the model to be displayed
      */
     public function actionView($id) {
-        echo "Methode1:";
-        self::sendMail();
-        echo "Methode2:";
-        self::sendMail2();
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
+    }
+
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * 
+     */
+    public function actionActivate($activationKey) {
+        $user = User::model()->findByAttributes(array('activationKey' => $activationKey));
+        if ($user !== NULL) {
+            if ($user->state == 0) {
+                $user->setAttribute('state', 1);
+                $user->save();
+                Yii::app()->user->setFlash('success', 'Ihr Account wurde erfolgreich aktiviert. Sie können Sich nun einloggen.');
+            } else if ($user->state == 1) {
+                Yii::app()->user->setFlash('activateFail', 'Ihr Account wurde bereits aktiviert.');
+            } else if ($user->state == 2) {
+                Yii::app()->user->setFlash('activateFail', 'Ihr Account konnte nicht aktiviert werden, weil er bereits gesperrt wurde. Sollten Sie Fragen haben füllen Sie bitte das Kontaktformular aus.');
+            }
+        } else {
+            Yii::app()->user->setFlash('activateFail', 'Leider konnte Ihr Aktivierungsschlüssel nicht identifiziert werden. Sollten Sie uns kontaktieren wollen, füllen Sie bitte das Kontaktformular aus.');
+        }
+        $this->render('activate');
     }
 
     /**
@@ -69,10 +87,13 @@ class UserController extends Controller {
         if (isset($_POST['User'])) {
             $model->setAttributes($_POST['User']);
             if ($model->save()) {
-                Yii::app()->user->setFlash("success", "Benutzer wurde erstellt.");
+
                 if (Yii::app()->user->checkAccess(1)) {
+                    Yii::app()->user->setFlash("success", "Benutzer wurde erstellt.");
                     $this->redirect(array('user/admin'));
                 } else {
+                    self::sendMail(Yii::app()->params['fromMail'] . ' Accountaktivierung', "Sie haben Sich bei der Elternsprechtagsapplikation der BWS registriert. Bitte aktivieren Sie ihren Account anhand folgendem Links: "
+                            . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "index.php?r=/User/activate&activationKey=" . $model->activationKey, $model->email);
                     $this->redirect(array('site/login'));
                 }
             } else {
@@ -208,33 +229,17 @@ class UserController extends Controller {
         $this->render("change", array("model" => $model));
     }
 
-    public static function sendMail() {
-$message = 'Hello World!';
-$mailer = Yii::createComponent('application.extensions.mailer.EMailer');
-$mailer->Host = "h1963533.stratoserver.net";
-$mailer->IsSMTP();
-$mailer->From = 'est@h1963533.stratoserver.net';
-//$mailer->AddReplyTo('wei@example.com');
-$mailer->AddAddress('c.ehringfeld@t-online.de');
-$mailer->FromName = 'est';
-$mailer->CharSet = 'UTF-8';
-$mailer->Subject = Yii::t('demo', 'Yii rulez!');
-$mailer->Body = $message;
-$mailer->Send();
-    }
-    public static function sendMail2() {
-$message = 'Hello World!';
-$mailer = Yii::createComponent('application.extensions.mailer.EMailer');
-$mailer->Host = "localhost";
-$mailer->IsSMTP();
-$mailer->From = 'est@h1963533.stratoserver.net';
-//$mailer->AddReplyTo('wei@example.com');
-$mailer->AddAddress('c.ehringfeld@t-online.de');
-$mailer->FromName = 'est';
-$mailer->CharSet = 'UTF-8';
-$mailer->Subject = Yii::t('demo', 'Yii rulez!');
-$mailer->Body = $message;
-$mailer->Send();
+    public static function sendMail($subject, $message, $to) {
+        $mailer = Yii::createComponent('application.extensions.mailer.EMailer');
+        $mailer->Host = Yii::app()->params['emailHost'];
+        $mailer->IsSMTP();
+        $mailer->From = Yii::app()->params['fromMailHost'];
+        $mailer->AddAddress($to);
+        $mailer->FromName = Yii::app()->params['fromMail'];
+        $mailer->CharSet = 'UTF-8';
+        $mailer->Subject = $subject;
+        $mailer->Body = $message;
+        $mailer->Send();
     }
 
 }
