@@ -24,8 +24,11 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
-
-<h1>Benutzerverwaltung</h1>
+<div class="row">
+    <div class="twelve columns centered">
+        <h2 class="text-center">Benutzerverwaltung</h2>
+    </div>
+</div>
 
 <!--<p>
     You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
