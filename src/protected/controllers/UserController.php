@@ -47,6 +47,10 @@ class UserController extends Controller {
      * @param integer $id the ID of the model to be displayed
      */
     public function actionView($id) {
+        echo "Methode1:";
+        self::sendMail();
+        echo "Methode2:";
+        self::sendMail2();
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
@@ -205,7 +209,32 @@ class UserController extends Controller {
     }
 
     public static function sendMail() {
-
+$message = 'Hello World!';
+$mailer = Yii::createComponent('application.extensions.mailer.EMailer');
+$mailer->Host = "h1963533.stratoserver.net";
+$mailer->IsSMTP();
+$mailer->From = 'est@h1963533.stratoserver.net';
+//$mailer->AddReplyTo('wei@example.com');
+$mailer->AddAddress('c.ehringfeld@t-online.de');
+$mailer->FromName = 'est';
+$mailer->CharSet = 'UTF-8';
+$mailer->Subject = Yii::t('demo', 'Yii rulez!');
+$mailer->Body = $message;
+$mailer->Send();
+    }
+    public static function sendMail2() {
+$message = 'Hello World!';
+$mailer = Yii::createComponent('application.extensions.mailer.EMailer');
+$mailer->Host = "localhost";
+$mailer->IsSMTP();
+$mailer->From = 'est@h1963533.stratoserver.net';
+//$mailer->AddReplyTo('wei@example.com');
+$mailer->AddAddress('c.ehringfeld@t-online.de');
+$mailer->FromName = 'est';
+$mailer->CharSet = 'UTF-8';
+$mailer->Subject = Yii::t('demo', 'Yii rulez!');
+$mailer->Body = $message;
+$mailer->Send();
     }
 
 }
