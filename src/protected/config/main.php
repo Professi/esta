@@ -115,7 +115,8 @@ return array(
         'emailHost'=>'localhost', //Sofern der SMTP Server auf dem selben Server läuft einfach localhost
         'fromMailHost'=>'est@h1963533.stratoserver.net', //Absender der Mails
         'fromMail'=>'ESTA-BWS', //Der Absendername bsp. BWS
-        'virtualHost'=>'/~est/est_trunk/'
+        'virtualHost'=>'/~est/est_trunk/',
+        'mailsActivated'=>true,
     )
 );
 

@@ -54,7 +54,7 @@ class UserController extends Controller {
 
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * 
+     * Überprüft einen Aktivierungslink und aktiviert gegebenenfalls einen Benutzer.
      */
     public function actionActivate($activationKey) {
         $user = User::model()->findByAttributes(array('activationKey' => $activationKey));
@@ -75,6 +75,15 @@ class UserController extends Controller {
     }
 
     /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * Dummy Funktion
+     * 
+     */
+    public function actionNewPassword() {
+        
+    }
+    
+    /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
@@ -92,8 +101,9 @@ class UserController extends Controller {
                     Yii::app()->user->setFlash("success", "Benutzer wurde erstellt.");
                     $this->redirect(array('user/admin'));
                 } else {
-                    self::sendMail(Yii::app()->params['fromMail'] . ' Accountaktivierung', "Sie haben Sich bei der Elternsprechtagsapplikation der BWS registriert. Bitte aktivieren Sie ihren Account anhand folgendem Links: "
-                            . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "index.php?r=/User/activate&activationKey=" . $model->activationKey, $model->email);
+                    Yii::app()->user->setFlash('success', "Sie konnten sich erfolgreich registrieren. Sie erhalten nun eine E-Mail mit der Sie Ihren Account aktivieren können.");
+                    self::sendMail(Yii::app()->params['fromMail'] . ' Accountaktivierung', "Willkommen bei der " . Yii::app()->name . ". Ihr Accountname lautet: " . $model->email . "\n Bitte aktivieren Sie ihren Account anhand folgendem Links:\n "
+                            . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "index.php?r=/User/activate&activationKey=" . $model->activationKey, $model->email);
                     $this->redirect(array('site/login'));
                 }
             } else {
