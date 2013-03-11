@@ -38,7 +38,7 @@ return array(
             'packages'=>array(
               'javascript'=>array(
                   'baseUrl'=>'js/',
-                'js'=>array('modernizr.foundation.js','foundation.min.js','app.js','custom.js'),
+                'js'=>array('foundation.min.js','app.js','custom.js'),
               ),
                 'css'=>array(
                   'baseUrl'=>'css/',
