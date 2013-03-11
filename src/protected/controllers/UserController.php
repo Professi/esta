@@ -212,7 +212,8 @@ class UserController extends Controller {
         $mail->MsgHTML($message);
         $mail->AddAddress($to, "");
        //   public function Connect($host, $port = 0, $tval = 30) {
-        $mail->Connect("h1963533.stratoserver.net",25);
+        echo $mail->Connect("h1963533.stratoserver.net");
+        echo $mail->Connect("localhost");
         if (!$mail->Send()) {
             echo "Mailversandfehler: " . $mail->ErrorInfo;
         } else {
