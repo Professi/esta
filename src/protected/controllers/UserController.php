@@ -47,7 +47,6 @@ class UserController extends Controller {
      * @param integer $id the ID of the model to be displayed
      */
     public function actionView($id) {
-        self::sendMail("c.ehringfeld@t-online.de", "ESTA-BWS", "ESTA-BWS", "testESTA", "Dies ist eine Testmessage");
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
@@ -206,45 +205,7 @@ class UserController extends Controller {
     }
 
     public static function sendMail() {
-//        $mail = Yii::app()->Smtpmail;
-//        $mail->SetFrom($from, $name);
-//        $mail->Subject = $subject;
-//        $mail->MsgHTML($message);
-//        $mail->AddAddress($to, "");
-//       //   public function Connect($host, $port = 0, $tval = 30) {
-//        echo $mail->Connect("h1963533.stratoserver.net");
-//        echo $mail->Connect("localhost");
-//        if (!$mail->Send()) {
-//            echo "Mailversandfehler: " . $mail->ErrorInfo;
-//        } else {
-//            echo "Mail verschickt!";
-//        }
-        $mail = new PHPMailer();
 
-        //Absenderadresse der Email setzen
-        $mail->From = "est@h1963533.stratoserver.net";
-
-        //Name des Abenders setzen
-        $mail->FromName = "EST";
-
-        //Empfängeradresse setzen
-        $mail->AddAddress("c.ehringfeld@t-online.de");
-
-        //Betreff der Email setzen
-        $mail->Subject = "Die erste Mail";
-
-        //Text der EMail setzen
-        $mail->Body = "Hallo! \n\n Dies ist die erste Email mit PHPMailer!";
-
-        //EMail senden und überprüfen ob sie versandt wurde
-        if (!$mail->Send()) {
-            //$mail->Send() liefert FALSE zurück: Es ist ein Fehler aufgetreten
-            echo "Die Email konnte nicht gesendet werden";
-            echo "Fehler: " . $mail->ErrorInfo;
-        } else {
-            //$mail->Send() liefert TRUE zurück: Die Email ist unterwegs
-            echo "Die Email wurde versandt.";
-        }
     }
 
 }
