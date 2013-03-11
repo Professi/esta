@@ -205,7 +205,7 @@ class UserController extends Controller {
         $this->render("change", array("model" => $model));
     }
 
-    public static function sendMail($to, $from, $name, $subject, $message) {
+    public static function sendMail() {
 //        $mail = Yii::app()->Smtpmail;
 //        $mail->SetFrom($from, $name);
 //        $mail->Subject = $subject;
