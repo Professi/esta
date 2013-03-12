@@ -28,12 +28,12 @@ $this->breadcrumbs = array(
 if ($model->getError('error') !== NULL) {
     ?>
 	<div class="row">
-	<div class="twelve columns centered">
-    <div class="alert-box alert">
+            <div class="twelve columns centered">
+                <div class="alert-box alert">
         <? echo $model->getError('error');
-        ?> </div> <? } ?>
-	</div>
-	</div>
+        ?> </div> 
+            </div>
+	</div> <? } ?>
 <div class="row">
     <div class="six columns centered">
         <?php

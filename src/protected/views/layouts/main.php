@@ -13,7 +13,7 @@
         <!-- HEADER -->
         <div class="row contain-to-grid">
             <div class="five mobile-four columns offset-by-one">
-                <div class="header">Elternsprechtag&nbsp;&nbsp;&nbsp;</div>
+                <div class="header">Elternsprechtag&nbsp;&nbsp;&nbsp;&nbsp;</div>
                 <div class="header-school-logo">
                     <div id="logo_artikel">der&nbsp;&nbsp;</div>
                     <img id="logo_school" src="<?php echo Yii::app()->request->baseUrl; ?>/img/LogoBWS.svg">
