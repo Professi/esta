@@ -109,7 +109,7 @@ return array(
     // using Yii::app()->params['paramName']
     'params' => array(
         // this is used in contact page
-        'adminEmail' => 'test@test.de',
+        'adminEmail' => 'c.ehringfeld@t-online.de',
         'salt' => 'e9HOiJFfDhyvcBMin5G8CBTR98wK',
         'dateTimeFormat' => 'd.m.Y H:i',
         'emailHost'=>'localhost', //Sofern der SMTP Server auf dem selben Server läuft einfach localhost

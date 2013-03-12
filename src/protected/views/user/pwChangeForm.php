@@ -12,12 +12,8 @@ $form = $this->beginWidget('CActiveForm', array(
         // 'clientOptions'=>array('validateOnSubmit'=>true),
         ));
 ?>
-
-
-<?php if (Yii::app()->user->isGuest) { ?>
-    <?php echo $form->textField($model, 'email', array('size' => 45, 'maxlength' => 45, 'placeholder' => 'E-Mail'));
-}
-?>
+<div><p>Sie können nun Ihr Passwort ändern.</p></div>
+<?php echo $form->hiddenField($model, 'activationKey'); ?>
 <?php echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 128, 'placeholder' => 'Passwort')); ?>
 <?php echo $form->error($model, 'password'); ?>
 </div>
@@ -29,3 +25,4 @@ $form = $this->beginWidget('CActiveForm', array(
 
 <?php echo $form->passwordField($model, 'password_repeat', array('size' => 60, 'maxlength' => 128, 'placeholder' => 'Passwort bestätigen')); ?>
 <?php echo $form->error($model, 'password_repeat'); ?>
+<?php $this->endWidget(); ?>

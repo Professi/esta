@@ -79,7 +79,7 @@ class User extends CActiveRecord {
 
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return encrypted and salted password with sha512
+     * @return string encrypted and salted password with sha512
      */
     public static function encryptPassword($password, $salt) {
         $saltedPw = $salt . $password;
@@ -214,6 +214,7 @@ class User extends CActiveRecord {
     
     public function generateActivationKey() {
         $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);
+        $this->save();
     }
 
     /**

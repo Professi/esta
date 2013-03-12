@@ -53,12 +53,12 @@ class SiteController extends Controller {
             if ($model->validate()) {
                 $name = '=?UTF-8?B?' . base64_encode($model->name) . '?=';
                 $subject = '=?UTF-8?B?' . base64_encode($model->subject) . '?=';
-                $headers = "From: $name <{$model->email}>\r\n" .
-                        "Reply-To: {$model->email}\r\n" .
-                        "MIME-Version: 1.0\r\n" .
-                        "Content-type: text/plain; charset=UTF-8";
-
-                mail(Yii::app()->params['adminEmail'], $subject, $model->body, $headers);
+//                $headers = "From: $name <{$model->email}>\r\n" .
+//                        "Reply-To: {$model->email}\r\n" .
+//                        "MIME-Version: 1.0\r\n" .
+//                        "Content-type: text/plain; charset=UTF-8";
+                self::sendMail($subject, $model->body, Yii::app()->params['adminEmail'], $model->email, $name);
+//                mail(Yii::app()->params['adminEmail'], $subject, $model->body, $headers);
                 Yii::app()->user->setFlash('contact', 'Vielen Dank dass Sie uns kontaktieren. Wir werden Ihnen so schnell wie möglich antworten.');
                 $this->refresh();
             }
@@ -103,4 +103,17 @@ class SiteController extends Controller {
         $this->redirect(Yii::app()->homeUrl);
     }
 
+        public static function sendMail($subject, $message, $to, $from,$fromName) {
+        $mailer = Yii::createComponent('application.extensions.mailer.EMailer');
+        $mailer->Host = Yii::app()->params['emailHost'];
+        $mailer->IsSMTP();
+        $mailer->From = $from;
+        $mailer->AddAddress($to);
+        $mailer->FromName = $fromName;
+        $mailer->CharSet = 'UTF-8';
+        $mailer->Subject = $subject;
+        $mailer->Body = $message;
+        $mailer->Send();
+    }
+    
 }

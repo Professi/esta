@@ -23,7 +23,7 @@ $this->breadcrumbs = array(
 <div class="row">
     <div class="twelve columns">
         <div class="alert-box success">
-            <?php echo Yii::app()->user->getFlash('success') . "Sie sollten nun eine Aktivierungsmail erhalten in der Sie ihren Account aktivieren können."; ?>
+            <?php echo Yii::app()->user->getFlash('success'); ?>
         </div>
     </div>
 </div>
@@ -64,7 +64,7 @@ if ($model->getError('error') !== NULL) {
             <?php echo $form->error($model, 'rememberMe'); ?>
 
             <?php echo CHtml::submitButton('Login', array('class' => 'button')); ?>
-            <?php echo CHtml::link('Probleme beim Login?', 'index.php?r=user/ChangePwd', array('class'=>'medium right')); ?>
+            <?php echo CHtml::link('Passwort vergessen?', 'index.php?r=user/ChangePwd', array('class'=>'medium right')); ?>
         </fieldset>
         <p class="text-center"><?php echo CHtml::link('<b>Ben&ouml;tigen Sie einen neuen Zugang?<br>Klicken Sie hier.</b>', 'index.php?r=user/create'); ?> </p>
 

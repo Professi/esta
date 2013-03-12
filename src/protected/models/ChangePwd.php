@@ -12,7 +12,7 @@ class ChangePwd extends CFormModel
 	{
 		return array(
 			// name, email, subject and body are required
-			array('email', 'required'),
+			array('email','required'),
 			// email has to be a valid email address
 			array('email', 'email'),
 			// verifyCode needs to be entered correctly

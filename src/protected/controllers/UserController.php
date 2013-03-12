@@ -18,6 +18,15 @@ class UserController extends Controller {
         );
     }
 
+    public function actions() {
+        return array(
+// captcha action renders the CAPTCHA image displayed on the contact page
+            'captcha' => array(
+                'class' => 'CCaptchaAction',
+                'backColor' => 0xFFFFFF,
+            ),);
+    }
+
     /**
      * Specifies the access control rules.
      * This method is used by the 'accessControl' filter.
@@ -30,7 +39,7 @@ class UserController extends Controller {
                 'roles' => array('3', '2'),
             ),
             array('allow',
-                'actions' => array('create', 'activate', 'ChangePwd'),
+                'actions' => array('create', 'activate', 'ChangePwd', 'captcha', 'NewPw'),
                 'users' => array('?'),
             ),
             array('allow',
@@ -74,27 +83,52 @@ class UserController extends Controller {
         $this->render('activate');
     }
 
+    public function actionNewPw() {
+        $model = new NewPw();
+        if (isset($_GET['activationKey'])) {
+            $user = User::model()->findByAttributes(array('activationKey' => $_GET['activationKey']));
+            if ($user !== NULL) {
+                $model->activationKey = $_GET['activationKey'];
+                $this->render('pwChangeForm', array('model' => $model));
+            }
+        } else if(isset($_POST['NewPw'])) {
+            $model->setAttributes($_POST['NewPw']);
+            $user = User::model()->findByAttributes(array('activationKey'=>$model->activationKey));
+            if($user !== NULL) {
+                $user->password = User::encryptPassword($model->password, Yii::app()->params['salt']);
+                $user->save();
+                Yii::app()->user->setFlash('success','Ihr Passwort konnte erfolgreich geändert werden. Sie können sich nun mit diesem einloggen.');
+            } else {
+                Yii::app()->user->setFlash('success','Leider konnte Ihr Passwort nicht geändert werden.');
+            }
+            $this->redirect("/site/index");
+        }
+    }
+
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * Dummy Funktion
+     * Action um ein neues Passwort anzufordern
      * 
      */
     public function actionChangePwd() {
-        if (isset($_POST['email'])) {
-            $user = User::model()->findByAttributes(array('email' => $_POST['email']));
-            if ($user !== null) {
+        $model = new ChangePwd;
+        if (isset($_POST['ChangePwd'])) {
+            $model->attributes = $_POST['ChangePwd'];
+            //   if ($model->validate()) {
+            $user = User::model()->findByAttributes(array('email' => $model->email));
+            if ($user !== null && $user->state == 1) {
+                $user->generateActivationKey();
                 self::sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', "Sie haben bei " . Yii::app()->name . ". versucht Ihr Passwort zu ändern. Mit hilfe des folgenden Links können Sie Ihr Passwort ändern:\n "
-                        . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "index.php?r=/User/changePwd&activationKey=" . $user->activationKey, $user->email);
+                        . "http://" . Yii::app()->request->baseUrl . "/index.php?r=/User/NewPw&activationKey=" . $user->activationKey, $user->email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
                 Yii::app()->user->setFlash('success', 'Sie erhalten nun eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.');
+                $this->redirect('index.php?r=/site/index');
             } else {
-                Yii::app()->user->setFlash('failMsg', 'Leider konnte Ihrer E-Mail Adresse kein Benutzerkonto zugeordnet werden.'); //success  - failMsg
+                Yii::app()->user->setFlash('failMsg', 'Leider konnte Ihre Anfrage nicht korrekt verarbeitet werden.'); //success  - failMsg
+                $this->refresh();
             }
-        } else if (isset($_GET['activationKey'])) {
-            
-        } else {
-                    $model = new ChangePwd;
-            $this->render('changePassword', array('model' => $model));
+            //  } 
         }
+        $this->render('changePassword', array('model' => $model));
     }
 
     /**
@@ -104,8 +138,8 @@ class UserController extends Controller {
     public function actionCreate() {
         $model = new User;
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
+// Uncomment the following line if AJAX validation is needed
+// $this->performAjaxValidation($model);
 
         if (isset($_POST['User'])) {
             $model->setAttributes($_POST['User']);
@@ -117,7 +151,7 @@ class UserController extends Controller {
                 } else {
                     Yii::app()->user->setFlash('success', "Sie konnten sich erfolgreich registrieren. Sie erhalten nun eine E-Mail mit der Sie Ihren Account aktivieren können.");
                     self::sendMail(Yii::app()->params['fromMail'] . ' Accountaktivierung', "Willkommen bei der " . Yii::app()->name . ". Ihr Accountname lautet: " . $model->email . "\n Bitte aktivieren Sie ihren Account anhand folgendem Links:\n "
-                            . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "index.php?r=/User/activate&activationKey=" . $model->activationKey, $model->email);
+                            . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "index.php?r=/User/activate&activationKey=" . $model->activationKey, $model->email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
                     $this->redirect(array('site/login'));
                 }
             } else {
@@ -137,8 +171,8 @@ class UserController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-        // Uncomment the following line if AJAX validation is needed
-        //  $this->performAjaxValidation($model);
+// Uncomment the following line if AJAX validation is needed
+//  $this->performAjaxValidation($model);
         if (isset($_POST['User'])) {
             $model->setAttributes($_POST['User']);
 
@@ -162,7 +196,7 @@ class UserController extends Controller {
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
 
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
@@ -200,7 +234,7 @@ class UserController extends Controller {
      */
     public function loadModel($id) {
         $model = User::model()->findByPk($id);
-        //lädt die Rolle
+//lädt die Rolle
         $model->password_repeat = $model->password;
         $model->oldPw = $model->password;
         $model->role = UserRole::model()->findByAttributes(array('user_id' => $id))->role_id;
@@ -253,13 +287,13 @@ class UserController extends Controller {
         $this->render("change", array("model" => $model));
     }
 
-    public static function sendMail($subject, $message, $to) {
+    public static function sendMail($subject, $message, $to, $from, $fromName) {
         $mailer = Yii::createComponent('application.extensions.mailer.EMailer');
         $mailer->Host = Yii::app()->params['emailHost'];
         $mailer->IsSMTP();
-        $mailer->From = Yii::app()->params['fromMailHost'];
+        $mailer->From = $from;
         $mailer->AddAddress($to);
-        $mailer->FromName = Yii::app()->params['fromMail'];
+        $mailer->FromName = $fromName;
         $mailer->CharSet = 'UTF-8';
         $mailer->Subject = $subject;
         $mailer->Body = $message;
