@@ -80,21 +80,23 @@ class UserController extends Controller {
      * 
      */
     public function actionChangePwd() {
-                if(isset($_POST['email'])) {
-                    $user = User::model()->findByAttributes(array('email'=>$_POST['email']));
-                    if($user !== null) {
-                         self::sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', "Sie haben bei " . Yii::app()->name . ". versucht Ihr Passwort zu ändern. Mit hilfe des folgenden Links können Sie Ihr Passwort ändern:\n "
-                            . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "index.php?r=/User/changePwd&activationKey=" . $user->activationKey, $user->email);
-                         Yii::app()->user->setFlash('success','Sie erhalten nun eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.');
-                    } else {
-                        Yii::app()->user->setFlash('failMsg','Leider konnte Ihrer E-Mail Adresse kein Benutzerkonto zugeordnet werden.');//success  - failMsg
-                    }
-                } else if(isset($_GET['activationKey'])) {
-                    
-                }
-                $this->render('changePassword');
+        if (isset($_POST['email'])) {
+            $user = User::model()->findByAttributes(array('email' => $_POST['email']));
+            if ($user !== null) {
+                self::sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', "Sie haben bei " . Yii::app()->name . ". versucht Ihr Passwort zu ändern. Mit hilfe des folgenden Links können Sie Ihr Passwort ändern:\n "
+                        . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "index.php?r=/User/changePwd&activationKey=" . $user->activationKey, $user->email);
+                Yii::app()->user->setFlash('success', 'Sie erhalten nun eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.');
+            } else {
+                Yii::app()->user->setFlash('failMsg', 'Leider konnte Ihrer E-Mail Adresse kein Benutzerkonto zugeordnet werden.'); //success  - failMsg
+            }
+        } else if (isset($_GET['activationKey'])) {
+            
+        } else {
+                    $model = new ChangePwd;
+            $this->render('changePassword', array('model' => $model));
+        }
     }
-    
+
     /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
