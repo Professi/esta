@@ -30,7 +30,7 @@ class UserController extends Controller {
                 'roles' => array('3', '2'),
             ),
             array('allow',
-                'actions' => array('create', 'activate'),
+                'actions' => array('create', 'activate', 'ChangePwd'),
                 'users' => array('?'),
             ),
             array('allow',

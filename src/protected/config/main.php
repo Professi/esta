@@ -117,7 +117,8 @@ return array(
         'fromMail'=>'ESTA-BWS', //Der Absendername bsp. BWS
         'virtualHost'=>'/~est/est_trunk/',
         'mailsActivated'=>true,
-    )
+        'maxChild'=>3,
+        )
 );
 
 
