@@ -17,11 +17,29 @@ html, body {
 
 .header {
 	font-family: 'Clicker Script', cursive;
+	font-size: 44px;
+	font-weight: bold;
 	color:#fff;
 	background-image:url(../img/tafel2.png);
 	padding: .1em 0 .1em .3em;
 	background-repeat: no-repeat;
 	height: 60px;
+	line-height: 1.1;
+	margin-bottom: 14px;
+	margin-top: 14px;
+        float: left;
+}
+.header-school-logo {
+	margin-top: 20px;
+	margin-bottom: 10px;
+	padding-left: 3.5em;
+	color: white;
+}
+#logo_artikel {
+	font-size:44px;float:left;
+}
+#logo_school {
+	background:white;
 }
 .nav-icons { 
 	color: #FFF;
@@ -111,8 +129,11 @@ table {
 	border-color: #ccc;
 	height: 2.3em;
 	margin-bottom: 1em;
-	background: url(../img/play.png) no-repeat right #f2f2f2;
-	background-size: 5%;
+	background-image: url(../img/TriangleArrow-Down.svg);
+        background-color: #f2f2f2;
+        background-position: 99% .8em;
+        background-repeat: no-repeat;
+        background-size: 1em;
 }
 .styled-select select {
    background: transparent;
