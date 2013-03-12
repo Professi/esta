@@ -211,6 +211,10 @@ class User extends CActiveRecord {
         }
         return parent::beforeSave();
     }
+    
+    public function generateActivationKey() {
+        $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);
+    }
 
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
