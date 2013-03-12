@@ -3,24 +3,27 @@
 /* @var $data Appointment */
 ?>
 
-<div class="view">
-<?php //hier deine Methoden      array('name' => 'Lehrer', 'value' => data->user->firstname . " " . $data->user->lastname), ?>  
-        
-	<b><?php echo CHtml::encode("um"); ?>:</b>
-	<?php  echo CHtml::link(CHtml::encode($data->time), array('view', 'id'=>$data->id));//echo CHtml::encode($data->time); ?>
-	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('date_id')); ?>:</b>
-	<?php echo CHtml::encode($data->date_id); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('parent_child_id')); ?>:</b>
-	<?php echo CHtml::encode($data->parent_child_id); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('user_id')); ?>:</b>
-	<?php echo CHtml::encode($data->user_id); ?>
-	<br />
-
+<div class="panel">
+    <div class="row">
+        <div class="one columns">
+            <b>#<?php echo CHtml::encode($data->id); ?></b>
+        </div>
+        <div class="eleven columns">
+            <b>Am <?php echo CHtml::encode($data->date->date); ?> um <?php echo CHtml::encode($data->time.substr(0, 4)); ?></b>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="one columns"></div>
+        <div class="four columns">
+            <i>Ihr Kind</i><br>
+            <?php echo CHtml::encode($data->parentChild->child->firstname.' '.$data->parentChild->child->lastname); ?>
+        </div>
+        <div class="three columns">
+            <i>bei</i><br>
+            <?php echo CHtml::encode($data->user->lastname); ?>
+        </div>
+    </div>
 
 </div>

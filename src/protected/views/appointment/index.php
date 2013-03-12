@@ -11,8 +11,11 @@ $this->menu=array(
 	array('label'=>'Termin Manage', 'url'=>array('admin')),
 );
 ?>
-
-<h1>Appointments</h1>
+<div class="row">
+    <div class="twelve columns">
+        <h2 class="subheader">Ihre Termine</h2>
+        <hr>
+        
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
@@ -20,3 +23,5 @@ $this->menu=array(
 	'itemView'=>'_view',
         
 )); ?>
+    </div>
+</div>

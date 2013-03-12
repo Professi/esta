@@ -60,6 +60,7 @@ if ($model->getError('error') !== NULL) {
             <?php echo $form->error($model, 'rememberMe'); ?>
 
             <?php echo CHtml::submitButton('Login', array('class' => 'button')); ?>
+            <a class="medium right" href=""><br>Probleme beim Login?</a>
         </fieldset>
         <p class="text-center"><?php echo CHtml::link('<b>Ben&ouml;tigen Sie einen neuen Zugang?<br>Klicken Sie hier.</b>', 'index.php?r=user/create'); ?> </p>
 
