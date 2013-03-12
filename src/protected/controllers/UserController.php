@@ -85,23 +85,28 @@ class UserController extends Controller {
 
     public function actionNewPw() {
         $model = new NewPw();
-        if (isset($_GET['activationKey'])) {
+        if (isset($_POST['NewPw'])) {
+            $model->setAttributes($_POST['NewPw']);
+            if ($model->validate()) {
+                $user = User::model()->findByAttributes(array('activationKey' => $_GET['activationKey']));
+                if ($user !== NULL) {
+                    $user->password = $model->password;
+                    $user->generateActivationKey();
+                    Yii::app()->user->setFlash('success', 'Ihr Passwort konnte erfolgreich geändert werden. Sie können sich nun mit diesem einloggen.' . $user->password);
+                } else {
+                    Yii::app()->user->setFlash('success', 'Leider konnte Ihr Passwort aus unerklärlichen Gründen nicht geändert werden.');
+                }
+            }
+            $this->redirect('index.php?r=/site/index');
+        } else if (isset($_GET['activationKey'])) {
             $user = User::model()->findByAttributes(array('activationKey' => $_GET['activationKey']));
             if ($user !== NULL) {
                 $model->activationKey = $_GET['activationKey'];
                 $this->render('pwChangeForm', array('model' => $model));
-            }
-        } else if(isset($_POST['NewPw'])) {
-            $model->setAttributes($_POST['NewPw']);
-            $user = User::model()->findByAttributes(array('activationKey'=>$model->activationKey));
-            if($user !== NULL) {
-                $user->password = User::encryptPassword($model->password, Yii::app()->params['salt']);
-                $user->save();
-                Yii::app()->user->setFlash('success','Ihr Passwort konnte erfolgreich geändert werden. Sie können sich nun mit diesem einloggen.');
             } else {
-                Yii::app()->user->setFlash('success','Leider konnte Ihr Passwort nicht geändert werden.');
+                Yii::app()->user->setFlash('success', 'Leider konnte Ihr Aktivierungsschlüssel nicht wiedererkannt werden.');
+                $this->redirect('index.php?r=/site/index');
             }
-            $this->redirect("/site/index");
         }
     }
 
@@ -113,20 +118,20 @@ class UserController extends Controller {
     public function actionChangePwd() {
         $model = new ChangePwd;
         if (isset($_POST['ChangePwd'])) {
-            $model->attributes = $_POST['ChangePwd'];
-            //   if ($model->validate()) {
-            $user = User::model()->findByAttributes(array('email' => $model->email));
-            if ($user !== null && $user->state == 1) {
-                $user->generateActivationKey();
-                self::sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', "Sie haben bei " . Yii::app()->name . ". versucht Ihr Passwort zu ändern. Mit hilfe des folgenden Links können Sie Ihr Passwort ändern:\n "
-                        . "http://" . Yii::app()->request->baseUrl . "/index.php?r=/User/NewPw&activationKey=" . $user->activationKey, $user->email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
-                Yii::app()->user->setFlash('success', 'Sie erhalten nun eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.');
-                $this->redirect('index.php?r=/site/index');
-            } else {
-                Yii::app()->user->setFlash('failMsg', 'Leider konnte Ihre Anfrage nicht korrekt verarbeitet werden.'); //success  - failMsg
-                $this->refresh();
+            if ($model->validate()) {
+                $model->attributes = $_POST['ChangePwd'];
+                $user = User::model()->findByAttributes(array('email' => $model->email));
+                if ($user !== null && $user->state == 1) {
+                    $user->generateActivationKey();
+                    self::sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', "Sie haben bei " . Yii::app()->name . " versucht Ihr Passwort zu ändern. Mit Hilfe des folgenden Links können Sie Ihr Passwort ändern:\n "
+                            . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $user->activationKey, $user->email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
+                    Yii::app()->user->setFlash('success', 'Sie erhalten nun eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.');
+                    $this->redirect('index.php?r=/site/index');
+                } else {
+                    Yii::app()->user->setFlash('failMsg', 'Leider konnte Ihre Anfrage nicht korrekt verarbeitet werden.'); //success  - failMsg
+                    $this->refresh();
+                }
             }
-            //  } 
         }
         $this->render('changePassword', array('model' => $model));
     }
@@ -158,7 +163,6 @@ class UserController extends Controller {
                 Yii::app()->user->setFlash("error", "Benutzer konnte nicht erstellt werden.");
             }
         }
-
         $this->render('create', array(
             'model' => $model,
         ));
@@ -171,7 +175,7 @@ class UserController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-// Uncomment the following line if AJAX validation is needed
+        // Uncomment the following line if AJAX validation is needed
 //  $this->performAjaxValidation($model);
         if (isset($_POST['User'])) {
             $model->setAttributes($_POST['User']);
@@ -182,6 +186,10 @@ class UserController extends Controller {
             } else {
                 Yii::app()->user->setFlash("error", "Benutzer konnte nicht aktualisiert werden.");
             }
+        } else {
+
+            $model->password = "dummyPassword";
+            $model->password_repeat = $model->password;
         }
         $this->render('update', array(
             'model' => $model,
@@ -236,7 +244,6 @@ class UserController extends Controller {
         $model = User::model()->findByPk($id);
 //lädt die Rolle
         $model->password_repeat = $model->password;
-        $model->oldPw = $model->password;
         $model->role = UserRole::model()->findByAttributes(array('user_id' => $id))->role_id;
         switch ($model->state) {
             case 0:

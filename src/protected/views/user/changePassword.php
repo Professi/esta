@@ -13,10 +13,6 @@
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'ChangePwd-form',
-//        'enableClientValidation' => true,
-//        'clientOptions' => array(
-//            'validateOnSubmit' => true,
-       //),
     ));
     ?>
 

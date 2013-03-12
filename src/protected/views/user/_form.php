@@ -49,7 +49,6 @@
         ?>
 		<?php echo $form->error($model, 'email'); ?>
 
-        <?php echo $form->hiddenField($model, 'oldPw'); ?>
 		<div class="row collapse">
 		<div class="nine columns">
 		<?php echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 128,'placeholder' => 'Passwort')); ?>

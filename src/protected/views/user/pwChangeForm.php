@@ -1,6 +1,6 @@
 <?php
 /* @var $this UserController */
-/* @var $model User */
+/* @var $model NewPw */
 /* @var $form CActiveForm */
 ?>
 
@@ -13,7 +13,6 @@ $form = $this->beginWidget('CActiveForm', array(
         ));
 ?>
 <div><p>Sie können nun Ihr Passwort ändern.</p></div>
-<?php echo $form->hiddenField($model, 'activationKey'); ?>
 <?php echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 128, 'placeholder' => 'Passwort')); ?>
 <?php echo $form->error($model, 'password'); ?>
 </div>
@@ -25,4 +24,9 @@ $form = $this->beginWidget('CActiveForm', array(
 
 <?php echo $form->passwordField($model, 'password_repeat', array('size' => 60, 'maxlength' => 128, 'placeholder' => 'Passwort bestätigen')); ?>
 <?php echo $form->error($model, 'password_repeat'); ?>
+<div class="row buttons">
+    <?php echo CHtml::submitButton('Absenden'); ?>
+</div>
+
+
 <?php $this->endWidget(); ?>

@@ -26,7 +26,7 @@ class UserIdentity extends CUserIdentity {
         if ($user === null) { // No user found!
             $this->errorCode = self::ERROR_USERNAME_INVALID;
             $this->errorMessage = self::ERROR_MSG_USERNAME_INVALID;
-        } else if ($user->password !== User::encryptPassword($this->password, Yii::app()->params["salt"])) { // Invalid password!
+        } else if ($user->password !== User::encryptPassword($this->password, Yii::app()->params["salt"])) {
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
             $this->errorMessage = self::ERROR_MSG_PASSWORD_INVALID;
         } else {

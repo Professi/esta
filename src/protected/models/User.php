@@ -26,7 +26,6 @@ class User extends CActiveRecord {
     public $role = null;
     public $roleName = null;
     public $stateName = null;
-    public $oldPw = null;
 
     /**
      * Returns the static model of the specified AR class.
@@ -204,15 +203,19 @@ class User extends CActiveRecord {
             $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);
             $this->username = $this->email;
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
-        } else if (!$this->isNewRecord && $this->password == $this->oldPw) {
+        } else if (!$this->isNewRecord && $this->password == User::model()->findByAttributes(array('id'=>  $this->id, 'password'=>  $this->password))) {
             
-        } else {
+        } else if(!$this->isNewRecord && $this->password == "dummyPassword") {
+            $this->password = User::model()->findByAttributes(array('id'=>  $this->id))->password;
+        } 
+        else {
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
         }
         return parent::beforeSave();
     }
     
     public function generateActivationKey() {
+        $this->activationKey = "";
         $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);
         $this->save();
     }
