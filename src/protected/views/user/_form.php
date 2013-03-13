@@ -73,7 +73,11 @@ $form = $this->beginWidget('CActiveForm', array(
         }
         ?>
     </div>
-<?php } if (!Yii::app()->user->isAdmin() && CCaptcha::checkRequirements()) { ?>
+<?php } if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) { ?>
+<?php echo $form->textField($model, 'tan', array('size' => 45, 'maxlength' => Yii::app()->params['tanSize'], 'placeholder' => 'TAN')); ?>
+        <?php echo $form->error($model, 'tan'); ?>
+
+
         <?php echo $form->labelEx($model, 'verifyCode'); ?>
     <div>
         <?php $this->widget('CCaptcha'); ?>

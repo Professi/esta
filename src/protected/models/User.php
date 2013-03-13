@@ -27,6 +27,7 @@ class User extends CActiveRecord {
     public $roleName = null;
     public $stateName = null;
     public $verifyCode = null;
+    public $tan = null;
 
     /**
      * Returns the static model of the specified AR class.
@@ -56,9 +57,15 @@ class User extends CActiveRecord {
             array('state', 'numerical', 'integerOnly' => true),
             array('firstname, lastname, email', 'length', 'max' => 45),
             array('password', 'length', 'max' => 128, 'min' => 8),
+            array('tan', 'length',
+                'min' => Yii::app()->params['tanSize'],
+                'max' => Yii::app()->params['tanSize'],),
+            array('tan', 'numerical', 'integerOnly' => TRUE,
+                'allowEmpty' => !Yii::app()->user->isGuest
+            ),
             array('password', 'compare', "on" => "insert"),
-            array('password_repeat','safe'), //allow bulk assignment
-            array('verifyCode', 'captcha', 'allowEmpty'=>Yii::app()->user->isAdmin() || !CCaptcha::checkRequirements()),
+            array('password_repeat', 'safe'), //allow bulk assignment
+            array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !CCaptcha::checkRequirements()),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, username, firstname, state, lastname, email, role,roleName,stateName', 'safe', 'on' => 'search'),
@@ -118,7 +125,7 @@ class User extends CActiveRecord {
             'createtime' => 'Registrierungsdatum',
             'role' => 'RollenID',
             'roleName' => 'Rolle',
-            'verifyCode'=> 'Sicherheitscode',
+            'verifyCode' => 'Sicherheitscode',
         );
     }
 
@@ -170,6 +177,9 @@ class User extends CActiveRecord {
      */
     public function afterSave() {
         if ($this->isNewRecord) {
+            $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
+            $tan->used = true;
+            $tan->update();
             $userRole = New UserRole();
             $userRole->user_id = $this->id;
             if (Yii::app()->user->isGuest) {
@@ -196,7 +206,7 @@ class User extends CActiveRecord {
         $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
         $userRole->delete();
         $a_parentChild = ParentChild::model()->findAllByAttributes(array('user_id' => $this->id));
-        for($i = 0; $i < count($a_parentChild); ++$i) {
+        for ($i = 0; $i < count($a_parentChild); ++$i) {
             $a_parentChild[$i]->delete();
         }
         /**
@@ -239,6 +249,10 @@ class User extends CActiveRecord {
         return parent::beforeSave();
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * Generiert einen Aktivierungsschlüssel und speichert diesen im aktuellen Objekt
+     */
     public function generateActivationKey() {
         $this->activationKey = "";
         $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);
@@ -292,6 +306,21 @@ class User extends CActiveRecord {
     static public function getFormattedRole($role) {
         $role = Role::model()->findByAttributes(array('id' => $role));
         echo $role->title;
+    }
+
+    public function beforeValidate() {
+        $rc = parent::beforeValidate();
+        if ($rc && Yii::app()->user->isGuest) {
+            $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
+            if ($tan !== null) {
+                if ($tan->used) {
+                    $this->addError('tan', 'Leider wurde Ihre TAN schon benutzt.');
+                }
+            } else {
+                $this->addError('tan', 'Leider konnte die eingegebene TAN nicht identifiziert werden.');
+            }
+        }
+        return $rc;
     }
 
 }
