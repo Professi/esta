@@ -118,8 +118,8 @@ class UserController extends Controller {
     public function actionChangePwd() {
         $model = new ChangePwd;
         if (isset($_POST['ChangePwd'])) {
+            $model->attributes = $_POST['ChangePwd'];
             if ($model->validate()) {
-                $model->attributes = $_POST['ChangePwd'];
                 $user = User::model()->findByAttributes(array('email' => $model->email));
                 if ($user !== null && $user->state == 1) {
                     $user->generateActivationKey();
