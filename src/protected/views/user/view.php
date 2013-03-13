@@ -8,8 +8,8 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Benutzer erstellen', 'url' => array('create'), 'visible'=>Yii::app()->user->isGuest || Yii::app()->user->checkAccess(1)),
-    array('label' => 'Benutzer aktualisieren', 'url' => array('update', 'id' => $model->id)),
+    array('label' => 'Benutzer anlegen', 'url' => array('create'), 'visible'=>Yii::app()->user->isGuest || Yii::app()->user->checkAccess(1)),
+    array('label' => 'Benutzer bearbeiten', 'url' => array('update', 'id' => $model->id)),
     array('label' => 'Benutzer löschen', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => 'Sind Sie sich sicher dass Sie diesen Benutzer löschen möchten?'), 'visible'=> Yii::app()->user->checkAccess(1)),
     array('label' => 'Benutzer verwalten', 'url' => array('admin'), 'visible'=>Yii::app()->user->checkAccess(1)),
 );
@@ -31,7 +31,7 @@ $this->widget('zii.widgets.CDetailView', array(
         'lastname',
         array('label'=>'Status','value'=>$model->getStateName()),
         array('label'=>'Rolle','value'=>Role::model()->findByAttributes(array('id'=>$model->role))->title),
-        array('label'=>'Benutzerid','value'=>$model->id,'visible'=>Yii::app()->user->checkAccess('0')),
+        array('label'=>'Benutzer-ID','value'=>$model->id,'visible'=>Yii::app()->user->checkAccess('0')),
         array('label'=>'Benutzername','value'=>$model->username,'visible'=>Yii::app()->user->checkAccess('0')),
         //array('label'=>'Passwort','value'=>$model->password,'visible'=>Yii::app()->user->checkAccess('0')),
         array('label'=>'Registrierung am','value'=>date(Yii::app()->params['dateTimeFormat'],$model->createtime)),

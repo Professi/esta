@@ -9,10 +9,14 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Liste der Schüler', 'url'=>array('index')),
-	array('label'=>'Elternkinderverknüpfungsverwaltung', 'url'=>array('admin'), 'visible'=>Yii::app()->user->checkAccess(1)),
+	array('label'=>'Eltern-Kind-Verknüpfungen verwalten', 'url'=>array('admin'), 'visible'=>Yii::app()->user->checkAccess(1)),
 );
 ?>
-
-<h1>Create ParentChild</h1>
-
+<div class="row">
+    <div class="twelve columns centered">
+        <fieldset>
+            <legend>Eltern-Kind-Verknüpfung anlegen</legend>
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+        </fieldset>
+    </div>
+</div>

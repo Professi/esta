@@ -8,11 +8,14 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Date', 'url'=>array('index')),
-	array('label'=>'Manage Date', 'url'=>array('admin')),
+	array('label'=>'Elternsprechtage verwalten', 'url'=>array('admin')),
 );
 ?>
-
-<h1>Create Date</h1>
-
+<div class="row">
+    <div class="twelve columns">
+        <fieldset>
+            <legend>Elternsprechtag anlegen</legend>
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+        </fieldset>
+    </div>
+</div>

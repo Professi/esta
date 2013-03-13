@@ -14,7 +14,11 @@ $this->menu=array(
 	array('label'=>'Benutzer verwalten', 'url'=>array('admin'), 'visible'=>Yii::app()->user->checkAccess('1')),
 );
 ?>
-
-<h1>Benutzer aktualisieren <?php echo $model->email; ?></h1>
-
+<div class="row">
+    <div class="nine columns centered">
+        <fieldset>
+            <legend>Benutzer <?php echo $model->email; ?> aktualisieren</legend>
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+        </fieldset>
+    </div>
+</div>

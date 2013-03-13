@@ -4,8 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="row">
-<div class="nine columns centered">
+
 
     <?php
     $form = $this->beginWidget('CActiveForm', array(
@@ -16,18 +15,6 @@
     ));
     ?>
 	
-	<fieldset>
-	<?php if (Yii::app()->user->isGuest) { ?>
-	<legend>Registrierung</legend>
-	<div class="panel">
-		<p> Geben Sie ihre E-Mail-Adresse und ein Passwort ein um sich im System zu registrieren.<br> 
-			Sie sollten innerhalb weniger Minuten eine E-Mail empfangen, die einen Link enthält mit dem Sie ihre Registrierung abschlie&szlig;en k&ouml;nnen.
-		</p>
-	</div>
-	<?php } else { ?>
-	<legend>Benutzerdaten</legend>
-	<?php } ?>
-
 	<div class="row">
 		<div class="six columns">
 			<?php echo $form->textField($model, 'firstname', array('size' => 45, 'maxlength' => 45,'placeholder' => 'Vorname')); ?>
@@ -70,9 +57,6 @@
     <?php echo $form->dropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt')); ?>
     <?php echo $form->error($model, 'state'); ?>
                 </div>
-                
-
-
 
             <?php echo $form->labelEx($model, 'role'); ?>
                 <div class="styled-select">
@@ -83,8 +67,6 @@
                 echo $form->dropDownList($model, 'role', array('2' => 'Lehrer', '3' => 'Eltern'));
                 ?>
             <?php echo $form->error($model, 'role'); ?>
-                
-                
 
             <?php echo $form->errorSummary($model); ?>
             <?php
@@ -93,10 +75,6 @@
     <?php }
     ?>
 
-
     <?php echo CHtml::submitButton($model->isNewRecord ? 'Registrieren' : 'Speichern', array('class' => 'button')); ?>
 
-	</fieldset>
 <?php $this->endWidget(); ?>
-</div>
-</div><!-- form -->

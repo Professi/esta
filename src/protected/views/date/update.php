@@ -9,13 +9,16 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Date', 'url'=>array('index')),
-	array('label'=>'Create Date', 'url'=>array('create')),
-	array('label'=>'View Date', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Date', 'url'=>array('admin')),
+	array('label'=>'Elternsprechtag anlegen', 'url'=>array('create')),
+	array('label'=>'Elternsprechtag anzeigen', 'url'=>array('view', 'id'=>$model->id)),
+	array('label'=>'Elternsprechtage verwalten', 'url'=>array('admin')),
 );
 ?>
-
-<h1>Update Date <?php echo $model->id; ?></h1>
-
+<div class="row">
+    <div class="twelve columns">
+        <fieldset>
+            <legend>Elternsprechtag Nummer <?php echo $model->id; ?> bearbeiten</legend>
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+            </fieldset>
+    </div>
+</div>

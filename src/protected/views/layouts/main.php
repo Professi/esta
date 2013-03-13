@@ -39,7 +39,7 @@
                         'items' => array(//0=Administration 1=Verwaltung 2= Lehrer 3=Eltern
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span>', 'url' => array('/Appointment/index',), 'visible' => !Yii::app()->user->isAdmin() && Yii::app()->user->checkAccessRole('2', '3')),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span>', 'url' => array('/Appointment/create'), 'visible' => Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
-                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Datumsverwaltung', 'url' => array('/Date/admin'), 'visible' => Yii::app()->user->checkAccess('0')),
+                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Elternsprechtagsverwaltung', 'url' => array('/Date/admin'), 'visible' => Yii::app()->user->checkAccess('0')),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Terminverwaltung', 'url' => array('/Appointment/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Schülerverwaltung', 'url' => array('/Child/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Eltern und Kinder', 'url' => array('/ParentChild/admin'), 'visible' => Yii::app()->user->checkAccess('1')),

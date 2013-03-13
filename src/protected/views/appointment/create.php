@@ -8,11 +8,16 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Appointment', 'url'=>array('index')),
-	array('label'=>'Manage Appointment', 'url'=>array('admin')),
+	array('label'=>'Termine verwalten', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Create Appointment</h1>
 
+<div class="row">
+    <div class="twelve columns centered">
+        <fieldset>
+            <legend>Termin anlegen</legend>
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+        </fieldset>
+    </div>
+</div>

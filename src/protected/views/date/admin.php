@@ -27,7 +27,7 @@ $('.search-form form').submit(function(){
 
 <div class="row">
     <div class="twelve columns centered">
-        <h2 class="text-center">Datumsverwaltung</h2>
+        <h2 class="text-center">Elternsprechtagsverwaltung</h2>
     </div>
 </div>
 

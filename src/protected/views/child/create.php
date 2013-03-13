@@ -8,11 +8,14 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Child', 'url'=>array('index')),
-	array('label'=>'Manage Child', 'url'=>array('admin')),
+	array('label'=>'Schüler verwalten', 'url'=>array('admin')),
 );
 ?>
-
-<h1>Create Child</h1>
-
+<div class="row">
+    <div class="twelve columns centered">
+        <fieldset>
+            <legend>Schüler anlegen</legend>
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+        </fieldset>
+    </div>
+</div>

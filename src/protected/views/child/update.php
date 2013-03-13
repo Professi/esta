@@ -9,13 +9,16 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Child', 'url'=>array('index')),
-	array('label'=>'Create Child', 'url'=>array('create')),
-	array('label'=>'View Child', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Child', 'url'=>array('admin')),
+	array('label'=>'Schüler anlegen', 'url'=>array('create')),
+	array('label'=>'Schüler anzeigen', 'url'=>array('view', 'id'=>$model->id)),
+	array('label'=>'Schüler verwalten', 'url'=>array('admin')),
 );
 ?>
-
-<h1>Update Child <?php echo $model->id; ?></h1>
-
+<div class="row">
+    <div class="twelve columns centered">
+        <fieldset>
+            <legend>Schüler Nummer <?php echo $model->id; ?> bearbeiten</legend>
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+        </fieldset>
+    </div>
+</div>

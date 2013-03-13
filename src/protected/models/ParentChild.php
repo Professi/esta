@@ -90,8 +90,8 @@ class ParentChild extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'user_id' => 'BenutzerID',
-            'child_id' => 'KindID',
+            'user_id' => 'Benutzer',
+            'child_id' => 'Kind',
             'childFirstName' => 'Vorname Ihres Kindes',
             'childLastName' => 'Nachname Ihres Kindes',
             'class' => 'Klasse',

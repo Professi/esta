@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Kind anlegen', 'url'=>array('create')),
+	array('label'=>'Schüler anlegen', 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "

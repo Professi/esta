@@ -8,16 +8,20 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Child', 'url'=>array('index')),
-	array('label'=>'Create Child', 'url'=>array('create')),
-	array('label'=>'Update Child', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete Child', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Child', 'url'=>array('admin')),
+	array('label'=>'Schüler anlegen', 'url'=>array('create')),
+	array('label'=>'Schüler bearbeiten', 'url'=>array('update', 'id'=>$model->id)),
+	array('label'=>'Schüler löschen', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'Schüler verwalten', 'url'=>array('admin')),
 );
 ?>
+<div class="row">
+    <div class="twelve columns centered">
+        <h2 class="text-center">Schüler Nummer <?php echo $model->id; ?></h2>
+    </div>
+</div>
 
-<h1>View Child #<?php echo $model->id; ?></h1>
-
+<div class="row">
+    <div class="twelve columns centered">
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
@@ -26,3 +30,5 @@ $this->menu=array(
 		'lastname',
 	),
 )); ?>
+    </div>
+</div>
