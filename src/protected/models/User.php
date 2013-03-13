@@ -175,14 +175,12 @@ class User extends CActiveRecord {
                 $userRole->role_id = Role::model()->findByAttributes(array('id' => $this->role))->id;
             }
             $userRole->save();
+        } else {
+            $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
+            $userRole->role_id = $this->role;
+            $userRole->save();
         }
- else {
-     $userRole = UserRole::model()->findByAttributes(array('user_id'=> $this->id));
-     $userRole->role_id = $this->role;
-     $userRole->save();
-     
- }
-        
+
         return parent::afterSave();
     }
 
@@ -194,19 +192,23 @@ class User extends CActiveRecord {
     public function beforeDelete() {
         $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
         $userRole->delete();
-        $a_parentChild = ParentChild::model()->findAllByAttributes(array('user_id'=>  $this->id));
-        if(!empty($a_parentChild)) {
-            for($i=0; $i< count($a_parentChild); ++$i) {
-                /**
-                 * @todo nach Lehrer auch User entfernen
-                 */
-                $a_appointment = Appointment::model()->findAllByAttributes(array('parent_child_id'=>$a_parentChild[$i]->id));
-                for($x=0; $x  < count($a_appointment); ++$x) {
-                    $a_appointment[$x]->delete();
-                }
-                $a_parentChild[$i]->delete();
+        $a_parentChild = ParentChild::model()->findAllByAttributes(array('user_id' => $this->id));
+        for($i = 0; $i < count($a_parentChild); ++$i) {
+            $a_parentChild[$i]->delete();
+        }
+        /**
+         * @todo nach Lehrer auch User entfernen
+         */
+        $a_appointment = Appointment::model()->findAllByAttributes(array('user_id' => $this->id));
+        for ($x = 0; $x < count($a_appointment); ++$x) {
+            $a_appointment[$x]->delete();
+        }
+        for ($i = 0; $i < count($a_parentChild); ++$i) {
+            $a_appointment = Appointment::model()->findAllByAttributes(array('parent_child_id' => $a_parentChild[$i]->id));
+            for ($x = 0; $x < count($a_appointment); ++$i) {
+                $a_appointment[$i]->delete();
             }
-            
+            $a_parentChild[$i]->delete();
         }
         return parent::beforeDelete();
     }
@@ -224,17 +226,16 @@ class User extends CActiveRecord {
             $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);
             $this->username = $this->email;
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
-        } else if (!$this->isNewRecord && $this->password == User::model()->findByAttributes(array('id'=>  $this->id, 'password'=>  $this->password))) {
+        } else if (!$this->isNewRecord && $this->password == User::model()->findByAttributes(array('id' => $this->id, 'password' => $this->password))) {
             
-        } else if(!$this->isNewRecord && $this->password == "dummyPassword") {
-            $this->password = User::model()->findByAttributes(array('id'=>  $this->id))->password;
-        } 
-        else {
+        } else if (!$this->isNewRecord && $this->password == "dummyPassword") {
+            $this->password = User::model()->findByAttributes(array('id' => $this->id))->password;
+        } else {
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
         }
         return parent::beforeSave();
     }
-    
+
     public function generateActivationKey() {
         $this->activationKey = "";
         $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);

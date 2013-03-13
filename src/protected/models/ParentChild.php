@@ -19,14 +19,42 @@ class ParentChild extends CActiveRecord {
     public $childLastName;
 
     /**
+     * 
+     * 
+     * @return boolean Return der Elternmethode
+     */
+    
+    public function beforeDelete() {
+        $rc = false;
+       if(Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()) {
+           if(ParentChild::model()->countByAttributes(array('user_id'=> Yii::app()->user->getId()) > 1)) {
+               $rc = parent::beforeDelete();
+           }
+       }
+        return $rc;
+    }
+
+    /**
+     * @author Christan Ehringfeld <c.ehringfeld@t-online.de>
+     * Prueft ob ein Benutzer die Rolle 3 hat und ob er nicht Admin ist. 
+     * Falls er dies erfüllt, wird seine eigene Userid eingefügt.
+     * @return boolean Return der Elternmethode
+     * 
+     * 
+     */
+    public function beforeValidate() {
+        if(Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()) {
+            $this->user_id = Yii::app()->user->getId();
+        }
+        return parent::beforeValidate();
+    }
+
+        /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean parent::beforeSave()
      * 
      */
     public function beforeSave() {
-        if (Yii::app()->user->checkAccess('3')) {
-            $this->user_id = Yii::app()->user->getId();
-        }
         $child = Child::model()->findByAttributes(array('firstname' => $this->childFirstName, 'lastname' => $this->childLastName));
         if($child === NULL) {
             $child = new Child;

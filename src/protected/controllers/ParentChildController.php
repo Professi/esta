@@ -25,11 +25,11 @@ class ParentChildController extends Controller {
      */
     public function accessRules() {
         return array(
-            array('allow', 
+            array('allow',
                 'roles' => array('1'),
             ),
             array('allow',
-                'actions' => array('create', 'view', 'index',),
+                'actions' => array('create', 'view', 'index', 'delete'),
                 'roles' => array('3'),
             ),
             array('deny', // deny all users
@@ -52,10 +52,10 @@ class ParentChildController extends Controller {
      */
 
     public function actionIndex() {
-        if(Yii::app()->user->checkAccess(1)) {
-         $dataProvider = new CActiveDataProvider('ParentChild');   
-        }else {
-        $dataProvider = new CActiveDataProvider('ParentChild',array('criteria'=>array('condition'=>'user_id='.Yii::app()->user->getId())));
+        if (Yii::app()->user->checkAccess(1)) {
+            $dataProvider = new CActiveDataProvider('ParentChild');
+        } else {
+            $dataProvider = new CActiveDataProvider('ParentChild', array('criteria' => array('condition' => 'user_id=' . Yii::app()->user->getId())));
         }
         $this->render('index', array('dataProvider' => $dataProvider,));
     }
@@ -66,16 +66,21 @@ class ParentChildController extends Controller {
      */
     public function actionCreate() {
         $model = new ParentChild;
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['ParentChild'])) {
             $model->attributes = $_POST['ParentChild'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
+            if ($model->validate()) {
+                if (ParentChild::model()->countByAttributes(
+                                array('user_id' => $model->attributes['user_id'])) <
+                        Yii::app()->params['maxChild']) {
+                    if ($model->save()) {
+                        Yii::app()->user->setFlash('success', 'Kind erfolgreich hinzugefügt.');
+                    }
+                } else {
+                    Yii::app()->user->setFlash('failMsg', 'Sie haben die Anzahl der eintragbaren Kinder überschritten.');
+                }
+                $this->redirect(array('index'));
+            }
         }
-
         $this->render('create', array(
             'model' => $model,
         ));
@@ -154,5 +159,4 @@ class ParentChildController extends Controller {
             Yii::app()->end();
         }
     }
-
 }

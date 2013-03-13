@@ -19,9 +19,17 @@ if(Yii::app()->user->checkAccess(1)) {
 <div class="row">
     <div class="twelve columns">
         <h2 class="subheader">Ihre Kinder</h2>
-        <hr>
-
-<?php  } $this->widget('zii.widgets.CListView', array(
+        <hr/>
+         
+<?php } if (Yii::app()->user->hasFlash('success')) { ?>
+    <div class="panel callout">
+        <?php echo Yii::app()->user->getFlash('success'); ?>
+    </div>
+  <?php } else if(Yii::app()->user->hasFlash('failMsg')) { ?>
+        <div class="alert-box">
+<?php echo Yii::app()->user->getFlash('failMsg'); ?>            
+        </div>
+  <?php } $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 )); ?>
