@@ -17,9 +17,5 @@
 	<?php echo CHtml::encode($data->lastname); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('class')); ?>:</b>
-	<?php echo CHtml::encode($data->class); ?>
-	<br />
-
 
 </div>

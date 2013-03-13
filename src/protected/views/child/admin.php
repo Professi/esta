@@ -40,7 +40,6 @@ $('.search-form form').submit(function(){
 		'id',
 		'firstname',
 		'lastname',
-		'class',
 		array(
 			'class'=>'CButtonColumn',
 		),

@@ -26,12 +26,7 @@
 		<?php echo $form->textField($model,'lastname',array('size'=>60,'maxlength'=>255)); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->label($model,'class'); ?>
-		<?php echo $form->textField($model,'class',array('size'=>10,'maxlength'=>10)); ?>
-	</div>
-
-	<div class="row buttons">
+    <div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>
 

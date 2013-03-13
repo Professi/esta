@@ -7,7 +7,6 @@
  * @property integer $id
  * @property string $firstname
  * @property string $lastname
- * @property string $class
  *
  * The followings are the available model relations:
  * @property ParentChild[] $parentChildren
@@ -40,12 +39,11 @@ class Child extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('firstname, lastname, class', 'required'),
+			array('firstname, lastname', 'required'),
 			array('firstname, lastname', 'length', 'max'=>255),
-			array('class', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, firstname, lastname, class', 'safe', 'on'=>'search'),
+			array('id, firstname, lastname', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -70,7 +68,6 @@ class Child extends CActiveRecord
 			'id' => 'ID',
 			'firstname' => 'Vorname',
 			'lastname' => 'Nachname',
-			'class' => 'Klasse',
 		);
 	}
 
@@ -88,7 +85,6 @@ class Child extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('firstname',$this->firstname,true);
 		$criteria->compare('lastname',$this->lastname,true);
-		$criteria->compare('class',$this->class,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -40,11 +40,6 @@
 		<?php echo $form->textField($model,'childLastName'); ?>
 		<?php echo $form->error($model,'childLastName'); ?>
 	</div>
-	<div class="row">
-		<?php echo $form->labelEx($model,'class'); ?>
-		<?php echo $form->textField($model,'class'); ?>
-		<?php echo $form->error($model,'class'); ?>
-	</div>
             
             <?
         

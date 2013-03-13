@@ -26,13 +26,6 @@
 		<?php echo $form->textField($model,'lastname',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'lastname'); ?>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'class'); ?>
-		<?php echo $form->textField($model,'class',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'class'); ?>
-	</div>
-
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

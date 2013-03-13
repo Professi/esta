@@ -9,7 +9,7 @@ class UserIdentity extends CUserIdentity {
 
     const ERROR_MSG_USERNAME_INVALID = "Ungültige E-Mail Adresse";
     const ERROR_MSG_PASSWORD_INVALID = "Falsches Passwort";
-    const ERROR_MSG_ACCOUNT_NOT_ACTIVATED = "Ihr Benutzerkonto wurde noch nicht aktiviert. Bitte nutzen Sie den Aktivierungslink, der Ihnen per E-Mail zugesandt wurde. Sollten Sie Probleme haben wenden Sie sich an folgende E-Mail Adresse ";
+    const ERROR_MSG_ACCOUNT_NOT_ACTIVATED = "Ihr Benutzerkonto wurde noch nicht aktiviert. Bitte nutzen Sie den Aktivierungslink, der Ihnen per E-Mail zugesandt wurde. Sollten Sie Probleme haben, füllen Sie bitte das Kontaktformular aus. ";
     const ERROR_MSG_ACCOUNT_BANNED = "Ihr Benutzerkonto wurde gesperrt. Bitte wenden Sie sich an die Schulverwaltung.";
     const ERROR_ACCOUNT_NOT_ACTIVATED = 3;
     const ERROR_ACCOUNT_BANNED = 4;

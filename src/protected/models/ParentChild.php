@@ -17,7 +17,6 @@ class ParentChild extends CActiveRecord {
 
     public $childFirstName;
     public $childLastName;
-    public $class;
 
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
@@ -28,7 +27,14 @@ class ParentChild extends CActiveRecord {
         if (Yii::app()->user->checkAccess('3')) {
             $this->user_id = Yii::app()->user->getId();
         }
-        $child = Child::model()->findByAttributes(array('firstname' => $this->childFirstName, 'lastname' => $this->childLastName, 'class' => $this->class));
+        $child = Child::model()->findByAttributes(array('firstname' => $this->childFirstName, 'lastname' => $this->childLastName));
+        if($child === NULL) {
+            $child = new Child;
+            $child->firstname = $this->childFirstName;
+            $child->lastname = $this->childLastName;
+            $child->save();
+           $child->id = Child::model()->findByAttributes(array('firstname'=>  $this->childFirstName, 'lastname' => $this->childLastName))->id; 
+        }
         $this->child_id = $child->id;
         return parent::beforeSave();
     }
@@ -56,7 +62,7 @@ class ParentChild extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('childFirstName, childLastName, class', 'required'),
+            array('childFirstName, childLastName', 'required'),
             array('child_id', 'numerical', 'integerOnly' => true),
             array('user_id', 'length', 'max' => 11),
             // The following rule is used by search().

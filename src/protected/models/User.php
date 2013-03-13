@@ -176,6 +176,13 @@ class User extends CActiveRecord {
             }
             $userRole->save();
         }
+ else {
+     $userRole = UserRole::model()->findByAttributes(array('user_id'=> $this->id));
+     $userRole->role_id = $this->role;
+     $userRole->save();
+     
+ }
+        
         return parent::afterSave();
     }
 
