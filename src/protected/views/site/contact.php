@@ -9,7 +9,9 @@ $this->breadcrumbs = array(
 );
 ?>
 
-<h1>Kontakt</h1>
+<div class="row">
+    <div class="twelve columns">
+        
 
 <?php if (Yii::app()->user->hasFlash('contact')): ?>
 
@@ -18,12 +20,12 @@ $this->breadcrumbs = array(
     </div>
 
 <?php else: ?>
+    <div class="alert-box secondary">
+        
+            Sollten Sie Fragen haben, füllen Sie bitte das nachfolgende Formular aus. Vielen Dank.
+        
+    </div>
 
-    <p>
-        Sollten Sie Fragen haben, füllen Sie bitte das nachfolgende Formular aus. Vielen Dank.
-    </p>
-
-    <div class="form">
 
         <?php
         $form = $this->beginWidget('CActiveForm', array(
@@ -34,8 +36,8 @@ $this->breadcrumbs = array(
             ),
         ));
         ?>
-
-        <p class="note">Felder mit <span class="required">*</span> werden benötigt.</p>
+    <fieldset>
+        <legend>Kontakt</legend>
 
         <?php echo $form->errorSummary($model); ?>
 
@@ -73,14 +75,19 @@ $this->breadcrumbs = array(
                 <div class="hint">Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>
                 <?php echo $form->error($model, 'verifyCode'); ?>
             </div>
+        <br>
         <?php endif; ?>
 
         <div class="row buttons">
-            <?php echo CHtml::submitButton('Absenden'); ?>
+            <?php echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
         </div>
+        
+    </fieldset>
 
         <?php $this->endWidget(); ?>
 
-    </div><!-- form -->
-
+    
+    <p class="text-center"><?php echo CHtml::link('<b>Zurück zur Startseite</b>', 'index.php'); ?> </p>
+    </div>
+</div>
 <?php endif; ?>
