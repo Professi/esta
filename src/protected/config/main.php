@@ -118,6 +118,7 @@ return array(
         'virtualHost'=>'/~est/est_trunk/',
         'mailsActivated'=>true,
         'maxChild'=>3,
+        'tanSize'=>6,
         )
 );
 

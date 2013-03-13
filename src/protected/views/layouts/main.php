@@ -17,7 +17,7 @@
                 <div class="header-school-logo">
                     <div id="logo_artikel">der&nbsp;&nbsp;</div>
                     <img id="logo_school" src="<?php echo Yii::app()->request->baseUrl; ?>/img/LogoBWS.svg">
-		</div>
+                </div>
             </div>
         </div>
         <?php if (!Yii::app()->user->isGuest) { ?>
@@ -46,6 +46,8 @@
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Ihre Kinder', 'url' => array('/ParentChild/index'), 'visible' => Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
                             //          array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Rollenverwaltung', 'url' => array('/Role/admin'), 'visible' => Yii::app()->user->checkAccess('0')),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Benutzerverwaltung', 'url' => array('/User/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
+                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Tanverwaltung', 'url' => array('Tan/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
+                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Tanverwaltung', 'url' => array('Tan/genTans'), 'visible' => Yii::app()->user->checkAccess('2') && !Yii::app()->user->isAdmin()),
                             //          array('label' => 'Rollenzuweisung', 'url' => array('/UserRole/admin'), 'visible' => Yii::app()->user->checkAccess('1')), // wird nicht benötigt atm
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Ihr Account', 'url' => array('/User/view&id=' . Yii::app()->user->getId()), 'visible' => !Yii::app()->user->isGuest),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),

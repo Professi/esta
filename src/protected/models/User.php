@@ -26,6 +26,7 @@ class User extends CActiveRecord {
     public $role = null;
     public $roleName = null;
     public $stateName = null;
+    public $verifyCode = null;
 
     /**
      * Returns the static model of the specified AR class.
@@ -56,7 +57,8 @@ class User extends CActiveRecord {
             array('firstname, lastname, email', 'length', 'max' => 45),
             array('password', 'length', 'max' => 128, 'min' => 8),
             array('password', 'compare', "on" => "insert"),
-            array('password_repeat', 'safe'), //allow bulk assignment 
+            array('password_repeat','safe'), //allow bulk assignment
+            array('verifyCode', 'captcha', 'allowEmpty'=>Yii::app()->user->isAdmin() || !CCaptcha::checkRequirements()),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, username, firstname, state, lastname, email, role,roleName,stateName', 'safe', 'on' => 'search'),
@@ -115,7 +117,8 @@ class User extends CActiveRecord {
             'email' => 'E-Mail',
             'createtime' => 'Registrierungsdatum',
             'role' => 'RollenID',
-            'roleName' => 'Rolle'
+            'roleName' => 'Rolle',
+            'verifyCode'=> 'Sicherheitscode',
         );
     }
 

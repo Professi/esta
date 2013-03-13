@@ -25,17 +25,13 @@ class TanController extends Controller {
      */
     public function accessRules() {
         return array(
-            array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view'),
-                'users' => array('*'),
-            ),
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update'),
-                'users' => array('@'),
-            ),
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete'),
-                'users' => array('admin'),
+//            array('allow',
+//                'actions' => array('create', 'update'),
+//                'roles' => array('2'),
+//            ),
+            array('allow', 
+                'actions' => array('admin','genTans'),
+                'roles' => array('1'),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
@@ -73,6 +69,12 @@ class TanController extends Controller {
             'model' => $model,
         ));
     }
+
+    public function actionGenTans() {
+        $model = new Tan();
+        $this->render('formGenTans', array('model'=>$model));
+    }
+
 
     /**
      * Updates a particular model.
@@ -163,7 +165,7 @@ class TanController extends Controller {
         for ($i = 0; $i < $count; ++$i) {
             $tan = new Tan;
             $sTan = "";
-            for ($x = 0; $x < 6; ++$x) {
+            for ($x = 0; $x < Yii::app()->params['tanSize']; ++$x) {
                 $sTan .= rand(0, 9);
             }
             $tan->tan = $sTan;
