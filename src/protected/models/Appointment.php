@@ -73,10 +73,10 @@ class Appointment extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'time' => 'Time',
-			'date_id' => 'Date',
-			'parent_child_id' => 'Parent Child',
-			'user_id' => 'User',
+			'time' => 'Zeit',
+			'date_id' => 'Datum',
+			'parent_child_id' => 'Benutzer',
+			'user_id' => 'Lehrer',
 		);
 	}
 

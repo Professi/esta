@@ -16,9 +16,14 @@ if(Yii::app()->user->checkAccess(1)) {
 } else {
 ?>
 
-<h1>Ihr(e) Kind(er)</h1>
+<div class="row">
+    <div class="twelve columns">
+        <h2 class="subheader">Ihre Kinder</h2>
+        <hr>
 
 <?php  } $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 )); ?>
+    </div>
+</div>

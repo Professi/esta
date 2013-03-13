@@ -68,10 +68,10 @@ class Date extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'date' => 'Date',
-			'begin' => 'Begin',
-			'end' => 'End',
-			'durationPerAppointment' => 'Duration Per Appointment',
+			'date' => 'Datum',
+			'begin' => 'Anfang',
+			'end' => 'Ende',
+			'durationPerAppointment' => 'Dauer eines Termins',
 		);
 	}
 

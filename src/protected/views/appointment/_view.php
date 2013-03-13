@@ -10,20 +10,27 @@
             <b>#<?php echo CHtml::encode($data->id); ?></b>
         </div>
         <div class="eleven columns">
-            <b>Am <?php echo CHtml::encode($data->date->date); ?> um <?php echo CHtml::encode($data->time.substr(0, 4)); ?></b>
+            <b>Am <?php echo CHtml::encode($data->date->date); ?> um <?php echo CHtml::encode($data->time); ?></b>
         </div>
     </div>
     <br>
-    <div class="row">
+    <div class="row collapse">
         <div class="one columns"></div>
-        <div class="four columns">
-            <i>Ihr Kind</i><br>
+        <div class="one columns">
+            <i>Ihr Kind</i>
+        </div>
+        <div class="ten columns">
             <?php echo CHtml::encode($data->parentChild->child->firstname.' '.$data->parentChild->child->lastname); ?>
         </div>
-        <div class="three columns">
-            <i>bei</i><br>
-            <?php echo CHtml::encode($data->user->lastname); ?>
+    </div>
+    <br>
+    <div class="row collapse">
+        <div class="one columns"></div>
+        <div class="one columns">   
+            <i>bei</i>
+        </div>
+        <div class="ten columns">
+             <?php echo CHtml::encode($data->user->lastname); ?>
         </div>
     </div>
-
 </div>
