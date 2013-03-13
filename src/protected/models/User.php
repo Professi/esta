@@ -194,6 +194,20 @@ class User extends CActiveRecord {
     public function beforeDelete() {
         $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
         $userRole->delete();
+        $a_parentChild = ParentChild::model()->findAllByAttributes(array('user_id'=>  $this->id));
+        if(!empty($a_parentChild)) {
+            for($i=0; $i< count($a_parentChild); ++$i) {
+                /**
+                 * @todo nach Lehrer auch User entfernen
+                 */
+                $a_appointment = Appointment::model()->findAllByAttributes(array('parent_child_id'=>$a_parentChild[$i]->id));
+                for($x=0; $x  < count($a_appointment); ++$x) {
+                    $a_appointment[$x]->delete();
+                }
+                $a_parentChild[$i]->delete();
+            }
+            
+        }
         return parent::beforeDelete();
     }
 
