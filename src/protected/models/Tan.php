@@ -11,7 +11,7 @@ class Tan extends CActiveRecord {
 
     public $tan_count = 0;
     public $id = 0;
-    
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -35,8 +35,8 @@ class Tan extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-           // array('tan_count', 'required'),
-            array('tan_count', 'numerical', 'integerOnly' => true, 'min'=>1, 'max'=>Yii::app()->params['maxTanGen']),
+            // array('tan_count', 'required'),
+            array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen']),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('tan, used', 'safe', 'on' => 'search'),
