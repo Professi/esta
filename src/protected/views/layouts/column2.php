@@ -1,10 +1,6 @@
 <?php /* @var $this Controller */ ?>
 <?php $this->beginContent('//layouts/main'); ?>
-<div class="span-19">
-	<div id="content">
 		<?php echo $content; ?>
-	</div><!-- content -->
-</div>
 <div class="push"></div>
 <div class="row">
 	<div id="sidebar" class="twelve columns">
