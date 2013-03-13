@@ -29,8 +29,8 @@ class TanController extends Controller {
 //                'actions' => array('create', 'update'),
 //                'roles' => array('2'),
 //            ),
-            array('allow', 
-                'actions' => array('admin','genTans'),
+            array('allow',
+                'actions' => array('admin', 'genTans'),
                 'roles' => array('1'),
             ),
             array('deny', // deny all users
@@ -72,9 +72,20 @@ class TanController extends Controller {
 
     public function actionGenTans() {
         $model = new Tan();
-        $this->render('formGenTans', array('model'=>$model));
+        if (isset($_POST['Tan']) && Yii::app()->session['isTanGen'] != 1) {
+            $model->attributes = $_POST['Tan'];
+            if ($model->validate()) {
+                Yii::app()->session['isTanGen'] = 1;
+                $dataProvider = new CArrayDataProvider(self::generateTan($model->tan_count), array('pagination' => array('pageSize' => Yii::app()->params['maxTanGen'])));
+                $this->render('showGenTans', array('dataProvider' => $dataProvider));
+            }
+        } else {
+            if (isset(Yii::app()->session['isTanGen'])) {
+                unset(Yii::app()->session['isTanGen']);
+            }
+            $this->render('formGenTans', array('model' => $model));
+        }
     }
-
 
     /**
      * Updates a particular model.
@@ -170,8 +181,15 @@ class TanController extends Controller {
             }
             $tan->tan = $sTan;
             $tan->used = false;
-            $tan->save();
-            $a_rc = array_push($a_rc, $sTan);
+            $tan->tan_count = 1;
+            if (Tan::model()->countByAttributes(array('tan' => $tan->tan)) == 0) {
+                if ($tan->save()) {
+                    $tan->id = $i;
+                    $a_rc[] = $tan;
+                }
+            } else {
+                --$i;
+            }
         }
         return $a_rc;
     }

@@ -5,11 +5,12 @@
  *
  * The followings are the available columns in table 'tan':
  * @property integer $tan
- * @property integer $used
+ * @property boolean $used
  */
 class Tan extends CActiveRecord {
 
     public $tan_count = 0;
+    public $id = 0;
     
     /**
      * Returns the static model of the specified AR class.
@@ -34,8 +35,8 @@ class Tan extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('tan_count', 'required'),
-            array('tan_count', 'numerical', 'integerOnly' => true),
+           // array('tan_count', 'required'),
+            array('tan_count', 'numerical', 'integerOnly' => true, 'min'=>1, 'max'=>Yii::app()->params['maxTanGen']),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('tan, used', 'safe', 'on' => 'search'),
@@ -59,6 +60,7 @@ class Tan extends CActiveRecord {
         return array(
             'tan' => 'Tan',
             'used' => 'Benutzt',
+            'tan_count' => 'Anzahl',
         );
     }
 

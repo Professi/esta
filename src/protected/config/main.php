@@ -119,6 +119,7 @@ return array(
         'mailsActivated'=>true,
         'maxChild'=>3,
         'tanSize'=>6,
+        'maxTanGen'=>100,
         )
 );
 
