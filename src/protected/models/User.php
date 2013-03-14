@@ -178,9 +178,11 @@ class User extends CActiveRecord {
      */
     public function afterSave() {
         if ($this->isNewRecord) {
+            if(!Yii::app()->user->isAdmin()) {
             $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
             $tan->used = true;
             $tan->update();
+            }
             $userRole = New UserRole();
             $userRole->user_id = $this->id;
             if (Yii::app()->user->isGuest) {
