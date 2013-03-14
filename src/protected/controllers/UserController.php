@@ -85,7 +85,7 @@ class UserController extends Controller {
     }
 
     public function actionImportTeachers() {
-        
+        $this->render('importTeacher');
     }
 
 
