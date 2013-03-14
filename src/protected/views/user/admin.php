@@ -9,6 +9,7 @@ $this->breadcrumbs = array(
 
 $this->menu = array(
     array('label' => 'Benutzer erstellen', 'url' => array('create')),
+    array('label' => 'Lehrer importieren', 'url' => array('importTeachers')),
 );
 
 Yii::app()->clientScript->registerScript('search', "

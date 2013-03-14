@@ -16,13 +16,13 @@ $form = $this->beginWidget('CActiveForm', array(
         ));
 ?>
 
-<?php echo $form->labelEx($model, 'email'); ?>
-<?php echo $form->textField($model, 'email'); ?>
-<?php echo $form->error($model, 'email'); ?>
+<?php echo $form->labelEx($model, 'file'); ?>
+<?php echo $form->fileField($model, 'file'); ?>
+<?php echo $form->error($model, 'file'); ?>
 
 
 
-<?php echo CHtml::submitButton($model->isNewRecord ? 'Registrieren' : 'Speichern', array('class' => 'button')); ?>
+<?php echo CHtml::submitButton('Importieren', array('class' => 'button')); ?>
 
 <?php $this->endWidget(); ?>
 

@@ -85,7 +85,14 @@ class UserController extends Controller {
     }
 
     public function actionImportTeachers() {
-        $this->render('importTeacher');
+        $model = new CsvUpload();
+        if(isset($_POST['CsvUpload'])) {
+            if($model->validate()) {
+                 $model->attributes->saveAs(Yii::app()->request->basePath . '/protected/upload');
+            }
+        }
+        
+        $this->render('importTeacher',array('model'=>$model,));
     }
 
 
