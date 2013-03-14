@@ -22,7 +22,7 @@ $this->breadcrumbs = array(
 <?php else: ?>
     <div class="alert-box secondary">
         
-            Sollten Sie Fragen haben, füllen Sie bitte das nachfolgende Formular aus. Vielen Dank.
+            Sollten Sie Fragen oder Anregungen haben, setzen Sie sich mit uns in Kontakt indem Sie das nachfolgende Formular ausfüllen. Vielen Dank.
         
     </div>
 

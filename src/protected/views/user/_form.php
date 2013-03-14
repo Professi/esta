@@ -81,10 +81,10 @@ $form = $this->beginWidget('CActiveForm', array(
     <div>
         <?php $this->widget('CCaptcha'); ?>
     <?php echo $form->textField($model, 'verifyCode', array('placeholder' => 'Sicherheitscode')); ?>
-        <?php    echo $form->error($model, 'verifyCode');}?>
+        <?php    echo $form->error($model, 'verifyCode');?>
     </div>
     <div class="hint">Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>
-
+<?php } ?>
 
 <?php echo CHtml::submitButton($model->isNewRecord ? 'Registrieren' : 'Speichern', array('class' => 'button')); ?>
 

@@ -77,7 +77,6 @@
                         $this->widget('zii.widgets.CMenu', array(
                             'htmlOptions' => array('class' => 'link-list right'),
                             'items' => array(
-                                array('label' => 'Über', 'url' => array('/site/page', 'view' => 'about')),
                                 array('label' => 'Impressum', 'url' => array('/site/page', 'view' => 'impressum')),
                                 array('label' => 'Kontakt', 'url' => array('/site/contact')
                         ))));
