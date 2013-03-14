@@ -164,3 +164,6 @@ table {
     position: relative;
     top: -1.5em;
 }
+.pager {
+    text-align:center;
+}

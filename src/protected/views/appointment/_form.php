@@ -40,7 +40,7 @@
 
 	<div class="row collapse">
             <div class="two columns">
-                <span class="prefix">Eltern-Kind-Verknüpfungs-ID</span>
+                <span class="prefix">Verknüpfungs-ID</span>
             </div>
             <div class="ten columns">
 		<?php echo $form->textField($model,'parent_child_id'); ?>

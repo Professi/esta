@@ -96,6 +96,22 @@ return array(
             'class' => 'CHttpSession',
             'autoStart' => true,
         ),
+        'widgetFactory' => array(
+            'widgets' => array(
+                'CLinkPager' => array(
+                    'header' => '',
+                    'nextPageLabel' => '&rsaquo;',
+                    'prevPageLabel' => '&lsaquo;',
+                    'firstPageLabel' => '&laquo;',
+                    'lastPageLabel' => '&raquo;',
+                    'firstPageCssClass' => 'arrow',
+                    'lastPageCssClass' => 'arrow',
+                    'hiddenPageCssClass' => 'unavailable',
+                    'selectedPageCssClass' => 'current',
+                    'htmlOptions' => array ('class' => 'pagination'),
+                ),
+            ),
+        ),
     ),
     'modules' => array(
         'gii' => array(

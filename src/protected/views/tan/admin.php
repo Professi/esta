@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create Tan', 'url'=>array('genTans')),
+	array('label'=>'Tan generieren', 'url'=>array('genTans')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -24,8 +24,11 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
-
-<h1>Bisher generierte Tans</h1>
+<div class="row">
+    <div class="twelve columns centered">
+        <h2 class="text-center">Bisher generierte Tans</h2>
+    </div>
+</div>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'tan-grid',
