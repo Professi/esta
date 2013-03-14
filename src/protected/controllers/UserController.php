@@ -114,7 +114,7 @@ class UserController extends Controller {
                             } else {
                                 $uml = array("Ö" => "Oe", "ö" => "oe", "Ä" => "Ae", "ä" => "ae", "Ü" => "Ue", "ü" => "ue", "ß" => "ss",);
                                 $model->email = strtolower(substr($model->firstname, 0, 1))
-                                        . '.' . strtolower(strtr($model->lastname, $uml)) . '@'
+                                        . '.' . preg_replace("/\s+/", " ", strtolower(strtr($model->lastname, $uml))) . '@'
                                         . Yii::app()->params['teacherMail'];
                             }
                             $model->username = $model->email;
