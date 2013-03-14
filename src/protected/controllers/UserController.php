@@ -84,6 +84,10 @@ class UserController extends Controller {
         $this->render('activate');
     }
 
+    /**
+     * Falls die CSV Datei hochgeladen wurde, wird diese geparsed und sofern eine E-Mail Adresse vorhanden ist eingefügt
+     * 
+     */
     public function actionImportTeachers() {
         $model = new CsvUpload();
         if (isset($_POST['CsvUpload'])) {
