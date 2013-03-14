@@ -167,3 +167,6 @@ table {
 .pager {
     text-align:center;
 }
+#CsvUpload_file {
+    margin-bottom: 1em;
+}
