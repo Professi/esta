@@ -85,30 +85,13 @@ class UserController extends Controller {
     }
 
     public function actionImportTeachers() {
-//        $model = new CsvUpload();
-//        if(isset($_POST['CsvUpload'])) {
-//            if($model->validate()) {
-//                 $model->attributes->saveAs(Yii::app()->request->basePath . '/protected/upload');
-//            }
-//            $this->render('importTeacher',array('model'=>$model,));
-//        }
-//        
-
-
         $model = new CsvUpload();
-        //$file = CUploadedFile::getInstance($model,'csv_file');
         if (isset($_POST['CsvUpload'])) {
             $model->attributes = $_POST['CsvUpload'];
             if (!empty($_FILES['CsvUpload']['tmp_name']['file'])) {
                 $file = CUploadedFile::getInstance($model, 'file');
-                echo mb_check_encoding($file->tempName);
-                $fileNeu = mb_convert_encoding($file->tempName, 'ISO-8859-1','UTF-8');
-//                $fileNeu = mb_convert_encoding($file->tempName, 'UTF-8');
-                $fp = fopen($fileNeu, 'r');
-
+                $fp = fopen($file->tempName, 'r');
                 if ($fp) {
-                    //  $line = fgetcsv($fp, 1000, ",");
-                    //  print_r($line); exit;
                     $first_time = true;
                     $i = 0;
                     do {
@@ -120,24 +103,25 @@ class UserController extends Controller {
                         if ($line[2] != NULL) {
                             if ($line[0] != "Vorname" && !$line[1] != "Nachname") {
                                 $model = new User();
-                                $model->firstname = $line[0];
-                                $model->lastname = $line[1];
-                                echo $model->lastname . " ";
-                                $model->email = $line[2];
-                                $model->username = $line[2];
-                                $model->title = $line[3];
+                                $model->firstname = mb_convert_encoding($line[0], 'UTF-8', 'ISO-8859-1');
+                                $model->lastname = mb_convert_encoding($line[1], 'UTF-8', 'ISO-8859-1');
+                                $model->email = mb_convert_encoding($line[2], 'UTF-8', 'ISO-8859-1');
+                                $model->username = mb_convert_encoding($line[2], 'UTF-8', 'ISO-8859-1');
+                                $model->title = mb_convert_encoding($line[3], 'UTF-8', 'ISO-8859-1');
                                 $model->state = 1;
                                 $model->role = 2;
                                 $model->password = "DONNERSTAG01";
                                 $model->password_repeat = $model->password;
-                                //       $model->save();
+                                $model->save();
                             }
                         }
                     } while (($line = fgetcsv($fp, 1000, ";")) != FALSE);
                 }
+                $this->redirect('index.php?r=/user/admin');
             }
+        } else {
+            $this->render('importTeacher', array('model' => $model,));
         }
-        $this->render('importTeacher', array('model' => $model,));
     }
 
     /**
