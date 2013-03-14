@@ -26,5 +26,8 @@ if (Yii::app()->user->checkAccess(1)) {
             <?php } ?>
 <? echo $this->renderPartial('_form', array('model' => $model)); ?>
         </fieldset>
+        <?php if (Yii::app()->user->isGuest) { ?>
+        <p class="text-center"><?php echo CHtml::link('<b>Zurück zur Startseite</b>', 'index.php'); ?> </p>
+        <?php } ?>
     </div>
 </div>
