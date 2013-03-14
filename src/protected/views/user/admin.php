@@ -62,6 +62,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name'=>'createtime','value'=>'date(Yii::app()->params["dateTimeFormat"], $data->createtime)',),
         array('name'=>'firstname',),
         'lastname',
+        'title',
         array('name' => 'Status','value'=>'User::getFormattedState($data->state)'),
         array('name' => 'Rolle', 'value'=>'User::getFormattedRole($data->userRoles->role_id)'),
       //  array('header'=>'Rolle','value'=>'$data->role'),
