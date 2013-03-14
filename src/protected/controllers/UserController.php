@@ -84,6 +84,15 @@ class UserController extends Controller {
         $this->render('activate');
     }
 
+    public function actionImportTeachers() {
+        
+    }
+
+
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * Action um ein neues Passwort zu setzen
+     */
     public function actionNewPw() {
         $model = new NewPw();
         if (isset($_POST['NewPw'])) {
@@ -114,7 +123,6 @@ class UserController extends Controller {
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * Action um ein neues Passwort anzufordern
-     * 
      */
     public function actionChangePwd() {
         $model = new ChangePwd;
@@ -209,16 +217,6 @@ class UserController extends Controller {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 
-//    /**
-//     * Lists all models.
-//     */
-//    public function actionIndex() {
-//        $dataProvider = new CActiveDataProvider('User');
-//        $this->render('index', array(
-//            'dataProvider' => $dataProvider,
-//        ));
-//    }
-
     /**
      * Manages all models.
      */
@@ -270,28 +268,6 @@ class UserController extends Controller {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
-    }
-
-    public function actionChange() {
-        $model = new PasswordChangeForm();
-        if (isset($_POST["PasswordChangeForm"])) {
-            $attributes = $_POST["PasswordChangeForm"];
-            $currentUserId = Yii::app()->user->id;
-            $attributes["user_id"] = $currentUserId;
-            $model->setAttributes($attributes);
-            if ($model->validate()) {
-                $user = User::model()->findByPk($currentUserId);
-                $user->password = $_POST["PasswordChangeForm"]["password"];
-                $user->password_repeat = $_POST["PasswordChangeForm"]["password"];
-                Yii::app()->user->setFlash("success", "Passwort wurde geändert.");
-                if ($user->save())
-                    if (Yii::app()->user->checkAccess(1)) {
-                        $this->redirect('User/admin');
-                    }
-                $this->redirect("User/view&id=" . Yii::app()->user->getId());
-            }
-        }
-        $this->render("change", array("model" => $model));
     }
 
     public static function sendMail($subject, $message, $to, $from, $fromName) {

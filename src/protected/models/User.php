@@ -325,5 +325,9 @@ class User extends CActiveRecord {
         }
         return $rc;
     }
+    
+    public function importTeacherList() {
+        
+    }
 
 }
