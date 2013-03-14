@@ -121,6 +121,7 @@ return array(
         'emailHost'=>'localhost', //Sofern der SMTP Server auf dem selben Server läuft einfach localhost
         'fromMailHost'=>'est@h1963533.stratoserver.net', //Absender der Mails wird wohl später dann EST@bws-hofheim.de
         'fromMail'=>'ESTA-BWS', //Der Absendername bsp. BWS-Hofhei,
+        'teacherMail'=>'bws-hofheim.de',
         'virtualHost'=>'/~est/est_trunk/', //unbedingt anpassen damit E-Mails mit korrektem Aktivierungslink versendet werden können
         'mailsActivated'=>true, //ob Mails versendet werden solen
         'maxChild'=>3, //Maximal Anzahl von eintragbaren Kindern pro Benutzer mit Elternrolle

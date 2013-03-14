@@ -14,7 +14,7 @@ class UserController extends Controller {
     public function filters() {
         return array(
             'accessControl', // perform access control for CRUD operations
-         //   'postOnly + delete', // we only allow deletion via POST request
+                //   'postOnly + delete', // we only allow deletion via POST request
         );
     }
 
@@ -93,7 +93,7 @@ class UserController extends Controller {
         $model = new CsvUpload();
         if (isset($_POST['CsvUpload'])) {
             $model->attributes = $_POST['CsvUpload'];
-            if (!empty($_FILES['CsvUpload']['tmp_name']['file'])) {
+            if ($model->validate() && !empty($_FILES['CsvUpload']['tmp_name']['file'])) {
                 $file = CUploadedFile::getInstance($model, 'file');
                 $fp = fopen($file->tempName, 'r');
                 if ($fp) {
@@ -105,24 +105,31 @@ class UserController extends Controller {
                             $first_time = false;
                             continue;
                         }
-                        if ($line[2] != NULL && $line[2] != 'Email') {
-                            if ($line[0] != "Vorname" && !$line[1] != "Nachname") {
-                                $model = new User();
-                                $model->firstname = mb_convert_encoding($line[0], 'UTF-8', 'ISO-8859-1');
-                                $model->lastname = mb_convert_encoding($line[1], 'UTF-8', 'ISO-8859-1');
+                        if ($line[0] != "Vorname" && !$line[1] != "Nachname" && $line[2] != 'Email') {
+                            $model = new User();
+                            $model->firstname = mb_convert_encoding($line[1], 'UTF-8', 'ISO-8859-1');
+                            $model->lastname = mb_convert_encoding($line[0], 'UTF-8', 'ISO-8859-1');
+                            if ($line[2] != NULL) {
                                 $model->email = mb_convert_encoding($line[2], 'UTF-8', 'ISO-8859-1');
-                                $model->username = mb_convert_encoding($line[2], 'UTF-8', 'ISO-8859-1');
-                                $model->title = mb_convert_encoding($line[3], 'UTF-8', 'ISO-8859-1');
-                                $model->state = 1;
-                                $model->role = 2;
-                                $model->password = "DONNERSTAG01";
-                                $model->password_repeat = $model->password;
-                                $model->save();
+                            } else {
+                                $uml = array("Ö" => "Oe", "ö" => "oe", "Ä" => "Ae", "ä" => "ae", "Ü" => "Ue", "ü" => "ue", "ß" => "ss",);
+                                $model->email = strtolower(substr($model->firstname, 0, 1))
+                                        . '.' . strtolower(strtr($model->lastname, $uml)) . '@'
+                                        . Yii::app()->params['teacherMail'];
                             }
+                            $model->username = $model->email;
+                            $model->title = mb_convert_encoding($line[3], 'UTF-8', 'ISO-8859-1');
+                            $model->state = 1;
+                            $model->role = 2;
+                            $model->password = "DONNERSTAG01";
+                            $model->password_repeat = $model->password;
+                            $model->save();
                         }
                     } while (($line = fgetcsv($fp, 1000, ";")) != FALSE);
                 }
                 $this->redirect('index.php?r=/user/admin');
+            } else {
+                $this->render('importTeacher', array('model' => $model,));
             }
         } else {
             $this->render('importTeacher', array('model' => $model,));
