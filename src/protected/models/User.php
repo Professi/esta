@@ -13,6 +13,7 @@
  * @property integer $state
  * @property string $lastname
  * @property string $email
+ * @property string $title
  *
  * The followings are the available model relations:
  * @property Appointment[] $appointments

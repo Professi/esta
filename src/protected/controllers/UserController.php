@@ -306,5 +306,4 @@ class UserController extends Controller {
         $mailer->Body = $message;
         $mailer->Send();
     }
-
 }
