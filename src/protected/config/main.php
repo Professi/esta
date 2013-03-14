@@ -5,115 +5,105 @@
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 return array(
-    'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
-    'name' => 'Elternsprechtagsplattform der Brühlwiesenschule',
-    'language' => 'de',
-    // preloading 'log' component
-    'preload' => array('log'),
-    // autoloading model and component classes
-    'import' => array(
-        'application.models.*',
-        'application.components.*',
+    'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..', //nicht ändern
+    'name' => 'Elternsprechtagsplattform der Brühlwiesenschule', //entsprechend den eigenen Bedürfnissen anpassen
+    'language' => 'de', //Sprache
+    'preload' => array('log'), //Logkomponente - nicht ändern
+    'import' => array(          //nicht ändern
+        'application.models.*', //nicht ändern
+        'application.components.*', //nicht ändern
     ),
 // application components
-    'components' => array(
-        'user' => array(
-            'class' => 'WebUser',
-            'allowAutoLogin' => true,
-//            'loginUrl' => array('//user/user/login'),
+    'components' => array( //nicht ändern
+        'user' => array( //nicht ändern
+            'class' => 'WebUser', //nicht ändern
+            'allowAutoLogin' => true, //nicht ändern
         ),
-        'clientScript' => array(
-            'coreScriptPosition'=>  CClientScript::POS_END,
-            'scriptMap' => array(
-                'jquery.js' => false,
-                'jquery.js.min' => false,
-                'jquery.cookie.js'=>false,
-                'jquery.ba-bbq.js'=>false,
-                'jquery.yiigridview.js'=>false,
-                'core.css' => false,
-                'styles.css' => false,
-                'pager.css' => false,
-                'default.css' => false,
+        'clientScript' => array( //nicht ändern
+            'coreScriptPosition'=>  CClientScript::POS_END, //nicht ändern
+            'scriptMap' => array( //nicht ändern
+                'jquery.js' => false, //nicht ändern
+                'jquery.js.min' => false, //nicht ändern
+                'jquery.cookie.js'=>false, //nicht ändern
+                'jquery.ba-bbq.js'=>false, //nicht ändern
+                'jquery.yiigridview.js'=>false, //nicht ändern
+                'core.css' => false, //nicht ändern
+                'styles.css' => false, //nicht ändern
+                'pager.css' => false, //nicht ändern
+                'default.css' => false, //nicht ändern
             ),
-            'packages'=>array(
-              'javascript'=>array(
-                  'baseUrl'=>'js/',
-                'js'=>array('foundation.min.js','app.js','custom.js'),
+            'packages'=>array( //nicht ändern
+              'javascript'=>array( //nicht ändern
+                  'baseUrl'=>'js/', //nicht ändern
+                'js'=>array('foundation.min.js','app.js','custom.js'), //nicht ändern
               ),
-                'css'=>array(
-                  'baseUrl'=>'css/',
-                    'css'=>array('foundation.min.css','icons.css','app.css')
+                'css'=>array( //nicht ändern
+                  'baseUrl'=>'css/', //nicht ändern
+                    'css'=>array('foundation.min.css','icons.css','app.css') //nicht ändern
                 ),
             ),
         ),
-        // uncomment the following to enable URLs in path-format
-        'urlManager' => array(
-            //   'urlFormat'=>'path',
-            'rules' => array(
-                '<controller:\w+>/<id:\d+>' => '<controller>/view',
-                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>', // this is the rule you absolutely need for update to work
-                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-                '<action>' => 'site/<action>'
+        'urlManager' => array( //nicht ändern
+            'rules' => array( //nicht ändern
+                '<controller:\w+>/<id:\d+>' => '<controller>/view', //nicht ändern
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>', //nicht ändern
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>', //nicht ändern
+                '<action>' => 'site/<action>' //nicht ändern
             ),
         ),
-        'authManager' => array(
-            'class' => 'CDbAuthManager',
-            'connectionID' => 'db',
+        'authManager' => array( //nicht ändern
+            'class' => 'CDbAuthManager', //nicht ändern
+            'connectionID' => 'db', //nicht ändern
         ),
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=estdb',
-            'emulatePrepare' => true,
-            'enableProfiling' => true,
-            'username' => 'estdb',
-            'password' => 'qwertzuiop',
-            'charset' => 'utf8',
-            'tablePrefix' => '',
+            'connectionString' => 'mysql:host=localhost;dbname=estdb', //entsprechen der eigenen Datenbank anpassen  Beispiel: mysql:host=HOST;dbname=DBNAME
+            'emulatePrepare' => true, //nicht ändern
+            'enableProfiling' => true, //nicht ändern
+            'username' => 'estdb', //DB User bitte anpassen
+            'password' => 'qwertzuiop', //DB Passwort bitte anpassen
+            'charset' => 'utf8', //eventuell anpassen im optimalfall dabei belassen
+            'tablePrefix' => '', //nicht ändern
         ),
         'errorHandler' => array(
-            // use 'site/error' action to display errors
-            'errorAction' => 'site/error',
+            'errorAction' => 'site/error', //nicht ändern
         ),
         'log' => array(
-            'class' => 'CLogRouter',
-            'routes' => array(
+            'class' => 'CLogRouter', //nicht ändern
+            'routes' => array( //nicht ändern
                 array(
-                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute',
-         //           'class' => 'CFileLogRoute',
-           //         'levels' => 'error,warning',
+                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute', //auskommentieren
+         //           'class' => 'CFileLogRoute', //jenachdem ob ein DateiLog benötigt wird auskommentieren - empfohlen
+           //         'levels' => 'error,warning', // auskommentieren wird auch hier empfohlen
                 ),
-            // uncomment the following to show log messages on web pages
-          //   array(
-          //    'class'=>'CWebLogRoute',
-          //   ), 
             ),
         ),
-        'cache' => array(
+        'cache' => array(  // nicht ändern , kommt eventuell noch wegen da aktuell nichts gecached wird
             'class' => 'system.caching.CDbCache',
             'connectionID' => 'db'
         ),
-        'session' => array(
-            'sessionName' => 'SiteSession',
-            'class' => 'CHttpSession',
-            'autoStart' => true,
+        'session' => array( // nicht ändern
+            'sessionName' => 'SiteSession', // nicht ändern
+            'class' => 'CHttpSession', // nicht ändern
+            'autoStart' => true, // nicht ändern
         ),
-        'widgetFactory' => array(
-            'widgets' => array(
-                'CLinkPager' => array(
-                    'header' => '',
-                    'nextPageLabel' => '&rsaquo;',
-                    'prevPageLabel' => '&lsaquo;',
-                    'firstPageLabel' => '&laquo;',
-                    'lastPageLabel' => '&raquo;',
-                    'firstPageCssClass' => 'arrow',
-                    'lastPageCssClass' => 'arrow',
-                    'hiddenPageCssClass' => 'unavailable',
-                    'selectedPageCssClass' => 'current',
-                    'htmlOptions' => array ('class' => 'pagination'),
+        'widgetFactory' => array( // nicht ändern
+            'widgets' => array( // nicht ändern
+                'CLinkPager' => array( // nicht ändern
+                    'header' => '', // nicht ändern
+                    'nextPageLabel' => '&rsaquo;', // nicht ändern
+                    'prevPageLabel' => '&lsaquo;', // nicht ändern
+                    'firstPageLabel' => '&laquo;', // nicht ändern
+                    'lastPageLabel' => '&raquo;', // nicht ändern
+                    'firstPageCssClass' => 'arrow', // nicht ändern
+                    'lastPageCssClass' => 'arrow', // nicht ändern
+                    'hiddenPageCssClass' => 'unavailable', // nicht ändern
+                    'selectedPageCssClass' => 'current', // nicht ändern
+                    'htmlOptions' => array ('class' => 'pagination'), // nicht ändern
                 ),
             ),
         ),
     ),
-    'modules' => array(
+    'modules' => array( //wird noch entfernt
         'gii' => array(
             'class' => 'system.gii.GiiModule',
             'password' => 'test',
@@ -125,18 +115,18 @@ return array(
     // using Yii::app()->params['paramName']
     'params' => array(
         // this is used in contact page
-        'adminEmail' => 'c.ehringfeld@t-online.de',
-        'salt' => 'e9HOiJFfDhyvcBMin5G8CBTR98wK',
-        'dateTimeFormat' => 'd.m.Y H:i',
+        'adminEmail' => 'c.ehringfeld@t-online.de', //Administrator E-Mail Adresse
+        'salt' => 'e9HOiJFfDhyvcBMin5G8CBTR98wK', //der Applikationssalt sollte mindestens 30 Zeichen lang sein und nur aus alphanumerischen Zeichen bestehen 
+        'dateTimeFormat' => 'd.m.Y H:i', //Datumsformat -  muss nicht geändert werden
         'emailHost'=>'localhost', //Sofern der SMTP Server auf dem selben Server läuft einfach localhost
-        'fromMailHost'=>'est@h1963533.stratoserver.net', //Absender der Mails
-        'fromMail'=>'ESTA-BWS', //Der Absendername bsp. BWS
-        'virtualHost'=>'/~est/est_trunk/',
-        'mailsActivated'=>true,
-        'maxChild'=>3,
-        'tanSize'=>6,
-        'maxTanGen'=>100,
-        'maxAppointmentsPerChild'=>5,
+        'fromMailHost'=>'est@h1963533.stratoserver.net', //Absender der Mails wird wohl später dann EST@bws-hofheim.de
+        'fromMail'=>'ESTA-BWS', //Der Absendername bsp. BWS-Hofhei,
+        'virtualHost'=>'/~est/est_trunk/', //unbedingt anpassen damit E-Mails mit korrektem Aktivierungslink versendet werden können
+        'mailsActivated'=>true, //ob Mails versendet werden solen
+        'maxChild'=>3, //Maximal Anzahl von eintragbaren Kindern pro Benutzer mit Elternrolle
+        'tanSize'=>6, //Länge der Tans
+        'maxTanGen'=>100, //Maximal auf einmal generierbare Anzahl an TANs
+        'maxAppointmentsPerChild'=>5, //Maximal Anzahl an Terminen pro Kind
         )
 );
 
