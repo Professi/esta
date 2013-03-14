@@ -78,16 +78,13 @@ $form = $this->beginWidget('CActiveForm', array(
         <?php echo $form->error($model, 'tan'); ?>
 
 
-        <?php echo $form->labelEx($model, 'verifyCode'); ?>
     <div>
         <?php $this->widget('CCaptcha'); ?>
-    <?php echo $form->textField($model, 'verifyCode'); ?>
+    <?php echo $form->textField($model, 'verifyCode', array('placeholder' => 'Sicherheitscode')); ?>
+        <?php    echo $form->error($model, 'verifyCode');}?>
     </div>
     <div class="hint">Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>
-    <?php
-    echo $form->error($model, 'verifyCode');
-}
-?>
+
 
 <?php echo CHtml::submitButton($model->isNewRecord ? 'Registrieren' : 'Speichern', array('class' => 'button')); ?>
 

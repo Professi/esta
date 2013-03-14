@@ -16,7 +16,7 @@
                 <div class="header">Elternsprechtag&nbsp;&nbsp;&nbsp;&nbsp;</div>
                 <div class="header-school-logo">
                     <div id="logo_artikel">der&nbsp;&nbsp;</div>
-                    <img id="logo_school" src="<?php echo Yii::app()->request->baseUrl; ?>/img/LogoBWS.svg">
+                    <img id="logo_school" src="<?php echo Yii::app()->request->baseUrl; ?>/img/LogoBWS.svg" alt="Brühlwiesenschule Hofheim">
                 </div>
             </div>
         </div>

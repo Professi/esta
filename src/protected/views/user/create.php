@@ -10,7 +10,7 @@ if (Yii::app()->user->checkAccess(1)) {
     $this->menu = array(
         array('label' => 'Benutzer verwalten', 'url' => array('admin')),
     );
-    ?>
+}?>
 <div class="row">
     <div class="nine columns centered">
         <fieldset>
@@ -24,7 +24,7 @@ if (Yii::app()->user->checkAccess(1)) {
             <?php } else { ?>
             <legend>Benutzer anlegen</legend>
             <?php } ?>
-<? }echo $this->renderPartial('_form', array('model' => $model)); ?>
+<? echo $this->renderPartial('_form', array('model' => $model)); ?>
         </fieldset>
     </div>
 </div>

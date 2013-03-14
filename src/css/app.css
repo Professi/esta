@@ -156,3 +156,11 @@ table {
 	margin-top: -1em;
         margin-bottom: 1em;
 }
+.hint {
+    margin-bottom: 1em;
+    margin-top: -.5em;
+}
+#yw0_button {
+    position: relative;
+    top: -1.5em;
+}
