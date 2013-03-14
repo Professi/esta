@@ -78,6 +78,8 @@ class TanController extends Controller {
                 Yii::app()->session['isTanGen'] = 1;
                 $dataProvider = new CArrayDataProvider(self::generateTan($model->tan_count), array('pagination' => array('pageSize' => Yii::app()->params['maxTanGen'])));
                 $this->render('showGenTans', array('dataProvider' => $dataProvider));
+            } else {
+                $this->render('formGenTans', array('model' => $model));
             }
         } else {
             if (isset(Yii::app()->session['isTanGen'])) {
