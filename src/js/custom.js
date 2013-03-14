@@ -26,8 +26,10 @@
 
     $('#Weiteres_Kind').on('click', function(e) {
         e.preventDefault();
-        $counterKinder++;
-        $('#Weiteres_Kind').before('<input type="text" name="kind' + $counterKinder + '" placeholder="Vorname, Nachname" />');
+        if ($counterKinder < 2 ) {
+            $counterKinder++;
+            $('#Weiteres_Kind').before('<input type="text" name="kind' + $counterKinder + '" placeholder="Vorname, Nachname" />');
+        }
     });
 
     $('.avaiable').on('click', function() {
