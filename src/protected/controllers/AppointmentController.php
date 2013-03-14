@@ -33,8 +33,12 @@ class AppointmentController extends Controller {
                 'actions' => array('create', 'update', 'index'),
                 'roles' => array('3'),
             ),
+            array('allow', //for teachers
+                'actions' => array('index'),
+                'roles' => array('2')
+            ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete','view'),
+                'actions' => array('admin', 'delete','view', 'create'),
                 'roles' => array('1'),
             ),
             array('deny', // deny all users

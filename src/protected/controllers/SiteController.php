@@ -86,8 +86,11 @@ class SiteController extends Controller {
                 // validate user input and redirect to the previous page if valid
                 if ($model->validate() && $model->authenticate()) {
                     if(!Yii::app()->user->isAdmin()) {
+                        if (Yii::app()->user->checkAccess('1')){
+                            $this->redirect('index.php?r=/Appointment/admin');
+                        }
                     $this->redirect('index.php?r=/Appointment/Index');
-                    } else{
+                    } else {
                         $this->redirect('index.php?r=/Date/admin');
                     }
                 }

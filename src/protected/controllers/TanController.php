@@ -25,10 +25,10 @@ class TanController extends Controller {
      */
     public function accessRules() {
         return array(
-//            array('allow',
-//                'actions' => array('create', 'update'),
-//                'roles' => array('2'),
-//            ),
+            array('allow',
+                'actions' => array('genTans'),
+                'roles' => array('2'),
+            ),
             array('allow',
                 'actions' => array('admin', 'genTans'),
                 'roles' => array('1'),
