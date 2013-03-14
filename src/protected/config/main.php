@@ -136,6 +136,7 @@ return array(
         'maxChild'=>3,
         'tanSize'=>6,
         'maxTanGen'=>100,
+        'maxAppointmentsPerChild'=>5,
         )
 );
 

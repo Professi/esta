@@ -85,6 +85,7 @@ class UserController extends Controller {
     }
 
     /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * Falls die CSV Datei hochgeladen wurde, wird diese geparsed und sofern eine E-Mail Adresse vorhanden ist eingefügt
      * 
      */
@@ -104,7 +105,7 @@ class UserController extends Controller {
                             $first_time = false;
                             continue;
                         }
-                        if ($line[2] != NULL) {
+                        if ($line[2] != NULL && $line[2] != 'Email') {
                             if ($line[0] != "Vorname" && !$line[1] != "Nachname") {
                                 $model = new User();
                                 $model->firstname = mb_convert_encoding($line[0], 'UTF-8', 'ISO-8859-1');

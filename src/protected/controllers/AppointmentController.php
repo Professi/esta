@@ -30,7 +30,7 @@ class AppointmentController extends Controller {
 //				'roles'=>array('@'),
 //			),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'index'),
+                'actions' => array('create', 'update', 'index','view'),
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
