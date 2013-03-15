@@ -74,12 +74,12 @@ class UserController extends Controller {
                 $user->save();
                 Yii::app()->user->setFlash('success', 'Ihr Account wurde erfolgreich aktiviert. Sie können Sich nun einloggen.');
             } else if ($user->state == 1) {
-                Yii::app()->user->setFlash('activateFail', 'Ihr Account wurde bereits aktiviert.');
+                Yii::app()->user->setFlash('failMsg', 'Ihr Account wurde bereits aktiviert.');
             } else if ($user->state == 2) {
-                Yii::app()->user->setFlash('activateFail', 'Ihr Account konnte nicht aktiviert werden, weil er bereits gesperrt wurde. Sollten Sie Fragen haben füllen Sie bitte das Kontaktformular aus.');
+                Yii::app()->user->setFlash('failMsg', 'Ihr Account konnte nicht aktiviert werden, weil er bereits gesperrt wurde. Sollten Sie Fragen haben füllen Sie bitte das Kontaktformular aus.');
             }
         } else {
-            Yii::app()->user->setFlash('activateFail', 'Leider konnte Ihr Aktivierungsschlüssel nicht identifiziert werden. Sollten Sie uns kontaktieren wollen, füllen Sie bitte das Kontaktformular aus.');
+            Yii::app()->user->setFlash('failMsg', 'Leider konnte Ihr Aktivierungsschlüssel nicht identifiziert werden. Sollten Sie uns kontaktieren wollen, füllen Sie bitte das Kontaktformular aus.');
         }
         $this->render('activate');
     }

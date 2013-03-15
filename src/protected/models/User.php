@@ -139,14 +139,17 @@ class User extends CActiveRecord {
         // should not be searched.
 
         $criteria = new CDbCriteria;
+        if(!Yii::app()->user->isAdmin()) {
+        $criteria->compare('lastname', $this->lastname, true);
+        $criteria->compare('roleName', $this->roleName, true);
+        } else {
+        $criteria->compare('firstname', $this->firstname, true);
         $criteria->compare('id', $this->id, true);
         $criteria->compare('username', $this->username, true);
-        $criteria->compare('firstname', $this->firstname, true);
         $criteria->compare('state', $this->state);
-        $criteria->compare('lastname', $this->lastname, true);
         $criteria->compare('email', $this->email, true);
         $criteria->compare('stateName', $this->stateName, true);
-        $criteria->compare('roleName', $this->roleName, true);
+        }
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array('pageSize' => 20),
@@ -178,10 +181,10 @@ class User extends CActiveRecord {
      */
     public function afterSave() {
         if ($this->isNewRecord) {
-            if(!Yii::app()->user->isAdmin()) {
-            $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
-            $tan->used = true;
-            $tan->update();
+            if (!Yii::app()->user->isAdmin()) {
+                $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
+                $tan->used = true;
+                $tan->update();
             }
             $userRole = New UserRole();
             $userRole->user_id = $this->id;
@@ -324,10 +327,6 @@ class User extends CActiveRecord {
             }
         }
         return $rc;
-    }
-    
-    public function importTeacherList() {
-        
     }
 
 }

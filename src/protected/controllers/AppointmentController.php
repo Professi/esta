@@ -30,7 +30,7 @@ class AppointmentController extends Controller {
 //				'roles'=>array('@'),
 //			),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'index','view'),
+                'actions' => array('create', 'update', 'index', 'view', 'getTeacher'),
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
@@ -38,7 +38,7 @@ class AppointmentController extends Controller {
                 'roles' => array('2')
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete','view', 'create'),
+                'actions' => array('admin', 'delete', 'view', 'create'),
                 'roles' => array('1'),
             ),
             array('deny', // deny all users
@@ -75,6 +75,17 @@ class AppointmentController extends Controller {
 
         $this->render('create', array(
             'model' => $model,
+        ));
+    }
+
+    public function actionGetTeacher() {
+        if (isset($_GET['teacherLetter']) && strlen($_GET['teacherLetter']) == 1 && ctype_alpha($_GET['teacherLetter'])) {
+            $dataProvider = new CActiveDataProvider('User', array('criteria' => array('with' => $_GET['teacherLetter'],'order'=>'lastname ASC')));
+        } else {
+            $dataProvider = new CActiveDataProvider('User');
+        }
+        $this->render('getTeacher', array(
+            'dataProvider' => $dataProvider,
         ));
     }
 
