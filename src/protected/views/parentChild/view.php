@@ -26,8 +26,8 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
-		array('name' => 'user_id', 'value' => '$data->user->firstname." ".$data->user->lastname." (ID#".$data->user->user_id.")"'), 'user_id',
-		array('name' => 'child_id', 'value' => '$data->child->firstname." ".$data->child->lastname." (ID#".$data->childr->child_id.")"'), 'child_id',
+		'user_id',
+		'child_id',
 	),
 )); ?>
     </div>
