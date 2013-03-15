@@ -15,11 +15,11 @@
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'appointment-grid',
-    'dataProvider' => $dataProvider,
+    'dataProvider' => $dataProvider->searchTeacher(),
     /**
      * @todo Suche einbauen
      */
-    //   'filter' => $model, 
+    //   'filter' => $dataProvider, 
     'columns' => array(
         'title',
         'firstname',

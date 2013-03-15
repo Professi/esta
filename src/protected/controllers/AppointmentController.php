@@ -75,13 +75,17 @@ class AppointmentController extends Controller {
     }
 
     public function actionGetTeacher() {
-        if (isset($_GET['teacherLetter']) && strlen($_GET['teacherLetter']) == 1 && ctype_alpha($_GET['teacherLetter'])) {
-            $dataProvider = new CActiveDataProvider('User');
-        } else {
-            $dataProvider = new CActiveDataProvider('User');
-        }
+//        if (isset($_GET['teacherLetter']) && strlen($_GET['teacherLetter']) == 1 && ctype_alpha($_GET['teacherLetter'])) {
+//         //   $dataProvider = new CActiveDataProvider('User');
+//        } else {
+           // $dataProvider = new CActiveDataProvider('User');
+            $model = new User('searchTeacher');
+            $model->unsetAttributes();
+            $model->state = 1;
+            $model->role = 2;
+//        }
         $this->render('getTeacher', array(
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $model,
         ));
     }
 

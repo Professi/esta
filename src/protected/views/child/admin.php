@@ -34,7 +34,7 @@ $('.search-form form').submit(function(){
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'child-grid',
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$model,
 	'filter'=>$model,
 	'columns'=>array(
 		'id',

@@ -130,28 +130,35 @@ class User extends CActiveRecord {
         );
     }
 
-    /**
+
+        /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search() {
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
-$criteria = new CDbCriteria;
+        $criteria = new CDbCriteria();
+        $criteria->compare('firstname', $this->firstname, true);
+        $criteria->compare('id', $this->id, true);
+        $criteria->compare('username', $this->username, true);
+        $criteria->compare('state', $this->state);
+        $criteria->compare('email', $this->email, true);
+        $criteria->compare('stateName', $this->stateName, true);
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+            'pagination' => array('pageSize' => 20),
+        ));
+    }
 
-        if (!Yii::app()->user->isAdmin()) {
-            $criteria = new CDbCriteria();
-            $criteria->addSearchCondition('role_id', '2');
-            $criteria->compare('lastname', $this->lastname, true);
-            $criteria->compare('roleName', $this->roleName, true);
-        } else {
-            $criteria->compare('firstname', $this->firstname, true);
-            $criteria->compare('id', $this->id, true);
-            $criteria->compare('username', $this->username, true);
-            $criteria->compare('state', $this->state);
-            $criteria->compare('email', $this->email, true);
-            $criteria->compare('stateName', $this->stateName, true);
-        }
+    public function searchTeacher() {
+        $criteria = new CDbCriteria(array('with'=>array('userRoles','userRoles'=>array('alias'=>'role'))));
+        $criteria->compare('firstname', $this->firstname, true);
+        $criteria->compare('lastname', $this->lastname, true);
+        $criteria->compare('role', $this->roleName, true);
+    //    $criteria->addCondition('role = 3');
+    //    $criteria->addCondition('role.id = 2');
+     //   $criteria->addCondition('state = 1');
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array('pageSize' => 20),
