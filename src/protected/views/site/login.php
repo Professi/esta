@@ -39,7 +39,7 @@ if ($model->getError('error') !== NULL) {
             </div>
 	</div> <? } ?>
 <div class="row">
-    <div class="six columns centered">
+    <div class="seven columns centered">
         <?php
         $form = $this->beginWidget('CActiveForm', array(
             'id' => 'login-form',
@@ -52,12 +52,26 @@ if ($model->getError('error') !== NULL) {
 
         <fieldset>
             <legend>Login</legend>
-
-            <?php echo $form->textField($model, 'email', array('placeholder' => 'E-Mail')); ?>
-            <?php echo $form->error($model, 'email'); ?>
-
-            <?php echo $form->passwordField($model, 'password', array('placeholder' => 'Passwort')); ?>
-            <?php echo $form->error($model, 'password'); ?>
+            <div class="row collapse">
+                <div class="two columns">
+                    <span class="prefix"><?php echo $form->labelEx($model,'email'); ?></span>
+                </div>
+                <div class="ten columns">
+                    <?php echo $form->textField($model, 'email'); ?>
+                    <?php echo $form->error($model, 'email'); ?>
+                </div>
+            </div>
+            
+            <div class="row collapse">
+                <div class="two columns">
+                    <span class="prefix"><?php echo $form->labelEx($model,'password'); ?></span>
+                </div>
+                <div class="ten columns">
+                    <?php echo $form->passwordField($model, 'password'); ?>
+                    <?php echo $form->error($model, 'password'); ?>
+                </div>
+            </div>
+            
 
             <?php echo $form->checkBox($model, 'rememberMe'); ?>
             Anmeldedaten merken<br><br>

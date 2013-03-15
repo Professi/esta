@@ -29,8 +29,11 @@ if(Yii::app()->user->checkAccess(1)) {
         <div class="alert-box">
 <?php echo Yii::app()->user->getFlash('failMsg'); ?>            
         </div>
-  <?php } $this->widget('zii.widgets.CListView', array(
+  <?php } ?>
+  
+  <?php  $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
+        'summaryText' => '',
 	'itemView'=>'_view',
 )); ?>
     </div>

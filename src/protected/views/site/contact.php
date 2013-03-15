@@ -38,26 +38,64 @@ $this->breadcrumbs = array(
         ?>
     <fieldset>
         <legend>Kontakt</legend>
+        
+        <div class="row collapse">
+            <div class="two columns">
+                <span class="prefix"><?php echo $form->labelEx($model,'name'); ?></span>
+            </div>
+            <div class="ten columns">
+                <?php echo $form->textField($model, 'name'); ?>
+                <?php echo $form->error($model, 'name'); ?>
+            </div>
+        </div>
+        <div class="row collapse">
+            <div class="two columns">
+                <span class="prefix"><?php echo $form->labelEx($model,'email'); ?></span>
+            </div>
+            <div class="ten columns">
+                <?php echo $form->textField($model, 'email'); ?>
+                <?php echo $form->error($model, 'email'); ?>
+            </div>
+        </div>
+        <div class="row collapse">
+            <div class="two columns">
+                <span class="prefix"><?php echo $form->labelEx($model,'subject'); ?></span>
+            </div>
+            <div class="ten columns">
+                <?php echo $form->textField($model, 'subject', array('size' => 60, 'maxlength' => 128)); ?>
+                <?php echo $form->error($model, 'subject'); ?>
+            </div>
+        </div>
 
-            <?php echo $form->textField($model, 'name', array('placeholder' => 'Name')); ?>
-            <?php echo $form->error($model, 'name'); ?>
-
-            <?php echo $form->textField($model, 'email', array('placeholder' => 'E-Mail')); ?>
-            <?php echo $form->error($model, 'email'); ?>
-
-            <?php echo $form->textField($model, 'subject', array('size' => 60, 'maxlength' => 128, 'placeholder' => 'Betreff')); ?>
-            <?php echo $form->error($model, 'subject'); ?>
-
-            <?php echo $form->textArea($model, 'body', array('rows' => 6, 'cols' => 50, 'placeholder' => 'Ihre Nachricht')); ?>
-            <?php echo $form->error($model, 'body'); ?>
+               <div class="row collapse">
+            <div class="twelve columns" style="padding-left:.2em;">
+                <?php // $model->body = 'Ihre Nachricht'; ?>
+                <?php echo $form->textArea($model, 'body', array('rows' => 6, 'cols' => 50, 'placeholder' => 'Ihre Nachricht')); ?>
+                
+                <?php echo $form->error($model, 'body'); ?>
+            </div>
+        </div>
+        
 
         <?php if (CCaptcha::checkRequirements()): ?>
-                <div>
-                    <?php $this->widget('CCaptcha'); ?>
-                    <?php echo $form->textField($model, 'verifyCode'); ?>
+        <div class="row">
+            <div class="two columns"></div>
+            <div class="ten columns">
+                <?php $this->widget('CCaptcha'); ?>
+            </div>
+        </div>
+                <div class="row collapse">
+                    <div class="two columns">
+                        <span class="prefix"><?php echo $form->labelEx($model,'verifyCode'); ?></span>
+                    </div>
+                    <div class="ten columns">
+                        <?php echo $form->textField($model, 'verifyCode'); ?>
+                        <?php echo $form->error($model, 'verifyCode'); ?>
+                        <div class="hint">&nbsp;Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>
+                    </div>
                 </div>
-                <?php echo $form->error($model, 'verifyCode'); ?>
-                <div class="hint">Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>
+                
+                
                 
         <?php endif; ?>
 

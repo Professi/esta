@@ -18,8 +18,11 @@ $form = $this->beginWidget('CActiveForm', array(
 ?>
         <fieldset>
 <div class="row collapse">
-    <div class="nine columns">
-        <?php echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 128, 'placeholder' => 'Passwort')); ?>
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->labelEx($model,'password'); ?></span>
+    </div>
+    <div class="seven columns">
+        <?php echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 128)); ?>
         <?php echo $form->error($model, 'password'); ?>
     </div>
     <div class="three columns">
@@ -28,8 +31,13 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 
 <div class="row collapse">
-    <?php echo $form->passwordField($model, 'password_repeat', array('size' => 60, 'maxlength' => 128, 'placeholder' => 'Passwort bestätigen')); ?>
-    <?php echo $form->error($model, 'password_repeat'); ?>
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->labelEx($model,'password_repeat'); ?></span>
+    </div>
+    <div class="ten columns">
+        <?php echo $form->passwordField($model, 'password_repeat', array('size' => 60, 'maxlength' => 128)); ?>
+        <?php echo $form->error($model, 'password_repeat'); ?>
+    </div>
 </div>
 
     <?php echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>

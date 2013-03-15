@@ -4,18 +4,12 @@
 ?>
 
 <div class="view">
+       <ul class="square">
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
-	<br />
+    <li>
+	<?php echo CHtml::encode($data->child->firstname." ".$data->child->lastname); ?>
+    </li>
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('user_id')); ?>:</b>
-	<?php echo CHtml::encode($data->user_id); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('child_id')); ?>:</b>
-	<?php echo CHtml::encode($data->child_id); ?>
-	<br />
-
+        </ul>
 
 </div>

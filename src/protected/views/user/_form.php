@@ -14,43 +14,71 @@ $form = $this->beginWidget('CActiveForm', array(
         // 'clientOptions'=>array('validateOnSubmit'=>true),
         ));
 ?>
-
-<div class="row">
-    <div class="six columns">
-        <?php echo $form->textField($model, 'firstname', array('size' => 45, 'maxlength' => 45, 'placeholder' => 'Vorname')); ?>
+<div class="row collapse">
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->labelEx($model,'firstname'); ?></span>
+    </div>
+    <div class="ten columns">
+        <?php echo $form->textField($model, 'firstname', array('size' => 45, 'maxlength' => 45)); ?>
         <?php echo $form->error($model, 'firstname'); ?>
     </div>
+</div>
 
-    <div class="six columns">
-        <?php echo $form->textField($model, 'lastname', array('size' => 45, 'maxlength' => 45, 'placeholder' => 'Nachname')); ?>
+
+<div class="row collapse">
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->labelEx($model,'lastname'); ?></span>
+    </div>
+    <div class="ten columns">
+        <?php echo $form->textField($model, 'lastname', array('size' => 45, 'maxlength' => 45)); ?>
         <?php echo $form->error($model, 'lastname'); ?>
     </div>
 </div>
 
-<?php if (Yii::app()->user->CheckAccess('1') || Yii::app()->user->isGuest) { ?>
+        
+
+
+<div class="row collapse">
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->labelEx($model,'email'); ?></span>
+    </div>
+    <div class="ten columns">
+    <?php if (Yii::app()->user->CheckAccess('1') || Yii::app()->user->isGuest) { ?>
     <?php
-    echo $form->textField($model, 'email', array('size' => 45, 'maxlength' => 45, 'placeholder' => 'E-Mail'));
+    echo $form->textField($model, 'email', array('size' => 45, 'maxlength' => 45));
 } else {
     ?>
     <?php
-    echo $form->textField($model, 'email', array('readonly' => true));
-}
-?>
+    echo $form->textField($model, 'email', array('readonly' => true, 'class' => 'form-readonly'));
+}?>
 <?php echo $form->error($model, 'email'); ?>
+    </div>
+</div>
+
 
 <div class="row collapse">
-    <div class="nine columns">
-        <?php echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 128, 'placeholder' => 'Passwort')); ?>
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->labelEx($model,'password'); ?></span>
+    </div>
+    <div class="seven columns">
+        <?php echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 128)); ?>
         <?php echo $form->error($model, 'password'); ?>
     </div>
     <div class="three columns">
-        <span class="postfix" style="font-size:.8em;">Mindeslänge 8 Zeichen</span>
+        <span class="postfix" style="font-size:.8em;">Mindestlänge 8 Zeichen</span>
     </div>
 </div>
 <div class="show-for-small"><br></div>
+<div class="row collapse">
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->labelEx($model,'password_repeat'); ?></span>
+    </div>
+    <div class="ten columns">
+        <?php echo $form->passwordField($model, 'password_repeat', array('size' => 60, 'maxlength' => 128)); ?>
+        <?php echo $form->error($model, 'password_repeat'); ?>
+    </div>
+</div>
 
-<?php echo $form->passwordField($model, 'password_repeat', array('size' => 60, 'maxlength' => 128, 'placeholder' => 'Passwort bestätigen')); ?>
-<?php echo $form->error($model, 'password_repeat'); ?>
 
 <?php if (Yii::app()->user->checkAccess(1)) { ?>
 
@@ -74,16 +102,36 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
 <?php } if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) { ?>
-<?php echo $form->textField($model, 'tan', array('size' => 45, 'maxlength' => Yii::app()->params['tanSize'], 'placeholder' => 'TAN')); ?>
-        <?php echo $form->error($model, 'tan'); ?>
-
-
-    <div>
-        <?php $this->widget('CCaptcha'); ?>
-    <?php echo $form->textField($model, 'verifyCode', array('placeholder' => 'Sicherheitscode')); ?>
-        <?php    echo $form->error($model, 'verifyCode');?>
+<div class="row collapse">
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->labelEx($model,'tan'); ?></span>
     </div>
-    <div class="hint">Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>
+    <div class="ten columns">
+        <?php echo $form->textField($model, 'tan', array('size' => 45, 'maxlength' => Yii::app()->params['tanSize'])); ?>
+        <?php echo $form->error($model, 'tan'); ?>
+    </div>
+</div>
+
+
+<div class="row ">
+    <div class="two columns"></div>
+    <div class="ten columns">
+        <?php $this->widget('CCaptcha'); ?>
+    </div>
+</div>
+
+        
+<div class="row collapse">
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->labelEx($model,'verifyCode'); ?></span>
+    </div>
+    <div class="ten columns">
+        <?php echo $form->textField($model, 'verifyCode');?>
+        <?php echo $form->error($model, 'verifyCode');?>
+        <div class="hint">&nbsp;Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>
+    </div>
+</div>
+    
 <?php } ?>
 
 <?php echo CHtml::submitButton($model->isNewRecord ? 'Registrieren' : 'Speichern', array('class' => 'button')); ?>

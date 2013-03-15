@@ -170,3 +170,6 @@ table {
 #CsvUpload_file {
     margin-bottom: 1em;
 }
+.form-readonly {
+    background-color: #f2f2f2 !important;
+}
