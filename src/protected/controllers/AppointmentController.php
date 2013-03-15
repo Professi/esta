@@ -25,10 +25,6 @@ class AppointmentController extends Controller {
      */
     public function accessRules() {
         return array(
-//			array('allow',  // allow all users to perform 'index' and 'view' actions
-//				'actions'=>array('index','view','create'),
-//				'roles'=>array('@'),
-//			),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array('create', 'update', 'index', 'view', 'getTeacher'),
                 'roles' => array('3'),
@@ -80,9 +76,9 @@ class AppointmentController extends Controller {
 
     public function actionGetTeacher() {
         if (isset($_GET['teacherLetter']) && strlen($_GET['teacherLetter']) == 1 && ctype_alpha($_GET['teacherLetter'])) {
-            $dataProvider = new CActiveDataProvider('User', array('criteria' => array('with' => $_GET['teacherLetter'],'condition' => 'role_id=' . '2')));
+            $dataProvider = new CActiveDataProvider('User');
         } else {
-                        $dataProvider = new CActiveDataProvider('User');
+            $dataProvider = new CActiveDataProvider('User');
         }
         $this->render('getTeacher', array(
             'dataProvider' => $dataProvider,

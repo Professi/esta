@@ -36,7 +36,7 @@ class UserController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('update', 'view'),
+                'actions' => array('update', 'account'),
                 'roles' => array('3', '2'),
             ),
             array('allow',
@@ -60,6 +60,14 @@ class UserController extends Controller {
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
+    }
+
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * rendert das eigene Profilview
+     */
+    public function actionAccount() {
+        $this->render('view', array('model' => $this->loadModel(Yii::app()->user->getId())));
     }
 
     /**
@@ -97,20 +105,13 @@ class UserController extends Controller {
                 $file = CUploadedFile::getInstance($model, 'file');
                 $fp = fopen($file->tempName, 'r');
                 if ($fp) {
-                    $first_time = true;
-                    $i = 0;
                     do {
-                        ++$i;
-                        if ($first_time == true) {
-                            $first_time = false;
-                            continue;
-                        }
                         if ($line[0] != "Vorname" && !$line[1] != "Nachname" && $line[2] != 'Email') {
                             $model = new User();
-                            $model->firstname = mb_convert_encoding($line[1], 'UTF-8', 'ISO-8859-1');
-                            $model->lastname = mb_convert_encoding($line[0], 'UTF-8', 'ISO-8859-1');
+                            $model->firstname = self::encodingString($line[1]);
+                            $model->lastname = self::encodingString($line[0]);
                             if ($line[2] != NULL) {
-                                $model->email = mb_convert_encoding($line[2], 'UTF-8', 'ISO-8859-1');
+                                $model->email = self::encodingString($line[2]);
                             } else {
                                 $uml = array("Ö" => "Oe", "ö" => "oe", "Ä" => "Ae", "ä" => "ae", "Ü" => "Ue", "ü" => "ue", "ß" => "ss",);
                                 $model->email = strtolower(substr($model->firstname, 0, 1))
@@ -118,7 +119,7 @@ class UserController extends Controller {
                                         . Yii::app()->params['teacherMail'];
                             }
                             $model->username = $model->email;
-                            $model->title = mb_convert_encoding($line[3], 'UTF-8', 'ISO-8859-1');
+                            $model->title = self::encodingString($line[3]);
                             $model->state = 1;
                             $model->role = 2;
                             $model->password = "DONNERSTAG01";
@@ -134,6 +135,16 @@ class UserController extends Controller {
         } else {
             $this->render('importTeacher', array('model' => $model,));
         }
+    }
+
+    /**
+     * Konvertiert eine Datei in ISO-8859-1 in UTF-8
+     * @param string $toEncode
+     * @return string
+     * 
+     */
+    static private function encodingString($toEncode) {
+        return mb_convert_encoding(toEncode, 'UTF-8', 'ISO-8859-1');
     }
 
     /**
@@ -179,7 +190,7 @@ class UserController extends Controller {
                 $user = User::model()->findByAttributes(array('email' => $model->email));
                 if ($user !== null && $user->state == 1) {
                     $user->generateActivationKey();
-                    self::sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', "Sie haben bei " . Yii::app()->name . " versucht Ihr Passwort zu ändern. Mit Hilfe des folgenden Links können Sie Ihr Passwort ändern:\n "
+                    SiteController::sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', "Sie haben bei " . Yii::app()->name . " versucht Ihr Passwort zu ändern. Mit Hilfe des folgenden Links können Sie Ihr Passwort ändern:\n "
                             . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $user->activationKey, $user->email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
                     Yii::app()->user->setFlash('success', 'Sie erhalten nun eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.');
                     $this->redirect('index.php?r=/site/index');
@@ -210,7 +221,7 @@ class UserController extends Controller {
                     $this->redirect(array('user/admin'));
                 } else {
                     Yii::app()->user->setFlash('success', "Sie konnten sich erfolgreich registrieren. Sie erhalten nun eine E-Mail mit der Sie Ihren Account aktivieren können.");
-                    self::sendMail(Yii::app()->params['fromMail'] . ' Accountaktivierung', "Willkommen bei der " . Yii::app()->name . ". Ihr Accountname lautet: " . $model->email . "\n Bitte aktivieren Sie ihren Account anhand folgendem Links:\n "
+                    SiteController::sendMail(Yii::app()->params['fromMail'] . ' Accountaktivierung', "Willkommen bei der " . Yii::app()->name . ". Ihr Accountname lautet: " . $model->email . "\n Bitte aktivieren Sie ihren Account anhand folgendem Links:\n "
                             . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "index.php?r=/User/activate&activationKey=" . $model->activationKey, $model->email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
                     $this->redirect(array('site/login'));
                 }
@@ -230,8 +241,6 @@ class UserController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-        // Uncomment the following line if AJAX validation is needed
-//  $this->performAjaxValidation($model);
         if (isset($_POST['User'])) {
             $model->setAttributes($_POST['User']);
 
@@ -242,7 +251,6 @@ class UserController extends Controller {
                 Yii::app()->user->setFlash("error", "Benutzer konnte nicht aktualisiert werden.");
             }
         } else {
-
             $model->password = "dummyPassword";
             $model->password_repeat = $model->password;
         }
@@ -287,7 +295,6 @@ class UserController extends Controller {
      */
     public function loadModel($id) {
         $model = User::model()->findByPk($id);
-//lädt die Rolle
         $model->password_repeat = $model->password;
         $model->role = UserRole::model()->findByAttributes(array('user_id' => $id))->role_id;
         switch ($model->state) {
@@ -316,18 +323,4 @@ class UserController extends Controller {
             Yii::app()->end();
         }
     }
-
-    public static function sendMail($subject, $message, $to, $from, $fromName) {
-        $mailer = Yii::createComponent('application.extensions.mailer.EMailer');
-        $mailer->Host = Yii::app()->params['emailHost'];
-        $mailer->IsSMTP();
-        $mailer->From = $from;
-        $mailer->AddAddress($to);
-        $mailer->FromName = $fromName;
-        $mailer->CharSet = 'UTF-8';
-        $mailer->Subject = $subject;
-        $mailer->Body = $message;
-        $mailer->Send();
-    }
-
 }

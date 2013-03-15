@@ -53,12 +53,7 @@ class SiteController extends Controller {
             if ($model->validate()) {
                 $name = '=?UTF-8?B?' . base64_encode($model->name) . '?=';
                 $subject = '=?UTF-8?B?' . base64_encode($model->subject) . '?=';
-//                $headers = "From: $name <{$model->email}>\r\n" .
-//                        "Reply-To: {$model->email}\r\n" .
-//                        "MIME-Version: 1.0\r\n" .
-//                        "Content-type: text/plain; charset=UTF-8";
                 self::sendMail($subject, $model->body, Yii::app()->params['adminEmail'], $model->email, $name);
-//                mail(Yii::app()->params['adminEmail'], $subject, $model->body, $headers);
                 Yii::app()->user->setFlash('contact', 'Vielen Dank dass Sie uns kontaktieren. Wir werden Ihnen so schnell wie möglich antworten.');
                 $this->refresh();
             }
@@ -85,11 +80,11 @@ class SiteController extends Controller {
                 $model->attributes = $_POST['LoginForm'];
                 // validate user input and redirect to the previous page if valid
                 if ($model->validate() && $model->authenticate()) {
-                    if(!Yii::app()->user->isAdmin()) {
-                        if (Yii::app()->user->checkAccess('1')){
+                    if (!Yii::app()->user->isAdmin()) {
+                        if (Yii::app()->user->checkAccess('1')) {
                             $this->redirect('index.php?r=/Appointment/admin');
                         }
-                    $this->redirect('index.php?r=/Appointment/Index');
+                        $this->redirect('index.php?r=/Appointment/Index');
                     } else {
                         $this->redirect('index.php?r=/Date/admin');
                     }
@@ -110,7 +105,15 @@ class SiteController extends Controller {
         $this->redirect(Yii::app()->homeUrl);
     }
 
-        public static function sendMail($subject, $message, $to, $from,$fromName) {
+    /**
+     * Versendet eine E-Mail
+     * @param string $subject Betreff einer E-Mail
+     * @param string $message Nachricht einer E-Mail
+     * @param string $to Empfänger der Nachricht
+     * @param string $from Absender der Nachricht
+     * @param string $fromName Absendername
+     */
+    public static function sendMail($subject, $message, $to, $from, $fromName) {
         $mailer = Yii::createComponent('application.extensions.mailer.EMailer');
         $mailer->Host = Yii::app()->params['emailHost'];
         $mailer->IsSMTP();
@@ -122,5 +125,5 @@ class SiteController extends Controller {
         $mailer->Body = $message;
         $mailer->Send();
     }
-    
+
 }

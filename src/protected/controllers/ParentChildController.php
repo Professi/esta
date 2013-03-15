@@ -14,7 +14,6 @@ class ParentChildController extends Controller {
     public function filters() {
         return array(
             'accessControl', // perform access control for CRUD operations
-                //	'postOnly + delete', // we only allow deletion via POST request
         );
     }
 
@@ -29,10 +28,11 @@ class ParentChildController extends Controller {
                 'roles' => array('1'),
             ),
             array('allow',
-                'actions' => array('create', 'view', 'index', 'delete'),
+                'actions' => array('create', 'index','update'),
                 'roles' => array('3'),
             ),
-            array('deny', // deny all users
+            array('deny',
+                'users' => array('*'), // deny all users
             ),
         );
     }
@@ -92,11 +92,8 @@ class ParentChildController extends Controller {
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id) {
+        if(self::checkUser($id)) {
         $model = $this->loadModel($id);
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['ParentChild'])) {
             $model->attributes = $_POST['ParentChild'];
             if ($model->save())
@@ -106,6 +103,9 @@ class ParentChildController extends Controller {
         $this->render('update', array(
             'model' => $model,
         ));
+        } else {
+            throw new CHttpException(400, 'Ihre Anfrage ist ungültig.');
+        }
     }
 
     /**
@@ -115,8 +115,6 @@ class ParentChildController extends Controller {
      */
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
-
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
@@ -133,6 +131,16 @@ class ParentChildController extends Controller {
         $this->render('admin', array(
             'model' => $model,
         ));
+    }
+
+    public function checkUser($parentChildId) {
+        $rc = false;
+        if (Yii::app()->user->checkAccess('1')) {
+            $rc = true;
+        } else if (ParentChild::model()->countByAttributes(array('user_id' => Yii::app()->user->getId(), 'child_id' => $parentChildId)) == 1) {
+            $rc = true;
+        }
+        return $rc;
     }
 
     /**
@@ -159,4 +167,5 @@ class ParentChildController extends Controller {
             Yii::app()->end();
         }
     }
+
 }

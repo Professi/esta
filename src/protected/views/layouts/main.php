@@ -49,7 +49,7 @@
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Tanverwaltung', 'url' => array('Tan/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Tanverwaltung', 'url' => array('Tan/genTans'), 'visible' => Yii::app()->user->checkAccess('2') && !Yii::app()->user->isAdmin()),
                             //          array('label' => 'Rollenzuweisung', 'url' => array('/UserRole/admin'), 'visible' => Yii::app()->user->checkAccess('1')), // wird nicht benötigt atm
-                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Ihr Account', 'url' => array('/User/view&id=' . Yii::app()->user->getId()), 'visible' => !Yii::app()->user->isGuest),
+                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Ihr Account', 'url' => array('/User/account'), 'visible' => !Yii::app()->user->isGuest),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),
                         'activeCssClass' => 'active'
                     ));
@@ -59,15 +59,15 @@
             </div> <? } ?>
         <div class="row">
             <div class="twelve columns centered">
-                <?php  if (Yii::app()->user->hasFlash('success')) { ?>
-                <div class="alert-box">
-                    <?php echo Yii::app()->user->getFlash('success'); ?>
-                </div>
-                <?php } else if(Yii::app()->user->hasFlash('failMsg')) { ?>
-                <div class="alert-box">
-                    <?php echo Yii::app()->user->getFlash('failMsg'); ?>            
-                </div>
-              <?php } ?>
+                <?php if (Yii::app()->user->hasFlash('success')) { ?>
+                    <div class="alert-box">
+                        <?php echo Yii::app()->user->getFlash('success'); ?>
+                    </div>
+                <?php } else if (Yii::app()->user->hasFlash('failMsg')) { ?>
+                    <div class="alert-box">
+                        <?php echo Yii::app()->user->getFlash('failMsg'); ?>            
+                    </div>
+                <?php } ?>
             </div>
         </div>
         <?php
