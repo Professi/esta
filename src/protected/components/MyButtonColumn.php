@@ -16,7 +16,7 @@ class MyButtonColumn extends CButtonColumn  {
         $this->updateButtonImageUrl=Yii::app()->request->baseUrl.'/img/pencil.svg';
         $this->updateButtonOptions=array('class' => 'column-button');
         $this->deleteButtonImageUrl=Yii::app()->request->baseUrl.'/img/remove.svg';
-        $this->deleteButtonOptions=array('class' => 'column-button');
+        $this->deleteButtonOptions=array('class' => 'column-button delete');
         return parent::init();
       }
 }

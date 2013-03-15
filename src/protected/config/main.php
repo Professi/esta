@@ -88,6 +88,9 @@ return array(
         ),
         'widgetFactory' => array( // nicht ändern
             'widgets' => array( // nicht ändern
+                'CBaseListView' => array(
+                  '$pagerCssClass' => 'pagination-centered',  
+                ),
                 'CLinkPager' => array( // nicht ändern
                     'header' => '', // nicht ändern
                     'nextPageLabel' => '&rsaquo;', // nicht ändern
