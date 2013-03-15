@@ -17,7 +17,7 @@ $this->menu = array(
 
 <div class="row">
     <div class="twelve columns centered">
-<h2 class="subheader">Benutzerinformationen für <?php echo $model->email; ?> </h2>
+<h2 class="subheader">Benutzerdaten für <?php echo $model->email; ?> </h2>
 <?php 
 $this->widget('zii.widgets.CDetailView', array(
     'data' => $model,

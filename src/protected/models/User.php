@@ -152,18 +152,32 @@ class User extends CActiveRecord {
     }
 
     public function searchTeacher() {
-        $criteria = new CDbCriteria(array('with'=>array('userRoles','userRoles'=>array('alias'=>'role'))));
-        $criteria->compare('firstname', $this->firstname, true);
-        $criteria->compare('lastname', $this->lastname, true);
-        $criteria->compare('role', $this->roleName, true);
+        $criteria = new CDbCriteria; //(array('with'=>array('userRoles','userRoles'=>array('alias'=>'role'))))
+//        $criteria->compare('firstname', $this->firstname, true);
+//        $criteria->compare('lastname', $this->lastname, true);
+//        $criteria->compare('role', $this->roleName, true);
     //    $criteria->addCondition('role = 3');
     //    $criteria->addCondition('role.id = 2');
      //   $criteria->addCondition('state = 1');
+          $criteria->scopes = 'CActiveRecord::findAll'; //Macht COUNT(*) nicht weg
+          $criteria->select = '*'; 
+          $criteria->join = 'LEFT JOIN `user_role` ON (`user_role`.`user_id`=`user`.`id`)'; 
+          $criteria->condition = '`user_role`.`role_id`="2"';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array('pageSize' => 20),
-        ));
+        )); 
     }
+    // so siehts aus:
+//    SELECT COUNT(*) 
+//    FROM `user` `t` LEFT JOIN `user_role` ON (`user_role`.`user_id`=`user`.`id`) 
+//    WHERE `user_role`.`role_id`="2"
+//    so sollte es aussehen:
+  //SELECT *
+  //FROM `user` LEFT JOIN `user_role` ON (`user_role`.`user_id`=`user`.`id`) 
+  //WHERE `user_role`.`role_id`=`2`;
+  //
+    // Mach das Count noch weg und dieses seltsame `t` und dann sollte es funzen. Obwohl ich natürlich nicht weiß was du alles brauchst.
 
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
