@@ -244,7 +244,7 @@ $criteria = new CDbCriteria;
             if (Yii::app()->user->isGuest) {
                 $this->state = 0;
             }
-            $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);
+            $this->activationKey = self::generateActivationKey();
             $this->username = $this->email;
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
         } else if (!$this->isNewRecord && $this->password == User::model()->findByAttributes(array('id' => $this->id, 'password' => $this->password))) {
@@ -262,8 +262,7 @@ $criteria = new CDbCriteria;
      * Generiert einen Aktivierungsschlüssel und speichert diesen im aktuellen Objekt
      */
     public function generateActivationKey() {
-        $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);
-        $this->save();
+        return sha1(mt_rand(10000, 99999) . time() . $this->email);
     }
 
     /**

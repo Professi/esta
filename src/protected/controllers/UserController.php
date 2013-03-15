@@ -189,15 +189,14 @@ class UserController extends Controller {
             if ($model->validate()) {
                 $user = User::model()->findByAttributes(array('email' => $model->email));
                 if ($user != null) {
-                    if($user->state == 1) {
-                    $user->generateActivationKey();
-                    $user->save();
-                    self::sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', "Sie haben bei " . Yii::app()->name . " versucht Ihr Passwort zu ändern. Mit Hilfe des folgenden Links können Sie Ihr Passwort ändern:\n "
-                            . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $user->activationKey, $user->email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
-                    Yii::app()->user->setFlash('success', 'Sie erhalten nun eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.');
-                    $this->redirect('index.php?r=/site/index');
+                    if ($user->state == 1) {
+                        $user->activationKey = $user->generateActivationKey();
+                        self::sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', "Sie haben bei " . Yii::app()->name . " versucht Ihr Passwort zu ändern. Mit Hilfe des folgenden Links können Sie Ihr Passwort ändern:\n "
+                                . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $user->activationKey, $user->email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
+                        Yii::app()->user->setFlash('success', 'Sie erhalten nun eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.');
+                        $this->redirect('index.php?r=/site/index');
                     } else {
-                        Yii::app()->user->setFlash('failMsg','Bevor Sie ein neues Passwort anfordern können, muss Ihr Account aktiviert sein.');
+                        Yii::app()->user->setFlash('failMsg', 'Bevor Sie ein neues Passwort anfordern können, muss Ihr Account aktiviert sein.');
                     }
                 } else {
                     Yii::app()->user->setFlash('failMsg', 'Leider konnte Ihre E-Mail Adresse nicht im System gefunden werden.'); //success  - failMsg
@@ -328,8 +327,8 @@ class UserController extends Controller {
             Yii::app()->end();
         }
     }
-    
-        /**
+
+    /**
      * Versendet eine E-Mail
      * @param string $subject Betreff einer E-Mail
      * @param string $message Nachricht einer E-Mail
@@ -349,5 +348,5 @@ class UserController extends Controller {
         $mailer->Body = $message;
         $mailer->Send();
     }
-    
+
 }
