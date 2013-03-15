@@ -190,7 +190,7 @@ class UserController extends Controller {
                 $user = User::model()->findByAttributes(array('email' => $model->email));
                 if ($user !== null && $user->state == 1) {
                     $user->generateActivationKey();
-                    SiteController::sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', "Sie haben bei " . Yii::app()->name . " versucht Ihr Passwort zu ändern. Mit Hilfe des folgenden Links können Sie Ihr Passwort ändern:\n "
+                    self::sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', "Sie haben bei " . Yii::app()->name . " versucht Ihr Passwort zu ändern. Mit Hilfe des folgenden Links können Sie Ihr Passwort ändern:\n "
                             . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $user->activationKey, $user->email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
                     Yii::app()->user->setFlash('success', 'Sie erhalten nun eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.');
                     $this->redirect('index.php?r=/site/index');
@@ -221,7 +221,7 @@ class UserController extends Controller {
                     $this->redirect(array('user/admin'));
                 } else {
                     Yii::app()->user->setFlash('success', "Sie konnten sich erfolgreich registrieren. Sie erhalten nun eine E-Mail mit der Sie Ihren Account aktivieren können.");
-                    SiteController::sendMail(Yii::app()->params['fromMail'] . ' Accountaktivierung', "Willkommen bei der " . Yii::app()->name . ". Ihr Accountname lautet: " . $model->email . "\n Bitte aktivieren Sie ihren Account anhand folgendem Links:\n "
+                    self::sendMail(Yii::app()->params['fromMail'] . ' Accountaktivierung', "Willkommen bei der " . Yii::app()->name . ". Ihr Accountname lautet: " . $model->email . "\n Bitte aktivieren Sie ihren Account anhand folgendem Links:\n "
                             . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "index.php?r=/User/activate&activationKey=" . $model->activationKey, $model->email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
                     $this->redirect(array('site/login'));
                 }
@@ -323,4 +323,26 @@ class UserController extends Controller {
             Yii::app()->end();
         }
     }
+    
+        /**
+     * Versendet eine E-Mail
+     * @param string $subject Betreff einer E-Mail
+     * @param string $message Nachricht einer E-Mail
+     * @param string $to Empfänger der Nachricht
+     * @param string $from Absender der Nachricht
+     * @param string $fromName Absendername
+     */
+    public static function sendMail($subject, $message, $to, $from, $fromName) {
+        $mailer = Yii::createComponent('application.extensions.mailer.EMailer');
+        $mailer->Host = Yii::app()->params['emailHost'];
+        $mailer->IsSMTP();
+        $mailer->From = $from;
+        $mailer->AddAddress($to);
+        $mailer->FromName = $fromName;
+        $mailer->CharSet = 'UTF-8';
+        $mailer->Subject = $subject;
+        $mailer->Body = $message;
+        $mailer->Send();
+    }
+    
 }
