@@ -19,18 +19,8 @@ $this->breadcrumbs = array(
         </div>
     </div>
 </div>
-<?php if (Yii::app()->user->hasFlash('success')) { ?>
-<div class="row">
-    <div class="twelve columns">
-        <div class="alert-box success">
-            <?php echo Yii::app()->user->getFlash('success'); ?>
-        </div>
-    </div>
-</div>
-    <?php
-}
-if ($model->getError('error') !== NULL) {
-    ?>
+
+    <?php if ($model->getError('error') !== NULL) { ?>
 	<div class="row">
             <div class="twelve columns centered">
                 <div class="alert-box alert">
@@ -54,9 +44,9 @@ if ($model->getError('error') !== NULL) {
             <legend>Login</legend>
             <div class="row collapse">
                 <div class="two columns">
-                    <span class="prefix"><?php echo $form->labelEx($model,'email'); ?></span>
+                    <span class="prefix"><?php echo $form->label($model,'email'); ?></span>
                 </div>
-                <div class="ten columns">
+                <div class="ten columns mobile-input">
                     <?php echo $form->textField($model, 'email'); ?>
                     <?php echo $form->error($model, 'email'); ?>
                 </div>
@@ -64,9 +54,9 @@ if ($model->getError('error') !== NULL) {
             
             <div class="row collapse">
                 <div class="two columns">
-                    <span class="prefix"><?php echo $form->labelEx($model,'password'); ?></span>
+                    <span class="prefix"><?php echo $form->label($model,'password'); ?></span>
                 </div>
-                <div class="ten columns">
+                <div class="ten columns mobile-input">
                     <?php echo $form->passwordField($model, 'password'); ?>
                     <?php echo $form->error($model, 'password'); ?>
                 </div>
@@ -78,6 +68,7 @@ if ($model->getError('error') !== NULL) {
             <?php echo $form->error($model, 'rememberMe'); ?>
 
             <?php echo CHtml::submitButton('Login', array('class' => 'button')); ?>
+            <div class="show-for-small"><br><br></div>
             <?php echo CHtml::link('Passwort vergessen?', 'index.php?r=user/ChangePwd', array('class'=>'medium right')); ?>
         </fieldset>
         <p class="text-center"><?php echo CHtml::link('<b>Ben&ouml;tigen Sie einen neuen Zugang?<br>Klicken Sie hier.</b>', 'index.php?r=user/create'); ?> </p>

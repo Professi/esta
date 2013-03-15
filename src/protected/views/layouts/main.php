@@ -57,6 +57,19 @@
 
                 </div>
             </div> <? } ?>
+        <div class="row">
+            <div class="twelve columns centered">
+                <?php  if (Yii::app()->user->hasFlash('success')) { ?>
+                <div class="alert-box">
+                    <?php echo Yii::app()->user->getFlash('success'); ?>
+                </div>
+                <?php } else if(Yii::app()->user->hasFlash('failMsg')) { ?>
+                <div class="alert-box">
+                    <?php echo Yii::app()->user->getFlash('failMsg'); ?>            
+                </div>
+              <?php } ?>
+            </div>
+        </div>
         <?php
         echo $content;
         ?>

@@ -41,27 +41,27 @@ $this->breadcrumbs = array(
         
         <div class="row collapse">
             <div class="two columns">
-                <span class="prefix"><?php echo $form->labelEx($model,'name'); ?></span>
+                <span class="prefix"><?php echo $form->label($model,'name'); ?></span>
             </div>
-            <div class="ten columns">
+            <div class="ten columns mobile-input">
                 <?php echo $form->textField($model, 'name'); ?>
                 <?php echo $form->error($model, 'name'); ?>
             </div>
         </div>
         <div class="row collapse">
             <div class="two columns">
-                <span class="prefix"><?php echo $form->labelEx($model,'email'); ?></span>
+                <span class="prefix"><?php echo $form->label($model,'email'); ?></span>
             </div>
-            <div class="ten columns">
+            <div class="ten columns mobile-input">
                 <?php echo $form->textField($model, 'email'); ?>
                 <?php echo $form->error($model, 'email'); ?>
             </div>
         </div>
         <div class="row collapse">
             <div class="two columns">
-                <span class="prefix"><?php echo $form->labelEx($model,'subject'); ?></span>
+                <span class="prefix"><?php echo $form->label($model,'subject'); ?></span>
             </div>
-            <div class="ten columns">
+            <div class="ten columns mobile-input">
                 <?php echo $form->textField($model, 'subject', array('size' => 60, 'maxlength' => 128)); ?>
                 <?php echo $form->error($model, 'subject'); ?>
             </div>
@@ -69,7 +69,6 @@ $this->breadcrumbs = array(
 
                <div class="row collapse">
             <div class="twelve columns" style="padding-left:.2em;">
-                <?php // $model->body = 'Ihre Nachricht'; ?>
                 <?php echo $form->textArea($model, 'body', array('rows' => 6, 'cols' => 50, 'placeholder' => 'Ihre Nachricht')); ?>
                 
                 <?php echo $form->error($model, 'body'); ?>
@@ -86,9 +85,9 @@ $this->breadcrumbs = array(
         </div>
                 <div class="row collapse">
                     <div class="two columns">
-                        <span class="prefix"><?php echo $form->labelEx($model,'verifyCode'); ?></span>
+                        <span class="prefix"><?php echo $form->label($model,'verifyCode'); ?></span>
                     </div>
-                    <div class="ten columns">
+                    <div class="ten columns mobile-input">
                         <?php echo $form->textField($model, 'verifyCode'); ?>
                         <?php echo $form->error($model, 'verifyCode'); ?>
                         <div class="hint">&nbsp;Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>

@@ -29,7 +29,7 @@ if (Yii::app()->user->checkAccess(1)) {
     <div class="two columns">
         <span class="prefix">Vorname</span>
     </div>
-    <div class="ten columns">
+    <div class="ten columns mobile-input">
 <?php echo $form->textField($model, 'childFirstName'); ?>
 <?php echo $form->error($model, 'childFirstName'); ?>
     </div>
@@ -39,7 +39,7 @@ if (Yii::app()->user->checkAccess(1)) {
     <div class="two columns">
         <span class="prefix">Nachname</span>
     </div>
-    <div class="ten columns">
+    <div class="ten columns mobile-input">
 <?php echo $form->textField($model, 'childLastName'); ?>
 <?php echo $form->error($model, 'childLastName'); ?>
     </div>

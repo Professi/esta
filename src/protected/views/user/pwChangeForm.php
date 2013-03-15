@@ -18,10 +18,10 @@ $form = $this->beginWidget('CActiveForm', array(
 ?>
         <fieldset>
 <div class="row collapse">
-    <div class="two columns">
-        <span class="prefix"><?php echo $form->labelEx($model,'password'); ?></span>
+    <div class="three columns">
+        <span class="prefix"><?php echo $form->label($model,'password'); ?></span>
     </div>
-    <div class="seven columns">
+    <div class="six columns">
         <?php echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 128)); ?>
         <?php echo $form->error($model, 'password'); ?>
     </div>
@@ -31,10 +31,10 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 
 <div class="row collapse">
-    <div class="two columns">
-        <span class="prefix"><?php echo $form->labelEx($model,'password_repeat'); ?></span>
+    <div class="three columns">
+        <span class="prefix"><?php echo $form->label($model,'password_repeat'); ?></span>
     </div>
-    <div class="ten columns">
+    <div class="nine columns">
         <?php echo $form->passwordField($model, 'password_repeat', array('size' => 60, 'maxlength' => 128)); ?>
         <?php echo $form->error($model, 'password_repeat'); ?>
     </div>

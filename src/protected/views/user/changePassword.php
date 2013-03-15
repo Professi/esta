@@ -4,11 +4,6 @@
 ?>
 
 <div class="row">
-
-    <?php if (Yii::app()->user->hasFlash('failMsg')) { ?> 
-        <div class='panel callout'>
-            <?php echo Yii::app()->user->getFlash('failMsg'); ?></div>  
-    <? } ?>
     <div class="nine columns centered">
         <h3>M&ouml;chten Sie ihr Passwort zur&uuml;cksetzen ?</h3>
         <div class="panel">
@@ -23,10 +18,10 @@
            
         <fieldset>
             <div class="row collapse">
-                <div class="two columns">
-                    <span class="prefix"><?php echo $form->labelEx($model,'email'); ?></span>
+                <div class="three columns">
+                    <span class="prefix"><?php echo $form->label($model,'email'); ?></span>
                 </div>
-                <div class="ten columns">
+                <div class="nine columns mobile-input">
                     <?php echo $form->textField($model, 'email'); ?>
                     <?php echo $form->error($model, 'email'); ?>
                 </div>
@@ -34,16 +29,16 @@
   
     <?php if (CCaptcha::checkRequirements()): ?>
             <div class="row">
-                <div class="two columns"></div>
-                <div class="ten columns">
+                <div class="three columns"></div>
+                <div class="nine columns">
                     <?php $this->widget('CCaptcha'); ?>
                 </div>
             </div>
             <div class="row collapse">
-                <div class="two columns">
-                    <span class="prefix"><?php echo $form->labelEx($model,'verifyCode'); ?></span>
+                <div class="three columns">
+                    <span class="prefix"><?php echo $form->label($model,'verifyCode'); ?></span>
                 </div>
-                <div class="ten columns">
+                <div class="nine columns mobile-input">
                     <?php echo $form->textField($model, 'verifyCode'); ?>
                     <?php echo $form->error($model, 'verifyCode'); ?>
                     <div class="hint">&nbsp;Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>

@@ -100,6 +100,9 @@ return array(
                     'selectedPageCssClass' => 'current', // nicht ändern
                     'htmlOptions' => array ('class' => 'pagination'), // nicht ändern
                 ),
+                'CCaptcha' => array(
+                    'buttonOptions' => array('class' => 'tiny button captcha-button'),
+                ),
             ),
         ),
     ),

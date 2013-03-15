@@ -18,11 +18,7 @@ $this->menu = array(
 <div class="row">
     <div class="twelve columns centered">
 <h2 class="subheader">Benutzerinformationen für <?php echo $model->email; ?> </h2>
-<?php if (Yii::app()->user->hasFlash('success')) { ?>
-    <div class="panel callout">
-        <?php echo Yii::app()->user->getFlash('success'); ?>
-    </div>
-<?php }
+<?php 
 $this->widget('zii.widgets.CDetailView', array(
     'data' => $model,
     'attributes' => array(

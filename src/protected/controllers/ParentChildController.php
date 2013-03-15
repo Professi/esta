@@ -76,7 +76,7 @@ class ParentChildController extends Controller {
                         Yii::app()->user->setFlash('success', 'Kind erfolgreich hinzugefügt.');
                     }
                 } else {
-                    Yii::app()->user->setFlash('failMsg', 'Sie haben die Anzahl der eintragbaren Kinder überschritten.');
+                    Yii::app()->user->setFlash('failMsg', 'Sie haben die Anzahl der maximal eintragbaren Kinder überschritten.');
                 }
                 $this->redirect(array('index'));
             }

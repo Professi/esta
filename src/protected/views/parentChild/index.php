@@ -21,15 +21,7 @@ if(Yii::app()->user->checkAccess(1)) {
         <h2 class="subheader">Ihre Kinder</h2>
         <hr/>
          
-<?php } if (Yii::app()->user->hasFlash('success')) { ?>
-    <div class="panel callout">
-        <?php echo Yii::app()->user->getFlash('success'); ?>
-    </div>
-  <?php } else if(Yii::app()->user->hasFlash('failMsg')) { ?>
-        <div class="alert-box">
-<?php echo Yii::app()->user->getFlash('failMsg'); ?>            
-        </div>
-  <?php } ?>
+<?php } ?>
   
   <?php  $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

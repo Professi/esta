@@ -115,6 +115,13 @@ table {
 	.styled-select-parent {
 		left: .15em;
 	}
+        .mobile-input {
+            padding-left: .15em !important;
+            margin-right: -.15em !important;
+        }
+        .captcha-button {
+            margin-top: 1em;
+        }
 }
 #small_buttons>div {
 	display: inline-block;
