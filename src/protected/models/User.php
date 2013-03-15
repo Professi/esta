@@ -152,7 +152,12 @@ class User extends CActiveRecord {
     }
 
     public function searchTeacher() {
-        $criteria = new CDbCriteria; //(array('with'=>array('userRoles','userRoles'=>array('alias'=>'role'))))
+        $criteria = new CDbCriteria;
+        //$criteria->compare('lastname', $this->lastname, true);
+        $match = addcslashes($this->lastname, '%_');
+        $criteria->addCondition('lastname LIKE :match');
+        $criteria->params = array(':match'=>"$match%");
+        $criteria->compare('state', $this->state, true);
         $criteria->with= array('userRoles');
         $criteria->select='*';
         $criteria->addCondition('userRoles.role_id="2"');
