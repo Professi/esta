@@ -32,7 +32,7 @@ class ChildController extends Controller
 				'users'=>array('3'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','index','create','update'),
+				'actions'=>array('admin','delete','index','create','update','view'),
 				'roles'=>array('1'),
 			),
 			array('deny',  // deny all users

@@ -25,7 +25,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'firstname',
         'lastname',        
         array(
-            'class' => 'MyButtonColumn', //ändern für zB. Termin vereinbaren
+            'class' => 'CustomButtonColumn', //ändern für zB. Termin vereinbaren
             'template' => '{date}',
             'buttons' => array(
                 'date' => array(
