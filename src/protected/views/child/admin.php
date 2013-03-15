@@ -41,7 +41,7 @@ $('.search-form form').submit(function(){
 		'firstname',
 		'lastname',
 		array(
-			'class'=>'MyButtonColumn',
+			'class'=>'CustomButtonColumn',
 		),
 	),
 )); ?>

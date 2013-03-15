@@ -7,7 +7,7 @@
  *
  * @author David Mock
  */
-class MyButtonColumn extends CButtonColumn  {
+class CustomButtonColumn extends CButtonColumn  {
     
   public function init()
       {
