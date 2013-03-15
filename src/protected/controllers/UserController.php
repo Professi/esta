@@ -188,14 +188,18 @@ class UserController extends Controller {
             $model->attributes = $_POST['ChangePwd'];
             if ($model->validate()) {
                 $user = User::model()->findByAttributes(array('email' => $model->email));
-                if ($user != null && $user->state == 1) {
+                if ($user != null) {
+                    if($user->state == 1) {
                     $user->generateActivationKey();
                     self::sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', "Sie haben bei " . Yii::app()->name . " versucht Ihr Passwort zu ändern. Mit Hilfe des folgenden Links können Sie Ihr Passwort ändern:\n "
                             . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $user->activationKey, $user->email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
                     Yii::app()->user->setFlash('success', 'Sie erhalten nun eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.');
                     $this->redirect('index.php?r=/site/index');
+                    } else {
+                        Yii::app()->user->setFlash('failMsg','Bevor Sie ein neues Passwort anfordern können, muss Ihr Account aktiviert sein.');
+                    }
                 } else {
-                    Yii::app()->user->setFlash('failMsg', 'Leider konnte Ihre Anfrage nicht korrekt verarbeitet werden.'); //success  - failMsg
+                    Yii::app()->user->setFlash('failMsg', 'Leider konnte Ihre E-Mail Adresse nicht im System gefunden werden.'); //success  - failMsg
                     $this->refresh();
                 }
             }
