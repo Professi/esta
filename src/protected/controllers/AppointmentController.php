@@ -74,12 +74,17 @@ class AppointmentController extends Controller {
         ));
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * prüft ob per GET ein Buchstabe übergeben wurde wenn dies der Fall ist
+     *  wird die entsprechende Suchanfrage gesendet und rendert das GridView
+     */
     public function actionGetTeacher() {
-        if (isset($_GET['teacherLetter']) && strlen($_GET['teacherLetter']) == 1 && ctype_alpha($_GET['teacherLetter'])) {
+        if (isset($_GET['letter']) && strlen($_GET['letter']) == 1 && ctype_alpha($_GET['letter'])) {
             $model = new User('searchTeacher');
             $model->unsetAttributes();
             $model->state = 1;
-            $model->lastname = $_GET['teacherLetter'];
+            $model->lastname = $_GET['letter'];
         } else {
            $model = new User('searchTeacher');
            $model->unsetAttributes();

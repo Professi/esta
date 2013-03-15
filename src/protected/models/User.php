@@ -119,14 +119,15 @@ class User extends CActiveRecord {
             'password' => 'Passwort',
             'password_repeat' => 'Passwort wiederholen',
             'firstname' => 'Vorname',
-            'state' => 'Status ID',
+            'state' => 'Status',
             'stateName' => 'Status',
             'lastname' => 'Nachname',
             'email' => 'E-Mail',
             'createtime' => 'Registrierungsdatum',
-            'role' => 'RollenID',
+            'role' => 'Rolle',
             'roleName' => 'Rolle',
             'verifyCode' => 'Sicherheitscode',
+            'title'=>'Titel',
         );
     }
 
@@ -153,13 +154,27 @@ class User extends CActiveRecord {
 
     public function searchTeacher() {
         $criteria = new CDbCriteria;
-        //$criteria->compare('lastname', $this->lastname, true);
         $match = addcslashes($this->lastname, '%_');
         $criteria->addCondition('lastname LIKE :match');
         $criteria->params = array(':match'=>"$match%");
         $criteria->compare('state', $this->state, true);
         $criteria->with= array('userRoles');
         $criteria->select='*';
+        $criteria->addCondition('userRoles.role_id="2"');
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+            'pagination' => array('pageSize' => 20),
+        )); 
+    }
+    
+    public function searchTeacherAutoComplete() {
+                $criteria = new CDbCriteria;
+        $match = addcslashes($this->lastname, '%_');
+        $criteria->addCondition('lastname LIKE :match');
+        $criteria->params = array(':match'=>"$match%");
+        $criteria->compare('state', $this->state, true);
+        $criteria->with= array('userRoles');
+        $criteria->select='firstname,lastname';
         $criteria->addCondition('userRoles.role_id="2"');
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

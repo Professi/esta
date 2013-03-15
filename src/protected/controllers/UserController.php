@@ -36,7 +36,7 @@ class UserController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('update', 'account'),
+                'actions' => array('update', 'account', 'search'),
                 'roles' => array('3', '2'),
             ),
             array('allow',
@@ -50,6 +50,19 @@ class UserController extends Controller {
                 'users' => array('*'),
             ),
         );
+    }
+
+    /**
+     * 
+     * @param string $term
+     * @author Christian Ehringfeld <c.ehringfeld@t-onlined.e>
+     * @todo Sinnvolle JSON Ausgabe
+     */
+    public function actionSearch($term) {
+        $dataProvider = new User('searchTeacherAutoComplete');
+        $dataProvider->unsetAttributes();
+        $dataProvider->lastname = $term;
+        echo CJSON::encode("test1");
     }
 
     /**
@@ -144,7 +157,7 @@ class UserController extends Controller {
      * 
      */
     static private function encodingString($toEncode) {
-        return mb_convert_encoding(toEncode, 'UTF-8', 'ISO-8859-1');
+        return mb_convert_encoding($toEncode, 'UTF-8', 'ISO-8859-1');
     }
 
     /**
@@ -283,8 +296,7 @@ class UserController extends Controller {
         $model = new User('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['User']))
-            $model->attributes = $_GET['User'];
-
+            $model->attributes = $_GET['user'];
         $this->render('admin', array(
             'model' => $model,
         ));

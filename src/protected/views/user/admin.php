@@ -53,19 +53,19 @@ $this->widget('zii.widgets.grid.CGridView', array(
     /**
      * @todo Suche einbauen
      */
-    //   'filter' => $model, 
+       'filter' => $model, 
     'columns' => array(
         'id',
         'email',
 //		'password',
 //		'activationKey',
-        array('name' => 'createtime', 'value' => 'date(Yii::app()->params["dateTimeFormat"], $data->createtime)',),
+        //array('name' => 'createtime', 'value' => 'date(Yii::app()->params["dateTimeFormat"], $data->createtime)',),
         array('name' => 'firstname',),
         'lastname',
         'title',
-        array('name' => 'Status', 'value' => 'User::getFormattedState($data->state)'),
-        array('name' => 'Rolle', 'value' => 'User::getFormattedRole($data->userRoles->role_id)'),
-        //  array('header'=>'Rolle','value'=>'$data->role'),
+        array('name' => 'state', 'value' => 'User::getFormattedState($data->state)'),
+        array('name' => 'role', 'value' => 'User::getFormattedRole($data->userRoles->role_id)'),
+         // array('header'=>'Rolle','value'=>'$data->role'),
         //'username',
         array(
             'class' => 'CustomButtonColumn',

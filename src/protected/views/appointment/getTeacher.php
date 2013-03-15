@@ -8,13 +8,27 @@
                         <p>	Klicken Sie auf einen Buchstaben um sich alle Lehrer anzeigen zu lassen.<br> 
                                 Drücken Sie auf den Stern um eine Liste mit allen Lehrer zu erhalten.<br>
                                 Sie können alternativ auch den Namen in das Suchfeld eingeben um alle zutreffenden Möglichkeiten zu sehen.<br>
-                                Wenn Sie den richitgen Lehrer gefunden haben, 
+                                Wenn Sie den richtigen Lehrer gefunden haben, 
                                 klicken Sie einfach auf seinen Namen um zu der Terminvereinbarung des Lehres zu gelangen.
                         </p>
                 </div>
 <?php
+$this->widget('zii.widgets.jui.CJuiAutoComplete',array(
+    'name'=>'teacher-ac',
+    //'source'=>$dataProvider,
+    // additional javascript options for the autocomplete plugin
+    'sourceUrl'=>'index.php?r=user/search',
+    'options'=>array(
+        'minLength'=>'2',
+    ),
+    'htmlOptions'=>array(
+        //'style'=>'height:20px;',
+    ),
+));
+
+
 $this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'appointment-grid',
+    'id' => 'teacher-grid',
     'dataProvider' => $dataProvider->searchTeacher(),
     /**
      * @todo Suche einbauen
