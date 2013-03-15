@@ -262,7 +262,6 @@ $criteria = new CDbCriteria;
      * Generiert einen Aktivierungsschlüssel und speichert diesen im aktuellen Objekt
      */
     public function generateActivationKey() {
-        $this->activationKey = "";
         $this->activationKey = sha1(mt_rand(10000, 99999) . time() . $this->email);
         $this->save();
     }
