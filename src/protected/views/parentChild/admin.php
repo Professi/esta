@@ -42,7 +42,7 @@ $('.search-form form').submit(function(){
 		array('name' => 'user_id', 'value' => '$data->user->firstname." ".$data->user->lastname'), 
 		array('name' => 'child_id', 'value' => '$data->child->firstname." ".$data->child->lastname'),
 		array(
-			'class'=>'CButtonColumn',
+			'class'=>'MyButtonColumn',
 		),
 	),
 )); ?>

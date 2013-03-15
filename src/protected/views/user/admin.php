@@ -68,7 +68,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         //  array('header'=>'Rolle','value'=>'$data->role'),
         //'username',
         array(
-            'class' => 'CButtonColumn',
+            'class' => 'MyButtonColumn',
         )
     )
 ));

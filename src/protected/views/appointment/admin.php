@@ -45,7 +45,7 @@ $('.search-form form').submit(function(){
                         'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'),
 		array(  'name' => 'user_id', 'value' => '$data->user->lastname'),
 		array(
-			'class'=>'CButtonColumn',
+			'class'=>'MyButtonColumn',
 		),
 	),
 )); ?>

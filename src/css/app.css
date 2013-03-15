@@ -180,3 +180,9 @@ table {
 .form-readonly {
     background-color: #f2f2f2 !important;
 }
+.column-button>img {
+    width: 14px;
+}
+.button-column {
+    text-align: center;
+}

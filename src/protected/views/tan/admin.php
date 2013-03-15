@@ -38,7 +38,7 @@ $('.search-form form').submit(function(){
 		'tan',
 		'used',
 		array(
-			'class'=>'CButtonColumn',
+			'class'=>'MyButtonColumn',
 		),
 	),
 )); ?>
