@@ -80,9 +80,9 @@ class AppointmentController extends Controller {
 
     public function actionGetTeacher() {
         if (isset($_GET['teacherLetter']) && strlen($_GET['teacherLetter']) == 1 && ctype_alpha($_GET['teacherLetter'])) {
-            $dataProvider = new CActiveDataProvider('User', array('criteria' => array('with' => $_GET['teacherLetter'],'order'=>'lastname ASC')));
+            $dataProvider = new CActiveDataProvider('User', array('criteria' => array('with' => $_GET['teacherLetter'],'condition' => 'role_id=' . '2')));
         } else {
-            $dataProvider = new CActiveDataProvider('User');
+                        $dataProvider = new CActiveDataProvider('User');
         }
         $this->render('getTeacher', array(
             'dataProvider' => $dataProvider,

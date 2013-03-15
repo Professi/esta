@@ -137,18 +137,20 @@ class User extends CActiveRecord {
     public function search() {
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
+$criteria = new CDbCriteria;
 
-        $criteria = new CDbCriteria;
-        if(!Yii::app()->user->isAdmin()) {
-        $criteria->compare('lastname', $this->lastname, true);
-        $criteria->compare('roleName', $this->roleName, true);
+        if (!Yii::app()->user->isAdmin()) {
+            $criteria = new CDbCriteria();
+            $criteria->addSearchCondition('role_id', '2');
+            $criteria->compare('lastname', $this->lastname, true);
+            $criteria->compare('roleName', $this->roleName, true);
         } else {
-        $criteria->compare('firstname', $this->firstname, true);
-        $criteria->compare('id', $this->id, true);
-        $criteria->compare('username', $this->username, true);
-        $criteria->compare('state', $this->state);
-        $criteria->compare('email', $this->email, true);
-        $criteria->compare('stateName', $this->stateName, true);
+            $criteria->compare('firstname', $this->firstname, true);
+            $criteria->compare('id', $this->id, true);
+            $criteria->compare('username', $this->username, true);
+            $criteria->compare('state', $this->state);
+            $criteria->compare('email', $this->email, true);
+            $criteria->compare('stateName', $this->stateName, true);
         }
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
