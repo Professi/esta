@@ -188,7 +188,7 @@ class UserController extends Controller {
             $model->attributes = $_POST['ChangePwd'];
             if ($model->validate()) {
                 $user = User::model()->findByAttributes(array('email' => $model->email));
-                if ($user !== null && $user->state == 1) {
+                if ($user != null && $user->state == 1) {
                     $user->generateActivationKey();
                     self::sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', "Sie haben bei " . Yii::app()->name . " versucht Ihr Passwort zu ändern. Mit Hilfe des folgenden Links können Sie Ihr Passwort ändern:\n "
                             . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $user->activationKey, $user->email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
