@@ -1,5 +1,20 @@
 <?php
 
+/**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * 
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 class ParentChildController extends Controller {
 
     /**
@@ -28,7 +43,7 @@ class ParentChildController extends Controller {
                 'roles' => array('1'),
             ),
             array('allow',
-                'actions' => array('create', 'index','update'),
+                'actions' => array('create', 'index', 'update'),
                 'roles' => array('3'),
             ),
             array('deny',
@@ -92,17 +107,17 @@ class ParentChildController extends Controller {
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id) {
-        if(self::checkUser($id)) {
-        $model = $this->loadModel($id);
-        if (isset($_POST['ParentChild'])) {
-            $model->attributes = $_POST['ParentChild'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
-        }
+        if (self::checkUser($id)) {
+            $model = $this->loadModel($id);
+            if (isset($_POST['ParentChild'])) {
+                $model->attributes = $_POST['ParentChild'];
+                if ($model->save())
+                    $this->redirect(array('view', 'id' => $model->id));
+            }
 
-        $this->render('update', array(
-            'model' => $model,
-        ));
+            $this->render('update', array(
+                'model' => $model,
+            ));
         } else {
             throw new CHttpException(400, 'Ihre Anfrage ist ungültig.');
         }
