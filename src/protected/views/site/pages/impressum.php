@@ -7,12 +7,12 @@ $this->breadcrumbs=array(
 ?>
 <div class="row">
     <div class="twelve columns">
-            <p>Br&uuml;hlwiesenschule</p>
-            <p>Gartenstra&szlige 28</p>
-            <p>65719 Hofheim</p>
-            <p>Tel.: 06192 2904-0</p>
-            <p>Fax: 06192 2904-66</p>
-            <p>e-mail: office@bws-hofheim.de</p>
+            <p>Br&uuml;hlwiesenschule<br>
+            Gartenstra&szlige 28<br>
+            65719 Hofheim<br>
+            Tel.: 06192 2904-0<br>
+            Fax: 06192 2904-66<br>
+            e-mail: office@bws-hofheim.de</p>
             <p>Die Elternsprechtagssoftware ESTA ist ein Schulprojekt der Br&uuml;hlwiesenschule. ESTA ist mit der GPL v3 lizensiert:</p>
             <p>ESTA&nbsp;&nbsp;<a href="http://www.gnu.org/licenses/" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
             <p>Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:</p>
