@@ -53,7 +53,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     /**
      * @todo Suche einbauen
      */
-       'filter' => $model, 
+      // 'filter' => $model, 
     'columns' => array(
         'id',
         'email',
