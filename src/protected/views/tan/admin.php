@@ -52,8 +52,8 @@ $('.search-form form').submit(function(){
 	'columns'=>array(
 		'tan',
 		'used',
-		array(
-			'class'=>'CustomButtonColumn',
-		),
+//		array(
+//			'class'=>'CustomButtonColumn',
+//		),
 	),
 )); ?>

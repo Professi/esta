@@ -76,11 +76,11 @@ class User extends CActiveRecord {
                 'min' => Yii::app()->params['tanSize'],
                 'max' => Yii::app()->params['tanSize'],),
             array('tan', 'numerical', 'integerOnly' => TRUE,
-                'allowEmpty' => !Yii::app()->user->isGuest
+                'allowEmpty' => !$this->isNewRecord || !Yii::app()->user->isGuest 
             ),
             array('password', 'compare', "on" => "insert"),
             array('password_repeat', 'safe'), //allow bulk assignment
-            array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !CCaptcha::checkRequirements()),
+            array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, username, firstname, state, lastname, email, role,roleName,stateName', 'safe', 'on' => 'search'),
@@ -347,7 +347,7 @@ class User extends CActiveRecord {
 
     public function beforeValidate() {
         $rc = parent::beforeValidate();
-        if ($rc && Yii::app()->user->isGuest) {
+        if ($rc && Yii::app()->user->isGuest && $this->isNewRecord) {
             $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
             if ($tan !== null) {
                 if ($tan->used) {
