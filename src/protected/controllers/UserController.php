@@ -202,7 +202,7 @@ class UserController extends Controller {
                 if ($user !== NULL) {
                     $user->password = $model->password;
                     $user->generateActivationKey();
-                    Yii::app()->user->setFlash('success', 'Ihr Passwort konnte erfolgreich geändert werden. Sie können sich nun mit diesem einloggen.' . $user->password);
+                    Yii::app()->user->setFlash('success', 'Ihr Passwort konnte erfolgreich geändert werden. Sie können sich nun mit diesem einloggen.');
                 } else {
                     Yii::app()->user->setFlash('success', 'Leider konnte Ihr Passwort aus unerklärlichen Gründen nicht geändert werden.');
                 }
