@@ -1,9 +1,4 @@
 <?php
-
-// uncomment the following to define a path alias
-// Yii::setPathOfAlias('local','path/to/local-folder');
-// This is the main Web application configuration. Any writable
-// CWebApplication properties can be configured here.
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -28,7 +23,6 @@ return array(
         'application.models.*', //nicht ändern
         'application.components.*', //nicht ändern
     ),
-// application components
     'components' => array(//nicht ändern
         'user' => array(//nicht ändern
             'class' => 'WebUser', //nicht ändern
@@ -73,7 +67,7 @@ return array(
         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=estdb', //entsprechen der eigenen Datenbank anpassen  Beispiel: mysql:host=HOST;dbname=DBNAME
             'emulatePrepare' => true, //nicht ändern
-            'enableProfiling' => true, //nicht ändern
+            'enableProfiling' => true, //nicht ändern - Entwicklungsparameter wird später auf false gesetzt für Performancegewinn
             'username' => 'estdb', //DB User bitte anpassen
             'password' => 'qwertzuiop', //DB Passwort bitte anpassen
             'charset' => 'utf8', //eventuell anpassen im optimalfall dabei belassen
@@ -87,14 +81,14 @@ return array(
             'routes' => array(//nicht ändern
                 array(
                     'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute'), //auskommentieren
-                array('class' => 'CFileLogRoute', //jenachdem ob ein DateiLog benötigt wird auskommentieren - empfohlen
+                array('class' => 'CFileLogRoute', //jenachdem ob ein DateiLog benötigt - empfohlen
                     'levels' => 'error,warning,watch',
-                    'categories'=>'system.*'), // auskommentieren wird auch hier empfohlen
-                array('class' => 'CProfileLogRoute',
+                    'categories'=>'system.*'), 
+                array('class' => 'CProfileLogRoute', // auskommentieren nur interesant für die Entwicklung
                     'report' => 'summary',),
             ),
         ),
-        'cache' => array(// nicht ändern , kommt eventuell noch wegen da aktuell nichts gecached wird
+        'cache' => array(// nicht ändern , kommt eventuell noch weg da aktuell nichts gecached wird
             'class' => 'system.caching.CDbCache',
             'connectionID' => 'db'
         ),
@@ -126,18 +120,7 @@ return array(
             ),
         ),
     ),
-    'modules' => array(//wird noch entfernt
-        'gii' => array(
-            'class' => 'system.gii.GiiModule',
-            'password' => 'test',
-            // If removed, Gii defaults to localhost only. Edit carefully to taste.
-            'ipFilters' => array('127.0.0.1', '::1'),
-        ),
-    ),
-    // application-level parameters that can be accessed
-// using Yii::app()->params['paramName']
     'params' => array(
-// this is used in contact page
         'adminEmail' => 'c.ehringfeld@t-online.de', //Administrator E-Mail Adresse
         'salt' => 'e9HOiJFfDhyvcBMin5G8CBTR98wK', //der Applikationssalt sollte mindestens 30 Zeichen lang sein und nur aus alphanumerischen Zeichen bestehen 
         'dateTimeFormat' => 'd.m.Y H:i', //Datumsformat -  muss nicht geändert werden
