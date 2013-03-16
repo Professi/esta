@@ -80,11 +80,11 @@ class UserController extends Controller {
         $dataProvider->role = 2;
         $criteria = $dataProvider->searchCriteriaTeacherAutoComplete();
         $a_rc = array();
-        $a_data = User::model()->findAll($criteria,array());
+        $a_data = User::model()->findAll($criteria, array());
         foreach ($a_data as $record) {
-            array_push($a_rc, array('label' => $record->title . " " 
+            array_push($a_rc, array('label' => $record->title . " "
                 . $record->firstname . " " . $record->lastname
-                    , 'value' => $record->id));
+                , 'value' => $record->id));
         }
         echo CJSON::encode($a_rc);
     }
