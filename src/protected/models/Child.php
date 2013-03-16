@@ -55,7 +55,7 @@ class Child extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'parentChildren' => array(self::HAS_MANY, 'ParentChild', 'child_id'),
+			'parentChildren' => array(self::BELONGS_TO, 'ParentChild', 'child_id'),
 		);
 	}
 

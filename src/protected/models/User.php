@@ -127,12 +127,11 @@ class User extends CActiveRecord {
             'role' => 'Rolle',
             'roleName' => 'Rolle',
             'verifyCode' => 'Sicherheitscode',
-            'title'=>'Titel',
+            'title' => 'Titel',
         );
     }
 
-
-        /**
+    /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
@@ -156,30 +155,30 @@ class User extends CActiveRecord {
         $criteria = new CDbCriteria;
         $match = addcslashes($this->lastname, '%_');
         $criteria->addCondition('lastname LIKE :match');
-        $criteria->params = array(':match'=>"$match%");
+        $criteria->params = array(':match' => "$match%");
         $criteria->compare('state', $this->state, true);
-        $criteria->with= array('userRoles');
-        $criteria->select='*';
+        $criteria->with = array('userRoles');
+        $criteria->select = '*';
         $criteria->addCondition('userRoles.role_id="2"');
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array('pageSize' => 20),
-        )); 
+        ));
     }
-    
+
     public function searchTeacherAutoComplete() {
-                $criteria = new CDbCriteria;
+        $criteria = new CDbCriteria;
         $match = addcslashes($this->lastname, '%_');
         $criteria->addCondition('lastname LIKE :match');
-        $criteria->params = array(':match'=>"$match%");
+        $criteria->params = array(':match' => "$match%");
         $criteria->compare('state', $this->state, true);
-        $criteria->with= array('userRoles');
-        $criteria->select='firstname,lastname';
+        $criteria->with = array('userRoles');
+        $criteria->select = 'firstname,lastname';
         $criteria->addCondition('userRoles.role_id="2"');
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array('pageSize' => 20),
-        )); 
+        ));
     }
 
     /**
@@ -232,28 +231,24 @@ class User extends CActiveRecord {
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Rückgabewert der Elternklassemethoden
-     * löscht den UserRole Eintrag
+     * löscht den UserRole Eintrag + ElternKind Verknüpfung + Kinder
      */
     public function beforeDelete() {
         $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
         $userRole->delete();
-        $a_parentChild = ParentChild::model()->findAllByAttributes(array('user_id' => $this->id));
-        for ($i = 0; $i < count($a_parentChild); ++$i) {
-            $a_parentChild[$i]->delete();
-        }
-        /**
-         * @todo nach Lehrer auch User entfernen
-         */
         $a_appointment = Appointment::model()->findAllByAttributes(array('user_id' => $this->id));
-        for ($x = 0; $x < count($a_appointment); ++$x) {
+        for ($x = 0; $x < count($a_appointment); $x++) {
             $a_appointment[$x]->delete();
         }
-        for ($i = 0; $i < count($a_parentChild); ++$i) {
+        $a_parentChild = ParentChild::model()->findAllByAttributes(array('user_id' => $this->id));
+        for ($i = 0; $i < count($a_parentChild); $i++) {
             $a_appointment = Appointment::model()->findAllByAttributes(array('parent_child_id' => $a_parentChild[$i]->id));
-            for ($x = 0; $x < count($a_appointment); ++$i) {
-                $a_appointment[$i]->delete();
+            for ($x = 0; $x < count($a_appointment); $x++) {
+                $a_appointment[$x]->delete();
             }
-            $a_parentChild[$i]->delete();
+            $childId = $a_parentChild[$i]->child_id;
+            ParentChild::model()->deleteByPk($a_parentChild[$i]->id);
+            Child::model()->deleteByPk($childId);
         }
         return parent::beforeDelete();
     }
