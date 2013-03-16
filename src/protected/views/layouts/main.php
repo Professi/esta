@@ -16,7 +16,7 @@
                 <div class="header">Elternsprechtag&nbsp;&nbsp;&nbsp;&nbsp;</div>
                 <div class="header-school-logo">
                     <div id="logo_artikel">der&nbsp;&nbsp;</div>
-                    <img id="logo_school" src="<?php echo Yii::app()->request->baseUrl; ?>/img/LogoBWS.svg" alt="Brühlwiesenschule Hofheim">
+                    <img id="logo_school" src="<?php echo Yii::app()->request->baseUrl; ?>/img/logo.svg" alt="<?php echo Yii::app()->params['schoolName']?>">
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span>', 'url' => array('/Appointment/getTeacher'), 'visible' => Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Elternsprechtagsverwaltung', 'url' => array('/Date/admin'), 'visible' => Yii::app()->user->checkAccess('0')),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Terminverwaltung', 'url' => array('/Appointment/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
-                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Schülerverwaltung', 'url' => array('/Child/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
+                           // array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Schülerverwaltung', 'url' => array('/Child/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Eltern und Kinder', 'url' => array('/ParentChild/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Ihre Kinder', 'url' => array('/ParentChild/index'), 'visible' => Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
                             //          array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Rollenverwaltung', 'url' => array('/Role/admin'), 'visible' => Yii::app()->user->checkAccess('0')),
