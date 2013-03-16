@@ -7,7 +7,12 @@ $this->breadcrumbs=array(
 ?>
 <div class="row">
     <div class="twelve columns">
-            <p>Br&uuml;hlwiesenschule, Gartenstra&szlige 28, 65719 Hofheim </p>
+            <p>Br&uuml;hlwiesenschule</p>
+            <p>Gartenstra&szlige 28</p>
+            <p>65719 Hofheim</p>
+            <p>Tel.: 06192 2904-0</p>
+            <p>Fax: 06192 2904-66</p>
+            <p>e-mail: office@bws-hofheim.de</p>
             <p>Die Elternsprechtagssoftware ESTA ist ein Schulprojekt der Br&uuml;hlwiesenschule. ESTA ist mit der GPL v3 lizensiert:</p>
             <p>ESTA&nbsp;&nbsp;<a href="http://www.gnu.org/licenses/" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
             <p>Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:</p>
@@ -16,7 +21,6 @@ $this->breadcrumbs=array(
             <p>Google Web Fonts&nbsp;&nbsp;<a href="http://www.google.com/webfonts" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
             <p>Free Stock Textures&nbsp;&nbsp;<a href="http://freestocktextures.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
             <p>Yii Framework&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
-            <p>Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch</p>
             <p class="text-center"><?php echo CHtml::link('<b>Zurück zur Startseite</b>', 'index.php'); ?> </p>
     </div>
 </div>
