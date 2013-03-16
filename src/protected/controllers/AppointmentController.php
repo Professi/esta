@@ -15,7 +15,6 @@
  * You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 class AppointmentController extends Controller {
 
     /**
@@ -102,13 +101,19 @@ class AppointmentController extends Controller {
             $model->state = 1;
             $model->lastname = $_GET['letter'];
         } else {
-           $model = new User('searchTeacher');
-           $model->unsetAttributes();
-           $model->state = 1;
+            $model = new User('searchTeacher');
+            $model->unsetAttributes();
+            $model->state = 1;
         }
         $this->render('getTeacher', array(
             'dataProvider' => $model,
         ));
+    }
+
+    public function actionMakeAppointment() {
+        $model = new Appointment;
+        $model->unsetAttributes();
+        $this->render('makeAppointment', array('model' => $model));
     }
 
     /**
