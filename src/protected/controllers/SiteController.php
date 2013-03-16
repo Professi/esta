@@ -20,15 +20,6 @@ class SiteController extends Controller {
     /**
      * Declares class-based actions.
      */
-    public function filters() {
-        return array(
-            array(
-                'COutputCache',
-                'duration' => 1000,
-                'varyByParam' => array('id'),
-            ),
-        );
-    }
 
     public function actions() {
         return array(

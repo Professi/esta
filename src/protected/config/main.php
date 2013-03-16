@@ -88,10 +88,10 @@ return array(
                     'report' => 'summary',),
             ),
         ),
-        'cache' => array(// nicht ändern , kommt eventuell noch weg da aktuell nichts gecached wird
-            'class' => 'system.caching.CDbCache',
-            'connectionID' => 'db',
-        ),
+//        'cache' => array(// nicht ändern , kommt eventuell noch weg da aktuell nichts gecached wird
+//            'class' => 'system.caching.CDbCache',
+//            'connectionID' => 'db',
+//        ),
         'session' => array(// nicht ändern
             'sessionName' => 'SiteSession', // nicht ändern
             'class' => 'CHttpSession', // nicht ändern

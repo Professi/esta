@@ -46,10 +46,10 @@ class UserIdentity extends CUserIdentity {
         } else {
             if ($user->state == 0) {
                 $this->errorCode = self::ERROR_ACCOUNT_NOT_ACTIVATED;
-                $this->errorMessage = self::ERROR_MSG_ACCOUNT_NOT_ACTIVATED . Yii::app()->params['adminEmail'];
+                $this->errorMessage = self::ERROR_MSG_ACCOUNT_NOT_ACTIVATED;
             } else if ($user->state == 2) {
                 $this->errorCode = self::ERROR_ACCOUNT_BANNED;
-                $this->errorMessage = self::ERROR_MSG_ACCOUNT_BANNED . Yii::app()->params['adminEmail'];
+                $this->errorMessage = self::ERROR_MSG_ACCOUNT_BANNED ;
             } else {
                 $this->errorCode = self::ERROR_NONE;
                 $this->_id = $user->id;
