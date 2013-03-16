@@ -1,4 +1,5 @@
 <?php
+
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -73,10 +74,19 @@ class UserController extends Controller {
      * @todo Sinnvolle JSON Ausgabe
      */
     public function actionSearch($term) {
-        $dataProvider = new User('searchTeacherAutoComplete');
+        $dataProvider = new User();
         $dataProvider->unsetAttributes();
         $dataProvider->lastname = $term;
-        echo CJSON::encode("test1");
+        $dataProvider->role = 2;
+        $criteria = $dataProvider->searchCriteriaTeacherAutoComplete();
+        $a_rc = array();
+        $a_data = User::model()->findAll($criteria,array());
+        foreach ($a_data as $record) {
+            array_push($a_rc, array('label' => $record->title . " " 
+                . $record->firstname . " " . $record->lastname
+                    , 'value' => $record->id));
+        }
+        echo CJSON::encode($a_rc);
     }
 
     /**
@@ -132,26 +142,31 @@ class UserController extends Controller {
                 $file = CUploadedFile::getInstance($model, 'file');
                 $fp = fopen($file->tempName, 'r');
                 if ($fp) {
+                    $first = true;
                     do {
-                        if ($line[0] != "Vorname" && !$line[1] != "Nachname" && $line[2] != 'Email') {
-                            $model = new User();
-                            $model->firstname = self::encodingString($line[1]);
-                            $model->lastname = self::encodingString($line[0]);
-                            if ($line[2] != NULL) {
-                                $model->email = self::encodingString($line[2]);
-                            } else {
-                                $uml = array("Ö" => "Oe", "ö" => "oe", "Ä" => "Ae", "ä" => "ae", "Ü" => "Ue", "ü" => "ue", "ß" => "ss",);
-                                $model->email = strtolower(substr($model->firstname, 0, 1))
-                                        . '.' . preg_replace("/\s+/", "", strtolower(strtr($model->lastname, $uml))) . '@'
-                                        . Yii::app()->params['teacherMail'];
+                        if (!$first) {
+                            if ($line[0] != "Vorname" && !$line[1] != "Nachname" && $line[2] != 'Email') {
+                                $model = new User();
+                                $model->firstname = self::encodingString($line[1]);
+                                $model->lastname = self::encodingString($line[0]);
+                                if ($line[2] != NULL) {
+                                    $model->email = self::encodingString($line[2]);
+                                } else {
+                                    $uml = array("Ö" => "Oe", "ö" => "oe", "Ä" => "Ae", "ä" => "ae", "Ü" => "Ue", "ü" => "ue", "ß" => "ss",);
+                                    $model->email = strtolower(substr($model->firstname, 0, 1))
+                                            . '.' . preg_replace("/\s+/", "", strtolower(strtr($model->lastname, $uml))) . '@'
+                                            . Yii::app()->params['teacherMail'];
+                                }
+                                $model->username = $model->email;
+                                $model->title = self::encodingString($line[3]);
+                                $model->state = 1;
+                                $model->role = 2;
+                                $model->password = "DONNERSTAG01";
+                                $model->password_repeat = $model->password;
+                                $model->save();
                             }
-                            $model->username = $model->email;
-                            $model->title = self::encodingString($line[3]);
-                            $model->state = 1;
-                            $model->role = 2;
-                            $model->password = "DONNERSTAG01";
-                            $model->password_repeat = $model->password;
-                            $model->save();
+                        } else {
+                            $first = false;
                         }
                     } while (($line = fgetcsv($fp, 1000, ";")) != FALSE);
                 }

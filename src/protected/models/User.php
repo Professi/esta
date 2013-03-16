@@ -180,19 +180,17 @@ class User extends CActiveRecord {
         ));
     }
 
-    public function searchTeacherAutoComplete() {
+    public function searchCriteriaTeacherAutoComplete() {
         $criteria = new CDbCriteria;
         $match = addcslashes($this->lastname, '%_');
         $criteria->addCondition('lastname LIKE :match');
         $criteria->params = array(':match' => "$match%");
         $criteria->compare('state', $this->state, true);
         $criteria->with = array('userRoles');
-        $criteria->select = 'firstname,lastname';
-        $criteria->addCondition('userRoles.role_id="2"');
-        return new CActiveDataProvider($this, array(
-            'criteria' => $criteria,
-            'pagination' => array('pageSize' => 20),
-        ));
+        $criteria->select = 'title,firstname,lastname';
+        $criteria->addCondition('userRoles.role_id="'.$this->role.'"');
+        $criteria->limit = 10;
+        return $criteria;
     }
 
     /**
