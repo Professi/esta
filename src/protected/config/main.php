@@ -90,7 +90,7 @@ return array(
         ),
         'cache' => array(// nicht ändern , kommt eventuell noch weg da aktuell nichts gecached wird
             'class' => 'system.caching.CDbCache',
-            'connectionID' => 'db'
+            'connectionID' => 'db',
         ),
         'session' => array(// nicht ändern
             'sessionName' => 'SiteSession', // nicht ändern

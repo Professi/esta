@@ -1,4 +1,5 @@
 <?php
+
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -19,6 +20,16 @@ class SiteController extends Controller {
     /**
      * Declares class-based actions.
      */
+    public function filters() {
+        return array(
+            array(
+                'COutputCache',
+                'duration' => 1000,
+                'varyByParam' => array('id'),
+            ),
+        );
+    }
+
     public function actions() {
         return array(
             // captcha action renders the CAPTCHA image displayed on the contact page
