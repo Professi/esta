@@ -13,7 +13,8 @@ $this->breadcrumbs=array(
             <p>Google Web Fonts&nbsp;&nbsp;<a href="http://www.google.com/webfonts" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
             <p>Free Stock Textures&nbsp;&nbsp;<a href="http://freestocktextures.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
             <p>Yii Framework&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
-            <p>ESTA&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
+            <p>Die Elternsprechtagssoftware ESTA ist ein Schulprojekt der Brühlwiesenschule. ESTA ist mit der GPL v3 lizensiert:</p>
+            <p>ESTA&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl.de.html" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
             <p class="text-center"><?php echo CHtml::link('<b>ZurÃ¼ck zur Startseite</b>', 'index.php'); ?> </p>
     </div>
 </div>
