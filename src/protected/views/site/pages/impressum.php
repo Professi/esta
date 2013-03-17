@@ -28,9 +28,9 @@ $this->breadcrumbs=array(
             Tel.: 06192 2904-0<br>
             Fax: 06192 2904-66<br>
             e-mail: office@bws-hofheim.de</p>
-            <p>Haftungsausschluss:<br>
-                &Uuml;ber Links auf dieser Seite k&ouml;nnen Sie auf Fremdseiten und werbliche Mitteilungen Dritter gelangen,
-                f&uuml;r deren Inhalt die Br&uuml;hlwiesenschule keine Verantwortung &uuml;bernehmen kann.<br>
+            <p>Haftungsausschluss:</p>
+            <p>&Uuml;ber Links auf dieser Seite k&ouml;nnen Sie auf Fremdseiten und werbliche Mitteilungen Dritter gelangen,
+            f&uuml;r deren Inhalt die Br&uuml;hlwiesenschule keine Verantwortung &uuml;bernehmen kann.<br>
             Haftungsauschlluss&nbsp;&nbsp;<a href="http://www.disclaimer.de/disclaimer.htm" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
             <p>Die Elternsprechtagssoftware ESTA ist ein Schulprojekt der Br&uuml;hlwiesenschule. ESTA ist mit der GPL v3 lizensiert:</p>
             <p>GPLv3 (ENG)&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
