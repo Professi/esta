@@ -39,7 +39,8 @@ $this->breadcrumbs=array(
             IcoMoon  Icon Fonts&nbsp;&nbsp;<a href="http://icomoon.io" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             Google Web Fonts&nbsp;&nbsp;<a href="http://www.google.com/webfonts" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             Free Stock Textures&nbsp;&nbsp;<a href="http://freestocktextures.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            Yii Framework&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
+            Yii Framework&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
+            EMailer eine Yii Extension die PHPMailer verwendet&nbsp;&nbsp;<a href="http://www.yiiframework.com/extension/mailer/" > <span aria-hiden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
             <p class="text-center"><?php echo CHtml::link('<b>Zurück zur Startseite</b>', 'index.php'); ?> </p>
     </div>
 </div>

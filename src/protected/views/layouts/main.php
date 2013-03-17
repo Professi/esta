@@ -98,7 +98,6 @@
                 <div class="row">
                     <div class="six columns">
                         <p>Copyright &copy; <?php echo date('Y'); ?> BWS Brühlwiesenschule Hofheim<br>
-                            <?php echo Yii::powered(); ?>
                         </p>
                     </div>
                     <div class="six columns">
