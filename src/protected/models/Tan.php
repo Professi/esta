@@ -25,6 +25,26 @@ class Tan extends CActiveRecord {
 
     public $tan_count = 0;
     public $id = 0;
+    
+    public function getTanCount() {
+        return $this->tan_count;
+    }
+    
+    public function getId() {
+        return $this->id;
+    }
+    
+    public function setTanCount($tanCount) {
+        if(is_int($tanCount)) {
+            $this->tan_count = $tanCount;
+        }
+    }
+    
+    public function setId($id) {
+        if(is_int($id)) {
+            $this->id = $id;
+        }
+    } 
 
     /**
      * Returns the static model of the specified AR class.

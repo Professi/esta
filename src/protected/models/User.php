@@ -1,4 +1,5 @@
 <?php
+
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -14,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * This is the model class for table "user".
  *
@@ -36,6 +38,9 @@
  */
 class User extends CActiveRecord {
 
+    /**
+     * @todo in private Attribute ändern und entsprechende getter und Setter erstellen
+     */
     public $password_repeat = null;
     public $pwdChanged = false;
     public $role = null;
@@ -76,7 +81,7 @@ class User extends CActiveRecord {
                 'min' => Yii::app()->params['tanSize'],
                 'max' => Yii::app()->params['tanSize'],),
             array('tan', 'numerical', 'integerOnly' => TRUE,
-                'allowEmpty' => !$this->isNewRecord || !Yii::app()->user->isGuest 
+                'allowEmpty' => !$this->isNewRecord || !Yii::app()->user->isGuest
             ),
             array('password', 'compare', "on" => "insert"),
             array('password_repeat', 'safe'), //allow bulk assignment
@@ -165,6 +170,11 @@ class User extends CActiveRecord {
         ));
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return \CActiveDataProvider
+     * Erstellt CActiveDataProvider mit CDbCriteria mit Suche nach Lehrerbenutzern 
+     */
     public function searchTeacher() {
         $criteria = new CDbCriteria;
         $match = addcslashes($this->lastname, '%_');
@@ -179,7 +189,12 @@ class User extends CActiveRecord {
             'pagination' => array('pageSize' => 20),
         ));
     }
-
+/**
+ * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+ * @return \CDbCriteria
+ * Suche für die Autovervollständigung bei getTeacher()
+ * 
+ */
     public function searchCriteriaTeacherAutoComplete() {
         $criteria = new CDbCriteria;
         $match = addcslashes($this->lastname, '%_');
@@ -187,8 +202,8 @@ class User extends CActiveRecord {
         $criteria->params = array(':match' => "$match%");
         $criteria->compare('state', $this->state, true);
         $criteria->with = array('userRoles');
-        $criteria->select = 'title,firstname,lastname';
-        $criteria->addCondition('userRoles.role_id="'.$this->role.'"');
+        $criteria->select = 'title,firstname,lastname,id';
+        $criteria->addCondition('userRoles.role_id="' . $this->role . '"');
         $criteria->limit = 10;
         return $criteria;
     }
@@ -345,6 +360,12 @@ class User extends CActiveRecord {
         echo $role->title;
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return boolean
+     * Führt zunächst die Elternmethode beforeValidate() aus und 
+     * prüft wenn diese true zurückgibt und es keiner neuer Eintrag ist ob die TAN schon benutzt wurde 
+     */
     public function beforeValidate() {
         $rc = parent::beforeValidate();
         if ($rc && Yii::app()->user->isGuest && $this->isNewRecord) {
@@ -356,6 +377,22 @@ class User extends CActiveRecord {
             } else {
                 $this->addError('tan', 'Leider konnte die eingegebene TAN nicht identifiziert werden.');
             }
+        }
+        return $rc;
+    }
+
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param integer $userId Benutzer ID
+     * @param integer $roleId Rollen ID
+     * @return boolean
+     * gibt true zurück wenn der gegebene Benutzer die entsprechende ROlle hat
+     */
+    public static function hasRole($userId, $roleId) {
+        $rc = false;
+        if (is_int($userId) && is_int($roleId) && UserRole::model()->countByAttributes(
+                array('user_id' => $userId, 'role_id' => $roleId)) == 1) {
+            $rc = true;
         }
         return $rc;
     }
