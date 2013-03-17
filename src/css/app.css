@@ -201,3 +201,10 @@ table {
 .button-column {
     text-align: center;
 }
+.teacher {
+    font-size: 1.2em;
+    font-family: Courier;
+}
+.small.teacher.button {
+    display: inline;
+}
