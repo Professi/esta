@@ -32,7 +32,7 @@ $this->menu=array(
 <div class="row">
     <div class="twelve columns centered">
         <fieldset>
-            <legend>Schüler Nummer <?php echo $model->id; ?> bearbeiten</legend>
+            <legend>Schüler bearbeiten</legend>
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
         </fieldset>
     </div>

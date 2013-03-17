@@ -41,7 +41,7 @@ class AppointmentController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'index', 'view', 'getTeacher','makeAppointment'),
+                'actions' => array('create', 'update', 'index', 'view', 'getTeacher', 'makeAppointment'),
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
@@ -95,15 +95,17 @@ class AppointmentController extends Controller {
      *  wird die entsprechende Suchanfrage gesendet und rendert das GridView
      */
     public function actionGetTeacher() {
-        if (isset($_GET['letter']) && strlen($_GET['letter']) == 1 && ctype_alpha($_GET['letter'])) {
-            $model = new User('searchTeacher');
-            $model->unsetAttributes();
-            $model->state = 1;
-            $model->lastname = $_GET['letter'];
-        } else {
-            $model = new User('searchTeacher');
-            $model->unsetAttributes();
-            $model->state = 1;
+        $model = new User('searchTeacher');
+        $model->unsetAttributes();
+        $model->state = 1;
+        if (isset($_GET['letter']) && strlen($_GET['letter']) <= 2) {
+            $search = array('ae', 'oe', 'ue');
+            $replace = array('ä', 'ö', 'ü');
+            $letter = str_replace($search, $replace, $_GET['letter']);
+            print_r($letter);
+            if (strlen($letter) == 1) {
+                $model->lastname = $_GET['letter'];
+            }
         }
         $this->render('getTeacher', array(
             'dataProvider' => $model,
@@ -113,7 +115,7 @@ class AppointmentController extends Controller {
     public function actionMakeAppointment($teacher) {
         $model = new Appointment;
         $model->unsetAttributes();
- $this->render('makeAppointment', array('model' => $model));
+        $this->render('makeAppointment', array('model' => $model));
     }
 
     /**

@@ -43,8 +43,8 @@ class ChildController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','index'),
-				'users'=>array('3'),
+				'actions'=>array('update'),
+				'roles'=>array('3'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete','index','create','update','view'),
@@ -97,21 +97,20 @@ class ChildController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
+            if((!Yii::app()->user->isAdmin() && ParentChild::model()->countByAttributes(array('child_id'=>$id))) || Yii::app()->user->isAdmin()) {
+            $model=$this->loadModel($id);
 		if(isset($_POST['Child']))
 		{
 			$model->attributes=$_POST['Child'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('parentChild/index'));
 		}
-
 		$this->render('update',array(
 			'model'=>$model,
 		));
+            } else {
+                throw new CHttpException('403','Sie sind nicht berechtigt, diese Aktion auszuführen.');
+            }            
 	}
 
 	/**
