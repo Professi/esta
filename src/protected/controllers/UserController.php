@@ -58,9 +58,14 @@ class UserController extends Controller {
                 'actions' => array('create', 'activate', 'ChangePwd', 'captcha', 'NewPw'),
                 'users' => array('?'),
             ),
+            array('deny',
+                'actions' => array('deleteAll'),
+                'roles' => array('1')),
             array('allow',
                 'roles' => array('1'),
             ),
+            array('allow',
+                'roles' => array('0')),
             array('deny', // deny all users
                 'users' => array('*'),
             ),
@@ -82,13 +87,27 @@ class UserController extends Controller {
         $a_rc = array();
         $a_data = User::model()->findAll($criteria);
         foreach ($a_data as $record) {
-        //    if (substr_compare($term, $record->lastname, 0, strlen($term)) == 0) {
-                $a_rc[] = array('label' => $record->title . " "
-                    . $record->firstname . " " . $record->lastname
-                    , 'value' => $record->id);
-         //   }
+            //    if (substr_compare($term, $record->lastname, 0, strlen($term)) == 0) {
+            $a_rc[] = array('label' => $record->title . " "
+                . $record->firstname . " " . $record->lastname
+                , 'value' => $record->id);
+            //   }
         }
         echo CJSON::encode($a_rc);
+    }
+
+    public function actionDeleteAll() {
+        Appointment::model()->deleteAll();
+        ParentChild::model()->deleteAll();
+        Child::model()->deleteAll();
+        Date::model()->deleteAll();
+        Tan::model()->deleteAll();
+        $a_delete = User::model()->findAll(User::deleteAllCriteria());
+        foreach ($a_delete as $record) {
+            $record->delete();
+        }
+        Yii::app()->user->setFlash('success', 'Alle Daten gelöscht, einzig die Verwaltungs- und Administrationskonten wurden nicht gelöscht') .
+                $this->redirect('index.php?r=user/account');
     }
 
     /**
@@ -235,7 +254,7 @@ class UserController extends Controller {
                 if ($user != null) {
                     if ($user->state == 1) {
                         $user->activationKey = $user->generateActivationKey();
-                        $user->password = "dummyPassword";
+                        $user->password = "dummyPassworddummyPassword";
                         $user->save();
                         self::sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', "Sie haben bei " . Yii::app()->name . " versucht Ihr Passwort zu ändern. Mit Hilfe des folgenden Links können Sie Ihr Passwort ändern:\n "
                                 . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $user->activationKey, $user->email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
@@ -301,7 +320,7 @@ class UserController extends Controller {
                 Yii::app()->user->setFlash("error", "Benutzer konnte nicht aktualisiert werden.");
             }
         } else {
-            $model->password = "dummyPassword";
+            $model->password = "dummyPassworddummyPassword";
             $model->password_repeat = $model->password;
         }
         $this->render('update', array(

@@ -189,12 +189,13 @@ class User extends CActiveRecord {
             'pagination' => array('pageSize' => 20),
         ));
     }
-/**
- * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
- * @return \CDbCriteria
- * Suche für die Autovervollständigung bei getTeacher()
- * 
- */
+
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return \CDbCriteria
+     * Suche für die Autovervollständigung bei getTeacher()
+     * 
+     */
     public function searchCriteriaTeacherAutoComplete() {
         $criteria = new CDbCriteria;
         $match = addcslashes($this->lastname, '%_');
@@ -205,6 +206,15 @@ class User extends CActiveRecord {
         $criteria->select = 'title,firstname,lastname,id';
         $criteria->addCondition('userRoles.role_id="' . $this->role . '"');
         $criteria->limit = 10;
+        return $criteria;
+    }
+
+    public static function deleteAllCriteria() {
+        $criteria = new CDbCriteria();
+        $criteria->with = array('userRoles');
+        $criteria->addCondition('userRoles.role_id="2"', "OR");
+        $criteria->addCondition('userRoles.role_id="3"', "OR");
+        $criteria->select = 'id';
         return $criteria;
     }
 
@@ -295,7 +305,7 @@ class User extends CActiveRecord {
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
         } else if (!$this->isNewRecord && $this->password == User::model()->findByAttributes(array('id' => $this->id, 'password' => $this->password))) {
             
-        } else if (!$this->isNewRecord && $this->password == "dummyPassword") {
+        } else if (!$this->isNewRecord && $this->password == "dummyPassworddummyPassword") {
             $this->password = User::model()->findByAttributes(array('id' => $this->id))->password;
         } else {
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
@@ -391,7 +401,7 @@ class User extends CActiveRecord {
     public static function hasRole($userId, $roleId) {
         $rc = false;
         if (is_int($userId) && is_int($roleId) && UserRole::model()->countByAttributes(
-                array('user_id' => $userId, 'role_id' => $roleId)) == 1) {
+                        array('user_id' => $userId, 'role_id' => $roleId)) == 1) {
             $rc = true;
         }
         return $rc;
