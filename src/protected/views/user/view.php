@@ -49,5 +49,11 @@ $this->widget('zii.widgets.CDetailView', array(
     ),
 ));
 ?>
+<?php if (Yii::app()->user->checkAccess('0')) { ?>
+<fieldset class="text-center">
+    <p>Mit dem Dr&uuml;cken dieses Knopfes werden alle Daten aus der Datenbank gel&ouml;scht. Bet&auml;tigen Sie ihn nur wenn Sie sich absolut sicher sind!</p>
+    <img src="<?php echo Yii::app()->request->baseUrl; ?>/img/redbutton.png" alt="Der Rote Knopf" >
+</fieldset>
+<?php } ?>
     </div>
 </div>

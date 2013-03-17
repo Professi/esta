@@ -21,9 +21,10 @@
         <div class="twelve columns centered">
                 <div class="panel">
                         <p>	Klicken Sie auf einen Buchstaben um sich alle Lehrer, deren Name mit diesem Buchstaben beginnt, anzeigen zu lassen.<br> 
-                                Drücken Sie auf den Stern um eine Liste mit allen Lehrer zu erhalten.<br>
-                                Sie können alternativ auch den Namen in das Suchfeld eingeben um alle zutreffenden Möglichkeiten zu sehen.<br>
-                                Wenn Sie den richtigen Lehrer gefunden haben, 
+                                Drücken Sie auf den Stern um eine Liste mit allen Lehrer zu erhalten.
+                        </p>
+                        <p class="js_show" style="display: none;">Sie können alternativ auch den Namen in das Suchfeld eingeben um alle zutreffenden Möglichkeiten zu sehen.</p>
+                        <p>     Wenn Sie den richtigen Lehrer gefunden haben, 
                                 klicken Sie einfach auf das Uhrsymbol neben seinem Namen um zu der Terminvereinbarung des Lehres zu gelangen.
                         </p>
                 </div>
@@ -57,9 +58,9 @@
                         <a href="index.php?r=appointment/getTeacher&letter=x" class="tiny teacher button">X</a>
                         <a href="index.php?r=appointment/getTeacher&letter=y" class="tiny teacher button">Y</a>
                         <a href="index.php?r=appointment/getTeacher&letter=z" class="tiny teacher button">Z</a>
-                        <a href="index.php?r=appointment/getTeacher&letter=ä" class="tiny teacher button">&Auml;</a>
-                        <a href="index.php?r=appointment/getTeacher&letter=ö" class="tiny teacher button">&Ouml</a>
-                        <a href="index.php?r=appointment/getTeacher&letter=ü" class="tiny teacher button">&Uuml;</a>
+                        <a href="index.php?r=appointment/getTeacher&letter=ae" class="tiny teacher button">&Auml;</a>
+                        <a href="index.php?r=appointment/getTeacher&letter=oe" class="tiny teacher button">&Ouml</a>
+                        <a href="index.php?r=appointment/getTeacher&letter=ue" class="tiny teacher button">&Uuml;</a>
                         <a href="index.php?r=appointment/getTeacher&letter=" class="tiny teacher button">*</a>
                     </div>
                     <div class="show-for-small" style="line-height:2.5em;">
@@ -100,15 +101,15 @@
                         </div>
                         <div class="left">
                             <a href="index.php?r=appointment/getTeacher&letter=z" class="small teacher button">Z</a>
-                            <a href="index.php?r=appointment/getTeacher&letter=ä" class="small teacher button">&Auml;</a>
-                            <a href="index.php?r=appointment/getTeacher&letter=ö" class="small teacher button">&Ouml;</a>
-                            <a href="index.php?r=appointment/getTeacher&letter=ü" class="small teacher button">&Uuml;</a>
+                            <a href="index.php?r=appointment/getTeacher&letter=ae" class="small teacher button">&Auml;</a>
+                            <a href="index.php?r=appointment/getTeacher&letter=oe" class="small teacher button">&Ouml;</a>
+                            <a href="index.php?r=appointment/getTeacher&letter=ue" class="small teacher button">&Uuml;</a>
                             <a href="index.php?r=appointment/getTeacher&letter=" class="small teacher button">*</a>
                         </div>
                         <div style="clear:both;"></div> 
                     </div>
                     <br>
-                    <div class="row collapse">
+                    <div class="row collapse js_show" style="display:none;">
                         <div class="three columns">
                             <span class="prefix">Lehrername</span>
                         </div>
@@ -152,6 +153,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'buttons' => array(
                 'date' => array(
                     'label' => 'Termin vereinbaren',
+                    'url' => '"index.php?r=Appointment/makeAppointment&teacher=".$data->id',
                     'imageUrl' => Yii::app()->request->baseUrl.'/img/alarm.svg',
                     'options' => array('class' => 'column-button')
                 ),

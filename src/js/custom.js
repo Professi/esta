@@ -49,6 +49,11 @@
         $('#nojs_menu > div').remove();
 
     });
+    
+    $('#teacher-ac').on( 'autocompleteselect', function(e, ui) {
+        e.preventDefault();
+        window.location.href = "index.php?r=Appointment/makeAppointment&teacher="+ui.item.value;
+    });
 
 }(this, document, jQuery));
 
