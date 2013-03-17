@@ -22,27 +22,32 @@ $this->breadcrumbs=array(
 ?>
 
 <div class="row">
-    <h1>Impressum</h1>
+    <h2 class='subheader'>Impressum</h2>
+    <hr>
     <div class="twelve columns">
-            <p>Br&uuml;hlwiesenschule<br>
-            Gartenstra&szlige 28<br>
-            65719 Hofheim<br>
-            Tel.: 06192 2904-0<br>
-            Fax: 06192 2904-66<br>
-            e-mail: office@bws-hofheim.de</p>
-            <p>Haftungsausschluss:</p>
-            <p>&Uuml;ber Links auf dieser Seite k&ouml;nnen Sie auf Fremdseiten und werbliche Mitteilungen Dritter gelangen,
-            f&uuml;r deren Inhalt die Br&uuml;hlwiesenschule und die Entwickler dieser Anwendung keine Verantwortung &uuml;bernehmen können.<br>
-            Haftungsauschlluss&nbsp;&nbsp;<a href="http://www.disclaimer.de/disclaimer.htm" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
-            <p>ESTA ist ein Schulprojekt der Br&uuml;hlwiesenschule. ESTA wurde mit der GPL v3 lizensiert:</p>
-            <p>GPLv3 (ENG)&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
+            <p> Br&uuml;hlwiesenschule<br>
+                Gartenstra&szlige 28<br>
+                65719 Hofheim<br>
+                Tel.: 06192 2904-0<br>
+                Fax: 06192 2904-66<br>
+                E-Mail: <a href="mailto:office@bws-hofheim.de">office@bws-hofheim.de</a>
+            </p>
+            <p> Haftungsausschluss:
+            <br>&Uuml;ber Links auf dieser Seite k&ouml;nnen Sie auf Fremdseiten und werbliche Mitteilungen Dritter gelangen,
+                f&uuml;r deren Inhalt die Br&uuml;hlwiesenschule und die Entwickler dieser Anwendung keine Verantwortung &uuml;bernehmen können.<br>
+                Haftungsauschluss&nbsp;&nbsp;<a href="http://www.disclaimer.de/disclaimer.htm" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a>
+            </p>
+            <p> ESTA ist ein Schulprojekt der Br&uuml;hlwiesenschule. ESTA wurde mit der GPL v3 lizensiert:
+            <br>GPLv3 (ENG)&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a>
+            </p>
             <p>Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:</p>
-            <p>ZURB Foundation Framework&nbsp;&nbsp;<a href="http://foundation.zurb.com"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            IcoMoon  Icon Fonts&nbsp;&nbsp;<a href="http://icomoon.io" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            Google Web Fonts&nbsp;&nbsp;<a href="http://www.google.com/webfonts" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            Free Stock Textures&nbsp;&nbsp;<a href="http://freestocktextures.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            Yii Framework&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            EMailer eine Yii Extension die PHPMailer verwendet&nbsp;&nbsp;<a href="http://www.yiiframework.com/extension/mailer/" > <span aria-hiden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
+            <p> ZURB Foundation Framework&nbsp;&nbsp;<a href="http://foundation.zurb.com"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
+                IcoMoon  Icon Fonts&nbsp;&nbsp;<a href="http://icomoon.io" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
+                Google Web Fonts&nbsp;&nbsp;<a href="http://www.google.com/webfonts" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
+                Free Stock Textures&nbsp;&nbsp;<a href="http://freestocktextures.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
+                Yii Framework&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
+                EMailer eine Yii Extension die PHPMailer verwendet&nbsp;&nbsp;<a href="http://www.yiiframework.com/extension/mailer/" > <span aria-hiden="true" data-icon="&#xe006;">&nbsp;Link</span></a>
+            </p>
             <p class="text-center"><?php echo CHtml::link('<b>Zurück zur Startseite</b>', 'index.php'); ?> </p>
     </div>
 </div>

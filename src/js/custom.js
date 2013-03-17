@@ -54,6 +54,14 @@
         e.preventDefault();
         window.location.href = "index.php?r=Appointment/makeAppointment&teacher="+ui.item.value;
     });
+    
+    $('#red-button').on('click', function(e){
+        e.preventDefault();
+        $answer = confirm('Alles löschen?');
+        if ($answer) {
+            window.location.href = "index.php?r=user/deleteAll";
+        }
+    });
 
 }(this, document, jQuery));
 
