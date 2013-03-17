@@ -82,9 +82,9 @@ class UserController extends Controller {
         $a_rc = array();
         $a_data = User::model()->findAll($criteria, array());
         foreach ($a_data as $record) {
-            array_push($a_rc, array('label' => $record->title . " "
+            $a_rc[] = array('label' => $record->title . " "
                 . $record->firstname . " " . $record->lastname
-                , 'value' => $record->id));
+                , 'value' => $record->id);
         }
         echo CJSON::encode($a_rc);
     }

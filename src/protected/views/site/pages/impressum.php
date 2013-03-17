@@ -20,7 +20,9 @@ $this->breadcrumbs=array(
 	'Impressum',
 );
 ?>
+
 <div class="row">
+    <h1>Impressum</h1>
     <div class="twelve columns">
             <p>Br&uuml;hlwiesenschule<br>
             Gartenstra&szlige 28<br>
@@ -30,9 +32,9 @@ $this->breadcrumbs=array(
             e-mail: office@bws-hofheim.de</p>
             <p>Haftungsausschluss:</p>
             <p>&Uuml;ber Links auf dieser Seite k&ouml;nnen Sie auf Fremdseiten und werbliche Mitteilungen Dritter gelangen,
-            f&uuml;r deren Inhalt die Br&uuml;hlwiesenschule keine Verantwortung &uuml;bernehmen kann.<br>
+            f&uuml;r deren Inhalt die Br&uuml;hlwiesenschule und die Entwickler dieser Anwendung keine Verantwortung &uuml;bernehmen können.<br>
             Haftungsauschlluss&nbsp;&nbsp;<a href="http://www.disclaimer.de/disclaimer.htm" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
-            <p>Die Elternsprechtagssoftware ESTA ist ein Schulprojekt der Br&uuml;hlwiesenschule. ESTA ist mit der GPL v3 lizensiert:</p>
+            <p>ESTA ist ein Schulprojekt der Br&uuml;hlwiesenschule. ESTA wurde mit der GPL v3 lizensiert:</p>
             <p>GPLv3 (ENG)&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
             <p>Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:</p>
             <p>ZURB Foundation Framework&nbsp;&nbsp;<a href="http://foundation.zurb.com"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
