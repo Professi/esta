@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `appointment` (
   KEY `fk_appointment_date1_idx` (`date_id`),
   KEY `fk_appointment_parent_child1_idx` (`parent_child_id`),
   KEY `fk_appointment_user1_idx` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -47,11 +47,11 @@ CREATE TABLE IF NOT EXISTS `appointment` (
 
 CREATE TABLE IF NOT EXISTS `child` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `lastname` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `firstname` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `lastname` varchar(255) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=18 ;
 
 -- --------------------------------------------------------
 
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `date` (
   `durationPerAppointment` int(3) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `parent_child` (
   PRIMARY KEY (`id`),
   KEY `fk_parent_child_user1_idx` (`user_id`),
   KEY `fk_parent_child_child1_idx` (`child_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=25 ;
 
 -- --------------------------------------------------------
 
@@ -92,10 +92,10 @@ CREATE TABLE IF NOT EXISTS `parent_child` (
 
 CREATE TABLE IF NOT EXISTS `role` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `description` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=4 ;
 
 --
 -- Daten für Tabelle `role`
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `tan` (
   `used` tinyint(1) NOT NULL,
   PRIMARY KEY (`tan`),
   UNIQUE KEY `tan_UNIQUE` (`tan`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -128,19 +128,19 @@ CREATE TABLE IF NOT EXISTS `tan` (
 
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) CHARACTER SET latin1 NOT NULL,
-  `password` varchar(128) CHARACTER SET latin1 NOT NULL,
-  `activationKey` varchar(128) CHARACTER SET latin1 NOT NULL DEFAULT '',
+  `username` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `password` varchar(128) CHARACTER SET utf8 NOT NULL,
+  `activationKey` varchar(128) CHARACTER SET utf8 NOT NULL DEFAULT '',
   `createtime` int(11) NOT NULL DEFAULT '0',
-  `firstname` varchar(45) CHARACTER SET latin1 NOT NULL,
+  `firstname` varchar(45) CHARACTER SET utf8 NOT NULL,
   `state` int(1) NOT NULL DEFAULT '0',
-  `lastname` varchar(45) CHARACTER SET latin1 NOT NULL,
-  `email` varchar(45) CHARACTER SET latin1 NOT NULL,
-  `title` varchar(15) CHARACTER SET latin1 DEFAULT NULL,
+  `lastname` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `email` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `title` varchar(15) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   KEY `status` (`state`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci COMMENT='itle' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='itle' AUTO_INCREMENT=2 ;
 
 --
 -- Daten für Tabelle `user`
@@ -163,14 +163,14 @@ CREATE TABLE IF NOT EXISTS `user_role` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_user_role_role1_idx` (`role_id`),
   KEY `fk_user_role_user1_idx` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=3 ;
 
 --
 -- Daten für Tabelle `user_role`
 --
 
 INSERT INTO `user_role` (`id`, `role_id`, `user_id`) VALUES
-(2, 0, 1);
+(0, 0, 1);
 
 --
 -- Constraints der exportierten Tabellen
