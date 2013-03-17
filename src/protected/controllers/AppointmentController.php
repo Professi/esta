@@ -41,7 +41,7 @@ class AppointmentController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'index', 'view', 'getTeacher'),
+                'actions' => array('create', 'update', 'index', 'view', 'getTeacher','makeAppointment'),
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
@@ -113,7 +113,8 @@ class AppointmentController extends Controller {
     public function actionMakeAppointment($teacher) {
         $model = new Appointment;
         $model->unsetAttributes();
-        $this->render('makeAppointment', array('model' => $model));
+        echo "test";
+// $this->render('makeAppointment', array('model' => $model));
     }
 
     /**

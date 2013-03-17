@@ -1,4 +1,5 @@
 <?php
+
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -14,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * This is the model class for table "tan".
  *
@@ -25,26 +27,26 @@ class Tan extends CActiveRecord {
 
     public $tan_count = 0;
     public $id = 0;
-    
+
     public function getTanCount() {
         return $this->tan_count;
     }
-    
+
     public function getId() {
         return $this->id;
     }
-    
+
     public function setTanCount($tanCount) {
-        if(is_int($tanCount)) {
+        if (is_int($tanCount)) {
             $this->tan_count = $tanCount;
         }
     }
-    
+
     public function setId($id) {
-        if(is_int($id)) {
+        if (is_int($id)) {
             $this->id = $id;
         }
-    } 
+    }
 
     /**
      * Returns the static model of the specified AR class.
