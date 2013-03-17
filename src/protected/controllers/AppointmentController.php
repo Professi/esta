@@ -113,8 +113,7 @@ class AppointmentController extends Controller {
     public function actionMakeAppointment($teacher) {
         $model = new Appointment;
         $model->unsetAttributes();
-        echo "test";
-// $this->render('makeAppointment', array('model' => $model));
+ $this->render('makeAppointment', array('model' => $model));
     }
 
     /**
