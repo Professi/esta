@@ -125,8 +125,16 @@ class Date extends CActiveRecord {
     }
 
     public function afterSave() {
-        $diff = $this->end = $this->begin;
-
+        $diff = $this->end - $this->begin;
+        $i = 1;
+        while ($diff > 0) {
+           $datetime =  new DateTime();
+           $datetime->date_id = $this->id;
+           $datetime->time = $this->begin + $this->durationPerAppointment * $i;
+           ++$i;
+           $diff - $this->durationPerAppointment;
+           $datetime->save();
+        }
 
         return parent::afterSave();
     }
