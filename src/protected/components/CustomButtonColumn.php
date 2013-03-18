@@ -1,4 +1,9 @@
 <?php
+/**
+ * Ersetzt die Bilder die bei den Tabellenbuttons angezeigt werden und initialisiert die Elternklasse CButtonColumn
+ *
+ * @author David Mock
+ */
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -13,11 +18,6 @@
  *
  * You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-/**
- * Ersetzt die Bilder die bei den Tabellenbuttons angezeigt werden und initialisiert die Elternklasse CButtonColumn
- *
- * @author David Mock
  */
 class CustomButtonColumn extends CButtonColumn  {
   /*

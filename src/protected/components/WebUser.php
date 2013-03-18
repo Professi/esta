@@ -18,6 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
+ * Webuser überschreibt CWebuser und überschreibt u.a. die Methode checkAccess
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
 class WebUser extends CWebUser {
@@ -25,9 +26,9 @@ class WebUser extends CWebUser {
     /**
      * Überschreibt eine Yii Methode, welche für die Zugriffsberechtigung
      *  in Controllern verwendet wird (accessRules)
-     * @param string $role RollenID
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * * @param mixed $params (opt) Muss gesetzt werden durch Vererbung
+     * @param string $role RollenID
+     * @param mixed $params (opt) Muss gesetzt werden durch Vererbung
      * @return bool Permission granted?
      */
     public function checkAccess($role, $params = array()) {
@@ -43,8 +44,8 @@ class WebUser extends CWebUser {
     /**
      * Prüft ob ein User eine der beiden Rollen hat
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @param integer $operation1 Benötigte Rolle
-     * @param integer $operation2 Benötigte Rolle
+     * @param integer $role1 Benötigte Rolle
+     * @param integer $role2 Benötigte Rolle
      * @return boolean Falls eine Operation mit der UserRolle übereinstimmt gibts true
      */
     public function checkAccessRole($role1, $role2) {

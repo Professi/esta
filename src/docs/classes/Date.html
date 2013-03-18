@@ -32,10 +32,10 @@
 <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
                                     Reports <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
-                <span class="label label-info">151</span></a></li>
+                <span class="label label-info">115</span></a></li>
 <li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
                 <ul><li>todo 
-                <span class="label label-info">2</span>
+                <span class="label label-info">1</span>
 </li></ul></a></li>
 <li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
                 <span class="label label-info">0</span></a></li>
@@ -58,23 +58,16 @@
 <ul class="side-nav nav nav-list"><li class="nav-header">
 <i class="icon-custom icon-method"></i> Methods
                     <ul>
-<li class="method public "><a href="#method_afterSave" title="afterSave :: "><span class="description">afterSave()
-        </span><pre>afterSave()</pre></a></li>
+<li class="method public "><a href="#method_afterSave" title="afterSave :: Erstellt neue DateTimes entsprechend der Elternsprechtagszeiten"><span class="description">Erstellt neue DateTimes entsprechend der Elternsprechtagszeiten</span><pre>afterSave()</pre></a></li>
 <li class="method public "><a href="#method_afterValidate" title="afterValidate :: Prüft nach der erfolgreichen Validierung ob das Ende vor dem Anfang liegt."><span class="description">Prüft nach der erfolgreichen Validierung ob das Ende vor dem Anfang liegt.</span><pre>afterValidate()</pre></a></li>
-<li class="method public "><a href="#method_attributeLabels" title="attributeLabels :: "><span class="description">attributeLabels()
-        </span><pre>attributeLabels()</pre></a></li>
-<li class="method public "><a href="#method_beforeDelete" title="beforeDelete :: "><span class="description">beforeDelete()
-        </span><pre>beforeDelete()</pre></a></li>
-<li class="method public "><a href="#method_beforeSave" title="beforeSave :: "><span class="description">beforeSave()
-        </span><pre>beforeSave()</pre></a></li>
+<li class="method public "><a href="#method_attributeLabels" title="attributeLabels :: Attributlabels"><span class="description">Attributlabels</span><pre>attributeLabels()</pre></a></li>
+<li class="method public "><a href="#method_beforeDelete" title="beforeDelete :: bevor der Elternsprechtag gelöscht wird werden alle DateAndTimes gelöscht"><span class="description">bevor der Elternsprechtag gelöscht wird werden alle DateAndTimes gelöscht</span><pre>beforeDelete()</pre></a></li>
+<li class="method public "><a href="#method_beforeSave" title="beforeSave :: wandelt das Datum von d.m.Y in Y-m-d um"><span class="description">wandelt das Datum von d.m.Y in Y-m-d um</span><pre>beforeSave()</pre></a></li>
 <li class="method public "><a href="#method_model" title="model :: Returns the static model of the specified AR class."><span class="description">Returns the static model of the specified AR class.</span><pre>model()</pre></a></li>
-<li class="method public "><a href="#method_relations" title="relations :: "><span class="description">relations()
-        </span><pre>relations()</pre></a></li>
-<li class="method public "><a href="#method_rules" title="rules :: "><span class="description">rules()
-        </span><pre>rules()</pre></a></li>
+<li class="method public "><a href="#method_relations" title="relations :: Relationen ( Appointments HAS_MANY )"><span class="description">Relationen ( Appointments HAS_MANY )</span><pre>relations()</pre></a></li>
+<li class="method public "><a href="#method_rules" title="rules :: Regeln für Validierung"><span class="description">Regeln für Validierung</span><pre>rules()</pre></a></li>
 <li class="method public "><a href="#method_search" title="search :: Retrieves a list of models based on the current search/filter conditions."><span class="description">Retrieves a list of models based on the current search/filter conditions.</span><pre>search()</pre></a></li>
-<li class="method public "><a href="#method_tableName" title="tableName :: "><span class="description">tableName()
-        </span><pre>tableName()</pre></a></li>
+<li class="method public "><a href="#method_tableName" title="tableName :: Tabellenname"><span class="description">Tabellenname</span><pre>tableName()</pre></a></li>
 </ul>
 </li></ul>
 </div>
@@ -106,47 +99,76 @@ GNU General Public License for more details.</p>
 <h3>
 <i class="icon-custom icon-method"></i> Methods</h3>
 <a id="method_afterSave"></a><div class="element clickable method public method_afterSave" data-toggle="collapse" data-target=".method_afterSave .collapse">
-<h2>afterSave()
-        </h2>
-<pre>afterSave() </pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
-</div>
-<a id="method_afterValidate"></a><div class="element clickable method public method_afterValidate" data-toggle="collapse" data-target=".method_afterValidate .collapse">
-<h2>Prüft nach der erfolgreichen Validierung ob das Ende vor dem Anfang liegt.</h2>
-<pre>afterValidate() : boolean</pre>
+<h2>Erstellt neue DateTimes entsprechend der Elternsprechtagszeiten</h2>
+<pre>afterSave() : boolean</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>author</th>
+<td><a href="mailto:c.ehringfeld@t-online.de">Christian Ehringfeld</a></td>
+</tr></table>
 <h3>Returns</h3>
-<div class="subelement response"><code>boolean</code></div>
+<div class="subelement response">
+<code>boolean</code>parent::afterSave();</div>
+</div></div>
+</div>
+<a id="method_afterValidate"></a><div class="element clickable method public method_afterValidate" data-toggle="collapse" data-target=".method_afterValidate .collapse">
+<h2>Prüft nach der erfolgreichen Validierung ob das Ende vor dem Anfang liegt.</h2>
+<pre>afterValidate() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>author</th>
+<td><a href="">Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;
+     * @return boolean</a></td>
+</tr></table>
 </div></div>
 </div>
 <a id="method_attributeLabels"></a><div class="element clickable method public method_attributeLabels" data-toggle="collapse" data-target=".method_attributeLabels .collapse">
-<h2>attributeLabels()
-        </h2>
+<h2>Attributlabels</h2>
 <pre>attributeLabels() : array</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>author</th>
+<td><a href="mailto:c.ehringfeld@t-online.de">Christian Ehringfeld</a></td>
+</tr></table>
 <h3>Returns</h3>
 <div class="subelement response">
 <code>array</code>customized attribute labels (name=>label)</div>
 </div></div>
 </div>
 <a id="method_beforeDelete"></a><div class="element clickable method public method_beforeDelete" data-toggle="collapse" data-target=".method_beforeDelete .collapse">
-<h2>beforeDelete()
-        </h2>
-<pre>beforeDelete() </pre>
+<h2>bevor der Elternsprechtag gelöscht wird werden alle DateAndTimes gelöscht</h2>
+<pre>beforeDelete() : \type</pre>
 <div class="labels"></div>
-<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>author</th>
+<td><a href="mailto:c.ehringfeld@t-online.de">Christian Ehringfeld</a></td>
+</tr></table>
+<h3>Returns</h3>
+<div class="subelement response"><code>\type</code></div>
+</div></div>
 </div>
 <a id="method_beforeSave"></a><div class="element clickable method public method_beforeSave" data-toggle="collapse" data-target=".method_beforeSave .collapse">
-<h2>beforeSave()
-        </h2>
-<pre>beforeSave() </pre>
+<h2>wandelt das Datum von d.m.Y in Y-m-d um</h2>
+<pre>beforeSave() : boolean</pre>
 <div class="labels"></div>
-<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>author</th>
+<td><a href="mailto:c.ehringfeld@t-online.de">Christian Ehringfeld</a></td>
+</tr></table>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>boolean</code>parent::beforeSave</div>
+</div></div>
 </div>
 <a id="method_model"></a><div class="element clickable method public method_model" data-toggle="collapse" data-target=".method_model .collapse">
 <h2>Returns the static model of the specified AR class.</h2>
@@ -164,8 +186,7 @@ GNU General Public License for more details.</p>
 </div></div>
 </div>
 <a id="method_relations"></a><div class="element clickable method public method_relations" data-toggle="collapse" data-target=".method_relations .collapse">
-<h2>relations()
-        </h2>
+<h2>Relationen ( Appointments HAS_MANY )</h2>
 <pre>relations() : array</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
@@ -176,12 +197,15 @@ GNU General Public License for more details.</p>
 </div></div>
 </div>
 <a id="method_rules"></a><div class="element clickable method public method_rules" data-toggle="collapse" data-target=".method_rules .collapse">
-<h2>rules()
-        </h2>
+<h2>Regeln für Validierung</h2>
 <pre>rules() : array</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>author</th>
+<td><a href="mailto:c.ehringfeld@t-online.de">Christian Ehringfeld</a></td>
+</tr></table>
 <h3>Returns</h3>
 <div class="subelement response">
 <code>array</code>validation rules for model attributes.</div>
@@ -199,8 +223,7 @@ GNU General Public License for more details.</p>
 </div></div>
 </div>
 <a id="method_tableName"></a><div class="element clickable method public method_tableName" data-toggle="collapse" data-target=".method_tableName .collapse">
-<h2>tableName()
-        </h2>
+<h2>Tabellenname</h2>
 <pre>tableName() : string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
@@ -217,7 +240,7 @@ GNU General Public License for more details.</p>
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a12</a> and<br>
-            generated on 2013-03-18T17:39:16+01:00.<br></footer></div>
+            generated on 2013-03-18T20:52:48+01:00.<br></footer></div>
 </div>
 </body>
 </html>

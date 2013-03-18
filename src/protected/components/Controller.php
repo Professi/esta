@@ -1,8 +1,8 @@
 <?php
-
 /**
  * Controller is the customized base controller class.
- * All controller classes for this application should extend from this base class.
+ *
+ *  All controller classes for this application should extend from this base class.
  */
 /* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
@@ -23,7 +23,9 @@ define('ADMIN', 0);
 define('MANAGEMENT', 1);
 define('TEACHER', 2);
 define('PARENTS', 3);
-
+/**
+ * Klasse Controller überschreibt die Standard Yii Controller Klasse
+ */
 class Controller extends CController {
 
     /**

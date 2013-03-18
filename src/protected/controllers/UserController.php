@@ -76,7 +76,6 @@ class UserController extends Controller {
      * 
      * @param string $term
      * @author Christian Ehringfeld <c.ehringfeld@t-onlined.e>
-     * @todo Sinnvolle JSON Ausgabe
      */
     public function actionSearch($role, $term) {
         $dataProvider = new User();

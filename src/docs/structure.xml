@@ -979,114 +979,133 @@ GNU General Public License for more details.&lt;/p&gt;
       </method>
     </class>
   </file>
-  <file path="protected/models/DateAndTime.php" hash="1c2467ecfd934e6cb84bbb07e8a946e0" package="Default">
-    <class final="false" abstract="false" namespace="global" line="15" package="Default">
+  <file path="protected/models/DateAndTime.php" hash="973329111fccb03a62aa9ae76ab22c36" package="Default">
+    <docblock line="2">
+      <description>This is the model class for table "dateAndTime".</description>
+      <long-description>&lt;p&gt;The followings are the available columns in table 'dateAndTime':&lt;/p&gt;</long-description>
+      <tag line="2" name="property" description="" type="integer" variable="$id">
+        <type by_reference="false">integer</type>
+      </tag>
+      <tag line="2" name="property" description="" type="string" variable="$time">
+        <type by_reference="false">string</type>
+      </tag>
+      <tag line="2" name="property" description="The followings are the available model relations:" type="integer" variable="$date_id">
+        <type by_reference="false">integer</type>
+      </tag>
+      <tag line="2" name="property" description="" type="\Appointment[]" variable="$appointments">
+        <type by_reference="false">\Appointment[]</type>
+      </tag>
+      <tag line="2" name="property" description="" type="\Date" variable="$date">
+        <type by_reference="false">\Date</type>
+      </tag>
+    </docblock>
+    <class final="false" abstract="false" namespace="global" line="30" package="Default">
       <extends>\CActiveRecord</extends>
       <name>DateAndTime</name>
       <full_name>\DateAndTime</full_name>
-      <docblock line="3">
-        <description>This is the model class for table "dateAndTime".</description>
-        <long-description>&lt;p&gt;The followings are the available columns in table 'dateAndTime':&lt;/p&gt;</long-description>
-        <tag line="3" name="property" description="" type="integer" variable="$id">
-          <type by_reference="false">integer</type>
-        </tag>
-        <tag line="3" name="property" description="" type="string" variable="$time">
-          <type by_reference="false">string</type>
-        </tag>
-        <tag line="3" name="property" description="The followings are the available model relations:" type="integer" variable="$date_id">
-          <type by_reference="false">integer</type>
-        </tag>
-        <tag line="3" name="property" description="" type="\Appointment[]" variable="$appointments">
-          <type by_reference="false">\Appointment[]</type>
-        </tag>
-        <tag line="3" name="property" description="" type="\Date" variable="$date">
-          <type by_reference="false">\Date</type>
-        </tag>
+      <docblock line="14">
+        <description>Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch</description>
+        <long-description>&lt;p&gt;This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.&lt;/p&gt;
+
+&lt;p&gt;This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.&lt;/p&gt;
+
+&lt;p&gt;You should have received a copy of the GNU General Public License
+  along with this program.  If not, see &lt;a href="http://www.gnu.org/licenses/"&gt;http://www.gnu.org/licenses/&lt;/a&gt;.&lt;/p&gt;</long-description>
       </docblock>
-      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="22" package="Default">
+      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="37" package="Default">
         <name>model</name>
         <full_name>model</full_name>
-        <docblock line="17">
+        <docblock line="32">
           <description>Returns the static model of the specified AR class.</description>
           <long-description></long-description>
-          <tag line="17" name="param" description="active record class name." type="string" variable="$className">
+          <tag line="32" name="param" description="active record class name." type="string" variable="$className">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="17" name="return" description="the static model class" type="\DateTime">
+          <tag line="32" name="return" description="the static model class" type="\DateTime">
             <type by_reference="false">\DateTime</type>
           </tag>
         </docblock>
-        <argument line="22">
+        <argument line="37">
           <name>$className</name>
           <default>__CLASS__</default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="30" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="46" package="Default">
         <name>tableName</name>
         <full_name>tableName</full_name>
-        <docblock line="27">
-          <description></description>
+        <docblock line="42">
+          <description>Tabellenname</description>
           <long-description></long-description>
-          <tag line="27" name="return" description="the associated database table name" type="string">
+          <tag line="42" name="return" description="the associated database table name" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="38" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="55" package="Default">
         <name>rules</name>
         <full_name>rules</full_name>
-        <docblock line="35">
-          <description></description>
+        <docblock line="51">
+          <description>Regeln für Validierung</description>
           <long-description></long-description>
-          <tag line="35" name="return" description="validation rules for model attributes." type="array">
+          <tag line="51" name="return" description="validation rules for model attributes." type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="55" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="69" package="Default">
         <name>relations</name>
         <full_name>relations</full_name>
-        <docblock line="52">
-          <description></description>
+        <docblock line="65">
+          <description>Relationen ( Appointments HAS_MANY , Date BELONGS_TO)</description>
           <long-description></long-description>
-          <tag line="52" name="return" description="relational rules." type="array">
+          <tag line="65" name="return" description="relational rules." type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="68" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="83" package="Default">
         <name>attributeLabels</name>
         <full_name>attributeLabels</full_name>
-        <docblock line="65">
-          <description></description>
+        <docblock line="79">
+          <description>Attributlabels</description>
           <long-description></long-description>
-          <tag line="65" name="return" description="customized attribute labels (name=&gt;label)" type="array">
+          <tag line="79" name="return" description="customized attribute labels (name=&gt;label)" type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="81" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="96" package="Default">
         <name>search</name>
         <full_name>search</full_name>
-        <docblock line="77">
+        <docblock line="92">
           <description>Retrieves a list of models based on the current search/filter conditions.</description>
           <long-description></long-description>
-          <tag line="77" name="return" description="the data provider that can return the models based on the search/filter conditions." type="\CActiveDataProvider">
+          <tag line="92" name="return" description="the data provider that can return the models based on the search/filter conditions." type="\CActiveDataProvider">
             <type by_reference="false">\CActiveDataProvider</type>
           </tag>
         </docblock>
       </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="110" package="Default">
+        <name>searchDateAndTime</name>
+        <full_name>searchDateAndTime</full_name>
+        <docblock line="106">
+          <description>Gibt Suchkriterien von DateAndTime zurück</description>
+          <long-description></long-description>
+          <tag line="106" name="return" description="Suchkriterien für Autocomplete" type="\CDbCriteria">
+            <type by_reference="false">\CDbCriteria</type>
+          </tag>
+        </docblock>
+      </method>
     </class>
-    <parse_markers>
-      <error line="0" code="50007">No page-level DocBlock was found in file protected/models/DateAndTime.php</error>
-      <error line="27" code="50012">No short description for method tableName()</error>
-      <error line="35" code="50012">No short description for method rules()</error>
-      <error line="52" code="50012">No short description for method relations()</error>
-      <error line="65" code="50012">No short description for method attributeLabels()</error>
-    </parse_markers>
   </file>
-  <file path="protected/models/ParentChild.php" hash="0f5d8266ff5636b7898871206b74d651" package="Default">
+  <file path="protected/models/ParentChild.php" hash="16eedb5d13e953b5aa6e88f5ca2c8a72" package="Default">
     <docblock line="3">
       <description>This is the model class for table "parent_child".</description>
       <long-description>&lt;p&gt;The followings are the available columns in table 'parent_child':&lt;/p&gt;</long-description>
@@ -1259,6 +1278,25 @@ GNU General Public License for more details.&lt;/p&gt;
           </tag>
         </docblock>
       </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="164" package="Default">
+        <name>searchParentChild</name>
+        <full_name>searchParentChild</full_name>
+        <docblock line="159">
+          <description>Gibt Suchkriterien von ParentChild zurück</description>
+          <long-description></long-description>
+          <tag line="159" name="return" description="Suchkriterien für Autocomplete" type="\CDbCriteria">
+            <type by_reference="false">\CDbCriteria</type>
+          </tag>
+          <tag line="159" name="param" description="Nachname eines Erziehungsberechtigten" type="string" variable="$lastname">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="164">
+          <name>$lastname</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
     </class>
   </file>
   <file path="protected/models/ChangePwd.php" hash="76ceec5cdac77a198d7e6301c17c402c" package="Default">
@@ -1324,7 +1362,7 @@ the same as its name with the first letter in upper case.&lt;/p&gt;</long-descri
       </method>
     </class>
   </file>
-  <file path="protected/models/Date.php" hash="67415db71b854f7b23c333c2214bb391" package="Default">
+  <file path="protected/models/Date.php" hash="11ef1bfe9111d51bd68e1ef9715651cc" package="Default">
     <docblock line="3">
       <description>This is the model class for table "date".</description>
       <long-description>&lt;p&gt;The followings are the available columns in table 'date':&lt;/p&gt;</long-description>
@@ -1385,24 +1423,25 @@ GNU General Public License for more details.&lt;/p&gt;
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="45" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="46" package="Default">
         <name>tableName</name>
         <full_name>tableName</full_name>
         <docblock line="42">
-          <description></description>
+          <description>Tabellenname</description>
           <long-description></long-description>
           <tag line="42" name="return" description="the associated database table name" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="52" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="55" package="Default">
         <name>rules</name>
         <full_name>rules</full_name>
-        <docblock line="49">
-          <description></description>
+        <docblock line="50">
+          <description>Regeln für Validierung</description>
           <long-description></long-description>
-          <tag line="49" name="return" description="validation rules for model attributes." type="array">
+          <tag line="50" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="50" name="return" description="validation rules for model attributes." type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
@@ -1410,74 +1449,136 @@ GNU General Public License for more details.&lt;/p&gt;
       <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="70" package="Default">
         <name>relations</name>
         <full_name>relations</full_name>
-        <docblock line="67">
-          <description></description>
+        <docblock line="66">
+          <description>Relationen ( Appointments HAS_MANY )</description>
           <long-description></long-description>
-          <tag line="67" name="return" description="relational rules." type="array">
+          <tag line="66" name="return" description="relational rules." type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="81" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="83" package="Default">
         <name>attributeLabels</name>
         <full_name>attributeLabels</full_name>
         <docblock line="78">
-          <description></description>
+          <description>Attributlabels</description>
           <long-description></long-description>
+          <tag line="78" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
           <tag line="78" name="return" description="customized attribute labels (name=&gt;label)" type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="95" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="97" package="Default">
         <name>search</name>
         <full_name>search</full_name>
-        <docblock line="91">
+        <docblock line="93">
           <description>Retrieves a list of models based on the current search/filter conditions.</description>
           <long-description></long-description>
-          <tag line="91" name="return" description="the data provider that can return the models based on the search/filter conditions." type="\CActiveDataProvider">
+          <tag line="93" name="return" description="the data provider that can return the models based on the search/filter conditions." type="\CActiveDataProvider">
             <type by_reference="false">\CActiveDataProvider</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="116" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="114" package="Default">
         <name>afterValidate</name>
         <full_name>afterValidate</full_name>
-        <docblock line="112">
+        <docblock line="109">
           <description>Prüft nach der erfolgreichen Validierung ob das Ende vor dem Anfang liegt.</description>
           <long-description></long-description>
-          <tag line="112" name="return" description="" type="boolean">
+          <tag line="109" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;&#10;     * @return boolean"/>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="136" package="Default">
+        <name>afterSave</name>
+        <full_name>afterSave</full_name>
+        <docblock line="131">
+          <description>Erstellt neue DateTimes entsprechend der Elternsprechtagszeiten</description>
+          <long-description></long-description>
+          <tag line="131" name="return" description="parent::afterSave();" type="boolean">
+            <type by_reference="false">boolean</type>
+          </tag>
+          <tag line="131" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="155" package="Default">
+        <name>beforeDelete</name>
+        <full_name>beforeDelete</full_name>
+        <docblock line="150">
+          <description>bevor der Elternsprechtag gelöscht wird werden alle DateAndTimes gelöscht</description>
+          <long-description></long-description>
+          <tag line="150" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="150" name="return" description="" type="\type">
+            <type by_reference="false">\type</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="165" package="Default">
+        <name>beforeSave</name>
+        <full_name>beforeSave</full_name>
+        <docblock line="160">
+          <description>wandelt das Datum von d.m.Y in Y-m-d um</description>
+          <long-description></long-description>
+          <tag line="160" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="160" name="return" description="parent::beforeSave" type="boolean">
             <type by_reference="false">boolean</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="134" package="Default">
-        <name>afterSave</name>
-        <full_name>afterSave</full_name>
-      </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="148" package="Default">
-        <name>beforeDelete</name>
-        <full_name>beforeDelete</full_name>
-      </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="153" package="Default">
-        <name>beforeSave</name>
-        <full_name>beforeSave</full_name>
-      </method>
     </class>
-    <parse_markers>
-      <error line="42" code="50012">No short description for method tableName()</error>
-      <error line="49" code="50012">No short description for method rules()</error>
-      <error line="67" code="50012">No short description for method relations()</error>
-      <error line="78" code="50012">No short description for method attributeLabels()</error>
-      <error line="134" code="50010">No DocBlock was found for method afterSave()</error>
-      <error line="148" code="50010">No DocBlock was found for method beforeDelete()</error>
-      <error line="153" code="50010">No DocBlock was found for method beforeSave()</error>
-    </parse_markers>
   </file>
-  <file path="protected/models/User.php" hash="0b709b4fd0ded63a11d89373eaa0607b" package="Default">
+  <file path="protected/models/User.php" hash="fdf9885a3112f8580938a0be6c602484" package="Default">
     <docblock line="3">
-      <description>Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch</description>
-      <long-description>&lt;p&gt;This program is free software: you can redistribute it and/or modify
+      <description>Die ist die Modelklasse für Tabelle "user".</description>
+      <long-description>&lt;p&gt;The followings are the available columns in table 'user':&lt;/p&gt;</long-description>
+      <tag line="3" name="property" description="" type="string" variable="$id">
+        <type by_reference="false">string</type>
+      </tag>
+      <tag line="3" name="property" description="" type="string" variable="$username">
+        <type by_reference="false">string</type>
+      </tag>
+      <tag line="3" name="property" description="" type="string" variable="$password">
+        <type by_reference="false">string</type>
+      </tag>
+      <tag line="3" name="property" description="" type="string" variable="$activationKey">
+        <type by_reference="false">string</type>
+      </tag>
+      <tag line="3" name="property" description="" type="integer" variable="$createtime">
+        <type by_reference="false">integer</type>
+      </tag>
+      <tag line="3" name="property" description="" type="string" variable="$firstname">
+        <type by_reference="false">string</type>
+      </tag>
+      <tag line="3" name="property" description="" type="integer" variable="$state">
+        <type by_reference="false">integer</type>
+      </tag>
+      <tag line="3" name="property" description="" type="string" variable="$lastname">
+        <type by_reference="false">string</type>
+      </tag>
+      <tag line="3" name="property" description="" type="string" variable="$email">
+        <type by_reference="false">string</type>
+      </tag>
+      <tag line="3" name="property" description="The followings are the available model relations:" type="string" variable="$title">
+        <type by_reference="false">string</type>
+      </tag>
+      <tag line="3" name="property" description="" type="\Appointment[]" variable="$appointments">
+        <type by_reference="false">\Appointment[]</type>
+      </tag>
+      <tag line="3" name="property" description="" type="\ParentChild[]" variable="$parentChildren">
+        <type by_reference="false">\ParentChild[]</type>
+      </tag>
+      <tag line="3" name="property" description="" type="\UserRole[]" variable="$userRoles">
+        <type by_reference="false">\UserRole[]</type>
+      </tag>
+      <tag line="3" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="global" line="40" package="Default">
+      <extends>\CActiveRecord</extends>
+      <name>User</name>
+      <full_name>\User</full_name>
+      <docblock line="25">
+        <description>Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch</description>
+        <long-description>&lt;p&gt;This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 any later version.&lt;/p&gt;
@@ -1489,377 +1590,344 @@ GNU General Public License for more details.&lt;/p&gt;
 
 &lt;p&gt;You should have received a copy of the GNU General Public License
   along with this program.  If not, see &lt;a href="http://www.gnu.org/licenses/"&gt;http://www.gnu.org/licenses/&lt;/a&gt;.&lt;/p&gt;</long-description>
-    </docblock>
-    <class final="false" abstract="false" namespace="global" line="39" package="Default">
-      <extends>\CActiveRecord</extends>
-      <name>User</name>
-      <full_name>\User</full_name>
-      <docblock line="19">
-        <description>This is the model class for table "user".</description>
-        <long-description>&lt;p&gt;The followings are the available columns in table 'user':&lt;/p&gt;</long-description>
-        <tag line="19" name="property" description="" type="string" variable="$id">
-          <type by_reference="false">string</type>
-        </tag>
-        <tag line="19" name="property" description="" type="string" variable="$username">
-          <type by_reference="false">string</type>
-        </tag>
-        <tag line="19" name="property" description="" type="string" variable="$password">
-          <type by_reference="false">string</type>
-        </tag>
-        <tag line="19" name="property" description="" type="string" variable="$activationKey">
-          <type by_reference="false">string</type>
-        </tag>
-        <tag line="19" name="property" description="" type="integer" variable="$createtime">
-          <type by_reference="false">integer</type>
-        </tag>
-        <tag line="19" name="property" description="" type="string" variable="$firstname">
-          <type by_reference="false">string</type>
-        </tag>
-        <tag line="19" name="property" description="" type="integer" variable="$state">
-          <type by_reference="false">integer</type>
-        </tag>
-        <tag line="19" name="property" description="" type="string" variable="$lastname">
-          <type by_reference="false">string</type>
-        </tag>
-        <tag line="19" name="property" description="" type="string" variable="$email">
-          <type by_reference="false">string</type>
-        </tag>
-        <tag line="19" name="property" description="The followings are the available model relations:" type="string" variable="$title">
-          <type by_reference="false">string</type>
-        </tag>
-        <tag line="19" name="property" description="" type="\Appointment[]" variable="$appointments">
-          <type by_reference="false">\Appointment[]</type>
-        </tag>
-        <tag line="19" name="property" description="" type="\ParentChild[]" variable="$parentChildren">
-          <type by_reference="false">\ParentChild[]</type>
-        </tag>
-        <tag line="19" name="property" description="" type="\UserRole[]" variable="$userRoles">
-          <type by_reference="false">\UserRole[]</type>
-        </tag>
       </docblock>
-      <property final="false" static="false" visibility="public" line="44" namespace="global" package="Default">
+      <property final="false" static="false" visibility="public" line="43" namespace="global" package="Default">
         <name>$password_repeat</name>
         <default>null</default>
-        <docblock line="41">
+        <docblock line="42">
           <description></description>
           <long-description></long-description>
-          <tag line="41" name="todo" description="in private Attribute ändern und entsprechende getter und Setter erstellen"/>
+          <tag line="42" name="var" description="Passwortwiederholung" type="string">
+            <type by_reference="false">string</type>
+          </tag>
         </docblock>
-      </property>
-      <property final="false" static="false" visibility="public" line="45" namespace="global" package="Default">
-        <name>$pwdChanged</name>
-        <default>false</default>
       </property>
       <property final="false" static="false" visibility="public" line="46" namespace="global" package="Default">
         <name>$role</name>
         <default>null</default>
-      </property>
-      <property final="false" static="false" visibility="public" line="47" namespace="global" package="Default">
-        <name>$roleName</name>
-        <default>null</default>
-      </property>
-      <property final="false" static="false" visibility="public" line="48" namespace="global" package="Default">
-        <name>$stateName</name>
-        <default>null</default>
+        <docblock line="45">
+          <description></description>
+          <long-description></long-description>
+          <tag line="45" name="var" description="Rolle als ID" type="integer">
+            <type by_reference="false">integer</type>
+          </tag>
+        </docblock>
       </property>
       <property final="false" static="false" visibility="public" line="49" namespace="global" package="Default">
-        <name>$verifyCode</name>
+        <name>$roleName</name>
         <default>null</default>
-      </property>
-      <property final="false" static="false" visibility="public" line="50" namespace="global" package="Default">
-        <name>$tan</name>
-        <default>null</default>
-      </property>
-      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="57" package="Default">
-        <name>model</name>
-        <full_name>model</full_name>
-        <docblock line="52">
-          <description>Returns the static model of the specified AR class.</description>
+        <docblock line="48">
+          <description></description>
           <long-description></long-description>
-          <tag line="52" name="param" description="active record class name." type="string" variable="$className">
+          <tag line="48" name="var" description="Rollenname" type="string">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="52" name="return" description="the static model class" type="\User">
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="52" namespace="global" package="Default">
+        <name>$stateName</name>
+        <default>null</default>
+        <docblock line="51">
+          <description></description>
+          <long-description></long-description>
+          <tag line="51" name="var" description="StatusName" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="55" namespace="global" package="Default">
+        <name>$verifyCode</name>
+        <default>null</default>
+        <docblock line="54">
+          <description></description>
+          <long-description></long-description>
+          <tag line="54" name="var" description="Sicherheitscode" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="public" line="58" namespace="global" package="Default">
+        <name>$tan</name>
+        <default>null</default>
+        <docblock line="57">
+          <description></description>
+          <long-description></long-description>
+          <tag line="57" name="var" description="TAN Nummer bei Registrierung" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="65" package="Default">
+        <name>model</name>
+        <full_name>model</full_name>
+        <docblock line="60">
+          <description>Returns the static model of the specified AR class.</description>
+          <long-description></long-description>
+          <tag line="60" name="param" description="active record class name." type="string" variable="$className">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="60" name="return" description="the static model class" type="\User">
             <type by_reference="false">\User</type>
           </tag>
         </docblock>
-        <argument line="57">
+        <argument line="65">
           <name>$className</name>
           <default>__CLASS__</default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="64" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="73" package="Default">
         <name>tableName</name>
         <full_name>tableName</full_name>
-        <docblock line="61">
-          <description></description>
+        <docblock line="69">
+          <description>Tabellenname</description>
           <long-description></long-description>
-          <tag line="61" name="return" description="the associated database table name" type="string">
+          <tag line="69" name="return" description="the associated database table name" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="71" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="81" package="Default">
         <name>rules</name>
         <full_name>rules</full_name>
-        <docblock line="68">
-          <description></description>
+        <docblock line="77">
+          <description>Regeln für die Validierung</description>
           <long-description></long-description>
-          <tag line="68" name="return" description="validation rules for model attributes." type="array">
+          <tag line="77" name="return" description="validation rules for model attributes." type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="98" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="105" package="Default">
         <name>relations</name>
         <full_name>relations</full_name>
-        <docblock line="95">
-          <description></description>
+        <docblock line="101">
+          <description>Relationen ( Appointments HAS_MANY , parentChildren HAS_MANY, userRoles HAS_ONE )</description>
           <long-description></long-description>
-          <tag line="95" name="return" description="relational rules." type="array">
+          <tag line="101" name="return" description="relational rules." type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="112" package="Default">
+      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="120" package="Default">
         <name>encryptPassword</name>
         <full_name>encryptPassword</full_name>
-        <docblock line="108">
-          <description></description>
+        <docblock line="115">
+          <description>Verschlüsselt ein Passwort mit Applikationssalt in sha512</description>
           <long-description></long-description>
-          <tag line="108" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
-          <tag line="108" name="return" description="encrypted and salted password with sha512" type="string">
+          <tag line="115" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="115" name="return" description="encrypted and salted password with sha512" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="112">
+        <argument line="120">
           <name>$password</name>
           <default></default>
           <type/>
         </argument>
-        <argument line="112">
+        <argument line="120">
           <name>$salt</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="117" package="Default">
-        <name>setAttributes</name>
-        <full_name>setAttributes</full_name>
-        <argument line="117">
-          <name>$attributes</name>
-          <default></default>
-          <type/>
-        </argument>
-        <argument line="117">
-          <name>$safe</name>
-          <default>true</default>
-          <type/>
-        </argument>
-      </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="124" package="Default">
-        <name>setAttribute</name>
-        <full_name>setAttribute</full_name>
-        <argument line="124">
-          <name>$name</name>
-          <default></default>
-          <type/>
-        </argument>
-        <argument line="124">
-          <name>$value</name>
-          <default></default>
-          <type/>
-        </argument>
-      </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="134" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="129" package="Default">
         <name>attributeLabels</name>
         <full_name>attributeLabels</full_name>
-        <docblock line="131">
-          <description></description>
+        <docblock line="125">
+          <description>Attributlabels</description>
           <long-description></long-description>
-          <tag line="131" name="return" description="customized attribute labels (name=&gt;label)" type="array">
+          <tag line="125" name="return" description="customized attribute labels (name=&gt;label)" type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="157" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="152" package="Default">
         <name>search</name>
         <full_name>search</full_name>
-        <docblock line="153">
+        <docblock line="148">
           <description>Retrieves a list of models based on the current search/filter conditions.</description>
           <long-description></long-description>
-          <tag line="153" name="return" description="the data provider that can return the models based on the search/filter conditions." type="\CActiveDataProvider">
+          <tag line="148" name="return" description="the data provider that can return the models based on the search/filter conditions." type="\CActiveDataProvider">
             <type by_reference="false">\CActiveDataProvider</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="178" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="171" package="Default">
         <name>searchTeacher</name>
         <full_name>searchTeacher</full_name>
-        <docblock line="173">
-          <description></description>
+        <docblock line="166">
+          <description>Erstellt CActiveDataProvider mit CDbCriteria mit Suche nach Lehrerbenutzern</description>
           <long-description></long-description>
-          <tag line="173" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
-          <tag line="173" name="return" description="Erstellt CActiveDataProvider mit CDbCriteria mit Suche nach Lehrerbenutzern" type="\CActiveDataProvider">
+          <tag line="166" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="166" name="return" description="" type="\CActiveDataProvider">
             <type by_reference="false">\CActiveDataProvider</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="199" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="185" package="Default">
         <name>searchCriteriaTeacherAutoComplete</name>
         <full_name>searchCriteriaTeacherAutoComplete</full_name>
-        <docblock line="193">
-          <description></description>
+        <docblock line="179">
+          <description>Suche für die Autovervollständigung bei getTeacher()</description>
           <long-description></long-description>
-          <tag line="193" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
-          <tag line="193" name="return" description="Suche für die Autovervollständigung bei getTeacher()" type="\CDbCriteria">
+          <tag line="179" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="179" name="return" description="" type="\CDbCriteri">
+            <type by_reference="false">\CDbCriteri</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="202" package="Default">
+        <name>deleteAllCriteria</name>
+        <full_name>deleteAllCriteria</full_name>
+        <docblock line="198">
+          <description>Suchkriterien um alle User mit UserRollen zu löschen</description>
+          <long-description></long-description>
+          <tag line="198" name="return" description="" type="\CDbCriteria">
             <type by_reference="false">\CDbCriteria</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="212" package="Default">
-        <name>deleteAllCriteria</name>
-        <full_name>deleteAllCriteria</full_name>
-      </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="226" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="216" package="Default">
         <name>behaviors</name>
         <full_name>behaviors</full_name>
-        <docblock line="221">
-          <description></description>
+        <docblock line="211">
+          <description>Erstellt automatisch für createtime einen Timestamp</description>
           <long-description></long-description>
-          <tag line="221" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
-          <tag line="221" name="return" description="gibt für das Attribut createtime den aktuellen Timestamp zurück" type="array">
+          <tag line="211" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="211" name="return" description="gibt für das Attribut createtime den aktuellen Timestamp zurück" type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="244" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="234" package="Default">
         <name>afterSave</name>
         <full_name>afterSave</full_name>
-        <docblock line="239">
-          <description></description>
+        <docblock line="229">
+          <description>weist einem neuen Nutzer automatisch die Rolle "Eltern" zu</description>
           <long-description></long-description>
-          <tag line="239" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
-          <tag line="239" name="return" description="Rückgabewert der Methode afterSave() CActiveRecord&#10;weist einem neuen Nutzer automatisch die Rolle &quot;Eltern&quot; zu" type="boolean">
+          <tag line="229" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="229" name="return" description="Rückgabewert der Methode afterSave() CActiveRecord" type="boolean">
             <type by_reference="false">boolean</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="273" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="263" package="Default">
         <name>beforeDelete</name>
         <full_name>beforeDelete</full_name>
-        <docblock line="268">
-          <description></description>
+        <docblock line="258">
+          <description>löscht den UserRole Eintrag + ElternKind Verknüpfung + Kinder</description>
           <long-description></long-description>
-          <tag line="268" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
-          <tag line="268" name="return" description="Rückgabewert der Elternklassemethoden&#10;löscht den UserRole Eintrag + ElternKind Verknüpfung + Kinder" type="boolean">
+          <tag line="258" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="258" name="return" description="Rückgabewert der Elternklassemethoden" type="boolean">
             <type by_reference="false">boolean</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="298" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="288" package="Default">
         <name>beforeSave</name>
         <full_name>beforeSave</full_name>
-        <docblock line="293">
-          <description></description>
+        <docblock line="283">
+          <description>verschlüsselt das Passwort und generiert einen Aktivierungsschlüssel, setzt die E-Mail Adresse als Username fest</description>
           <long-description></long-description>
-          <tag line="293" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
-          <tag line="293" name="return" description="Rückgabewert der parent methode&#10; verschlüsselt das Passwort und generiert einen Aktivierungsschlüssel, setzt die E-Mail Adresse als Username fest" type="boolean">
+          <tag line="283" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="283" name="return" description="Rückgabewert der parent methode" type="boolean">
             <type by_reference="false">boolean</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="320" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="312" package="Default">
         <name>generateActivationKey</name>
         <full_name>generateActivationKey</full_name>
-        <docblock line="316">
-          <description></description>
+        <docblock line="308">
+          <description>Generiert einen Aktivierungsschlüssel und speichert diesen im aktuellen Objekt</description>
           <long-description></long-description>
-          <tag line="316" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;&#10;Generiert einen Aktivierungsschlüssel und speichert diesen im aktuellen Objekt"/>
+          <tag line="308" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="328" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="321" package="Default">
         <name>getStateName</name>
         <full_name>getStateName</full_name>
-        <docblock line="324">
-          <description></description>
+        <docblock line="316">
+          <description>Setzt den StateName und gibt ihn zurück</description>
           <long-description></long-description>
-          <tag line="324" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
-          <tag line="324" name="return" description="0=NichtAktiv 1=Aktiv 2=Gesperrt" type="string">
+          <tag line="316" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="316" name="return" description="0=NichtAktiv 1=Aktiv 2=Gesperrt" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="349" package="Default">
+      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="343" package="Default">
         <name>getFormattedState</name>
         <full_name>getFormattedState</full_name>
-        <docblock line="345">
-          <description></description>
+        <docblock line="338">
+          <description>Gibt den Status als String aus ( echo )</description>
           <long-description></long-description>
-          <tag line="345" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
-          <tag line="345" name="param" description="Status ID des Users" type="integer" variable="$stateId">
+          <tag line="338" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="338" name="param" description="Status ID des Users" type="integer" variable="$stateId">
             <type by_reference="false">integer</type>
           </tag>
         </docblock>
-        <argument line="349">
+        <argument line="343">
           <name>$state</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="368" package="Default">
+      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="363" package="Default">
         <name>getFormattedRole</name>
         <full_name>getFormattedRole</full_name>
-        <docblock line="363">
-          <description></description>
+        <docblock line="357">
+          <description>Gibt Rolle als String aus ( echo )
+ 0 = Admin 1=Verwaltung 2=Lehrer 3= Eltern</description>
           <long-description></long-description>
-          <tag line="363" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
-          <tag line="363" name="param" description="Rollen ID des Users&#10; 0 = Admin 1=Verwaltung 2=Lehrer 3= Eltern" type="integer" variable="$role">
+          <tag line="357" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="357" name="param" description="Rollen ID des Users" type="integer" variable="$role">
             <type by_reference="false">integer</type>
           </tag>
         </docblock>
-        <argument line="368">
+        <argument line="363">
           <name>$role</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="379" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="374" package="Default">
         <name>beforeValidate</name>
         <full_name>beforeValidate</full_name>
-        <docblock line="373">
-          <description></description>
+        <docblock line="368">
+          <description>Führt zunächst die Elternmethode beforeValidate() aus und
+prüft wenn diese true zurückgibt und es keiner neuer Eintrag ist ob die TAN schon benutzt wurde</description>
           <long-description></long-description>
-          <tag line="373" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
-          <tag line="373" name="return" description="Führt zunächst die Elternmethode beforeValidate() aus und &#10;prüft wenn diese true zurückgibt und es keiner neuer Eintrag ist ob die TAN schon benutzt wurde" type="boolean">
+          <tag line="368" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="368" name="return" description="" type="boolean">
             <type by_reference="false">boolean</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="401" package="Default">
+      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="396" package="Default">
         <name>hasRole</name>
         <full_name>hasRole</full_name>
-        <docblock line="394">
-          <description></description>
+        <docblock line="389">
+          <description>gibt true zurück wenn der gegebene Benutzer die entsprechende Rolle hat</description>
           <long-description></long-description>
-          <tag line="394" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
-          <tag line="394" name="param" description="Benutzer ID" type="integer" variable="$userId">
+          <tag line="389" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="389" name="param" description="Benutzer ID" type="integer" variable="$userId">
             <type by_reference="false">integer</type>
           </tag>
-          <tag line="394" name="param" description="Rollen ID" type="integer" variable="$roleId">
+          <tag line="389" name="param" description="Rollen ID" type="integer" variable="$roleId">
             <type by_reference="false">integer</type>
           </tag>
-          <tag line="394" name="return" description="gibt true zurück wenn der gegebene Benutzer die entsprechende ROlle hat" type="boolean">
+          <tag line="389" name="return" description="" type="boolean">
             <type by_reference="false">boolean</type>
           </tag>
         </docblock>
-        <argument line="401">
+        <argument line="396">
           <name>$userId</name>
           <default></default>
           <type/>
         </argument>
-        <argument line="401">
+        <argument line="396">
           <name>$roleId</name>
           <default></default>
           <type/>
@@ -1867,37 +1935,10 @@ GNU General Public License for more details.&lt;/p&gt;
       </method>
     </class>
     <parse_markers>
-      <critical line="41" code="50019">No short description for property $password_repeat</critical>
-      <error line="45" code="50018">No DocBlock was found for property $pwdChanged</error>
-      <error line="46" code="50018">No DocBlock was found for property $role</error>
-      <error line="47" code="50018">No DocBlock was found for property $roleName</error>
-      <error line="48" code="50018">No DocBlock was found for property $stateName</error>
-      <error line="49" code="50018">No DocBlock was found for property $verifyCode</error>
-      <error line="50" code="50018">No DocBlock was found for property $tan</error>
-      <error line="61" code="50012">No short description for method tableName()</error>
-      <error line="68" code="50012">No short description for method rules()</error>
-      <error line="95" code="50012">No short description for method relations()</error>
-      <error line="108" code="50012">No short description for method encryptPassword()</error>
-      <error line="108" code="50015">Argument $password is missing from the Docblock of encryptPassword()</error>
-      <error line="108" code="50015">Argument $salt is missing from the Docblock of encryptPassword()</error>
-      <error line="117" code="50010">No DocBlock was found for method setAttributes()</error>
-      <error line="124" code="50010">No DocBlock was found for method setAttribute()</error>
-      <error line="131" code="50012">No short description for method attributeLabels()</error>
-      <error line="173" code="50012">No short description for method searchTeacher()</error>
-      <error line="193" code="50012">No short description for method searchCriteriaTeacherAutoComplete()</error>
-      <error line="212" code="50010">No DocBlock was found for method deleteAllCriteria()</error>
-      <error line="221" code="50012">No short description for method behaviors()</error>
-      <error line="239" code="50012">No short description for method afterSave()</error>
-      <error line="268" code="50012">No short description for method beforeDelete()</error>
-      <error line="293" code="50012">No short description for method beforeSave()</error>
-      <error line="316" code="50012">No short description for method generateActivationKey()</error>
-      <error line="324" code="50012">No short description for method getStateName()</error>
-      <error line="345" code="50012">No short description for method getFormattedState()</error>
-      <error line="345" code="50014">Name of argument $state does not match with the DocBlock's name $stateId in getFormattedState()</error>
-      <notice line="345" code="50013">Parameter $stateId could not be found in getFormattedState()</notice>
-      <error line="363" code="50012">No short description for method getFormattedRole()</error>
-      <error line="373" code="50012">No short description for method beforeValidate()</error>
-      <error line="394" code="50012">No short description for method hasRole()</error>
+      <error line="115" code="50015">Argument $password is missing from the Docblock of encryptPassword()</error>
+      <error line="115" code="50015">Argument $salt is missing from the Docblock of encryptPassword()</error>
+      <error line="338" code="50014">Name of argument $state does not match with the DocBlock's name $stateId in getFormattedState()</error>
+      <notice line="338" code="50013">Parameter $stateId could not be found in getFormattedState()</notice>
     </parse_markers>
   </file>
   <file path="protected/tests/bootstrap.php" hash="4fb731c329320ead98ade44f6db9913e" package="Default">
@@ -2032,7 +2073,7 @@ We also provide some common methods to be used by concrete test classes.&lt;/p&g
       <error line="24" code="50010">No DocBlock was found for method testLoginLogout()</error>
     </parse_markers>
   </file>
-  <file path="protected/components/CustomButtonColumn.php" hash="b8794914453204cf464d9f026c2b2aa8" package="Default">
+  <file path="protected/components/CustomButtonColumn.php" hash="dc4dc928d571d79e80fd0f0402929f99" package="Default">
     <docblock line="2">
       <description>Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch</description>
       <long-description>&lt;p&gt;This program is free software: you can redistribute it and/or modify
@@ -2057,22 +2098,23 @@ GNU General Public License for more details.&lt;/p&gt;
         <long-description></long-description>
         <tag line="17" name="author" description="David Mock"/>
       </docblock>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="24" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="26" package="Default">
         <name>init</name>
         <full_name>init</full_name>
       </method>
     </class>
     <parse_markers>
-      <error line="24" code="50010">No DocBlock was found for method init()</error>
+      <error line="26" code="50010">No DocBlock was found for method init()</error>
     </parse_markers>
   </file>
-  <file path="protected/components/DataColumn.php" hash="a70fe8f9b1ab1c4798d5ac60f3ace62b" package="Default">
+  <file path="protected/components/DataColumn.php" hash="af09c962a13c780f1b23665baf2792fe" package="Default">
     <class final="false" abstract="false" namespace="global" line="7" package="Default">
       <extends>\CDataColumn</extends>
       <name>DataColumn</name>
       <full_name>\DataColumn</full_name>
       <docblock line="3">
-        <description>Description of DataColumn</description>
+        <description>Stellt die Variable $data in GridViews zur Verfügung
+siehe &lt;http://www.yiiframework.com/wiki/314/cgridview-use-special-variable-data-in-the-htmloptions-of-a-column-i-e-evaluate-htmloptions-attribute/&gt;</description>
         <long-description></long-description>
       </docblock>
       <property final="false" static="false" visibility="public" line="12" namespace="global" package="Default">
@@ -2107,131 +2149,139 @@ GNU General Public License for more details.&lt;/p&gt;
       <error line="0" code="50007">No page-level DocBlock was found in file protected/components/DataColumn.php</error>
     </parse_markers>
   </file>
-  <file path="protected/components/UserIdentity.php" hash="a4958e81c0bf18d1e183c47ee87004cb" package="Default">
-    <class final="false" abstract="false" namespace="global" line="22" package="Default">
+  <file path="protected/components/UserIdentity.php" hash="ec3d973a48bb615791f7f0fbd8179c66" package="Default">
+    <class final="false" abstract="false" namespace="global" line="24" package="Default">
       <extends>\CUserIdentity</extends>
       <name>UserIdentity</name>
       <full_name>\UserIdentity</full_name>
-      <docblock line="17">
+      <docblock line="3">
         <description>UserIdentity represents the data needed to identity a user.</description>
         <long-description>&lt;p&gt;It contains the authentication method that checks if the provided
 data can identity the user.&lt;/p&gt;</long-description>
       </docblock>
-      <constant namespace="global" line="24" package="Default">
+      <constant namespace="global" line="26" package="Default">
         <name>ERROR_MSG_USERNAME_INVALID</name>
         <full_name>ERROR_MSG_USERNAME_INVALID</full_name>
         <value>"Ungültige E-Mail Adresse"</value>
       </constant>
-      <constant namespace="global" line="25" package="Default">
+      <constant namespace="global" line="27" package="Default">
         <name>ERROR_MSG_PASSWORD_INVALID</name>
         <full_name>ERROR_MSG_PASSWORD_INVALID</full_name>
         <value>"Falsches Passwort"</value>
       </constant>
-      <constant namespace="global" line="26" package="Default">
+      <constant namespace="global" line="28" package="Default">
         <name>ERROR_MSG_ACCOUNT_NOT_ACTIVATED</name>
         <full_name>ERROR_MSG_ACCOUNT_NOT_ACTIVATED</full_name>
         <value>"Ihr Benutzerkonto wurde noch nicht aktiviert. Bitte nutzen Sie den Aktivierungslink, der Ihnen per E-Mail zugesandt wurde. Sollten Sie Probleme haben, füllen Sie bitte das Kontaktformular aus. "</value>
       </constant>
-      <constant namespace="global" line="27" package="Default">
+      <constant namespace="global" line="29" package="Default">
         <name>ERROR_MSG_ACCOUNT_BANNED</name>
         <full_name>ERROR_MSG_ACCOUNT_BANNED</full_name>
         <value>"Ihr Benutzerkonto wurde gesperrt. Bitte wenden Sie sich an die Schulverwaltung."</value>
       </constant>
-      <constant namespace="global" line="28" package="Default">
+      <constant namespace="global" line="30" package="Default">
         <name>ERROR_ACCOUNT_NOT_ACTIVATED</name>
         <full_name>ERROR_ACCOUNT_NOT_ACTIVATED</full_name>
         <value>3</value>
       </constant>
-      <constant namespace="global" line="29" package="Default">
+      <constant namespace="global" line="31" package="Default">
         <name>ERROR_ACCOUNT_BANNED</name>
         <full_name>ERROR_ACCOUNT_BANNED</full_name>
         <value>4</value>
       </constant>
-      <property final="false" static="false" visibility="private" line="31" namespace="global" package="Default">
+      <property final="false" static="false" visibility="private" line="34" namespace="global" package="Default">
         <name>$_id</name>
         <default></default>
+        <docblock line="33">
+          <description></description>
+          <long-description></long-description>
+          <tag line="33" name="var" description="ID" type="integer">
+            <type by_reference="false">integer</type>
+          </tag>
+        </docblock>
       </property>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="38" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="41" package="Default">
         <name>authenticate</name>
         <full_name>authenticate</full_name>
-        <docblock line="33">
+        <docblock line="36">
           <description>Authentifiziert einen Benutzer</description>
           <long-description></long-description>
-          <tag line="33" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
-          <tag line="33" name="return" description="gibt einen Fehlercode zurück" type="integer">
+          <tag line="36" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="36" name="return" description="gibt einen Fehlercode zurück" type="integer">
             <type by_reference="false">integer</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="64" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="71" package="Default">
         <name>getId</name>
         <full_name>getId</full_name>
+        <docblock line="67">
+          <description>Liefert die Benutzer ID</description>
+          <long-description></long-description>
+          <tag line="67" name="return" description="ID" type="integer">
+            <type by_reference="false">integer</type>
+          </tag>
+        </docblock>
       </method>
     </class>
     <parse_markers>
       <error line="0" code="50007">No page-level DocBlock was found in file protected/components/UserIdentity.php</error>
-      <error line="31" code="50018">No DocBlock was found for property $_id</error>
-      <error line="64" code="50010">No DocBlock was found for method getId()</error>
     </parse_markers>
   </file>
-  <file path="protected/components/Controller.php" hash="fb76842888ce6200861784d7955797d5" package="Default">
-    <constant namespace="global" line="17" package="Default">
+  <file path="protected/components/Controller.php" hash="b24cfce8985cd92ad7dd77b2806a9482" package="Default">
+    <constant namespace="global" line="22" package="Default">
       <name>ADMIN</name>
       <full_name>\ADMIN</full_name>
       <value>0</value>
     </constant>
-    <constant namespace="global" line="18" package="Default">
+    <constant namespace="global" line="23" package="Default">
       <name>MANAGEMENT</name>
       <full_name>\MANAGEMENT</full_name>
       <value>1</value>
     </constant>
-    <constant namespace="global" line="19" package="Default">
+    <constant namespace="global" line="24" package="Default">
       <name>TEACHER</name>
       <full_name>\TEACHER</full_name>
       <value>2</value>
     </constant>
-    <constant namespace="global" line="20" package="Default">
+    <constant namespace="global" line="25" package="Default">
       <name>PARENTS</name>
       <full_name>\PARENTS</full_name>
       <value>3</value>
     </constant>
-    <class final="false" abstract="false" namespace="global" line="26" package="Default">
+    <class final="false" abstract="false" namespace="global" line="27" package="Default">
       <extends>\CController</extends>
       <name>Controller</name>
       <full_name>\Controller</full_name>
-      <docblock line="22">
-        <description>Controller is the customized base controller class.</description>
-        <long-description>&lt;p&gt;All controller classes for this application should extend from this base class.&lt;/p&gt;</long-description>
-      </docblock>
-      <property final="false" static="false" visibility="public" line="32" namespace="global" package="Default">
+      <property final="false" static="false" visibility="public" line="33" namespace="global" package="Default">
         <name>$layout</name>
         <default>'//layouts/column1'</default>
-        <docblock line="28">
+        <docblock line="29">
           <description></description>
           <long-description></long-description>
-          <tag line="28" name="var" description="the default layout for the controller view. Defaults to '//layouts/column1', meaning using a single column layout. See 'protected/views/layouts/column1.php'." type="string">
+          <tag line="29" name="var" description="the default layout for the controller view. Defaults to '//layouts/column1', meaning using a single column layout. See 'protected/views/layouts/column1.php'." type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
       </property>
-      <property final="false" static="false" visibility="public" line="37" namespace="global" package="Default">
+      <property final="false" static="false" visibility="public" line="38" namespace="global" package="Default">
         <name>$menu</name>
         <default>array()</default>
-        <docblock line="34">
+        <docblock line="35">
           <description></description>
           <long-description></long-description>
-          <tag line="34" name="var" description="context menu items. This property will be assigned to {@link CMenu::items}." type="array">
+          <tag line="35" name="var" description="context menu items. This property will be assigned to {@link CMenu::items}." type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </property>
-      <property final="false" static="false" visibility="public" line="44" namespace="global" package="Default">
+      <property final="false" static="false" visibility="public" line="45" namespace="global" package="Default">
         <name>$breadcrumbs</name>
         <default>array()</default>
-        <docblock line="39">
+        <docblock line="40">
           <description></description>
           <long-description></long-description>
-          <tag line="39" name="var" description="the breadcrumbs of the current page. The value of this property will be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links} for more details on how to specify this property." type="array">
+          <tag line="40" name="var" description="the breadcrumbs of the current page. The value of this property will be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links} for more details on how to specify this property." type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
@@ -2239,91 +2289,97 @@ data can identity the user.&lt;/p&gt;</long-description>
     </class>
     <parse_markers>
       <error line="0" code="50007">No page-level DocBlock was found in file protected/components/Controller.php</error>
+      <error line="27" code="50000">No DocBlock was found for \Controller</error>
     </parse_markers>
   </file>
-  <file path="protected/components/WebUser.php" hash="3fbc77dca1f8dff54002e950aea52e45" package="Default">
-    <class final="false" abstract="false" namespace="global" line="21" package="Default">
+  <file path="protected/components/WebUser.php" hash="9eb72e7a275886c8f98960725dc6e4b9" package="Default">
+    <docblock line="2">
+      <description>Repräsentiert den persistenten Status eines Benutzers</description>
+      <long-description></long-description>
+    </docblock>
+    <class final="false" abstract="false" namespace="global" line="23" package="Default">
       <extends>\CWebUser</extends>
       <name>WebUser</name>
       <full_name>\WebUser</full_name>
-      <docblock line="17">
+      <docblock line="20">
         <description></description>
         <long-description></long-description>
-        <tag line="17" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+        <tag line="20" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
       </docblock>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="30" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="33" package="Default">
         <name>checkAccess</name>
         <full_name>checkAccess</full_name>
-        <docblock line="23">
-          <description>Overrides a Yii method that is used for roles in controllers (accessRules).</description>
+        <docblock line="25">
+          <description>Überschreibt eine Yii Methode, welche für die Zugriffsberechtigung
+ in Controllern verwendet wird (accessRules)</description>
           <long-description></long-description>
-          <tag line="23" name="param" description="Name of the operation required (here, a role)." type="string" variable="$operation">
+          <tag line="25" name="param" description="RollenID" type="string" variable="$role">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="23" name="param" description="(opt) Parameters for this operation, usually the object to access." type="mixed" variable="$params">
-            <type by_reference="false">mixed</type>
-          </tag>
-          <tag line="23" name="return" description="Permission granted?" type="bool">
+          <tag line="25" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;&#10;* @param mixed $params (opt) Muss gesetzt werden durch Vererbung"/>
+          <tag line="25" name="return" description="Permission granted?" type="bool">
             <type by_reference="false">bool</type>
           </tag>
         </docblock>
-        <argument line="30">
-          <name>$operation</name>
+        <argument line="33">
+          <name>$role</name>
           <default></default>
           <type/>
         </argument>
-        <argument line="30">
+        <argument line="33">
           <name>$params</name>
           <default>array()</default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="47" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="50" package="Default">
         <name>checkAccessRole</name>
         <full_name>checkAccessRole</full_name>
-        <docblock line="41">
-          <description></description>
+        <docblock line="43">
+          <description>Prüft ob ein User eine der beiden Rollen hat</description>
           <long-description></long-description>
-          <tag line="41" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
-          <tag line="41" name="param" description="Benötigte Rolle oder $operation2" type="integer" variable="$operation1">
+          <tag line="43" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
+          <tag line="43" name="param" description="Benötigte Rolle" type="integer" variable="$operation1">
             <type by_reference="false">integer</type>
           </tag>
-          <tag line="41" name="param" description="Benötigte Rolle" type="integer" variable="$operation2">
+          <tag line="43" name="param" description="Benötigte Rolle" type="integer" variable="$operation2">
             <type by_reference="false">integer</type>
           </tag>
-          <tag line="41" name="return" description="Falls eine Operation mit der UserRolle übereinstimmt gibts true" type="boolean">
+          <tag line="43" name="return" description="Falls eine Operation mit der UserRolle übereinstimmt gibts true" type="boolean">
             <type by_reference="false">boolean</type>
           </tag>
         </docblock>
-        <argument line="47">
-          <name>$operation1</name>
+        <argument line="50">
+          <name>$role1</name>
           <default></default>
           <type/>
         </argument>
-        <argument line="47">
-          <name>$operation2</name>
+        <argument line="50">
+          <name>$role2</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="58" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="62" package="Default">
         <name>isAdmin</name>
         <full_name>isAdmin</full_name>
-        <docblock line="54">
-          <description></description>
+        <docblock line="57">
+          <description>ist der Benutzer ein Administrator?</description>
           <long-description></long-description>
-          <tag line="54" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online,de&gt;"/>
-          <tag line="54" name="return" description="selbsterklärend" type="boolean">
+          <tag line="57" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online,de&gt;"/>
+          <tag line="57" name="return" description="selbsterklärend" type="boolean">
             <type by_reference="false">boolean</type>
           </tag>
         </docblock>
       </method>
     </class>
     <parse_markers>
-      <error line="0" code="50007">No page-level DocBlock was found in file protected/components/WebUser.php</error>
-      <critical line="17" code="50005">No short description for class \WebUser</critical>
-      <error line="41" code="50012">No short description for method checkAccessRole()</error>
-      <error line="54" code="50012">No short description for method isAdmin()</error>
+      <critical line="20" code="50005">No short description for class \WebUser</critical>
+      <error line="25" code="50015">Argument $params is missing from the Docblock of checkAccess()</error>
+      <error line="43" code="50014">Name of argument $role1 does not match with the DocBlock's name $operation1 in checkAccessRole()</error>
+      <error line="43" code="50014">Name of argument $role2 does not match with the DocBlock's name $operation2 in checkAccessRole()</error>
+      <notice line="43" code="50013">Parameter $operation1 could not be found in checkAccessRole()</notice>
+      <notice line="43" code="50013">Parameter $operation2 could not be found in checkAccessRole()</notice>
     </parse_markers>
   </file>
   <file path="protected/config/test.php" hash="35419f8742b3902597a7c04176a9b8e0" package="Default">
@@ -2351,182 +2407,174 @@ GNU General Public License for more details.&lt;/p&gt;
   along with this program.  If not, see &lt;a href="http://www.gnu.org/licenses/"&gt;http://www.gnu.org/licenses/&lt;/a&gt;.&lt;/p&gt;</long-description>
     </docblock>
   </file>
-  <file path="protected/controllers/AppointmentController.php" hash="a402d4eaf1d639f496d76442131a2282" package="Default">
-    <class final="false" abstract="false" namespace="global" line="20" package="Default">
+  <file path="protected/controllers/AppointmentController.php" hash="19d038ebca1fed0d04fbd729bbaa1743" package="Default">
+    <class final="false" abstract="false" namespace="global" line="22" package="Default">
       <extends>\Controller</extends>
       <name>AppointmentController</name>
       <full_name>\AppointmentController</full_name>
-      <docblock line="5">
-        <description>Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch</description>
-        <long-description>&lt;p&gt;This program is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-any later version.&lt;/p&gt;
-
-&lt;p&gt;This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.&lt;/p&gt;
-
-&lt;p&gt;You should have received a copy of the GNU General Public License
-  along with this program.  If not, see &lt;a href="http://www.gnu.org/licenses/"&gt;http://www.gnu.org/licenses/&lt;/a&gt;.&lt;/p&gt;</long-description>
-      </docblock>
-      <property final="false" static="false" visibility="public" line="26" namespace="global" package="Default">
+      <property final="false" static="false" visibility="public" line="28" namespace="global" package="Default">
         <name>$layout</name>
         <default>'//layouts/column2'</default>
-        <docblock line="22">
+        <docblock line="24">
           <description></description>
           <long-description></long-description>
-          <tag line="22" name="var" description="the default layout for the views. Defaults to '//layouts/column2', meaning using two-column layout. See 'protected/views/layouts/column2.php'." type="string">
+          <tag line="24" name="var" description="the default layout for the views. Defaults to '//layouts/column2', meaning using two-column layout. See 'protected/views/layouts/column2.php'." type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
       </property>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="31" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="33" package="Default">
         <name>filters</name>
         <full_name>filters</full_name>
-        <docblock line="28">
+        <docblock line="30">
           <description></description>
           <long-description></long-description>
-          <tag line="28" name="return" description="action filters" type="array">
+          <tag line="30" name="return" description="action filters" type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="43" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="45" package="Default">
         <name>accessRules</name>
         <full_name>accessRules</full_name>
-        <docblock line="38">
+        <docblock line="40">
           <description>Specifies the access control rules.</description>
           <long-description>&lt;p&gt;This method is used by the 'accessControl' filter.&lt;/p&gt;</long-description>
-          <tag line="38" name="return" description="access control rules" type="array">
+          <tag line="40" name="return" description="access control rules" type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="67" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="69" package="Default">
         <name>actionView</name>
         <full_name>actionView</full_name>
-        <docblock line="63">
+        <docblock line="65">
           <description>Displays a particular model.</description>
           <long-description></long-description>
-          <tag line="63" name="param" description="the ID of the model to be displayed" type="integer" variable="$id">
+          <tag line="65" name="param" description="the ID of the model to be displayed" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
         </docblock>
-        <argument line="67">
+        <argument line="69">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="77" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="79" package="Default">
         <name>actionCreate</name>
         <full_name>actionCreate</full_name>
-        <docblock line="73">
+        <docblock line="75">
           <description>Creates a new model.</description>
           <long-description>&lt;p&gt;If creation is successful, the browser will be redirected to the 'view' page.&lt;/p&gt;</long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="99" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="101" package="Default">
         <name>actionGetTeacher</name>
         <full_name>actionGetTeacher</full_name>
-        <docblock line="94">
+        <docblock line="96">
           <description></description>
           <long-description></long-description>
-          <tag line="94" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;&#10;prüft ob per GET ein Buchstabe übergeben wurde wenn dies der Fall ist&#10; wird die entsprechende Suchanfrage gesendet und rendert das GridView"/>
+          <tag line="96" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;&#10;prüft ob per GET ein Buchstabe übergeben wurde wenn dies der Fall ist&#10; wird die entsprechende Suchanfrage gesendet und rendert das GridView"/>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="117" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="123" package="Default">
         <name>actionMakeAppointment</name>
         <full_name>actionMakeAppointment</full_name>
-        <argument line="117">
+        <docblock line="119">
+          <description>die Action makeAppointment rendert das View um Termine zu vereinbaren</description>
+          <long-description></long-description>
+          <tag line="119" name="param" description="LehrerID" type="integer" variable="$teacher">
+            <type by_reference="false">integer</type>
+          </tag>
+        </docblock>
+        <argument line="123">
           <name>$teacher</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="128" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="135" package="Default">
         <name>actionUpdate</name>
         <full_name>actionUpdate</full_name>
-        <docblock line="123">
+        <docblock line="130">
           <description>Updates a particular model.</description>
           <long-description>&lt;p&gt;If update is successful, the browser will be redirected to the 'view' page.&lt;/p&gt;</long-description>
-          <tag line="123" name="param" description="the ID of the model to be updated" type="integer" variable="$id">
+          <tag line="130" name="param" description="the ID of the model to be updated" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
         </docblock>
-        <argument line="128">
+        <argument line="135">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="150" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="152" package="Default">
         <name>actionDelete</name>
         <full_name>actionDelete</full_name>
-        <docblock line="145">
+        <docblock line="147">
           <description>Deletes a particular model.</description>
           <long-description>&lt;p&gt;If deletion is successful, the browser will be redirected to the 'admin' page.&lt;/p&gt;</long-description>
-          <tag line="145" name="param" description="the ID of the model to be deleted" type="integer" variable="$id">
+          <tag line="147" name="param" description="the ID of the model to be deleted" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
         </docblock>
-        <argument line="150">
+        <argument line="152">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="161" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="163" package="Default">
         <name>actionIndex</name>
         <full_name>actionIndex</full_name>
-        <docblock line="158">
+        <docblock line="160">
           <description>Lists all models.</description>
           <long-description></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="171" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="173" package="Default">
         <name>actionAdmin</name>
         <full_name>actionAdmin</full_name>
-        <docblock line="168">
+        <docblock line="170">
           <description>Manages all models.</description>
           <long-description></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="189" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="191" package="Default">
         <name>loadModel</name>
         <full_name>loadModel</full_name>
-        <docblock line="182">
+        <docblock line="184">
           <description>Returns the data model based on the primary key given in the GET variable.</description>
           <long-description>&lt;p&gt;If the data model is not found, an HTTP exception will be raised.&lt;/p&gt;</long-description>
-          <tag line="182" name="param" description="the ID of the model to be loaded" type="integer" variable="$id">
+          <tag line="184" name="param" description="the ID of the model to be loaded" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
-          <tag line="182" name="return" description="the loaded model" type="\Appointment">
+          <tag line="184" name="return" description="the loaded model" type="\Appointment">
             <type by_reference="false">\Appointment</type>
           </tag>
-          <tag line="182" name="throws" description="" type="\CHttpException">
+          <tag line="184" name="throws" description="" type="\CHttpException">
             <type by_reference="false">\CHttpException</type>
           </tag>
         </docblock>
-        <argument line="189">
+        <argument line="191">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="200" package="Default">
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="202" package="Default">
         <name>performAjaxValidation</name>
         <full_name>performAjaxValidation</full_name>
-        <docblock line="196">
+        <docblock line="198">
           <description>Performs the AJAX validation.</description>
           <long-description></long-description>
-          <tag line="196" name="param" description="the model to be validated" type="\Appointment" variable="$model">
+          <tag line="198" name="param" description="the model to be validated" type="\Appointment" variable="$model">
             <type by_reference="false">\Appointment</type>
           </tag>
         </docblock>
-        <argument line="200">
+        <argument line="202">
           <name>$model</name>
           <default></default>
           <type/>
@@ -2535,12 +2583,12 @@ GNU General Public License for more details.&lt;/p&gt;
     </class>
     <parse_markers>
       <error line="0" code="50007">No page-level DocBlock was found in file protected/controllers/AppointmentController.php</error>
-      <error line="28" code="50012">No short description for method filters()</error>
-      <error line="94" code="50012">No short description for method actionGetTeacher()</error>
-      <error line="117" code="50010">No DocBlock was found for method actionMakeAppointment()</error>
+      <error line="22" code="50000">No DocBlock was found for \AppointmentController</error>
+      <error line="30" code="50012">No short description for method filters()</error>
+      <error line="96" code="50012">No short description for method actionGetTeacher()</error>
     </parse_markers>
   </file>
-  <file path="protected/controllers/UserController.php" hash="9f52ccb8d4945507e16ef64692e4700a" package="Default">
+  <file path="protected/controllers/UserController.php" hash="4674bcda4fec2b908f40902e6bb608a7" package="Default">
     <class final="false" abstract="false" namespace="global" line="18" package="Default">
       <extends>\Controller</extends>
       <name>UserController</name>
@@ -2610,229 +2658,234 @@ GNU General Public License for more details.&lt;/p&gt;
           <tag line="75" name="todo" description="Sinnvolle JSON Ausgabe"/>
         </docblock>
         <argument line="81">
+          <name>$role</name>
+          <default></default>
+          <type/>
+        </argument>
+        <argument line="81">
           <name>$term</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="99" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="101" package="Default">
         <name>actionDeleteAll</name>
         <full_name>actionDeleteAll</full_name>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="118" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="120" package="Default">
         <name>actionView</name>
         <full_name>actionView</full_name>
-        <docblock line="114">
+        <docblock line="116">
           <description>Displays a particular model.</description>
           <long-description></long-description>
-          <tag line="114" name="param" description="the ID of the model to be displayed" type="integer" variable="$id">
+          <tag line="116" name="param" description="the ID of the model to be displayed" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
         </docblock>
-        <argument line="118">
+        <argument line="120">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="128" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="130" package="Default">
         <name>actionAccount</name>
         <full_name>actionAccount</full_name>
-        <docblock line="124">
+        <docblock line="126">
           <description></description>
           <long-description></long-description>
-          <tag line="124" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;&#10;rendert das eigene Profilview"/>
+          <tag line="126" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;&#10;rendert das eigene Profilview"/>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="136" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="138" package="Default">
         <name>actionActivate</name>
         <full_name>actionActivate</full_name>
-        <docblock line="132">
+        <docblock line="134">
           <description></description>
           <long-description></long-description>
-          <tag line="132" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;&#10;Überprüft einen Aktivierungslink und aktiviert gegebenenfalls einen Benutzer."/>
+          <tag line="134" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;&#10;Überprüft einen Aktivierungslink und aktiviert gegebenenfalls einen Benutzer."/>
         </docblock>
-        <argument line="136">
+        <argument line="138">
           <name>$activationKey</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="159" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="161" package="Default">
         <name>actionImportTeachers</name>
         <full_name>actionImportTeachers</full_name>
-        <docblock line="154">
-          <description></description>
+        <docblock line="156">
+          <description>Falls die CSV Datei hochgeladen wurde, wird diese geparsed und sofern eine E-Mail Adresse vorhanden ist eingefügt</description>
           <long-description></long-description>
-          <tag line="154" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;&#10;Falls die CSV Datei hochgeladen wurde, wird diese geparsed und sofern eine E-Mail Adresse vorhanden ist eingefügt"/>
+          <tag line="156" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;"/>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="true" visibility="private" namespace="global" line="210" package="Default">
+      <method final="false" abstract="false" static="true" visibility="private" namespace="global" line="212" package="Default">
         <name>encodingString</name>
         <full_name>encodingString</full_name>
-        <docblock line="204">
+        <docblock line="206">
           <description>Konvertiert eine Datei in ISO-8859-1 in UTF-8</description>
           <long-description></long-description>
-          <tag line="204" name="param" description="" type="string" variable="$toEncode">
+          <tag line="206" name="param" description="" type="string" variable="$toEncode">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="204" name="return" description="" type="string">
+          <tag line="206" name="return" description="" type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="210">
+        <argument line="212">
           <name>$toEncode</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="218" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="220" package="Default">
         <name>actionNewPw</name>
         <full_name>actionNewPw</full_name>
-        <docblock line="214">
+        <docblock line="216">
           <description></description>
           <long-description></long-description>
-          <tag line="214" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;&#10;Action um ein neues Passwort zu setzen"/>
+          <tag line="216" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;&#10;Action um ein neues Passwort zu setzen"/>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="249" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="251" package="Default">
         <name>actionChangePwd</name>
         <full_name>actionChangePwd</full_name>
-        <docblock line="245">
+        <docblock line="247">
           <description></description>
           <long-description></long-description>
-          <tag line="245" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;&#10;Action um ein neues Passwort anzufordern"/>
+          <tag line="247" name="author" description="Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;&#10;Action um ein neues Passwort anzufordern"/>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="280" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="282" package="Default">
         <name>actionCreate</name>
         <full_name>actionCreate</full_name>
-        <docblock line="276">
+        <docblock line="278">
           <description>Creates a new model.</description>
           <long-description>&lt;p&gt;If creation is successful, the browser will be redirected to the 'view' page.&lt;/p&gt;</long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="312" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="314" package="Default">
         <name>actionUpdate</name>
         <full_name>actionUpdate</full_name>
-        <docblock line="307">
+        <docblock line="309">
           <description>Updates a particular model.</description>
           <long-description>&lt;p&gt;If update is successful, the browser will be redirected to the 'view' page.&lt;/p&gt;</long-description>
-          <tag line="307" name="param" description="the ID of the model to be updated" type="integer" variable="$id">
+          <tag line="309" name="param" description="the ID of the model to be updated" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
         </docblock>
-        <argument line="312">
+        <argument line="314">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="337" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="339" package="Default">
         <name>actionDelete</name>
         <full_name>actionDelete</full_name>
-        <docblock line="332">
+        <docblock line="334">
           <description>Deletes a particular model.</description>
           <long-description>&lt;p&gt;If deletion is successful, the browser will be redirected to the 'admin' page.&lt;/p&gt;</long-description>
-          <tag line="332" name="param" description="the ID of the model to be deleted" type="integer" variable="$id">
+          <tag line="334" name="param" description="the ID of the model to be deleted" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
         </docblock>
-        <argument line="337">
+        <argument line="339">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="348" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="350" package="Default">
         <name>actionAdmin</name>
         <full_name>actionAdmin</full_name>
-        <docblock line="345">
+        <docblock line="347">
           <description>Manages all models.</description>
           <long-description></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="365" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="367" package="Default">
         <name>loadModel</name>
         <full_name>loadModel</full_name>
-        <docblock line="358">
+        <docblock line="360">
           <description>Returns the data model based on the primary key given in the GET variable.</description>
           <long-description>&lt;p&gt;If the data model is not found, an HTTP exception will be raised.&lt;/p&gt;</long-description>
-          <tag line="358" name="param" description="the ID of the model to be loaded" type="integer" variable="$id">
+          <tag line="360" name="param" description="the ID of the model to be loaded" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
-          <tag line="358" name="return" description="the loaded model with Role" type="\User">
+          <tag line="360" name="return" description="the loaded model with Role" type="\User">
             <type by_reference="false">\User</type>
           </tag>
-          <tag line="358" name="throws" description="" type="\CHttpException">
+          <tag line="360" name="throws" description="" type="\CHttpException">
             <type by_reference="false">\CHttpException</type>
           </tag>
         </docblock>
-        <argument line="365">
+        <argument line="367">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="389" package="Default">
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="391" package="Default">
         <name>performAjaxValidation</name>
         <full_name>performAjaxValidation</full_name>
-        <docblock line="385">
+        <docblock line="387">
           <description>Performs the AJAX validation.</description>
           <long-description></long-description>
-          <tag line="385" name="param" description="the model to be validated" type="\User" variable="$model">
+          <tag line="387" name="param" description="the model to be validated" type="\User" variable="$model">
             <type by_reference="false">\User</type>
           </tag>
         </docblock>
-        <argument line="389">
+        <argument line="391">
           <name>$model</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="404" package="Default">
+      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="406" package="Default">
         <name>sendMail</name>
         <full_name>sendMail</full_name>
-        <docblock line="396">
+        <docblock line="398">
           <description>Versendet eine E-Mail</description>
           <long-description></long-description>
-          <tag line="396" name="param" description="Betreff einer E-Mail" type="string" variable="$subject">
+          <tag line="398" name="param" description="Betreff einer E-Mail" type="string" variable="$subject">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="396" name="param" description="Nachricht einer E-Mail" type="string" variable="$message">
+          <tag line="398" name="param" description="Nachricht einer E-Mail" type="string" variable="$message">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="396" name="param" description="Empfänger der Nachricht" type="string" variable="$to">
+          <tag line="398" name="param" description="Empfänger der Nachricht" type="string" variable="$to">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="396" name="param" description="Absender der Nachricht" type="string" variable="$from">
+          <tag line="398" name="param" description="Absender der Nachricht" type="string" variable="$from">
             <type by_reference="false">string</type>
           </tag>
-          <tag line="396" name="param" description="Absendername" type="string" variable="$fromName">
+          <tag line="398" name="param" description="Absendername" type="string" variable="$fromName">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
-        <argument line="404">
+        <argument line="406">
           <name>$subject</name>
           <default></default>
           <type/>
         </argument>
-        <argument line="404">
+        <argument line="406">
           <name>$message</name>
           <default></default>
           <type/>
         </argument>
-        <argument line="404">
+        <argument line="406">
           <name>$to</name>
           <default></default>
           <type/>
         </argument>
-        <argument line="404">
+        <argument line="406">
           <name>$from</name>
           <default></default>
           <type/>
         </argument>
-        <argument line="404">
+        <argument line="406">
           <name>$fromName</name>
           <default></default>
           <type/>
@@ -2844,21 +2897,22 @@ GNU General Public License for more details.&lt;/p&gt;
       <error line="26" code="50012">No short description for method filters()</error>
       <error line="36" code="50010">No DocBlock was found for method actions()</error>
       <error line="75" code="50012">No short description for method actionSearch()</error>
-      <error line="99" code="50010">No DocBlock was found for method actionDeleteAll()</error>
-      <error line="124" code="50012">No short description for method actionAccount()</error>
-      <error line="132" code="50012">No short description for method actionActivate()</error>
-      <error line="132" code="50015">Argument $activationKey is missing from the Docblock of actionActivate()</error>
-      <error line="154" code="50012">No short description for method actionImportTeachers()</error>
-      <error line="214" code="50012">No short description for method actionNewPw()</error>
-      <error line="245" code="50012">No short description for method actionChangePwd()</error>
+      <error line="75" code="50014">Name of argument $role does not match with the DocBlock's name $term in actionSearch()</error>
+      <error line="75" code="50015">Argument $term is missing from the Docblock of actionSearch()</error>
+      <error line="101" code="50010">No DocBlock was found for method actionDeleteAll()</error>
+      <error line="126" code="50012">No short description for method actionAccount()</error>
+      <error line="134" code="50012">No short description for method actionActivate()</error>
+      <error line="134" code="50015">Argument $activationKey is missing from the Docblock of actionActivate()</error>
+      <error line="216" code="50012">No short description for method actionNewPw()</error>
+      <error line="247" code="50012">No short description for method actionChangePwd()</error>
     </parse_markers>
   </file>
-  <file path="protected/controllers/DateController.php" hash="d189876300965cae952faeb980cb7791" package="Default">
-    <class final="false" abstract="false" namespace="global" line="21" package="Default">
+  <file path="protected/controllers/DateController.php" hash="5ff8f07451c686ca73d55867bb89e7b8" package="Default">
+    <class final="false" abstract="false" namespace="global" line="23" package="Default">
       <extends>\Controller</extends>
       <name>DateController</name>
       <full_name>\DateController</full_name>
-      <docblock line="6">
+      <docblock line="8">
         <description>Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch</description>
         <long-description>&lt;p&gt;This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -2873,144 +2927,160 @@ GNU General Public License for more details.&lt;/p&gt;
 &lt;p&gt;You should have received a copy of the GNU General Public License
   along with this program.  If not, see &lt;a href="http://www.gnu.org/licenses/"&gt;http://www.gnu.org/licenses/&lt;/a&gt;.&lt;/p&gt;</long-description>
       </docblock>
-      <property final="false" static="false" visibility="public" line="27" namespace="global" package="Default">
+      <property final="false" static="false" visibility="public" line="29" namespace="global" package="Default">
         <name>$layout</name>
         <default>'//layouts/column2'</default>
-        <docblock line="23">
+        <docblock line="25">
           <description></description>
           <long-description></long-description>
-          <tag line="23" name="var" description="the default layout for the views. Defaults to '//layouts/column2', meaning using two-column layout. See 'protected/views/layouts/column2.php'." type="string">
+          <tag line="25" name="var" description="the default layout for the views. Defaults to '//layouts/column2', meaning using two-column layout. See 'protected/views/layouts/column2.php'." type="string">
             <type by_reference="false">string</type>
           </tag>
         </docblock>
       </property>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="32" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="34" package="Default">
         <name>filters</name>
         <full_name>filters</full_name>
-        <docblock line="29">
+        <docblock line="31">
           <description></description>
           <long-description></long-description>
-          <tag line="29" name="return" description="action filters" type="array">
+          <tag line="31" name="return" description="action filters" type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="44" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="46" package="Default">
         <name>accessRules</name>
         <full_name>accessRules</full_name>
-        <docblock line="39">
+        <docblock line="41">
           <description>Specifies the access control rules.</description>
           <long-description>&lt;p&gt;This method is used by the 'accessControl' filter.&lt;/p&gt;</long-description>
-          <tag line="39" name="return" description="access control rules" type="array">
+          <tag line="41" name="return" description="access control rules" type="array">
             <type by_reference="false">array</type>
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="59" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="65" package="Default">
+        <name>actionSearch</name>
+        <full_name>actionSearch</full_name>
+        <docblock line="60">
+          <description>Suchaction für das Autocomplete für die Verwaltung um Termine einzutragen</description>
+          <long-description></long-description>
+          <tag line="60" name="param" description="" type="string" variable="$term">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="65">
+          <name>$term</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="84" package="Default">
         <name>actionView</name>
         <full_name>actionView</full_name>
-        <docblock line="55">
+        <docblock line="80">
           <description>Displays a particular model.</description>
           <long-description></long-description>
-          <tag line="55" name="param" description="the ID of the model to be displayed" type="integer" variable="$id">
+          <tag line="80" name="param" description="the ID of the model to be displayed" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
         </docblock>
-        <argument line="59">
+        <argument line="84">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="69" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="94" package="Default">
         <name>actionCreate</name>
         <full_name>actionCreate</full_name>
-        <docblock line="65">
+        <docblock line="90">
           <description>Creates a new model.</description>
           <long-description>&lt;p&gt;If creation is successful, the browser will be redirected to the 'view' page.&lt;/p&gt;</long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="87" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="112" package="Default">
         <name>actionUpdate</name>
         <full_name>actionUpdate</full_name>
-        <docblock line="82">
+        <docblock line="107">
           <description>Updates a particular model.</description>
           <long-description>&lt;p&gt;If update is successful, the browser will be redirected to the 'view' page.&lt;/p&gt;</long-description>
-          <tag line="82" name="param" description="the ID of the model to be updated" type="integer" variable="$id">
+          <tag line="107" name="param" description="the ID of the model to be updated" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
         </docblock>
-        <argument line="87">
+        <argument line="112">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="106" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="131" package="Default">
         <name>actionDelete</name>
         <full_name>actionDelete</full_name>
-        <docblock line="101">
+        <docblock line="126">
           <description>Deletes a particular model.</description>
           <long-description>&lt;p&gt;If deletion is successful, the browser will be redirected to the 'admin' page.&lt;/p&gt;</long-description>
-          <tag line="101" name="param" description="the ID of the model to be deleted" type="integer" variable="$id">
+          <tag line="126" name="param" description="the ID of the model to be deleted" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
         </docblock>
-        <argument line="106">
+        <argument line="131">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="117" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="142" package="Default">
         <name>actionIndex</name>
         <full_name>actionIndex</full_name>
-        <docblock line="114">
+        <docblock line="139">
           <description>Lists all models.</description>
           <long-description></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="127" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="152" package="Default">
         <name>actionAdmin</name>
         <full_name>actionAdmin</full_name>
-        <docblock line="124">
+        <docblock line="149">
           <description>Manages all models.</description>
           <long-description></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="145" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="170" package="Default">
         <name>loadModel</name>
         <full_name>loadModel</full_name>
-        <docblock line="138">
+        <docblock line="163">
           <description>Returns the data model based on the primary key given in the GET variable.</description>
           <long-description>&lt;p&gt;If the data model is not found, an HTTP exception will be raised.&lt;/p&gt;</long-description>
-          <tag line="138" name="param" description="the ID of the model to be loaded" type="integer" variable="$id">
+          <tag line="163" name="param" description="the ID of the model to be loaded" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
-          <tag line="138" name="return" description="the loaded model" type="\Date">
+          <tag line="163" name="return" description="the loaded model" type="\Date">
             <type by_reference="false">\Date</type>
           </tag>
-          <tag line="138" name="throws" description="" type="\CHttpException">
+          <tag line="163" name="throws" description="" type="\CHttpException">
             <type by_reference="false">\CHttpException</type>
           </tag>
         </docblock>
-        <argument line="145">
+        <argument line="170">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="156" package="Default">
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="181" package="Default">
         <name>performAjaxValidation</name>
         <full_name>performAjaxValidation</full_name>
-        <docblock line="152">
+        <docblock line="177">
           <description>Performs the AJAX validation.</description>
           <long-description></long-description>
-          <tag line="152" name="param" description="the model to be validated" type="\Date" variable="$model">
+          <tag line="177" name="param" description="the model to be validated" type="\Date" variable="$model">
             <type by_reference="false">\Date</type>
           </tag>
         </docblock>
-        <argument line="156">
+        <argument line="181">
           <name>$model</name>
           <default></default>
           <type/>
@@ -3019,7 +3089,7 @@ GNU General Public License for more details.&lt;/p&gt;
     </class>
     <parse_markers>
       <error line="0" code="50007">No page-level DocBlock was found in file protected/controllers/DateController.php</error>
-      <error line="29" code="50012">No short description for method filters()</error>
+      <error line="31" code="50012">No short description for method filters()</error>
     </parse_markers>
   </file>
   <file path="protected/controllers/UserRoleController.php" hash="85f4ee0b7871e67b8c776f72c6a0cd78" package="Default">
@@ -3700,7 +3770,7 @@ GNU General Public License for more details.&lt;/p&gt;
       <error line="190" code="50010">No DocBlock was found for method generateTan()</error>
     </parse_markers>
   </file>
-  <file path="protected/controllers/ParentChildController.php" hash="cd4cf27746d2f607d0302c9ca4640456" package="Default">
+  <file path="protected/controllers/ParentChildController.php" hash="c379753f2c3d4e696b324ed65e5ad205" package="Default">
     <class final="false" abstract="false" namespace="global" line="18" package="Default">
       <extends>\Controller</extends>
       <name>ParentChildController</name>
@@ -3753,116 +3823,125 @@ GNU General Public License for more details.&lt;/p&gt;
           </tag>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="59" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="55" package="Default">
+        <name>actionSearch</name>
+        <full_name>actionSearch</full_name>
+        <argument line="55">
+          <name>$term</name>
+          <default></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="72" package="Default">
         <name>actionView</name>
         <full_name>actionView</full_name>
-        <docblock line="55">
+        <docblock line="68">
           <description>Displays a particular model.</description>
           <long-description></long-description>
-          <tag line="55" name="param" description="the ID of the model to be displayed" type="integer" variable="$id">
+          <tag line="68" name="param" description="the ID of the model to be displayed" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
         </docblock>
-        <argument line="59">
+        <argument line="72">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="69" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="82" package="Default">
         <name>actionIndex</name>
         <full_name>actionIndex</full_name>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="82" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="95" package="Default">
         <name>actionCreate</name>
         <full_name>actionCreate</full_name>
-        <docblock line="78">
+        <docblock line="91">
           <description>Creates a new model.</description>
           <long-description>&lt;p&gt;If creation is successful, the browser will be redirected to the 'view' page.&lt;/p&gt;</long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="113" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="126" package="Default">
         <name>actionUpdate</name>
         <full_name>actionUpdate</full_name>
-        <docblock line="108">
+        <docblock line="121">
           <description>Updates a particular model.</description>
           <long-description>&lt;p&gt;If update is successful, the browser will be redirected to the 'view' page.&lt;/p&gt;</long-description>
-          <tag line="108" name="param" description="the ID of the model to be updated" type="integer" variable="$id">
+          <tag line="121" name="param" description="the ID of the model to be updated" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
         </docblock>
-        <argument line="113">
+        <argument line="126">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="137" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="150" package="Default">
         <name>actionDelete</name>
         <full_name>actionDelete</full_name>
-        <docblock line="132">
+        <docblock line="145">
           <description>Deletes a particular model.</description>
           <long-description>&lt;p&gt;If deletion is successful, the browser will be redirected to the 'admin' page.&lt;/p&gt;</long-description>
-          <tag line="132" name="param" description="the ID of the model to be deleted" type="integer" variable="$id">
+          <tag line="145" name="param" description="the ID of the model to be deleted" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
         </docblock>
-        <argument line="137">
+        <argument line="150">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="146" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="159" package="Default">
         <name>actionAdmin</name>
         <full_name>actionAdmin</full_name>
-        <docblock line="143">
+        <docblock line="156">
           <description>Manages all models.</description>
           <long-description></long-description>
         </docblock>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="157" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="170" package="Default">
         <name>checkUser</name>
         <full_name>checkUser</full_name>
-        <argument line="157">
+        <argument line="170">
           <name>$parentChildId</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="174" package="Default">
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="187" package="Default">
         <name>loadModel</name>
         <full_name>loadModel</full_name>
-        <docblock line="167">
+        <docblock line="180">
           <description>Returns the data model based on the primary key given in the GET variable.</description>
           <long-description>&lt;p&gt;If the data model is not found, an HTTP exception will be raised.&lt;/p&gt;</long-description>
-          <tag line="167" name="param" description="the ID of the model to be loaded" type="integer" variable="$id">
+          <tag line="180" name="param" description="the ID of the model to be loaded" type="integer" variable="$id">
             <type by_reference="false">integer</type>
           </tag>
-          <tag line="167" name="return" description="the loaded model" type="\ParentChild">
+          <tag line="180" name="return" description="the loaded model" type="\ParentChild">
             <type by_reference="false">\ParentChild</type>
           </tag>
-          <tag line="167" name="throws" description="" type="\CHttpException">
+          <tag line="180" name="throws" description="" type="\CHttpException">
             <type by_reference="false">\CHttpException</type>
           </tag>
         </docblock>
-        <argument line="174">
+        <argument line="187">
           <name>$id</name>
           <default></default>
           <type/>
         </argument>
       </method>
-      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="185" package="Default">
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="198" package="Default">
         <name>performAjaxValidation</name>
         <full_name>performAjaxValidation</full_name>
-        <docblock line="181">
+        <docblock line="194">
           <description>Performs the AJAX validation.</description>
           <long-description></long-description>
-          <tag line="181" name="param" description="the model to be validated" type="\ParentChild" variable="$model">
+          <tag line="194" name="param" description="the model to be validated" type="\ParentChild" variable="$model">
             <type by_reference="false">\ParentChild</type>
           </tag>
         </docblock>
-        <argument line="185">
+        <argument line="198">
           <name>$model</name>
           <default></default>
           <type/>
@@ -3872,8 +3951,9 @@ GNU General Public License for more details.&lt;/p&gt;
     <parse_markers>
       <error line="0" code="50007">No page-level DocBlock was found in file protected/controllers/ParentChildController.php</error>
       <error line="26" code="50012">No short description for method filters()</error>
-      <error line="69" code="50010">No DocBlock was found for method actionIndex()</error>
-      <error line="157" code="50010">No DocBlock was found for method checkUser()</error>
+      <error line="55" code="50010">No DocBlock was found for method actionSearch()</error>
+      <error line="82" code="50010">No DocBlock was found for method actionIndex()</error>
+      <error line="170" code="50010">No DocBlock was found for method checkUser()</error>
     </parse_markers>
   </file>
   <file path="protected/controllers/SiteController.php" hash="d153af84326454b9172f07186ff8ac27" package="Default">
@@ -4088,7 +4168,7 @@ when an action is not explicitly requested by users.</description>
       <error line="0" code="50007">No page-level DocBlock was found in file protected/views/parentChild/_search.php</error>
     </parse_markers>
   </file>
-  <file path="protected/views/parentChild/_form.php" hash="99b2071ef6a977b5913c714085d08c4e" package="Default">
+  <file path="protected/views/parentChild/_form.php" hash="283d4087367e5fd33690f4ba77b1e0b2" package="Default">
     <parse_markers>
       <error line="0" code="50007">No page-level DocBlock was found in file protected/views/parentChild/_form.php</error>
     </parse_markers>
@@ -4371,7 +4451,7 @@ GNU General Public License for more details.&lt;/p&gt;
       <error line="0" code="50007">No page-level DocBlock was found in file protected/views/child/_form.php</error>
     </parse_markers>
   </file>
-  <file path="protected/views/appointment/getTeacher.php" hash="1ac533ab5cff381bc3b7d0c2a6168ab2" package="Default">
+  <file path="protected/views/appointment/getTeacher.php" hash="9f66bdac3165332901a54463e2b213b9" package="Default">
     <parse_markers>
       <error line="0" code="50007">No page-level DocBlock was found in file protected/views/appointment/getTeacher.php</error>
     </parse_markers>
@@ -4476,7 +4556,7 @@ GNU General Public License for more details.&lt;/p&gt;
       <error line="0" code="50007">No page-level DocBlock was found in file protected/views/appointment/_search.php</error>
     </parse_markers>
   </file>
-  <file path="protected/views/appointment/_form.php" hash="f3cdecd4c37bfde8919a329288ca8d65" package="Default">
+  <file path="protected/views/appointment/_form.php" hash="f77c2ff6bfd80eabd36b3feeac43940c" package="Default">
     <parse_markers>
       <error line="0" code="50007">No page-level DocBlock was found in file protected/views/appointment/_form.php</error>
     </parse_markers>
@@ -4514,7 +4594,7 @@ GNU General Public License for more details.&lt;/p&gt;
   <package name="Default" full_name="Default"/>
   <package name="YiiDebugToolbar" full_name="YiiDebugToolbar"/>
   <namespace name="global" full_name="global"/>
-  <marker count="2">todo</marker>
+  <marker count="1">todo</marker>
   <marker count="0">fixme</marker>
   <deprecated count="0"/>
 </project>

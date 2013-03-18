@@ -115,6 +115,8 @@ class User extends CActiveRecord {
     /**
      * Verschlüsselt ein Passwort mit Applikationssalt in sha512
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param string $password Zu salzendes Passwort
+     * @param string $salt Salt
      * @return string encrypted and salted password with sha512
      */
     public static function encryptPassword($password, $salt) {
@@ -338,7 +340,7 @@ class User extends CActiveRecord {
     /**
      * Gibt den Status als String aus ( echo )
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @param integer $stateId Status ID des Users
+     * @param integer $state Status ID des Users
      */
     static public function getFormattedState($state) {
         switch ($state) {

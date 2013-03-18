@@ -1,6 +1,5 @@
 <?php
-
-/*
+/**
  * Dies ist die Controller Klasse von Model Appointment.
  */
 /* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
@@ -18,7 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+/**
+ * Stellt die Controller Actions des Appointments Models zur Verfügung.
+ */
 class AppointmentController extends Controller {
 
     /**
@@ -28,12 +29,12 @@ class AppointmentController extends Controller {
     public $layout = '//layouts/column2';
 
     /**
+     * Filter
      * @return array action filters
      */
     public function filters() {
         return array(
-            'accessControl', // perform access control for CRUD operations
-                //'postOnly + delete', // we only allow deletion via POST request
+            'accessControl',
         );
     }
 
@@ -94,9 +95,10 @@ class AppointmentController extends Controller {
     }
 
     /**
+     * Prüft ob per GET ein Buchstabe übergeben wurde wenn dies der Fall ist
+     *
+     * wird die entsprechende Suchanfrage gesendet und rendert das GridView
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * prüft ob per GET ein Buchstabe übergeben wurde wenn dies der Fall ist
-     *  wird die entsprechende Suchanfrage gesendet und rendert das GridView
      */
     public function actionGetTeacher() {
         $model = new User('searchTeacher');
