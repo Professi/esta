@@ -23,7 +23,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Liste der Schüler', 'url'=>array('index'),'visible'=>Yii::app()->user->checkAccess(1)),
 	array('label'=>'Eltern-Kind-Verknüpfungen verwalten', 'url'=>array('admin'), 'visible'=>Yii::app()->user->checkAccess(1)),
 );
 ?>

@@ -26,4 +26,12 @@ blockquote {margin:1.5em;padding:1em;font-style:italic;font-size:.9em;}
 .quiet {color:#999;}
 .hide {display:none;}
 a:link, a:visited {background:transparent;font-weight:700;text-decoration:underline;}
-a:link:after, a:visited:after {content:" (" attr(href) ")";font-size:90%;}
+.header{display:none;}
+.header-school-logo{display:none;}
+#js_menu{display:none;}
+#nojs_menu{display: none;}
+.pager{display: none;}
+#sidebar{display: none;}
+#footer{display: none;}
+.column-button{display: none;}
+td>input{display:none;}

@@ -43,8 +43,8 @@
                 <span class="prefix">Datum</span>
             </div>
             <div class="eight columns">
-		<?php echo $form->textField($model,'date_id'); ?>
-		<?php echo $form->error($model,'date_id'); ?>
+		<?php echo $form->textField($model,'dateTime_id'); ?>
+		<?php echo $form->error($model,'dateTime_id'); ?>
             </div>
             <div class="two columns">
                 <span class="postfix">YYYY:MM:DD</span>
@@ -66,6 +66,7 @@
                 <span class="prefix">Lehrer-ID</span>
             </div>
             <div class="ten columns">
+                
 		<?php echo $form->textField($model,'user_id',array('size'=>11,'maxlength'=>11,)); ?>
 		<?php echo $form->error($model,'user_id'); ?>
             </div>

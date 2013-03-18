@@ -21,6 +21,7 @@
     <meta name="viewport" content="width=device-width">
     <?php Yii::app()->clientScript->registerPackage('css'); ?>
     <?php Yii::app()->clientScript->registerPackage('javascript'); ?>
+    <link rel="stylesheet" type="text/css" media="print" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css">
     <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/modernizr.foundation.js"></script>
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
