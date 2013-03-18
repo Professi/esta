@@ -21,9 +21,7 @@
                                     API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a>Packages</a></li>
 <li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
-<li><a href="../packages/PHPMailer.html"><i class="icon-folder-open"></i> PHPMailer</a></li>
 <li><a href="../packages/YiiDebugToolbar.html"><i class="icon-folder-open"></i> YiiDebugToolbar</a></li>
-<li><a href="../packages/application.html"><i class="icon-folder-open"></i> application</a></li>
 </ul>
 </li>
 <li class="dropdown" id="charts-menu">
@@ -34,10 +32,10 @@
 <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
                                     Reports <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
-                <span class="label label-info">371</span></a></li>
+                <span class="label label-info">151</span></a></li>
 <li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
                 <ul><li>todo 
-                <span class="label label-info">5</span>
+                <span class="label label-info">2</span>
 </li></ul></a></li>
 <li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
                 <span class="label label-info">0</span></a></li>
@@ -61,20 +59,18 @@
 <li class="nav-header">
 <i class="icon-custom icon-method"></i> Methods
                     <ul>
-<li class="method public "><a href="#method_attributeLabels" title="attributeLabels :: "><span class="description">attributeLabels()
-        </span><pre>attributeLabels()</pre></a></li>
-<li class="method public "><a href="#method_rules" title="rules :: "><span class="description">rules()
-        </span><pre>rules()</pre></a></li>
+<li class="method public "><a href="#method_attributeLabels" title="attributeLabels :: Attributlabels"><span class="description">Attributlabels</span><pre>attributeLabels()</pre></a></li>
+<li class="method public "><a href="#method_rules" title="rules :: Validierungsregeln"><span class="description">Validierungsregeln</span><pre>rules()</pre></a></li>
 </ul>
 </li>
 <li class="nav-header">
 <i class="icon-custom icon-property"></i> Properties
                     <ul>
-<li class="property public "><a href="#property_email" title="$email :: "><span class="description"></span><pre>$email</pre></a></li>
-<li class="property public "><a href="#property_file" title="$file :: "><span class="description"></span><pre>$file</pre></a></li>
-<li class="property public "><a href="#property_firstname" title="$firstname :: "><span class="description"></span><pre>$firstname</pre></a></li>
-<li class="property public "><a href="#property_lastname" title="$lastname :: "><span class="description"></span><pre>$lastname</pre></a></li>
-<li class="property public "><a href="#property_title" title="$title :: "><span class="description"></span><pre>$title</pre></a></li>
+<li class="property public "><a href="#property_email" title="$email :: "><span class="description">E-Mail Adresse</span><pre>$email</pre></a></li>
+<li class="property public "><a href="#property_file" title="$file :: "><span class="description">CSV Datei</span><pre>$file</pre></a></li>
+<li class="property public "><a href="#property_firstname" title="$firstname :: "><span class="description">Vorname</span><pre>$firstname</pre></a></li>
+<li class="property public "><a href="#property_lastname" title="$lastname :: "><span class="description">Nachname</span><pre>$lastname</pre></a></li>
+<li class="property public "><a href="#property_title" title="$title :: "><span class="description">Titel</span><pre>$title</pre></a></li>
 </ul>
 </li>
 </ul>
@@ -107,15 +103,18 @@ GNU General Public License for more details.</p>
 <h3>
 <i class="icon-custom icon-method"></i> Methods</h3>
 <a id="method_attributeLabels"></a><div class="element clickable method public method_attributeLabels" data-toggle="collapse" data-target=".method_attributeLabels .collapse">
-<h2>attributeLabels()
-        </h2>
-<pre>attributeLabels() </pre>
+<h2>Attributlabels</h2>
+<pre>attributeLabels() : array</pre>
 <div class="labels"></div>
-<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>Labels</div>
+</div></div>
 </div>
 <a id="method_rules"></a><div class="element clickable method public method_rules" data-toggle="collapse" data-target=".method_rules .collapse">
-<h2>rules()
-        </h2>
+<h2>Validierungsregeln</h2>
 <pre>rules() : array</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
@@ -128,32 +127,32 @@ GNU General Public License for more details.</p>
 <h3>
 <i class="icon-custom icon-property"></i> Properties</h3>
 <a id="property_email"> </a><div class="element clickable property public property_email" data-toggle="collapse" data-target=".property_email .collapse">
-<h2></h2>
-<pre>$email </pre>
+<h2>E-Mail Adresse</h2>
+<pre>$email : string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
 </div>
 <a id="property_file"> </a><div class="element clickable property public property_file" data-toggle="collapse" data-target=".property_file .collapse">
-<h2></h2>
-<pre>$file </pre>
+<h2>CSV Datei</h2>
+<pre>$file : \file</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
 </div>
 <a id="property_firstname"> </a><div class="element clickable property public property_firstname" data-toggle="collapse" data-target=".property_firstname .collapse">
-<h2></h2>
-<pre>$firstname </pre>
+<h2>Vorname</h2>
+<pre>$firstname : string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
 </div>
 <a id="property_lastname"> </a><div class="element clickable property public property_lastname" data-toggle="collapse" data-target=".property_lastname .collapse">
-<h2></h2>
-<pre>$lastname </pre>
+<h2>Nachname</h2>
+<pre>$lastname : string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
 </div>
 <a id="property_title"> </a><div class="element clickable property public property_title" data-toggle="collapse" data-target=".property_title .collapse">
-<h2></h2>
-<pre>$title </pre>
+<h2>Titel</h2>
+<pre>$title : string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
 </div>
@@ -164,7 +163,7 @@ GNU General Public License for more details.</p>
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a12</a> and<br>
-            generated on 2013-03-17T20:13:13+01:00.<br></footer></div>
+            generated on 2013-03-18T17:39:16+01:00.<br></footer></div>
 </div>
 </body>
 </html>

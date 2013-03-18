@@ -21,9 +21,7 @@
                                     API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a>Packages</a></li>
 <li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
-<li><a href="../packages/PHPMailer.html"><i class="icon-folder-open"></i> PHPMailer</a></li>
 <li><a href="../packages/YiiDebugToolbar.html"><i class="icon-folder-open"></i> YiiDebugToolbar</a></li>
-<li><a href="../packages/application.html"><i class="icon-folder-open"></i> application</a></li>
 </ul>
 </li>
 <li class="dropdown" id="charts-menu">
@@ -34,10 +32,10 @@
 <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
                                     Reports <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
-                <span class="label label-info">371</span></a></li>
+                <span class="label label-info">151</span></a></li>
 <li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
                 <ul><li>todo 
-                <span class="label label-info">5</span>
+                <span class="label label-info">2</span>
 </li></ul></a></li>
 <li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
                 <span class="label label-info">0</span></a></li>
@@ -62,17 +60,16 @@
 <i class="icon-custom icon-method"></i> Methods
                     <ul>
 <li class="method public "><a href="#method_attributeLabels" title="attributeLabels :: Declares attribute labels."><span class="description">Declares attribute labels.</span><pre>attributeLabels()</pre></a></li>
-<li class="method public "><a href="#method_authenticate" title="authenticate :: "><span class="description">authenticate()
-        </span><pre>authenticate()</pre></a></li>
+<li class="method public "><a href="#method_authenticate" title="authenticate :: Authentifiziert einen Benutzer"><span class="description">Authentifiziert einen Benutzer</span><pre>authenticate()</pre></a></li>
 <li class="method public "><a href="#method_rules" title="rules :: Declares the validation rules."><span class="description">Declares the validation rules.</span><pre>rules()</pre></a></li>
 </ul>
 </li>
 <li class="nav-header">
 <i class="icon-custom icon-property"></i> Properties
                     <ul>
-<li class="property public "><a href="#property_email" title="$email :: "><span class="description"></span><pre>$email</pre></a></li>
-<li class="property public "><a href="#property_password" title="$password :: "><span class="description"></span><pre>$password</pre></a></li>
-<li class="property public "><a href="#property_rememberMe" title="$rememberMe :: "><span class="description"></span><pre>$rememberMe</pre></a></li>
+<li class="property public "><a href="#property_email" title="$email :: "><span class="description">E-Mail</span><pre>$email</pre></a></li>
+<li class="property public "><a href="#property_password" title="$password :: "><span class="description">Passwort</span><pre>$password</pre></a></li>
+<li class="property public "><a href="#property_rememberMe" title="$rememberMe :: "><span class="description">Anmeldenamen merken</span><pre>$rememberMe</pre></a></li>
 </ul>
 </li>
 </ul>
@@ -88,10 +85,20 @@
 </li>
 </ul>
 <div class="element class">
-<p class="short_description">LoginForm class.</p>
+<p class="short_description">Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch</p>
 <div class="details">
-<div class="long_description"><p>LoginForm is the data structure for keeping
-user login form data. It is used by the 'login' action of 'SiteController'.</p></div>
+<div class="long_description"><p>This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+any later version.</p>
+
+<p>This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+
+<p>You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p></div>
 <h3>
 <i class="icon-custom icon-method"></i> Methods</h3>
 <a id="method_attributeLabels"></a><div class="element clickable method public method_attributeLabels" data-toggle="collapse" data-target=".method_attributeLabels .collapse">
@@ -101,8 +108,7 @@ user login form data. It is used by the 'login' action of 'SiteController'.</p><
 <div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
 </div>
 <a id="method_authenticate"></a><div class="element clickable method public method_authenticate" data-toggle="collapse" data-target=".method_authenticate .collapse">
-<h2>authenticate()
-        </h2>
+<h2>Authentifiziert einen Benutzer</h2>
 <pre>authenticate() : boolean</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
@@ -113,7 +119,7 @@ user login form data. It is used by the 'login' action of 'SiteController'.</p><
 </tr></table>
 <h3>Returns</h3>
 <div class="subelement response">
-<code>boolean</code>Gibt zurück ob ein Benutzer authentisiert werden konnte</div>
+<code>boolean</code>Gibt zurück ob ein Benutzer authentifiziert werden konnte</div>
 </div></div>
 </div>
 <a id="method_rules"></a><div class="element clickable method public method_rules" data-toggle="collapse" data-target=".method_rules .collapse">
@@ -126,20 +132,20 @@ and password needs to be authenticated.</p></div></div></div>
 <h3>
 <i class="icon-custom icon-property"></i> Properties</h3>
 <a id="property_email"> </a><div class="element clickable property public property_email" data-toggle="collapse" data-target=".property_email .collapse">
-<h2></h2>
-<pre>$email </pre>
+<h2>E-Mail</h2>
+<pre>$email : string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
 </div>
 <a id="property_password"> </a><div class="element clickable property public property_password" data-toggle="collapse" data-target=".property_password .collapse">
-<h2></h2>
-<pre>$password </pre>
+<h2>Passwort</h2>
+<pre>$password : string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
 </div>
 <a id="property_rememberMe"> </a><div class="element clickable property public property_rememberMe" data-toggle="collapse" data-target=".property_rememberMe .collapse">
-<h2></h2>
-<pre>$rememberMe </pre>
+<h2>Anmeldenamen merken</h2>
+<pre>$rememberMe : string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
 </div>
@@ -150,7 +156,7 @@ and password needs to be authenticated.</p></div></div></div>
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a12</a> and<br>
-            generated on 2013-03-17T20:13:13+01:00.<br></footer></div>
+            generated on 2013-03-18T17:39:16+01:00.<br></footer></div>
 </div>
 </body>
 </html>
