@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 16. Mrz 2013 um 18:10
+-- Erstellungszeit: 18. Mrz 2013 um 12:49
 -- Server Version: 5.5.29
 -- PHP-Version: 5.4.6-1ubuntu1.2
 
@@ -28,16 +28,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `appointment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `time` time NOT NULL,
-  `date_id` int(11) NOT NULL,
   `parent_child_id` int(11) NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
+  `dateAndTime_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
-  KEY `fk_appointment_date1_idx` (`date_id`),
   KEY `fk_appointment_parent_child1_idx` (`parent_child_id`),
-  KEY `fk_appointment_user1_idx` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=3 ;
+  KEY `fk_appointment_user1_idx` (`user_id`),
+  KEY `fk_appointment_dateAndTime1` (`dateAndTime_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -47,11 +46,11 @@ CREATE TABLE IF NOT EXISTS `appointment` (
 
 CREATE TABLE IF NOT EXISTS `child` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `lastname` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -67,7 +66,21 @@ CREATE TABLE IF NOT EXISTS `date` (
   `durationPerAppointment` int(3) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `dateAndTime`
+--
+
+CREATE TABLE IF NOT EXISTS `dateAndTime` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `time` time NOT NULL,
+  `date_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_dateTime_date1` (`date_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -80,9 +93,10 @@ CREATE TABLE IF NOT EXISTS `parent_child` (
   `user_id` int(11) unsigned NOT NULL,
   `child_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
   KEY `fk_parent_child_user1_idx` (`user_id`),
   KEY `fk_parent_child_child1_idx` (`child_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -92,11 +106,12 @@ CREATE TABLE IF NOT EXISTS `parent_child` (
 
 CREATE TABLE IF NOT EXISTS `role` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `description` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
+-- --------------------------------------------------------
 --
 -- Daten für Tabelle `role`
 --
@@ -106,9 +121,6 @@ INSERT INTO `role` (`id`, `title`, `description`) VALUES
 (1, 'Verwaltung', NULL),
 (2, 'Lehrer', NULL),
 (3, 'Eltern', NULL);
-
--- --------------------------------------------------------
-
 --
 -- Tabellenstruktur für Tabelle `tan`
 --
@@ -118,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `tan` (
   `used` tinyint(1) NOT NULL,
   PRIMARY KEY (`tan`),
   UNIQUE KEY `tan_UNIQUE` (`tan`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -128,26 +140,22 @@ CREATE TABLE IF NOT EXISTS `tan` (
 
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) CHARACTER SET utf8 NOT NULL,
-  `password` varchar(128) CHARACTER SET utf8 NOT NULL,
-  `activationKey` varchar(128) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  `username` varchar(45) NOT NULL,
+  `password` varchar(128) NOT NULL,
+  `activationKey` varchar(128) NOT NULL DEFAULT '',
   `createtime` int(11) NOT NULL DEFAULT '0',
-  `firstname` varchar(45) CHARACTER SET utf8 NOT NULL,
+  `firstname` varchar(45) NOT NULL,
   `state` int(1) NOT NULL DEFAULT '0',
-  `lastname` varchar(45) CHARACTER SET utf8 NOT NULL,
-  `email` varchar(45) CHARACTER SET utf8 NOT NULL,
-  `title` varchar(15) CHARACTER SET utf8 DEFAULT NULL,
+  `lastname` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `title` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   KEY `status` (`state`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='itle' AUTO_INCREMENT=2 ;
-
---
--- Daten für Tabelle `user`
---
-
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='itle' AUTO_INCREMENT=5 ;
 INSERT INTO `user` (`id`, `username`, `password`, `activationKey`, `createtime`, `firstname`, `state`, `lastname`, `email`, `title`) VALUES
 (1, 'admin@admin.de', 'cd613e9e5557f026ce9f11d91afc2dcca40c30cb608e756d4ad62edc50b1263098c80e161481d1b9a5e5413994072430f007b6d1c4633b0ff92c239c367954e1', 'c99375c5a0aa0267ec9342ac8d33de700ed13b8d', 1362647692, 'admin', 1, 'admin', 'admin@admin.de', NULL);
+
 
 -- --------------------------------------------------------
 
@@ -163,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_user_role_role1_idx` (`role_id`),
   KEY `fk_user_role_user1_idx` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Daten für Tabelle `user_role`
@@ -171,25 +179,26 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 
 INSERT INTO `user_role` (`id`, `role_id`, `user_id`) VALUES
 (0, 0, 1);
-
---
--- Constraints der exportierten Tabellen
---
-
 --
 -- Constraints der Tabelle `appointment`
 --
 ALTER TABLE `appointment`
-  ADD CONSTRAINT `fk_appointment_date1` FOREIGN KEY (`date_id`) REFERENCES `date` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_appointment_parent_child1` FOREIGN KEY (`parent_child_id`) REFERENCES `parent_child` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_appointment_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_appointment_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_appointment_dateAndTime1` FOREIGN KEY (`dateAndTime_id`) REFERENCES `dateAndTime` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints der Tabelle `dateAndTime`
+--
+ALTER TABLE `dateAndTime`
+  ADD CONSTRAINT `fk_dateTime_date1` FOREIGN KEY (`date_id`) REFERENCES `date` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `parent_child`
 --
 ALTER TABLE `parent_child`
-  ADD CONSTRAINT `fk_parent_child_child1` FOREIGN KEY (`child_id`) REFERENCES `child` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_parent_child_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_parent_child_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_parent_child_child1` FOREIGN KEY (`child_id`) REFERENCES `child` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `user_role`
