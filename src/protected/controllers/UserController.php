@@ -98,6 +98,7 @@ class UserController extends Controller {
 
     public function actionDeleteAll() {
         Appointment::model()->deleteAll();
+        DateTime::model()->deleteAll();
         ParentChild::model()->deleteAll();
         Child::model()->deleteAll();
         Date::model()->deleteAll();
