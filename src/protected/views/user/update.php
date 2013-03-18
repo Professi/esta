@@ -25,7 +25,7 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Benutzer erstellen', 'url'=>array('create'), 'visible'=>Yii::app()->user->checkAccess('1')),
-	array('label'=>'Benutzer anzeigen', 'url'=>array('view', 'id'=>$model->id),),
+	array('label'=>'Benutzer anzeigen', 'url'=>array('view', 'id'=>$model->id), 'visible'=>Yii::app()->user->checkAccess('1')),
 	array('label'=>'Benutzer verwalten', 'url'=>array('admin'), 'visible'=>Yii::app()->user->checkAccess('1')),
 );
 ?>

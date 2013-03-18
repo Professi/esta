@@ -26,9 +26,6 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-
-	<?php echo $form->errorSummary($model); ?>
-
 	<div class="row collapse">
             <div class="two columns">
                 <span class="prefix">Datum</span>
