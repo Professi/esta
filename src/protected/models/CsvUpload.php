@@ -1,4 +1,8 @@
 <?php
+/**
+ * Dies ist Formmodel um eine Lehrer CSV Datei zu importieren.
+ * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+ */
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -15,14 +19,19 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class CsvUpload extends CFormModel {
-
+    /** @var file CSV Datei */
     public $file;
+    /** @var string Vorname */
     public $firstname;
+   /** @var string Nachname */
     public $lastname;
+    /** @var string Titel */
     public $title;
+    /** @var string E-Mail Adresse */
     public $email;
 
     /**
+     * Validierungsregeln
      * @return array validation rules for model attributes.
      */
     public function rules() {
@@ -30,7 +39,10 @@ class CsvUpload extends CFormModel {
                 'allowEmpty' => true, 'wrongType' => 'Nur CSV Dateien erlaubt.',
                 'tooLarge' => 'Datei ist zu groß. Die Begrenzung liegt bei 5 MB.'));
     }
-
+/**
+ * Attributlabels
+ * @return array Labels
+ */
     public function attributeLabels() {
         return array('file' => 'CSV Datei hochladen');
     }

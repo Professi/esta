@@ -38,6 +38,7 @@ class Role extends CActiveRecord
 	}
 
 	/**
+         * Tabellenname
 	 * @return string the associated database table name
 	 */
 	public function tableName()
@@ -46,6 +47,7 @@ class Role extends CActiveRecord
 	}
 
 	/**
+         * Regeln fuer die Validierung
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -62,6 +64,7 @@ class Role extends CActiveRecord
 	}
 
 	/**
+         * Relationen mit anderen Tabellen/Models
 	 * @return array relational rules.
 	 */
 	public function relations()
@@ -74,6 +77,7 @@ class Role extends CActiveRecord
 	}
 
 	/**
+         * Attributlabels
 	 * @return array customized attribute labels (name=>label)
 	 */
 	public function attributeLabels()

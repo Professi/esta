@@ -1,4 +1,16 @@
 <?php
+/**
+ * This is the model class for table "user_role".
+ *
+ * The followings are the available columns in table 'user_role':
+ * @property integer $id
+ * @property string $role_id
+ * @property string $user_id
+ *
+ * The followings are the available model relations:
+ * @property Role $role
+ * @property User $user
+ */
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -14,18 +26,6 @@
  * You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/**
- * This is the model class for table "user_role".
- *
- * The followings are the available columns in table 'user_role':
- * @property integer $id
- * @property string $role_id
- * @property string $user_id
- *
- * The followings are the available model relations:
- * @property Role $role
- * @property User $user
- */
 class UserRole extends CActiveRecord
 {
 	/**
@@ -39,6 +39,7 @@ class UserRole extends CActiveRecord
 	}
 
 	/**
+         * Tabellenname in der Datenbank
 	 * @return string the associated database table name
 	 */
 	public function tableName()
@@ -47,6 +48,7 @@ class UserRole extends CActiveRecord
 	}
 
 	/**
+         * Regeln für Validierung
 	 * @return array validation rules for model attributes.
 	 */
 	public function rules()
@@ -63,6 +65,7 @@ class UserRole extends CActiveRecord
 	}
 
 	/**
+         * Relationen mit anderen Models / DB Tabellen
 	 * @return array relational rules.
 	 */
 	public function relations()
@@ -76,6 +79,7 @@ class UserRole extends CActiveRecord
 	}
 
 	/**
+         * Attributlabels
 	 * @return array customized attribute labels (name=>label)
 	 */
 	public function attributeLabels()
@@ -93,15 +97,10 @@ class UserRole extends CActiveRecord
 	 */
 	public function search()
 	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
-
 		$criteria=new CDbCriteria;
-
 		$criteria->compare('id',$this->id);
 		$criteria->compare('role_id',$this->role_id,true);
 		$criteria->compare('user_id',$this->user_id,true);
-
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

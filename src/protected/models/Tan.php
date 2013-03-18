@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * This is the model class for table "tan".
+ *
+ * The followings are the available columns in table 'tan':
+ * @property integer $tan
+ * @property boolean $used
+ */
+
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -15,38 +23,10 @@
  * You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-/**
- * This is the model class for table "tan".
- *
- * The followings are the available columns in table 'tan':
- * @property integer $tan
- * @property boolean $used
- */
 class Tan extends CActiveRecord {
 
+    /** @var integer Anzahl der TANs die generiert werden sollen */
     public $tan_count = 0;
-    public $id = 0;
-
-    public function getTanCount() {
-        return $this->tan_count;
-    }
-
-    public function getId() {
-        return $this->id;
-    }
-
-    public function setTanCount($tanCount) {
-        if (is_int($tanCount)) {
-            $this->tan_count = $tanCount;
-        }
-    }
-
-    public function setId($id) {
-        if (is_int($id)) {
-            $this->id = $id;
-        }
-    }
 
     /**
      * Returns the static model of the specified AR class.
@@ -58,6 +38,7 @@ class Tan extends CActiveRecord {
     }
 
     /**
+     * Tabellenname in der Datenbank
      * @return string the associated database table name
      */
     public function tableName() {
@@ -65,31 +46,29 @@ class Tan extends CActiveRecord {
     }
 
     /**
+     * Validierungsregeln
      * @return array validation rules for model attributes.
      */
     public function rules() {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            // array('tan_count', 'required'),
             array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen']),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
             array('tan, used', 'safe', 'on' => 'search'),
         );
     }
 
     /**
+     * Keine Relationen, liefert ein leeres Array
      * @return array relational rules.
      */
     public function relations() {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
         );
     }
 
     /**
+     * Attributlabels
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels() {
@@ -100,10 +79,11 @@ class Tan extends CActiveRecord {
         );
     }
 
+    /**
+     * Individuelle Suchcriteria für View
+     * @return \CActiveDataProvider 
+     */
     public function search() {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
         $criteria = new CDbCriteria;
         $criteria->compare('tan', $this->tan, true);
         return new CActiveDataProvider($this, array(

@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Formmodel für die Vergabe eines neuen Passwortes
+ * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+ */
+
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -19,17 +25,19 @@
  * and open the template in the editor.
  */
 
-/**
- * Description of NewPw
- *
- * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
- */
 class NewPw extends CFormModel {
 
+    /** @var string Passwort */
     public $password;
+    /** @var string Passwortwiederholung */
     public $password_repeat;
+    /** @var string Aktivierungsschlüssel des Benutzers standardmäßig sha1 */
     public $activationKey;
 
+    /**
+     * Regeln fuer die Validierung
+     * @return array Regeln
+     */
     public function rules() {
         return array(
             array('password','required'),

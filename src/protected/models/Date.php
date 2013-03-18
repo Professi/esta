@@ -55,9 +55,9 @@ class Date extends CActiveRecord {
         return array(
             array('date, begin, end, durationPerAppointment', 'required'),
             array('durationPerAppointment', 'numerical', 'integerOnly' => true),
-            array('date', 'date', 'format'=>'dd.MM.yyyy'),
-            array('begin,end','date', 'format'=>'H:m'),
-            array('durationPerAppointment','date','format'=>'m'),
+            array('date', 'date', 'format' => 'dd.MM.yyyy'),
+            array('begin,end', 'date', 'format' => 'H:m'),
+            array('durationPerAppointment', 'date', 'format' => 'm'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, date, begin, end, durationPerAppointment', 'safe', 'on' => 'search'),
@@ -113,38 +113,46 @@ class Date extends CActiveRecord {
      * Prüft nach der erfolgreichen Validierung ob das Ende vor dem Anfang liegt.
      * @return boolean
      */
-    public function beforeValidate() {
-        $rc = parent::afterValidate();
-        if ($rc) {
-            if (strtotime($this->end) <= strtotime($this->begin)) {
-                $rc = false;
-                Yii::app()->user->setFlash('failMsg', 'Das Ende darf nicht vor dem Beginn liegen.');
-            } else if (!is_int($this->end - $this->begin / $this->durationPerAppointment)) {
-                $rc = false;
-                Yii::app()->user->setFlash('failMsg', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.');
-            }
+    public function afterValidate() {
+        if (strtotime($this->end) <= strtotime($this->begin)) {
+            $rc = false;
+            $this->addError('end', 'Das Ende darf nicht vor dem Beginn liegen.');
         }
-        return $rc;
+        if (time() >= strtotime($this->date)) {
+            $rc = false;
+            Yii::app()->user->setFlash('failMsg', 'Datum liegt in der Vergangenheit');
+            $this->addError('date', 'Datum liegt in der Vergangenheit.');
+        }
+        else
+            if (!is_int ((strtotime ($this->end)) - (strtotime ($this->begin))/60 / $this->durationPerAppointment)) {
+            $rc = false;
+            $this->addError('begin', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.');
+        }
+        return parent::afterValidate();
     }
 
     public function afterSave() {
-        $diff = (strtotime($this->end) - strtotime($this->begin))/60;
+        $diff = (strtotime($this->end) - strtotime($this->begin)) / 60;
         $i = 0;
         while ($diff >= $this->durationPerAppointment) {
-           $datetime =  new DateAndTime;
-           $datetime->date_id = $this->id;
-           $datetime->time = date("H:i",(strtotime($this->begin) + ($this->durationPerAppointment * $i)*60));
-           ++$i;
-           $diff -= $this->durationPerAppointment;
-           $datetime->save();
-           
+            $datetime = new DateAndTime;
+            $datetime->date_id = $this->id;
+            $datetime->time = date("H:i", (strtotime($this->begin) + ($this->durationPerAppointment * $i) * 60));
+            ++$i;
+            $diff -= $this->durationPerAppointment;
+            $datetime->save();
         }
         return parent::afterSave();
     }
-    
+
     public function beforeDelete() {
-        DateAndTime::model()->deleteAllByAttributes(array('date_id'=>  $this->id));
+        DateAndTime::model()->deleteAllByAttributes(array('date_id' => $this->id));
         return parent::beforeDelete();
+    }
+
+    public function beforeSave() {
+        $this->date = date('Y-m-d', strtotime($this->date));
+        return parent::beforeSave();
     }
 
 }

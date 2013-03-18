@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Formmodel um einen neuen Aktivierungslink zum Passwort zurücksetzen anzufordern
+ * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+ */
+
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -14,38 +20,37 @@
  * You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class ChangePwd extends CFormModel
-{
-    public $email;
-    public $verifyCode;
-    
-    	/**
-	 * Declares the validation rules.
-	 */
-	public function rules()
-	{
-		return array(
-			// name, email, subject and body are required
-			array('email','required'),
-			// email has to be a valid email address
-			array('email', 'email'),
-			// verifyCode needs to be entered correctly
-			array('verifyCode', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements()),
-		);
-	}
+class ChangePwd extends CFormModel {
 
-	/**
-	 * Declares customized attribute labels.
-	 * If not declared here, an attribute would have a label that is
-	 * the same as its name with the first letter in upper case.
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'verifyCode'=>'Sicherheitscode',
-                        'email'=>'E-Mail',
-		);
-	}
-    
+    /** @var string E-Mail Adresse */
+    public $email;
+
+    /** var string Sicherheitscode */
+    public $verifyCode;
+
+    /**
+     * Declares the validation rules.
+     */
+    public function rules() {
+        return array(
+            array('email', 'required'),
+            array('email', 'email'),
+            array('verifyCode', 'captcha', 'allowEmpty' => !CCaptcha::checkRequirements()),
+        );
+    }
+
+    /**
+     * Declares customized attribute labels.
+     * If not declared here, an attribute would have a label that is
+     * the same as its name with the first letter in upper case.
+     */
+    public function attributeLabels() {
+        return array(
+            'verifyCode' => 'Sicherheitscode',
+            'email' => 'E-Mail',
+        );
+    }
+
 }
+
 ?>
