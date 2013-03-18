@@ -49,7 +49,7 @@ $this->widget('zii.widgets.CDetailView', array(
     ),
 ));
 ?>
-<?php if (Yii::app()->user->checkAccess('0')) { // && $_GET['id'] == Yii::App()->user->getId() ?> 
+<?php if (Yii::app()->user->checkAccess('0') && empty($_GET['id'])) { ?> 
 <fieldset class="text-center">
     <p>Mit dem Dr&uuml;cken dieses Knopfes werden alle Daten aus der Datenbank gel&ouml;scht. Bet&auml;tigen Sie ihn nur wenn Sie sich absolut sicher sind!</p>
     <p>Nur die Admin- und Verwaltungsbenutzer bleiben bestehen</p>

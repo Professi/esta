@@ -41,8 +41,8 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
-		'user_id',
-		'child_id',
+		array ('name' => 'user_id', 'value' => $model->user->firstname." ".$model->user->lastname),
+		array ('name' => 'child_id', 'value' => $model->child->firstname." ".$model->child->lastname),
 	),
 )); ?>
     </div>

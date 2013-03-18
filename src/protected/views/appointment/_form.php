@@ -47,7 +47,7 @@
 		<?php echo $form->error($model,'dateTime_id'); ?>
             </div>
             <div class="two columns">
-                <span class="postfix">YYYY:MM:DD</span>
+                <span class="postfix">YYYY-MM-DD</span>
             </div>
 	</div>
 
