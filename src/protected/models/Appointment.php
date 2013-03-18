@@ -5,7 +5,6 @@
  *
  * The followings are the available columns in table 'appointment':
  * @property integer $id
- * @property string $time
  * @property integer $parent_child_id
  * @property string $user_id
  * @property integer $dateTime_id
@@ -55,12 +54,12 @@ class Appointment extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('time, dateTime_id, parent_child_id, user_id', 'required'),
+            array('dateTime_id, parent_child_id, user_id', 'required'),
             array('dateTime_id, parent_child_id', 'numerical', 'integerOnly' => true),
             array('user_id', 'length', 'max' => 11),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, time, dateTime_id, parent_child_id, user_id', 'safe', 'on' => 'search'),
+            array('id, dateTime_id, parent_child_id, user_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -85,7 +84,6 @@ class Appointment extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'time' => 'Zeit',
 			'parent_child_id' => 'Eltern-Kind',
 			'user_id' => 'Lehrer',
 			'dateTime_id' => 'Datum',
@@ -103,7 +101,6 @@ class Appointment extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('time',$this->time,true);
 		$criteria->compare('parent_child_id',$this->parent_child_id);
 		$criteria->compare('user_id',$this->user_id,true);
 		$criteria->compare('dateTime_id',$this->dateTime_id);
