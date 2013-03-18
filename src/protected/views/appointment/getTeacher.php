@@ -58,9 +58,9 @@
                         <a href="index.php?r=appointment/getTeacher&letter=x" class="tiny teacher button">X</a>
                         <a href="index.php?r=appointment/getTeacher&letter=y" class="tiny teacher button">Y</a>
                         <a href="index.php?r=appointment/getTeacher&letter=z" class="tiny teacher button">Z</a>
-                        <a href="index.php?r=appointment/getTeacher&letter=ae" class="tiny teacher button">&Auml;</a>
-                        <a href="index.php?r=appointment/getTeacher&letter=oe" class="tiny teacher button">&Ouml</a>
-                        <a href="index.php?r=appointment/getTeacher&letter=ue" class="tiny teacher button">&Uuml;</a>
+                        <a href="index.php?r=appointment/getTeacher&letter=ü" class="tiny teacher button">&Auml;</a>
+                        <a href="index.php?r=appointment/getTeacher&letter=ö" class="tiny teacher button">&Ouml</a>
+                        <a href="index.php?r=appointment/getTeacher&letter=ä" class="tiny teacher button">&Uuml;</a>
                         <a href="index.php?r=appointment/getTeacher&letter=" class="tiny teacher button">*</a>
                     </div>
                     <div class="show-for-small" style="line-height:2.5em;">

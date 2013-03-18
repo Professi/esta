@@ -176,16 +176,9 @@ class User extends CActiveRecord {
      * Erstellt CActiveDataProvider mit CDbCriteria mit Suche nach Lehrerbenutzern 
      */
     public function searchTeacher() {
-        $criteria = new CDbCriteria;
-        $match = addcslashes($this->lastname, '%_');
-        $criteria->addCondition('lastname LIKE :match');
-        $criteria->params = array(':match' => "$match%");
-        $criteria->compare('state', $this->state, true);
-        $criteria->with = array('userRoles');
-        $criteria->select = '*';
-        $criteria->addCondition('userRoles.role_id="2"');
+        $this->role = 2;
         return new CActiveDataProvider($this, array(
-            'criteria' => $criteria,
+            'criteria' => self::searchCriteriaTeacherAutoComplete(),
             'pagination' => array('pageSize' => 20),
         ));
     }
@@ -198,7 +191,7 @@ class User extends CActiveRecord {
      */
     public function searchCriteriaTeacherAutoComplete() {
         $criteria = new CDbCriteria;
-        $match = addcslashes($this->lastname, '%_');
+        $match = addcslashes(ucfirst($this->lastname), '%_');
         $criteria->addCondition('lastname LIKE :match');
         $criteria->params = array(':match' => "$match%");
         $criteria->compare('state', $this->state, true);
@@ -302,6 +295,8 @@ class User extends CActiveRecord {
             }
             $this->activationKey = self::generateActivationKey();
             $this->username = $this->email;
+            $this->lastname = ucfirst($this->lastname);
+            $this->firstname = ucfirst($this->firstname);
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
         } else if (!$this->isNewRecord && $this->password == User::model()->findByAttributes(array('id' => $this->id, 'password' => $this->password))) {
             

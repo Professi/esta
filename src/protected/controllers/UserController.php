@@ -78,22 +78,18 @@ class UserController extends Controller {
      * @author Christian Ehringfeld <c.ehringfeld@t-onlined.e>
      * @todo Sinnvolle JSON Ausgabe
      */
-    public function actionSearch($role,$term) {
+    public function actionSearch($role, $term) {
         $dataProvider = new User();
         $dataProvider->unsetAttributes();
         $dataProvider->lastname = $term;
-        if(Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()) {
+        if (!Yii::app()->user->isAdmin()) {
             $dataProvider->role = 2;
-        }
-        else if(is_int($role) && $role < 4 && $role >= 0) {
+        } else if (Yii::app()->isAdmin()) {
             $dataProvider->role = $role;
-        } else {
-        $dataProvider->role = 2;
         }
         $criteria = $dataProvider->searchCriteriaTeacherAutoComplete();
         $a_rc = array();
         $a_data = User::model()->findAll($criteria);
-        print_r($a_data);
         foreach ($a_data as $record) {
             $a_rc[] = array('label' => $record->title . " "
                 . $record->firstname . " " . $record->lastname
@@ -114,7 +110,7 @@ class UserController extends Controller {
             $record->delete();
         }
         Yii::app()->user->setFlash('success', 'Alle Daten gelöscht, einzig die Verwaltungs- und Administrationskonten wurden nicht gelöscht') .
-        $this->redirect('index.php?r=user/account');
+                $this->redirect('index.php?r=user/account');
     }
 
     /**
@@ -158,8 +154,8 @@ class UserController extends Controller {
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * Falls die CSV Datei hochgeladen wurde, wird diese geparsed und sofern eine E-Mail Adresse vorhanden ist eingefügt
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * 
      */
     public function actionImportTeachers() {

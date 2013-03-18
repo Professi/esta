@@ -102,10 +102,10 @@ class AppointmentController extends Controller {
         $model->state = 1;
         if (isset($_GET['letter']) && strlen($_GET['letter']) <= 2) {
             $search = array('ae', 'oe', 'ue');
-            $replace = array('a', 'o', 'u');
+            $replace = array('Ä', 'Ö', 'Ü');
             $letter = str_replace($search, $replace, $_GET['letter']);
             print_r($letter);
-            if (strlen($letter) == 1) {
+            if (strlen($letter) <= 2) {
                 $model->lastname = $letter;
             }
         }
