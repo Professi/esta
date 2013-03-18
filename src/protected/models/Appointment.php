@@ -54,12 +54,12 @@ class Appointment extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('dateTime_id, parent_child_id, user_id', 'required'),
-            array('dateTime_id, parent_child_id', 'numerical', 'integerOnly' => true),
+            array('dateAndTime_id, parent_child_id, user_id', 'required'),
+            array('dateAndTime_id, parent_child_id', 'numerical', 'integerOnly' => true),
             array('user_id', 'length', 'max' => 11),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, dateTime_id, parent_child_id, user_id', 'safe', 'on' => 'search'),
+            array('id, dateAndTime_id, parent_child_id, user_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -71,7 +71,7 @@ class Appointment extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'dateTime' => array(self::BELONGS_TO, 'DateTime', 'dateTime_id'),
+			'dateAndTime' => array(self::BELONGS_TO, 'DateAndTime', 'dateAndTime_id'),
 			'parentChild' => array(self::BELONGS_TO, 'ParentChild', 'parent_child_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 		);
@@ -86,7 +86,7 @@ class Appointment extends CActiveRecord
 			'id' => 'ID',
 			'parent_child_id' => 'Eltern-Kind',
 			'user_id' => 'Lehrer',
-			'dateTime_id' => 'Datum',
+			'dateAndTime_id' => 'Datum',
 		);
 	}
 	/**
@@ -103,7 +103,7 @@ class Appointment extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('parent_child_id',$this->parent_child_id);
 		$criteria->compare('user_id',$this->user_id,true);
-		$criteria->compare('dateTime_id',$this->dateTime_id);
+		$criteria->compare('dateAndTime_id',$this->dateAndTime_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

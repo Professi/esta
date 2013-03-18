@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "dateTime".
+ * This is the model class for table "dateAndTime".
  *
- * The followings are the available columns in table 'dateTime':
+ * The followings are the available columns in table 'dateAndTime':
  * @property integer $id
  * @property string $time
  * @property integer $date_id
@@ -12,7 +12,7 @@
  * @property Appointment[] $appointments
  * @property Date $date
  */
-class DateTime extends CActiveRecord
+class DateAndTime extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
@@ -29,7 +29,7 @@ class DateTime extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'dateTime';
+		return 'dateAndTime';
 	}
 
 	/**
@@ -57,7 +57,7 @@ class DateTime extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'appointments' => array(self::HAS_MANY, 'Appointment', 'dateTime_id'),
+			'appointments' => array(self::HAS_MANY, 'Appointment', 'dateAndTime_id'),
 			'date' => array(self::BELONGS_TO, 'Date', 'date_id'),
 		);
 	}

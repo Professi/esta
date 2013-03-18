@@ -58,14 +58,14 @@ class UserController extends Controller {
                 'actions' => array('create', 'activate', 'ChangePwd', 'captcha', 'NewPw'),
                 'users' => array('?'),
             ),
+            array('allow',
+                'roles' => array('0')),
             array('deny',
                 'actions' => array('deleteAll'),
                 'roles' => array('1')),
             array('allow',
                 'roles' => array('1'),
             ),
-            array('allow',
-                'roles' => array('0')),
             array('deny', // deny all users
                 'users' => array('*'),
             ),
@@ -98,7 +98,7 @@ class UserController extends Controller {
 
     public function actionDeleteAll() {
         Appointment::model()->deleteAll();
-        DateTime::model()->deleteAll();
+        DateAndTime::model()->deleteAll();
         ParentChild::model()->deleteAll();
         Child::model()->deleteAll();
         Date::model()->deleteAll();
@@ -108,7 +108,7 @@ class UserController extends Controller {
             $record->delete();
         }
         Yii::app()->user->setFlash('success', 'Alle Daten gelöscht, einzig die Verwaltungs- und Administrationskonten wurden nicht gelöscht') .
-                $this->redirect('index.php?r=user/account');
+        $this->redirect('index.php?r=user/account');
     }
 
     /**
