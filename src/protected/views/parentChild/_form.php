@@ -1,5 +1,5 @@
 <?php
-/**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,23 +37,17 @@ if (Yii::app()->user->checkAccess(1)) {
         </div>
         <div class="ten columns">
             <?php
-                            $this->widget('zii.widgets.jui.CJuiAutoComplete',array(
-                                'name'=>'user_id',
-                                //'source'=>$dataProvider,
-                                // additional javascript options for the autocomplete plugin
-                                'sourceUrl'=>'index.php?r=user/search&role=3',
-                                'options'=>array(
-                                    'minLength'=>'2',
-                                ),
-                                'htmlOptions'=>array(
-                                    //'style'=>'height:20px;',
-                                ),
-                            ));
-                            ?>
-            
-            
-    <?php //echo $form->textField($model, 'user_id', array('size' => 11, 'maxlength' => 11)); ?>
-    <?php echo $form->error($model, 'user_id'); ?>
+            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                'name' => 'user_id',
+                'sourceUrl' => 'index.php?r=user/search&role=3',
+                'options' => array(
+                    'minLength' => '2',
+                ),
+                'htmlOptions' => array(
+                ),
+            ));
+            ?>
+            <?php echo $form->error($model, 'user_id'); ?>
         </div>
     </div>
 <? } ?>
@@ -62,8 +56,8 @@ if (Yii::app()->user->checkAccess(1)) {
         <span class="prefix">Vorname</span>
     </div>
     <div class="ten columns mobile-input">
-<?php echo $form->textField($model, 'childFirstName'); ?>
-<?php echo $form->error($model, 'childFirstName'); ?>
+        <?php echo $form->textField($model, 'childFirstName'); ?>
+        <?php echo $form->error($model, 'childFirstName'); ?>
     </div>
 </div>
 
@@ -72,8 +66,8 @@ if (Yii::app()->user->checkAccess(1)) {
         <span class="prefix">Nachname</span>
     </div>
     <div class="ten columns mobile-input">
-<?php echo $form->textField($model, 'childLastName'); ?>
-<?php echo $form->error($model, 'childLastName'); ?>
+        <?php echo $form->textField($model, 'childLastName'); ?>
+        <?php echo $form->error($model, 'childLastName'); ?>
     </div>
 </div>            
 <br>

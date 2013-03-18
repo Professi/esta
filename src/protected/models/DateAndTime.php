@@ -80,17 +80,28 @@ class DateAndTime extends CActiveRecord
 	 */
 	public function search()
 	{
-		// Warning: Please modify the following code to remove attributes that
-		// should not be searched.
-
 		$criteria=new CDbCriteria;
-
 		$criteria->compare('id',$this->id);
 		$criteria->compare('time',$this->time,true);
 		$criteria->compare('date_id',$this->date_id);
-
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
+        /**
+         * Gibt Suchkriterien von DateAndTime zurück
+         * @return CDbCriteria Suchkriterien für Autocomplete
+         * 
+         */
+        public function searchDateAndTime() {
+            $criteria = new CDbCriteria;
+                    $match = addcslashes($this->time, '%_');
+        $criteria->addCondition('time LIKE :match');
+        $criteria->params = array(':match' => "$match%");
+        $criteria->with = array('date');
+        $criteria->select = '*';
+        $criteria->limit = 10;
+           return $criteria;
+        }
+        
 }

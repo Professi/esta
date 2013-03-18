@@ -259,9 +259,9 @@ class User extends CActiveRecord {
     }
 
     /**
+     * löscht den UserRole Eintrag + ElternKind Verknüpfung + Kinder
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Rückgabewert der Elternklassemethoden
-     * löscht den UserRole Eintrag + ElternKind Verknüpfung + Kinder
      */
     public function beforeDelete() {
         $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->id));

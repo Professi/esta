@@ -156,4 +156,20 @@ class ParentChild extends CActiveRecord {
         ));
     }
 
+    /**
+     * Gibt Suchkriterien von ParentChild zurück
+     * @return CDbCriteria Suchkriterien für Autocomplete
+     * @param string $lastname Nachname eines Erziehungsberechtigten
+     */
+    public function searchParentChild($lastname) {
+        $criteria = new CDbCriteria;
+        $match = addcslashes(ucfirst($lastname), '%_');
+        $criteria->addCondition('user.lastname LIKE :match');
+        $criteria->params = array(':match' => "$match%");
+        $criteria->with = array('user', 'child');
+        $criteria->select = '*';
+        $criteria->limit = 10;
+        return $criteria;
+    }
+
 }

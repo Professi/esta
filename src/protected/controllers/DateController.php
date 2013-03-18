@@ -1,8 +1,10 @@
 <?php
+
 /*
  * Dies ist die Controller Klasse vom Model Date.
  * 
  */
+
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -43,13 +45,36 @@ class DateController extends Controller {
      */
     public function accessRules() {
         return array(
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
+            array('allow',
+                'actions' => array('search'),
+                'roles' => array(1)),
+            array('allow',
                 'roles' => array(0),
             ),
-            array('deny', // deny all users
+            array('deny',
                 'users' => array('*'),
             ),
         );
+    }
+
+    /**
+     * Suchaction für das Autocomplete für die Verwaltung um Termine einzutragen
+     * @param string $term
+     * 
+     */
+    public function actionSearch($term) {
+        $dataProvider = new DateAndTime();
+        $dataProvider->unsetAttributes();
+        $dataProvider->time = $term;
+        $criteria = $dataProvider->searchDateAndTime();
+        $a_rc = array();
+        $a_data = DateAndTime::model()->findAll($criteria);
+        foreach ($a_data as $record) {
+            $a_rc[] = array('label' => date('d.m.Y', strtotime($record->date->date)) . " "
+                . date('H:i', strtotime($record->time))
+                , 'value' => $record->id);
+        }
+        echo CJSON::encode($a_rc);
     }
 
     /**

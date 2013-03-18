@@ -52,6 +52,19 @@ class ParentChildController extends Controller {
         );
     }
 
+    public function actionSearch($term) {
+        $dataProvider = new ParentChild();
+        $dataProvider->unsetAttributes();
+        $criteria = $dataProvider->searchParentChild($term);
+        $a_rc = array();
+        $a_data = ParentChild::model()->findAll($criteria);
+        foreach ($a_data as $record) {
+            $a_rc[] = array('label' => $record->user->firstname . " " . $record->user->lastname .
+                ";Kind: " . $record->child->firstname . " " . $record->child->lastname, 'value' => $record->id);
+        }
+        echo CJSON::encode($a_rc);
+    }
+
     /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
@@ -113,7 +126,7 @@ class ParentChildController extends Controller {
     public function actionUpdate($id) {
         if (self::checkUser($id)) {
             $model = $this->loadModel($id);
-            $model->childFirstName =  $model->child->firstname;
+            $model->childFirstName = $model->child->firstname;
             $model->childLastName = $model->child->lastname;
             if (isset($_POST['ParentChild'])) {
                 $model->attributes = $_POST['ParentChild'];

@@ -1,4 +1,7 @@
 <?php
+/* @var $this AppointmentController */
+/* @var $model Appointment */
+/* @var $form CActiveForm */
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -14,9 +17,6 @@
  * You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this AppointmentController */
-/* @var $model Appointment */
-/* @var $form CActiveForm */
 ?>
 
 
@@ -29,7 +29,17 @@
                 <span class="prefix">DatumUndZeit-ID</span>
             </div>
             <div class="ten columns">
-		<?php echo $form->textField($model,'dateAndTime_id'); ?>
+		            <?php
+                            $this->widget('zii.widgets.jui.CJuiAutoComplete',array(
+                                'name'=>'dateAndTime_id',
+                                'sourceUrl'=>'index.php?r=date/search',
+                                'options'=>array(
+                                    'minLength'=>'2',
+                                ),
+                                'htmlOptions'=>array(
+                                ),
+                            ));
+                            ?>
 		<?php echo $form->error($model,'dateAndTime_id'); ?>
             </div>
 	</div>
@@ -39,7 +49,17 @@
                 <span class="prefix">Verknüpfungs-ID</span>
             </div>
             <div class="ten columns">
-		<?php echo $form->textField($model,'parent_child_id'); ?>
+		            <?php
+            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                'name' => 'parent_child_id',
+                'sourceUrl' => 'index.php?r=ParentChild/search',
+                'options' => array(
+                    'minLength' => '2',
+                ),
+                'htmlOptions' => array(
+                ),
+            ));
+            ?>
 		<?php echo $form->error($model,'parent_child_id'); ?>
             </div>
 	</div>
@@ -50,7 +70,17 @@
             </div>
             <div class="ten columns">
                 
-		<?php echo $form->textField($model,'user_id',array('size'=>11,'maxlength'=>11,)); ?>
+		            <?php
+                            $this->widget('zii.widgets.jui.CJuiAutoComplete',array(
+                                'name'=>'user_id',
+                                'sourceUrl'=>'index.php?r=user/search&role=2',
+                                'options'=>array(
+                                    'minLength'=>'2',
+                                ),
+                                'htmlOptions'=>array(
+                                ),
+                            ));
+                            ?>
 		<?php echo $form->error($model,'user_id'); ?>
             </div>
 	</div>
