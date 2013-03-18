@@ -1,5 +1,17 @@
 <?php
-/**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/**
+ * This is the model class for table "date".
+ *
+ * The followings are the available columns in table 'date':
+ * @property integer $id
+ * @property string $date
+ * @property string $begin
+ * @property string $end
+ * @property integer $durationPerAppointment
+ * The followings are the available model relations:
+ * @property Appointment[] $appointments
+ */
+ /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,19 +26,7 @@
  * You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/**
- * This is the model class for table "date".
- *
- * The followings are the available columns in table 'date':
- * @property integer $id
- * @property string $date
- * @property string $begin
- * @property string $end
- * @property integer $durationPerAppointment
- *
- * The followings are the available model relations:
- * @property Appointment[] $appointments
- */
+
 class Date extends CActiveRecord
 {
 	/**
