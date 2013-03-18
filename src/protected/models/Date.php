@@ -55,6 +55,9 @@ class Date extends CActiveRecord {
         return array(
             array('date, begin, end, durationPerAppointment', 'required'),
             array('durationPerAppointment', 'numerical', 'integerOnly' => true),
+            array('date', 'date', 'format'=>'dd.MM.yyyy'),
+            array('begin,end','date', 'format'=>'H:m'),
+            array('durationPerAppointment','date','format'=>'m'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, date, begin, end, durationPerAppointment', 'safe', 'on' => 'search'),
@@ -110,15 +113,15 @@ class Date extends CActiveRecord {
      * Prüft nach der erfolgreichen Validierung ob das Ende vor dem Anfang liegt.
      * @return boolean
      */
-    public function afterValidate() {
+    public function beforeValidate() {
         $rc = parent::afterValidate();
         if ($rc) {
             if (strtotime($this->end) <= strtotime($this->begin)) {
                 $rc = false;
-                $this->addError('end', 'Das Ende darf nicht vor dem Beginn liegen.');
+                Yii::app()->user->setFlash('failMsg', 'Das Ende darf nicht vor dem Beginn liegen.');
             } else if (!is_int($this->end - $this->begin / $this->durationPerAppointment)) {
                 $rc = false;
-                $this->addError('begin', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.');
+                Yii::app()->user->setFlash('failMsg', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.');
             }
         }
         return $rc;
@@ -137,6 +140,11 @@ class Date extends CActiveRecord {
            
         }
         return parent::afterSave();
+    }
+    
+    public function beforeDelete() {
+        DateAndTime::model()->deleteAllByAttributes(array('date_id'=>  $this->id));
+        return parent::beforeDelete();
     }
 
 }
