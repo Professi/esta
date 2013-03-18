@@ -93,7 +93,11 @@ class ParentChildController extends Controller {
                 } else {
                     Yii::app()->user->setFlash('failMsg', 'Sie haben die Anzahl der maximal eintragbaren Kinder überschritten.');
                 }
-                $this->redirect(array('index'));
+                if (Yii::app()->user->checkAccess('1')) {
+                    $this->redirect(array('admin'));
+                } else {
+                    $this->redirect(array('index'));
+                }
             }
         }
         $this->render('create', array(
@@ -109,6 +113,8 @@ class ParentChildController extends Controller {
     public function actionUpdate($id) {
         if (self::checkUser($id)) {
             $model = $this->loadModel($id);
+            $model->childFirstName =  $model->child->firstname;
+            $model->childLastName = $model->child->lastname;
             if (isset($_POST['ParentChild'])) {
                 $model->attributes = $_POST['ParentChild'];
                 if ($model->save())

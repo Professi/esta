@@ -35,7 +35,7 @@
 		<?php echo $form->error($model,'date'); ?>
             </div>
             <div class="two columns">
-                <span class="postfix">YYYY-MM-DD</span>
+                <span class="postfix">TT.MM.JJJJ</span>
             </div>
 	</div>
 

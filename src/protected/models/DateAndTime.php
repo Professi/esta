@@ -69,8 +69,8 @@ class DateAndTime extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'time' => 'Time',
-			'date_id' => 'Date',
+			'time' => 'Zeit',
+			'date_id' => 'Datum',
 		);
 	}
 

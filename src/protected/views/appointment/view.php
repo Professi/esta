@@ -43,12 +43,12 @@ $this->widget('zii.widgets.CDetailView', array(
     'data' => $model,
     'attributes' => array(
         'id',
-        'time',
-        'date_id',
+        array('name' => 'time', 'value' => $model->dateAndTime->time),
+        array('name' => 'date_id', 'value' => $model->dateAndTime->date->date),
         //	'parent_child_id',
         array('name' => 'Schüler', 'value' => $model->parentChild->child->firstname . " " . $model->parentChild->child->lastname),
         array('name' => 'Erziehungsberechtigte/r', 'value' => $model->parentChild->user->firstname . " " . $model->parentChild->user->lastname),
-        array('name' => 'Lehrer', 'value' => $model->user->firstname . " " . $model->user->lastname),
+        array('name' => 'Lehrer', 'value' => $model->user->title." ".$model->user->firstname." ".$model->user->lastname),
     //array('label'=>'Status','value'=>$model->getStateName()),
     ),
 ));

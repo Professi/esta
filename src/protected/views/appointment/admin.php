@@ -54,11 +54,10 @@ $('.search-form form').submit(function(){
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
-		'time',
-		array(  'name' => 'date_id', 'value' => '$data->date->date' ),
+                array('name' => 'dateAndTime_id', 'value' => '$data->dateAndTime->date->date." - ".$data->dateAndTime->time'),
 		array(  'name' => 'parent_child_id', 
                         'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'),
-		array(  'name' => 'user_id', 'value' => '$data->user->lastname'),
+		array(  'name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
 		array(
 			'class'=>'CustomButtonColumn',
 		),

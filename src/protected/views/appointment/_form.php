@@ -24,30 +24,13 @@
 	'id'=>'appointment-form',
 	'enableAjaxValidation'=>false,
 )); ?>
-
 	<div class="row collapse">
             <div class="two columns">
-                <span class="prefix">Zeit</span>
+                <span class="prefix">DatumUndZeit-ID</span>
             </div>
-            <div class="eight columns">
-		<?php echo $form->textField($model,'time'); ?>
-		<?php echo $form->error($model,'time'); ?>
-            </div>
-            <div class="two columns">
-                <span class="postfix">HH:MM</span>
-            </div>
-	</div>
-
-	<div class="row collapse">
-            <div class="two columns">
-                <span class="prefix">Datum</span>
-            </div>
-            <div class="eight columns">
-		<?php echo $form->textField($model,'dateTime_id'); ?>
-		<?php echo $form->error($model,'dateTime_id'); ?>
-            </div>
-            <div class="two columns">
-                <span class="postfix">YYYY-MM-DD</span>
+            <div class="ten columns">
+		<?php echo $form->textField($model,'dateAndTime_id'); ?>
+		<?php echo $form->error($model,'dateAndTime_id'); ?>
             </div>
 	</div>
 
