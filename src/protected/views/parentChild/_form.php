@@ -36,7 +36,23 @@ if (Yii::app()->user->checkAccess(1)) {
             <span class="prefix">Benutzer-ID</span>
         </div>
         <div class="ten columns">
-    <?php echo $form->textField($model, 'user_id', array('size' => 11, 'maxlength' => 11)); ?>
+            <?php
+                            $this->widget('zii.widgets.jui.CJuiAutoComplete',array(
+                                'name'=>'user_id',
+                                //'source'=>$dataProvider,
+                                // additional javascript options for the autocomplete plugin
+                                'sourceUrl'=>'index.php?r=user/search&role=3',
+                                'options'=>array(
+                                    'minLength'=>'2',
+                                ),
+                                'htmlOptions'=>array(
+                                    //'style'=>'height:20px;',
+                                ),
+                            ));
+                            ?>
+            
+            
+    <?php //echo $form->textField($model, 'user_id', array('size' => 11, 'maxlength' => 11)); ?>
     <?php echo $form->error($model, 'user_id'); ?>
         </div>
     </div>

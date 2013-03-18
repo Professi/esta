@@ -117,6 +117,7 @@ class AppointmentController extends Controller {
     public function actionMakeAppointment($teacher) {
         $model = new Appointment;
         $model->unsetAttributes();
+        $model->user_id = $teacher;
         $this->render('makeAppointment', array('model' => $model));
     }
 

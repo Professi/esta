@@ -78,20 +78,26 @@ class UserController extends Controller {
      * @author Christian Ehringfeld <c.ehringfeld@t-onlined.e>
      * @todo Sinnvolle JSON Ausgabe
      */
-    public function actionSearch($term) {
+    public function actionSearch($role,$term) {
         $dataProvider = new User();
         $dataProvider->unsetAttributes();
         $dataProvider->lastname = $term;
+        if(Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()) {
+            $dataProvider->role = 2;
+        }
+        else if(is_int($role) && $role < 4 && $role >= 0) {
+            $dataProvider->role = $role;
+        } else {
         $dataProvider->role = 2;
+        }
         $criteria = $dataProvider->searchCriteriaTeacherAutoComplete();
         $a_rc = array();
         $a_data = User::model()->findAll($criteria);
+        print_r($a_data);
         foreach ($a_data as $record) {
-            //    if (substr_compare($term, $record->lastname, 0, strlen($term)) == 0) {
             $a_rc[] = array('label' => $record->title . " "
                 . $record->firstname . " " . $record->lastname
                 , 'value' => $record->id);
-            //   }
         }
         echo CJSON::encode($a_rc);
     }

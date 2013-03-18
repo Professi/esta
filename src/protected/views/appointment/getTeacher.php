@@ -119,7 +119,7 @@
                                 'name'=>'teacher-ac',
                                 //'source'=>$dataProvider,
                                 // additional javascript options for the autocomplete plugin
-                                'sourceUrl'=>'index.php?r=user/search',
+                                'sourceUrl'=>'index.php?r=user/search&role=2',
                                 'options'=>array(
                                     'minLength'=>'2',
                                 ),
