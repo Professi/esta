@@ -1,23 +1,7 @@
 <?php
 
-/**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
- *
- *   This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- * 
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 /**
- * This is the model class for table "user".
+ * Die ist die Modelklasse für Tabelle "user".
  *
  * The followings are the available columns in table 'user':
  * @property string $id
@@ -35,18 +19,42 @@
  * @property Appointment[] $appointments
  * @property ParentChild[] $parentChildren
  * @property UserRole[] $userRoles
+ * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+ */
+
+/**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * 
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class User extends CActiveRecord {
 
-    /**
-     * @todo in private Attribute ändern und entsprechende getter und Setter erstellen
-     */
+    /** @var string  Passwortwiederholung */
     public $password_repeat = null;
-    public $pwdChanged = false;
+
+    /** @var integer Rolle als ID */
     public $role = null;
+
+    /** @var string Rollenname */
     public $roleName = null;
+
+    /** @var string StatusName */
     public $stateName = null;
+
+    /** @var string Sicherheitscode */
     public $verifyCode = null;
+
+    /** @var string TAN Nummer bei Registrierung */
     public $tan = null;
 
     /**
@@ -59,6 +67,7 @@ class User extends CActiveRecord {
     }
 
     /**
+     * Tabellenname
      * @return string the associated database table name
      */
     public function tableName() {
@@ -66,11 +75,10 @@ class User extends CActiveRecord {
     }
 
     /**
+     * Regeln für die Validierung
      * @return array validation rules for model attributes.
      */
     public function rules() {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
             array('password, firstname, lastname, email', 'required'),
             array('email', "unique"),
@@ -86,13 +94,12 @@ class User extends CActiveRecord {
             array('password', 'compare', "on" => "insert"),
             array('password_repeat', 'safe'), //allow bulk assignment
             array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
             array('id, username, firstname, state, lastname, email, role,roleName,stateName', 'safe', 'on' => 'search'),
         );
     }
 
     /**
+     * Relationen ( Appointments HAS_MANY , parentChildren HAS_MANY, userRoles HAS_ONE )
      * @return array relational rules.
      */
     public function relations() {
@@ -106,6 +113,7 @@ class User extends CActiveRecord {
     }
 
     /**
+     * Verschlüsselt ein Passwort mit Applikationssalt in sha512
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return string encrypted and salted password with sha512
      */
@@ -114,21 +122,8 @@ class User extends CActiveRecord {
         return hash('sha512', $saltedPw);
     }
 
-    public function setAttributes($attributes, $safe = true) {
-        foreach ($attributes as $name => $value) {
-            $this->setAttribute($name, $value);
-        }
-        return true;
-    }
-
-    public function setAttribute($name, $value) {
-        if ($name == "password") {
-            $this->pwdChanged = true;
-        }
-        parent::setAttribute($name, $value);
-    }
-
     /**
+     * Attributlabels
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels() {
@@ -155,8 +150,6 @@ class User extends CActiveRecord {
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search() {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
         $criteria = new CDbCriteria();
         $criteria->compare('firstname', $this->firstname, true);
         $criteria->compare('id', $this->id, true);
@@ -171,9 +164,9 @@ class User extends CActiveRecord {
     }
 
     /**
+     * Erstellt CActiveDataProvider mit CDbCriteria mit Suche nach Lehrerbenutzern 
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return \CActiveDataProvider
-     * Erstellt CActiveDataProvider mit CDbCriteria mit Suche nach Lehrerbenutzern 
      */
     public function searchTeacher() {
         $this->role = 2;
@@ -184,9 +177,9 @@ class User extends CActiveRecord {
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return \CDbCriteria
      * Suche für die Autovervollständigung bei getTeacher()
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return \CDbCriteri
      * 
      */
     public function searchCriteriaTeacherAutoComplete() {
@@ -202,6 +195,10 @@ class User extends CActiveRecord {
         return $criteria;
     }
 
+    /**
+     * Suchkriterien um alle User mit UserRollen zu löschen
+     * @return \CDbCriteria 
+     */
     public static function deleteAllCriteria() {
         $criteria = new CDbCriteria();
         $criteria->with = array('userRoles');
@@ -212,9 +209,9 @@ class User extends CActiveRecord {
     }
 
     /**
+     * Erstellt automatisch für createtime einen Timestamp
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array gibt für das Attribut createtime den aktuellen Timestamp zurück
-     * 
      */
     public function behaviors() {
         if ($this->isNewRecord) {
@@ -230,9 +227,9 @@ class User extends CActiveRecord {
     }
 
     /**
+     * weist einem neuen Nutzer automatisch die Rolle "Eltern" zu
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Rückgabewert der Methode afterSave() CActiveRecord
-     * weist einem neuen Nutzer automatisch die Rolle "Eltern" zu
      */
     public function afterSave() {
         if ($this->isNewRecord) {
@@ -284,9 +281,9 @@ class User extends CActiveRecord {
     }
 
     /**
+     *  verschlüsselt das Passwort und generiert einen Aktivierungsschlüssel, setzt die E-Mail Adresse als Username fest
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Rückgabewert der parent methode
-     *  verschlüsselt das Passwort und generiert einen Aktivierungsschlüssel, setzt die E-Mail Adresse als Username fest
      */
     public function beforeSave() {
         if ($this->isNewRecord) {
@@ -309,14 +306,15 @@ class User extends CActiveRecord {
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * Generiert einen Aktivierungsschlüssel und speichert diesen im aktuellen Objekt
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function generateActivationKey() {
         return sha1(mt_rand(10000, 99999) . time() . $this->email);
     }
 
     /**
+     * Setzt den StateName und gibt ihn zurück
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return string 0=NichtAktiv 1=Aktiv 2=Gesperrt
      */
@@ -338,6 +336,7 @@ class User extends CActiveRecord {
     }
 
     /**
+     * Gibt den Status als String aus ( echo )
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param integer $stateId Status ID des Users
      */
@@ -356,9 +355,10 @@ class User extends CActiveRecord {
     }
 
     /**
+     * Gibt Rolle als String aus ( echo )
+     *  0 = Admin 1=Verwaltung 2=Lehrer 3= Eltern
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param integer $role Rollen ID des Users
-     *  0 = Admin 1=Verwaltung 2=Lehrer 3= Eltern
      */
     static public function getFormattedRole($role) {
         $role = Role::model()->findByAttributes(array('id' => $role));
@@ -366,10 +366,10 @@ class User extends CActiveRecord {
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return boolean
      * Führt zunächst die Elternmethode beforeValidate() aus und 
      * prüft wenn diese true zurückgibt und es keiner neuer Eintrag ist ob die TAN schon benutzt wurde 
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return boolean
      */
     public function beforeValidate() {
         $rc = parent::beforeValidate();
@@ -387,11 +387,11 @@ class User extends CActiveRecord {
     }
 
     /**
+     * gibt true zurück wenn der gegebene Benutzer die entsprechende Rolle hat
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param integer $userId Benutzer ID
      * @param integer $roleId Rollen ID
      * @return boolean
-     * gibt true zurück wenn der gegebene Benutzer die entsprechende ROlle hat
      */
     public static function hasRole($userId, $roleId) {
         $rc = false;

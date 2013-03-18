@@ -1,5 +1,11 @@
 <?php
-/**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+
+/**
+ * UserIdentity represents the data needed to identity a user.
+ * It contains the authentication method that checks if the provided
+ * data can identity the user.
+ */
+/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,11 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/**
- * UserIdentity represents the data needed to identity a user.
- * It contains the authentication method that checks if the provided
- * data can identity the user.
- */
+
 class UserIdentity extends CUserIdentity {
 
     const ERROR_MSG_USERNAME_INVALID = "Ungültige E-Mail Adresse";
@@ -28,6 +30,7 @@ class UserIdentity extends CUserIdentity {
     const ERROR_ACCOUNT_NOT_ACTIVATED = 3;
     const ERROR_ACCOUNT_BANNED = 4;
 
+    /** @var integer ID */
     private $_id;
 
     /**
@@ -49,20 +52,24 @@ class UserIdentity extends CUserIdentity {
                 $this->errorMessage = self::ERROR_MSG_ACCOUNT_NOT_ACTIVATED;
             } else if ($user->state == 2) {
                 $this->errorCode = self::ERROR_ACCOUNT_BANNED;
-                $this->errorMessage = self::ERROR_MSG_ACCOUNT_BANNED ;
+                $this->errorMessage = self::ERROR_MSG_ACCOUNT_BANNED;
             } else {
                 $this->errorCode = self::ERROR_NONE;
                 $this->_id = $user->id;
                 $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->_id));
                 $this->setState('state', $user->state);
-                $this->setState('role',  $userRole->role_id);
+                $this->setState('role', $userRole->role_id);
             }
         }
         return $this->errorCode;
     }
-    
+
+    /**
+     * Liefert die Benutzer ID
+     * @return integer ID
+     */
     public function getId() {
         return $this->_id;
     }
-    
+
 }

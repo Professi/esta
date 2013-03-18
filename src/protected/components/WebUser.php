@@ -1,4 +1,7 @@
 <?php
+/**
+ * Repräsentiert den persistenten Status eines Benutzers
+ */
 /**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,43 +18,44 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- *
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
 class WebUser extends CWebUser {
 
     /**
-     * Overrides a Yii method that is used for roles in controllers (accessRules).
-     *
-     * @param string $operation Name of the operation required (here, a role).
-     * @param mixed $params (opt) Parameters for this operation, usually the object to access.
+     * Überschreibt eine Yii Methode, welche für die Zugriffsberechtigung
+     *  in Controllern verwendet wird (accessRules)
+     * @param string $role RollenID
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * * @param mixed $params (opt) Muss gesetzt werden durch Vererbung
      * @return bool Permission granted?
      */
-    public function checkAccess($operation, $params = array()) {
+    public function checkAccess($role, $params = array()) {
         if (empty($this->id)) {
             return false;
         }
-
         if ($this->getState("role") == 0) {
-            return true;   //Admin darf immer alles
+            return true;
         }
-        return ($operation === $this->getState('role'));
+        return ($role === $this->getState('role'));
     }
 
     /**
+     * Prüft ob ein User eine der beiden Rollen hat
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @param integer $operation1 Benötigte Rolle oder $operation2
+     * @param integer $operation1 Benötigte Rolle
      * @param integer $operation2 Benötigte Rolle
      * @return boolean Falls eine Operation mit der UserRolle übereinstimmt gibts true
      */
-    public function checkAccessRole($operation1, $operation2) {
+    public function checkAccessRole($role1, $role2) {
         if (empty($this->id)) {
             return false;
         }
-        return ($operation1 === $this->getState('role') || $operation2 == $this->getState('role'));
+        return ($role1 === $this->getState('role') || $role2 == $this->getState('role'));
     }
 
     /**
+     * ist der Benutzer ein Administrator?
      * @author Christian Ehringfeld <c.ehringfeld@t-online,de>
      * @return boolean selbsterklärend
      */
@@ -60,10 +64,9 @@ class WebUser extends CWebUser {
             return false;
         }
         if ($this->getState("role") == 0) {
-            return true;   //Admin darf immer alles
+            return true;
         }
     }
-
 }
 
 ?>

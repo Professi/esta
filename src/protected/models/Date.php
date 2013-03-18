@@ -40,6 +40,7 @@ class Date extends CActiveRecord {
     }
 
     /**
+     * Tabellenname
      * @return string the associated database table name
      */
     public function tableName() {
@@ -47,24 +48,23 @@ class Date extends CActiveRecord {
     }
 
     /**
+     * Regeln für Validierung
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array validation rules for model attributes.
      */
     public function rules() {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
             array('date, begin, end, durationPerAppointment', 'required'),
             array('durationPerAppointment', 'numerical', 'integerOnly' => true),
             array('date', 'date', 'format' => 'dd.MM.yyyy'),
             array('begin,end', 'date', 'format' => 'H:m'),
             array('durationPerAppointment', 'date', 'format' => 'm'),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
             array('id, date, begin, end, durationPerAppointment', 'safe', 'on' => 'search'),
         );
     }
 
     /**
+     * Relationen ( Appointments HAS_MANY )
      * @return array relational rules.
      */
     public function relations() {
@@ -76,6 +76,8 @@ class Date extends CActiveRecord {
     }
 
     /**
+     * Attributlabels
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels() {
@@ -93,17 +95,12 @@ class Date extends CActiveRecord {
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search() {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
         $criteria = new CDbCriteria;
-
         $criteria->compare('id', $this->id);
         $criteria->compare('date', $this->date, true);
         $criteria->compare('begin', $this->begin, true);
         $criteria->compare('end', $this->end, true);
         $criteria->compare('durationPerAppointment', $this->durationPerAppointment);
-
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
@@ -111,7 +108,8 @@ class Date extends CActiveRecord {
 
     /**
      * Prüft nach der erfolgreichen Validierung ob das Ende vor dem Anfang liegt.
-     * @return boolean
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     *      * @return boolean
      */
     public function afterValidate() {
         if (strtotime($this->end) <= strtotime($this->begin)) {
@@ -122,15 +120,19 @@ class Date extends CActiveRecord {
             $rc = false;
             Yii::app()->user->setFlash('failMsg', 'Datum liegt in der Vergangenheit');
             $this->addError('date', 'Datum liegt in der Vergangenheit.');
-        }
-        else
-            if (!is_int ((strtotime ($this->end)) - (strtotime ($this->begin))/60 / $this->durationPerAppointment)) {
+        } else
+        if (!is_int((strtotime($this->end)) - (strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
             $rc = false;
             $this->addError('begin', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.');
         }
         return parent::afterValidate();
     }
 
+    /**
+     * Erstellt neue DateTimes entsprechend der Elternsprechtagszeiten
+     * @return boolean parent::afterSave();
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
     public function afterSave() {
         $diff = (strtotime($this->end) - strtotime($this->begin)) / 60;
         $i = 0;
@@ -145,11 +147,21 @@ class Date extends CActiveRecord {
         return parent::afterSave();
     }
 
+    /**
+     * bevor der Elternsprechtag gelöscht wird werden alle DateAndTimes gelöscht
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return type
+     */
     public function beforeDelete() {
         DateAndTime::model()->deleteAllByAttributes(array('date_id' => $this->id));
         return parent::beforeDelete();
     }
 
+    /**
+     * wandelt das Datum von d.m.Y in Y-m-d um
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return boolean parent::beforeSave
+     */
     public function beforeSave() {
         $this->date = date('Y-m-d', strtotime($this->date));
         return parent::beforeSave();

@@ -1,5 +1,10 @@
 <?php
-/**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+
+/**
+ * Controller is the customized base controller class.
+ * All controller classes for this application should extend from this base class.
+ */
+/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +24,6 @@ define('MANAGEMENT', 1);
 define('TEACHER', 2);
 define('PARENTS', 3);
 
-/**
- * Controller is the customized base controller class.
- * All controller classes for this application should extend from this base class.
- */
 class Controller extends CController {
 
     /**

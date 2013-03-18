@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Description of DataColumn
- *
+ * Stellt die Variable $data in GridViews zur Verfügung
+ * siehe <http://www.yiiframework.com/wiki/314/cgridview-use-special-variable-data-in-the-htmloptions-of-a-column-i-e-evaluate-htmloptions-attribute/>
  */
 class DataColumn extends CDataColumn {
 

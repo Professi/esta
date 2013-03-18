@@ -20,7 +20,9 @@
  * @author David Mock
  */
 class CustomButtonColumn extends CButtonColumn  {
-    
+  /*
+   * Ersetzt die Bilder die bei den Tabellenbuttons angezeigt werden und initialisiert die Elternklasse CButtonColumn
+   */  
   public function init()
       {
         $this->viewButtonImageUrl=Yii::app()->request->baseUrl.'/img/search.svg';
