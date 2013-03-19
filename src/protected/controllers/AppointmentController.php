@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Dies ist die Controller Klasse von Model Appointment.
  */
@@ -18,7 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 /**
  * Stellt die Controller Actions des Appointments Models zur Verfügung.
  */
@@ -57,7 +55,7 @@ class AppointmentController extends Controller {
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('admin', 'delete', 'view', 'create'),
-                'roles' => array('0','1'),
+                'roles' => array('0', '1'),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
@@ -122,6 +120,13 @@ class AppointmentController extends Controller {
         $model = new Appointment;
         $model->unsetAttributes();
         $model->user_id = $teacher;
+        if (isset($_POST['Appointment'])) {
+            $model->attributes = $_POST['Appointment'];
+            if ($model->save()) {
+                Yii::app()->user->setFlash('success', 'Ihr Termin wurde erfolgreich gebucht.');
+                $this->redirect(array('index'));
+            }
+        }
         $this->render('makeAppointment', array('model' => $model));
     }
 
@@ -142,7 +147,6 @@ class AppointmentController extends Controller {
         ));
     }
 
-    
     /**
      * Deletes a particular model.
      * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -157,13 +161,27 @@ class AppointmentController extends Controller {
     }
 
     /**
-     * Lists all models.
+     * Terminübersicht für Lehrer/Eltern, haben jeweils ein View
      */
     public function actionIndex() {
-        $dataProvider = new CActiveDataProvider('Appointment');
-        $this->render('index', array(
-            'dataProvider' => $dataProvider,
-        ));
+        if (Yii::app()->user->checkAccess('2') && !Yii::app()->user->isAdmin()) {
+            $dataProvider = new Appointment('customSearch');
+            $dataProvider->user_id = Yii::app()->user->getId();
+            $this->render('indexTeacher', array(
+                'dataProvider' => $dataProvider->customSearch()
+            ));
+        } else {
+            $criteria = new CDbCriteria();
+            $pC = ParentChild::model()->findAllByAttributes(array('user_id'=>Yii::app()->user->getId()));
+            foreach ( $pC as $record) {
+                $criteria->addCondition(array('parent_child_id'=>$record->id), 'OR');
+            }
+            $dataProvider = new CActiveDataProvider('Appointment', array(
+                'criteria' => $criteria));
+            $this->render('index', array(
+                'dataProvider' => $dataProvider,
+            ));
+        }
     }
 
     /**
@@ -231,7 +249,7 @@ class AppointmentController extends Controller {
         if (is_int($dateMax)) {
             $a_dates = Date::model()->findAll('', array('LIMIT ' . $dateMax));
             foreach ($a_dates as $record) {
-                $a_groupOfDateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id'=>$record->id));
+                $a_groupOfDateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
             }
         }
         return $a_groupOfDateAndTimes;
@@ -244,11 +262,11 @@ class AppointmentController extends Controller {
      * @return array Gibt BELEGT,0 oder Verfügbar,1 zurück,
      */
     public function isAppointmentAvailable($teacher, $dateAndTimeId) {
-       $rc = array("BELEGT",0);
-            if(Appointment::model()->countByAttributes(array('user_id' => $teacher, 'dateAndTime_id' => $dateAndTimeId)) == '0') {
-                $rc = array("VERF&Uuml;gbar",1);
-            }
+        $rc = array("BELEGT", 0);
+        if (Appointment::model()->countByAttributes(array('user_id' => $teacher, 'dateAndTime_id' => $dateAndTimeId)) == '0') {
+            $rc = array("VERF&Uuml;gbar", 1);
+        }
         return $rc;
     }
-    
+
 }

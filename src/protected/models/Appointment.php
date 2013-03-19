@@ -94,21 +94,25 @@ class Appointment extends CActiveRecord {
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search() {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
         $criteria = new CDbCriteria;
-
         $criteria->compare('id', $this->id);
         $criteria->compare('parent_child_id', $this->parent_child_id);
         $criteria->compare('user_id', $this->user_id, true);
         $criteria->compare('dateAndTime_id', $this->dateAndTime_id);
-
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
     }
-
+    /**
+     * Prüft auf genau die User ID die festgelegt wurde
+     * @return CActiveDataProvider gibt Datensätze mit der user_id aus
+     */
+    public function customSearch() {
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('user_id',$this->user_id);
+        return new CActiveDataProvider($this, array('criteria'=>$criteria));
+    }
+    
     /**
      * Prüft ob der Lehrer vorhanden ist, ob der vermeintlich gewählte Lehrer überhaupt die Rolle hat und prüft ob die Elternkindverknüpfung existiert.
      * Prüft ebenfalls ob bereits ein Termin bei diesem Lehrer besteht
