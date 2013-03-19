@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Dies ist die Controller Klasse von Model Appointment.
  */
@@ -17,6 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * Stellt die Controller Actions des Appointments Models zur Verfügung.
  */
@@ -207,5 +209,25 @@ class AppointmentController extends Controller {
             Yii::app()->end();
         }
     }
+
+    /**
+     * Liefert die Kindernamen mit ParentChild ID
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param integer $userId Benutzer ID des Users
+     * @return array Mehrdimensionales Array, jedes Array enthält die Felder label und Value
+     */
+    public function getChilds($userId) {
+        $a_rc = array();
+        $a_data = ParentChild::model()->findAllByAttributes(array('user_id' => $userId));
+        foreach ($a_data as $record) {
+            $a_rc[] = array('label' => $record->child->firstname . " " . $record->child->lastname, 'value' => $record->id);
+        }
+        return $a_rc;
+    }
+    
+    /**
+     * 
+     * 
+     */
 
 }
