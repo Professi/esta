@@ -1,4 +1,7 @@
 <?php
+/**
+ * Tan Controller
+ */
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -14,6 +17,9 @@
  * You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+/**
+ * Tan Controller
+ */
 class TanController extends Controller {
 
     /**
@@ -23,6 +29,7 @@ class TanController extends Controller {
     public $layout = '//layouts/column2';
 
     /**
+     * Filtermethode
      * @return array action filters
      */
     public function filters() {
@@ -84,6 +91,9 @@ class TanController extends Controller {
         ));
     }
 
+    /**
+     * action um Tans zu generieren
+     */
     public function actionGenTans() {
         $model = new Tan();
         if (isset($_POST['Tan']) && Yii::app()->session['isTanGen'] != 1) {
@@ -110,10 +120,6 @@ class TanController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['Tan'])) {
             $model->attributes = $_POST['Tan'];
             if ($model->save())
@@ -186,7 +192,11 @@ class TanController extends Controller {
             Yii::app()->end();
         }
     }
-
+/**
+ * Generiert n-Tans
+ * @param integer $count Anzahl der zu generierenden TAN's
+ * @return array Beinhaltet TAN's
+ */
     public function generateTan($count) {
         $a_rc = array();
         for ($i = 0; $i < $count; ++$i) {

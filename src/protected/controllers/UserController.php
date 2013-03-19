@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * User Controller
+ */
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -15,6 +17,9 @@
  * You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+/**
+ * User Controller erbt von Controller
+ */
 class UserController extends Controller {
 
     /**
@@ -24,18 +29,21 @@ class UserController extends Controller {
     public $layout = '//layouts/column2';
 
     /**
+     * Filtermethode
      * @return array action filters
      */
     public function filters() {
         return array(
             'accessControl', // perform access control for CRUD operations
-                //   'postOnly + delete', // we only allow deletion via POST request
         );
     }
 
+    /**
+     * Captchagenerator
+     * @return array Actions
+     */
     public function actions() {
         return array(
-// captcha action renders the CAPTCHA image displayed on the contact page
             'captcha' => array(
                 'class' => 'CCaptchaAction',
                 'backColor' => 0xFFFFFF,
@@ -73,7 +81,7 @@ class UserController extends Controller {
     }
 
     /**
-     * 
+     * Autocomplete suche anhand des Nachnamen , echo JSON
      * @param string $term
      * @author Christian Ehringfeld <c.ehringfeld@t-onlined.e>
      */
@@ -96,7 +104,9 @@ class UserController extends Controller {
         }
         echo CJSON::encode($a_rc);
     }
-
+/**
+ * Löscht alles außer den Admin Account
+ */
     public function actionDeleteAll() {
         Appointment::model()->deleteAll();
         DateAndTime::model()->deleteAll();
@@ -280,9 +290,6 @@ class UserController extends Controller {
      */
     public function actionCreate() {
         $model = new User;
-// Uncomment the following line if AJAX validation is needed
-// $this->performAjaxValidation($model);
-
         if (isset($_POST['User'])) {
             $model->setAttributes($_POST['User']);
             if ($model->save()) {

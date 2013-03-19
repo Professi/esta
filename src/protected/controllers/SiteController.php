@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * SiteController für Forms/Static Pages ohne echtes Datenmodell
+ */
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify

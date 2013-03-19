@@ -1,4 +1,7 @@
 <?php
+/**
+ * Controller der CRUD Operationen von userRole
+ */
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -14,6 +17,9 @@
  * You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+/**
+ * Controllerklasse
+ */
 class UserRoleController extends Controller {
 
     /**
@@ -23,6 +29,7 @@ class UserRoleController extends Controller {
     public $layout = '//layouts/column2';
 
     /**
+     * Filtermethode
      * @return array action filters
      */
     public function filters() {

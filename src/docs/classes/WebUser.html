@@ -32,11 +32,9 @@
 <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
                                     Reports <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
-                <span class="label label-info">115</span></a></li>
+                <span class="label label-info">100</span></a></li>
 <li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
-                <ul><li>todo 
-                <span class="label label-info">1</span>
-</li></ul></a></li>
+                <ul></ul></a></li>
 <li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
                 <span class="label label-info">0</span></a></li>
 </ul>
@@ -77,9 +75,9 @@
 </li>
 </ul>
 <div class="element class">
-<p class="short_description"></p>
+<p class="short_description">Webuser überschreibt CWebuser und überschreibt u.a.</p>
 <div class="details">
-<div class="long_description"></div>
+<div class="long_description"><p>die Methode checkAccess</p></div>
 <table class="table table-bordered"><tr>
 <th>author</th>
 <td><a href="mailto:c.ehringfeld@t-online.de">Christian Ehringfeld</a></td>
@@ -89,28 +87,7 @@
 <a id="method_checkAccess"></a><div class="element clickable method public method_checkAccess" data-toggle="collapse" data-target=".method_checkAccess .collapse">
 <h2>Überschreibt eine Yii Methode, welche für die Zugriffsberechtigung
  in Controllern verwendet wird (accessRules)</h2>
-<pre>checkAccess(string $role, $params) : bool</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"></div>
-<table class="table table-bordered"><tr>
-<th>author</th>
-<td><a href="">Christian Ehringfeld &lt;c.ehringfeld@t-online.de&gt;
-* @param mixed $params (opt) Muss gesetzt werden durch Vererbung</a></td>
-</tr></table>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$role</h4>
-<code>string</code><p>RollenID</p></div>
-<div class="subelement argument"><h4>$params</h4></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>bool</code>Permission granted?</div>
-</div></div>
-</div>
-<a id="method_checkAccessRole"></a><div class="element clickable method public method_checkAccessRole" data-toggle="collapse" data-target=".method_checkAccessRole .collapse">
-<h2>Prüft ob ein User eine der beiden Rollen hat</h2>
-<pre>checkAccessRole($role1, $role2) : boolean</pre>
+<pre>checkAccess(string $role, mixed $params) : bool</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <div class="long_description"></div>
@@ -119,8 +96,37 @@
 <td><a href="mailto:c.ehringfeld@t-online.de">Christian Ehringfeld</a></td>
 </tr></table>
 <h3>Parameters</h3>
-<div class="subelement argument"><h4>$role1</h4></div>
-<div class="subelement argument"><h4>$role2</h4></div>
+<div class="subelement argument">
+<h4>$role</h4>
+<code>string</code><p>RollenID</p></div>
+<div class="subelement argument">
+<h4>$params</h4>
+<code>mixed</code><p>(opt) Muss gesetzt werden durch Vererbung</p>
+</div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>bool</code>Permission granted?</div>
+</div></div>
+</div>
+<a id="method_checkAccessRole"></a><div class="element clickable method public method_checkAccessRole" data-toggle="collapse" data-target=".method_checkAccessRole .collapse">
+<h2>Prüft ob ein User eine der beiden Rollen hat</h2>
+<pre>checkAccessRole(integer $role1, integer $role2) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>author</th>
+<td><a href="mailto:c.ehringfeld@t-online.de">Christian Ehringfeld</a></td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$role1</h4>
+<code>integer</code><p>Benötigte Rolle</p>
+</div>
+<div class="subelement argument">
+<h4>$role2</h4>
+<code>integer</code><p>Benötigte Rolle</p>
+</div>
 <h3>Returns</h3>
 <div class="subelement response">
 <code>boolean</code>Falls eine Operation mit der UserRolle übereinstimmt gibts true</div>
@@ -148,7 +154,7 @@
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a12</a> and<br>
-            generated on 2013-03-18T20:52:48+01:00.<br></footer></div>
+            generated on 2013-03-19T13:53:19+01:00.<br></footer></div>
 </div>
 </body>
 </html>

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * ParentChild Controller für Model ParentChild 
+ */
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -24,6 +26,7 @@ class ParentChildController extends Controller {
     public $layout = '//layouts/column2';
 
     /**
+     * Filtermethoden
      * @return array action filters
      */
     public function filters() {
@@ -51,7 +54,11 @@ class ParentChildController extends Controller {
             ),
         );
     }
-
+/**
+ * Suche fuer Elternkindverknuepfungen anhand von  dem Namen des Erziehungsberechtigten 
+ * @param string $term
+ * echo JSON
+ */
     public function actionSearch($term) {
         $dataProvider = new ParentChild();
         $dataProvider->unsetAttributes();
@@ -78,7 +85,6 @@ class ParentChildController extends Controller {
     /*
      * Lists all models.
      */
-
     public function actionIndex() {
         if (Yii::app()->user->checkAccess(1)) {
             $dataProvider = new CActiveDataProvider('ParentChild');
@@ -166,7 +172,11 @@ class ParentChildController extends Controller {
             'model' => $model,
         ));
     }
-
+/**
+ * Prüft ob das Kind zum User gehört.
+ * @param integer $parentChildId
+ * @return boolean
+ */
     public function checkUser($parentChildId) {
         $rc = false;
         if (Yii::app()->user->checkAccess('1')) {
