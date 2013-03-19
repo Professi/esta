@@ -245,11 +245,9 @@ class AppointmentController extends Controller {
      */
     public function isAppointmentAvailable($teacher, $dateAndTimeId) {
        $rc = array("BELEGT",0);
-        if ($teacher && $dateAndTimeId) {
             if(Appointment::model()->countByAttributes(array('user_id' => $teacher, 'dateAndTime_id' => $dateAndTimeId->id)) == 0) {
                 $rc = array("VERF&Uuml;gbar",1);
             }
-        }
         return $rc;
     }
     
