@@ -6,32 +6,6 @@
     $('.js_show').toggle();
     $('.js_hide').toggle();
 
-    $counterKinder = 0;
-
-    $('#Zugang_Anchor').on('click', function(e) {
-        e.preventDefault();
-        $('#Zugang_Form').toggle();
-        $('#Login_Form').toggle();
-        $('#Zugang_Anchor').toggle();
-        $('#Login_Anchor').toggle();
-    });
-
-    $('#Login_Anchor').on('click', function(e) {
-        e.preventDefault();
-        $('#Zugang_Form').toggle();
-        $('#Login_Form').toggle();
-        $('#Zugang_Anchor').toggle();
-        $('#Login_Anchor').toggle();
-    });
-
-    $('#Weiteres_Kind').on('click', function(e) {
-        e.preventDefault();
-        if ($counterKinder < 2 ) {
-            $counterKinder++;
-            $('#Weiteres_Kind').before('<input type="text" name="kind' + $counterKinder + '" placeholder="Vorname, Nachname" />');
-        }
-    });
-
     $('.avaiable').on('click', function() {
 
         $id = $(this).attr('id');

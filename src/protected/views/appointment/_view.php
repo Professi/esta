@@ -25,7 +25,7 @@
             <b>#<?php echo CHtml::encode($data->id); ?></b>
         </div>
         <div class="eleven columns">
-            <b>Am <?php echo CHtml::encode($data->date->date); ?> um <?php echo CHtml::encode($data->time); ?></b>
+            <b>Am <?php echo CHtml::encode($data->dateAndTime->date->date); ?> um <?php echo CHtml::encode($data->dateAndTime->time); ?></b>
         </div>
     </div>
     <br>
@@ -45,7 +45,7 @@
             <i>bei</i>
         </div>
         <div class="ten columns">
-             <?php echo CHtml::encode($data->user->lastname); ?>
+             <?php echo CHtml::encode($data->user->title." ".$data->user->firstname." ".$data->user->lastname); ?>
         </div>
     </div>
 </div>

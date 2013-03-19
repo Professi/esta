@@ -53,5 +53,6 @@ $this->widget('zii.widgets.CDetailView', array(
     ),
 ));
 ?>
+        
     </div>
 </div>

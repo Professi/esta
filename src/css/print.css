@@ -35,3 +35,4 @@ a:link, a:visited {background:transparent;font-weight:700;text-decoration:underl
 #footer{display: none;}
 .column-button{display: none;}
 td>input{display:none;}
+#print_button{display: none;}
