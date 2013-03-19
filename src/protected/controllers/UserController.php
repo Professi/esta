@@ -293,7 +293,6 @@ class UserController extends Controller {
         if (isset($_POST['User'])) {
             $model->setAttributes($_POST['User']);
             if ($model->save()) {
-
                 if (Yii::app()->user->checkAccess(1)) {
                     Yii::app()->user->setFlash("success", "Benutzer wurde erstellt.");
                     $this->redirect(array('user/admin'));

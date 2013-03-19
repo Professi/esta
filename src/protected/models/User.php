@@ -229,7 +229,31 @@ class User extends CActiveRecord {
     }
 
     /**
-     * weist einem neuen Nutzer automatisch die Rolle "Eltern" zu
+     * Setzt auch nicht in DB persistierte Variablen
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param array $attributes Attribute die festgelegt werden sollen 
+     * @param boolean $safe
+     * @return boolean
+     */
+    public function setAttributes($attributes, $safe = true) {
+        foreach ($attributes as $name => $value) {
+            $this->setAttribute($name, $value);
+        }
+        return true;
+    }
+
+    /**
+     * Setzt ein Attribut
+     * @param string $name
+     * @param string $value
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
+    public function setAttribute($name, $value) {
+        parent::setAttribute($name, $value);
+    }
+
+    /**
+     * weist einem neuen Nutzer eine Rolle zu
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Rückgabewert der Methode afterSave() CActiveRecord
      */
@@ -241,14 +265,11 @@ class User extends CActiveRecord {
                 $tan->update();
             }
             $userRole = New UserRole();
-            $userRole->unsetAttributes();
             $userRole->user_id = $this->id;
             if (Yii::app()->user->isGuest) {
-                $userRole->role_id = 3;
-            } else if (is_int($this->role) && $this->role <= 3 && $this->role >= 0) {
-                $userRole->role_id = $this->role;
+                $userRole->role_id = Role::model()->findByAttributes(array('title' => 'Eltern'))->id;
             } else {
-                $userRole->role_id = 3;
+                $userRole->role_id = Role::model()->findByAttributes(array('id' => $this->role))->id;
             }
             $userRole->save();
         } else {
