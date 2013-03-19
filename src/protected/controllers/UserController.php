@@ -316,8 +316,13 @@ class UserController extends Controller {
             $model->setAttributes($_POST['User']);
 
             if ($model->save()) {
+                if(Yii::app()->user->checkAccess('1')) {
                 Yii::app()->user->setFlash("success", "Benutzer wurde aktualisiert.");
                 $this->redirect(array('view&id=' . $id), false);
+                } else {
+                    Yii::app()->user->setFlash('success','Ihr Account wurde aktualisiert.');
+                    $this->redirect(array('account'));
+                }
             } else {
                 Yii::app()->user->setFlash("error", "Benutzer konnte nicht aktualisiert werden.");
             }
