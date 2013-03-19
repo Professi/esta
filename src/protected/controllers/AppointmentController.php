@@ -245,8 +245,8 @@ class AppointmentController extends Controller {
      */
     public function isAppointmentAvailable($teacher, $dateAndTimeId) {
        $rc = array("BELEGT",0);
-        if (is_int($teacher) && is_int($dateAndTimeId)) {
-            if(!Appointment::model()->countByAttributes(array('user_id' => $teacher, 'dateAndTime_id' => $dateAndTimeId->id)) == 1) {
+        if ($teacher && $dateAndTimeId) {
+            if(Appointment::model()->countByAttributes(array('user_id' => $teacher, 'dateAndTime_id' => $dateAndTimeId->id)) == 0) {
                 $rc = array("VERF&Uuml;gbar",1);
             }
         }

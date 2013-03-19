@@ -7,10 +7,10 @@
  * @property integer $id
  * @property integer $parent_child_id
  * @property string $user_id
- * @property integer $dateTime_id
+ * @property integer $dateAndTime_id
  *
  * The followings are the available model relations:
- * @property DateTime $dateTime
+ * @property DateAndTime $dateAndTime
  * @property ParentChild $parentChild
  * @property User $user
  */
@@ -128,12 +128,20 @@ class Appointment extends CActiveRecord {
     }
 
     /**
-     * Prüft ob die maximal Anzahl von Terminen überschritten wurde
+     * Prüft ob die maximal Anzahl von Terminen überschritten wurde und ob der Benutzer bereits zu dieser Uhrzeit einen Termin hat
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean
      */
     public function beforeSave() {
         $rc = parent::beforeSave();
+        if($rc && Appointment::model()->countByAttributes(array('dateAndTime_id'=>$this->dateAndTime_id)) > 0) {
+            $rc = false;
+            if(Yii::app()->checkAccess('1')) {
+                Yii::app()->setFlash('failMsg','Der Benutzer hat bereits zu dieser Uhrzeit einen Termin gebucht.');
+            } else {
+            Yii::app()->setFlash('failMsg','Sie können immer nur einen Termin zur selben Zeit haben.');
+            }
+        }
         if (!Yii::app()->user->checkAccess('1') && $rc) {
             if (Appointment::model()->countByAttributes(array('parent_child_id' => $this->parent_child_id)) >= Yii::app()->params['maxAppointmentsPerChild']) {
                 $rc = false;
@@ -144,6 +152,9 @@ class Appointment extends CActiveRecord {
                 Yii::app()->user->setFlash('success', 'Ihr Termin wurde erfolgreich gebucht.');
             }
         }
+        
+        
+        
         return $rc;
     }
 
