@@ -1,4 +1,7 @@
 <?php
+/**
+ * Date _form
+ */
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -64,7 +67,7 @@
                 <span class="postfix">HH:MM</span>
             </div>
 	</div>
-
+        <?php if($model->isNewRecord) { ?>
 	<div class="row collapse">
             <div class="two columns">
                 <span class="prefix">Dauer eines Termins</span>
@@ -77,6 +80,7 @@
                 <span class="postfix">MM</span>
             </div>
 	</div>
+        <?php } ?>
 <br>
 
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Anlegen' : 'Speichern', array('class' => 'small button')); ?>
