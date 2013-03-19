@@ -1,10 +1,7 @@
 <?php
-
 /*
  * Dies ist die Controller Klasse vom Model Date.
- * 
  */
-
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -29,12 +26,12 @@ class DateController extends Controller {
     public $layout = '//layouts/column2';
 
     /**
+     * Filter
      * @return array action filters
      */
     public function filters() {
         return array(
             'accessControl', // perform access control for CRUD operations
-                //	'postOnly + delete', // we only allow deletion via POST request
         );
     }
 

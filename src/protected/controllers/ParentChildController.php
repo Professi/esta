@@ -82,14 +82,16 @@ class ParentChildController extends Controller {
         ));
     }
 
-    /*
+    /**
      * Lists all models.
      */
     public function actionIndex() {
         if (Yii::app()->user->checkAccess(1)) {
             $dataProvider = new CActiveDataProvider('ParentChild');
         } else {
-            $dataProvider = new CActiveDataProvider('ParentChild', array('criteria' => array('condition' => 'user_id=' . Yii::app()->user->getId())));
+            $dataProvider = new CActiveDataProvider('ParentChild', array(
+                'criteria' => array('condition' => 'user_id=' . 
+                    Yii::app()->user->getId())));
         }
         $this->render('index', array('dataProvider' => $dataProvider,));
     }

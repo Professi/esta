@@ -128,6 +128,16 @@ class Appointment extends CActiveRecord {
             Yii::app()->user->setFlash('failMsg', 'Leider haben Sie bereits einen Termin bei diesem Lehrer gebucht. Daher können Sie keinen weiteren buchen.');
             $rc = false;
         }
+        if($rc && DateAndTime::model()->countByAttributes(array('dateAndTime_id'=>  $this->dateAndTime_id)) != '1') {
+            $rc = false;
+            Yii::app()->user->setFlash('failMsg', 'Der angegebene Termin existiert nicht.');
+        }
+        if($rc && ParentChild::model()->countByAttributes(array('parent_child_id'=>$this->parent_child_id)) != '1') {
+            $rc = false;
+            Yii::app()->user->setFlash('failMsg','Die angegebene Elternkindverknüpfung existiert nicht.');
+        }
+        
+        
         return $rc;
     }
 

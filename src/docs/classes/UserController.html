@@ -32,7 +32,7 @@
 <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
                                     Reports <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
-                <span class="label label-info">100</span></a></li>
+                <span class="label label-info">84</span></a></li>
 <li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
                 <ul></ul></a></li>
 <li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
@@ -67,19 +67,15 @@
         </span><pre>actionChangePwd()</pre></a></li>
 <li class="method public "><a href="#method_actionCreate" title="actionCreate :: Creates a new model."><span class="description">Creates a new model.</span><pre>actionCreate()</pre></a></li>
 <li class="method public "><a href="#method_actionDelete" title="actionDelete :: Deletes a particular model."><span class="description">Deletes a particular model.</span><pre>actionDelete()</pre></a></li>
-<li class="method public "><a href="#method_actionDeleteAll" title="actionDeleteAll :: "><span class="description">actionDeleteAll()
-        </span><pre>actionDeleteAll()</pre></a></li>
+<li class="method public "><a href="#method_actionDeleteAll" title="actionDeleteAll :: Löscht alles außer den Admin Account"><span class="description">Löscht alles außer den Admin Account</span><pre>actionDeleteAll()</pre></a></li>
 <li class="method public "><a href="#method_actionImportTeachers" title="actionImportTeachers :: Falls die CSV Datei hochgeladen wurde, wird diese geparsed und sofern eine E-Mail Adresse vorhanden ist eingefügt"><span class="description">Falls die CSV Datei hochgeladen wurde, wird diese geparsed und sofern eine E-Mail Adresse vorhanden ist eingefügt</span><pre>actionImportTeachers()</pre></a></li>
 <li class="method public "><a href="#method_actionNewPw" title="actionNewPw :: "><span class="description">actionNewPw()
         </span><pre>actionNewPw()</pre></a></li>
-<li class="method public "><a href="#method_actionSearch" title="actionSearch :: "><span class="description">actionSearch()
-        </span><pre>actionSearch()</pre></a></li>
+<li class="method public "><a href="#method_actionSearch" title="actionSearch :: Autocomplete suche anhand des Nachnamen , echo JSON"><span class="description">Autocomplete suche anhand des Nachnamen , echo JSON</span><pre>actionSearch()</pre></a></li>
 <li class="method public "><a href="#method_actionUpdate" title="actionUpdate :: Updates a particular model."><span class="description">Updates a particular model.</span><pre>actionUpdate()</pre></a></li>
 <li class="method public "><a href="#method_actionView" title="actionView :: Displays a particular model."><span class="description">Displays a particular model.</span><pre>actionView()</pre></a></li>
-<li class="method public "><a href="#method_actions" title="actions :: "><span class="description">actions()
-        </span><pre>actions()</pre></a></li>
-<li class="method public "><a href="#method_filters" title="filters :: "><span class="description">filters()
-        </span><pre>filters()</pre></a></li>
+<li class="method public "><a href="#method_actions" title="actions :: Captchagenerator"><span class="description">Captchagenerator</span><pre>actions()</pre></a></li>
+<li class="method public "><a href="#method_filters" title="filters :: Filtermethode"><span class="description">Filtermethode</span><pre>filters()</pre></a></li>
 <li class="method public "><a href="#method_loadModel" title="loadModel :: Returns the data model based on the primary key given in the GET variable."><span class="description">Returns the data model based on the primary key given in the GET variable.</span><pre>loadModel()</pre></a></li>
 <li class="method public "><a href="#method_sendMail" title="sendMail :: Versendet eine E-Mail"><span class="description">Versendet eine E-Mail</span><pre>sendMail()</pre></a></li>
 </ul>
@@ -111,20 +107,9 @@
 </li>
 </ul>
 <div class="element class">
-<p class="short_description">Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch</p>
+<p class="short_description">User Controller erbt von Controller</p>
 <div class="details">
-<div class="long_description"><p>This program is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-any later version.</p>
-
-<p>This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.</p>
-
-<p>You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p></div>
+<div class="long_description"></div>
 <h3>
 <i class="icon-custom icon-method"></i> Methods</h3>
 <a id="method_accessRules"></a><div class="element clickable method public method_accessRules" data-toggle="collapse" data-target=".method_accessRules .collapse">
@@ -207,8 +192,7 @@ Action um ein neues Passwort anzufordern</a></td>
 </div></div>
 </div>
 <a id="method_actionDeleteAll"></a><div class="element clickable method public method_actionDeleteAll" data-toggle="collapse" data-target=".method_actionDeleteAll .collapse">
-<h2>actionDeleteAll()
-        </h2>
+<h2>Löscht alles außer den Admin Account</h2>
 <pre>actionDeleteAll() </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
@@ -240,8 +224,7 @@ Action um ein neues Passwort zu setzen</a></td>
 </div></div>
 </div>
 <a id="method_actionSearch"></a><div class="element clickable method public method_actionSearch" data-toggle="collapse" data-target=".method_actionSearch .collapse">
-<h2>actionSearch()
-        </h2>
+<h2>Autocomplete suche anhand des Nachnamen , echo JSON</h2>
 <pre>actionSearch($role, string $term) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
@@ -283,15 +266,18 @@ Action um ein neues Passwort zu setzen</a></td>
 </div></div>
 </div>
 <a id="method_actions"></a><div class="element clickable method public method_actions" data-toggle="collapse" data-target=".method_actions .collapse">
-<h2>actions()
-        </h2>
-<pre>actions() </pre>
+<h2>Captchagenerator</h2>
+<pre>actions() : array</pre>
 <div class="labels"></div>
-<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>Actions</div>
+</div></div>
 </div>
 <a id="method_filters"></a><div class="element clickable method public method_filters" data-toggle="collapse" data-target=".method_filters .collapse">
-<h2>filters()
-        </h2>
+<h2>Filtermethode</h2>
 <pre>filters() : array</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
@@ -414,7 +400,7 @@ Action um ein neues Passwort zu setzen</a></td>
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a12</a> and<br>
-            generated on 2013-03-19T13:53:19+01:00.<br></footer></div>
+            generated on 2013-03-19T19:51:07+01:00.<br></footer></div>
 </div>
 </body>
 </html>

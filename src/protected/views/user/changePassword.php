@@ -1,4 +1,7 @@
 <?php
+/**
+ * View Benutzer Passwort ändern
+ */
 /**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -22,8 +25,7 @@
     <div class="nine columns centered">
         <h3>M&ouml;chten Sie ihr Passwort zur&uuml;cksetzen ?</h3>
         <div class="panel">
-            <p>Geben Sie einfach ihre E-Mail-Adresse ein. Ihnen wird ein tempor&auml;res Passwort zugesandt 
-                mit dem Sie sich einloggen können.</p>
+            <p>Geben Sie Ihre E-Mail-Adresse ein. Ihnen wird ein Aktivierungslink zugesendet mit dem Sie ein neues Passwort setzen können.</p>
         </div>
     <?php
     $form = $this->beginWidget('CActiveForm', array(

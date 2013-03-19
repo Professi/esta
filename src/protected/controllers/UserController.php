@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User Controller
  */
@@ -17,6 +18,7 @@
  * You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * User Controller erbt von Controller
  */
@@ -82,7 +84,8 @@ class UserController extends Controller {
 
     /**
      * Autocomplete suche anhand des Nachnamen , echo JSON
-     * @param string $term
+     * @param integer $role Rollen ID
+     * @param string $term Suchstring
      * @author Christian Ehringfeld <c.ehringfeld@t-onlined.e>
      */
     public function actionSearch($role, $term) {
@@ -104,9 +107,10 @@ class UserController extends Controller {
         }
         echo CJSON::encode($a_rc);
     }
-/**
- * Löscht alles außer den Admin Account
- */
+
+    /**
+     * Löscht alles außer den Admin Account
+     */
     public function actionDeleteAll() {
         Appointment::model()->deleteAll();
         DateAndTime::model()->deleteAll();
@@ -133,16 +137,17 @@ class UserController extends Controller {
     }
 
     /**
+     * rendert das Profilview des Users
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * rendert das eigene Profilview
      */
     public function actionAccount() {
         $this->render('view', array('model' => $this->loadModel(Yii::app()->user->getId())));
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * Überprüft einen Aktivierungslink und aktiviert gegebenenfalls einen Benutzer.
+     * @param string $activationKey Aktivierungsschlüssel in sha1 als string
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function actionActivate($activationKey) {
         $user = User::model()->findByAttributes(array('activationKey' => $activationKey));
@@ -223,8 +228,8 @@ class UserController extends Controller {
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * Action um ein neues Passwort zu setzen
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function actionNewPw() {
         $model = new NewPw();
@@ -254,8 +259,8 @@ class UserController extends Controller {
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * Action um ein neues Passwort anzufordern
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function actionChangePwd() {
         $model = new ChangePwd;
@@ -322,11 +327,11 @@ class UserController extends Controller {
             $model->setAttributes($_POST['User']);
 
             if ($model->save()) {
-                if(Yii::app()->user->checkAccess('1')) {
-                Yii::app()->user->setFlash("success", "Benutzer wurde aktualisiert.");
-                $this->redirect(array('view&id=' . $id), false);
+                if (Yii::app()->user->checkAccess('1')) {
+                    Yii::app()->user->setFlash("success", "Benutzer wurde aktualisiert.");
+                    $this->redirect(array('view&id=' . $id), false);
                 } else {
-                    Yii::app()->user->setFlash('success','Ihr Account wurde aktualisiert.');
+                    Yii::app()->user->setFlash('success', 'Ihr Account wurde aktualisiert.');
                     $this->redirect(array('account'));
                 }
             } else {
@@ -348,8 +353,6 @@ class UserController extends Controller {
      */
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
-
-// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }

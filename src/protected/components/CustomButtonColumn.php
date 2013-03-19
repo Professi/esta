@@ -1,9 +1,11 @@
 <?php
+
 /**
  * Ersetzt die Bilder die bei den Tabellenbuttons angezeigt werden und initialisiert die Elternklasse CButtonColumn
  *
  * @author David Mock
  */
+
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -19,19 +21,22 @@
  * You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class CustomButtonColumn extends CButtonColumn  {
-  /*
-   * Ersetzt die Bilder die bei den Tabellenbuttons angezeigt werden und initialisiert die Elternklasse CButtonColumn
-   */  
-  public function init()
-      {
-        $this->viewButtonImageUrl=Yii::app()->request->baseUrl.'/img/search.svg';
-        $this->viewButtonOptions=array('class' => 'column-button');
-        $this->updateButtonImageUrl=Yii::app()->request->baseUrl.'/img/pencil.svg';
-        $this->updateButtonOptions=array('class' => 'column-button');
-        $this->deleteButtonImageUrl=Yii::app()->request->baseUrl.'/img/remove.svg';
-        $this->deleteButtonOptions=array('class' => 'column-button delete');
+class CustomButtonColumn extends CButtonColumn {
+   
+    /**
+     * Ersetzt die Bilder die bei den Tabellenbuttons angezeigt werden und initialisiert die Elternklasse CButtonColumn
+     * @return void parent::init();
+     */
+    public function init() {
+        $this->viewButtonImageUrl = Yii::app()->request->baseUrl . '/img/search.svg';
+        $this->viewButtonOptions = array('class' => 'column-button');
+        $this->updateButtonImageUrl = Yii::app()->request->baseUrl . '/img/pencil.svg';
+        $this->updateButtonOptions = array('class' => 'column-button');
+        $this->deleteButtonImageUrl = Yii::app()->request->baseUrl . '/img/remove.svg';
+        $this->deleteButtonOptions = array('class' => 'column-button delete');
         return parent::init();
-      }
+    }
+
 }
+
 ?>

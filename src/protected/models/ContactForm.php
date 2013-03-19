@@ -1,7 +1,8 @@
 <?php
 /**
  * ContactForm ist die Datenstruktur um Kontaktformdaten zu behalten. 
- * 
+ */
+/**
  * Es wird in der 'contact' action von 'SiteController' verwendet.
  */
 /* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch

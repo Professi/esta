@@ -32,7 +32,7 @@
 <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
                                     Reports <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
-                <span class="label label-info">100</span></a></li>
+                <span class="label label-info">84</span></a></li>
 <li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
                 <ul></ul></a></li>
 <li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
@@ -63,14 +63,11 @@
 <li class="method public "><a href="#method_actionDelete" title="actionDelete :: Deletes a particular model."><span class="description">Deletes a particular model.</span><pre>actionDelete()</pre></a></li>
 <li class="method public "><a href="#method_actionIndex" title="actionIndex :: "><span class="description">actionIndex()
         </span><pre>actionIndex()</pre></a></li>
-<li class="method public "><a href="#method_actionSearch" title="actionSearch :: "><span class="description">actionSearch()
-        </span><pre>actionSearch()</pre></a></li>
+<li class="method public "><a href="#method_actionSearch" title="actionSearch :: Suche fuer Elternkindverknuepfungen anhand von  dem Namen des Erziehungsberechtigten"><span class="description">Suche fuer Elternkindverknuepfungen anhand von  dem Namen des Erziehungsberechtigten</span><pre>actionSearch()</pre></a></li>
 <li class="method public "><a href="#method_actionUpdate" title="actionUpdate :: Updates a particular model."><span class="description">Updates a particular model.</span><pre>actionUpdate()</pre></a></li>
 <li class="method public "><a href="#method_actionView" title="actionView :: Displays a particular model."><span class="description">Displays a particular model.</span><pre>actionView()</pre></a></li>
-<li class="method public "><a href="#method_checkUser" title="checkUser :: "><span class="description">checkUser()
-        </span><pre>checkUser()</pre></a></li>
-<li class="method public "><a href="#method_filters" title="filters :: "><span class="description">filters()
-        </span><pre>filters()</pre></a></li>
+<li class="method public "><a href="#method_checkUser" title="checkUser :: Prüft ob das Kind zum User gehört."><span class="description">Prüft ob das Kind zum User gehört.</span><pre>checkUser()</pre></a></li>
+<li class="method public "><a href="#method_filters" title="filters :: Filtermethoden"><span class="description">Filtermethoden</span><pre>filters()</pre></a></li>
 <li class="method public "><a href="#method_loadModel" title="loadModel :: Returns the data model based on the primary key given in the GET variable."><span class="description">Returns the data model based on the primary key given in the GET variable.</span><pre>loadModel()</pre></a></li>
 </ul>
 </li>
@@ -157,14 +154,15 @@ GNU General Public License for more details.</p>
 <div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
 </div>
 <a id="method_actionSearch"></a><div class="element clickable method public method_actionSearch" data-toggle="collapse" data-target=".method_actionSearch .collapse">
-<h2>actionSearch()
-        </h2>
-<pre>actionSearch($term) </pre>
+<h2>Suche fuer Elternkindverknuepfungen anhand von  dem Namen des Erziehungsberechtigten</h2>
+<pre>actionSearch(string $term) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <div class="long_description"></div>
 <h3>Parameters</h3>
-<div class="subelement argument"><h4>$term</h4></div>
+<div class="subelement argument">
+<h4>$term</h4>
+<code>string</code><p>echo JSON</p></div>
 </div></div>
 </div>
 <a id="method_actionUpdate"></a><div class="element clickable method public method_actionUpdate" data-toggle="collapse" data-target=".method_actionUpdate .collapse">
@@ -192,19 +190,22 @@ GNU General Public License for more details.</p>
 </div></div>
 </div>
 <a id="method_checkUser"></a><div class="element clickable method public method_checkUser" data-toggle="collapse" data-target=".method_checkUser .collapse">
-<h2>checkUser()
-        </h2>
-<pre>checkUser($parentChildId) </pre>
+<h2>Prüft ob das Kind zum User gehört.</h2>
+<pre>checkUser(integer $parentChildId) : boolean</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <div class="long_description"></div>
 <h3>Parameters</h3>
-<div class="subelement argument"><h4>$parentChildId</h4></div>
+<div class="subelement argument">
+<h4>$parentChildId</h4>
+<code>integer</code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
 </div></div>
 </div>
 <a id="method_filters"></a><div class="element clickable method public method_filters" data-toggle="collapse" data-target=".method_filters .collapse">
-<h2>filters()
-        </h2>
+<h2>Filtermethoden</h2>
 <pre>filters() : array</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
@@ -285,7 +286,7 @@ GNU General Public License for more details.</p>
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a12</a> and<br>
-            generated on 2013-03-19T13:53:19+01:00.<br></footer></div>
+            generated on 2013-03-19T19:51:07+01:00.<br></footer></div>
 </div>
 </body>
 </html>

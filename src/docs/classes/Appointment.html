@@ -32,7 +32,7 @@
 <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
                                     Reports <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
-                <span class="label label-info">100</span></a></li>
+                <span class="label label-info">84</span></a></li>
 <li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
                 <ul></ul></a></li>
 <li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
@@ -58,7 +58,8 @@
                     <ul>
 <li class="method public "><a href="#method_afterValidate" title="afterValidate :: Prüft ob der Lehrer vorhanden ist, ob der vermeintlich gewählte Lehrer überhaupt die Rolle hat und prüft ob die Elternkindverknüpfung existiert."><span class="description">Prüft ob der Lehrer vorhanden ist, ob der vermeintlich gewählte Lehrer überhaupt die Rolle hat und prüft ob die Elternkindverknüpfung existiert.</span><pre>afterValidate()</pre></a></li>
 <li class="method public "><a href="#method_attributeLabels" title="attributeLabels :: Attributlabels"><span class="description">Attributlabels</span><pre>attributeLabels()</pre></a></li>
-<li class="method public "><a href="#method_beforeSave" title="beforeSave :: Prüft ob die maximal Anzahl von Terminen überschritten wurde"><span class="description">Prüft ob die maximal Anzahl von Terminen überschritten wurde</span><pre>beforeSave()</pre></a></li>
+<li class="method public "><a href="#method_beforeSave" title="beforeSave :: Prüft ob die maximal Anzahl von Terminen überschritten wurde und ob der Benutzer bereits zu dieser Uhrzeit einen Termin hat"><span class="description">Prüft ob die maximal Anzahl von Terminen überschritten wurde und ob der Benutzer bereits zu dieser Uhrzeit einen Termin hat</span><pre>beforeSave()</pre></a></li>
+<li class="method public "><a href="#method_customSearch" title="customSearch :: Prüft auf genau die User ID die festgelegt wurde"><span class="description">Prüft auf genau die User ID die festgelegt wurde</span><pre>customSearch()</pre></a></li>
 <li class="method public "><a href="#method_model" title="model :: Returns the static model of the specified AR class."><span class="description">Returns the static model of the specified AR class.</span><pre>model()</pre></a></li>
 <li class="method public "><a href="#method_relations" title="relations :: Relationen (dateAndTime, parentChild, user)"><span class="description">Relationen (dateAndTime, parentChild, user)</span><pre>relations()</pre></a></li>
 <li class="method public "><a href="#method_rules" title="rules :: Regeln für die Validierung"><span class="description">Regeln für die Validierung</span><pre>rules()</pre></a></li>
@@ -120,7 +121,7 @@ GNU General Public License for more details.</p>
 </div></div>
 </div>
 <a id="method_beforeSave"></a><div class="element clickable method public method_beforeSave" data-toggle="collapse" data-target=".method_beforeSave .collapse">
-<h2>Prüft ob die maximal Anzahl von Terminen überschritten wurde</h2>
+<h2>Prüft ob die maximal Anzahl von Terminen überschritten wurde und ob der Benutzer bereits zu dieser Uhrzeit einen Termin hat</h2>
 <pre>beforeSave() : boolean</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
@@ -131,6 +132,17 @@ GNU General Public License for more details.</p>
 </tr></table>
 <h3>Returns</h3>
 <div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
+<a id="method_customSearch"></a><div class="element clickable method public method_customSearch" data-toggle="collapse" data-target=".method_customSearch .collapse">
+<h2>Prüft auf genau die User ID die festgelegt wurde</h2>
+<pre>customSearch() : \CActiveDataProvider</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\CActiveDataProvider</code>gibt Datensätze mit der user_id aus</div>
 </div></div>
 </div>
 <a id="method_model"></a><div class="element clickable method public method_model" data-toggle="collapse" data-target=".method_model .collapse">
@@ -199,7 +211,7 @@ GNU General Public License for more details.</p>
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a12</a> and<br>
-            generated on 2013-03-19T13:53:19+01:00.<br></footer></div>
+            generated on 2013-03-19T19:51:07+01:00.<br></footer></div>
 </div>
 </body>
 </html>

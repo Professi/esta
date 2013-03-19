@@ -171,5 +171,16 @@ class ParentChild extends CActiveRecord {
         $criteria->limit = 10;
         return $criteria;
     }
-
+    /**
+     * Prüft ob der angegebene Benutzer überhaupt existiert
+     * @return boolean 
+     */
+    public function afterValidate() {
+        $rc = parent::afterValidate();
+        if($rc && User::model()->countByAttributes(array('user_id'=>$this->user_id))  != '1') {
+            $rc = false;
+            $this->addError('user_id', 'Der angegebene Benutzer existiert nicht.');
+        }
+        return $rc;
+    }
 }
