@@ -235,9 +235,7 @@ class AppointmentController extends Controller {
         if (is_int($dateMax)) {
             $a_dates = Date::model()->findAll('', array('LIMIT ' . $dateMax));
             foreach ($a_dates as $record) {
-                $criteria = new CDbCriteria();
-                $criteria->addCondition(array('date_id' => $record->id));
-                $a_groupOfDateAndTimes[] = array(DateAndTime::model()->findAll($criteria, array('LIMIT ' . $dateMax)));
+                $a_groupOfDateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id'=>$record->id));
             }
         }
         return $a_groupOfDateAndTimes;
@@ -247,13 +245,13 @@ class AppointmentController extends Controller {
      * Prüft ob ein Termin bereits belegt ist
      * @param integer $teacher User_ID des Lehrers
      * @param integer $dateAndTimeId ID des dateAndTime
-     * @return array Gibt BELEGT,false oder Verfügbar,true zurück,
+     * @return array Gibt BELEGT,0 oder Verfügbar,1 zurück,
      */
     public function isAppointmentAvailable($teacher, $dateAndTimeId) {
-       $rc = array("BELEGT",false);
+       $rc = array("BELEGT",0);
         if (is_int($teacher) && is_int($dateAndTimeId)) {
             if(!Appointment::model()->countByAttributes(array('user_id' => $teacher, 'dateAndTime_id' => $dateAndTimeId->id)) == 1) {
-                $rc = array("VERF&Uuml;gbar",true);
+                $rc = array("VERF&Uuml;gbar",1);
             }
         }
         return $rc;
