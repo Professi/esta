@@ -241,11 +241,14 @@ class User extends CActiveRecord {
                 $tan->update();
             }
             $userRole = New UserRole();
+            $userRole->unsetAttributes();
             $userRole->user_id = $this->id;
             if (Yii::app()->user->isGuest) {
-                $userRole->role_id = Role::model()->findByAttributes(array('title' => 'Eltern'))->id;
+                $userRole->role_id = 3;
+            } else if (is_int($this->role) && $this->role <= 3 && $this->role >= 0) {
+                $userRole->role_id = $this->role;
             } else {
-                $userRole->role_id = Role::model()->findByAttributes(array('id' => $this->role))->id;
+                $userRole->role_id = 3;
             }
             $userRole->save();
         } else {
