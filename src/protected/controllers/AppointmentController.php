@@ -57,7 +57,7 @@ class AppointmentController extends Controller {
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('admin', 'delete', 'view', 'create'),
-                'roles' => array('1'),
+                'roles' => array('0','1'),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
@@ -81,16 +81,11 @@ class AppointmentController extends Controller {
      */
     public function actionCreate() {
         $model = new Appointment;
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['Appointment'])) {
             $model->attributes = $_POST['Appointment'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
-
         $this->render('create', array(
             'model' => $model,
         ));
@@ -147,6 +142,7 @@ class AppointmentController extends Controller {
         ));
     }
 
+    
     /**
      * Deletes a particular model.
      * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -256,5 +252,5 @@ class AppointmentController extends Controller {
         }
         return $rc;
     }
-
+    
 }

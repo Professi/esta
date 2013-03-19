@@ -38,7 +38,7 @@ if (Yii::app()->user->checkAccess(1)) {
         <div class="ten columns">
             <?php
             $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                'name' => 'user_id',
+                'name' => 'ParentChild[user_id]',
                 'sourceUrl' => 'index.php?r=user/search&role=3',
                 'options' => array(
                     'minLength' => '2',

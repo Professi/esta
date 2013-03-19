@@ -22,7 +22,6 @@
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'appointment-form',
-	'enableAjaxValidation'=>false,
 )); ?>
 	<div class="row collapse">
             <div class="two columns">
@@ -31,10 +30,10 @@
             <div class="ten columns">
 		            <?php
                             $this->widget('zii.widgets.jui.CJuiAutoComplete',array(
-                                'name'=>'dateAndTime_id',
+                                'name'=>'Appointment[dateAndTime_id]',
                                 'sourceUrl'=>'index.php?r=date/search',
                                 'options'=>array(
-                                    'minLength'=>'2',
+                                    'minLength'=>'1',
                                 ),
                                 'htmlOptions'=>array(
                                 ),
@@ -51,10 +50,10 @@
             <div class="ten columns">
 		            <?php
             $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                'name' => 'parent_child_id',
+                'name' => 'Appointment[parent_child_id]',
                 'sourceUrl' => 'index.php?r=ParentChild/search',
                 'options' => array(
-                    'minLength' => '2',
+                    'minLength' => '1',
                 ),
                 'htmlOptions' => array(
                 ),
@@ -72,10 +71,10 @@
                 
 		            <?php
                             $this->widget('zii.widgets.jui.CJuiAutoComplete',array(
-                                'name'=>'user_id',
+                                'name'=>'Appointment[user_id]',
                                 'sourceUrl'=>'index.php?r=user/search&role=2',
                                 'options'=>array(
-                                    'minLength'=>'2',
+                                    'minLength'=>'1',
                                 ),
                                 'htmlOptions'=>array(
                                 ),
