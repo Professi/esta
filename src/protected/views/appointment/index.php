@@ -38,6 +38,6 @@ $this->menu=array(
 	'itemView'=>'_view',
         
 )); ?>
-        <span id="print_button" class="nav-icons small button" aria-hidden="true" data-icon="&#xe001;" onClick="window.print();">&nbsp;Drucken</span>
+        <span id="print_button" class="nav-icons small button js_show" aria-hidden="true" data-icon="&#xe001;" onClick="window.print();">&nbsp;Drucken</span>
     </div>
 </div>
