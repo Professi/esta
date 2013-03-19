@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Dies ist die Controller Klasse von Model Appointment.
  */
@@ -98,7 +97,6 @@ class AppointmentController extends Controller {
 
     /**
      * Prüft ob per GET ein Buchstabe übergeben wurde wenn dies der Fall ist
-     *
      * wird die entsprechende Suchanfrage gesendet und rendert das GridView
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
@@ -224,10 +222,24 @@ class AppointmentController extends Controller {
         }
         return $a_rc;
     }
-    
+
     /**
-     * 
-     * 
+     * Liefert das Datum mit DateAndTime
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param integer $dateMax Maximal Anzahl der Elternsprechtage für die DateAndTimes gefunden werden sollen
+     * @return array Enthält Arrays welche n-DateAndTimes enthalten
      */
+    public function getDatesWithTimes($dateMax) {
+        $a_groupOfDateAndTimes = array();
+        if (is_int($dateMax)) {
+            $a_dates = Date::model()->findAll('', array('LIMIT ' . $dateMax));
+            foreach ($a_dates as $record) {
+                $criteria = new CDbCriteria();
+                $criteria->addCondition(array('date_id' => $record->id));
+                $a_groupOfDateAndTimes[] = array(DateAndTime::model()->findAll($criteria, array('LIMIT ' . $dateMax)));
+            }
+        }
+        return $a_groupOfDateAndTimes;
+    }
 
 }
