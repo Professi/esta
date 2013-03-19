@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Dies ist die Controller Klasse von Model Appointment.
  */
@@ -240,6 +241,22 @@ class AppointmentController extends Controller {
             }
         }
         return $a_groupOfDateAndTimes;
+    }
+
+    /**
+     * Prüft ob ein Termin bereits belegt ist
+     * @param integer $teacher User_ID des Lehrers
+     * @param integer $dateAndTimeId ID des dateAndTime
+     * @return array Gibt BELEGT,false oder Verfügbar,true zurück,
+     */
+    public function isAppointmentAvailable($teacher, $dateAndTimeId) {
+       $rc = array("BELEGT",false);
+        if (is_int($teacher) && is_int($dateAndTimeId)) {
+            if(!Appointment::model()->countByAttributes(array('user_id' => $teacher, 'dateAndTime_id' => $dateAndTimeId->id)) == 1) {
+                $rc = array("VERF&Uuml;gbar",true);
+            }
+        }
+        return $rc;
     }
 
 }

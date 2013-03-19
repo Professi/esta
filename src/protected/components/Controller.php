@@ -1,6 +1,6 @@
 <?php
 /**
- * Controller is the customized base controller class.
+ * Controller ist die angepasste Basis CController Klasse
  *
  *  All controller classes for this application should extend from this base class.
  */
