@@ -45,7 +45,7 @@ class DateController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => 'search',
+                'actions' => array('search'),
                 'roles' => array(1)
             ),
             array('allow',
