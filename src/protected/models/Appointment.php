@@ -179,11 +179,11 @@ class Appointment extends CActiveRecord {
 
     public function beforeDelete() {
         $rc = parent::beforeDelete();
-        if ($rc && Yii::app()->checkAccessNotAdmin('2')) {
+        if ($rc && Yii::app()->user->checkAccessNotAdmin('2')) {
             if ($this->user_id != Yii::app()->user->getId()) {
                 $rc = false;
             }
-        } else if ($rc && Yii::app()->checkAccessNotAdmin('3')) {
+        } else if ($rc && Yii::app()->user->checkAccessNotAdmin('3')) {
             if ($this->parentChild->user_id != Yii::app()->user->id) {
                 $rc = false;
             }

@@ -307,8 +307,6 @@ class UserController extends Controller {
                     Yii::app()->user->setFlash('success', "Sie konnten sich erfolgreich registrieren. Sie erhalten nun eine E-Mail mit der Sie Ihren Account aktivieren können.");
                     $mail = new Mail();
                     $mail->sendActivationLinkMail($model->email, $model->activationKey);
-                    $mail->sendMail(Yii::app()->params['fromMail'] . ' Accountaktivierung', "Willkommen bei der " . Yii::app()->name . ". Ihr Accountname lautet: " . $model->email . "\n Bitte aktivieren Sie ihren Account anhand folgendem Links:\n "
-                            . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "index.php?r=/User/activate&activationKey=" . $model->activationKey, $model->email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
                     $this->redirect(array('site/login'));
                 }
             } else {
@@ -326,7 +324,7 @@ class UserController extends Controller {
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id) {
-                    $model = $this->loadModel($id);
+        $model = $this->loadModel($id);
         if ((!Yii::app()->user->isAdmin() && $model->role != '0') || Yii::app()->user->isAdmin()) {
             if (isset($_POST['User'])) {
                 $model->setAttributes($_POST['User']);

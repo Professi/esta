@@ -167,7 +167,7 @@ class AppointmentController extends Controller {
      * Terminübersicht für Lehrer/Eltern, haben jeweils ein View
      */
     public function actionIndex() {
-        if (Yii::app()->checkAccessNotAdmin('2')) {
+        if (Yii::app()->user->checkAccessNotAdmin('2')) {
             $dataProvider = new Appointment('customSearch');
             $dataProvider->user_id = Yii::app()->user->getId();
             $this->render('indexTeacher', array(
