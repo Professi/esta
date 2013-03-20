@@ -27,7 +27,6 @@
     $(document).ready(function() {
         $('.button-group > li > a').addClass('small button');
         $('.button-group > li.disabled > a').addClass('disabled');
-        
         $('#MenuModal').append($('.nojs_menu').clone()).html();
         $('#MenuModal ul').attr('class', 'nav-bar vertical');
         $('#MenuModal ul').attr('style', 'display:inherit;');
