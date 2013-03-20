@@ -46,7 +46,7 @@ class ParentChildController extends Controller {
                 'roles' => array('1'),
             ),
             array('allow',
-                'actions' => array('create', 'index', 'update'),
+                'actions' => array('create', 'index', 'delete'),
                 'roles' => array('3'),
             ),
             array('deny',

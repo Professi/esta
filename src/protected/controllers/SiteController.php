@@ -71,7 +71,8 @@ class SiteController extends Controller {
             if ($model->validate()) {
                 $name = '=?UTF-8?B?' . base64_encode($model->name) . '?=';
                 $subject = '=?UTF-8?B?' . base64_encode($model->subject) . '?=';
-                Mail::sendMail($subject, $model->body, Yii::app()->params['adminEmail'], $model->email, $name);
+                $mail = new Mail;
+                $mail->sendMail($subject, $model->body, Yii::app()->params['adminEmail'], $model->email, $name);
                 Yii::app()->user->setFlash('contact', 'Vielen Dank dass Sie uns kontaktieren. Wir werden Ihnen so schnell wie möglich antworten.');
                 $this->refresh();
             }
@@ -111,7 +112,7 @@ class SiteController extends Controller {
             // display the login form
             $this->render('login', array('model' => $model));
         } else {
-            $this->redirect('index.php?r=User/view&id=' . Yii::app()->user->getId());
+            $this->redirect('index.php?r=User/account');
         }
     }
 

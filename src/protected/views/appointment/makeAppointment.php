@@ -137,7 +137,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row collapse">
+                <div class="row .'_collapse">
                         <div class="two columns">
                                 <span class="prefix">Für</span>
                         </div>

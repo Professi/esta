@@ -3,9 +3,6 @@
 /**
  * Mail ist eine Klasse um Mails zu versenden die die Extension EMailer versendet
  */
-/**
- * All controller classes for this application should extend from this base class.
- */
 /* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -30,7 +27,7 @@ class Mail {
      * @param string $from Absender der Nachricht
      * @param string $fromName Absendername
      */
-    public static function sendMail($subject, $message, $to, $from, $fromName) {
+    public function sendMail($subject, $message, $to, $from, $fromName) {
         $mailer = Yii::createComponent('application.extensions.mailer.EMailer');
         $mailer->Host = Yii::app()->params['emailHost'];
         $mailer->IsSMTP();
