@@ -194,4 +194,15 @@ class Appointment extends CActiveRecord {
         return $rc;
     }
 
+    /**
+     * Nach dem der Termin gelöscht wurde, wird eine Infomail an die Eltern versendet.
+     */
+    public function afterDelete() {
+        $rc = parent::afterDelete();
+        if ($rc) {
+            $mail = new Mail;
+            $mail->sendAppointmentDeleted($this->parentChild->user->email, $this->user, $this->dateAndTime->time, $this->parentChild->child, $this->dateAndTime->date->date);
+        }
+    }
+
 }
