@@ -100,7 +100,7 @@ class TanController extends Controller {
             $model->attributes = $_POST['Tan'];
             if ($model->validate()) {
                 Yii::app()->session['isTanGen'] = 1;
-                $dataProvider = new CArrayDataProvider(self::generateTan($model->getTanCount()), array('pagination' => array('pageSize' => Yii::app()->params['maxTanGen'])));
+                $dataProvider = new CArrayDataProvider(self::generateTan($model->tan_count), array('pagination' => array('pageSize' => Yii::app()->params['maxTanGen'])));
                 $this->render('showGenTans', array('dataProvider' => $dataProvider));
             } else {
                 $this->render('formGenTans', array('model' => $model));
