@@ -85,6 +85,9 @@
                     case 3:
                         $column_count = 'four';
                         break;
+                    default :
+                        $column_count = 'four';
+                        break;
                 }
                 foreach ($arr_tabs as $key => $value) {
                     ?>
