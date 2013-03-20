@@ -84,7 +84,7 @@ class User extends CActiveRecord {
             array('email', "unique"),
             array('state', 'numerical', 'integerOnly' => true),
             array('firstname, lastname, email', 'length', 'max' => 45),
-            array('email', 'length', 'max'=> 45),
+            array('email', 'length', 'max' => 45),
             array('password', 'length', 'max' => 128, 'min' => 8),
             array('tan', 'length',
                 'min' => Yii::app()->params['tanSize'],
@@ -322,11 +322,12 @@ class User extends CActiveRecord {
             $this->lastname = ucfirst($this->lastname);
             $this->firstname = ucfirst($this->firstname);
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
-            print_r($this->password);
         } else if (!$this->isNewRecord && $this->password == User::model()->findByAttributes(array('id' => $this->id, 'password' => $this->password))) {
             
         } else if (!$this->isNewRecord && $this->password == "dummyPassworddummyPassword") {
             $this->password = User::model()->findByAttributes(array('id' => $this->id))->password;
+        } else if (!$this->isNewRecord && $this->state != User::model()->findByPk($this->id)->state) {
+            
         } else {
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
         }
