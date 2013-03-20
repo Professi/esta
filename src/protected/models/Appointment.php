@@ -182,7 +182,10 @@ class Appointment extends CActiveRecord {
 
         return $rc;
     }
-
+/**
+ * Prüft ob der Benutzer die Berechtigung zum löschen von dem Termin hat
+ * @return boolean
+ */
     public function beforeDelete() {
         $rc = parent::beforeDelete();
         if ($rc && Yii::app()->user->checkAccessNotAdmin('2')) {
