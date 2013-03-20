@@ -71,7 +71,7 @@ class SiteController extends Controller {
             if ($model->validate()) {
                 $name = '=?UTF-8?B?' . base64_encode($model->name) . '?=';
                 $subject = '=?UTF-8?B?' . base64_encode($model->subject) . '?=';
-                self::sendMail($subject, $model->body, Yii::app()->params['adminEmail'], $model->email, $name);
+                Mail::sendMail($subject, $model->body, Yii::app()->params['adminEmail'], $model->email, $name);
                 Yii::app()->user->setFlash('contact', 'Vielen Dank dass Sie uns kontaktieren. Wir werden Ihnen so schnell wie möglich antworten.');
                 $this->refresh();
             }
@@ -121,27 +121,6 @@ class SiteController extends Controller {
     public function actionLogout() {
         Yii::app()->user->logout();
         $this->redirect(Yii::app()->homeUrl);
-    }
-
-    /**
-     * Versendet eine E-Mail
-     * @param string $subject Betreff einer E-Mail
-     * @param string $message Nachricht einer E-Mail
-     * @param string $to Empfänger der Nachricht
-     * @param string $from Absender der Nachricht
-     * @param string $fromName Absendername
-     */
-    public static function sendMail($subject, $message, $to, $from, $fromName) {
-        $mailer = Yii::createComponent('application.extensions.mailer.EMailer');
-        $mailer->Host = Yii::app()->params['emailHost'];
-        $mailer->IsSMTP();
-        $mailer->From = $from;
-        $mailer->AddAddress($to);
-        $mailer->FromName = $fromName;
-        $mailer->CharSet = 'UTF-8';
-        $mailer->Subject = $subject;
-        $mailer->Body = $message;
-        $mailer->Send();
     }
 
 }

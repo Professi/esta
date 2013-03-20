@@ -50,7 +50,7 @@ class AppointmentController extends Controller {
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
-                'actions' => array('index'),
+                'actions' => array('index','delete'),
                 'roles' => array('2')
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions

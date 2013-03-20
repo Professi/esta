@@ -166,10 +166,17 @@ class Appointment extends CActiveRecord {
                 Yii::app()->user->setFlash('success', 'Ihr Termin wurde erfolgreich gebucht.');
             }
         }
-        
-        
-        
         return $rc;
     }
 
+    public function beforeDelete() {
+        $rc = parent::beforeDelete();
+        if(Yii::app()->user->checkAccess('2') && !Yii::app()->user->isAdmin()) {
+            if($this->user_id != Yii::app()->user->getId()) {
+                $rc = false;
+                }
+        }
+    }
+    
+    
 }
