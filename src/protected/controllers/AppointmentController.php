@@ -169,8 +169,6 @@ class AppointmentController extends Controller {
     public function actionIndex() {
         if (Yii::app()->user->checkAccess('2') && !Yii::app()->user->isAdmin()) {
             $dataProvider = new Appointment('customSearch');
-            $criteria = new CDbCriteria();
-            $criteria->addCondition(array('user_id'=>Yii::app()->user->id));
             $dataProvider->user_id = Yii::app()->user->getId();
             $this->render('indexTeacher', array(
                 'dataProvider' => $dataProvider->customSearch()
