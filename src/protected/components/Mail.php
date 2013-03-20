@@ -35,6 +35,7 @@ class Mail {
         $mailer->AddAddress($to);
         $mailer->FromName = $fromName;
         $mailer->CharSet = 'UTF-8';
+        $mailer->ContentType = 'text/html';
         $mailer->Subject = $subject;
         $mailer->Body = $message;
         $mailer->Send();
