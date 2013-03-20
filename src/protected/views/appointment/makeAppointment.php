@@ -56,6 +56,9 @@
             $select_content .= '</optgroup>';
             $tabs_content .= '</tbody></table>';
             $arr_tabs[$tabs_name] = $tabs_content;
+            if ($tabs_ui_id == 3) {
+                break;
+            }
         }
         $select_content .= '</select>';
         ?>
