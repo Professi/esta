@@ -246,7 +246,10 @@ class AppointmentController extends Controller {
     public function getDatesWithTimes($dateMax) {
         $a_groupOfDateAndTimes = array();
         if (is_int($dateMax)) {
-            $a_dates = Date::model()->findAll('', array('LIMIT ' . $dateMax . 'ORDER BY `date` ASC '));
+            $criteria = new CDbCriteria();
+            $criteria->limit = $dateMax;
+            $criteria->order = 'date ASC';
+            $a_dates = Date::model()->findAll($criteria);
             foreach ($a_dates as $record) {
                 $a_groupOfDateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
             }
