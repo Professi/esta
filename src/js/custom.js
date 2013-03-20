@@ -27,9 +27,12 @@
     $(document).ready(function() {
         $('.button-group > li > a').addClass('small button');
         $('.button-group > li.disabled > a').addClass('disabled');
-        $('#MenuModal').html($('#nojs_menu > div').html());
+        
+        $('#MenuModal').append($('.nojs_menu').clone()).html();
+        $('#MenuModal ul').attr('class', 'nav-bar vertical');
+        $('#MenuModal ul').attr('style', 'display:inherit;');
         $('#MenuModal').append('<a class="close-reveal-modal" data-icon="&#xe014;" style="color:#fff;"></a>');
-        $('#nojs_menu > div').remove();
+        
 
     });
     

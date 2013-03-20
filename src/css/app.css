@@ -35,10 +35,11 @@ html, body {
 	font-size: 44px;
 	font-weight: bold;
 	color:#fff;
-	background-image:url(../img/tafel2.png);
+	background-image:url(../img/tafel.png);
 	padding: .1em 0 .1em .3em;
 	background-repeat: no-repeat;
 	height: 60px;
+        width: 6.5em;
 	line-height: 1.1;
 	margin-bottom: 14px;
 	margin-top: 14px;
@@ -74,11 +75,11 @@ html, body {
 	top: .2em
 }
 #nojs_menu {
-	position: absolute;
+/*	position: absolute;
 	float: left;
-        font-size: 1em;
+        font-size: 1em;*/
 }
-#nojs_menu>div>ul>li>a>.nav-icons {
+.nojs_menu>div>ul>li>a>.nav-icons {
     font-size: 1em;
 }
 table {
@@ -86,6 +87,16 @@ table {
 }
 .js_show {
 	display: none;
+}
+.nav-bar.nojs_menu {
+    margin-top: 0;
+    padding-bottom: 4em;
+    padding-top: 3em;
+}
+.nav-bar.nojs_menu  > li {
+    top: -2em;
+    border: none;
+    line-height: 32px;
 }
 .nav-bar.vertical {
 	border-radius: 5px;

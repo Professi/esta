@@ -33,8 +33,8 @@
     <div class="wrapper">
         <!-- HEADER -->
         <div class="row contain-to-grid">
-            <div class="five mobile-four columns offset-by-one">
-                <div class="header">Elternsprechtag&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div class="twelve columns offset-by-one">
+                <div class="header"></div>
                 <div class="header-school-logo">
                     <div id="logo_artikel">der&nbsp;&nbsp;</div>
                     <div id="logo_school_border">
@@ -51,13 +51,12 @@
                     </a>
                 </div>
             </div> <? } ?>
-        <div class="push"></div>
+        
         <?php if (!Yii::app()->user->isGuest) { ?>
-            <div class="row hide-for-small" id="nojs_menu">
-                <div class="three columns">
+            
                     <?
                     $this->widget('zii.widgets.CMenu', array(
-                        'htmlOptions' => array('class' => 'nav-bar vertical'),
+                        'htmlOptions' => array('class' => 'nav-bar js_hide nojs_menu'),
                         'encodeLabel' => false,
                         'items' => array(//0=Administration 1=Verwaltung 2= Lehrer 3=Eltern
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span>', 'url' => array('/Appointment/index',), 'visible' => !Yii::app()->user->isAdmin() && Yii::app()->user->checkAccessRole('2', '3')),
@@ -75,8 +74,8 @@
                     ));
                     ?>
 
-                </div>
-            </div> <? } ?>
+                 <? } ?>
+        <div class="push"></div>
         <div class="row">
             <div class="twelve columns centered">
                 <?php if (Yii::app()->user->hasFlash('success')) { ?>

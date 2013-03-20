@@ -32,7 +32,7 @@
         $arr_parent_dates = $this->getDatesWithTimes(3); //Magic Number: only the next 3 dates are presented.
         $arr_tabs = null;
         $tabs_ui_id = 0; //id element of the tables, important for jquery from custom.js
-        $select_content = '<select id="form_dateAndTime">'; //the select element which transmits the actual dateAndTime_id
+        $select_content = '<select id="form_dateAndTime" name="Appointment[dateAndTime_id]">'; //the select element which transmits the actual dateAndTime_id
         foreach ($arr_parent_dates as $arr_dates) {
             $tabs_ui_id++;
             $tabs_name = date('d.m.Y',  strtotime($arr_dates[0]->date->date));
@@ -96,8 +96,10 @@
                 }
         ?>
         </div>
+        <?php $form=$this->beginWidget('CActiveForm', array(
+	'id'=>'appointment-form',
+)); ?>
         
-        <form action="" method="post" accept-charset="UTF-8">
             <fieldset>
                 <legend>Termin</legend>
                 <div class="row collapse">
@@ -105,7 +107,7 @@
                                 <span class="prefix">Mit</span>
                         </div>
                         <div class="ten columns mobile-input">
-                                <input id="teacher" type="text" disabled 
+                                <input id="teacher" type="text" disabled name="Appointment[user_id]"
                                  value="<?php echo $model->user->title." ".$model->user->firstname." ".$model->user->lastname ?>" />                                
                         </div>
                 </div>
@@ -141,7 +143,7 @@
                         </div>
                         <div class="ten columns mobile-input">
                                 <div class="styled-select">
-                                        <select>
+                                        <select name="Appointment[parent_child_id]">
                                             <?php
                                             
                                             $arr_child = $this->getChilds($user_id_temp);
@@ -158,6 +160,6 @@
                 <input type="submit" class="button right" value="Best&auml;tigen" />
             </fieldset>
             <input type="hidden" value="<?php echo $model->user->id; ?>" />
-        </form>
+      <?php $this->endWidget(); ?>
     </div>
 </div>
