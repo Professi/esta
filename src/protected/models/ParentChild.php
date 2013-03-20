@@ -49,8 +49,6 @@ class ParentChild extends CActiveRecord {
                 $rc = false;
                 Yii::app()->user->setFlash('failMsg','Es muss mindestens ein Kind eingetragen sein.');
             }
-        } else {
-         Yii::app()->user->setFlash('failMsg','Ungültiges Kind.');   
         }
         if($rc) {
             Appointment::model()->deleteAllByAttributes(array('parent_child_id'=>  $this->id));
@@ -112,7 +110,7 @@ class ParentChild extends CActiveRecord {
      */
     public function rules() {
         return array(
-            array('childFirstName, childLastName', 'required'),
+            array('childFirstName, childLastName,user_id', 'required'),
             array('child_id', 'numerical', 'integerOnly' => true),
             array('user_id', 'length', 'max' => 11),
             array('id, user_id, child_id', 'safe', 'on' => 'search'),

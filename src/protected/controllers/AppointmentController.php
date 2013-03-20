@@ -48,7 +48,7 @@ class AppointmentController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'index', 'view', 'getTeacher', 'makeAppointment'),
+                'actions' => array('create', 'update', 'index', 'view', 'getTeacher', 'makeAppointment','delete'),
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
@@ -167,7 +167,7 @@ class AppointmentController extends Controller {
      * Terminübersicht für Lehrer/Eltern, haben jeweils ein View
      */
     public function actionIndex() {
-        if (Yii::app()->user->checkAccess('2') && !Yii::app()->user->isAdmin()) {
+        if (Yii::app()->checkAccessNotAdmin('2')) {
             $dataProvider = new Appointment('customSearch');
             $dataProvider->user_id = Yii::app()->user->getId();
             $this->render('indexTeacher', array(

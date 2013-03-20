@@ -54,6 +54,21 @@ class WebUser extends CWebUser {
         }
         return ($role1 === $this->getState('role') || $role2 == $this->getState('role'));
     }
+    
+    /**
+     * Prüft ob ein Benutzer der Rolle zugewiesen wurde und ob er nicht Admin ist
+     * @param integer $role Rolle die der Benutzer haben sollte
+     * @return boolean
+     */
+    public function checkAccessNotAdmin($role) {
+        $rc = false;
+        if($this->checkAccess($role) && !$this->isAdmin()) {
+            $rc = true;
+        }
+        return $rc;
+    }
+
+
 
     /**
      * ist der Benutzer ein Administrator?

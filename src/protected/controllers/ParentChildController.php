@@ -1,7 +1,9 @@
 <?php
+
 /**
  * ParentChild Controller für Model ParentChild 
  */
+
 /**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -54,11 +56,12 @@ class ParentChildController extends Controller {
             ),
         );
     }
-/**
- * Suche fuer Elternkindverknuepfungen anhand von  dem Namen des Erziehungsberechtigten 
- * @param string $term
- * echo JSON
- */
+
+    /**
+     * Suche fuer Elternkindverknuepfungen anhand von  dem Namen des Erziehungsberechtigten 
+     * @param string $term
+     * echo JSON
+     */
     public function actionSearch($term) {
         $dataProvider = new ParentChild();
         $dataProvider->unsetAttributes();
@@ -90,7 +93,7 @@ class ParentChildController extends Controller {
             $dataProvider = new CActiveDataProvider('ParentChild');
         } else {
             $dataProvider = new CActiveDataProvider('ParentChild', array(
-                'criteria' => array('condition' => 'user_id=' . 
+                'criteria' => array('condition' => 'user_id=' .
                     Yii::app()->user->getId())));
         }
         $this->render('index', array('dataProvider' => $dataProvider,));
@@ -132,8 +135,8 @@ class ParentChildController extends Controller {
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id) {
+        $model = $this->loadModel($id);
         if (self::checkUser($id)) {
-            $model = $this->loadModel($id);
             $model->childFirstName = $model->child->firstname;
             $model->childLastName = $model->child->lastname;
             if (isset($_POST['ParentChild'])) {
@@ -141,7 +144,6 @@ class ParentChildController extends Controller {
                 if ($model->save())
                     $this->redirect(array('view', 'id' => $model->id));
             }
-
             $this->render('update', array(
                 'model' => $model,
             ));
@@ -177,11 +179,12 @@ class ParentChildController extends Controller {
             'model' => $model,
         ));
     }
-/**
- * Prüft ob das Kind zum User gehört.
- * @param integer $parentChildId
- * @return boolean
- */
+
+    /**
+     * Prüft ob das Kind zum User gehört.
+     * @param integer $parentChildId
+     * @return boolean
+     */
     public function checkUser($parentChildId) {
         $rc = false;
         if (Yii::app()->user->checkAccess('1')) {
