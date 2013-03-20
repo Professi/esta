@@ -27,6 +27,13 @@ class Tan extends CActiveRecord {
 
     /** @var integer Anzahl der TANs die generiert werden sollen */
     public $tan_count = 0;
+    
+    /**
+     *
+     * @var integer ID 
+     */
+    public $id = 0;
+    
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.

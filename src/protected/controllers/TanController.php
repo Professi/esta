@@ -210,6 +210,7 @@ class TanController extends Controller {
             $tan->tan_count = 1;
             if (strlen($tan->tan) == Yii::app()->params['tanSize'] && Tan::model()->countByAttributes(array('tan' => $tan->tan)) == 0) {
                 if ($tan->save()) {
+                    $tan->id = $i;
                     $a_rc[] = $tan;
                 }
             } else {
