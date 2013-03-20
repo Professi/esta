@@ -233,6 +233,7 @@ class UserController extends Controller {
      */
     public function actionNewPw() {
         $model = new NewPw();
+        $model->unsetAttributes();
         if (isset($_POST['NewPw'])) {
             $model->setAttributes($_POST['NewPw']);
             if ($model->validate()) {
@@ -240,6 +241,7 @@ class UserController extends Controller {
                 if ($user !== NULL) {
                     $user->password = $model->password;
                     $user->generateActivationKey();
+                    $user->save();
                     Yii::app()->user->setFlash('success', 'Ihr Passwort konnte erfolgreich geändert werden. Sie können sich nun mit diesem einloggen.');
                 } else {
                     Yii::app()->user->setFlash('success', 'Leider konnte Ihr Passwort aus unerklärlichen Gründen nicht geändert werden.');
