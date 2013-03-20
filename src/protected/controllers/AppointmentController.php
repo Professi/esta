@@ -102,7 +102,6 @@ class AppointmentController extends Controller {
             $search = array('ae', 'oe', 'ue');
             $replace = array('Ä', 'Ö', 'Ü');
             $letter = str_replace($search, $replace, $_GET['letter']);
-            print_r($letter);
             if (strlen($letter) <= 2) {
                 $model->lastname = $letter;
             }

@@ -135,6 +135,8 @@ return array(
         'tanSize' => 6, //Länge der Tans
         'maxTanGen' => 100, //Maximal auf einmal generierbare Anzahl an TANs
         'maxAppointmentsPerChild' => 5, //Maximal Anzahl an Terminen pro Kind
+        'standardTeacherPassword'=> 'DONNERSTAG01', //Standardlehrerpasswort
+        'minLengthPerAppointment' => 5, //Minimallänge eines Termins bei Elternsprechtagserstellung
     )
 );
 

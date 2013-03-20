@@ -56,7 +56,7 @@ class Appointment extends CActiveRecord {
     public function rules() {
         return array(
             array('dateAndTime_id, parent_child_id, user_id', 'required'),
-            array('dateAndTime_id, parent_child_id', 'numerical', 'integerOnly' => true),
+            array('dateAndTime_id, parent_child_id', 'numerical', 'integerOnly' => true,'min'=>Yii::app()->params['minLengthPerAppointment']),
             array('user_id', 'length', 'max' => 11),
             array('id, dateAndTime_id, parent_child_id, user_id', 'safe', 'on' => 'search'),
         );

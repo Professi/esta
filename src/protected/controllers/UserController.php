@@ -199,7 +199,7 @@ class UserController extends Controller {
                                 $model->title = self::encodingString($line[3]);
                                 $model->state = 1;
                                 $model->role = 2;
-                                $model->password = "DONNERSTAG01";
+                                $model->password = Yii::app()->params['standardTeacherPassword'];
                                 $model->password_repeat = $model->password;
                                 $model->save();
                             }
