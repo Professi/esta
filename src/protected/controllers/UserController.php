@@ -326,27 +326,28 @@ class UserController extends Controller {
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id) {
-        $model = $this->loadModel($id);
-        if(Yii::app()->user->checkAccess('1') && !Yii::app()->user->isAdmin() && $model->role != 0) {
-        if (isset($_POST['User'])) {
-            $model->setAttributes($_POST['User']);
-            if ($model->save()) {
-                if (Yii::app()->user->checkAccess('1')) {
-                    Yii::app()->user->setFlash("success", "Benutzer wurde aktualisiert.");
-                    $this->redirect(array('view&id=' . $id), false);
+                    $model = $this->loadModel($id);
+        if ((!Yii::app()->user->isAdmin() && $model->role != '0') || Yii::app()->user->isAdmin()) {
+            if (isset($_POST['User'])) {
+                $model->setAttributes($_POST['User']);
+
+                if ($model->save()) {
+                    if (Yii::app()->user->checkAccess('1')) {
+                        Yii::app()->user->setFlash("success", "Benutzer wurde aktualisiert.");
+                        $this->redirect(array('view&id=' . $id), false);
+                    } else {
+                        Yii::app()->user->setFlash('success', 'Ihr Account wurde aktualisiert.');
+                        $this->redirect(array('account'));
+                    }
                 } else {
-                    Yii::app()->user->setFlash('success', 'Ihr Account wurde aktualisiert.');
-                    $this->redirect(array('account'));
+                    Yii::app()->user->setFlash("failMsg", "Benutzer konnte nicht aktualisiert werden");
                 }
             } else {
-                Yii::app()->user->setFlash("error", "Benutzer konnte nicht aktualisiert werden.");
+                $model->password = "dummyPassworddummyPassword";
+                $model->password_repeat = $model->password;
             }
         } else {
-            $model->password = "dummyPassworddummyPassword";
-            $model->password_repeat = $model->password;
-        }
-        } else {
-            Yii::app()->user->setFlash('failMsg','Sie können Administratorkonten nicht verändern.');
+            Yii::app()->user->setFlash('failMsg', 'Sie können keine Administratorkonten bearbeiten.');
         }
         $this->render('update', array(
             'model' => $model,
