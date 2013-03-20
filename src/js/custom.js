@@ -1,9 +1,7 @@
-;
-(function(window, document, $) {
-    
-    // IE-Hack  http://stackoverflow.com/questions/2612026/disable-javascript-on-ie-browsers
+;// IE-Hack  http://stackoverflow.com/questions/2612026/disable-javascript-on-ie-browsers
     var IE = /*@cc_on!@*/false;
     if (IE) {} else {
+(function(window, document, $) {
 
     $('#js_menu').css('visibility', 'visible');
     $('#nojs_menu').css('display', 'none');
@@ -52,6 +50,6 @@
         }
     });
     
-    }
+   
 }(this, document, jQuery));
-
+ }

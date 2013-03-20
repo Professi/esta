@@ -1,7 +1,10 @@
 ;
+// IE-Hack  http://stackoverflow.com/questions/2612026/disable-javascript-on-ie-browsers
+    var IE = /*@cc_on!@*/false;
+    if (IE) {} else {
 (function($, window, undefined) {
     'use strict';
-
+    
     var $doc = $(document),
             Modernizr = window.Modernizr;
 
@@ -37,3 +40,4 @@
     }
 
 })(jQuery, this);
+    }
