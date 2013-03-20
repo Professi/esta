@@ -55,7 +55,7 @@ class Date extends CActiveRecord {
     public function rules() {
         return array(
             array('date, begin, end, durationPerAppointment', 'required'),
-            array('durationPerAppointment', 'numerical', 'integerOnly' => true),
+            array('durationPerAppointment', 'numerical', 'integerOnly' => true,'min'=>Yii::app()->params['minLengthPerAppointment']),
             array('date', 'date', 'format' => 'dd.MM.yyyy'),
             array('begin,end', 'date', 'format' => 'H:m'),
             array('durationPerAppointment', 'date', 'format' => 'm'),

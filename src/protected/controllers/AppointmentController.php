@@ -123,6 +123,7 @@ class AppointmentController extends Controller {
         $model->user_id = $teacher;
         if (isset($_POST['Appointment'])) {
             $model->attributes = $_POST['Appointment'];
+            $model->validate();
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'Ihr Termin wurde erfolgreich gebucht.');
                 $this->redirect(array('index'));

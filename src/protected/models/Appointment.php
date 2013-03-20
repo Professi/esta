@@ -56,7 +56,7 @@ class Appointment extends CActiveRecord {
     public function rules() {
         return array(
             array('dateAndTime_id, parent_child_id, user_id', 'required'),
-            array('dateAndTime_id, parent_child_id', 'numerical', 'integerOnly' => true,'min'=>Yii::app()->params['minLengthPerAppointment']),
+            array('dateAndTime_id, parent_child_id', 'numerical', 'integerOnly' => true),
             array('user_id', 'length', 'max' => 11),
             array('id, dateAndTime_id, parent_child_id, user_id', 'safe', 'on' => 'search'),
         );
@@ -141,8 +141,6 @@ class Appointment extends CActiveRecord {
             $rc = false;
             Yii::app()->user->setFlash('failMsg','Die angegebene Elternkindverknüpfung existiert nicht.');
         }
-        
-        
         return $rc;
     }
 

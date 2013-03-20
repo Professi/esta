@@ -113,7 +113,7 @@
                                 <span class="prefix">Mit</span>
                         </div>
                         <div class="ten columns mobile-input">
-                                <input id="teacher" type="text" disabled name="Appointment[user_id]"
+                                <input id="Appointment[user_id]" type="text" disabled name="Appointment[user_id]"
                                  value="<?php echo $model->user->title." ".$model->user->firstname." ".$model->user->lastname ?>" />                                
                         </div>
                 </div>

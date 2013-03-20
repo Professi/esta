@@ -43,13 +43,17 @@ class ParentChild extends CActiveRecord {
      * @return boolean Return der Elternmethode
      */
     public function beforeDelete() {
-        $rc = false;
-        if (Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()) {
-            if (ParentChild::model()->countByAttributes(array('user_id' => Yii::app()->user->getId()) > 1)) {
-                $rc = parent::beforeDelete();
+        $rc = parent::beforeDelete();
+        if ($rc && Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin() && $this->user_id == Yii::app()->user->id) {
+            if (ParentChild::model()->countByAttributes(array('user_id' => Yii::app()->user->getId())) <= '1') {
+                $rc = false;
+                Yii::app()->user->setFlash('failMsg','Es muss mindestens ein Kind eingetragen sein.');
             }
-        } else if (Yii::app()->user->isAdmin()) {
-            $rc = parent::beforeDelete();
+        } else {
+         Yii::app()->user->setFlash('failMsg','Ungültiges Kind.');   
+        }
+        if($rc) {
+            Appointment::model()->deleteAllByAttributes(array('parent_child_id'=>  $this->id));
         }
         return $rc;
     }
