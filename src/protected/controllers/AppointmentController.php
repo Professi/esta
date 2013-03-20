@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Dies ist die Controller Klasse von Model Appointment.
  */
@@ -17,6 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * Stellt die Controller Actions des Appointments Models zur Verfügung.
  */
@@ -50,7 +52,7 @@ class AppointmentController extends Controller {
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
-                'actions' => array('index','delete'),
+                'actions' => array('index', 'delete'),
                 'roles' => array('2')
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -171,9 +173,13 @@ class AppointmentController extends Controller {
             ));
         } else {
             $criteria = new CDbCriteria();
-            $pC = ParentChild::model()->findAllByAttributes(array('user_id'=>Yii::app()->user->getId()));
-            foreach ( $pC as $record) {
-                $criteria->addCondition(array('parent_child_id'=>$record->id), 'OR');
+            $pC = ParentChild::model()->findAllByAttributes(array('user_id' => Yii::app()->user->id));
+            if ($pC != null) {
+                foreach ($pC as $record) {
+                    $criteria->addCondition(array('parent_child_id' => $record->id), 'OR');
+                }
+            } else {
+                $criteria->addCondition(array('parent_child_id' => '"impossible"'));
             }
             $dataProvider = new CActiveDataProvider('Appointment', array(
                 'criteria' => $criteria));

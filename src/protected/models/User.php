@@ -84,6 +84,7 @@ class User extends CActiveRecord {
             array('email', "unique"),
             array('state', 'numerical', 'integerOnly' => true),
             array('firstname, lastname, email', 'length', 'max' => 45),
+            array('email', 'length', 'max'=> 45),
             array('password', 'length', 'max' => 128, 'min' => 8),
             array('tan', 'length',
                 'min' => Yii::app()->params['tanSize'],
@@ -267,7 +268,7 @@ class User extends CActiveRecord {
             $userRole = New UserRole();
             $userRole->user_id = $this->id;
             if (Yii::app()->user->isGuest) {
-                $userRole->role_id = Role::model()->findByAttributes(array('title' => 'Eltern'))->id;
+                $userRole->role_id = Role::model()->findByAttributes(array('id' => '3'))->id;
             } else {
                 $userRole->role_id = Role::model()->findByAttributes(array('id' => $this->role))->id;
             }
@@ -321,6 +322,7 @@ class User extends CActiveRecord {
             $this->lastname = ucfirst($this->lastname);
             $this->firstname = ucfirst($this->firstname);
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
+            print_r($this->password);
         } else if (!$this->isNewRecord && $this->password == User::model()->findByAttributes(array('id' => $this->id, 'password' => $this->password))) {
             
         } else if (!$this->isNewRecord && $this->password == "dummyPassworddummyPassword") {

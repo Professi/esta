@@ -121,13 +121,18 @@ class Appointment extends CActiveRecord {
      */
     public function afterValidate() {
         $rc = parent::afterValidate();
-        if ($rc && User::model()->countByAttributes(array('id' => $this->user_id)) != 1 || UserRole::model()->findByAttributes(array('user_id' => $this->user_id))->role_id != 2 || ParentChild::model()->countByAttributes(array('id' => $this->parent_child_id)) != 1) {
+        if ($rc && User::model()->countByAttributes(array('id' => $this->user_id)) != 1 || UserRole::model()->findByAttributes(array('user_id' => $this->user_id))->role_id != 2 ) {
             $rc = false;
             Yii::app()->user->setFlash('failMsg', 'Sie haben keine gültige Lehrkraft ausgewählt.');
         } else if ($rc && Appointment::model()->countByAttributes(array('user_id' => $this->user_id, 'parent_child_id' => $this->parent_child_id)) >= 1) {
             Yii::app()->user->setFlash('failMsg', 'Leider haben Sie bereits einen Termin bei diesem Lehrer gebucht. Daher können Sie keinen weiteren buchen.');
             $rc = false;
         }
+        else if($rc && ParentChild::model()->countByAttributes(array('id' => $this->parent_child_id)) != '1') {
+            $rc = false;
+            Yii::app()->user->setFlash('failMsg', 'Sie müssen ein Kind angeben.');
+        }
+        
         if($rc && DateAndTime::model()->countByAttributes(array('dateAndTime_id'=>  $this->dateAndTime_id)) != '1') {
             $rc = false;
             Yii::app()->user->setFlash('failMsg', 'Der angegebene Termin existiert nicht.');

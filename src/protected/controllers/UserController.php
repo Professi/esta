@@ -307,7 +307,7 @@ class UserController extends Controller {
                     $mail = new Mail();
                     $mail->sendMail(Yii::app()->params['fromMail'] . ' Accountaktivierung', "Willkommen bei der " . Yii::app()->name . ". Ihr Accountname lautet: " . $model->email . "\n Bitte aktivieren Sie ihren Account anhand folgendem Links:\n "
                             . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "index.php?r=/User/activate&activationKey=" . $model->activationKey, $model->email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
-                    $this->redirect(array('site/login'));
+                  //  $this->redirect(array('site/login'));
                 }
             } else {
                 Yii::app()->user->setFlash("error", "Benutzer konnte nicht erstellt werden.");
