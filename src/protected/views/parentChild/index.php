@@ -38,7 +38,11 @@ if(Yii::app()->user->checkAccess(1)) {
     <div class="twelve columns">
         <h2 class="subheader">Ihre Kinder</h2>
         <hr/>
-         
+        <div class="panel hide-for-print">
+            Falls Sie bei der Eingabe ihrer Kinder einen Fehler gemacht haben sollten, 
+            drücken Sie einfach auf das "x" neben dem Namen. 
+            Der Eintrag wird daraufhin entfernt und Sie können eine neue Eingabe über "Schüler hinzufügen" tätigen.
+        </div>
 <?php } ?>
   
   <?php  $this->widget('zii.widgets.CListView', array(

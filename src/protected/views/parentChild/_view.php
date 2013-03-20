@@ -25,8 +25,11 @@
        <ul class="square">
 
     <li>
-	<?php  echo CHtml::encode($data->child->firstname." ".$data->child->lastname); 
-        ?>
+	<?php  echo CHtml::encode($data->child->firstname." ".$data->child->lastname); ?>
+        &nbsp;
+        <a href="index.php?r=parentChild/delete&id=<?php echo $data->child->id ?>">
+            <span class="hide-for-print" aria-hidden="true" data-icon="&#xe014;">&nbsp;</span>
+        </a>
     </li>
 
         </ul>

@@ -6,13 +6,22 @@
     $('.js_show').toggle();
     $('.js_hide').toggle();
 
+    $('.avaiable').css('cursor', 'pointer');
     $('.avaiable').on('click', function() {
-
         $id = $(this).attr('id');
-        $date = 'date' + $id.substr(($id.indexOf('-') + 1), 1);
-        $time = $id.substring(0, ($id.indexOf('-')));
-        $('#form_date').val($('#' + $date).text());
-        $('#form_time').val($('#' + $time).text());
+        $date = $id.substr(0,($id.indexOf('_')));
+        $time = 'time-' + $id;
+        $date_text = $('#' + $date).text();
+        $time_text = $('#' + $time).text();
+        $('#form_date').val($date_text);
+        $('#form_time').val($time_text);
+        $('#form_dateAndTime').children().each(function(i, $this){
+           $($this).children().each(function(i, $this) {
+              if ($($this).text().match($date_text+' - '+$time_text)) {
+                $this['selected'] = true;  
+              };
+           });
+        });
     });
 
     $(document).ready(function() {

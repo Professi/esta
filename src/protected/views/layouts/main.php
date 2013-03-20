@@ -22,6 +22,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width">
+    <link rel="icon" href="<?php echo Yii::app()->request->baseUrl; ?>/favicon.ico">
     <?php Yii::app()->clientScript->registerPackage('css'); ?>
     <?php Yii::app()->clientScript->registerPackage('javascript'); ?>
     <link rel="stylesheet" type="text/css" media="print" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css">
@@ -36,7 +37,9 @@
                 <div class="header">Elternsprechtag&nbsp;&nbsp;&nbsp;&nbsp;</div>
                 <div class="header-school-logo">
                     <div id="logo_artikel">der&nbsp;&nbsp;</div>
-                    <img id="logo_school" src="<?php echo Yii::app()->request->baseUrl; ?>/img/logo.svg" alt="<?php echo Yii::app()->params['schoolName']?>">
+                    <div id="logo_school_border">
+                        <img id="logo_school" src="<?php echo Yii::app()->request->baseUrl; ?>/img/logo.svg" alt="<?php echo Yii::app()->params['schoolName']?>">
+                    </div>
                 </div>
             </div>
         </div>
@@ -92,10 +95,13 @@
         ?>
         <div class="push"></div>
     </div> <!-- /WRAPPER -->
+    
     <!-- FOOTER -->
     <div id="footer">
         <div class="row">
-            <div class="twelve columns"><hr />
+            <div class="twelve columns">
+                <span id="print_button" class="nav-icons small button js_show" aria-hidden="true" data-icon="&#xe001;" onClick="window.print();">&nbsp;Drucken</span>
+                <hr />
                 <div class="row">
                     <div class="six columns">
                         <p>Copyright &copy; <?php echo date('Y'); ?> BWS Brühlwiesenschule Hofheim<br>
