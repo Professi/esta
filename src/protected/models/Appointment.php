@@ -109,7 +109,7 @@ class Appointment extends CActiveRecord {
      */
     public function customSearch() {
         $criteria = new CDbCriteria();
-        $criteria->addCondition('user_id',$this->user_id);
+        $criteria->addCondition(array('user_id='.$this->user_id));
         return new CActiveDataProvider($this, array('criteria'=>$criteria));
     }
     
@@ -174,11 +174,13 @@ class Appointment extends CActiveRecord {
 
     public function beforeDelete() {
         $rc = parent::beforeDelete();
-        if(Yii::app()->user->checkAccess('2') && !Yii::app()->user->isAdmin()) {
+        if($rc && Yii::app()->user->checkAccess('2') && !Yii::app()->user->isAdmin()) {
             if($this->user_id != Yii::app()->user->getId()) {
                 $rc = false;
+                Yii::app()->user->setFlash('failMsg','Keine Berechtigung um diesen Termin zu löschen.');
                 }
         }
+        return $rc;
     }
     
     

@@ -156,10 +156,11 @@ class AppointmentController extends Controller {
      */
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
-
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if (!isset($_GET['ajax']))
+        if (Yii::app()->user->isAdmin()) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        } else {
+            $this->redirect('index.php?r=/appointment/index');
+        }
     }
 
     /**
@@ -168,6 +169,8 @@ class AppointmentController extends Controller {
     public function actionIndex() {
         if (Yii::app()->user->checkAccess('2') && !Yii::app()->user->isAdmin()) {
             $dataProvider = new Appointment('customSearch');
+            $criteria = new CDbCriteria();
+            $criteria->addCondition(array('user_id'=>Yii::app()->user->id));
             $dataProvider->user_id = Yii::app()->user->getId();
             $this->render('indexTeacher', array(
                 'dataProvider' => $dataProvider->customSearch()
