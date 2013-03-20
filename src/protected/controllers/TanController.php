@@ -21,7 +21,7 @@
  * Tan Controller
  */
 class TanController extends Controller {
-
+    
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -210,7 +210,6 @@ class TanController extends Controller {
             $tan->tan_count = 1;
             if (strlen($tan->tan) == Yii::app()->params['tanSize'] && Tan::model()->countByAttributes(array('tan' => $tan->tan)) == 0) {
                 if ($tan->save()) {
-                    $tan->id = $i;
                     $a_rc[] = $tan;
                 }
             } else {
