@@ -1,0 +1,12 @@
+<html>
+<head><title>Einer Ihrer Termine bei der Elternsprechtagsapplikation der Br&uuml;hlwiesenschule Hofheim wurde gelöscht</title>
+<body>
+	<p>Leider müssen wir Sie dar&uuml;ber informieren, dass einer Ihrer Termine gel&ouml;scht wurde.</p>
+	<p>Termin</p>
+        <p>Am [date('d.m.Y',  strtotime($data->dateAndTime->date->date))] um [date('H:i', strtotime($data->dateAndTime->time))]</p>
+        <p>Bei [$data->user->title." ".$data->user->firstname." ".$data->user->lastname]
+	
+	<p>Sollten Sie noch Fragen oder Anregungen haben benutzen Sie die Kontaktform auf der <a href="$KONTAKTFORM">Webseite</a></p>
+	<p>Das Team der Elternsprechtagsapplikation w&uuml;nscht Ihnen gutes Gelingen.</p>
+</body>
+</html>
