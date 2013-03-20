@@ -30,7 +30,8 @@
             <div class="ten columns">
 		            <?php
                             $this->widget('zii.widgets.jui.CJuiAutoComplete',array(
-                                'name'=>'Appointment[dateAndTime_id]',
+                                'id' => 'appointment_dateAndTime_display',
+                                'name'=>'',
                                 'sourceUrl'=>'index.php?r=date/search',
                                 'options'=>array(
                                     'minLength'=>'1',
@@ -40,6 +41,7 @@
                             ));
                             ?>
 		<?php echo $form->error($model,'dateAndTime_id'); ?>
+                <input type="hidden" id="appointment_dateAndTime_id" name="Appointment[dateAndTime_id]" value="">
             </div>
 	</div>
 

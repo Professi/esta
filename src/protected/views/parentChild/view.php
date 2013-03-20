@@ -29,7 +29,7 @@ $this->menu=array(
 	array('label'=>'Eltern-Kind-Verknüpfung anlegen', 'url'=>array('create')),
 	array('label'=>'Eltern-Kind-Verknüpfung bearbeiten', 'url'=>array('update', 'id'=>$model->id)),
 	array('label'=>'Eltern-Kind-Verknüpfung löschen', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Eltern-Kind-Verknüpfungen bearbeiten', 'url'=>array('admin')),
+	array('label'=>'Eltern-Kind-Verknüpfungen verwalten', 'url'=>array('admin')),
 );
 ?>
 <div class="row">

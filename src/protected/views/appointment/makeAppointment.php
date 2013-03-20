@@ -23,13 +23,22 @@
             <?php echo $model->user->title." ".$model->user->firstname." ".$model->user->lastname; ?>
         </h2>
         <hr>
+        <?php
+        $arr_parent_dates = $this->getDatesWithTimes(3); //Magic Number: only the next 3 dates are presented.
+        if (empty($arr_parent_dates)) {
+            ?>
+        <div class="panel">
+            In n&auml;chster Zeit ist kein Elternsprechtag geplant, f&uuml;r den Sie Termine vereinbaren k&ouml;nnten.
+        </div>
+        <?php
+        } else {
+        ?>
         <div class="panel js_show">
             Hier k&ouml;nnen Sie Termine mit dem Lehrer vereinbaren. 
             Klicken Sie einfach auf ein Feld mit "Verf&uuml;gbar" und best&auml;tigen Sie am Ende der Seite den Termin.
         </div>
         <?php
-        $user_id_temp = Yii::app()->user->getId(); //ID of the teacher, whose appointments we are viewing.
-        $arr_parent_dates = $this->getDatesWithTimes(3); //Magic Number: only the next 3 dates are presented.
+        $user_id_temp = Yii::app()->user->getId(); //ID of the parent, who is viewing the appointments.
         $arr_tabs = null;
         $tabs_ui_id = 0; //id element of the tables, important for jquery from custom.js
         $select_content = '<select id="form_dateAndTime" name="Appointment[dateAndTime_id]">'; //the select element which transmits the actual dateAndTime_id
@@ -169,3 +178,4 @@
       <?php $this->endWidget(); ?>
     </div>
 </div>
+        <?php } //End else: atleast one Elternsprechtag ?>

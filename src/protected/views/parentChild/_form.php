@@ -40,6 +40,7 @@ if (Yii::app()->user->checkAccess('1')) {
             $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
                 'id' => 'ParentChild_user_id',
                 'name' => 'ParentChild[user_id]',
+                'value' => $model->user->firstname." ".$model->user->lastname,
                 'sourceUrl' => 'index.php?r=user/search&role=3',
                 'options' => array(
                     'minLength' => '2',

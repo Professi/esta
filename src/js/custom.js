@@ -1,5 +1,5 @@
 ;// IE-Hack  http://stackoverflow.com/questions/2612026/disable-javascript-on-ie-browsers
-    var IE = /*@cc_on!@*/false;
+    var IE = /*@cc_on @if (@_jscript_version < 9){!}@*/false;  
     if (IE) {} else {
 (function(window, document, $) {
 
