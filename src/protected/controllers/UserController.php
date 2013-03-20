@@ -69,7 +69,7 @@ class UserController extends Controller {
                 'users' => array('?'),
             ),
             array('allow',
-                'roles' => array('0')),
+                'roles' => array('1')),
             array('deny',
                 'actions' => array('deleteAll'),
                 'roles' => array('1')),
@@ -92,9 +92,9 @@ class UserController extends Controller {
         $dataProvider = new User();
         $dataProvider->unsetAttributes();
         $dataProvider->lastname = $term;
-        if (!Yii::app()->user->isAdmin()) {
+        if (Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()) {
             $dataProvider->role = 2;
-        } else if (Yii::app()->user->isAdmin()) {
+        } else if (Yii::app()->user->checkAccess('1')) {
             $dataProvider->role = $role;
         }
         $criteria = $dataProvider->searchCriteriaTeacherAutoComplete();
@@ -301,7 +301,7 @@ class UserController extends Controller {
         if (isset($_POST['User'])) {
             $model->setAttributes($_POST['User']);
             if ($model->save()) {
-                if (Yii::app()->user->checkAccess(1)) {
+                if (Yii::app()->user->checkAccess('1')) {
                     Yii::app()->user->setFlash("success", "Benutzer wurde erstellt.");
                     $this->redirect(array('user/admin'));
                 } else {
@@ -327,9 +327,9 @@ class UserController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
+        if(Yii::app()->user->checkAccess('1') && !Yii::app()->user->isAdmin() && $model->role != 0) {
         if (isset($_POST['User'])) {
             $model->setAttributes($_POST['User']);
-
             if ($model->save()) {
                 if (Yii::app()->user->checkAccess('1')) {
                     Yii::app()->user->setFlash("success", "Benutzer wurde aktualisiert.");
@@ -344,6 +344,9 @@ class UserController extends Controller {
         } else {
             $model->password = "dummyPassworddummyPassword";
             $model->password_repeat = $model->password;
+        }
+        } else {
+            Yii::app()->user->setFlash('failMsg','Sie können Administratorkonten nicht verändern.');
         }
         $this->render('update', array(
             'model' => $model,

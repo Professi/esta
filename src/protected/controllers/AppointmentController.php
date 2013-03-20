@@ -156,7 +156,7 @@ class AppointmentController extends Controller {
      */
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
-        if (Yii::app()->user->isAdmin()) {
+        if (Yii::app()->user->checkAccess('1')) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
         } else {
             $this->redirect('index.php?r=/appointment/index');

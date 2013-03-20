@@ -46,11 +46,11 @@ class DateController extends Controller {
         return array(
             array('allow',
                 'actions' => array('search'),
-                'roles' => array(1),
+                'roles' => array('1'),
             ),
             array('allow',
                 'actions' => array('create', 'delete', 'admin', 'search','view'),
-                'roles' => array(0),
+                'roles' => array('0'),
             ),
             array('deny',
                 'users' => array('*'),

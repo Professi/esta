@@ -260,7 +260,7 @@ class User extends CActiveRecord {
      */
     public function afterSave() {
         if ($this->isNewRecord) {
-            if (!Yii::app()->user->isAdmin()) {
+            if (!Yii::app()->user->checkAccess('1')) {
                 $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
                 $tan->used = true;
                 $tan->update();

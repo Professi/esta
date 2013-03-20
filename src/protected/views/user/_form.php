@@ -95,7 +95,7 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 
 
-<?php if (Yii::app()->user->checkAccess(1)) { ?>
+<?php if (Yii::app()->user->checkAccess('1')) { ?>
 
     <?php echo $form->label($model, 'state'); ?>
     <div class="styled-select">
@@ -106,7 +106,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <?php echo $form->label($model, 'role'); ?>
     <div class="styled-select">
         <?php
-        if (Yii::app()->user->checkAccess(0)) {
+        if (Yii::app()->user->checkAccess('0')) {
             echo $form->dropDownList($model, 'role', array('0' => 'Administrator', '1' => 'Verwaltung', '2' => 'Lehrer', '3' => 'Eltern'));
         } else {
             echo $form->dropDownList($model, 'role', array('2' => 'Lehrer', '3' => 'Eltern'));

@@ -29,7 +29,7 @@ $form = $this->beginWidget('CActiveForm', array(
 
 <?php
 echo $form->errorSummary($model);
-if (Yii::app()->user->checkAccess(1)) {
+if (Yii::app()->user->checkAccess('1')) {
     ?>
     <div class="row collapse">
         <div class="two columns">
