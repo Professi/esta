@@ -1,5 +1,9 @@
 ;
 (function(window, document, $) {
+    
+    // IE-Hack  http://stackoverflow.com/questions/2612026/disable-javascript-on-ie-browsers
+    var IE = /*@cc_on!@*/false;
+    if (IE) {} else {
 
     $('#js_menu').css('visibility', 'visible');
     $('#nojs_menu').css('display', 'none');
@@ -47,6 +51,7 @@
             window.location.href = "index.php?r=user/deleteAll";
         }
     });
-
+    
+    }
 }(this, document, jQuery));
 

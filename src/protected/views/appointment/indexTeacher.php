@@ -20,3 +20,27 @@
 /* @var $this AppointmentController */
 /* @var $data Appointment */
 ?>
+<div class="row">
+    <div class="twelve columns">
+        <h2 class="subheader">Ihre Termine</h2>
+        <hr>
+        <?php $this->widget('zii.widgets.grid.CGridView', array(
+            'id'=>'appointment-grid',
+            'dataProvider'=>$dataProvider,
+            'columns'=>array(
+                    array('name' => 'dateAndTime_id', 
+                          'value' => 'date("d.m.Y",  strtotime($data->dateAndTime->date->date))." - ".date("H:i", strtotime($data->dateAndTime->time))'),
+                    array('name' => 'parent_child_id', 
+                          'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'), //$data->dateAndTime->time $data->dateAndTime->date->date
+                    array('name' => 'Kind', 
+                          'value' => '$data->parentChild->child->firstname." ".$data->parentChild->child->lastname' ),
+                    array(
+                        'class' => 'CustomButtonColumn', 
+                        'template' => '{delete}'
+                        ),
+                    )
+            )); ?>
+    </div>
+</div>
+
+

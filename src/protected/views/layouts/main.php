@@ -38,7 +38,7 @@
                 <div class="header-school-logo">
                     <div id="logo_artikel">der&nbsp;&nbsp;</div>
                     <div id="logo_school_border">
-                        <img id="logo_school" src="<?php echo Yii::app()->request->baseUrl; ?>/img/logo.svg" alt="<?php echo Yii::app()->params['schoolName']?>">
+                        <img id="logo_school" src="<?php echo Yii::app()->request->baseUrl; ?>/img/Logo.png" alt="<?php echo Yii::app()->params['schoolName']?>">
                     </div>
                 </div>
             </div>
