@@ -45,7 +45,8 @@
         foreach ($arr_parent_dates as $arr_dates) {
             $tabs_ui_id++;
             $tabs_name = date('d.m.Y',  strtotime($arr_dates[0]->date->date));
-            $tabs_content = '<table><thead><th class="table-text" width="40%">Uhrzeit</th><th class="table-text" width="60%">Termin</th></thead><tbody>';
+            $tabs_content = '<div style="display:none;" id="date-ui-id-'.$tabs_ui_id.'">'.$tabs_name.'</div>';
+            $tabs_content .= '<table><thead><th class="table-text" width="40%">Uhrzeit</th><th class="table-text" width="60%">Termin</th></thead><tbody>';
             $select_content .= '<optgroup label="'.$tabs_name.'">';
             $dates_ui_id = 0;
             foreach ($arr_dates as $key => $arr_times) {

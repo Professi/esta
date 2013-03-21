@@ -12,7 +12,7 @@ if (IE) {
         $('.avaiable').css('cursor', 'pointer');
         $('.avaiable').on('click', function() {
             $id = $(this).attr('id');
-            $date = $id.substr(0, ($id.indexOf('_')));
+            $date = 'date-' + $id.substr(0, ($id.indexOf('_')));
             $time = 'time-' + $id;
             $date_text = $('#' + $date).text();
             $time_text = $('#' + $time).text();
