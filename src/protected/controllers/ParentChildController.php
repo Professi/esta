@@ -129,28 +129,28 @@ class ParentChildController extends Controller {
         ));
     }
 
-    /**
-     * Updates a particular model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id the ID of the model to be updated
-     */
-    public function actionUpdate($id) {
-        $model = $this->loadModel($id);
-        if (self::checkUser($id)) {
-            $model->childFirstName = $model->child->firstname;
-            $model->childLastName = $model->child->lastname;
-            if (isset($_POST['ParentChild'])) {
-                $model->attributes = $_POST['ParentChild'];
-                if ($model->save())
-                    $this->redirect(array('view', 'id' => $model->id));
-            }
-            $this->render('update', array(
-                'model' => $model,
-            ));
-        } else {
-            throw new CHttpException(400, 'Ihre Anfrage ist ungültig.');
-        }
-    }
+//    /**
+//     * Updates a particular model.
+//     * If update is successful, the browser will be redirected to the 'view' page.
+//     * @param integer $id the ID of the model to be updated
+//     */
+//    public function actionUpdate($id) {
+//        $model = $this->loadModel($id);
+//        if (self::checkUser($id)) {
+//            $model->childFirstName = $model->child->firstname;
+//            $model->childLastName = $model->child->lastname;
+//            if (isset($_POST['ParentChild'])) {
+//                $model->attributes = $_POST['ParentChild'];
+//                if ($model->save())
+//                    $this->redirect(array('view', 'id' => $model->id));
+//            }
+//            $this->render('update', array(
+//                'model' => $model,
+//            ));
+//        } else {
+//            throw new CHttpException(400, 'Ihre Anfrage ist ungültig.');
+//        }
+//    }
 
     /**
      * Deletes a particular model.
