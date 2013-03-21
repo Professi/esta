@@ -113,7 +113,7 @@ $form = $this->beginWidget('CActiveForm', array(
             ?>
             <?php echo $form->error($model, 'role'); ?>
             
-        }
+       <?php }
         ?>
     </div>
 <?php } if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) { ?>
