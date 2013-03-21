@@ -82,6 +82,7 @@ class User extends CActiveRecord {
         return array(
             array('password, firstname, lastname, email', 'required'),
             array('email', "unique"),
+            array('email','email'),
             array('state', 'numerical', 'integerOnly' => true),
             array('firstname, lastname, email', 'length', 'max' => 45),
             array('email', 'length', 'max' => 45),
