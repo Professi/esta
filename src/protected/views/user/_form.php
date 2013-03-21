@@ -109,7 +109,7 @@ $form = $this->beginWidget('CActiveForm', array(
         if (Yii::app()->user->checkAccess('0')) {
             echo $form->dropDownList($model, 'role', array('0' => 'Administrator', '1' => 'Verwaltung', '2' => 'Lehrer', '3' => 'Eltern'));
         } else {
-            echo $form->dropDownList($model, 'role', array('2' => 'Lehrer', '3' => 'Eltern'));
+            echo $form->dropDownList($model, 'role', array('1' =>'Verwaltung', '2' => 'Lehrer', '3' => 'Eltern'));
             ?>
             <?php echo $form->error($model, 'role'); ?>
             <?php echo $form->errorSummary($model);

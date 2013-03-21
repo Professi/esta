@@ -44,14 +44,8 @@ class ParentChild extends CActiveRecord {
      */
     public function beforeDelete() {
         $rc = parent::beforeDelete();
-        if ($rc && Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin() && $this->user_id == Yii::app()->user->id) {
-            if (ParentChild::model()->countByAttributes(array('user_id' => Yii::app()->user->getId())) <= '1') {
-                $rc = false;
-                Yii::app()->user->setFlash('failMsg','Es muss mindestens ein Kind eingetragen sein.');
-            }
-        }
-        if($rc) {
-            Appointment::model()->deleteAllByAttributes(array('parent_child_id'=>  $this->id));
+        if ($rc) {
+            Appointment::model()->deleteAllByAttributes(array('parent_child_id' => $this->id));
         }
         return $rc;
     }
@@ -75,16 +69,25 @@ class ParentChild extends CActiveRecord {
      * @return boolean parent::beforeSave()
      */
     public function beforeSave() {
-        $child = Child::model()->findByAttributes(array('firstname' => $this->childFirstName, 'lastname' => $this->childLastName));
-        if ($child === NULL) {
-            $child = new Child;
-            $child->firstname = $this->childFirstName;
-            $child->lastname = $this->childLastName;
-            $child->save();
-            $child->id = Child::model()->findByAttributes(array('firstname' => $this->childFirstName, 'lastname' => $this->childLastName))->id;
+        $rc = parent::beforeSave();
+        if($rc) {
+            $childCheck = Child::model()->findByAttributes(array('firstname'=>  $this->childFirstName, 'lastname'=> $this->childLastName));
+        if($childCheck != null) {
+            if(ParentChild::model()->findByAttributes(array('child_id'=>$childCheck->id, 'user_id'=>  $this->user_id)) >= '1') {
+              $rc = false;
+              Yii::app()->user->setFlash('failMsg','Kind wurde bereits eingetragen.');
+            } 
         }
+        if($rc) {
+        $child = new Child;
+        $child->firstname = $this->childFirstName;
+        $child->lastname = $this->childLastName;
+        $child->save();
+        $child->id = Child::model()->findByAttributes(array('firstname' => $this->childFirstName, 'lastname' => $this->childLastName))->id;
         $this->child_id = $child->id;
-        return parent::beforeSave();
+        }
+        }
+        return $rc;
     }
 
     /**
@@ -173,16 +176,18 @@ class ParentChild extends CActiveRecord {
         $criteria->limit = 10;
         return $criteria;
     }
+
     /**
      * Prüft ob der angegebene Benutzer überhaupt existiert
      * @return boolean 
      */
     public function afterValidate() {
         $rc = parent::afterValidate();
-        if($rc && User::model()->countByAttributes(array('user_id'=>$this->user_id))  != '1') {
+        if ($rc && User::model()->countByAttributes(array('user_id' => $this->user_id)) != '1') {
             $rc = false;
             $this->addError('user_id', 'Der angegebene Benutzer existiert nicht.');
         }
         return $rc;
     }
+
 }
