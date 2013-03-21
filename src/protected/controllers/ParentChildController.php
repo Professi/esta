@@ -3,21 +3,20 @@
 /**
  * ParentChild Controller für Model ParentChild 
  */
-
-/**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
- *   This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  * 
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class ParentChildController extends Controller {
 
@@ -60,6 +59,7 @@ class ParentChildController extends Controller {
     /**
      * Suche fuer Elternkindverknuepfungen anhand von  dem Namen des Erziehungsberechtigten 
      * @param string $term
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * echo JSON
      */
     public function actionSearch($term) {
@@ -183,6 +183,7 @@ class ParentChildController extends Controller {
     /**
      * Prüft ob das Kind zum User gehört.
      * @param integer $parentChildId
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean
      */
     public function checkUser($parentChildId) {

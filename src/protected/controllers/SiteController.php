@@ -2,20 +2,20 @@
 /**
  * SiteController für Forms/Static Pages ohne echtes Datenmodell
  */
-/**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
- *   This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  * 
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class SiteController extends Controller {
 
@@ -81,23 +81,14 @@ class SiteController extends Controller {
     }
 
     /**
-     * Displays the login page
+     * Zeigt die Login Seite an
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function actionLogin() {
-
         if (Yii::app()->user->isGuest) {
             $model = new LoginForm;
-
-            // if it is ajax validation request
-            if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form') {
-                echo CActiveForm::validate($model);
-                Yii::app()->end();
-            }
-
-            // collect user input data
             if (isset($_POST['LoginForm'])) {
                 $model->attributes = $_POST['LoginForm'];
-                // validate user input and redirect to the previous page if valid
                 if ($model->validate() && $model->authenticate()) {
                     if (!Yii::app()->user->isAdmin()) {
                         if (Yii::app()->user->checkAccess('1')) {
@@ -109,7 +100,6 @@ class SiteController extends Controller {
                     }
                 }
             }
-            // display the login form
             $this->render('login', array('model' => $model));
         } else {
             $this->redirect('index.php?r=User/account');

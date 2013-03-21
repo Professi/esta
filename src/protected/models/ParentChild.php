@@ -2,8 +2,9 @@
 
 /**
  * This is the model class for table "parent_child".
- *
- * The followings are the available columns in table 'parent_child':
+ */
+
+/** The followings are the available columns in table 'parent_child':
  * @property integer $id
  * @property integer $user_id
  * @property integer $child_id
@@ -13,21 +14,20 @@
  * @property User $user
  * @property Child $child
  */
-
-/**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
- *   This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  * 
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class ParentChild extends CActiveRecord {
 
@@ -40,6 +40,7 @@ class ParentChild extends CActiveRecord {
     /**
      * 
      * Eltern könnten nur ihre eigenen Verknüpfungen löschen und Admins können diese löschen
+     * @author Christan Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Return der Elternmethode
      */
     public function beforeDelete() {
@@ -70,22 +71,22 @@ class ParentChild extends CActiveRecord {
      */
     public function beforeSave() {
         $rc = parent::beforeSave();
-        if($rc) {
-            $childCheck = Child::model()->findByAttributes(array('firstname'=>  $this->childFirstName, 'lastname'=> $this->childLastName));
-        if($childCheck != null) {
-            if(ParentChild::model()->findByAttributes(array('child_id'=>$childCheck->id, 'user_id'=>  $this->user_id)) >= '1') {
-              $rc = false;
-              Yii::app()->user->setFlash('failMsg','Kind wurde bereits eingetragen.');
-            } 
-        }
-        if($rc) {
-        $child = new Child;
-        $child->firstname = $this->childFirstName;
-        $child->lastname = $this->childLastName;
-        $child->save();
-        $child->id = Child::model()->findByAttributes(array('firstname' => $this->childFirstName, 'lastname' => $this->childLastName))->id;
-        $this->child_id = $child->id;
-        }
+        if ($rc) {
+            $childCheck = Child::model()->findByAttributes(array('firstname' => $this->childFirstName, 'lastname' => $this->childLastName));
+            if ($childCheck != null) {
+                if (ParentChild::model()->findByAttributes(array('child_id' => $childCheck->id, 'user_id' => $this->user_id)) >= '1') {
+                    $rc = false;
+                    Yii::app()->user->setFlash('failMsg', 'Kind wurde bereits eingetragen.');
+                }
+            }
+            if ($rc) {
+                $child = new Child;
+                $child->firstname = $this->childFirstName;
+                $child->lastname = $this->childLastName;
+                $child->save();
+                $child->id = Child::model()->findByAttributes(array('firstname' => $this->childFirstName, 'lastname' => $this->childLastName))->id;
+                $this->child_id = $child->id;
+            }
         }
         return $rc;
     }
@@ -163,6 +164,7 @@ class ParentChild extends CActiveRecord {
 
     /**
      * Gibt Suchkriterien von ParentChild zurück
+     * @author Christan Ehringfeld <c.ehringfeld@t-online.de>
      * @return CDbCriteria Suchkriterien für Autocomplete
      * @param string $lastname Nachname eines Erziehungsberechtigten
      */
@@ -179,6 +181,7 @@ class ParentChild extends CActiveRecord {
 
     /**
      * Prüft ob der angegebene Benutzer überhaupt existiert
+     * @author Christan Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean 
      */
     public function afterValidate() {

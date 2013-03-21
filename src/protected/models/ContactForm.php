@@ -2,10 +2,10 @@
 /**
  * ContactForm ist die Datenstruktur um Kontaktformdaten zu behalten. 
  */
-/**
+/*
  * Es wird in der 'contact' action von 'SiteController' verwendet.
  */
-/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

@@ -1,9 +1,10 @@
 <?php
 
 /**
- * This is the model class for table "appointment".
- *
- * The followings are the available columns in table 'appointment':
+ * Die Klasse Appointment ist für die Persistierung von Terminen zuständig.
+ */
+
+/** The followings are the available columns in table 'appointment':
  * @property integer $id
  * @property integer $parent_child_id
  * @property string $user_id
@@ -14,21 +15,20 @@
  * @property ParentChild $parentChild
  * @property User $user
  */
-
-/**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
- *   This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  * 
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class Appointment extends CActiveRecord {
 
@@ -106,6 +106,7 @@ class Appointment extends CActiveRecord {
 
     /**
      * Prüft auf genau die User ID die festgelegt wurde
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return CActiveDataProvider gibt Datensätze mit der user_id aus
      */
     public function customSearch() {
@@ -124,7 +125,6 @@ class Appointment extends CActiveRecord {
         $rc = parent::afterValidate();
         $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->user_id));
         if ($rc && User::model()->countByAttributes(array('id' => $this->user_id)) != 1) {
-
             $rc = false;
             Yii::app()->user->setFlash('failMsg', 'Sie haben keine gültige Lehrkraft ausgewählt.');
         } else if ($userRole == NULL || $userRole->role_id != 2) {
@@ -182,10 +182,12 @@ class Appointment extends CActiveRecord {
 
         return $rc;
     }
-/**
- * Prüft ob der Benutzer die Berechtigung zum löschen von dem Termin hat
- * @return boolean
- */
+
+    /**
+     * Prüft ob der Benutzer die Berechtigung zum löschen von dem Termin hat
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return boolean
+     */
     public function beforeDelete() {
         $rc = parent::beforeDelete();
         if ($rc && Yii::app()->user->checkAccessNotAdmin('2')) {
@@ -205,6 +207,7 @@ class Appointment extends CActiveRecord {
 
     /**
      * Nach dem der Termin gelöscht wurde, wird eine Infomail an die Eltern versendet.
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function afterDelete() {
         $rc = parent::afterDelete();

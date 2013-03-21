@@ -1,6 +1,6 @@
 <?php
 /**
- * UserIdentity represents the data needed to identity a user.
+ * UserIdentity repräsentiert die Daten die nötig sind um einen Benutzer zu identifizieren.
  */
 /**
  * It contains the authentication method that checks if the provided

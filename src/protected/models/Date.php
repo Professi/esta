@@ -1,9 +1,10 @@
 <?php
 
 /**
- * This is the model class for table "date".
- *
- * The followings are the available columns in table 'date':
+ * Dies ist das Model für Elternsprechtage.
+ */
+
+/** The followings are the available columns in table 'date':
  * @property integer $id
  * @property string $date
  * @property string $begin
@@ -12,21 +13,20 @@
  * The followings are the available model relations:
  * @property Appointment[] $appointments
  */
-
-/**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
- *   This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  * 
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class Date extends CActiveRecord {
 
@@ -55,7 +55,7 @@ class Date extends CActiveRecord {
     public function rules() {
         return array(
             array('date, begin, end, durationPerAppointment', 'required'),
-            array('durationPerAppointment', 'numerical', 'integerOnly' => true,'min'=>Yii::app()->params['minLengthPerAppointment']),
+            array('durationPerAppointment', 'numerical', 'integerOnly' => true, 'min' => Yii::app()->params['minLengthPerAppointment']),
             array('date', 'date', 'format' => 'dd.MM.yyyy'),
             array('begin,end', 'date', 'format' => 'H:m'),
             array('durationPerAppointment', 'date', 'format' => 'm'),
@@ -109,7 +109,7 @@ class Date extends CActiveRecord {
     /**
      * Prüft nach der erfolgreichen Validierung ob das Ende vor dem Anfang liegt.
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     *      * @return boolean
+     * @return boolean
      */
     public function afterValidate() {
         if (strtotime($this->end) <= strtotime($this->begin)) {

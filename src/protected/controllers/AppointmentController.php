@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Dies ist die Controller Klasse von Model Appointment.
+ * Dies ist die Controller Klasse von Model Appointment.Stellt die Controller Actions des Appointments Models zur Verfügung.
  */
-/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/**
- * Stellt die Controller Actions des Appointments Models zur Verfügung.
  */
 class AppointmentController extends Controller {
 
@@ -116,6 +112,7 @@ class AppointmentController extends Controller {
     /**
      * die Action makeAppointment rendert das View um Termine zu vereinbaren
      * @param integer $teacher LehrerID
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function actionMakeAppointment($teacher) {
         $model = new Appointment;
@@ -165,6 +162,7 @@ class AppointmentController extends Controller {
 
     /**
      * Terminübersicht für Lehrer/Eltern, haben jeweils ein View
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function actionIndex() {
         if (Yii::app()->user->checkAccessNotAdmin('2')) {
@@ -269,6 +267,7 @@ class AppointmentController extends Controller {
      * Prüft ob ein Termin bereits belegt ist
      * @param integer $teacher User_ID des Lehrers
      * @param integer $dateAndTimeId ID des dateAndTime
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array Gibt BELEGT,0 oder Verfügbar,1 zurück,
      */
     public function isAppointmentAvailable($teacher, $dateAndTimeId) {
