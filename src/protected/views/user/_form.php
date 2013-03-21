@@ -112,7 +112,7 @@ $form = $this->beginWidget('CActiveForm', array(
             echo $form->dropDownList($model, 'role', array('1' =>'Verwaltung', '2' => 'Lehrer', '3' => 'Eltern'));
             ?>
             <?php echo $form->error($model, 'role'); ?>
-            <?php echo $form->errorSummary($model);
+            
         }
         ?>
     </div>
