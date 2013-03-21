@@ -253,3 +253,6 @@ table {
     font-weight: bold;
     cursor: default;
 }
+.ui-tabs-nav {
+    height: 2.9em;
+}

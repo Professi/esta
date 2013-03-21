@@ -35,36 +35,40 @@
                 <div class="ten columns centered text-center">
                     <fieldset>
                     <div class="hide-for-small" style="line-height:2em;" >
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=a" class="tiny teacher button">A</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=b" class="tiny teacher button">B</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=c" class="tiny teacher button">C</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=d" class="tiny teacher button">D</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=e" class="tiny teacher button">E</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=f" class="tiny teacher button">F</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=g" class="tiny teacher button">G</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=h" class="tiny teacher button">H</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=i" class="tiny teacher button">I</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=j" class="tiny teacher button">J</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=k" class="tiny teacher button">K</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=l" class="tiny teacher button">L</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=m" class="tiny teacher button">M</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=n" class="tiny teacher button">N</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=o" class="tiny teacher button">O</a><br>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=p" class="tiny teacher button">P</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=q" class="tiny teacher button">Q</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=r" class="tiny teacher button">R</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=s" class="tiny teacher button">S</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=t" class="tiny teacher button">T</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=u" class="tiny teacher button">U</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=v" class="tiny teacher button">V</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=w" class="tiny teacher button">W</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=x" class="tiny teacher button">X</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=y" class="tiny teacher button">Y</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=z" class="tiny teacher button">Z</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=ü" class="tiny teacher button">&Auml;</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=ö" class="tiny teacher button">&Ouml;</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=ä" class="tiny teacher button">&Uuml;</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=" class="tiny teacher button">*</a>
+                        <div style="margin-bottom: .6em;">
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=a" class="small teacher button">A</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=b" class="small teacher button">B</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=c" class="small teacher button">C</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=d" class="small teacher button">D</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=e" class="small teacher button">E</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=f" class="small teacher button">F</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=g" class="small teacher button">G</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=h" class="small teacher button">H</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=i" class="small teacher button">I</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=j" class="small teacher button">J</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=k" class="small teacher button">K</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=l" class="small teacher button">L</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=m" class="small teacher button">M</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=n" class="small teacher button">N</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=o" class="small teacher button">O</a>
+                        </div>
+                        <div>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=p" class="small teacher button">P</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=q" class="small teacher button">Q</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=r" class="small teacher button">R</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=s" class="small teacher button">S</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=t" class="small teacher button">T</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=u" class="small teacher button">U</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=v" class="small teacher button">V</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=w" class="small teacher button">W</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=x" class="small teacher button">X</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=y" class="small teacher button">Y</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=z" class="small teacher button">Z</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=ü" class="small teacher button">&Auml;</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=ö" class="small teacher button">&Ouml;</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=ä" class="small teacher button">&Uuml;</a>
+                        <a href="index.php?r=appointment/getTeacher&amp;letter=" class="small teacher button">*</a>
+                        </div>
                     </div>
                     <div class="show-for-small" style="line-height:2.5em;">
                         <div class="left">
