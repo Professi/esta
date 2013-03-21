@@ -29,18 +29,18 @@ $this->menu=array(
 	array('label'=>'Eltern-Kind-Verknüpfung anlegen', 'url'=>array('create')),
 );
 
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$('#parent-child-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
+//Yii::app()->clientScript->registerScript('search', "
+//$('.search-button').click(function(){
+//	$('.search-form').toggle();
+//	return false;
+//});
+//$('.search-form form').submit(function(){
+//	$('#parent-child-grid').yiiGridView('update', {
+//		data: $(this).serialize()
+//	});
+//	return false;
+//});
+//");
 ?>
 
 <div class="row">
@@ -54,13 +54,14 @@ $('.search-form form').submit(function(){
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'parent-child-grid',
 	'dataProvider'=>$model->search(),
-	'filter'=>$model,
+//	'filter'=>$model,
 	'columns'=>array(
 		'id',
 		array('name' => 'user_id', 'value' => '$data->user->firstname." ".$data->user->lastname'), 
 		array('name' => 'child_id', 'value' => '$data->child->firstname." ".$data->child->lastname'),
 		array(
 			'class'=>'CustomButtonColumn',
+                        'template' => '{view} {delete}',
 		),
 	),
 )); ?>

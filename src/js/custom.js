@@ -42,6 +42,30 @@
         window.location.href = "index.php?r=Appointment/makeAppointment&teacher="+ui.item.value;
     });
     
+    $('#appointment_dateAndTime_display').on('autocompleteselect', function(e, ui) {
+        e.preventDefault();
+        $('#appointment_dateAndTime_display').val(ui.item.label);
+        $('#appointment_dateAndTime_id').val(ui.item.value);
+    });
+    
+    $('#appointment_parent_user_display').on('autocompleteselect', function(e, ui) {
+        e.preventDefault();
+        $('#appointment_parent_user_display').val(ui.item.label);
+        $('#appointment_parent_user_id').val(ui.item.value);
+    });
+    
+    $('#appointment_parent_child_display').on('autocompleteselect', function(e, ui) {
+        e.preventDefault();
+        $('#appointment_parent_child_display').val(ui.item.label);
+        $('#appointment_parent_child_id').val(ui.item.value);
+    });
+    
+    $('#parentChild_user_display').on('autocompleteselect', function(e, ui) {
+        e.preventDefault();
+        $('#parentChild_user_display').val(ui.item.label);
+        $('#parentChild_user_id').val(ui.item.value);
+    });
+    
     $('#red-button').on('click', function(e){
         e.preventDefault();
         $answer = confirm('Alles löschen?');

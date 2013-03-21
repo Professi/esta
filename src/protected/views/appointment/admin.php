@@ -29,18 +29,18 @@ $this->menu=array(
 	array('label'=>'Termin anlegen', 'url'=>array('create')),
 );
 
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$('#appointment-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
+//Yii::app()->clientScript->registerScript('search', "
+//$('.search-button').click(function(){
+//	$('.search-form').toggle();
+//	return false;
+//});
+//$('.search-form form').submit(function(){
+//	$('#appointment-grid').yiiGridView('update', {
+//		data: $(this).serialize()
+//	});
+//	return false;
+//});
+//");
 ?>
 
 <div class="row">
@@ -54,7 +54,7 @@ $('.search-form form').submit(function(){
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'appointment-grid',
 	'dataProvider'=>$model->search(),
-	'filter'=>$model,
+//	'filter'=>$model,
 	'columns'=>array(
 		'id',
                 array('name' => 'dateAndTime_id', 'value' => '$data->dateAndTime->date->date." - ".$data->dateAndTime->time'),

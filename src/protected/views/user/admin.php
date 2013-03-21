@@ -48,6 +48,22 @@ $('.search-form form').submit(function(){
         <h2 class="text-center">Benutzerverwaltung</h2>
     </div>
 </div>
+<!--<div class="row">
+    <div class="five columns centered">
+        <?php
+//                            $this->widget('zii.widgets.jui.CJuiAutoComplete',array(
+//                                'name'=>'user-ac',
+//                                'sourceUrl'=>'index.php?r=user/search&role=3',
+//                                'options'=>array(
+//                                    'minLength'=>'2',
+//                                ),
+//                                'htmlOptions'=>array(
+//                                    'placeholder' => 'Benuter suchen...',
+//                                ),
+//                            ));
+        ?>
+    </div>
+</div>-->
 
 <!--<p>
     You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
