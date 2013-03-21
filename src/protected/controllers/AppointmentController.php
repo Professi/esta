@@ -178,7 +178,7 @@ class AppointmentController extends Controller {
             $pC = ParentChild::model()->findAllByAttributes(array('user_id' => Yii::app()->user->id));
             if ($pC != null) {
                 foreach ($pC as $record) {
-                    $criteria->addCondition(array('parent_child_id' => $record->id), 'OR');
+                    $criteria->addCondition(array('parent_child_id='. $record->id), 'OR');
                 }
             } else {
                 $criteria->addCondition(array('parent_child_id' => '"impossible"'));
