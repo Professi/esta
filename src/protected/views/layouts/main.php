@@ -35,7 +35,7 @@
     <div class="wrapper">
         <!-- HEADER -->
         <div class="row contain-to-grid">
-            <div class="twelve columns offset-by-one">
+            <div class="eleven columns offset-by-one">
                 <div class="header" title="Elternsprechtag"></div>
                 <div class="header-school-logo">
                     <div id="logo_artikel">der&nbsp;&nbsp;</div>
