@@ -25,7 +25,7 @@
 <div class="panel">
     <div class="row">
         <div class="one columns">
-            <b>#<?php echo CHtml::encode($data->id); ?></b>
+            <b>#<?php echo CHtml::encode($index+1);?></b>
         </div>
         <div class="eleven columns">
             <b>Am <?php echo CHtml::encode(date('d.m.Y',  strtotime($data->dateAndTime->date->date))); ?> um <?php echo CHtml::encode(date('H:i', strtotime($data->dateAndTime->time))); ?></b>
