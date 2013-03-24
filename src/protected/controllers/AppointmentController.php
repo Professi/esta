@@ -44,7 +44,7 @@ class AppointmentController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'index', 'view', 'getTeacher', 'makeAppointment','delete'),
+                'actions' => array('create', 'index', 'view', 'getTeacher', 'makeAppointment','delete'),
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
@@ -52,7 +52,7 @@ class AppointmentController extends Controller {
                 'roles' => array('2')
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete', 'view', 'create'),
+                'actions' => array('admin', 'delete', 'view', 'create','update'),
                 'roles' => array('0', '1'),
             ),
             array('deny', // deny all users
@@ -173,6 +173,7 @@ class AppointmentController extends Controller {
             ));
         } else {
             $criteria = new CDbCriteria();
+            $criteria->order = '`dateAndTime_id` ASC';
             $pC = ParentChild::model()->findAllByAttributes(array('user_id' => Yii::app()->user->id));
             if ($pC != null) {
                 foreach ($pC as $record) {

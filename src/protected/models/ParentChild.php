@@ -45,8 +45,12 @@ class ParentChild extends CActiveRecord {
      */
     public function beforeDelete() {
         $rc = parent::beforeDelete();
-        if ($rc) {
-            Appointment::model()->deleteAllByAttributes(array('parent_child_id' => $this->id));
+        if (Yii::app()->user->checkAccess('1') || $this->user_id == Yii::app()->user->getId()) {
+            if ($rc) {
+                Appointment::model()->deleteAllByAttributes(array('parent_child_id' => $this->id));
+            }
+        } else {
+            throw new CHttpException(403, 'Keine Berechtigung.');
         }
         return $rc;
     }

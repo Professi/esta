@@ -112,20 +112,23 @@ class Date extends CActiveRecord {
      * @return boolean
      */
     public function afterValidate() {
-        if (strtotime($this->end) <= strtotime($this->begin)) {
-            $rc = false;
-            $this->addError('end', 'Das Ende darf nicht vor dem Beginn liegen.');
+        $rc = parent::afterValidate();
+        if ($rc) {
+            if (strtotime($this->end) <= strtotime($this->begin)) {
+                $rc = false;
+                $this->addError('end', 'Das Ende darf nicht vor dem Beginn liegen.');
+            }
+            if (time() >= strtotime($this->date)) {
+                $rc = false;
+                Yii::app()->user->setFlash('failMsg', 'Datum liegt in der Vergangenheit');
+                $this->addError('date', 'Datum liegt in der Vergangenheit.');
+            } else
+            if (!is_int((strtotime($this->end)) - (strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
+                $rc = false;
+                $this->addError('begin', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.');
+            }
         }
-        if (time() >= strtotime($this->date)) {
-            $rc = false;
-            Yii::app()->user->setFlash('failMsg', 'Datum liegt in der Vergangenheit');
-            $this->addError('date', 'Datum liegt in der Vergangenheit.');
-        } else
-        if (!is_int((strtotime($this->end)) - (strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
-            $rc = false;
-            $this->addError('begin', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.');
-        }
-        return parent::afterValidate();
+        return $rc;
     }
 
     /**
