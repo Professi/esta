@@ -341,15 +341,15 @@ class UserController extends Controller {
                 $model->password = "dummyPassworddummyPassword";
                 $model->password_repeat = $model->password;
             }
-        }else {
+        } else {
             Yii::app()->user->setFlash('failMsg', 'Sie können keine Administratorkonten bearbeiten.');
         }
-        if((Yii::app()->user->checkAccessRole('2','3') && Yii::app()->user->id == $id) || Yii::app()->user->checkAccess('1')) {
-        $this->render('update', array(
-            'model' => $model,
-        ));
+        if ((Yii::app()->user->checkAccessRole('2', '3') && Yii::app()->user->id == $id) || Yii::app()->user->checkAccess('1')) {
+            $this->render('update', array(
+                'model' => $model,
+            ));
         } else {
-            throw new CHttpException('403','Noooooooooooooooooooooooo!');
+            throw new CHttpException('403', 'Noooooooooooooooooooooooo!');
         }
     }
 
@@ -370,8 +370,9 @@ class UserController extends Controller {
     public function actionAdmin() {
         $model = new User('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['User']))
-            $model->attributes = $_GET['user'];
+        if (isset($_GET['User'])) {
+            $model->setAttributes($_GET['User']);
+        }
         $this->render('admin', array(
             'model' => $model,
         ));

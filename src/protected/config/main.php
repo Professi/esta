@@ -31,15 +31,15 @@ return array(
         'clientScript' => array(//nicht ändern
             'coreScriptPosition' => CClientScript::POS_END, //nicht ändern
             'scriptMap' => array(//nicht ändern
-                'jquery.js' => false, //nicht ändern
+         //       'jquery.js' => false, //nicht ändern
                 'jquery.js.min' => false, //nicht ändern
                 'jquery.cookie.js' => false, //nicht ändern
-                'jquery.ba-bbq.js' => false, //nicht ändern
-                'jquery.yiigridview.js' => false, //nicht ändern
-                'core.css' => false, //nicht ändern
-                'styles.css' => false, //nicht ändern
-                'pager.css' => false, //nicht ändern
-                'default.css' => false, //nicht ändern
+         //      'jquery.ba-bbq.js' => false, //nicht ändern
+     //        'jquery.yiigridview.js' => TRUE, //nicht ändern
+               'core.css' => false, //nicht ändern
+               'styles.css' => false, //nicht ändern
+               'pager.css' => false, //nicht ändern
+              'default.css' => false, //nicht ändern
             ),
             'packages' => array(//nicht ändern
                 'javascript' => array(//nicht ändern
@@ -79,8 +79,8 @@ return array(
         'log' => array(
             'class' => 'CLogRouter', //nicht ändern
             'routes' => array(//nicht ändern
-                array(
-                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute'), //auskommentieren
+//                array(
+//                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute'), //auskommentieren
                 array('class' => 'CFileLogRoute', //jenachdem ob ein DateiLog benötigt - empfohlen
                     'levels' => 'error,warning,watch',
                     'categories'=>'system.*'), 

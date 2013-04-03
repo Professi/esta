@@ -96,7 +96,7 @@ class User extends CActiveRecord {
             array('password', 'compare', "on" => "insert"),
             array('password_repeat', 'safe'), //allow bulk assignment
             array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
-            array('id, username, firstname, state, lastname, email, role,roleName,stateName', 'safe', 'on' => 'search'),
+            array('id, username, firstname, state, lastname, email, role,roleName,stateName,title', 'safe', 'on' => 'search'),
         );
     }
 
@@ -155,15 +155,46 @@ class User extends CActiveRecord {
      */
     public function search() {
         $criteria = new CDbCriteria();
+        $criteria->with = array('userRoles');
+        $criteria->together = true;
         $criteria->compare('firstname', $this->firstname, true);
+        $criteria->compare('lastname', $this->lastname, true);
         $criteria->compare('id', $this->id, true);
         $criteria->compare('username', $this->username, true);
         $criteria->compare('state', $this->state);
         $criteria->compare('email', $this->email, true);
-        $criteria->compare('stateName', $this->stateName, true);
+        $criteria->compare('state', $this->state, true);
+        $criteria->compare('title', $this->title, true);
+        $criteria->compare('userRoles.role_id', $this->role, true);
+        $sort = new CSort;
+        $sort->attributes = array(
+            'defaultOrder' => 'id ASC',
+            'id' => array(
+                'asc' => 'id',
+                'desc' => 'id desc'),
+            'username' => array(
+                'asc' => 'username',
+                'desc' => 'username desc'),
+            'firstname' => array(
+                'asc' => 'firstname',
+                'desc' => 'firstname desc'),
+            'lastname' => array(
+                'asc' => 'lastname',
+                'desc' => 'lastname desc'),
+            'title' => array(
+                'asc' => 'title',
+                'desc' => 'title desc'),
+            'state' => array(
+                'asc' => 'state',
+                'desc' => 'state desc'),
+            'role' => array(
+                'asc' => 'userRoles.role_id',
+                'desc' => 'userRoles.role_id desc'),
+        );
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'pagination' => array('pageSize' => 20),
+            'sort' => $sort,
         ));
     }
 
@@ -384,6 +415,11 @@ class User extends CActiveRecord {
                 break;
         }
     }
+    
+    public static function getStateNameAndValue() {
+        return array(array('value'=>'0','name'=>'Nicht aktiv'),array('value'=>'1','name'=>'Aktiv'),array('value'=>'2','name'=>'Gesperrt'));
+    }
+    
 
     /**
      * Gibt Rolle als String aus ( echo )

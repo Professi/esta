@@ -2,7 +2,7 @@
 /**
  * View Benutzerverwaltung
  */
-/**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ $('.search-form form').submit(function(){
 	});
 	return false;
 });
-");
+", CClientScript::POS_READY);
 ?>
 <div class="row">
     <div class="twelve columns centered">
@@ -50,7 +50,7 @@ $('.search-form form').submit(function(){
 </div>
 <!--<div class="row">
     <div class="five columns centered">
-        <?php
+<?php
 //                            $this->widget('zii.widgets.jui.CJuiAutoComplete',array(
 //                                'name'=>'user-ac',
 //                                'sourceUrl'=>'index.php?r=user/search&role=3',
@@ -61,7 +61,7 @@ $('.search-form form').submit(function(){
 //                                    'placeholder' => 'Benuter suchen...',
 //                                ),
 //                            ));
-        ?>
+?>
     </div>
 </div>-->
 
@@ -78,29 +78,26 @@ $('.search-form form').submit(function(){
 //    ));
 ?>
 <!--</div> search-form -->
-<?php //print_r($model->search()); ?>
 
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'user-grid',
     'dataProvider' => $model->search(),
-    /**
-     * @todo Suche einbauen
-     */
-      // 'filter' => $model, 
+    'filter' => $model,
     'columns' => array(
         'id',
-        'email',
-//		'password',
-//		'activationKey',
-        //array('name' => 'createtime', 'value' => 'date(Yii::app()->params["dateTimeFormat"], $data->createtime)',),
+        array('name' => 'username', 'header' => 'E-Mail'),
         array('name' => 'firstname',),
         'lastname',
         'title',
-        array('name' => 'state', 'value' => 'User::getFormattedState($data->state)'),
-        array('name' => 'role', 'value' => 'User::getFormattedRole($data->userRoles->role_id)'),
-         // array('header'=>'Rolle','value'=>'$data->role'),
-        //'username',
+        array('name' => 'state',
+            'value' => 'User::getFormattedState($data->state)',
+            'filter' => CHtml::listData(
+                    User::getStateNameAndValue(), 'value', 'name'),
+        ),
+        array('name' => 'role',
+            'value' => 'User::getFormattedRole($data->userRoles->role_id)',
+            'filter' => CHtml::listData(Role::model()->findAll(), 'id', 'title')),
         array(
             'class' => 'CustomButtonColumn',
         )
