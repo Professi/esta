@@ -32,13 +32,13 @@ return array(
         'clientScript' => array(//nicht ändern
             'coreScriptPosition' => CClientScript::POS_END, //nicht ändern
             'packages' => array(//nicht ändern
-                'jquery' => array(//nicht ändern
-                    'baseUrl' => 'js/', //nicht ändern
-                    'js' => array('foundation.min.js', 'app.js', 'custom.js'), //nicht ändern
-                ),
                 'css' => array(//nicht ändern
                     'baseUrl' => 'css/', //nicht ändern
                     'css' => array('foundation.min.css', 'icons.css', 'app.css') //nicht ändern
+                ),
+                'jquery' => array(//nicht ändern
+                    'baseUrl' => 'js/', //nicht ändern
+                    'js' => array('foundation.min.js', 'app.js', 'custom.js'), //nicht ändern
                 ),
             ),
             'scriptMap' => array(//nicht ändern
@@ -136,9 +136,9 @@ return array(
         'maxAppointmentsPerChild' => 5, //Maximal Anzahl an Terminen pro Kind
         'standardTeacherPassword' => 'DONNERSTAG01', //Standardlehrerpasswort
         'minLengthPerAppointment' => 5, //Minimallänge eines Termins bei Elternsprechtagserstellung
-        'banUsers'=>true, //Automatische Usersperrung bei n-Versuchen , true Aktiviert - False Deaktiviert
-        'durationTempBans'=> 5, //Dauer die ein Account gesperrt wird bei 3-facher Fehleingabe des Passworts
-        'maxAttemptsForLogin'=>30, //Maximalanzahl von Loginversuchen bis zur Sperrung
+        'banUsers' => true, //Automatische Usersperrung bei n-Versuchen , true Aktiviert - False Deaktiviert
+        'durationTempBans' => 5, //Dauer die ein Account gesperrt wird bei 3-facher Fehleingabe des Passworts
+        'maxAttemptsForLogin' => 30, //Maximalanzahl von Loginversuchen bis zur Sperrung
     )
 );
 
