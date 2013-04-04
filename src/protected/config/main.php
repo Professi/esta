@@ -39,6 +39,7 @@ return array(
                 'jquery' => array(//nicht ändern
                     'baseUrl' => 'js/', //nicht ändern
                     'js' => array('foundation.min.js', 'app.js', 'custom.js'), //nicht ändern
+                    'depends'=>array('css'),
                 ),
             ),
             'scriptMap' => array(//nicht ändern
@@ -78,7 +79,7 @@ return array(
             'routes' => array(//nicht ändern
                 array(
                     'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute', //auskommentieren
-                'ipFilters'=>array('*')),
+               /* 'ipFilters'=>array('*') */),
                 array('class' => 'CFileLogRoute', //jenachdem ob ein DateiLog benötigt - empfohlen
                     'levels' => 'error,warning,watch',
                     'categories' => 'system.*'),
