@@ -30,9 +30,21 @@ return array(
             'allowAutoLogin' => true, //nicht ändern
         ),
         'clientScript' => array(//nicht ändern
+            'coreScriptPosition' => CClientScript::POS_END, //nicht ändern
+            'packages' => array(//nicht ändern
+                'css' => array(//nicht ändern
+                    'baseUrl' => 'css/', //nicht ändern
+                    'css' => array('foundation.min.css', 'icons.css', 'app.css') //nicht ändern
+                ),
+                'jquery' => array(//nicht ändern
+                    'baseUrl' => 'js/', //nicht ändern
+                    'js' => array('foundation.min.js', 'app.js', 'custom.js'), //nicht ändern
+                    'depends' => array('css'),
+                ),
+            ),
             'scriptMap' => array(//nicht ändern
-                'jquery.js' => false,
-                'jquery.min.js' => false,
+                'jquery.js'=> false,
+                'jquery.min.js'=> false,
                 'jquery.cookie.js' => false, //nicht ändern
                 'core.css' => false, //nicht ändern
                 'styles.css' => false, //nicht ändern
@@ -67,9 +79,9 @@ return array(
         'log' => array(
             'class' => 'CLogRouter', //nicht ändern
             'routes' => array(//nicht ändern
-//                array(
-//                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute', //auskommentieren
-//                    'ipFilters' => array('*')),
+                array(
+                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute', //auskommentieren
+                'ipFilters'=>array('*') ),
                 array('class' => 'CFileLogRoute', //jenachdem ob ein DateiLog benötigt - empfohlen
                     'levels' => 'error,warning,watch',
                     'categories' => 'system.*'),
