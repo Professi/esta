@@ -323,9 +323,10 @@ class UserController extends Controller {
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
         if ((!Yii::app()->user->isAdmin() && $model->role != '0') || Yii::app()->user->isAdmin()) {
+                    $model->password = '';
+        $model->password_repeat = '';
             if (isset($_POST['User'])) {
                 $model->setAttributes($_POST['User']);
-
                 if ($model->save()) {
                     if (Yii::app()->user->checkAccess('1')) {
                         Yii::app()->user->setFlash("success", "Benutzer wurde aktualisiert.");
@@ -337,9 +338,6 @@ class UserController extends Controller {
                 } else {
                     Yii::app()->user->setFlash("failMsg", "Benutzer konnte nicht aktualisiert werden");
                 }
-            } else {
-                $model->password = "dummyPassworddummyPassword";
-                $model->password_repeat = $model->password;
             }
         } else {
             Yii::app()->user->setFlash('failMsg', 'Sie können keine Administratorkonten bearbeiten.');
@@ -349,6 +347,7 @@ class UserController extends Controller {
                 'model' => $model,
             ));
         } else {
+            Yii::app()->user->getFlash('failMsg');
             throw new CHttpException('403', 'Noooooooooooooooooooooooo!');
         }
     }
@@ -387,6 +386,9 @@ class UserController extends Controller {
      */
     public function loadModel($id) {
         $model = User::model()->findByPk($id);
+        if ($model === null) {
+            throw new CHttpException(404, 'Die angeforderte Seite existiert nicht.');
+        } else {
         $model->password_repeat = $model->password;
         $model->role = UserRole::model()->findByAttributes(array('user_id' => $id))->role_id;
         switch ($model->state) {
@@ -400,8 +402,7 @@ class UserController extends Controller {
                 $model->stateName = "Gesperrt";
                 break;
         }
-        if ($model === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
+        }
         return $model;
     }
 

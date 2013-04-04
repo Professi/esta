@@ -3,25 +3,6 @@
 /**
  * Dies ist die Modelklasse für Tabelle "user".
  */
-
-/** The followings are the available columns in table 'user':
- * @property string $id
- * @property string $username
- * @property string $password
- * @property string $activationKey
- * @property integer $createtime
- * @property string $firstname
- * @property integer $state
- * @property string $lastname
- * @property string $email
- * @property string $title
- *
- * The followings are the available model relations:
- * @property Appointment[] $appointments
- * @property ParentChild[] $parentChildren
- * @property UserRole[] $userRoles
- * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
- */
 /* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -36,6 +17,27 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/** The followings are the available columns in table 'user':
+ * @property string $id
+ * @property string $username
+ * @property string $password
+ * @property string $activationKey
+ * @property integer $createtime
+ * @property string $firstname
+ * @property integer $state
+ * @property string $lastname
+ * @property string $email
+ * @property string $title
+ * @property integer $lastLogin
+ * @property integer $badLogins
+ * @property integer $bannedUntil
+ *
+ * The followings are the available model relations:
+ * @property Appointment[] $appointments
+ * @property ParentChild[] $parentChildren
+ * @property UserRole[] $userRoles
+ * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
 class User extends CActiveRecord {
 
@@ -56,6 +58,9 @@ class User extends CActiveRecord {
 
     /** @var string TAN Nummer bei Registrierung */
     public $tan = null;
+    
+    /** @var array Array mit den Rollennamen */
+    static private $a_roleName = null;
 
     /**
      * Returns the static model of the specified AR class.
@@ -86,7 +91,10 @@ class User extends CActiveRecord {
             array('state', 'numerical', 'integerOnly' => true),
             array('firstname, lastname, email', 'length', 'max' => 45),
             array('email', 'length', 'max' => 45),
-            array('password', 'length', 'max' => 128, 'min' => 8),
+            array('password', 'length', 'max' => 64, 'min' => 8, 'on' => 'insert'),
+            array('password', 'length','max' => 128,
+                'on'=>'update', 
+                'allowEmpty'=>strlen($this->password) == 0 && !Yii::app()->user->isGuest),
             array('tan', 'length',
                 'min' => Yii::app()->params['tanSize'],
                 'max' => Yii::app()->params['tanSize'],),
@@ -354,16 +362,12 @@ class User extends CActiveRecord {
             $this->username = $this->email;
             $this->lastname = ucfirst($this->lastname);
             $this->firstname = ucfirst($this->firstname);
-            $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
-        } else if (!$this->isNewRecord && $this->password == User::model()->findByAttributes(array('id' => $this->id, 'password' => $this->password))) {
-            
-        } else if (!$this->isNewRecord && $this->password == "dummyPassworddummyPassword") {
-            $this->password = User::model()->findByAttributes(array('id' => $this->id))->password;
-        } else if (!$this->isNewRecord && $this->state != User::model()->findByPk($this->id)->state) {
-            
-        } else {
-            $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
         }
+            if(strlen($this->password) < 128 && strlen($this->password) > 0) {
+            $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
+            } else {
+                 $this->password = User::model()->findByPk($this->id)->password;
+            }
         return parent::beforeSave();
     }
 
@@ -428,8 +432,10 @@ class User extends CActiveRecord {
      * @param integer $role Rollen ID des Users
      */
     static public function getFormattedRole($role) {
-        $role = Role::model()->findByAttributes(array('id' => $role));
-        echo $role->title;
+        if(is_null(self::$a_roleName)) {
+        self::$a_roleName = Role::model()->findAll();
+        } 
+        echo self::$a_roleName[$role]->title;
     }
 
     /**
@@ -449,7 +455,7 @@ class User extends CActiveRecord {
             } else {
                 $this->addError('tan', 'Leider konnte die eingegebene TAN nicht identifiziert werden.');
             }
-        }
+        } 
         return $rc;
     }
 

@@ -138,21 +138,27 @@ CREATE TABLE IF NOT EXISTS `tan` (
 -- Tabellenstruktur für Tabelle `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) NOT NULL,
-    `email` varchar(45) NOT NULL,
-      `firstname` varchar(45) NOT NULL,
-    `lastname` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  `password` varchar(128) NOT NULL,
-  `activationKey` varchar(128) NOT NULL DEFAULT '',
-  `createtime` int(11) NOT NULL DEFAULT '0',
-  `state` int(1) NOT NULL DEFAULT '0',
-  `title` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
-  KEY `status` (`state`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='itle' AUTO_INCREMENT=5 ;
+CREATE  TABLE IF NOT EXISTS `user` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `username` VARCHAR(45) NOT NULL ,
+  `email` VARCHAR(45) NOT NULL ,
+  `activationKey` VARCHAR(128) NOT NULL,
+  `createtime` INT UNSIGNED NOT NULL ,
+  `firstname` VARCHAR(45) NOT NULL ,
+  `lastname` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
+  `title` VARCHAR(15) NULL ,
+  `state` TINYINT UNSIGNED NOT NULL DEFAULT 0 ,
+  `lastLogin` INT UNSIGNED NULL DEFAULT 0 ,
+  `badLogins` TINYINT NOT NULL DEFAULT 0 ,
+  `bannedUntil` INT UNSIGNED NULL ,
+  `password` VARCHAR(128) NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `username` (`username` ASC) ,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) )
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
 INSERT INTO `user` (`id`, `username`, `password`, `activationKey`, `createtime`, `firstname`, `state`, `lastname`, `email`, `title`) VALUES
 (1, 'admin@admin.de', 'cd613e9e5557f026ce9f11d91afc2dcca40c30cb608e756d4ad62edc50b1263098c80e161481d1b9a5e5413994072430f007b6d1c4633b0ff92c239c367954e1', 'c99375c5a0aa0267ec9342ac8d33de700ed13b8d', 1362647692, 'admin', 1, 'admin', 'admin@admin.de', NULL);
 

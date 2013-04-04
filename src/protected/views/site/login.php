@@ -79,12 +79,10 @@ $this->breadcrumbs = array(
                     <?php echo $form->error($model, 'password'); ?>
                 </div>
             </div>
-            
-
+            <?php echo $form->textField($model, 'text', array('style'=>'display:none')); ?>
             <?php echo $form->checkBox($model, 'rememberMe'); ?>
             Anmeldedaten merken<br><br>
             <?php echo $form->error($model, 'rememberMe'); ?>
-
             <?php echo CHtml::submitButton('Login', array('class' => 'button')); ?>
             <div class="show-for-small"><br><br></div>
             <?php echo CHtml::link('Passwort vergessen?', 'index.php?r=user/ChangePwd', array('class'=>'medium right')); ?>

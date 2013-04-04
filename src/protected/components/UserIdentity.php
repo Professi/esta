@@ -1,7 +1,9 @@
 <?php
+
 /**
  * UserIdentity repräsentiert die Daten die nötig sind um einen Benutzer zu identifizieren.
  */
+
 /**
  * It contains the authentication method that checks if the provided
  * data can identity the user.
@@ -41,28 +43,81 @@ class UserIdentity extends CUserIdentity {
      */
     public function authenticate() {
         $user = User::model()->findByAttributes(array('email' => $this->username));
-        if ($user === null) { // No user found!
+        //     $this->errorMessage = '';
+        if ($user === null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
             $this->errorMessage = self::ERROR_MSG_USERNAME_INVALID;
-        } else if ($user->password !== User::encryptPassword($this->password, Yii::app()->params["salt"])) {
-            $this->errorCode = self::ERROR_PASSWORD_INVALID;
-            $this->errorMessage = self::ERROR_MSG_PASSWORD_INVALID;
-        } else {
-            if ($user->state == 0) {
-                $this->errorCode = self::ERROR_ACCOUNT_NOT_ACTIVATED;
-                $this->errorMessage = self::ERROR_MSG_ACCOUNT_NOT_ACTIVATED;
-            } else if ($user->state == 2) {
+        } else if ($user->state == 0) {
+            $this->errorCode = self::ERROR_ACCOUNT_NOT_ACTIVATED;
+            $this->errorMessage = self::ERROR_MSG_ACCOUNT_NOT_ACTIVATED;
+        } else if ($user->state == 1 && $user->password !== User::encryptPassword($this->password, Yii::app()->params["salt"])) {
+            $this->invalidPassword($user);
+            echo $this->errorMessage;
+        } else if ($user->state == 2) {
+            if (is_null($user->bannedUntil) || $user->bannedUntil == 0) {
                 $this->errorCode = self::ERROR_ACCOUNT_BANNED;
                 $this->errorMessage = self::ERROR_MSG_ACCOUNT_BANNED;
             } else {
-                $this->errorCode = self::ERROR_NONE;
-                $this->_id = $user->id;
-                $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->_id));
-                $this->setState('state', $user->state);
-                $this->setState('role', $userRole->role_id);
+                $time = time();
+                if ($user->bannedUntil > $time) {
+                    $this->errorCode = self::ERROR_ACCOUNT_BANNED;
+                    $this->errorMessage = "Ihr Benutzerkonto ist noch für " . ($user->bannedUntil - $time) . " Sekunden gesperrt";
+                } else {
+                    $this->unbanUser($user);
+                }
             }
         }
+        if (empty($this->errorMessage)) {
+            $this->login($user);
+        }
         return $this->errorCode;
+    }
+
+    /**
+     * @param User &$user User Objekt
+     * entbannt einen Benutzer
+     */
+    public function unbanUser(&$user) {
+        $user->state = 1;
+        $user->bannedUntil = 0;
+        $user->badLogins = 0;
+    }
+
+    /**
+     * Loggt einen Benutzer ein und aktualisiert lastLogin
+     * @param User &$user User Objekt
+     */
+    public function login(&$user) {
+        $this->errorCode = self::ERROR_NONE;
+        $this->errorMessage = '';
+        $this->_id = $user->id;
+        $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->_id));
+        $this->setState('state', $user->state);
+        $this->setState('role', $userRole->role_id);
+        $user->lastLogin = time();
+        $user->update();
+    }
+
+    /**
+     * Fehlermeldungen bei ungültigem Passwort, Zählt Fehllogins und sperrt eventuell den Benutzer
+     * @param User &$user User Objekt
+     */
+    public function invalidPassword(&$user) {
+        $this->errorCode = self::ERROR_PASSWORD_INVALID;
+        $this->errorMessage = self::ERROR_MSG_PASSWORD_INVALID;
+        if (Yii::app()->params['banUsers']) {
+            $user->badLogins++;
+            if ($user->badLogins == Yii::app()->params['maxAttemptsForLogin']) {
+                $user->state = 2;
+                $user->bannedUntil = time() + Yii::app()->params['durationTempBans'] * 60;
+                $this->errorMessage = "Falsches Passwort! Ihr Benutzerkonto wurde für " . Yii::app()->params['durationTempBans'] . " Minuten gesperrt.";
+            } else {
+                $this->errorMessage = "Falsches Passwort! Ihnen verbleiben noch " .
+                        (Yii::app()->params['maxAttemptsForLogin'] - $user->badLogins) .
+                        " Versuche. Sobald alle Versuche aufgebraucht sind, wird ihr Konto temporär gesperrt.";
+            }
+            $user->update();
+        }
     }
 
     /**

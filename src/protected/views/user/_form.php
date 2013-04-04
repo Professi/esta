@@ -50,9 +50,6 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
 </div>
 
-        
-
-
 <div class="row collapse">
     <div class="three columns">
         <span class="prefix"><?php echo $form->label($model,'email'); ?></span>
@@ -76,7 +73,7 @@ $form = $this->beginWidget('CActiveForm', array(
         <span class="prefix"><?php echo $form->label($model,'password'); ?></span>
     </div>
     <div class="six columns mobile-input">
-        <?php echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 128)); ?>
+        <?php echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 64)); ?>
         <?php echo $form->error($model, 'password'); ?>
     </div>
     <div class="three columns mobile-input">
@@ -89,7 +86,7 @@ $form = $this->beginWidget('CActiveForm', array(
         <span class="prefix"><?php echo $form->label($model,'password_repeat'); ?></span>
     </div>
     <div class="nine columns mobile-input">
-        <?php echo $form->passwordField($model, 'password_repeat', array('size' => 60, 'maxlength' => 128)); ?>
+        <?php echo $form->passwordField($model, 'password_repeat', array('size' => 60, 'maxlength' => 64)); ?>
         <?php echo $form->error($model, 'password_repeat'); ?>
     </div>
 </div>

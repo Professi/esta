@@ -1,18 +1,19 @@
 <?php
-/**   Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+
+/** Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
- *   This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
  * 
- *   This program is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..', //nicht ändern
@@ -30,19 +31,8 @@ return array(
         ),
         'clientScript' => array(//nicht ändern
             'coreScriptPosition' => CClientScript::POS_END, //nicht ändern
-            'scriptMap' => array(//nicht ändern
-         //       'jquery.js' => false, //nicht ändern
-                'jquery.js.min' => false, //nicht ändern
-                'jquery.cookie.js' => false, //nicht ändern
-         //      'jquery.ba-bbq.js' => false, //nicht ändern
-     //        'jquery.yiigridview.js' => TRUE, //nicht ändern
-               'core.css' => false, //nicht ändern
-               'styles.css' => false, //nicht ändern
-               'pager.css' => false, //nicht ändern
-              'default.css' => false, //nicht ändern
-            ),
             'packages' => array(//nicht ändern
-                'javascript' => array(//nicht ändern
+                'jquery' => array(//nicht ändern
                     'baseUrl' => 'js/', //nicht ändern
                     'js' => array('foundation.min.js', 'app.js', 'custom.js'), //nicht ändern
                 ),
@@ -50,6 +40,15 @@ return array(
                     'baseUrl' => 'css/', //nicht ändern
                     'css' => array('foundation.min.css', 'icons.css', 'app.css') //nicht ändern
                 ),
+            ),
+            'scriptMap' => array(//nicht ändern
+                'jquery.js' => false, //nicht ändern
+                'jquery.js.min' => false, //nicht ändern
+                'jquery.cookie.js' => false, //nicht ändern
+                'core.css' => false, //nicht ändern
+                'styles.css' => false, //nicht ändern
+                'pager.css' => false, //nicht ändern
+                'default.css' => false, //nicht ändern
             ),
         ),
         'urlManager' => array(//nicht ändern
@@ -79,11 +78,11 @@ return array(
         'log' => array(
             'class' => 'CLogRouter', //nicht ändern
             'routes' => array(//nicht ändern
-//                array(
-//                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute'), //auskommentieren
+                array(
+                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute'), //auskommentieren
                 array('class' => 'CFileLogRoute', //jenachdem ob ein DateiLog benötigt - empfohlen
                     'levels' => 'error,warning,watch',
-                    'categories'=>'system.*'), 
+                    'categories' => 'system.*'),
                 array('class' => 'CProfileLogRoute', // auskommentieren nur interesant für die Entwicklung
                     'report' => 'summary',),
             ),
@@ -128,15 +127,18 @@ return array(
         'fromMailHost' => 'est@h1963533.stratoserver.net', //Absender der Mails wird wohl später dann EST@bws-hofheim.de
         'fromMail' => 'ESTA-BWS', //Der Absendername bsp. BWS-Hofhei,
         'teacherMail' => 'bws-hofheim.de',
-        'schoolName'=> 'Brühlwiesenschule Hofheim',
+        'schoolName' => 'Brühlwiesenschule Hofheim',
         'virtualHost' => '/~est/est_trunk/', //unbedingt anpassen damit E-Mails mit korrektem Aktivierungslink versendet werden können
         'mailsActivated' => true, //ob Mails versendet werden solen
         'maxChild' => 3, //Maximal Anzahl von eintragbaren Kindern pro Benutzer mit Elternrolle
         'tanSize' => 6, //Länge der Tans
         'maxTanGen' => 100, //Maximal auf einmal generierbare Anzahl an TANs
         'maxAppointmentsPerChild' => 5, //Maximal Anzahl an Terminen pro Kind
-        'standardTeacherPassword'=> 'DONNERSTAG01', //Standardlehrerpasswort
+        'standardTeacherPassword' => 'DONNERSTAG01', //Standardlehrerpasswort
         'minLengthPerAppointment' => 5, //Minimallänge eines Termins bei Elternsprechtagserstellung
+        'banUsers'=>true, //Automatische Usersperrung bei n-Versuchen , true Aktiviert - False Deaktiviert
+        'durationTempBans'=> 5, //Dauer die ein Account gesperrt wird bei 3-facher Fehleingabe des Passworts
+        'maxAttemptsForLogin'=>30, //Maximalanzahl von Loginversuchen bis zur Sperrung
     )
 );
 

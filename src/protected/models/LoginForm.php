@@ -28,6 +28,9 @@ class LoginForm extends CFormModel {
 
     /** @var string Anmeldenamen merken */
     public $rememberMe;
+    
+    /** @var string Spambotfilter */
+    public $text;
 
     /**
      * Declares the validation rules.
@@ -39,6 +42,7 @@ class LoginForm extends CFormModel {
             array('email, password', 'required'),
             array('rememberMe', 'boolean'),
             array('password', 'authenticate'),
+            array('text', 'length', 'max'=>0),
         );
     }
 
@@ -74,6 +78,7 @@ class LoginForm extends CFormModel {
                     break;
                 case UserIdentity::ERROR_PASSWORD_INVALID:
                     $this->addError('password', UserIdentity::ERROR_MSG_PASSWORD_INVALID);
+                     $this->addError('error', $identity->errorMessage);
                     break;
                 default:
                     $this->addError('error', $identity->errorMessage);
