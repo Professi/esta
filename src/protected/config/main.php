@@ -77,7 +77,8 @@ return array(
             'class' => 'CLogRouter', //nicht ändern
             'routes' => array(//nicht ändern
                 array(
-                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute'), //auskommentieren
+                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute', //auskommentieren
+                'ipFilters'=>array('*')),
                 array('class' => 'CFileLogRoute', //jenachdem ob ein DateiLog benötigt - empfohlen
                     'levels' => 'error,warning,watch',
                     'categories' => 'system.*'),
