@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controller ist die angepasste Basis CController Klasse
  */
@@ -25,7 +26,10 @@ define('PARENTS', 3);
 /*
  * Klasse Controller überschreibt die Standard Yii Controller Klasse
  */
+
 class Controller extends CController {
+
+    private $_assetsBase;
 
     /**
      * @var string the default layout for the controller view. Defaults to '//layouts/column1',
@@ -44,5 +48,30 @@ class Controller extends CController {
      * for more details on how to specify this property.
      */
     public $breadcrumbs = array();
+
+    public function getAssetsBase() {
+        if ($this->_assetsBase === null) {
+            $this->_assetsBase = Yii::app()->assetManager->publish(
+                    Yii::getPathOfAlias('application.assets'), false, -1, defined('YII_DEBUG') && YII_DEBUG
+            );
+        }
+        return $this->_assetsBase;
+    }
+
+    public function beforeAction($action) {
+        Yii::app()->clientScript->registerCssFile($this->assetsBase . '/css/print.css', 'print');
+        Yii::app()->clientScript->registerCssFile($this->assetsBase . '/css/foundation.min.css');
+        Yii::app()->clientScript->registerCssFile($this->assetsBase . '/css/icons.css');
+        Yii::app()->clientScript->registerCssFile($this->assetsBase . '/css/app.css');
+        Yii::app()->clientScript->registerScriptFile($this->assetsBase . '/js/modernizr.foundation.js', CClientScript::POS_HEAD);
+        $ua = '';
+        if (!(preg_match('/\bmsie [0-8]/i', $ua) && !preg_match('/\bopera/i', $ua))) {
+        Yii::app()->clientScript->registerScriptFile($this->assetsBase . '/js/foundation.js', CClientScript::POS_END);
+        Yii::app()->clientScript->registerScriptFile($this->assetsBase . '/js/app.js', CClientScript::POS_END);
+        Yii::app()->clientScript->registerScriptFile($this->assetsBase . '/js/custom.js', CClientScript::POS_END);
+        }
+            Yii::app()->clientScript->registerLinkTag('icon',null,$this->assetsBase.'/img/favicon.ico');
+        return parent::beforeAction($action);
+    }
 
 }
