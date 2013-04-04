@@ -36,7 +36,7 @@ return array(
                     'baseUrl' => 'css/', //nicht ändern
                     'css' => array('foundation.min.css', 'icons.css', 'app.css') //nicht ändern
                 ),
-                'jquery' => array(//nicht ändern
+                'jqueryReplacement' => array(//nicht ändern
                     'baseUrl' => 'js/', //nicht ändern
                     'js' => array('foundation.min.js', 'app.js', 'custom.js'), //nicht ändern
                 ),
