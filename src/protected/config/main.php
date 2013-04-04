@@ -36,14 +36,12 @@ return array(
                     'baseUrl' => 'css/', //nicht ändern
                     'css' => array('foundation.min.css', 'icons.css', 'app.css') //nicht ändern
                 ),
-                'jqueryReplacement' => array(//nicht ändern
+                'jquery' => array(//nicht ändern
                     'baseUrl' => 'js/', //nicht ändern
                     'js' => array('foundation.min.js', 'app.js', 'custom.js'), //nicht ändern
                 ),
             ),
             'scriptMap' => array(//nicht ändern
-                'jquery.js' => false, //nicht ändern
-                'jquery.js.min' => false, //nicht ändern
                 'jquery.cookie.js' => false, //nicht ändern
                 'core.css' => false, //nicht ändern
                 'styles.css' => false, //nicht ändern
