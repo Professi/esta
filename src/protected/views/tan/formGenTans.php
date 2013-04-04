@@ -19,6 +19,7 @@
  */
 /* @var $this TanController */
 /* @var $model tan */
+                Yii::app()->clientScript->registerPackage('jquery');
 ?>
 <div class="row">
     <div class="twelve columns centered">
