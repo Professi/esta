@@ -20,7 +20,11 @@
 /* @var $this TanController */
 /* @var $model tan */
 ?>
-
+<div class="row">
+    <div class="twelve columns centered">
+        <h2 class="text-center">Tan Generierung</h2>
+    </div>
+</div>
 <div class="row">
     <div class="eight columns centered">
 <?php

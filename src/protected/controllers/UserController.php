@@ -152,11 +152,11 @@ class UserController extends Controller {
             if ($user->state == 0) {
                 $user->setAttribute('state', 1);
                 $user->save();
-                Yii::app()->user->setFlash('success', 'Ihr Account wurde erfolgreich aktiviert. Sie können Sich nun einloggen.');
+                Yii::app()->user->setFlash('success', 'Ihr Benutzerkonto wurde erfolgreich aktiviert. Sie können Sich nun einloggen.');
             } else if ($user->state == 1) {
-                Yii::app()->user->setFlash('failMsg', 'Ihr Account wurde bereits aktiviert.');
+                Yii::app()->user->setFlash('failMsg', 'Ihr Benutzerkonto wurde bereits aktiviert.');
             } else if ($user->state == 2) {
-                Yii::app()->user->setFlash('failMsg', 'Ihr Account konnte nicht aktiviert werden, weil er bereits gesperrt wurde. Sollten Sie Fragen haben füllen Sie bitte das Kontaktformular aus.');
+                Yii::app()->user->setFlash('failMsg', 'Ihr Benutzerkonto konnte nicht aktiviert werden, weil er bereits gesperrt wurde. Sollten Sie Fragen haben füllen Sie bitte das Kontaktformular aus.');
             }
         } else {
             Yii::app()->user->setFlash('failMsg', 'Leider konnte Ihr Aktivierungsschlüssel nicht identifiziert werden. Sollten Sie uns kontaktieren wollen, füllen Sie bitte das Kontaktformular aus.');
@@ -277,7 +277,7 @@ class UserController extends Controller {
                         Yii::app()->user->setFlash('success', 'Sie erhalten nun eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.');
                         $this->redirect('index.php?r=/site/index');
                     } else {
-                        Yii::app()->user->setFlash('failMsg', 'Bevor Sie ein neues Passwort anfordern können, muss Ihr Account aktiviert sein.');
+                        Yii::app()->user->setFlash('failMsg', 'Bevor Sie ein neues Passwort anfordern können, muss Ihr Benutzerkonto aktiviert sein.');
                     }
                 } else {
                     Yii::app()->user->setFlash('failMsg', 'Leider konnte Ihre E-Mail Adresse nicht im System gefunden werden.'); //success  - failMsg
@@ -331,7 +331,7 @@ class UserController extends Controller {
                         Yii::app()->user->setFlash("success", "Benutzer wurde aktualisiert.");
                         $this->redirect(array('view&id=' . $id), false);
                     } else {
-                        Yii::app()->user->setFlash('success', 'Ihr Account wurde aktualisiert.');
+                        Yii::app()->user->setFlash('success', 'Ihr Benutzerkonto wurde aktualisiert.');
                         $this->redirect(array('account'));
                     }
                 } else {

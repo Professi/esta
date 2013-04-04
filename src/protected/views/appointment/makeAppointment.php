@@ -24,9 +24,9 @@
         </h2>
         <hr>
         <?php
-        $arr_parent_dates = $this->getDatesWithTimes(3); //Magic Number: only the next 3 dates are presented.
-        if (empty($arr_parent_dates)) {
-            ?>
+        $a_dates = $this->getDatesWithTimes(3); //Magic Number: nur die nächsten 3 Elternsprechtage werden geladen.
+        if (empty($a_dates)) {
+        ?>
         <div class="panel">
             In n&auml;chster Zeit ist kein Elternsprechtag geplant, f&uuml;r den Sie Termine vereinbaren k&ouml;nnten.
         </div>
@@ -38,44 +38,14 @@
             Klicken Sie einfach auf ein Feld mit "Verf&uuml;gbar" und best&auml;tigen Sie am Ende der Seite den Termin.
         </div>
         <?php
-        $user_id_temp = Yii::app()->user->getId(); //ID of the parent, who is viewing the appointments.
-        $arr_tabs = null;
-        $tabs_ui_id = 0; //id element of the tables, important for jquery from custom.js
-        $select_content = '<select id="form_dateAndTime" name="Appointment[dateAndTime_id]">'; //the select element which transmits the actual dateAndTime_id
-        foreach ($arr_parent_dates as $arr_dates) {
-            $tabs_ui_id++;
-            $tabs_name = date('d.m.Y',  strtotime($arr_dates[0]->date->date));
-            $tabs_content = '<div style="display:none;" id="date-ui-id-'.$tabs_ui_id.'">'.$tabs_name.'</div>';
-            $tabs_content .= '<table><thead><th class="table-text" width="40%">Uhrzeit</th><th class="table-text" width="60%">Termin</th></thead><tbody>';
-            $select_content .= '<optgroup label="'.$tabs_name.'">';
-            $dates_ui_id = 0;
-            foreach ($arr_dates as $key => $arr_times) {
-                $dates_ui_id++;
-                $arr_times = $this->isAppointmentAvailable($model->user->id,$arr_dates[$key]->id); //Array in dem gespeichert wird ob ein Termin Belegt oder Frei ist.
-                $tabs_content .= '<tr><td id="time-ui-id-'.$tabs_ui_id.'_'.$dates_ui_id.'" class="table-text">'.date('H:i', strtotime($arr_dates[$key]->time)).'</td>';
-                $select_content .= '<option value="'.$arr_dates[$key]->id.'"';
-                if ($arr_times[1]) {
-                    $tabs_content .= '<td id="ui-id-'.$tabs_ui_id.'_'.$dates_ui_id.'" class="avaiable table-text">'.$arr_times[0].'</td>';
-                } else {
-                    $tabs_content .= '<td class="occupied table-text">'.$arr_times[0].'</td>';
-                    $select_content .= ' disabled ';
-                }
-                $tabs_content .= '</tr>';
-                $select_content .= '>'.$tabs_name." - ".date('H:i', strtotime($arr_dates[$key]->time)).'</option>';
-            }   
-            $select_content .= '</optgroup>';
-            $tabs_content .= '</tbody></table>';
-            $arr_tabs[$tabs_name] = $tabs_content;
-            if ($tabs_ui_id == 3) {
-                break;
-            }
-        }
-        $select_content .= '</select>';
+        $a_tabs = null;
+        $selectContent = null;
+        $this->createMakeAppointmentContent($a_dates, $a_tabs, $selectContent, $model);
         ?>
         <div class="js_show">
         <?php
         $this->widget('zii.widgets.jui.CJuiTabs',array(
-            'tabs'=>$arr_tabs,
+            'tabs'=>$a_tabs,
             'options'=>array(
                 'collapsible'=>false,
             ),
@@ -88,25 +58,25 @@
         </div>
         <div class="row js_hide">
         <?php
-                switch (count($arr_tabs)) {
+                switch (count($a_tabs)) {
                     case 1: 
-                        $column_count = 'twelve';
+                        $columnCount = 'twelve';
                         break;
                     case 2: 
-                        $column_count = 'six';
+                        $columnCount = 'six';
                         break;
                     case 3:
-                        $column_count = 'four';
+                        $columnCount = 'four';
                         break;
                     default :
-                        $column_count = 'four';
+                        $columnCount = 'twelve';
                         break;
                 }
-                foreach ($arr_tabs as $key => $value) {
+                foreach ($a_tabs as $date => $table) {
                     ?>
-            <div class="<?php echo $column_count ?> columns">
-                <h4 class="subheader text-center"><?php echo $key ?></h4>
-                <?php echo $value; //Tabelle ?>
+            <div class="<?php echo $columnCount ?> columns">
+                <h4 class="subheader text-center"><?php echo $date ?></h4>
+                <?php echo $table; ?>
             </div>
                     <?php
                 }
@@ -149,7 +119,7 @@
                     </div>
                     <div class="ten columns mobile-input">
                         <div class="styled-select">
-                            <?php echo $select_content; ?>
+                            <?php echo $selectContent; ?>
                         </div>
                     </div>
                 </div>
@@ -161,11 +131,11 @@
                                 <div class="styled-select">
                                         <select name="Appointment[parent_child_id]">
                                             <?php
-                                            
-                                            $arr_child = $this->getChilds($user_id_temp);
-                                                for ( $i = 0; $i < ParentChild::model()->countByAttributes(array('user_id' => $user_id_temp)); $i++) {
+                                            $userIdTemp = Yii::app()->user->getId(); //ID des Benutzers, der sich die Termine ansieht.
+                                            $a_child = $this->getChilds($userIdTemp);
+                                                for ( $i = 0; $i < ParentChild::model()->countByAttributes(array('user_id' => $userIdTemp)); $i++) {
                                             ?>
-                                            <option value="<?php echo CHtml::encode($arr_child[$i]['value']); ?>"><?php echo CHtml::encode($arr_child[$i]['label']); ?></option>
+                                            <option value="<?php echo CHtml::encode($a_child[$i]['value']); ?>"><?php echo CHtml::encode($a_child[$i]['label']); ?></option>
                                             <?php
                                                 }
                                             ?>

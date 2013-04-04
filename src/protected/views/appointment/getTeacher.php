@@ -20,8 +20,10 @@
 /* @var $this AppointmentController */
 /* @var $model User */
 ?>
-<div class="row">
-        <div class="twelve columns centered">
+        <div class="row">
+            <div class="twelve columns centered">
+                <h2 class="subheader">Lehrerauswahl</h2>
+                <hr>
                 <div class="panel">
                         <p>	Klicken Sie auf einen Buchstaben um sich alle Lehrer, deren Name mit diesem Buchstaben beginnt, anzeigen zu lassen.<br> 
                                 Drücken Sie auf den Stern um eine Liste mit allen Lehrer zu erhalten.

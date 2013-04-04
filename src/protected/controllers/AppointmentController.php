@@ -278,5 +278,48 @@ class AppointmentController extends Controller {
         }
         return $rc;
     }
+    
+    /**
+     * Generiert den Inhalt der Terminvereinbarung für die Rolle Eltern 
+     * @author David Mock <dumock@gmail.com>
+     * @param array $a_dates Array welches die nächsten Elternsprechtagstermine enthält
+     * @param array $a_tabs Array mit den Tabellen, die die Termine anzeigen
+     * @param string $select_content Das select-Element welches die id für den zu buchenden Termin an den Server überträgt.
+     * @param object $model Das model der aktuellen Ansicht
+     */
+    public function createMakeAppointmentContent($a_dates,&$a_tabs,&$selectContent,$model) {
+        $tabsUiId = 0; //id der tabellen, wichtig für Javascriptfunktionen aus custom.js
+        $selectContent = '<select id="form_dateAndTime" name="Appointment[dateAndTime_id]">'; 
+        foreach ($a_dates as $a_day) {
+            $tabsUiId++;
+            $tabsName = date('d.m.Y',  strtotime($a_day[0]->date->date));
+            $tabsContent = '<div style="display:none;" id="date-ui-id-'.$tabsUiId.'">'.$tabsName.'</div>'; //verstecktes Element für Javascriptfunktionen aus custom.js
+            $tabsContent .= '<table><thead><th class="table-text" width="40%">Uhrzeit</th><th class="table-text" width="60%">Termin</th></thead><tbody>';
+            $selectContent .= '<optgroup label="'.$tabsName.'">';
+            $datesUiId = 0; //id der einzelnen Zeiten, wichtig für Javascriptfunktionen aus custom.js
+            foreach ($a_day as $key => $a_times) {
+                $datesUiId++;
+                $a_times = $this->isAppointmentAvailable($model->user->id,$a_day[$key]->id); //Array in dem gespeichert wird ob ein Termin Belegt oder Frei ist.
+                $tabsContent .= '<tr><td id="time-ui-id-'.$tabsUiId.'_'.$datesUiId.'" class="table-text">'.date('H:i', strtotime($a_day[$key]->time)).'</td>';
+                $selectContent .= '<option value="'.$a_day[$key]->id.'"';
+                if ($a_times[1]) { //Termin verfügbar
+                    $tabsContent .= '<td id="ui-id-'.$tabsUiId.'_'.$datesUiId.'" class="avaiable table-text">'.$a_times[0].'</td>';
+                } else {
+                    $tabsContent .= '<td class="occupied table-text">'.$a_times[0].'</td>';
+                    $selectContent .= ' disabled ';
+                }
+                $tabsContent .= '</tr>';
+                $selectContent .= '>'.$tabsName." - ".date('H:i', strtotime($a_day[$key]->time)).'</option>';
+            }   
+            $selectContent .= '</optgroup>';
+            $tabsContent .= '</tbody></table>';
+            $a_tabs[$tabsName] = $tabsContent;
+            if ($tabsUiId == 3) { //Magic Number aus makeAppointment.php nach 3 Elternsprechtagen wird die Schleife verlassen. 
+                break;
+            }
+        }
+        $selectContent .= '</select>';
+    }
+
 
 }

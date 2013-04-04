@@ -22,28 +22,29 @@
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'appointment-form',
-)); ?>
+)); 
+    if ($model->isNewRecord) {
+        $dateAndTime_value = '';
+        $parentChild_value = '';
+        $user_value = '';
+        $dateAndTime_label = '';
+        $parentChild_label = '';
+        $user_label = '';
+    } else {
+        $dateAndTime_value = $model->dateAndTime->id;
+        $parentChild_value = $model->parentChild->id;
+        $user_value = $model->user->id; //
+        $dateAndTime_label = date('d.m.Y',  strtotime($model->dateAndTime->date->date))." ".date('H:i', strtotime($model->dateAndTime->time)); 
+        $parentChild_label = $model->parentChild->user->firstname." ".$model->parentChild->user->lastname.";Kind: ".$model->parentChild->child->firstname." ".$model->parentChild->child->lastname;
+        $user_label = $model->user->title." ".$model->user->firstname." ".$model->user->lastname;
+    }
+?>
 	<div class="row collapse">
             <div class="two columns">
                 <span class="prefix">Termin</span>
             </div>
             <div class="ten columns">
 		            <?php
-                            if ($model->isNewRecord) {
-                                $dateAndTime_value = '';
-                                $parentChild_value = '';
-                                $user_value = '';
-                                $dateAndTime_label = '';
-                                $parentChild_label = '';
-                                $user_label = '';
-                            } else {
-                                $dateAndTime_value = $model->dateAndTime->id;
-                                $parentChild_value = $model->parentChild->id;
-                                $user_value = $model->user->id; //
-                                $dateAndTime_label = date('d.m.Y',  strtotime($model->dateAndTime->date->date))." ".date('H:i', strtotime($model->dateAndTime->time)); 
-                                $parentChild_label = $model->parentChild->user->firstname." ".$model->parentChild->user->lastname.";Kind: ".$model->parentChild->child->firstname." ".$model->parentChild->child->lastname;
-                                $user_label = $model->user->title." ".$model->user->firstname." ".$model->user->lastname;
-                            }
                             $this->widget('zii.widgets.jui.CJuiAutoComplete',array(
                                 'id' => 'appointment_dateAndTime_display',
                                 'name'=>'',

@@ -34,7 +34,7 @@
 <body>
     <div class="wrapper">
         <!-- HEADER -->
-        <div class="row contain-to-grid">
+        <div class="row contain-to-grid" id="header_row">
             <div class="eleven columns offset-by-one">
                 <div class="header" title="Elternsprechtag"></div>
                 <div class="header-school-logo">
@@ -69,7 +69,7 @@
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Ihre Kinder</span>', 'url' => array('/ParentChild/index'), 'visible' => Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Benutzerverwaltung</span>', 'url' => array('/User/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Tanverwaltung</span>', 'url' => array('Tan/genTans'), 'visible' => Yii::app()->user->checkAccessRole('2','1') || Yii::app()->user->isAdmin()),
-                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Ihr Account</span>', 'url' => array('/User/account'), 'visible' => !Yii::app()->user->isGuest),
+                            array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Ihr Benutzerkonto</span>', 'url' => array('/User/account'), 'visible' => !Yii::app()->user->isGuest),
                             array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),
                         'activeCssClass' => 'active'
                     ));

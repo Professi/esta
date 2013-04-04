@@ -256,3 +256,10 @@ table {
 .ui-tabs-nav {
     height: 2.9em;
 }
+ul.button-group li {
+    margin: 0 0 0 5px;
+}
+
+#header_row {
+    border-bottom: 2px ridge rgb(49, 49, 49);
+}

@@ -26,7 +26,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Elternsprechtag löschen', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'Elternsprechtag löschen', 'url'=>'#', 'linkOptions' => array( 'submit' => array( 'delete' , 'id' => $model->id ), 'confirm' => 'Möchten Sie diesen Elternsprechtag wirklich löschen?'), 'visible' => true),
 	array('label'=>'Elternsprechtage verwalten', 'url'=>array('admin')),
 );
 ?>
