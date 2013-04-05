@@ -87,9 +87,6 @@
         <?php echo $form->textField($model, 'maxAttemptsForLogin'); ?>
         <?php echo $form->error($model, 'maxAttemptsForLogin'); ?>
         <?php if (!Yii::app()->params['installed']) { ?>
-            <?php echo $form->labelEx($model, 'installed'); ?>
-            <?php echo $form->textField($model, 'installed'); ?>
-            <?php echo $form->error($model, 'installed'); ?>
             <?php echo $form->labelEx($model, 'salt'); ?>
             <?php echo $form->textField($model, 'salt'); ?>
             <?php echo $form->error($model, 'salt'); ?>
