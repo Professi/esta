@@ -38,8 +38,7 @@ class ConfigForm extends CFormModel {
     public $installed;
     
     public function init() {
-        $arr = Yii::app()->params->toArray();
-        $this->attributes = $arr;
+       $this->attributes = Yii::app()->params->toArray();
     }
     
     public function rules() {
@@ -48,9 +47,43 @@ class ConfigForm extends CFormModel {
                 ',teacherMail,schoolName,virtualHost,mailsActivated,maxChild,'
                 .'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,'.
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,'.
-                'durationTempBans,maxAttemptsForLogin', 'safe'),
-            array('salt,installed','safe','on'=>Yii::app()->params['installed']==0)
+                'durationTempBans,maxAttemptsForLogin','required'),
+            array('fromMailHost,adminEmail','email'),
+            array('emailHost,fromMail','length','min'=>4),
+            array('dateTimeFormat','length','min'=>5),
+            array('defaultTeacherPassword','length','min'=>8),
+            array('salt','length','min'=>16, 'max'=>64),
+            array('mailsActivated,randomTeacherPassword,banUsers','boolean'),
+            array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,durationTempBans,maxAttemptsForLogin','numerical', 'integerOnly'=>true),
+            array('adminEmail,dateTimeFormat,emailHost,fromMailHost,fromMail'.
+                ',teacherMail,schoolName,virtualHost,mailsActivated,maxChild,'
+                .'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,'.
+                'defaultTeacherPassword,minLengthPerAppointment,banUsers,'.
+                'durationTempBans,maxAttemptsForLogin,salt,installed', 'safe'),
         );
+    }
+    
+    public function attributeLabels() {
+        return array(
+            'adminEmail'=>'Administrator E-Mail Adresse',
+            'dateTimeFormat'=>'Datumsformat (z.B. d.m.Y H:i, siehe http://php.net/manual/de/function.date.php)', //
+            'emailHost'=>'Hostname des SMTP Servers (z.B. localhost)',
+            'fromMailHost'=>'Versender E-Mailadresse (z.B. xyz@schoolxyz.de)',
+            'fromMail'=>'Absendername (z.B. ESTA-School)',
+            'teacherMail'=>'Domainname des SMTP Servers (z.B. schoolxyz)',
+            'schoolName'=>'Schulname (z.B. Schule XYZ)',
+            'virtualHost'=>'Virtualhost-Pfad unter dem die Anwendung erreichbar ist (z.B. /est/)',
+            'mailsActivated'=>'E-Mails versenden? true|false',
+            'maxChild'=>'Maximal Anzahl an Kindern pro Eltern',
+            'maxAppointmentsPerChild'=>'Maximal Anzahl an Terminen pro Kinder',
+            'randomTeacherPassword'=>'Lehrerpasswörter bei deren Erstellung zufällig generieren? true|false',
+            'defaultTeacherPassword'=>'Standardpasswort wenn die vorherige Option deaktiviert ist',
+            'minLengthPerAppointment'=>'Mindestlänge eines Termins bei einem neuzuerstellenden Elternsprechtags',
+            'banUsers'=>'Antispam-Mechanismus, temporäres Sperren eines Nutzers bei zu vielen fehlgeschlagenen Loginversuchen in Minuten',
+            'durationTempBans'=>'Dauer dieser Maßnahme',
+            'maxAttemptsForLogin'=>'Maximalanzahl an fehlgeschlagenen Loginversuchen',
+            'salt'=>'Salz für Passwörter',
+            );
     }
     
     
