@@ -41,14 +41,44 @@ class SiteController extends Controller {
     public function actionConfig() {
         if ((Yii::app()->user->checkAccess('0') && Yii::app()->params['installed']) || !Yii::app()->params['installed']) {
             $model = new ConfigForm();
+
             if (isset($_POST['ConfigForm'])) {
+                $createAdminUser = false;
                 $file = Yii::app()->basePath . '/config/params.inc';
                 $model->attributes = $_POST['ConfigForm'];
                 if ($model->validate()) {
+                    if (Yii::app()->params['installed'] == 0) {
+                        $createAdminUser = true;
+                    }
                     $model->installed = 1;
                     $str = base64_encode(serialize($model->attributes));
                     file_put_contents($file, $str);
-                    Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert.');
+                    if ($createAdminUser) {
+                        $user = new User();
+                        $user->email = $model->adminEmail;
+                        $user->username = $user->email;
+                        $user->firstname = 'admin';
+                        $user->lastname = 'admin';
+                        $user->state = 1;
+                        $user->role = 0;
+                        if (Yii::app()->params['randomTeacherPassword']) {
+                            $passGen = new PasswordGenerator();
+                            $model->password = $passGen->generate();
+                        } else {
+                            $model->password = Yii::app()->params['defaultTeacherPassword'];
+                        }
+                        $password = $model->password;
+                        $model->password_repeat = $model->password;
+                        if ($model->save() && Yii::app()->params['randomTeacherPassword']) {
+                            $mail = new Mail();
+                            $mail->sendRandomUserPassword($model->email, $password);
+                        }
+                        Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert. Außerdem wurde ein Administratorkonto erstellt. Ihr Benutzerkontenname lautet: '
+                                . $model->email . ' Ihr Passwort lautet:' . $password .
+                                " .Sollten Sie nun eine Bestätigungsemail erhalten, wurde die Anwendung erfolgreich konfiguriert.");
+                    } else {
+                        Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert.');
+                    }
                 }
             } $this->render('config', array('model' => $model));
         } else {
