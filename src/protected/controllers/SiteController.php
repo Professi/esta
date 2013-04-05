@@ -38,6 +38,23 @@ class SiteController extends Controller {
         );
     }
 
+    public function actionConfig() {
+        if((Yii::app()->user->checkAccess('0') && Yii::app()->params['installed']) || !Yii::app()->params['installed']) {
+        $model = new ConfigForm();
+        if(isset($_POST['ConfigForm'])) {
+             $file = Yii::app()->basePath . '/config/params.inc';
+            $model->attributes = $_POST['ConfigForm'];
+            $model->installed = 1;
+           $str = base64_encode(serialize($model->attributes));
+            file_put_contents($file, $str);
+            Yii::app()->user->setFlash('success','Konfiguration aktualisiert.');
+        }
+        $this->render('config',array('model'=>$model));
+        } else {
+            throw new CHttpException('403', 'Sie haben keine Berechtigung um auf diese Seite zuzugreifen!');
+        }
+    }
+    
     /**
      * This is the default 'index' action that is invoked
      * when an action is not explicitly requested by users.

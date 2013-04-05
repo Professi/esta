@@ -200,7 +200,7 @@ class UserController extends Controller {
                                     $passGen = new PasswordGenerator();
                                     $model->password = $passGen->generate();
                                 } else {
-                                    $model->password = Yii::app()->params['standardTeacherPassword'];
+                                    $model->password = Yii::app()->params['defaultTeacherPassword'];
                                 }
                                 $password = $model->password;
                                 $model->password_repeat = $model->password;
