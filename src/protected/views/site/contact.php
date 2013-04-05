@@ -38,9 +38,10 @@ $this->breadcrumbs = array(
     </div>
 
 <?php else: ?>
-    <div class="alert-box secondary">
+    <div class="panel">
         
-            Sollten Sie Fragen oder Anregungen haben, setzen Sie sich mit uns in Kontakt indem Sie das nachfolgende Formular ausfüllen. Vielen Dank.
+            Sollten Sie Fragen oder Anregungen haben, setzen Sie sich mit uns in Kontakt indem Sie das nachfolgende Formular ausfüllen.<br>
+            Vielen Dank.
         
     </div>
 

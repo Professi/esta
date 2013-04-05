@@ -66,20 +66,20 @@ class ConfigForm extends CFormModel {
     public function attributeLabels() {
         return array(
             'adminEmail'=>'Administrator E-Mail Adresse',
-            'dateTimeFormat'=>'Datumsformat (z.B. d.m.Y H:i, siehe http://php.net/manual/de/function.date.php)', //
+            'dateTimeFormat'=>'Datumsformat (z.B. d.m.Y H:i, siehe <a href="http://php.net/manual/de/function.date.php">http://php.net/manual/de/function.date.php</a>)', //
             'emailHost'=>'Hostname des SMTP Servers (z.B. localhost)',
             'fromMailHost'=>'Versender E-Mailadresse (z.B. xyz@schoolxyz.de)',
             'fromMail'=>'Absendername (z.B. ESTA-School)',
             'teacherMail'=>'Domainname des SMTP Servers (z.B. schoolxyz)',
             'schoolName'=>'Schulname (z.B. Schule XYZ)',
             'virtualHost'=>'Virtualhost-Pfad unter dem die Anwendung erreichbar ist (z.B. /est/)',
-            'mailsActivated'=>'E-Mails versenden? true|false',
+            'mailsActivated'=>'E-Mails versenden?',
             'maxChild'=>'Maximal Anzahl an Kindern pro Eltern',
             'maxAppointmentsPerChild'=>'Maximal Anzahl an Terminen pro Kinder',
-            'randomTeacherPassword'=>'Lehrerpasswörter bei deren Erstellung zufällig generieren? true|false',
+            'randomTeacherPassword'=>'Lehrerpasswörter bei deren Erstellung zufällig generieren?',
             'defaultTeacherPassword'=>'Standardpasswort wenn die vorherige Option deaktiviert ist',
-            'minLengthPerAppointment'=>'Mindestlänge eines Termins bei einem neuzuerstellenden Elternsprechtags',
-            'banUsers'=>'Antispam-Mechanismus, temporäres Sperren eines Nutzers bei zu vielen fehlgeschlagenen Loginversuchen in Minuten',
+            'minLengthPerAppointment'=>'Mindestlänge eines Termins bei einem neuzuerstellenden Elternsprechtag',
+            'banUsers'=>'Temporäres Sperren eines Nutzers bei zu vielen fehlgeschlagenen Loginversuchen',
             'durationTempBans'=>'Dauer dieser Maßnahme',
             'maxAttemptsForLogin'=>'Maximalanzahl an fehlgeschlagenen Loginversuchen',
             'salt'=>'Salz für Passwörter',
