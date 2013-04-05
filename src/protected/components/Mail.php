@@ -57,6 +57,7 @@ class Mail {
         $body .= "<p>Das Team der Elternsprechtagsapplikation w&uuml;nscht Ihnen weiterhin ein gutes Gelingen.</p>\n";
         $body .= "<p>(Dies ist eine automatisch versendete E-Mail. Bitte antworten Sie nicht auf dieses Schreiben, da die E-Mail-Adresse nur zum Versenden, nicht aber zum Empfang von E-Mails eingerichtet ist.)</p>\n";
         $body .= "</body></html>\n";
+        Yii::trace($body, 'application.components.mail');
         $this->sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', $body, $email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
     }
 
@@ -77,6 +78,7 @@ class Mail {
         $body .= "<p>Das Team der Elternsprechtagsapplikation w&uuml;nscht Ihnen weiterhin ein gutes Gelingen.</p>";
         $body .= "<p>(Dies ist eine automatisch versendete E-Mail. Bitte antworten Sie nicht auf dieses Schreiben, da die E-Mail-Adresse nur zum Versenden, nicht aber zum Empfang von E-Mails eingerichtet ist.)</p>";
         $body .= "</body></html>";
+        Yii::trace($body, 'application.components.mail');
         $this->sendMail(Yii::app()->params['fromMail'] . ' Accountaktivierung', $body, $email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
     }
 
@@ -89,17 +91,17 @@ class Mail {
      * @param type $date Datum
      */
     public function sendAppointmentDeleted($email, $teacher, $time, $child, $date) {
-        $body = "<html><head><title>Einer Ihrer Termine bei der Elternsprechtagsapplikation der " . Yii::app()->name . "</title>";
-        $body .= "<body><p>Leider müssen wir Sie dar&uuml;ber informieren, dass einer Ihrer Termine gel&ouml;scht wurde.</p>";
-        $body .= "<p>Termin</p>";
-        $body .= "<p>Am " . date('d.m.Y', strtotime($date)) . " um  " . date('H:i', strtotime($time)) . "</p>";
-        $body .= "<p>Bei " . $teacher->title . " " . $teacher->firstname . " " . $teacher->lastname . "</p>";
-        $body .= "<p>Mit ihrem Kind " . $child->firstname . " " . $child->lastname . "</p>";
-        $body .= "<p>Sollten Sie noch Fragen oder Anregungen haben benutzen Sie das Kontaktformular auf der Webseite.</p>";
+        $body = "<html><head><title>Einer Ihrer Termine bei der Elternsprechtagsapplikation der " . Yii::app()->name . " wurde gel&oeml;scht</title></head>";
+        $body .= "<body><p>Hallo,</p><p>leider müssen wir Sie dar&uuml;ber informieren, dass Ihr Termin am <b>" . date('d.m.Y', strtotime($date)) . " um  " . date('H:i', strtotime($time)) . "</b><br>";
+        $body .= " bei <b>" . $teacher->title . " " . $teacher->firstname . " " . $teacher->lastname . "</b><br>";
+        $body .= "mit ihrem Kind <b>" . $child->firstname . " " . $child->lastname . "</b> <br>abgesagt wurde.</p>";
+        $body .= "<p>Sollten Sie noch Fragen oder Anregungen haben, benutzen Sie bitte das Kontaktformular auf der Webseite.</p>";
         $body .= "<p>Das Team der Elternsprechtagsapplikation w&uuml;nscht Ihnen weiterhin ein gutes Gelingen.</p>";
         $body .= "<p>(Dies ist eine automatisch versendete E-Mail. Bitte antworten Sie nicht auf diese Nachricht, da die E-Mail-Adresse nur zum Versenden, nicht aber zum Empfang von E-Mails eingerichtet ist.)</p>";
         $body .= "</body></html>";
+        Yii::trace($body, 'application.components.mail');
         $this->sendMail(Yii::app()->params['fromMail'] . ' Termin gel&ouml;scht', $body, $email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
+        Yii::trace('Subject:' . Yii::app()->params['fromMail'] . ' Termin gel&ouml;scht' . ' to:' . $email . ' fromMailHost:' . Yii::app()->params['fromMailHost'] . ' fromMail:' . Yii::app()->params['fromMail'], 'application.components.mail');
     }
 
 }

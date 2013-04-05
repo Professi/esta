@@ -153,6 +153,7 @@ class AppointmentController extends Controller {
      */
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
+        Yii::app()->user->setFlash('success','Termin erfolgreich entfernt.');
         if (Yii::app()->user->checkAccess('1')) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
         } else {

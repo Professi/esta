@@ -27,7 +27,7 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Eltern-Kind-Verknüpfung anlegen', 'url'=>array('create')),
-	array('label'=>'Eltern-Kind-Verknüpfung löschen', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'Eltern-Kind-Verknüpfung löschen', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Sind Sie sich sicher, dass Sie diese Verknüpfung löschen möchten?')),
 	array('label'=>'Eltern-Kind-Verknüpfungen verwalten', 'url'=>array('admin')),
 );
 ?>

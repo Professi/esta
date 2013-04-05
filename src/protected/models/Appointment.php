@@ -211,11 +211,11 @@ class Appointment extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function afterDelete() {
-        $rc = parent::afterDelete();
-        if ($rc) {
-            $mail = new Mail;
-            $mail->sendAppointmentDeleted($this->parentChild->user->email, $this->user, $this->dateAndTime->time, $this->parentChild->child, $this->dateAndTime->date->date);
-        }
+        Yii::trace($this->parentChild->user->email. ' ' . $this->dateAndTime->time . ' ' . $this->parentChild->child->firstname . ' ' . $this->dateAndTime->date->date,'application.models.appointment');
+        $mail = new Mail;
+        $mail->sendAppointmentDeleted($this->parentChild->user->email, $this->user, $this->dateAndTime->time, $this->parentChild->child, $this->dateAndTime->date->date);
+        Yii::app()->user->setFlash('success', 'Benutzer erfolgreich entfernt.');
+        return parent::afterDelete();
     }
 
 }

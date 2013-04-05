@@ -28,7 +28,7 @@ $this->breadcrumbs = array(
 $this->menu = array(
     array('label' => 'Termin anlegen', 'url' => array('create')),
     array('label' => 'Termin bearbeiten', 'url' => array('update', 'id' => $model->id)),
-    array('label' => 'Termin löschen', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => 'Are you sure you want to delete this item?')),
+    array('label' => 'Termin löschen', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => 'Sind Sie sich sicher, dass Sie diesen Termin löschen möchten?')),
     array('label' => 'Termine verwalten', 'url' => array('admin')),
 );
 ?>

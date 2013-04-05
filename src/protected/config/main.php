@@ -43,8 +43,8 @@ return array(
                 ),
             ),
             'scriptMap' => array(//nicht ändern
-                'jquery.js'=> false,
-                'jquery.min.js'=> false,
+                'jquery.js' => false,
+                'jquery.min.js' => false,
                 'jquery.cookie.js' => false, //nicht ändern
                 'core.css' => false, //nicht ändern
                 'styles.css' => false, //nicht ändern
@@ -81,12 +81,21 @@ return array(
             'routes' => array(//nicht ändern
                 array(
                     'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute', //auskommentieren
-                'ipFilters'=>array('*') ),
+                    'ipFilters' => array('*'),
+                    'categories' => '*'),
                 array('class' => 'CFileLogRoute', //jenachdem ob ein DateiLog benötigt - empfohlen
-                    'levels' => 'error,warning,watch',
-                    'categories' => 'system.*'),
+                    'levels' => 'error,warning',
+                    'categories' => 'system.'),
+                array(
+                    'class' => 'CFileLogRoute',
+                    'levels' => 'trace, info',
+                    'categories' => 'application.*',
+                ),
                 array('class' => 'CProfileLogRoute', // auskommentieren nur interesant für die Entwicklung
-                    'report' => 'summary',),
+                    'report' => 'summary'),
+                array('class' => 'CEmailLogRoute',
+                    'levels' => 'error, warning',
+                    'emails' => array('c.ehringfeld@t-online.de'),)
             ),
         ),
 //        'cache' => array(// nicht ändern , kommt eventuell noch weg da aktuell nichts gecached wird
