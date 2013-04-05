@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Mail ist eine Klasse um Mails zu versenden die die Extension EMailer verwendet
  */
@@ -21,6 +22,7 @@ class Mail {
 
     /**
      * Versendet eine E-Mail
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param string $subject Betreff einer E-Mail
      * @param string $message Nachricht einer E-Mail
      * @param string $to Empfänger der Nachricht
@@ -43,47 +45,44 @@ class Mail {
 
     /**
      * Sendet einen Aktivierungslink um das Passwort zu ändern.
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $email E-Mail des Empfängers
      * @param type $activationKey Aktivierungsschlüssel
      */
     public function sendChangePasswordMail($email, $activationKey) {
-        $body = "<html><head><title>Ihre Passwortzurücksetzung bei der " . Yii::app()->name . "</title><body>\n";
-        $body .= "<p>Ihr Passwort wurde erfolgreich zurückgesetzt. Bitte klicken Sie auf folgenden Link um ein neues Passwort für Ihren Account zu setzen</p>\n";
+        $body = "<html><head><title>Ihre Passwortzurücksetzung bei der " . Yii::app()->name . "</title></head><body>\n";
+        $body .= "<p>Bitte klicken Sie auf folgenden Link um ein neues Passwort für Ihr Benutzerkonto zu setzen</p>\n";
         $body .= "<p><a href=\"" . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $activationKey . "\">Link f&uuml;r die Passwortwahl</a></p>\n";
         $body .= "<p>Sollten Sie Probleme beim Aufrufen der Aktivierung haben kopieren Sie bitte den folgenden Link in die Adressleiste ihres Browser.</p>\n";
         $body .= "<p>http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $activationKey . "</p>\n";
         $body .= "<p>Falls Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese Nachricht.</p>\n";
-        $body .= "<p>Sollten Sie noch Fragen oder Anregungen haben benutzen Sie das Kontaktformular auf der Webseite.</p>\n";
-        $body .= "<p>Das Team der Elternsprechtagsapplikation w&uuml;nscht Ihnen weiterhin ein gutes Gelingen.</p>\n";
-        $body .= "<p>(Dies ist eine automatisch versendete E-Mail. Bitte antworten Sie nicht auf dieses Schreiben, da die E-Mail-Adresse nur zum Versenden, nicht aber zum Empfang von E-Mails eingerichtet ist.)</p>\n";
+        $this->addInfo($body);
         $body .= "</body></html>\n";
-        Yii::trace($body, 'application.components.mail');
-        $this->sendMail(Yii::app()->params['fromMail'] . ' Passwort ändern', $body, $email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
+        $this->send('Passwort &auml;ndern', $body, $email);
     }
 
     /**
      * Sendet ein Aktivierungslink
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $email E-Mail des Empfängers
      * @param type $activationKey  Aktivierungsschlüssel
      */
     public function sendActivationLinkMail($email, $activationKey) {
-        $body = "<html><head><title>Ihre Registrierung bei der " . Yii::app()->name . "</title>";
+        $body = "<html><head><title>Ihre Registrierung bei der " . Yii::app()->name . "</title></head>";
         $body .= "<body><p>Vielen Dank f&uuml;r Ihre Registrierung bei der " . Yii::app()->name . ".</p>";
         $body .= "<p>Ihr Benutzername lautet:" . $email . "</p>";
         $body .= "<p>Um Ihre Registrierung abzuschlie&szlig;en und die Applikation in Anspruch nehmen zu k&ouml;nnen klicken Sie bitte auf den folgenden Link.</p>";
         $body .= "<p><a href=\"" . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/activate&activationKey=" . $activationKey . "\">Link f&uuml;r die Aktivierung</a></p>";
         $body .= "<p>Sollten Sie Probleme beim Aufrufen der Aktivierung haben kopieren Sie bitte den folgenden Link in die Adressleiste ihres Browser.</p>";
         $body .= "<p>http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $activationKey . "</p>";
-        $body .= "<p>Sollten Sie noch Fragen oder Anregungen haben benutzen Sie das Kontaktformular auf der Webseite.</p>";
-        $body .= "<p>Das Team der Elternsprechtagsapplikation w&uuml;nscht Ihnen weiterhin ein gutes Gelingen.</p>";
-        $body .= "<p>(Dies ist eine automatisch versendete E-Mail. Bitte antworten Sie nicht auf dieses Schreiben, da die E-Mail-Adresse nur zum Versenden, nicht aber zum Empfang von E-Mails eingerichtet ist.)</p>";
+        $this->addInfo($body);
         $body .= "</body></html>";
-        Yii::trace($body, 'application.components.mail');
-        $this->sendMail(Yii::app()->params['fromMail'] . ' Accountaktivierung', $body, $email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
+        $this->send('Registrierung', $body, $email);
     }
 
     /**
      * Sendet eine Benachrichtungsemail dass ein Termin gelöscht wurde.
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $email E-Mail Adresse des zu Informierenden
      * @param type $user Lehrer
      * @param type $time Uhrzeit
@@ -91,17 +90,45 @@ class Mail {
      * @param type $date Datum
      */
     public function sendAppointmentDeleted($email, $teacher, $time, $child, $date) {
-        $body = "<html><head><title>Einer Ihrer Termine bei der Elternsprechtagsapplikation der " . Yii::app()->name . " wurde gel&oeml;scht</title></head>";
-        $body .= "<body><p>Hallo,</p><p>leider müssen wir Sie dar&uuml;ber informieren, dass Ihr Termin am <b>" . date('d.m.Y', strtotime($date)) . " um  " . date('H:i', strtotime($time)) . "</b><br>";
+        $body = "<html><head><title>Einer Ihrer Termine bei der " . Yii::app()->name . " wurde gel&oeml;scht</title></head>";
+        $body .= "<body><p>Hallo,</p><p>leider m&uuml;ssen wir Sie dar&uuml;ber informieren, dass Ihr Termin am <b>" . date('d.m.Y', strtotime($date)) . " um  " . date('H:i', strtotime($time)) . "</b><br>";
         $body .= " bei <b>" . $teacher->title . " " . $teacher->firstname . " " . $teacher->lastname . "</b><br>";
         $body .= "mit ihrem Kind <b>" . $child->firstname . " " . $child->lastname . "</b> <br>abgesagt wurde.</p>";
+        $this->addInfo($body);
+        $body .= "</body></html>";
+        $this->send('Termin gel&ouml;scht', $body, $email);
+    }
+
+    public function sendRandomUserPassword($email, $password, $isTeacher = true) {
+        $body = "<html><head><title>Willkommen bei der " . Yii::app()->name . "<title></head>";
+        if ($isTeacher) {
+            $body .= "<body><p>Sie wurden bei der " . Yii::app()->name . " als Lehrer registriert.</p>";
+        } else {
+            $body .= "<body><p>Sie wurden bei der " . Yii::app()->name . " registriert.</p>";
+        }
+        $body .= "<p>Ihr Benutzername lautet:" . $email . "</p>";
+        $body .= "<p>Ihr Passwort lautet: \"";
+        $body .= $password . "\"</p>";
+        $body .= "<p>Bitte &auml;ndern Sie dieses Passwort <b>SOFORT</b> nach der ersten Anmeldung unter \"Ihr Benutzerkonto->Meine Daten aktualisieren\"</p>";
+        $this->addInfo($body);
+        $body .= "</body></html>";
+        $this->send('Anmeldung', $body, $email);
+    }
+
+    /**
+     * Fuegt einen Infotext an
+     * @param string &$body Inhalt einer E-Mail
+     */
+    private function addInfo(&$body) {
         $body .= "<p>Sollten Sie noch Fragen oder Anregungen haben, benutzen Sie bitte das Kontaktformular auf der Webseite.</p>";
         $body .= "<p>Das Team der Elternsprechtagsapplikation w&uuml;nscht Ihnen weiterhin ein gutes Gelingen.</p>";
         $body .= "<p>(Dies ist eine automatisch versendete E-Mail. Bitte antworten Sie nicht auf diese Nachricht, da die E-Mail-Adresse nur zum Versenden, nicht aber zum Empfang von E-Mails eingerichtet ist.)</p>";
-        $body .= "</body></html>";
+    }
+
+    private function send($subject, &$body, $email) {
         Yii::trace($body, 'application.components.mail');
-        $this->sendMail(Yii::app()->params['fromMail'] . ' Termin gel&ouml;scht', $body, $email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
-        Yii::trace('Subject:' . Yii::app()->params['fromMail'] . ' Termin gel&ouml;scht' . ' to:' . $email . ' fromMailHost:' . Yii::app()->params['fromMailHost'] . ' fromMail:' . Yii::app()->params['fromMail'], 'application.components.mail');
+        $this->sendMail(Yii::app()->params['fromMail'] . ' ' . $subject, $body, $email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
+        Yii::trace('Subject:' . Yii::app()->params['fromMail'] . $subject . ' to:' . $email . ' fromMailHost:' . Yii::app()->params['fromMailHost'] . ' fromMail:' . Yii::app()->params['fromMail'], 'application.components.mail');
     }
 
 }

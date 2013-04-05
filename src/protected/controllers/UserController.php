@@ -196,9 +196,18 @@ class UserController extends Controller {
                                 $model->title = self::encodingString($line[3]);
                                 $model->state = 1;
                                 $model->role = 2;
-                                $model->password = Yii::app()->params['standardTeacherPassword'];
+                                if (Yii::app()->params['randomTeacherPassword']) {
+                                    $passGen = new PasswordGenerator();
+                                    $model->password = $passGen->generate();
+                                } else {
+                                    $model->password = Yii::app()->params['standardTeacherPassword'];
+                                }
+                                $password = $model->password;
                                 $model->password_repeat = $model->password;
-                                $model->save();
+                                if ($model->save() && Yii::app()->params['randomTeacherPassword']) {
+                                    $mail = new Mail();
+                                    $mail->sendRandomUserPassword($model->email, $password);
+                                }
                             }
                         } else {
                             $first = false;
@@ -323,8 +332,8 @@ class UserController extends Controller {
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
         if ((!Yii::app()->user->isAdmin() && $model->role != '0') || Yii::app()->user->isAdmin()) {
-                    $model->password = '';
-        $model->password_repeat = '';
+            $model->password = '';
+            $model->password_repeat = '';
             if (isset($_POST['User'])) {
                 $model->setAttributes($_POST['User']);
                 if ($model->save()) {
@@ -389,19 +398,19 @@ class UserController extends Controller {
         if ($model === null) {
             throw new CHttpException(404, 'Die angeforderte Seite existiert nicht.');
         } else {
-        $model->password_repeat = $model->password;
-        $model->role = UserRole::model()->findByAttributes(array('user_id' => $id))->role_id;
-        switch ($model->state) {
-            case 0:
-                $model->stateName = "Nicht aktiv";
-                break;
-            case 1:
-                $model->stateName = "Aktiv";
-                break;
-            case 2:
-                $model->stateName = "Gesperrt";
-                break;
-        }
+            $model->password_repeat = $model->password;
+            $model->role = UserRole::model()->findByAttributes(array('user_id' => $id))->role_id;
+            switch ($model->state) {
+                case 0:
+                    $model->stateName = "Nicht aktiv";
+                    break;
+                case 1:
+                    $model->stateName = "Aktiv";
+                    break;
+                case 2:
+                    $model->stateName = "Gesperrt";
+                    break;
+            }
         }
         return $model;
     }

@@ -145,7 +145,8 @@ return array(
         'tanSize' => 6, //Länge der Tans
         'maxTanGen' => 100, //Maximal auf einmal generierbare Anzahl an TANs
         'maxAppointmentsPerChild' => 5, //Maximal Anzahl an Terminen pro Kind
-        'standardTeacherPassword' => 'DONNERSTAG01', //Standardlehrerpasswort
+        'standardTeacherPassword' => 'DONNERSTAG01', //Standardlehrerpasswort sofern randomTeacherPassword false ist sollte dieses gesetzt werden
+        'randomTeacherPassword' => false,
         'minLengthPerAppointment' => 5, //Minimallänge eines Termins bei Elternsprechtagserstellung
         'banUsers' => true, //Automatische Usersperrung bei n-Versuchen , true Aktiviert - False Deaktiviert
         'durationTempBans' => 5, //Dauer die ein Account gesperrt wird bei 3-facher Fehleingabe des Passworts
