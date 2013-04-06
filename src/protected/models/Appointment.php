@@ -116,19 +116,32 @@ class Appointment extends CActiveRecord {
         return new CActiveDataProvider($this, array('criteria' => $criteria));
     }
 
+    /**
+     * Prüft ob ein EST noch gültig ist.
+     * @param array $attributes
+     * @param boolean $clearErrors
+     * @return boolean
+     */
     public function validate($attributes = null, $clearErrors = true) {
-        $rc = parent::validate($attributes, $clearErrors);
-        if($rc) {
-            if(Yii::app()->user->checkAccessNotAdmin('3')) {
-                if(strtotime($this->date->lockAt) + strtotime($this->date) <= time()) {
+        $rc = true;
+        if (parent::validate($attributes, $clearErrors)) {
+            $date = $this->dateAndTime->date;
+            if (Yii::app()->user->checkAccessNotAdmin('3')) {
+                if (strtotime($date->date . $date->lockAt) < time()) {
                     $rc = false;
-                    Yii::app()->user->setFlash('failMsg','Sie können für diesen Tag keine Termine mehr buchen.');
+                    Yii::app()->user->setFlash('failMsg', 'Sie können für diesen Tag keine Termine mehr buchen.');
                 }
+            } else if (!Yii::app()->user->isGuest() && time() > $date->date) {
+                Yii::app()->user->setFlash('failMsg', 'Dieser Elternsprechtag ist bereits vorbei.');
+                $rc = false;
+                $this->addError('date', 'Elternsprechtag bereits vorrüber.');
             }
+        } else {
+            $rc = false;
         }
         return $rc;
     }
-    
+
     /**
      * Prüft ob der Lehrer vorhanden ist, ob der vermeintlich gewählte Lehrer überhaupt die Rolle hat und prüft ob die Elternkindverknüpfung existiert.
      * Prüft ebenfalls ob bereits ein Termin bei diesem Lehrer besteht
