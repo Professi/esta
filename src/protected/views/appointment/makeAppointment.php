@@ -133,6 +133,9 @@
                                             <?php
                                             $userIdTemp = Yii::app()->user->getId(); //ID des Benutzers, der sich die Termine ansieht.
                                             $a_child = $this->getChilds($userIdTemp);
+                                            if(empty($a_child)) {
+                                                Yii::app()->user->setFlash('failMsg','Sie haben keine Kinder eingetragen.');
+                                            }
                                                 for ( $i = 0; $i < ParentChild::model()->countByAttributes(array('user_id' => $userIdTemp)); $i++) {
                                             ?>
                                             <option value="<?php echo CHtml::encode($a_child[$i]['value']); ?>"><?php echo CHtml::encode($a_child[$i]['label']); ?></option>
