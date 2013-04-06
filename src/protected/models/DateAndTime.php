@@ -115,5 +115,20 @@ class DateAndTime extends CActiveRecord {
         $criteria->limit = 10;
         return $criteria;
     }
+    
+    /**
+     * 
+     * Löscht alle Termine von einem DateAndTime
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return boolean
+     */
+    public function beforeDelete() {
+        $rc = false;
+        if(parent::beforeDelete()) {
+            Appointment::model()->deleteAllByAttributes(array('dateAndTime_id'=>  $this->id));
+            $rc = true;
+        }
+        return $rc;
+    }
 
 }
