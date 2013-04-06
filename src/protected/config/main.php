@@ -79,10 +79,10 @@ return array(
         'log' => array(
             'class' => 'CLogRouter', //nicht ändern
             'routes' => array(//nicht ändern
-                array(
-                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute', //auskommentieren
-                    'ipFilters' => array('*'),
-                    'categories' => '*'),
+//                array(
+//                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute', //auskommentieren
+//                    'ipFilters' => array('*'),
+//                    'categories' => '*'),
                 array('class' => 'CFileLogRoute', //jenachdem ob ein DateiLog benötigt - empfohlen
                     'levels' => 'error,warning',
                     'categories' => 'system.'),
@@ -93,9 +93,9 @@ return array(
                 ),
                 array('class' => 'CProfileLogRoute', // auskommentieren nur interesant für die Entwicklung
                     'report' => 'summary'),
-                array('class' => 'CEmailLogRoute',
-                    'levels' => 'error, warning',
-                    'emails' => array('c.ehringfeld@t-online.de'),)
+//                array('class' => 'CEmailLogRoute',
+//                    'levels' => 'error, warning',
+//                    'emails' => array('c.ehringfeld@t-online.de'),)
             ),
         ),
 //        'cache' => array(// nicht ändern , kommt eventuell noch weg da aktuell nichts gecached wird

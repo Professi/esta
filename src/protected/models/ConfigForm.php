@@ -36,6 +36,13 @@ class ConfigForm extends CFormModel {
     public $maxAttemptsForLogin;
     public $salt;
     public $installed;
+    public $timeFormat;
+    public $dateFormat;
+           
+    /**
+     *             'timeFormat'=>'H:i',
+            'dateFormat'=>'d.m.Y',
+     */
     
     public function init() {
        $this->attributes = Yii::app()->params->toArray();
@@ -47,9 +54,9 @@ class ConfigForm extends CFormModel {
                 ',teacherMail,schoolName,virtualHost,mailsActivated,maxChild,'
                 .'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,'.
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,'.
-                'durationTempBans,maxAttemptsForLogin','required'),
+                'durationTempBans,maxAttemptsForLogin,timeFormat,dateFormat','required'),
             array('fromMailHost,adminEmail','email'),
-            array('emailHost,fromMail','length','min'=>4),
+            array('emailHost,fromMail,dateFormat','length','min'=>4),
             array('dateTimeFormat','length','min'=>5),
             array('defaultTeacherPassword','length','min'=>8),
             array('salt','length','min'=>16, 'max'=>64),
@@ -59,14 +66,14 @@ class ConfigForm extends CFormModel {
                 ',teacherMail,schoolName,virtualHost,mailsActivated,maxChild,'
                 .'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,'.
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,'.
-                'durationTempBans,maxAttemptsForLogin,salt,installed', 'safe'),
+                'durationTempBans,maxAttemptsForLogin,salt,installed,dateFormat,timeFormat', 'safe'),
         );
     }
     
     public function attributeLabels() {
         return array(
             'adminEmail'=>'Administrator E-Mail Adresse',
-            'dateTimeFormat'=>'Datumsformat (z.B. d.m.Y H:i, siehe <a href="http://php.net/manual/de/function.date.php">http://php.net/manual/de/function.date.php</a>)', //
+            'dateTimeFormat'=>'Datums und Zeitformat (z.B. d.m.Y H:i, siehe <a href="http://php.net/manual/de/function.date.php">http://php.net/manual/de/function.date.php</a>)', //
             'emailHost'=>'Hostname des SMTP Servers (z.B. localhost)',
             'fromMailHost'=>'Versender E-Mailadresse (z.B. xyz@schoolxyz.de)',
             'fromMail'=>'Absendername (z.B. ESTA-School)',
@@ -83,6 +90,8 @@ class ConfigForm extends CFormModel {
             'durationTempBans'=>'Dauer dieser Maßnahme',
             'maxAttemptsForLogin'=>'Maximalanzahl an fehlgeschlagenen Loginversuchen',
             'salt'=>'Salz für Passwörter',
+            'dateFormat'=>'Datumsformat (z.B. d.m.Y)',
+            'timeFormat'=>'Zeitformat (z.B. H:i)',
             );
     }
     

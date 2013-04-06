@@ -39,6 +39,8 @@ $array2 = array(
             'banUsers' => true, //Automatische Usersperrung bei n-Versuchen , true Aktiviert - False Deaktiviert
             'durationTempBans' => 5, //Dauer die ein Account gesperrt wird bei 3-facher Fehleingabe des Passworts
             'maxAttemptsForLogin' => 5, //Maximalanzahl von Loginversuchen bis zur Sperrung
+            'timeFormat'=>'H:i',
+            'dateFormat'=>'d.m.Y',
                 );
 if(empty($arr)) {
     return $array2;
