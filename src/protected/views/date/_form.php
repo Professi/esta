@@ -44,15 +44,15 @@ $form = $this->beginWidget('CActiveForm', array(
                 'showAnim' => 'fold',
                 'minDate' => '0',
 //                            'dateFormat' => Yii::app()->params['dateFormat'],
-                'nextText' => '',
-                'prevText' => '',
-            ),
-            'language' => 'de',
-            'skin' => false,
-            'cssFile' => false,
-//                        'htmlOptions'=>array(
-//                            
-//                        ),
+                            'nextText' => '',
+                            'prevText' => '',
+                        ),
+                        'language' => 'de',
+                        'skin' => false,
+                        'cssFile' => false,
+                        'htmlOptions'=>array(
+                            'readonly' => 'readonly',
+                        ),
         ));
         ?>
 <?php echo $form->error($model, 'date'); ?>

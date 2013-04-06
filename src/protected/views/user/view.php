@@ -44,12 +44,12 @@ $this->widget('zii.widgets.CDetailView', array(
         'email',
         'firstname',
         'lastname',
-        array('label'=>'Status','value'=>$model->getStateName()),
-        array('label'=>'Rolle','value'=>Role::model()->findByAttributes(array('id'=>$model->role))->title),
-        array('label'=>'Benutzer-ID','value'=>$model->id,'visible'=>Yii::app()->user->checkAccess('0')),
-        array('label'=>'Benutzername','value'=>$model->username,'visible'=>Yii::app()->user->checkAccess('0')),
+        array('label'=> $model->getAttributeLabel('stateName'),'value'=>$model->getStateName()),
+        array('label'=> $model->getAttributeLabel('roleName'),'value'=>Role::model()->findByAttributes(array('id'=>$model->role))->title),
+        array('label'=> $model->getAttributeLabel('id'),'value'=>$model->id,'visible'=>Yii::app()->user->checkAccess('0')),
+        array('label'=> $model->getAttributeLabel('username'),'value'=>$model->username,'visible'=>Yii::app()->user->checkAccess('0')),
         //array('label'=>'Passwort','value'=>$model->password,'visible'=>Yii::app()->user->checkAccess('0')),
-        array('label'=>'Registrierung am','value'=>date(Yii::app()->params['dateTimeFormat'],$model->createtime)),
+        array('label'=> $model->getAttributeLabel('createtime'),'value'=>date(Yii::app()->params['dateTimeFormat'],$model->createtime)),
     ),
 ));
 ?>
