@@ -24,100 +24,97 @@
 
 
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'date-form',
-	'enableAjaxValidation'=>false,
-)); ?>
+<?php
+$form = $this->beginWidget('CActiveForm', array(
+    'id' => 'date-form',
+    'enableAjaxValidation' => false,
+        ));
+?>
 
-	<div class="row collapse">
-            <div class="two columns">
-                <span class="prefix"><?php echo $form->label($model,'date'); ?></span>
-            </div>
-            <div class="eight columns">
-                <?php
-                    $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-                        'model' => $model,
-                        'attribute' => 'date',
-                        'options'=>array(
-                            'showAnim'=>'fold',
-                            'minDate' => '0',
+<div class="row collapse">
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->label($model, 'date'); ?></span>
+    </div>
+    <div class="eight columns">
+        <?php
+        $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+            'model' => $model,
+            'attribute' => 'date',
+            'options' => array(
+                'showAnim' => 'fold',
+                'minDate' => '0',
 //                            'dateFormat' => Yii::app()->params['dateFormat'],
-                            'nextText' => '',
-                            'prevText' => '',
-                        ),
-                        'language' => 'de',
-
-                        'skin' => false,
-                        'cssFile' => false,
+                'nextText' => '',
+                'prevText' => '',
+            ),
+            'language' => 'de',
+            'skin' => false,
+            'cssFile' => false,
 //                        'htmlOptions'=>array(
 //                            
 //                        ),
-                    ));
-                ?>
-		<?php echo $form->error($model,'date'); ?>
-            </div>
-            <div class="two columns">
-                <span class="postfix">TT.MM.JJJJ<?php //echo Yii::app()->params['dateFormat'] ?></span>
-            </div>
-	</div>
+        ));
+        ?>
+<?php echo $form->error($model, 'date'); ?>
+    </div>
+    <div class="two columns">
+        <span class="postfix">TT.MM.JJJJ<?php //echo Yii::app()->params['dateFormat']  ?></span>
+    </div>
+</div>
 
-	<div class="row collapse">
-            <div class="two columns">
-                <span class="prefix"><?php echo $form->label($model,'begin'); ?></span>
-            </div>
-            <div class="eight columns">
-		<?php echo $form->textField($model,'begin'); ?>
-		<?php echo $form->error($model,'begin'); ?>
-            </div>
-            <div class="two columns">
-                <span class="postfix">HH:MM</span>
-            </div>
-	</div>
+<div class="row collapse">
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->label($model, 'begin'); ?></span>
+    </div>
+    <div class="eight columns">
+        <?php echo $form->textField($model, 'begin'); ?>
+<?php echo $form->error($model, 'begin'); ?>
+    </div>
+    <div class="two columns">
+        <span class="postfix">HH:MM</span>
+    </div>
+</div>
 
-	<div class="row collapse">
-            <div class="two columns">
-                <span class="prefix"><?php echo $form->label($model,'end'); ?></span>
-            </div>
-            <div class="eight columns">
-		<?php echo $form->textField($model,'end'); ?>
-		<?php echo $form->error($model,'end'); ?>
-            </div>
-            <div class="two columns">
-                <span class="postfix">HH:MM</span>
-            </div>
-	</div>
-        <div class="row collapse">
-            <div class="two columns">
-                <span class="prefix"><?php echo $form->label($model,'lockAt'); ?></span>
-            </div>
-            <div class="eight columns">
-		<?php echo $form->textField($model,'lockAt'); ?>
-		<?php echo $form->error($model,'lockAt'); ?>
-            </div>
-            <div class="two columns">
-                <span class="postfix">HH:MM</span>
-            </div>
-	</div>
+<div class="row collapse">
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->label($model, 'end'); ?></span>
+    </div>
+    <div class="eight columns">
+        <?php echo $form->textField($model, 'end'); ?>
+<?php echo $form->error($model, 'end'); ?>
+    </div>
+    <div class="two columns">
+        <span class="postfix">HH:MM</span>
+    </div>
+</div>
+<div class="row collapse">
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->label($model, 'lockAt'); ?></span>
+    </div>
+    <div class="eight columns">
+        <?php echo $form->textField($model, 'lockAt'); ?>
+<?php echo $form->error($model, 'lockAt'); ?>
+    </div>
+    <div class="two columns">
+        <span class="postfix">HH:MM</span>
+    </div>
+</div>
 
-        <?php if($model->isNewRecord) { ?>
-	<div class="row collapse">
-            <div class="two columns">
-                <span class="prefix"><?php echo $form->label($model,'durationPerAppointment'); ?></span>
-            </div>
-            <div class="eight columns">
-		<?php echo $form->textField($model,'durationPerAppointment'); ?>
-		<?php echo $form->error($model,'durationPerAppointment'); ?>
-            </div>
-            <div class="two columns">
-                <span class="postfix">MM</span>
-            </div>
-	</div>
-        <?php } ?>
+<?php if ($model->isNewRecord) { ?>
+    <div class="row collapse">
+        <div class="two columns">
+            <span class="prefix"><?php echo $form->label($model, 'durationPerAppointment'); ?></span>
+        </div>
+        <div class="eight columns">
+            <?php echo $form->textField($model, 'durationPerAppointment'); ?>
+    <?php echo $form->error($model, 'durationPerAppointment'); ?>
+        </div>
+        <div class="two columns">
+            <span class="postfix">MM</span>
+        </div>
+    </div>
+<?php } ?>
 <br>
-
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Anlegen' : 'Speichern', array('class' => 'small button')); ?>
-
-
-
+<?php echo CHtml::submitButton($model->isNewRecord ? 'Anlegen' : 'Speichern', array('class' => 'small button')); ?>
 <?php $this->endWidget(); ?>
 

@@ -116,6 +116,19 @@ class Appointment extends CActiveRecord {
         return new CActiveDataProvider($this, array('criteria' => $criteria));
     }
 
+    public function validate($attributes = null, $clearErrors = true) {
+        $rc = parent::validate($attributes, $clearErrors);
+        if($rc) {
+            if(Yii::app()->user->checkAccessNotAdmin('3')) {
+                if(strtotime($this->date->lockAt) + strtotime($this->date) <= time()) {
+                    $rc = false;
+                    Yii::app()->user->setFlash('failMsg','Sie können für diesen Tag keine Termine mehr buchen.');
+                }
+            }
+        }
+        return $rc;
+    }
+    
     /**
      * Prüft ob der Lehrer vorhanden ist, ob der vermeintlich gewählte Lehrer überhaupt die Rolle hat und prüft ob die Elternkindverknüpfung existiert.
      * Prüft ebenfalls ob bereits ein Termin bei diesem Lehrer besteht
@@ -211,9 +224,7 @@ class Appointment extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function afterDelete() {
-        Yii::trace($this->parentChild->user->email. ' ' . $this->dateAndTime->time . ' ' . $this->parentChild->child->firstname . ' ' . $this->dateAndTime->date->date,'application.models.appointment');
-        $mail = new Mail;
-        $mail->sendAppointmentDeleted($this->parentChild->user->email, $this->user, $this->dateAndTime->time, $this->parentChild->child, $this->dateAndTime->date->date);
+        Yii::trace($this->parentChild->user->email . ' ' . $this->dateAndTime->time . ' ' . $this->parentChild->child->firstname . ' ' . $this->dateAndTime->date->date, 'application.models.appointment');
         Yii::app()->user->setFlash('success', 'Benutzer erfolgreich entfernt.');
         return parent::afterDelete();
     }

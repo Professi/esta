@@ -44,7 +44,7 @@ class AppointmentController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'index', 'view', 'getTeacher', 'makeAppointment','delete'),
+                'actions' => array('create', 'index', 'view', 'getTeacher', 'makeAppointment', 'delete'),
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
@@ -52,7 +52,7 @@ class AppointmentController extends Controller {
                 'roles' => array('2')
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete', 'view', 'create','update'),
+                'actions' => array('admin', 'delete', 'view', 'create', 'update'),
                 'roles' => array('0', '1'),
             ),
             array('deny', // deny all users
@@ -152,12 +152,18 @@ class AppointmentController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) {
-        $this->loadModel($id)->delete();
-        Yii::app()->user->setFlash('success','Termin erfolgreich entfernt.');
-        if (Yii::app()->user->checkAccess('1')) {
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-        } else {
-            $this->redirect('index.php?r=/appointment/index');
+        $model = $this->loadModel($id);
+        if ($this->loadModel($id)->delete()) {
+            if (!Yii::app()->user->checkAccessNotAdmin('3')) {
+                $mail = new Mail;
+                $mail->sendAppointmentDeleted($model->parentChild->user->email, $model->user, $model->dateAndTime->time, $model->parentChild->child, $model->dateAndTime->date->date);
+            }
+            Yii::app()->user->setFlash('success', 'Termin erfolgreich entfernt.');
+            if (Yii::app()->user->checkAccess('1')) {
+                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+            } else {
+                $this->redirect('index.php?r=/appointment/index');
+            }
         }
     }
 
@@ -178,7 +184,7 @@ class AppointmentController extends Controller {
             $pC = ParentChild::model()->findAllByAttributes(array('user_id' => Yii::app()->user->id));
             if ($pC != null) {
                 foreach ($pC as $record) {
-                    $criteria->addCondition(array('parent_child_id='. $record->id), 'OR');
+                    $criteria->addCondition(array('parent_child_id=' . $record->id), 'OR');
                 }
             } else {
                 $criteria->addCondition(array('parent_child_id' => '"impossible"'));
@@ -279,7 +285,7 @@ class AppointmentController extends Controller {
         }
         return $rc;
     }
-    
+
     /**
      * Generiert den Inhalt der Terminvereinbarung für die Rolle Eltern 
      * @author David Mock <dumock@gmail.com>
@@ -288,30 +294,30 @@ class AppointmentController extends Controller {
      * @param string $select_content Das select-Element welches die id für den zu buchenden Termin an den Server überträgt.
      * @param object $model Das model der aktuellen Ansicht
      */
-    public function createMakeAppointmentContent($a_dates,&$a_tabs,&$selectContent,$model) {
+    public function createMakeAppointmentContent($a_dates, &$a_tabs, &$selectContent, $model) {
         $tabsUiId = 0; //id der tabellen, wichtig für Javascriptfunktionen aus custom.js
-        $selectContent = '<select id="form_dateAndTime" name="Appointment[dateAndTime_id]">'; 
+        $selectContent = '<select id="form_dateAndTime" name="Appointment[dateAndTime_id]">';
         foreach ($a_dates as $a_day) {
             $tabsUiId++;
-            $tabsName = date('d.m.Y',  strtotime($a_day[0]->date->date));
-            $tabsContent = '<div style="display:none;" id="date-ui-id-'.$tabsUiId.'">'.$tabsName.'</div>'; //verstecktes Element für Javascriptfunktionen aus custom.js
+            $tabsName = date('d.m.Y', strtotime($a_day[0]->date->date));
+            $tabsContent = '<div style="display:none;" id="date-ui-id-' . $tabsUiId . '">' . $tabsName . '</div>'; //verstecktes Element für Javascriptfunktionen aus custom.js
             $tabsContent .= '<table><thead><th class="table-text" width="40%">Uhrzeit</th><th class="table-text" width="60%">Termin</th></thead><tbody>';
-            $selectContent .= '<optgroup label="'.$tabsName.'">';
+            $selectContent .= '<optgroup label="' . $tabsName . '">';
             $datesUiId = 0; //id der einzelnen Zeiten, wichtig für Javascriptfunktionen aus custom.js
             foreach ($a_day as $key => $a_times) {
                 $datesUiId++;
-                $a_times = $this->isAppointmentAvailable($model->user->id,$a_day[$key]->id); //Array in dem gespeichert wird ob ein Termin Belegt oder Frei ist.
-                $tabsContent .= '<tr><td id="time-ui-id-'.$tabsUiId.'_'.$datesUiId.'" class="table-text">'.date('H:i', strtotime($a_day[$key]->time)).'</td>';
-                $selectContent .= '<option value="'.$a_day[$key]->id.'"';
+                $a_times = $this->isAppointmentAvailable($model->user->id, $a_day[$key]->id); //Array in dem gespeichert wird ob ein Termin Belegt oder Frei ist.
+                $tabsContent .= '<tr><td id="time-ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="table-text">' . date('H:i', strtotime($a_day[$key]->time)) . '</td>';
+                $selectContent .= '<option value="' . $a_day[$key]->id . '"';
                 if ($a_times[1]) { //Termin verfügbar
-                    $tabsContent .= '<td id="ui-id-'.$tabsUiId.'_'.$datesUiId.'" class="avaiable table-text">'.$a_times[0].'</td>';
+                    $tabsContent .= '<td id="ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="avaiable table-text">' . $a_times[0] . '</td>';
                 } else {
-                    $tabsContent .= '<td class="occupied table-text">'.$a_times[0].'</td>';
+                    $tabsContent .= '<td class="occupied table-text">' . $a_times[0] . '</td>';
                     $selectContent .= ' disabled ';
                 }
                 $tabsContent .= '</tr>';
-                $selectContent .= '>'.$tabsName." - ".date('H:i', strtotime($a_day[$key]->time)).'</option>';
-            }   
+                $selectContent .= '>' . $tabsName . " - " . date('H:i', strtotime($a_day[$key]->time)) . '</option>';
+            }
             $selectContent .= '</optgroup>';
             $tabsContent .= '</tbody></table>';
             $a_tabs[$tabsName] = $tabsContent;
@@ -321,6 +327,5 @@ class AppointmentController extends Controller {
         }
         $selectContent .= '</select>';
     }
-
 
 }
