@@ -31,20 +31,41 @@
 
 	<div class="row collapse">
             <div class="two columns">
-                <span class="prefix">Datum</span>
+                <span class="prefix"><?php echo $form->label($model,'date'); ?></span>
             </div>
             <div class="eight columns">
-		<?php echo $form->textField($model,'date'); ?>
+                <?php
+                    $this->widget('zii.widgets.jui.CJuiDatePicker',array(
+                        'model' => $model,
+                        'attribute' => 'date',
+//                        'name'=> 'date',
+                        // additional javascript options for the date picker plugin
+                        'options'=>array(
+                            'showAnim'=>'fold',
+                            'minDate' => '0',
+//                            'dateFormat' => Yii::app()->params['dateFormat'],
+                            'nextText' => '',
+                            'prevText' => '',
+                        ),
+                        'language' => 'de',
+//                        'flat' => true,
+                        'skin' => false,
+                        'cssFile' => false,
+//                        'htmlOptions'=>array(
+//                            
+//                        ),
+                    ));
+                ?>
 		<?php echo $form->error($model,'date'); ?>
             </div>
             <div class="two columns">
-                <span class="postfix">TT.MM.JJJJ</span>
+                <span class="postfix">TT.MM.JJJJ<?php //echo Yii::app()->params['dateFormat'] ?></span>
             </div>
 	</div>
 
 	<div class="row collapse">
             <div class="two columns">
-                <span class="prefix">Anfang</span>
+                <span class="prefix"><?php echo $form->label($model,'begin'); ?></span>
             </div>
             <div class="eight columns">
 		<?php echo $form->textField($model,'begin'); ?>
@@ -57,7 +78,7 @@
 
 	<div class="row collapse">
             <div class="two columns">
-                <span class="prefix">Ende</span>
+                <span class="prefix"><?php echo $form->label($model,'end'); ?></span>
             </div>
             <div class="eight columns">
 		<?php echo $form->textField($model,'end'); ?>
@@ -67,10 +88,23 @@
                 <span class="postfix">HH:MM</span>
             </div>
 	</div>
+        <div class="row collapse">
+            <div class="two columns">
+                <span class="prefix"><?php //echo $form->label($model,'lockAt'); ?></span>
+            </div>
+            <div class="eight columns">
+		<?php //echo $form->textField($model,'lockAt'); ?>
+		<?php //echo $form->error($model,'lockAt'); ?>
+            </div>
+            <div class="two columns">
+                <span class="postfix">HH:MM</span>
+            </div>
+	</div>
+
         <?php if($model->isNewRecord) { ?>
 	<div class="row collapse">
             <div class="two columns">
-                <span class="prefix">Dauer eines Termins</span>
+                <span class="prefix"><?php echo $form->label($model,'durationPerAppointment'); ?></span>
             </div>
             <div class="eight columns">
 		<?php echo $form->textField($model,'durationPerAppointment'); ?>

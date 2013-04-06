@@ -4,6 +4,8 @@ if (IE) {
 } else {
     (function(window, document, $) {
 
+        $('#LoginForm_email').focus();
+        
         $('#js_menu').css('visibility', 'visible');
         $('#nojs_menu').css('display', 'none');
         $('.js_show').toggle();
@@ -62,7 +64,5 @@ if (IE) {
                 window.location.href = "index.php?r=user/deleteAll";
             }
         });
-
-
     }(this, document, jQuery));
 }
