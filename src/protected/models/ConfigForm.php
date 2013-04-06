@@ -39,11 +39,6 @@ class ConfigForm extends CFormModel {
     public $timeFormat;
     public $dateFormat;
            
-    /**
-     *             'timeFormat'=>'H:i',
-            'dateFormat'=>'d.m.Y',
-     */
-    
     public function init() {
        $this->attributes = Yii::app()->params->toArray();
     }

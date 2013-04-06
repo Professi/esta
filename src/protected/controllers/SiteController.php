@@ -37,11 +37,29 @@ class SiteController extends Controller {
             ),
         );
     }
+    
+    /**
+     * action um (fast) alle Daten der Anwendung zu löschen
+     * @throws CHttpException
+     */
+    public function actionDeleteAll() {
+        if(Yii::app()->user->checkAccess('0')) {
+            $model = new DeleteAllForm();
+            if(isset($_POST['DeleteAllForm'])) {
+                $model->setAttributes($_POST['DeleteAllForm']);
+                if($model->validate()) {
+                    $model->delete();
+                }
+            }
+            $this->render('deleteAll', array('model' => $model));
+        } else {
+            throw new CHttpException('403','Zugriff verweigert.');
+        }
+    }
 
     public function actionConfig() {
         if ((Yii::app()->user->checkAccess('0') && Yii::app()->params['installed']) || !Yii::app()->params['installed']) {
             $model = new ConfigForm();
-
             if (isset($_POST['ConfigForm'])) {
                 $createAdminUser = false;
                 $file = Yii::app()->basePath . '/config/params.inc';

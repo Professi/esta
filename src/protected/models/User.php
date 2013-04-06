@@ -241,6 +241,7 @@ class User extends CActiveRecord {
     /**
      * Suchkriterien um alle User mit UserRollen zu löschen
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @deprecated since version 1.2
      * @return \CDbCriteria 
      */
     public static function deleteAllCriteria() {
@@ -250,6 +251,24 @@ class User extends CActiveRecord {
         $criteria->addCondition('userRoles.role_id="3"', "OR");
         $criteria->select = 'id';
         return $criteria;
+    }
+    
+    /**
+     * Loescht Benutzer mit einer bestimmten Rolle
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param integer $role
+     */
+    public function deleteUsersWithRole($role) {
+        if(is_int($role)) {
+            $criteria = new CDbCriteria();
+            $criteria->with = array('userRoles');
+            $criteria->addCondition('userRoles.role_id="' . $role. '"');
+            $criteria->select = 'id';
+                    $a_delete = User::model()->findAll($criteria);
+        foreach ($a_delete as $record) {
+            $record->delete();
+        }
+        }
     }
 
     /**
