@@ -38,8 +38,6 @@
                     $this->widget('zii.widgets.jui.CJuiDatePicker',array(
                         'model' => $model,
                         'attribute' => 'date',
-//                        'name'=> 'date',
-                        // additional javascript options for the date picker plugin
                         'options'=>array(
                             'showAnim'=>'fold',
                             'minDate' => '0',
@@ -48,7 +46,7 @@
                             'prevText' => '',
                         ),
                         'language' => 'de',
-//                        'flat' => true,
+
                         'skin' => false,
                         'cssFile' => false,
 //                        'htmlOptions'=>array(
@@ -90,11 +88,11 @@
 	</div>
         <div class="row collapse">
             <div class="two columns">
-                <span class="prefix"><?php //echo $form->label($model,'lockAt'); ?></span>
+                <span class="prefix"><?php echo $form->label($model,'lockAt'); ?></span>
             </div>
             <div class="eight columns">
-		<?php //echo $form->textField($model,'lockAt'); ?>
-		<?php //echo $form->error($model,'lockAt'); ?>
+		<?php echo $form->textField($model,'lockAt'); ?>
+		<?php echo $form->error($model,'lockAt'); ?>
             </div>
             <div class="two columns">
                 <span class="postfix">HH:MM</span>
