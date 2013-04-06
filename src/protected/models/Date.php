@@ -9,6 +9,7 @@
  * @property string $date
  * @property string $begin
  * @property string $end
+ * @property string $lockAt
  * @property integer $durationPerAppointment
  * The followings are the available model relations:
  * @property Appointment[] $appointments
@@ -54,10 +55,10 @@ class Date extends CActiveRecord {
      */
     public function rules() {
         return array(
-            array('date, begin, end, durationPerAppointment', 'required'),
+            array('date, begin, end,lockAt,durationPerAppointment', 'required'),
             array('durationPerAppointment', 'numerical', 'integerOnly' => true, 'min' => Yii::app()->params['minLengthPerAppointment']),
             array('date', 'date', 'format' => 'dd.MM.yyyy'),
-            array('begin,end', 'date', 'format' => 'H:m'),
+            array('begin,end,lockAt', 'date', 'format' => 'H:m'),
             array('durationPerAppointment', 'date', 'format' => 'm'),
             array('id, date, begin, end, durationPerAppointment', 'safe', 'on' => 'search'),
         );
