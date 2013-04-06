@@ -63,18 +63,18 @@ class SiteController extends Controller {
                         $user->role = 0;
                         if (Yii::app()->params['randomTeacherPassword']) {
                             $passGen = new PasswordGenerator();
-                            $model->password = $passGen->generate();
+                            $user->password = $passGen->generate();
                         } else {
-                            $model->password = Yii::app()->params['defaultTeacherPassword'];
+                            $user->password = Yii::app()->params['defaultTeacherPassword'];
                         }
-                        $password = $model->password;
-                        $model->password_repeat = $model->password;
+                        $password = $user->password;
+                        $user->password_repeat = $user->password;
                         if ($model->save() && Yii::app()->params['randomTeacherPassword']) {
                             $mail = new Mail();
-                            $mail->sendRandomUserPassword($model->email, $password);
+                            $mail->sendRandomUserPassword($user->email, $password);
                         }
                         Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert. Außerdem wurde ein Administratorkonto erstellt. Ihr Benutzerkontenname lautet: '
-                                . $model->email . ' Ihr Passwort lautet:' . $password .
+                                . $user->email . " Ihr Passwort lautet:" . $password .
                                 " .Sollten Sie nun eine Bestätigungsemail erhalten, wurde die Anwendung erfolgreich konfiguriert.");
                     } else {
                         Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert.');
