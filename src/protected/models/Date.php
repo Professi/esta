@@ -111,21 +111,23 @@ class Date extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean
      */
-    public function afterValidate() {
-        $rc = parent::afterValidate();
-        if ($rc) {
+    public function validate($attributes = NULL, $clearErrors = true) {
+        $rc = true;
+        Yii::trace('Aktuelle Zeit: ' . time(), 'application.models.date');
+        Yii::trace('Eingegebenes Datum: ' . strtotime($this->date), 'application.models.date');
+        if (parent::validate($attributes, $clearErrors)) {
+            Yii::trace('User:' . Yii::app()->user->getId(), 'application.models.date');
             if (strtotime($this->end) <= strtotime($this->begin)) {
                 $rc = false;
                 $this->addError('end', 'Das Ende darf nicht vor dem Beginn liegen.');
             }
             if (time() >= strtotime($this->date)) {
                 $rc = false;
-                Yii::app()->user->setFlash('failMsg', 'Datum liegt in der Vergangenheit');
-                $this->addError('date', 'Datum liegt in der Vergangenheit.');
-            } else
+                $this->addError('date', 'Datum liegt in der Vergangenheit');
+            } 
             if (!is_int((strtotime($this->end)) - (strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
                 $rc = false;
-                $this->addError('begin', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.');
+                $this->addError('durationPerAppointment', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.');
             }
         }
         return $rc;
