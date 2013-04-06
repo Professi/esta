@@ -69,7 +69,7 @@ class SiteController extends Controller {
                         }
                         $password = $user->password;
                         $user->password_repeat = $user->password;
-                        if ($model->save() && Yii::app()->params['randomTeacherPassword']) {
+                        if ($user->save() && Yii::app()->params['randomTeacherPassword']) {
                             $mail = new Mail();
                             $mail->sendRandomUserPassword($user->email, $password);
                         }
