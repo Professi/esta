@@ -20,6 +20,7 @@
 /* @var $this SiteController */
 /* @var $model ConfigForm */
 /* @var $form CActiveForm */
+Yii::app()->clientScript->registerPackage('jquery');
 ?>
 <div class="form">
 

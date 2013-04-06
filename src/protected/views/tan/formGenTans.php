@@ -2,7 +2,7 @@
 /**
  * Formular um Tans zu generieren
  */
-/**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  */
 /* @var $this TanController */
 /* @var $model tan */
-                Yii::app()->clientScript->registerPackage('jquery');
+Yii::app()->clientScript->registerPackage('jquery');
 ?>
 <div class="row">
     <div class="twelve columns centered">
@@ -28,27 +28,27 @@
 </div>
 <div class="row">
     <div class="eight columns centered">
-<?php
-$form = $this->beginWidget('CActiveForm', array(
-    'id' => 'tan-form',
-        //'enableAjaxValidation' => true,
-        //'enableClientValidation'=>true,
-        // 'clientOptions'=>array('validateOnSubmit'=>true),
+        <?php
+        $form = $this->beginWidget('CActiveForm', array(
+            'id' => 'tan-form',
+                //'enableAjaxValidation' => true,
+                //'enableClientValidation'=>true,
+                // 'clientOptions'=>array('validateOnSubmit'=>true),
         ));
-?>
+        ?>
         <fieldset>
-        <div class="row collapse">
-            <div class="two columns">
-                <span class="prefix">Anzahl TANs</span>
+            <div class="row collapse">
+                <div class="two columns">
+                    <span class="prefix">Anzahl TANs</span>
+                </div>
+                <div class="ten columns">
+                    <?php echo $form->textField($model, 'tan_count', array('size' => 60, 'maxlength' => 6,)); ?>
+                    <?php echo $form->error($model, 'tan_count'); ?>
+                </div>
             </div>
-            <div class="ten columns">
-                <?php echo $form->textField($model, 'tan_count', array('size' => 60, 'maxlength' => 6,)); ?>
-                <?php echo $form->error($model, 'tan_count'); ?>
-            </div>
-        </div>
 
-    <?php echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
+            <?php echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
         </fieldset>
-<?php $this->endWidget(); ?>
+        <?php $this->endWidget(); ?>
     </div>
 </div>
