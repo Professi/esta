@@ -50,7 +50,7 @@ class Mail {
      * @param type $activationKey Aktivierungsschlüssel
      */
     public function sendChangePasswordMail($email, $activationKey) {
-        $body = "<html><head><title>Ihre Passwortzurücksetzung bei der " . Yii::app()->name . "</title></head><body>\n";
+        $body = "<html><head><title></title></head><body>\n";
         $body .= "<p>Bitte klicken Sie auf folgenden Link um ein neues Passwort für Ihr Benutzerkonto zu setzen</p>\n";
         $body .= "<p><a href=\"" . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $activationKey . "\">Link f&uuml;r die Passwortwahl</a></p>\n";
         $body .= "<p>Sollten Sie Probleme beim Aufrufen der Aktivierung haben kopieren Sie bitte den folgenden Link in die Adressleiste ihres Browser.</p>\n";
@@ -58,7 +58,7 @@ class Mail {
         $body .= "<p>Falls Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese Nachricht.</p>\n";
         $this->addInfo($body);
         $body .= "</body></html>\n";
-        $this->send('Passwort &auml;ndern', $body, $email);
+        $this->send("Ihre Passwortzurücksetzung bei der " . Yii::app()->name, $body, $email);
     }
 
     /**
@@ -68,7 +68,7 @@ class Mail {
      * @param type $activationKey  Aktivierungsschlüssel
      */
     public function sendActivationLinkMail($email, $activationKey) {
-        $body = "<html><head><title>Ihre Registrierung bei der " . Yii::app()->name . "</title></head>";
+        $body = "<html><head><title></title></head>";
         $body .= "<body><p>Vielen Dank f&uuml;r Ihre Registrierung bei der " . Yii::app()->name . ".</p>";
         $body .= "<p>Ihr Benutzername lautet:" . $email . "</p>";
         $body .= "<p>Um Ihre Registrierung abzuschlie&szlig;en und die Applikation in Anspruch nehmen zu k&ouml;nnen klicken Sie bitte auf den folgenden Link.</p>";
@@ -77,7 +77,7 @@ class Mail {
         $body .= "<p>http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $activationKey . "</p>";
         $this->addInfo($body);
         $body .= "</body></html>";
-        $this->send('Registrierung', $body, $email);
+        $this->send("Ihre Registrierung bei der " . Yii::app()->name, $body, $email);
     }
 
     /**
@@ -90,17 +90,17 @@ class Mail {
      * @param type $date Datum
      */
     public function sendAppointmentDeleted($email, $teacher, $time, $child, $date) {
-        $body = "<html><head><title>Einer Ihrer Termine bei der " . Yii::app()->name . " wurde gel&oeml;scht</title></head>";
+        $body = "<html><head><title></title></head>";
         $body .= "<body><p>Hallo,</p><p>leider m&uuml;ssen wir Sie dar&uuml;ber informieren, dass Ihr Termin am <b>" . date('d.m.Y', strtotime($date)) . " um  " . date('H:i', strtotime($time)) . "</b><br>";
         $body .= " bei <b>" . $teacher->title . " " . $teacher->firstname . " " . $teacher->lastname . "</b><br>";
         $body .= "mit ihrem Kind <b>" . $child->firstname . " " . $child->lastname . "</b> <br>abgesagt wurde.</p>";
         $this->addInfo($body);
         $body .= "</body></html>";
-        $this->send('Termin gel&ouml;scht', $body, $email);
+        $this->send("Einer Ihrer Termine bei der " . Yii::app()->name . " wurde gel&oeml;scht", $body, $email);
     }
 
     public function sendRandomUserPassword($email, $password, $isTeacher = true) {
-        $body = "<html><head><title>Willkommen bei der " . Yii::app()->name . "<title></head>";
+        $body = "<html><head><title></title></head>";
         if ($isTeacher) {
             $body .= "<body><p>Sie wurden bei der " . Yii::app()->name . " als Lehrer registriert.</p>";
         } else {
@@ -112,7 +112,7 @@ class Mail {
         $body .= "<p>Bitte &auml;ndern Sie dieses Passwort <b>SOFORT</b> nach der ersten Anmeldung unter \"Ihr Benutzerkonto->Meine Daten aktualisieren\"</p>";
         $this->addInfo($body);
         $body .= "</body></html>";
-        $this->send('Anmeldung', $body, $email);
+        $this->send('Willkommen bei der ' . Yii::app()->name, $body, $email);
     }
 
     /**
@@ -127,7 +127,7 @@ class Mail {
 
     private function send($subject, &$body, $email) {
         Yii::trace($body, 'application.components.mail');
-        $this->sendMail(Yii::app()->params['fromMail'] . ' ' . $subject, $body, $email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
+        $this->sendMail($subject, $body, $email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
         Yii::trace('Subject:' . Yii::app()->params['fromMail'] . $subject . ' to:' . $email . ' fromMailHost:' . Yii::app()->params['fromMailHost'] . ' fromMail:' . Yii::app()->params['fromMail'], 'application.components.mail');
     }
 
