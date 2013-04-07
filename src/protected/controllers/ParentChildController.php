@@ -44,8 +44,7 @@ class ParentChildController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('searchcreateappointment'),
-                'roles' => array('0','1'),
+                'roles' => array('1'),
             ),
             array('allow',
                 'actions' => array('create', 'index', 'delete'),
@@ -244,9 +243,7 @@ class ParentChildController extends Controller {
             $selectContent .= '<option>Keine Kinder vorhanden, bitte fügen Sie mindestens ein Kind hinzu bevor Sie fortfahren</option>';
         }
         $selectContent .='</select>';
-        
         echo CJSON::encode($selectContent);
-        
         Yii::app()->end();
     }
 
