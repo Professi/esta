@@ -184,5 +184,42 @@ class DateController extends Controller {
             Yii::app()->end();
         }
     }
+    
+    /**
+     * Convert PHP date() style dateFormat to the equivalent jQuery UI datepicker string
+     * <http://snipplr.com/view/41329/>
+     * @param string $dateString string der konvertiert werden soll.
+     */
+    function dateStringToDatepickerFormat($dateString)
+    {
+	$pattern = array(
+ 
+		//day
+		'd',		//day of the month
+		'j',		//3 letter name of the day
+		'l',		//full name of the day
+		'z',		//day of the year
+ 
+		//month
+		'F',		//Month name full
+		'M',		//Month name short
+		'n',		//numeric month no leading zeros
+		'm',		//numeric month leading zeros
+ 
+		//year
+		'Y', 		//full numeric year
+		'y'		//numeric year: 2 digit
+	);
+	$replace = array(
+		'dd','d','DD','o',
+		'MM','M','m','mm',
+		'yy','y'
+	);
+	foreach($pattern as &$p)
+	{
+		$p = '/'.$p.'/';
+	}
+	return preg_replace($pattern,$replace,$dateString);
+    }
 
 }

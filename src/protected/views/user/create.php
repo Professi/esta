@@ -19,7 +19,7 @@
  */
 /* @var $this UserController */
 /* @var $model User */
-
+Yii::app()->clientScript->registerPackage('jquery');
 $this->breadcrumbs = array(
     'Users' => array('index'),
     'Create',

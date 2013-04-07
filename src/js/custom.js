@@ -89,13 +89,18 @@ if (IE) {
             e.preventDefault();
         });
         
-        // ** vorläufige Funktionalität für den Roten Knopf unter 'Ihr Benutzerkonto' **
+        // ** Funktionalität für den Roten Knopf unter 'Ihr Benutzerkonto' **
         $('#red-button').on('click', function(e) {
             e.preventDefault();
             $answer = confirm('Alles löschen?');
             if ($answer) {
                 window.location.href = "index.php?r=user/deleteAll";
             }
+        });
+        
+        // ** Daten von lockAt in das entsprechende Feld eintragen **
+        $('input[id$="_lockAt"]').on('change', function() {
+            $('#lockAt_value').val($('input[id$="_lockAt"]')[0]['value']+' '+$('input[id$="_lockAt"]')[1]['value']);
         });
         
     }(this, document, jQuery));

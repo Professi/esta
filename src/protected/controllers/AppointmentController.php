@@ -293,13 +293,14 @@ class AppointmentController extends Controller {
      * @param array $a_tabs Array mit den Tabellen, die die Termine anzeigen
      * @param string $select_content Das select-Element welches die id für den zu buchenden Termin an den Server überträgt.
      * @param object $model Das model der aktuellen Ansicht
+     * @param integer $appointmentId 
      */
-    public function createMakeAppointmentContent($a_dates, &$a_tabs, &$selectContent, $teacherId) {
+    public function createMakeAppointmentContent($a_dates, &$a_tabs, &$selectContent, $teacherId, $appointmentId=-1) {
         $tabsUiId = 0; //id der tabellen, wichtig für Javascriptfunktionen aus custom.js
         $selectContent = '<select id="form_dateAndTime" name="Appointment[dateAndTime_id]">';
         foreach ($a_dates as $a_day) {
             $tabsUiId++;
-            $tabsName = date('d.m.Y', strtotime($a_day[0]->date->date));
+            $tabsName = date(Yii::app()->params['dateFormat'], strtotime($a_day[0]->date->date));
             $tabsContent = '<div style="display:none;" id="date-ui-id-' . $tabsUiId . '">' . $tabsName . '</div>'; //verstecktes Element für Javascriptfunktionen aus custom.js
             $tabsContent .= '<table><thead><th class="table-text" width="40%">Uhrzeit</th><th class="table-text" width="60%">Termin</th></thead><tbody>';
             $selectContent .= '<optgroup label="' . $tabsName . '">';
@@ -307,16 +308,20 @@ class AppointmentController extends Controller {
             foreach ($a_day as $key => $a_times) {
                 $datesUiId++;
                 $a_times = $this->isAppointmentAvailable($teacherId, $a_day[$key]->id); //Array in dem gespeichert wird ob ein Termin Belegt oder Frei ist.
-                $tabsContent .= '<tr><td id="time-ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="table-text">' . date('H:i', strtotime($a_day[$key]->time)) . '</td>';
+                $tabsContent .= '<tr><td id="time-ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="table-text">' . date(Yii::app()->params['timeFormat'], strtotime($a_day[$key]->time)) . '</td>';
                 $selectContent .= '<option value="' . $a_day[$key]->id . '"';
                 if ($a_times[1]) { //Termin verfügbar
                     $tabsContent .= '<td id="ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="avaiable table-text">' . $a_times[0] . '</td>';
                 } else {
                     $tabsContent .= '<td class="occupied table-text">' . $a_times[0] . '</td>';
                     $selectContent .= ' disabled ';
+                    if ($a_day[$key]->id == $appointmentId) {
+                        $selectContent = str_replace(' disabled ', ' ', $selectContent);
+                        $selectContent .= ' selected ';
+                    }
                 }
                 $tabsContent .= '</tr>';
-                $selectContent .= '>' . $tabsName . " - " . date('H:i', strtotime($a_day[$key]->time)) . '</option>';
+                $selectContent .= '>' . $tabsName . " - " . date(Yii::app()->params['timeFormat'], strtotime($a_day[$key]->time)) . '</option>';
             }
             $selectContent .= '</optgroup>';
             $tabsContent .= '</tbody></table>';
@@ -343,17 +348,22 @@ class AppointmentController extends Controller {
      * Suche fuer Elternkindverknuepfungen anhand von  dem Namen des 
      * Erziehungsberechtigten, optimierte Ausgabe für appointment/create
      * @param string $term Nachname des Elternteils
+     * @param integer $id Falls bei einem Update schon ein Kind ausgewählt wurde
      * @author David Mock <dumock@gmail.com>
      * echo JSON
      */
-    public function createChildrenSelect($term) {
+    public function createChildrenSelect($term, $id=-1) {
         $dataProvider = new ParentChild();
         $dataProvider->unsetAttributes();
         $criteria = $dataProvider->searchParentChild($term);
         $selectContent = '<select name="Appointment[parent_child_id]">';
         $a_data = ParentChild::model()->findAll($criteria);
         foreach ($a_data as $record) {
-            $selectContent .= '<option value="'.$record->id.'">'.$record->child->firstname." ".$record->child->lastname.'</option>';
+            $selectContent .= '<option value="'.$record->id.'" ';
+            if ($record->id == $id) {
+                $selectContent .= 'selected';
+            }
+            $selectContent .= '>'.$record->child->firstname." ".$record->child->lastname.'</option>';
         }
         if (empty($a_data)) {
             $selectContent .= '<option>Keine Kinder vorhanden, bitte fügen Sie mindestens ein Kind hinzu bevor Sie fortfahren</option>';

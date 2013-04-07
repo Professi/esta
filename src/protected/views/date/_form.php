@@ -43,7 +43,7 @@ $form = $this->beginWidget('CActiveForm', array(
             'options' => array(
                 'showAnim' => 'fold',
                 'minDate' => '0',
-//                            'dateFormat' => Yii::app()->params['dateFormat'],
+                            'dateFormat' => $this->dateStringToDatepickerFormat(Yii::app()->params['dateFormat']),
                             'nextText' => '',
                             'prevText' => '',
                         ),
@@ -58,7 +58,7 @@ $form = $this->beginWidget('CActiveForm', array(
 <?php echo $form->error($model, 'date'); ?>
     </div>
     <div class="two columns">
-        <span class="postfix">TT.MM.JJJJ<?php //echo Yii::app()->params['dateFormat']  ?></span>
+        <span class="postfix"><?php echo Yii::app()->params['dateFormat']  ?></span>
     </div>
 </div>
 
@@ -71,7 +71,7 @@ $form = $this->beginWidget('CActiveForm', array(
 <?php echo $form->error($model, 'begin'); ?>
     </div>
     <div class="two columns">
-        <span class="postfix">HH:MM</span>
+        <span class="postfix"><?php echo Yii::app()->params['timeFormat']  ?></span>
     </div>
 </div>
 
@@ -84,19 +84,42 @@ $form = $this->beginWidget('CActiveForm', array(
 <?php echo $form->error($model, 'end'); ?>
     </div>
     <div class="two columns">
-        <span class="postfix">HH:MM</span>
+        <span class="postfix"><?php echo Yii::app()->params['timeFormat']  ?></span>
     </div>
 </div>
 <div class="row collapse">
     <div class="two columns">
         <span class="prefix"><?php echo $form->label($model, 'lockAt'); ?></span>
     </div>
-    <div class="eight columns">
-        <?php echo $form->textField($model, 'lockAt'); ?>
-<?php echo $form->error($model, 'lockAt'); ?>
+    <div class="four columns">
+        <?php // echo $form->textField($model, 'lockAt'); 
+        $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+            'model' => $model,
+            'name' => 'lockAt',
+            'id' => 'date_lockAt',
+            'options' => array(
+                'showAnim' => 'fold',
+                'minDate' => '0',
+                            'dateFormat' => $this->dateStringToDatepickerFormat(Yii::app()->params['dateFormat']),
+                            'nextText' => '',
+                            'prevText' => '',
+                        ),
+                        'language' => 'de',
+                        'skin' => false,
+                        'cssFile' => false,
+                        'htmlOptions'=>array(
+                            'readonly' => 'readonly',
+                        ),
+        ));
+        ?>
+        <?php echo $form->hiddenField($model, 'lockAt', array('id' => 'lockAt_value')); ?>
+        <?php echo $form->error($model, 'lockAt'); ?>
+    </div>
+    <div class="four columns">
+        <input type="text" id="time_lockAt">
     </div>
     <div class="two columns">
-        <span class="postfix">HH:MM</span>
+        <span class="postfix"><?php echo Yii::app()->params['dateTimeFormat']  ?></span>
     </div>
 </div>
 
