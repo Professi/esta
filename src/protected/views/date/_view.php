@@ -38,6 +38,9 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('end')); ?>:</b>
 	<?php echo CHtml::encode(date('H:i', strtotime($data->end))); ?>
 	<br />
+        	<b><?php echo CHtml::encode($data->getAttributeLabel('lockAt')); ?>:</b>
+	<?php echo CHtml::encode(date('H:i', strtotime($data->lockAt))); ?>
+	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('durationPerAppointment')); ?>:</b>
 	<?php echo CHtml::encode($data->durationPerAppointment); ?>
