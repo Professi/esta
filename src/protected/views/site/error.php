@@ -19,15 +19,22 @@
  */
 /* @var $this SiteController */
 /* @var $error array */
-
+Yii::app()->clientScript->registerPackage('jquery');
 $this->pageTitle=Yii::app()->name . ' - Error';
 $this->breadcrumbs=array(
 	'Error',
 );
 ?>
-
-<h2>Fehler <?php echo $code; ?></h2>
-
-<div class="error">
-<?php echo CHtml::encode($message); ?>
+<div class="row">
+    <div class="twelve columns">
+        <div class="push hide-for-small"></div>
+        <div class="push hide-for-small"></div>
+        <div class="panel">
+        <h2>Fehler <?php echo $code; ?></h2>   
+        <br>
+        <?php echo CHtml::encode($message); ?>
+        </div>
+        <p class="text-center"><?php echo CHtml::link('<b>Zurück zur Startseite</b>', 'index.php?r=Appointment/index'); ?> </p>
+    </div>
 </div>
+

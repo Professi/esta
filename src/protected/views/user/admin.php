@@ -85,11 +85,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $model->search(),
     'filter' => $model,
     'columns' => array(
-        'id',
+        array('name' =>'id', 'htmlOptions' => array ('width' => '5%')),
         array('name' => 'username', 'header' => 'E-Mail'),
         array('name' => 'firstname',),
         'lastname',
-        'title',
+        array('name' => 'title', 'htmlOptions' => array ('width' => '5%')),
         array('name' => 'state',
             'value' => 'User::getFormattedState($data->state)',
             'filter' => CHtml::listData(
@@ -100,6 +100,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'filter' => CHtml::listData(Role::model()->findAll(), 'id', 'title')),
         array(
             'class' => 'CustomButtonColumn',
+            'htmlOptions' => array ('width' => '10%', 'style' => 'text-align:center;')
         )
     )
 ));

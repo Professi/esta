@@ -405,3 +405,9 @@ ul.button-group li {
 .ui-widget-header .ui-icon {
 	background-image: url(../img/ui-icons_d8e7f3_256x240.png);
 }
+
+.filters select {
+    position: relative;
+    height: 2.4em;
+    top: -.45em;
+}

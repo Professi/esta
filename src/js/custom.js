@@ -11,6 +11,17 @@ if (IE) {
         $('.js_show').toggle();
         $('.js_hide').toggle();
 
+        $(document).ready(function() {
+            $('.button-group > li > a').addClass('small button');
+            $('.button-group > li.disabled > a').addClass('disabled');
+            $('#MenuModal').append($('.nojs_menu').clone()).html();
+            $('#MenuModal ul').attr('class', 'nav-bar vertical');
+            $('#MenuModal ul').attr('style', 'display:inherit;');
+            $('#MenuModal').append('<a class="close-reveal-modal" data-icon="&#xe014;" style="color:#fff;"></a>');
+        });
+        
+        // ** Funktionalität der Tabellen unter appointment/makeAppointment **
+        
         $('.avaiable').css('cursor', 'pointer');
         $('.avaiable').on('click', function() {
             $id = $(this).attr('id');
@@ -28,17 +39,22 @@ if (IE) {
                 });
             });
         });
-
-        $(document).ready(function() {
-            $('.button-group > li > a').addClass('small button');
-            $('.button-group > li.disabled > a').addClass('disabled');
-            $('#MenuModal').append($('.nojs_menu').clone()).html();
-            $('#MenuModal ul').attr('class', 'nav-bar vertical');
-            $('#MenuModal ul').attr('style', 'display:inherit;');
-            $('#MenuModal').append('<a class="close-reveal-modal" data-icon="&#xe014;" style="color:#fff;"></a>');
+        
+        // ** JQuery UI Autocomplete Einstellungen **
+            // ** Seite: appointment/getTeacher.php **
+        
+        $('#teacher-ac').on('autocompleteselect', function(e, ui) {
+            e.preventDefault();
+            window.location.href = "index.php?r=Appointment/makeAppointment&teacher=" + ui.item.value;
         });
         
-        $('input[id$="_display"]').on('autocompletefocus', function(e, ui) {
+        $('#teacher-ac').on('autocompletefocus', function(e) {
+           e.preventDefault(); 
+        });
+        
+            // ** Seite: appointment/create.php **
+        
+        $('input[id$="_display"]').on('autocompletefocus', function(e) {
            e.preventDefault(); 
         });
         
@@ -47,16 +63,33 @@ if (IE) {
             $(this).val(ui.item.label);
             $(this).nextAll('input').val(ui.item.value);
         });
-
-        $('#teacher-ac').on('autocompleteselect', function(e, ui) {
-            e.preventDefault();
-            window.location.href = "index.php?r=Appointment/makeAppointment&teacher=" + ui.item.value;
+        
+        $('#appointment_teacher').on('autocompleteselect', function (e, ui) {
+           e.preventDefault();
+           $(this).val(ui.item.label);
+           $(this).nextAll('input').val(ui.item.value);
+           $.get('index.php/?r=appointment/getteacherappointments', {teacherId: ui.item.value}, function(data) {
+               $('#appointment_dateAndTime_select').html(data);
+           }, 'json'); 
         });
         
-        $('#teacher-ac').on('autocompletefocus', function(e, ui) {
+        $('#appointment_teacher').on('autocompletefocus', function(e) {
            e.preventDefault(); 
         });
-
+        
+        $('#appointment_parent').on('autocompleteselect', function(e, ui) {
+           e.preventDefault();
+           $(this).val(ui.item.label);
+           $.get('index.php/?r=parentChild/searchcreateappointment', {term: ui.item.label.substr((ui.item.label.lastIndexOf(' '))+1)}, function(data) {
+              $('#appointment_parent_select').html(data); 
+           }, 'json');
+        });
+        
+        $('#appointment_parent').on('autocompletefocus', function(e) {
+            e.preventDefault();
+        });
+        
+        // ** vorläufige Funktionalität für den Roten Knopf unter 'Ihr Benutzerkonto' **
         $('#red-button').on('click', function(e) {
             e.preventDefault();
             $answer = confirm('Alles löschen?');
@@ -64,5 +97,6 @@ if (IE) {
                 window.location.href = "index.php?r=user/deleteAll";
             }
         });
+        
     }(this, document, jQuery));
 }

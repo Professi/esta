@@ -40,7 +40,7 @@
         <?php
         $a_tabs = null;
         $selectContent = null;
-        $this->createMakeAppointmentContent($a_dates, $a_tabs, $selectContent, $model);
+        $this->createMakeAppointmentContent($a_dates, $a_tabs, $selectContent, $model->user->id);
         ?>
         <div class="js_show">
         <?php

@@ -52,7 +52,7 @@ class AppointmentController extends Controller {
                 'roles' => array('2')
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete', 'view', 'create', 'update'),
+                'actions' => array('admin', 'delete', 'view', 'create', 'update', 'getteacherappointments'),
                 'roles' => array('0', '1'),
             ),
             array('deny', // deny all users
@@ -294,7 +294,7 @@ class AppointmentController extends Controller {
      * @param string $select_content Das select-Element welches die id für den zu buchenden Termin an den Server überträgt.
      * @param object $model Das model der aktuellen Ansicht
      */
-    public function createMakeAppointmentContent($a_dates, &$a_tabs, &$selectContent, $model) {
+    public function createMakeAppointmentContent($a_dates, &$a_tabs, &$selectContent, $teacherId) {
         $tabsUiId = 0; //id der tabellen, wichtig für Javascriptfunktionen aus custom.js
         $selectContent = '<select id="form_dateAndTime" name="Appointment[dateAndTime_id]">';
         foreach ($a_dates as $a_day) {
@@ -306,7 +306,7 @@ class AppointmentController extends Controller {
             $datesUiId = 0; //id der einzelnen Zeiten, wichtig für Javascriptfunktionen aus custom.js
             foreach ($a_day as $key => $a_times) {
                 $datesUiId++;
-                $a_times = $this->isAppointmentAvailable($model->user->id, $a_day[$key]->id); //Array in dem gespeichert wird ob ein Termin Belegt oder Frei ist.
+                $a_times = $this->isAppointmentAvailable($teacherId, $a_day[$key]->id); //Array in dem gespeichert wird ob ein Termin Belegt oder Frei ist.
                 $tabsContent .= '<tr><td id="time-ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="table-text">' . date('H:i', strtotime($a_day[$key]->time)) . '</td>';
                 $selectContent .= '<option value="' . $a_day[$key]->id . '"';
                 if ($a_times[1]) { //Termin verfügbar
@@ -326,6 +326,41 @@ class AppointmentController extends Controller {
             }
         }
         $selectContent .= '</select>';
+    }
+    
+    public function actionGetTeacherAppointments($teacherId) {
+        header('Content-type: application/json');
+        $a_tabs = null;
+        $selectContent = null;
+        $this->createMakeAppointmentContent($this->getDatesWithTimes(3), $a_tabs, $selectContent, $teacherId);
+        
+        echo CJSON::encode($selectContent);
+        
+        Yii::app()->end();
+    }
+    
+    /**
+     * Suche fuer Elternkindverknuepfungen anhand von  dem Namen des 
+     * Erziehungsberechtigten, optimierte Ausgabe für appointment/create
+     * @param string $term Nachname des Elternteils
+     * @author David Mock <dumock@gmail.com>
+     * echo JSON
+     */
+    public function createChildrenSelect($term) {
+        $dataProvider = new ParentChild();
+        $dataProvider->unsetAttributes();
+        $criteria = $dataProvider->searchParentChild($term);
+        $selectContent = '<select name="Appointment[parent_child_id]">';
+        $a_data = ParentChild::model()->findAll($criteria);
+        foreach ($a_data as $record) {
+            $selectContent .= '<option value="'.$record->id.'">'.$record->child->firstname." ".$record->child->lastname.'</option>';
+        }
+        if (empty($a_data)) {
+            $selectContent .= '<option>Keine Kinder vorhanden, bitte fügen Sie mindestens ein Kind hinzu bevor Sie fortfahren</option>';
+        }
+        $selectContent .='</select>';
+
+        return $selectContent;
     }
 
 }

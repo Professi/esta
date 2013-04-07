@@ -44,7 +44,8 @@ class ParentChildController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'roles' => array('1'),
+                'actions' => array('searchcreateappointment'),
+                'roles' => array('0','1'),
             ),
             array('allow',
                 'actions' => array('create', 'index', 'delete'),
@@ -219,6 +220,34 @@ class ParentChildController extends Controller {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
+    }
+    
+    /**
+     * Suche fuer Elternkindverknuepfungen anhand von  dem Namen des 
+     * Erziehungsberechtigten, optimierte Ausgabe für die appointment/create
+     * Ajaxanfrage
+     * @param string $term Nachname des Elternteils
+     * @author David Mock <dumock@gmail.com>
+     * echo JSON
+     */
+    public function actionSearchCreateAppointment($term) {
+        header('Content-type: application/json');
+        $dataProvider = new ParentChild();
+        $dataProvider->unsetAttributes();
+        $criteria = $dataProvider->searchParentChild($term);
+        $selectContent = '<select name="Appointment[parent_child_id]">';
+        $a_data = ParentChild::model()->findAll($criteria);
+        foreach ($a_data as $record) {
+            $selectContent .= '<option value="'.$record->id.'">'.$record->child->firstname." ".$record->child->lastname.'</option>';
+        }
+        if (empty($a_data)) {
+            $selectContent .= '<option>Keine Kinder vorhanden, bitte fügen Sie mindestens ein Kind hinzu bevor Sie fortfahren</option>';
+        }
+        $selectContent .='</select>';
+        
+        echo CJSON::encode($selectContent);
+        
+        Yii::app()->end();
     }
 
 }
