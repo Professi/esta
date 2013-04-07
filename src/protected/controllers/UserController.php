@@ -223,6 +223,20 @@ class UserController extends Controller {
         }
     }
 
+    public function actionCreateDummy() {
+        $model = new DummyUserForm();
+        $model->unsetAttributes();
+        if (isset($_POST['DummyUserForm'])) {
+            $model->attributes = $_POST['DummyUserForm'];
+            if ($model->validate()) {
+                $model->insert();
+            }
+        }
+        $this->render('createDummy', array(
+            'model' => $model,
+        ));
+    }
+
     /**
      * Konvertiert eine Datei in ISO-8859-1 in UTF-8
      * @param string $toEncode

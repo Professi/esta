@@ -111,7 +111,7 @@ class DateController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-        $model->date = date('d.m.Y', strtotime($model->date));
+     //   $model->date = date('d.m.Y', strtotime($model->date));
         if (isset($_POST['Date'])) {
             $model->attributes = $_POST['Date'];
             if ($model->save())

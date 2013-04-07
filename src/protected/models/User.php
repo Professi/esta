@@ -378,7 +378,9 @@ class User extends CActiveRecord {
                 $this->state = 0;
             }
             $this->activationKey = self::generateActivationKey();
+            if(empty($this->username) && !empty($this->email)) {
             $this->username = $this->email;
+            }
             $this->lastname = ucfirst($this->lastname);
             $this->firstname = ucfirst($this->firstname);
         }

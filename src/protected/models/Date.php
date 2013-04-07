@@ -129,7 +129,7 @@ class Date extends CActiveRecord {
             } else if (!is_int((strtotime($this->end)) - (strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
                 $rc = false;
                 $this->addError('durationPerAppointment', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.');
-            } else if (strtotime($this->date . $this->begin) < strtotime ($this->lockAt)) {
+            } else if (strtotime($this->date . $this->begin) < strtotime($this->lockAt)) {
                 $rc = false;
                 $this->addError('lockAt', 'Die Sperrfrist muss vor oder auf dem Anfang liegen.');
             }
