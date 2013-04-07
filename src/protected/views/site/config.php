@@ -49,15 +49,6 @@ Yii::app()->clientScript->registerPackage('jquery');
             </div>
             <div class="row collapse">
                 <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'dateTimeFormat'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php echo $form->textField($model, 'dateTimeFormat'); ?>
-                    <?php echo $form->error($model, 'dateTimeFormat'); ?>
-                </div>
-            </div>
-                        <div class="row collapse">
-                <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'dateFormat'); ?></span>
                 </div>
                 <div class="four columns">
@@ -65,13 +56,22 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <?php echo $form->error($model, 'dateFormat'); ?>
                 </div>
             </div>
-                        <div class="row collapse">
+            <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'timeFormat'); ?></span>
                 </div>
                 <div class="four columns">
                     <?php echo $form->textField($model, 'timeFormat'); ?>
                     <?php echo $form->error($model, 'timeFormat'); ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'dateTimeFormat'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php echo $form->textField($model, 'dateTimeFormat', array('readonly' => 'readonly')); ?>
+                    <?php echo $form->error($model, 'dateTimeFormat'); ?>
                 </div>
             </div>
             <div class="row collapse">

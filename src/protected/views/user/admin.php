@@ -27,6 +27,7 @@ $this->breadcrumbs = array(
 
 $this->menu = array(
     array('label' => 'Benutzer erstellen', 'url' => array('create')),
+    array('label' => 'Pseudobenutzer erstellen', 'url' => array('createDummy')),
     array('label' => 'Lehrer importieren', 'url' => array('importTeachers')),
 );
 

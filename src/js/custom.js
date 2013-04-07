@@ -99,8 +99,19 @@ if (IE) {
         });
         
         // ** Daten von lockAt in das entsprechende Feld eintragen **
-        $('input[id$="_lockAt"]').on('change', function() {
+
+        function changeLockAtContent() {
             $('#lockAt_value').val($('input[id$="_lockAt"]')[0]['value']+' '+$('input[id$="_lockAt"]')[1]['value']);
+        };
+        $('input[id$="_lockAt"]').on({
+                change: function() {changeLockAtContent()},
+                keyup: function() {changeLockAtContent()}
+        });
+        
+        // ** Daten von Time, DateFormat in das kombinierte Feld eintragen **
+        
+        $('input[id$="_dateFormat"], input[id$="_timeFormat"]').on('keyup', function() {
+           $('#ConfigForm_dateTimeFormat').val($('input[id$="_dateFormat"]').val()+' '+$('input[id$="_timeFormat"]').val());
         });
         
     }(this, document, jQuery));
