@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `date` (
   `date` date NOT NULL,
   `begin` time NOT NULL,
   `end` time NOT NULL,
-  `lockAt` datetime NOT NULL,
+  `lockAt` int unsigned NOT NULL,
   `durationPerAppointment` int(3) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)

@@ -127,7 +127,7 @@ class Appointment extends CActiveRecord {
         if (parent::validate($attributes, $clearErrors)) {
             $date = $this->dateAndTime->date;
             if (Yii::app()->user->checkAccessNotAdmin('3')) {
-                if (strtotime($date->date . $date->lockAt) < time()) {
+                if ($date->lockAt < time()) {
                     $rc = false;
                     Yii::app()->user->setFlash('failMsg', 'Sie können für diesen Tag keine Termine mehr buchen.');
                 }

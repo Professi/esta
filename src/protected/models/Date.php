@@ -57,8 +57,9 @@ class Date extends CActiveRecord {
         return array(
             array('date, begin, end,lockAt,durationPerAppointment', 'required'),
             array('durationPerAppointment', 'numerical', 'integerOnly' => true, 'min' => Yii::app()->params['minLengthPerAppointment']),
+            array('lockAt', 'date', 'format' => 'dd.MM.yyyy H:m'),
             array('date', 'date', 'format' => 'dd.MM.yyyy'),
-            array('begin,end,lockAt', 'date', 'format' => 'H:m'),
+            array('begin,end', 'date', 'format' => 'H:m'),
             array('durationPerAppointment', 'date', 'format' => 'm'),
             array('id, date, begin, end, durationPerAppointment', 'safe', 'on' => 'search'),
         );
@@ -88,7 +89,7 @@ class Date extends CActiveRecord {
             'begin' => 'Anfang',
             'end' => 'Ende',
             'durationPerAppointment' => 'Dauer eines Termins',
-            'lockAt'=>'Letzte Buchung',
+            'lockAt' => 'Letzte Buchung',
         );
     }
 
@@ -122,21 +123,21 @@ class Date extends CActiveRecord {
             if (strtotime($this->end) <= strtotime($this->begin)) {
                 $rc = false;
                 $this->addError('end', 'Das Ende darf nicht vor dem Beginn liegen.');
-            }
-            else if (time() >= strtotime($this->date)) {
+            } else if (time() >= strtotime($this->date)) {
                 $rc = false;
                 $this->addError('date', 'Datum liegt in der Vergangenheit');
-            } 
-            else if (!is_int((strtotime($this->end)) - (strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
+            } else if (!is_int((strtotime($this->end)) - (strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
                 $rc = false;
                 $this->addError('durationPerAppointment', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.');
-            }
-            else if(strtotime($this->begin) < strtotime($this->lockAt)) {
+            } else if (strtotime($this->date . $this->begin) < strtotime ($this->lockAt)) {
                 $rc = false;
-                $this->addError('lockAt','Die Sperrfrist muss vor oder auf dem Anfang liegen.');
+                $this->addError('lockAt', 'Die Sperrfrist muss vor oder auf dem Anfang liegen.');
             }
         } else {
             $rc = false;
+        }
+        if ($rc) {
+            $this->lockAt = strtotime($this->lockAt);
         }
         return $rc;
     }
