@@ -1,8 +1,9 @@
 <?php
+
 /**
  * Repräsentiert den persistenten Status eines Benutzers
  */
-/**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * Webuser überschreibt CWebuser und überschreibt u.a. die Methode checkAccess
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
@@ -54,7 +56,7 @@ class WebUser extends CWebUser {
         }
         return ($role1 === $this->getState('role') || $role2 == $this->getState('role'));
     }
-    
+
     /**
      * Prüft ob ein Benutzer der Rolle zugewiesen wurde und ob er nicht Admin ist
      * @param integer $role Rolle die der Benutzer haben sollte
@@ -62,13 +64,11 @@ class WebUser extends CWebUser {
      */
     public function checkAccessNotAdmin($role) {
         $rc = false;
-        if($this->checkAccess($role) && !$this->isAdmin()) {
+        if ($this->checkAccess($role) && !$this->isAdmin()) {
             $rc = true;
         }
         return $rc;
     }
-
-
 
     /**
      * ist der Benutzer ein Administrator?
@@ -83,6 +83,15 @@ class WebUser extends CWebUser {
             return true;
         }
     }
+
+    /**
+     * Methode fuer isGuest
+     * @return boolean 
+     */
+    public function isGuest() {
+        return $this->isGuest;
+    }
+
 }
 
 ?>
