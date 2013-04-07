@@ -131,7 +131,7 @@ class Appointment extends CActiveRecord {
                     $rc = false;
                     Yii::app()->user->setFlash('failMsg', 'Sie können für diesen Tag keine Termine mehr buchen.');
                 }
-            } else if (!Yii::app()->user->isGuest() && time() > $date->date) {
+            } else if (!Yii::app()->user->isGuest() && time() <= $date->date) {
                 Yii::app()->user->setFlash('failMsg', 'Dieser Elternsprechtag ist bereits vorbei.');
                 $rc = false;
                 $this->addError('date', 'Elternsprechtag bereits vorrüber.');
