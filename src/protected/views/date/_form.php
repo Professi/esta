@@ -29,6 +29,15 @@ $form = $this->beginWidget('CActiveForm', array(
     'id' => 'date-form',
     'enableAjaxValidation' => false,
         ));
+$a_disabled = array();
+$dateLabel = '';
+$timeLabel = '';
+if (!$model->isNewRecord) {
+    $a_disabled = array('disabled' => 'disabled');
+    $a_lockAtLabel = explode(' ', date(Yii::app()->params['dateTimeFormat'], $model->lockAt));
+    $dateLabel = $a_lockAtLabel[0];
+    $timeLabel = $a_lockAtLabel[1];
+}
 ?>
 
 <div class="row collapse">
@@ -67,7 +76,7 @@ $form = $this->beginWidget('CActiveForm', array(
         <span class="prefix"><?php echo $form->label($model, 'begin'); ?></span>
     </div>
     <div class="eight columns">
-        <?php echo $form->textField($model, 'begin'); ?>
+        <?php echo $form->textField($model, 'begin', $a_disabled); ?>
 <?php echo $form->error($model, 'begin'); ?>
     </div>
     <div class="two columns">
@@ -80,7 +89,7 @@ $form = $this->beginWidget('CActiveForm', array(
         <span class="prefix"><?php echo $form->label($model, 'end'); ?></span>
     </div>
     <div class="eight columns">
-        <?php echo $form->textField($model, 'end'); ?>
+        <?php echo $form->textField($model, 'end', $a_disabled); ?>
 <?php echo $form->error($model, 'end'); ?>
     </div>
     <div class="two columns">
@@ -97,6 +106,7 @@ $form = $this->beginWidget('CActiveForm', array(
             'model' => $model,
             'name' => 'lockAt',
             'id' => 'date_lockAt',
+            'value' => $dateLabel,
             'options' => array(
                 'showAnim' => 'fold',
                 'minDate' => '0',
@@ -116,27 +126,27 @@ $form = $this->beginWidget('CActiveForm', array(
         <?php echo $form->error($model, 'lockAt'); ?>
     </div>
     <div class="four columns">
-        <input type="text" id="time_lockAt">
+        <input type="text" id="time_lockAt" value="<?php echo $timeLabel; ?>">
     </div>
     <div class="two columns">
         <span class="postfix"><?php echo Yii::app()->params['dateTimeFormat']  ?></span>
     </div>
 </div>
 
-<?php if ($model->isNewRecord) { ?>
+<?php // if ($model->isNewRecord) { ?>
     <div class="row collapse">
         <div class="two columns">
             <span class="prefix"><?php echo $form->label($model, 'durationPerAppointment'); ?></span>
         </div>
         <div class="eight columns">
-            <?php echo $form->textField($model, 'durationPerAppointment'); ?>
+            <?php echo $form->textField($model, 'durationPerAppointment', $a_disabled); ?>
     <?php echo $form->error($model, 'durationPerAppointment'); ?>
         </div>
         <div class="two columns">
             <span class="postfix">MM</span>
         </div>
     </div>
-<?php } ?>
+<?php // } ?>
 <br>
 <?php echo CHtml::submitButton($model->isNewRecord ? 'Anlegen' : 'Speichern', array('class' => 'small button')); ?>
 <?php $this->endWidget(); ?>

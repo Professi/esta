@@ -28,7 +28,6 @@
     $parentLabel = '';
     $a_tabs = array();
     if ($model->isNewRecord) {
-//        $parentChild_value = '';
         $teacherValue = '';
         $teacherLabel = '';
         if (isset($_GET['teacherId'])) {
@@ -38,23 +37,15 @@
             $this->createMakeAppointmentContent($this->getDatesWithTimes(3),$a_tabs, $selectContent, $teacherValue);
         }
         if (isset($_GET['parentId'])) {
-//            $userTemp = ParentChild::model()->findByAttributes(array('user_id' => $_GET['parentId']));
             $userTemp = User::model()->findByPk($_GET['parentId']);
-//            $parentChild_value = $_GET['parentId'];
-//            $parentChild_label = $userTemp->user->firstname." ".$userTemp->user->lastname."; Kind: ".$userTemp->child->firstname." ".$userTemp->child->lastname;
+
             $parentLabel = $userTemp->firstname." ".$userTemp->lastname;
             $selectChildrenContent = $this->createChildrenSelect($userTemp->lastname);
         }
-//        $dateAndTime_value = '';
-//        $dateAndTime_label = '';
     } else {
-//        $dateAndTime_value = $model->dateAndTime->id;
-//        $parentChild_value = $model->parentChild->id;
         $parentLabel = $model->parentChild->user->firstname." ".$model->parentChild->user->lastname;
         $selectChildrenContent = $this->createChildrenSelect($model->parentChild->user->lastname, $model->parentChild->id);
         $teacherValue = $model->user->id; 
-//        $dateAndTime_label = date('d.m.Y',  strtotime($model->dateAndTime->date->date))." ".date('H:i', strtotime($model->dateAndTime->time)); 
-//        $parentChild_label = $model->parentChild->user->firstname." ".$model->parentChild->user->lastname."; Kind: ".$model->parentChild->child->firstname." ".$model->parentChild->child->lastname;
         $teacherLabel = $model->user->title." ".$model->user->firstname." ".$model->user->lastname;
         $this->createMakeAppointmentContent($this->getDatesWithTimes(3),$a_tabs, $selectContent, $model->user->id, $model->dateAndTime->id);
         

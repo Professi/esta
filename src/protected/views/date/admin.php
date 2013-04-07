@@ -74,7 +74,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'durationPerAppointment',
 		array(
 			'class'=>'CustomButtonColumn',
-                        'template' => '{view},{delete}',
+//                        'template' => '{view},{delete}',
 		),
 	),
 )); ?>

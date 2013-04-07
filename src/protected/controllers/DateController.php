@@ -47,7 +47,7 @@ class DateController extends Controller {
                 'roles' => array('1'),
             ),
             array('allow',
-                'actions' => array('create', 'delete', 'admin', 'search','view'),
+                'actions' => array('create', 'delete', 'admin', 'search','view','update'),
                 'roles' => array('0'),
             ),
             array('deny',
