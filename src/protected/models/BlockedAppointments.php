@@ -48,10 +48,17 @@ class BlockedAppointments extends CActiveRecord {
 
     public function rules() {
         return array(
-            array('dateAndTime_id,user_id','exist'),
-            array('reason','required'),
-            array('reason','length','min'=>Yii::app()->params['lengthReasonAppointmentBlocked']),
+            array('dateAndTime_id,user_id', 'exist'),
+            array('reason', 'required'),
+            array('reason', 'length', 'min' => Yii::app()->params['lengthReasonAppointmentBlocked']),
         );
+    }
+
+    public function countUsedDateAndTimes() {
+        $crit = new CDbCriteria();
+        $crit->with = 'dateAndTime';
+        $crit->addCondition('dateAndTime.date_id=\"' . $this->dateAndTime->date_id . '\"');
+        return $crit;
     }
 
     public function relations() {
@@ -60,23 +67,28 @@ class BlockedAppointments extends CActiveRecord {
             'user' => array(self::BELONGS_TO, 'User', 'user_id'),
         );
     }
-    
+
     public function validate($attributes = null, $clearErrors = true) {
         $rc = false;
-        if(parent::validate($attributes, $clearErrors)) {
-            if($this->user->role == 2) {
-                $rc = true;
-            } else {
+        if (parent::validate($attributes, $clearErrors)) {
+            if ($this->user->role != 2) {
                 $this->addError('user_id', 'Kein Lehrer.');
+            } else if (Yii::app()->params['allowBlockingAppointments']) {
+                if (BlockedAppointments::model()->count($this->countUsedDateAndTimes()) >= Yii::app()->params['appointmentBlocksPerDate']) {
+                    $this->addError('dateAndTime_id', 'Zuviele Termine berereits geblockt. Maximum liegt bei '
+                            . Yii::app()->params['appointmentBlocksPerDate'] . ' pro Elternsprechtag.');
+                }
+            } else {
+                $rc = true;
             }
         }
     }
 
     public function attributeLabels() {
         return array(
-            'user_id'=>'Lehrer',
-            'dateAndTime_id'=>'Termin',
-            'reason'=>'Grund',
+            'user_id' => 'Lehrer',
+            'dateAndTime_id' => 'Termin',
+            'reason' => 'Grund',
         );
     }
 
