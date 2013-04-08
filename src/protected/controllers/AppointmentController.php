@@ -48,11 +48,11 @@ class AppointmentController extends Controller {
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
-                'actions' => array('index', 'delete'),
+                'actions' => array('index', 'delete','blockApp','DeleteBlockApp'),
                 'roles' => array('2')
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete', 'view', 'create', 'update', 'getteacherappointments'),
+                'actions' => array('admin', 'delete', 'view', 'create', 'update', 'getteacherappointments','blockApp','DeleteBlockApp'),
                 'roles' => array('0', '1'),
             ),
             array('deny', // deny all users
@@ -61,6 +61,39 @@ class AppointmentController extends Controller {
         );
     }
 
+        
+    public function actionBlockApp() {
+        $model = new BlockedAppointments();
+        $model->unsetAttributes();
+        if(isset($_POST['BlockedAppointments'])) {
+            $model->setAttributes($_POST['BlockedAppointments']);
+            if($model->save()) {
+                Yii::app()->user->setFlash('success','Termin erfolgreich geblockt.');
+                $this->redirect(array('index'));
+            }
+        }
+        
+        $this->render('createBlockApp',array('model'=>$model));
+    }
+    
+    public function actionDeleteBlockApp($id,$teacherId=null) {
+        if($teacherId==null && Yii::app()->user->checkAccessNotAdmin('2')) {
+               $model = BlockedAppointments::model()->findByAttributes(array('id'=>$id, 'user_id'=>Yii::app()->user->getId()));
+        }
+        else if(Yii::app()->user->checkAccess('1')){
+            $model = BlockedAppointments::model()->findByPk($id);
+         } else {
+             throw new CHttpException(403, 'Kein Zugriff.');
+         }
+        if ($model != null && $model->delete()) {
+            Yii::app()->user->setFlash('success','Blockierung erfolgreich gelöscht.');
+        } else {
+            Yii::app()->user->setFlash('failMsg','Fehler beim löschen.');
+        }
+    }
+    
+    
+    
     /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
