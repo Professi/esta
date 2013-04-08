@@ -230,6 +230,7 @@ class UserController extends Controller {
             $model->attributes = $_POST['DummyUserForm'];
             if ($model->validate()) {
                 $model->insert();
+                $this->redirect('index.php?r=/user/admin');
             }
         }
         $this->render('createDummy', array(

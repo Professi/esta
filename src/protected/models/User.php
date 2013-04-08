@@ -18,6 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /** The followings are the available columns in table 'user':
  * @property string $id
  * @property string $username
@@ -58,7 +59,7 @@ class User extends CActiveRecord {
 
     /** @var string TAN Nummer bei Registrierung */
     public $tan = null;
-    
+
     /** @var array Array mit den Rollennamen */
     static private $a_roleName = null;
 
@@ -85,16 +86,19 @@ class User extends CActiveRecord {
      */
     public function rules() {
         return array(
-            array('password, firstname, lastname, email', 'required'),
+            array('firstname, lastname', 'required'),
+            array('email', 'length', 'min' => 1, 'on' => array('update'), 'allowEmpty' =>
+                empty($this->password) && empty($this->email) &&
+                !$this->isNewRecord && $this->state == 0 && $this->role == 3),
+            array('email', 'required', 'except' => array('update')),
             array('email', "unique"),
             array('email', 'email'),
             array('state', 'numerical', 'integerOnly' => true),
             array('firstname, lastname, email', 'length', 'max' => 45),
-            array('email', 'length', 'max' => 45),
             array('password', 'length', 'max' => 64, 'min' => 8, 'on' => 'insert'),
-            array('password', 'length','max' => 128,
-                'on'=>'update', 
-                'allowEmpty'=>strlen($this->password) == 0 && !Yii::app()->user->isGuest),
+            array('password', 'length', 'max' => 128, 'min' => 8,
+                'on' => array('update', 'insert'),
+                'allowEmpty' => strlen($this->password) == 0 && !Yii::app()->user->isGuest),
             array('tan', 'length',
                 'min' => Yii::app()->params['tanSize'],
                 'max' => Yii::app()->params['tanSize'],),
@@ -252,22 +256,22 @@ class User extends CActiveRecord {
         $criteria->select = 'id';
         return $criteria;
     }
-    
+
     /**
      * Loescht Benutzer mit einer bestimmten Rolle
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param integer $role
      */
     public function deleteUsersWithRole($role) {
-        if(is_int($role)) {
+        if (is_int($role)) {
             $criteria = new CDbCriteria();
             $criteria->with = array('userRoles');
-            $criteria->addCondition('userRoles.role_id="' . $role. '"');
+            $criteria->addCondition('userRoles.role_id="' . $role . '"');
             $criteria->select = 'id';
-                    $a_delete = User::model()->findAll($criteria);
-        foreach ($a_delete as $record) {
-            $record->delete();
-        }
+            $a_delete = User::model()->findAll($criteria);
+            foreach ($a_delete as $record) {
+                $record->delete();
+            }
         }
     }
 
@@ -378,17 +382,17 @@ class User extends CActiveRecord {
                 $this->state = 0;
             }
             $this->activationKey = self::generateActivationKey();
-            if(empty($this->username) && !empty($this->email)) {
-            $this->username = $this->email;
+            if (empty($this->username) && !empty($this->email)) {
+                $this->username = $this->email;
             }
             $this->lastname = ucfirst($this->lastname);
             $this->firstname = ucfirst($this->firstname);
         }
-            if(strlen($this->password) < 128 && strlen($this->password) > 0) {
+        if (strlen($this->password) < 128 && strlen($this->password) > 0) {
             $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
-            } else {
-                 $this->password = User::model()->findByPk($this->id)->password;
-            }
+        } else {
+            $this->password = User::model()->findByPk($this->id)->password;
+        }
         return parent::beforeSave();
     }
 
@@ -440,11 +444,10 @@ class User extends CActiveRecord {
                 break;
         }
     }
-    
+
     public static function getStateNameAndValue() {
-        return array(array('value'=>'0','name'=>'Nicht aktiv'),array('value'=>'1','name'=>'Aktiv'),array('value'=>'2','name'=>'Gesperrt'));
+        return array(array('value' => '0', 'name' => 'Nicht aktiv'), array('value' => '1', 'name' => 'Aktiv'), array('value' => '2', 'name' => 'Gesperrt'));
     }
-    
 
     /**
      * Gibt Rolle als String aus ( echo )
@@ -453,9 +456,9 @@ class User extends CActiveRecord {
      * @param integer $role Rollen ID des Users
      */
     static public function getFormattedRole($role) {
-        if(is_null(self::$a_roleName)) {
-        self::$a_roleName = Role::model()->findAll();
-        } 
+        if (is_null(self::$a_roleName)) {
+            self::$a_roleName = Role::model()->findAll();
+        }
         echo self::$a_roleName[$role]->title;
     }
 
@@ -476,7 +479,7 @@ class User extends CActiveRecord {
             } else {
                 $this->addError('tan', 'Leider konnte die eingegebene TAN nicht identifiziert werden.');
             }
-        } 
+        }
         return $rc;
     }
 

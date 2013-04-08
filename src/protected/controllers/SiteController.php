@@ -37,23 +37,23 @@ class SiteController extends Controller {
             ),
         );
     }
-    
+
     /**
      * action um (fast) alle Daten der Anwendung zu löschen
      * @throws CHttpException
      */
     public function actionDeleteAll() {
-        if(Yii::app()->user->checkAccess('0')) {
+        if (Yii::app()->user->checkAccess('0')) {
             $model = new DeleteAllForm();
-            if(isset($_POST['DeleteAllForm'])) {
+            if (isset($_POST['DeleteAllForm'])) {
                 $model->setAttributes($_POST['DeleteAllForm']);
-                if($model->validate()) {
+                if ($model->validate()) {
                     $model->delete();
                 }
             }
             $this->render('deleteAll', array('model' => $model));
         } else {
-            throw new CHttpException('403','Zugriff verweigert.');
+            throw new CHttpException('403', 'Zugriff verweigert.');
         }
     }
 
@@ -91,9 +91,12 @@ class SiteController extends Controller {
                             $mail = new Mail();
                             $mail->sendRandomUserPassword($user->email, $password);
                         }
-                        Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert. Außerdem wurde ein Administratorkonto erstellt. Ihr Benutzerkontenname lautet: '
-                                . $user->email . " Ihr Passwort lautet:" . $password .
-                                " .Sollten Sie nun eine Bestätigungsemail erhalten, wurde die Anwendung erfolgreich konfiguriert.");
+                        $msg = "Konfiguration aktualisiert. Außerdem wurde ein Administratorkonto erstellt. Ihr Benutzerkontenname lautet: "
+                                . $user->email . " Ihr Passwort lautet:" . $password;
+                        if ($model->randomTeacherPassword) {
+                            $msg .= " .Sollten Sie nun eine Bestätigungsemail erhalten, wurde die Anwendung erfolgreich konfiguriert.";
+                        }
+                        Yii::app()->user->setFlash('success', $msg);
                     } else {
                         Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert.');
                     }

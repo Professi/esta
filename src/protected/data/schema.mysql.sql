@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 18. Mrz 2013 um 12:49
+-- Erstellungszeit: 08. Apr 2013 um 16:43
 -- Server Version: 5.5.29
 -- PHP-Version: 5.4.6-1ubuntu1.2
 
@@ -41,6 +41,22 @@ CREATE TABLE IF NOT EXISTS `appointment` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `blockedAppointments`
+--
+
+CREATE TABLE IF NOT EXISTS `blockedAppointments` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `reason` text,
+  `dateAndTime_id` int(11) NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_blockedAppointments_dateAndTime1` (`dateAndTime_id`),
+  KEY `fk_blockedAppointments_user1` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `child`
 --
 
@@ -63,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `date` (
   `date` date NOT NULL,
   `begin` time NOT NULL,
   `end` time NOT NULL,
-  `lockAt` int unsigned NOT NULL,
+  `lockAt` int(10) unsigned NOT NULL,
   `durationPerAppointment` int(3) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
@@ -112,7 +128,6 @@ CREATE TABLE IF NOT EXISTS `role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
--- --------------------------------------------------------
 --
 -- Daten für Tabelle `role`
 --
@@ -122,6 +137,9 @@ INSERT INTO `role` (`id`, `title`, `description`) VALUES
 (1, 'Verwaltung', NULL),
 (2, 'Lehrer', NULL),
 (3, 'Eltern', NULL);
+
+-- --------------------------------------------------------
+
 --
 -- Tabellenstruktur für Tabelle `tan`
 --
@@ -139,30 +157,31 @@ CREATE TABLE IF NOT EXISTS `tan` (
 -- Tabellenstruktur für Tabelle `user`
 --
 
-CREATE  TABLE IF NOT EXISTS `user` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `username` VARCHAR(45) NOT NULL ,
-  `email` VARCHAR(45) NOT NULL ,
-  `activationKey` VARCHAR(128) NOT NULL,
-  `createtime` INT UNSIGNED NOT NULL ,
-  `firstname` VARCHAR(45) NOT NULL ,
-  `lastname` VARCHAR(45) CHARACTER SET 'utf8' COLLATE 'utf8_bin' NOT NULL ,
-  `title` VARCHAR(15) NULL ,
-  `state` TINYINT UNSIGNED NOT NULL DEFAULT 0 ,
-  `lastLogin` INT UNSIGNED NULL DEFAULT 0 ,
-  `badLogins` TINYINT NOT NULL DEFAULT 0 ,
-  `bannedUntil` INT UNSIGNED NULL ,
-  `password` VARCHAR(128) NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `username` (`username` ASC) ,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) )
-ENGINE = InnoDB
-AUTO_INCREMENT = 2
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci;
-INSERT INTO `user` (`id`, `username`, `password`, `activationKey`, `createtime`, `firstname`, `state`, `lastname`, `email`, `title`) VALUES
-(1, 'admin@admin.de', 'cd613e9e5557f026ce9f11d91afc2dcca40c30cb608e756d4ad62edc50b1263098c80e161481d1b9a5e5413994072430f007b6d1c4633b0ff92c239c367954e1', 'c99375c5a0aa0267ec9342ac8d33de700ed13b8d', 1362647692, 'admin', 1, 'admin', 'admin@admin.de', NULL);
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `activationKey` varchar(128) NOT NULL,
+  `createtime` int(10) unsigned NOT NULL,
+  `firstname` varchar(45) NOT NULL,
+  `lastname` varchar(45) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `title` varchar(15) DEFAULT NULL,
+  `state` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `lastLogin` int(10) unsigned DEFAULT '0',
+  `badLogins` tinyint(4) NOT NULL DEFAULT '0',
+  `bannedUntil` int(10) unsigned DEFAULT NULL,
+  `password` varchar(128) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
+--
+-- Daten für Tabelle `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `email`, `activationKey`, `createtime`, `firstname`, `lastname`, `title`, `state`, `lastLogin`, `badLogins`, `bannedUntil`, `password`) VALUES
+(1, 'admin@admin.de', 'admin@admin.de', 'c99375c5a0aa0267ec9342ac8d33de700ed13b8d', 1362647692, 'admin', 'admin', NULL, 1, 0, 0, NULL, 'cd613e9e5557f026ce9f11d91afc2dcca40c30cb608e756d4ad62edc50b1263098c80e161481d1b9a5e5413994072430f007b6d1c4633b0ff92c239c367954e1');
 
 -- --------------------------------------------------------
 
@@ -186,6 +205,11 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 
 INSERT INTO `user_role` (`id`, `role_id`, `user_id`) VALUES
 (0, 0, 1);
+
+--
+-- Constraints der exportierten Tabellen
+--
+
 --
 -- Constraints der Tabelle `appointment`
 --
@@ -193,6 +217,13 @@ ALTER TABLE `appointment`
   ADD CONSTRAINT `fk_appointment_parent_child1` FOREIGN KEY (`parent_child_id`) REFERENCES `parent_child` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_appointment_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_appointment_dateAndTime1` FOREIGN KEY (`dateAndTime_id`) REFERENCES `dateAndTime` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints der Tabelle `blockedAppointments`
+--
+ALTER TABLE `blockedAppointments`
+  ADD CONSTRAINT `fk_blockedAppointments_dateAndTime1` FOREIGN KEY (`dateAndTime_id`) REFERENCES `dateAndTime` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_blockedAppointments_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `dateAndTime`

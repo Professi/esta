@@ -41,6 +41,9 @@ $array2 = array(
             'maxAttemptsForLogin' => 5, //Maximalanzahl von Loginversuchen bis zur Sperrung
             'timeFormat'=>'H:i',
             'dateFormat'=>'d.m.Y',
+            'allowBlockingAppointments'=>true,
+            'appointmentBlocksPerDate'=>2,
+            'lengthReasonAppointmentBlocked'=>5,
                 );
 if(empty($arr)) {
     return $array2;

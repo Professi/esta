@@ -135,7 +135,7 @@ class Appointment extends CActiveRecord {
                 Yii::app()->user->setFlash('failMsg', 'Dieser Elternsprechtag ist bereits vorbei.');
                 $rc = false;
                 $this->addError('date', 'Elternsprechtag bereits vorrüber.');
-            } 
+            }
         } else {
             $rc = false;
         }
