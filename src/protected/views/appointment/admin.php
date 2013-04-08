@@ -27,6 +27,7 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Termin anlegen', 'url'=>array('create')),
+        array('label'=>'Termin blockieren', 'url'=>array('createBlockApp')),
 );
 
 //Yii::app()->clientScript->registerScript('search', "
@@ -57,12 +58,31 @@ $this->menu=array(
 //	'filter'=>$model,
 	'columns'=>array(
 		'id',
-                array('name' => 'dateAndTime_id', 'value' => '$data->dateAndTime->date->date." - ".$data->dateAndTime->time'),
-		array(  'name' => 'parent_child_id', 
-                        'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'),
+                array(  'name' => 'dateAndTime_id', 'value' => '$data->dateAndTime->date->date." - ".$data->dateAndTime->time'),
+		array(  'name' => 'parent_child_id', 'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'),
 		array(  'name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
-		array(
-			'class'=>'CustomButtonColumn',
-		),
+		array(  'class'=>'CustomButtonColumn',),
 	),
-)); ?>
+      ));
+?>
+<div class="push"></div>
+<div class="row">
+    <div class="twelve columns centered">
+        <h4 class="text-center">Blockierte Termine</h4>
+    </div>
+</div>
+
+<?php
+      $this->widget('zii.widgets.grid.CGridView', array(
+          'id'=>'appointmentBlock-grid',
+          'dataProvider'=>$model->search(),
+          'columns'=>array(
+              'id',
+              array(  'name' => 'dateAndTime_id', 'value' => ''),
+              array(  'name' => 'user_id', 'value' => ''),
+              array(  'name' => 'reason', 'value' => ''),
+              array(  'name' => 'length', 'value' => ''),
+              array(  'class'=>'CustomButtonColumn', 'template' => '{delete},{view}'),
+          ),
+      ));
+?>

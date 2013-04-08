@@ -91,6 +91,7 @@ if (!$model->isNewRecord) {
     <div class="eight columns">
         <?php echo $form->textField($model, 'end', $a_disabled); ?>
 <?php echo $form->error($model, 'end'); ?>
+        <div id="slider"></div>
     </div>
     <div class="two columns">
         <span class="postfix"><?php echo Yii::app()->params['timeFormat']  ?></span>
