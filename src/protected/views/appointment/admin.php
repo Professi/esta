@@ -19,6 +19,7 @@
  */
 /* @var $this AppointmentController */
 /* @var $model Appointment */
+/* @var $blockedApp BlockedAppointment */
 
 $this->breadcrumbs=array(
 	'Appointments'=>array('index'),
@@ -75,7 +76,7 @@ $this->menu=array(
 <?php
       $this->widget('zii.widgets.grid.CGridView', array(
           'id'=>'appointmentBlock-grid',
-          'dataProvider'=>$model->search(),
+          'dataProvider'=>$blockedApp->search(),
           'columns'=>array(
               'id',
               array(  'name' => 'dateAndTime_id', 'value' => ''),

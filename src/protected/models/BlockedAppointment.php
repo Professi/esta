@@ -85,8 +85,20 @@ class BlockedAppointment extends CActiveRecord {
         }
     }
 
+    public function search() {
+        $criteria = new CDbCriteria;
+        $criteria->compare('id', $this->id);
+        $criteria->compare('reason', $this->reason);
+        $criteria->compare('user_id', $this->user_id, true);
+        $criteria->compare('dateAndTime_id', $this->dateAndTime_id);
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
+    
     public function attributeLabels() {
         return array(
+            'id'=>'ID',
             'user_id' => 'Lehrer',
             'dateAndTime_id' => 'Termin',
             'reason' => 'Grund',

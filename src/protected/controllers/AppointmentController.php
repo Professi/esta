@@ -231,12 +231,17 @@ class AppointmentController extends Controller {
      */
     public function actionAdmin() {
         $model = new Appointment('search');
-        $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Appointment']))
+        $blockedApp = new BlockedAppointment();
+        $model->unsetAttributes(); 
+        $blockedApp->unsetAttributes();
+        if (isset($_GET['Appointment'])) {
             $model->attributes = $_GET['Appointment'];
-
+        }
+        if(isset($_GET['BlockedAppointment'])) {
+            $blockedApp->attributes = $_GET['BlockedAppointment'];
+        }
         $this->render('admin', array(
-            'model' => $model,
+            'model' => $model, 'blockedApp'=>$blockedApp,
         ));
     }
 
