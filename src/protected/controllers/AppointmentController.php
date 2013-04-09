@@ -48,11 +48,11 @@ class AppointmentController extends Controller {
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
-                'actions' => array('index', 'delete','blockApp','DeleteBlockApp'),
+                'actions' => array('index', 'delete','createBlockApp','DeleteBlockApp'),
                 'roles' => array('2')
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete', 'view', 'create', 'update', 'getteacherappointments','blockApp','DeleteBlockApp'),
+                'actions' => array('admin', 'delete', 'view', 'create', 'update', 'getteacherappointments','createBlockApp','DeleteBlockApp'),
                 'roles' => array('0', '1'),
             ),
             array('deny', // deny all users
@@ -62,11 +62,11 @@ class AppointmentController extends Controller {
     }
 
         
-    public function actionBlockApp() {
-        $model = new BlockedAppointments();
+    public function actionCreateBlockApp() {
+        $model = new BlockedAppointment();
         $model->unsetAttributes();
-        if(isset($_POST['BlockedAppointments'])) {
-            $model->setAttributes($_POST['BlockedAppointments']);
+        if(isset($_POST['BlockedAppointment'])) {
+            $model->attributes = $_POST['BlockedAppointment'];
             if($model->save()) {
                 Yii::app()->user->setFlash('success','Termin erfolgreich geblockt.');
                 $this->redirect(array('index'));
@@ -91,7 +91,6 @@ class AppointmentController extends Controller {
             Yii::app()->user->setFlash('failMsg','Fehler beim löschen.');
         }
     }
-    
     
     
     /**

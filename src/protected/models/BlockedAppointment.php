@@ -27,7 +27,7 @@
  * @property User $user
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
-class BlockedAppointments extends CActiveRecord {
+class BlockedAppointment extends CActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
@@ -43,21 +43,21 @@ class BlockedAppointments extends CActiveRecord {
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'blockedAppointments';
+        return 'blockedAppointment';
     }
 
     public function rules() {
         return array(
-            array('dateAndTime_id,user_id', 'exist'),
-            array('reason', 'required'),
-            array('reason', 'length', 'min' => Yii::app()->params['lengthReasonAppointmentBlocked']),
+            array('dateAndTime_id,user_id,reason', 'required'),
+         //   array('dateAndTime_id,user_id', 'exist'),
+            array('reason', 'length', 'min' => Yii::app()->params['lengthReasonAppointmentBlocked'] ),
         );
     }
 
     public function countUsedDateAndTimes() {
         $crit = new CDbCriteria();
         $crit->with = 'dateAndTime';
-        $crit->addCondition('dateAndTime.date_id=\"' . $this->dateAndTime->date_id . '\"');
+        $crit->addCondition('dateAndTime.date_id=\"' . $this->dateAndTime_id->date_id . '\"');
         return $crit;
     }
 
@@ -71,10 +71,11 @@ class BlockedAppointments extends CActiveRecord {
     public function validate($attributes = null, $clearErrors = true) {
         $rc = false;
         if (parent::validate($attributes, $clearErrors)) {
-            if ($this->user->role != 2) {
+            if (UserRole::model()->countByAttributes(array('user_id'=>$this->user_id, 'role_id'=>2)) > 0) {
                 $this->addError('user_id', 'Kein Lehrer.');
             } else if (Yii::app()->params['allowBlockingAppointments']) {
-                if (BlockedAppointments::model()->count($this->countUsedDateAndTimes()) >= Yii::app()->params['appointmentBlocksPerDate']) {
+                if (BlockedAppointment::model()->count($this->countUsedDateAndTimes()) 
+                        >= Yii::app()->params['appointmentBlocksPerDate']) {
                     $this->addError('dateAndTime_id', 'Zuviele Termine berereits geblockt. Maximum liegt bei '
                             . Yii::app()->params['appointmentBlocksPerDate'] . ' pro Elternsprechtag.');
                 }

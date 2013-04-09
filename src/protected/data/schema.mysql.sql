@@ -41,10 +41,10 @@ CREATE TABLE IF NOT EXISTS `appointment` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `blockedAppointments`
+-- Tabellenstruktur für Tabelle `blockedAppointment`
 --
 
-CREATE TABLE IF NOT EXISTS `blockedAppointments` (
+CREATE TABLE IF NOT EXISTS `blockedAppointment` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `reason` text,
   `dateAndTime_id` int(11) NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `blockedAppointments` (
   PRIMARY KEY (`id`),
   KEY `fk_blockedAppointments_dateAndTime1` (`dateAndTime_id`),
   KEY `fk_blockedAppointments_user1` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -160,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `tan` (
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
+  `email` varchar(45) NULL,
   `activationKey` varchar(128) NOT NULL,
   `createtime` int(10) unsigned NOT NULL,
   `firstname` varchar(45) NOT NULL,
@@ -221,9 +221,9 @@ ALTER TABLE `appointment`
 --
 -- Constraints der Tabelle `blockedAppointments`
 --
-ALTER TABLE `blockedAppointments`
-  ADD CONSTRAINT `fk_blockedAppointments_dateAndTime1` FOREIGN KEY (`dateAndTime_id`) REFERENCES `dateAndTime` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_blockedAppointments_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `blockedAppointment`
+  ADD CONSTRAINT `fk_blockedAppointment_dateAndTime1` FOREIGN KEY (`dateAndTime_id`) REFERENCES `dateAndTime` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_blockedAppointment_user1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `dateAndTime`

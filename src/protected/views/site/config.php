@@ -237,8 +237,5 @@ Yii::app()->clientScript->registerPackage('jquery');
             <?php echo CHtml::submitButton(Yii::t('app', 'Speichern'), array('class' => 'button')); ?>
         </div>
     </div>
-
-    
-
 <?php $this->endWidget(); ?>
 </div><!-- form -->
