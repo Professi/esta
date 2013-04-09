@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `YiiSession` (
   `id` char(32) NOT NULL,
   `expire` int(11) DEFAULT NULL,
   `data` longblob,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
 KEY `expire` (`expire`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
