@@ -67,9 +67,9 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 //	'filter'=>$model,
 	'columns'=>array(
 		'id',
-		'date',
-		'begin',
-		'end',
+		array('name'=>'date','value'=>'date(Yii::app()->params["dateFormat"], strtotime($data->date))'),
+		array('name'=>'begin','value'=>'date(Yii::app()->params["timeFormat"], strtotime($data->begin))'),
+		array('name'=>'end','value'=>'date(Yii::app()->params["timeFormat"], strtotime($data->end))'),
                 array('name'=>'lockAt','value'=>'date(Yii::app()->params["dateTimeFormat"], $data->lockAt)'),
 		'durationPerAppointment',
 		array(
