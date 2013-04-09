@@ -125,7 +125,6 @@ class AppointmentController extends Controller {
         $model = new User('searchTeacher');
         $model->unsetAttributes();
         $model->state = 1;
-        print_r($this->getDatesWithTimes(3));
         if (isset($_GET['letter']) && strlen($_GET['letter']) <= 2) {
             $search = array('ae', 'oe', 'ue');
             $replace = array('Ä', 'Ö', 'Ü');
