@@ -125,6 +125,7 @@ class AppointmentController extends Controller {
         $model = new User('searchTeacher');
         $model->unsetAttributes();
         $model->state = 1;
+        print_r($this->getDatesWithTimes(3));
         if (isset($_GET['letter']) && strlen($_GET['letter']) <= 2) {
             $search = array('ae', 'oe', 'ue');
             $replace = array('Ä', 'Ö', 'Ü');
@@ -232,16 +233,16 @@ class AppointmentController extends Controller {
     public function actionAdmin() {
         $model = new Appointment('search');
         $blockedApp = new BlockedAppointment();
-        $model->unsetAttributes(); 
+        $model->unsetAttributes();
         $blockedApp->unsetAttributes();
         if (isset($_GET['Appointment'])) {
             $model->attributes = $_GET['Appointment'];
         }
-        if(isset($_GET['BlockedAppointment'])) {
+        if (isset($_GET['BlockedAppointment'])) {
             $blockedApp->attributes = $_GET['BlockedAppointment'];
         }
         $this->render('admin', array(
-            'model' => $model, 'blockedApp'=>$blockedApp,
+            'model' => $model, 'blockedApp' => $blockedApp,
         ));
     }
 
@@ -291,15 +292,22 @@ class AppointmentController extends Controller {
      * @param integer $dateMax Maximal Anzahl der Elternsprechtage für die DateAndTimes gefunden werden sollen
      * @return array Enthält Arrays welche n-DateAndTimes enthalten
      */
-    public function getDatesWithTimes($dateMax) {
+    public function getDatesWithTimes($dateMax, $mergeDates = false) {
         $a_groupOfDateAndTimes = array();
+        $mergeDates = true;
         if (is_int($dateMax)) {
             $criteria = new CDbCriteria();
             $criteria->limit = $dateMax;
             $criteria->order = 'date ASC';
             $a_dates = Date::model()->findAll($criteria);
-            foreach ($a_dates as $record) {
-                $a_groupOfDateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
+            if (!$mergeDates) {
+                foreach ($a_dates as $record) {
+                    $a_groupOfDateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
+                }
+            } else if($mergeDates) {
+                foreach ($a_dates as $record) {
+                        $a_groupOfDateAndTimes = array_merge($a_groupOfDateAndTimes, DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id)));
+                }
             }
         }
         return $a_groupOfDateAndTimes;
