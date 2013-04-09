@@ -293,7 +293,6 @@ class AppointmentController extends Controller {
      */
     public function getDatesWithTimes($dateMax, $mergeDates = false) {
         $a_groupOfDateAndTimes = array();
-        $mergeDates = true;
         if (is_int($dateMax)) {
             $criteria = new CDbCriteria();
             $criteria->limit = $dateMax;
