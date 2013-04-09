@@ -77,6 +77,20 @@ if (IE) {
            e.preventDefault(); 
         });
         
+        $('#appointmentBlock_teacher').on('autocompleteselect', function (e, ui) {
+           e.preventDefault();
+           $(this).val(ui.item.label);
+           $(this).nextAll('input').val(ui.item.value);
+           $.get('index.php/?r=appointment/getteacherappointments', {teacherId: ui.item.value }, function(data) {
+               $('#appointment_dateAndTime_select').html(data);
+               $('#form_dateAndTime').attr('name', 'BlockedAppointment[dateAndTime_id]')
+           }, 'json'); 
+        });
+        
+        $('#appointmentBlock_teacher').on('autocompletefocus', function(e) {
+           e.preventDefault(); 
+        });
+        
         $('#appointment_parent').on('autocompleteselect', function(e, ui) {
            e.preventDefault();
            $(this).val(ui.item.label);

@@ -35,6 +35,7 @@
             $teacherValue = $_GET['teacherId'];
             $teacherLabel = $userTemp->title." ".$userTemp->firstname." ".$userTemp->lastname;
             $this->createMakeAppointmentContent($this->getDatesWithTimes(3),$a_tabs, $selectContent, $teacherValue);
+//            $selectContent = CHtml::listData($this->getDatesWithTimes(3, true), 'id', 'time','date_id');
         }
         if (isset($_GET['parentId'])) {
             $userTemp = User::model()->findByPk($_GET['parentId']);
@@ -118,7 +119,7 @@
                 <span class="prefix">Termin</span>
             </div>
             <div class="ten columns styled-select" id="appointment_dateAndTime_select">
-                <?php echo $selectContent; ?>                
+                <?php echo $selectContent; //echo $form->dropDownList($model, 'dateAndTime_id',$selectContent);  ?>                
 		<?php echo $form->error($model,'dateAndTime_id'); ?>
                 
             </div>

@@ -64,7 +64,7 @@ $this->menu = array(
 
 <?php
 $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-    'id' => 'appointment_teacher',
+    'id' => 'appointmentBlock_teacher',
     'name' => '',
     'value' => $teacherLabel,
     'sourceUrl' => 'index.php?r=user/search&role=2',
