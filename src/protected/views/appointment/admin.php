@@ -69,7 +69,7 @@ $this->menu=array(
 <div class="push"></div>
 <div class="row">
     <div class="twelve columns centered">
-        <h4 class="text-center">Blockierte Termine</h4>
+        <h2 class="text-center">Blockierte Termine</h2>
     </div>
 </div>
 

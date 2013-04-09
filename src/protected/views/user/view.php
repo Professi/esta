@@ -44,14 +44,13 @@ $this->menu = array(
 $this->widget('zii.widgets.CDetailView', array(
     'data' => $model,
     'attributes' => array(
+        array('label'=> $model->getAttributeLabel('id'),'value'=>$model->id,'visible'=>Yii::app()->user->checkAccess('0')),
         'email',
+        array('label'=> $model->getAttributeLabel('username'),'value'=>$model->username,'visible'=>Yii::app()->user->checkAccess('0')),
         'firstname',
         'lastname',
         array('label'=> $model->getAttributeLabel('stateName'),'value'=>$model->getStateName()),
         array('label'=> $model->getAttributeLabel('roleName'),'value'=>Role::model()->findByAttributes(array('id'=>$model->role))->title),
-        array('label'=> $model->getAttributeLabel('id'),'value'=>$model->id,'visible'=>Yii::app()->user->checkAccess('0')),
-        array('label'=> $model->getAttributeLabel('username'),'value'=>$model->username,'visible'=>Yii::app()->user->checkAccess('0')),
-        //array('label'=>'Passwort','value'=>$model->password,'visible'=>Yii::app()->user->checkAccess('0')),
         array('label'=> $model->getAttributeLabel('createtime'),'value'=>date(Yii::app()->params['dateTimeFormat'],$model->createtime)),
     ),
 ));
