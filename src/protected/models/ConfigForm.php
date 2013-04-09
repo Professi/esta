@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class ConfigForm extends CFormModel {
+
     public $adminEmail;
     public $dateTimeFormat;
     public $emailHost;
@@ -38,59 +39,73 @@ class ConfigForm extends CFormModel {
     public $installed;
     public $timeFormat;
     public $dateFormat;
-           
+    public $allowBlockingAppointments;
+    public $appointmentBlocksPerDate;
+    public $lengthReasonAppointmentBlocked;
+
+
     public function init() {
-       $this->attributes = Yii::app()->params->toArray();
+        $this->attributes = Yii::app()->params->toArray();
     }
-    
+
     public function rules() {
         return array(
-            array('adminEmail,dateTimeFormat,emailHost,fromMailHost,fromMail'.
+            array('adminEmail,dateTimeFormat,emailHost,fromMailHost,fromMail' .
                 ',teacherMail,schoolName,virtualHost,mailsActivated,maxChild,'
-                .'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,'.
-                'defaultTeacherPassword,minLengthPerAppointment,banUsers,'.
-                'durationTempBans,maxAttemptsForLogin,timeFormat,dateFormat','required'),
-            array('fromMailHost,adminEmail','email'),
-            array('emailHost,fromMail,dateFormat','length','min'=>4),
-            array('dateTimeFormat','length','min'=>5),
-            array('defaultTeacherPassword','length','min'=>8),
-            array('salt','length','min'=>16, 'max'=>64),
-            array('mailsActivated,randomTeacherPassword,banUsers','boolean'),
-            array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,durationTempBans,maxAttemptsForLogin','numerical', 'integerOnly'=>true),
-            array('adminEmail,dateTimeFormat,emailHost,fromMailHost,fromMail'.
+                . 'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,' .
+                'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
+                'durationTempBans,maxAttemptsForLogin,timeFormat,dateFormat,' .
+                'allowBlockingAppointments,appointmentBlocksPerDate,' .
+                'lengthReasonAppointmentBlocked', 'required'),
+            array('fromMailHost,adminEmail', 'email'),
+            array('emailHost,fromMail,dateFormat', 'length', 'min' => 4),
+            array('dateTimeFormat', 'length', 'min' => 5),
+            array('defaultTeacherPassword', 'length', 'min' => 8),
+            array('salt', 'length', 'min' => 16, 'max' => 64),
+            array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments',
+                'boolean'),
+            array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,'
+                . 'durationTempBans,maxAttemptsForLogin,appointmentBlocksPerDate,'
+                . 'lengthReasonAppointmentBlocked',
+                'numerical', 'integerOnly' => true),
+            array('adminEmail,dateTimeFormat,emailHost,fromMailHost,fromMail' .
                 ',teacherMail,schoolName,virtualHost,mailsActivated,maxChild,'
-                .'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,'.
-                'defaultTeacherPassword,minLengthPerAppointment,banUsers,'.
-                'durationTempBans,maxAttemptsForLogin,salt,installed,dateFormat,timeFormat', 'safe'),
+                . 'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,' .
+                'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
+                'durationTempBans,maxAttemptsForLogin,salt,installed,dateFormat,timeFormat,' .
+                'allowBlockingAppointments,appointmentBlocksPerDate,' .
+                'lengthReasonAppointmentBlocked', 'safe'),
         );
     }
-    
+
     public function attributeLabels() {
         return array(
-            'adminEmail'=>'Administrator E-Mail Adresse',
-            'dateTimeFormat'=>'Datums und Zeitformat (z.B. d.m.Y H:i, siehe <a href="http://php.net/manual/de/function.date.php">http://php.net/manual/de/function.date.php</a>)', //
-            'emailHost'=>'Hostname des SMTP Servers (z.B. localhost)',
-            'fromMailHost'=>'Versender E-Mailadresse (z.B. xyz@schoolxyz.de)',
-            'fromMail'=>'Absendername (z.B. ESTA-School)',
-            'teacherMail'=>'Domainname des SMTP Servers (z.B. schoolxyz)',
-            'schoolName'=>'Schulname (z.B. Schule XYZ)',
-            'virtualHost'=>'Virtualhost-Pfad unter dem die Anwendung erreichbar ist (z.B. /est/)',
-            'mailsActivated'=>'E-Mails versenden?',
-            'maxChild'=>'Maximal Anzahl an Kindern pro Eltern',
-            'maxAppointmentsPerChild'=>'Maximal Anzahl an Terminen pro Kinder',
-            'randomTeacherPassword'=>'Lehrerpasswörter bei deren Erstellung zufällig generieren?',
-            'defaultTeacherPassword'=>'Standardpasswort wenn die vorherige Option deaktiviert ist',
-            'minLengthPerAppointment'=>'Mindestlänge eines Termins bei einem neuzuerstellenden Elternsprechtag',
-            'banUsers'=>'Temporäres Sperren eines Nutzers bei zu vielen fehlgeschlagenen Loginversuchen',
-            'durationTempBans'=>'Dauer dieser Maßnahme',
-            'maxAttemptsForLogin'=>'Maximalanzahl an fehlgeschlagenen Loginversuchen',
-            'salt'=>'Salz für Passwörter',
-            'dateFormat'=>'Datumsformat (z.B. d.m.Y)',
-            'timeFormat'=>'Zeitformat (z.B. H:i)',
+            'adminEmail' => 'Administrator E-Mail Adresse',
+            'dateTimeFormat' => 'Datums und Zeitformat (z.B. d.m.Y H:i, siehe <a href="http://php.net/manual/de/function.date.php">http://php.net/manual/de/function.date.php</a>)', //
+            'emailHost' => 'Hostname des SMTP Servers (z.B. localhost)',
+            'fromMailHost' => 'Versender E-Mailadresse (z.B. xyz@schoolxyz.de)',
+            'fromMail' => 'Absendername (z.B. ESTA-School)',
+            'teacherMail' => 'Domainname des SMTP Servers (z.B. schoolxyz)',
+            'schoolName' => 'Schulname (z.B. Schule XYZ)',
+            'virtualHost' => 'Virtualhost-Pfad unter dem die Anwendung erreichbar ist (z.B. /est/)',
+            'mailsActivated' => 'E-Mails versenden?',
+            'maxChild' => 'Maximal Anzahl an Kindern pro Eltern',
+            'maxAppointmentsPerChild' => 'Maximal Anzahl an Terminen pro Kinder',
+            'randomTeacherPassword' => 'Lehrerpasswörter bei deren Erstellung zufällig generieren?',
+            'defaultTeacherPassword' => 'Standardpasswort wenn die vorherige Option deaktiviert ist',
+            'minLengthPerAppointment' => 'Mindestlänge eines Termins bei einem neuzuerstellenden Elternsprechtag',
+            'banUsers' => 'Temporäres Sperren eines Nutzers bei zu vielen fehlgeschlagenen Loginversuchen',
+            'durationTempBans' => 'Dauer dieser Maßnahme',
+            'maxAttemptsForLogin' => 'Maximalanzahl an fehlgeschlagenen Loginversuchen',
+            'salt' => 'Salz für Passwörter',
+            'dateFormat' => 'Datumsformat (z.B. d.m.Y)',
+            'timeFormat' => 'Zeitformat (z.B. H:i)',
+            'allowBlockingAppointments'=>'Blockieren von Terminen erlauben',
+            'appointmentBlocksPerDate'=>'Anzahl der Termine die blockiert werden dürfen',
+            'lengthReasonAppointmentBlocked'=>'Minimallänge eines Grundes um einen Termin zu blocken'
             );
     }
-    
-    
+
 }
 
 ?>

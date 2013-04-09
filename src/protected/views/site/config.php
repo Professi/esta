@@ -219,17 +219,46 @@ Yii::app()->clientScript->registerPackage('jquery');
                 </div>
             </div>
         </fieldset>
-        
+        <fieldset>
+            <legend>Terminblockierung</legend>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'allowBlockingAppointments'); ?></span>
+                </div>
+                <div class="four columns styled-select">
+                    <?php echo $form->dropDownList($model, 'allowBlockingAppointments', array('1' => 'Ja', '0' => 'Nein')); ?>
+                    <?php echo $form->error($model, 'allowBlockingAppointments'); ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'appointmentBlocksPerDate'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php echo $form->textField($model, 'appointmentBlocksPerDate'); ?>
+                    <?php echo $form->error($model, 'appointmentBlocksPerDate'); ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'lengthReasonAppointmentBlocked'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php echo $form->textField($model, 'lengthReasonAppointmentBlocked'); ?>
+                    <?php echo $form->error($model, 'lengthReasonAppointmentBlocked'); ?>
+                </div>
+            </div>            
+        </fieldset>
         <?php if (!Yii::app()->params['installed']) { ?>
-        <div class="row collapse">
-            <div class="eight columns">
-                <span class="prefix"><?php echo $form->label($model, 'salt'); ?></span>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'salt'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php echo $form->textField($model, 'salt'); ?>
+                    <?php echo $form->error($model, 'salt'); ?>
+                </div>
             </div>
-            <div class="four columns">
-                <?php echo $form->textField($model, 'salt'); ?>
-                <?php echo $form->error($model, 'salt'); ?>
-            </div>
-        </div>
         <?php } ?>        
     </div><!-- row -->
     <div class="row">
@@ -237,5 +266,5 @@ Yii::app()->clientScript->registerPackage('jquery');
             <?php echo CHtml::submitButton(Yii::t('app', 'Speichern'), array('class' => 'button')); ?>
         </div>
     </div>
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 </div><!-- form -->
