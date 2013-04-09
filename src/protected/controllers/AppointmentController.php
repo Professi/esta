@@ -65,13 +65,16 @@ class AppointmentController extends Controller {
         $model = new BlockedAppointment();
         $model->unsetAttributes();
         if (isset($_POST['BlockedAppointment'])) {
-            $model->attributes = $_POST['BlockedAppointment'];
+            $model->setAttributes($_POST['BlockedAppointment']);
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'Termin erfolgreich geblockt.');
-                $this->redirect(array('index'));
+                if (Yii::app()->user->checkAccessNotAdmin('2')) {
+                    $this->redirect(array('index'));
+                } else {
+                    $this->redirect(array('admin'));
+                }
             }
         }
-
         $this->render('createBlockApp', array('model' => $model));
     }
 
@@ -302,9 +305,9 @@ class AppointmentController extends Controller {
                 foreach ($a_dates as $record) {
                     $a_groupOfDateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
                 }
-            } else if($mergeDates) {
+            } else if ($mergeDates) {
                 foreach ($a_dates as $record) {
-                        $a_groupOfDateAndTimes = array_merge($a_groupOfDateAndTimes, DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id)));
+                    $a_groupOfDateAndTimes = array_merge($a_groupOfDateAndTimes, DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id)));
                 }
             }
         }

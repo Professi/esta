@@ -49,15 +49,18 @@ class BlockedAppointment extends CActiveRecord {
     public function rules() {
         return array(
             array('dateAndTime_id,user_id,reason', 'required'),
-         //   array('dateAndTime_id,user_id', 'exist'),
-            array('reason', 'length', 'min' => Yii::app()->params['lengthReasonAppointmentBlocked'] ),
+            array('user_id', 'exist', 'className' => 'UserRole'),
+            //     array('user_id','exist'),
+            array('reason', 'length', 'min' => Yii::app()->params['lengthReasonAppointmentBlocked']),
+            array('dateAndTime_id, user_id', 'safe', 'on' => 'search'),
         );
     }
 
     public function countUsedDateAndTimes() {
         $crit = new CDbCriteria();
-        $crit->with = 'dateAndTime';
-        $crit->addCondition('dateAndTime.date_id=\"' . $this->dateAndTime_id->date_id . '\"');
+            $crit->with = 'dateAndTime';
+            $crit->addCondition('user_id=' . $this->user_id , 'AND');
+            $crit->addCondition('dateAndTime.date_id=' . $this->dateAndTime->date_id, 'AND');
         return $crit;
     }
 
@@ -71,18 +74,18 @@ class BlockedAppointment extends CActiveRecord {
     public function validate($attributes = null, $clearErrors = true) {
         $rc = false;
         if (parent::validate($attributes, $clearErrors)) {
-            if (UserRole::model()->countByAttributes(array('user_id'=>$this->user_id, 'role_id'=>2)) < 1) {
+            if (UserRole::model()->countByAttributes(array('user_id' => $this->user_id, 'role_id' => 2)) < 1) {
                 $this->addError('user_id', 'Kein Lehrer.');
             } else if (Yii::app()->params['allowBlockingAppointments']) {
-                if (BlockedAppointment::model()->count($this->countUsedDateAndTimes()) 
-                        >= Yii::app()->params['appointmentBlocksPerDate']) {
+                if (BlockedAppointment::model()->count($this->countUsedDateAndTimes()) >= Yii::app()->params['appointmentBlocksPerDate']) {
                     $this->addError('dateAndTime_id', 'Zuviele Termine berereits geblockt. Maximum liegt bei '
                             . Yii::app()->params['appointmentBlocksPerDate'] . ' pro Elternsprechtag.');
+                } else {
+                    $rc = true;
                 }
-            } else {
-                $rc = true;
             }
         }
+        return $rc;
     }
 
     public function search() {
@@ -95,10 +98,10 @@ class BlockedAppointment extends CActiveRecord {
             'criteria' => $criteria,
         ));
     }
-    
+
     public function attributeLabels() {
         return array(
-            'id'=>'ID',
+            'id' => 'ID',
             'user_id' => 'Lehrer',
             'dateAndTime_id' => 'Termin',
             'reason' => 'Grund',

@@ -26,7 +26,7 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Termine vereinbaren', 'url'=>array('create'),'visible' => Yii::app()->user->checkAccess('1')),
-	array('label'=>'Termin Manage', 'url'=>array('admin'),'visible' => Yii::app()->user->checkAccess('1')),
+	array('label'=>'Termine verwalten', 'url'=>array('admin'),'visible' => Yii::app()->user->checkAccess('1')),
 );
 ?>
 <div class="row">
