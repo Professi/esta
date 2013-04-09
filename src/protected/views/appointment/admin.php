@@ -59,7 +59,7 @@ $this->menu=array(
 //	'filter'=>$model,
 	'columns'=>array(
 		'id',
-                array(  'name' => 'dateAndTime_id', 'value' => '$data->dateAndTime->date->date." - ".$data->dateAndTime->time'),
+                array(  'name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
 		array(  'name' => 'parent_child_id', 'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'),
 		array(  'name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
 		array(  'class'=>'CustomButtonColumn',),
@@ -79,9 +79,9 @@ $this->menu=array(
           'dataProvider'=>$blockedApp->search(),
           'columns'=>array(
               'id',
-              array(  'name' => 'dateAndTime_id', 'value' => ''),
-              array(  'name' => 'user_id', 'value' => ''),
-              array(  'name' => 'reason', 'value' => ''),
+              array(  'name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
+              array(  'name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
+              array(  'name' => 'reason'),
               array(  'class'=>'CustomButtonColumn', 'template' => '{delete},{view}'),
           ),
       ));
