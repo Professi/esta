@@ -82,7 +82,14 @@ $this->menu=array(
               array(  'name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
               array(  'name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
               array(  'name' => 'reason'),
-              array(  'class'=>'CustomButtonColumn', 'template' => '{delete},{view}'),
+              array(  'class'=>'CustomButtonColumn', 'template' => '{delete},{view}', 'buttons' => array(
+                  'delete' => array(
+                      'url' => '$this->grid->controller->createUrl("/appointment/deleteblockapp", array("id"=>$data->id))'
+                  ),
+                  'view' => array(
+                    'url' => '$this->grid->controller->createUrl("/appointment/viesomething", array("id"=>$data->id))'  
+                  ),
+              )),
           ),
       ));
 ?>
