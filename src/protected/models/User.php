@@ -352,8 +352,8 @@ class User extends CActiveRecord {
      * @return boolean Rückgabewert der Elternklassemethoden
      */
     public function beforeDelete() {
-        $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
-        $userRole->delete();
+    UserRole::model()->deleteByAttributes(array('user_id' => $this->id));
+    BlockedAppointment::model()->deleteAllByAttributes(array('user_id'=> $this->id));
         $a_appointment = Appointment::model()->findAllByAttributes(array('user_id' => $this->id));
         for ($x = 0; $x < count($a_appointment); $x++) {
             $a_appointment[$x]->delete();

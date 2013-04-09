@@ -125,6 +125,7 @@ class DateAndTime extends CActiveRecord {
     public function beforeDelete() {
         $rc = false;
         if(parent::beforeDelete()) {
+            BlockedAppointment::model()->deleteAllByAttributes(array('dateAndTime_id'=>  $this->id));
             Appointment::model()->deleteAllByAttributes(array('dateAndTime_id'=>  $this->id));
             $rc = true;
         }

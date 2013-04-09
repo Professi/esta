@@ -76,6 +76,7 @@ class DeleteAllForm extends CFormModel {
         }
         if($this->appointments) {
             Appointment::model()->deleteAll();
+            BlockedAppointment::model()->deleteAll();
         }
         if($this->teachers) {
             User::model()->deleteUsersWithRole(2);

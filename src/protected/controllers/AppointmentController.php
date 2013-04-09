@@ -48,11 +48,11 @@ class AppointmentController extends Controller {
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
-                'actions' => array('index', 'delete','createBlockApp','DeleteBlockApp'),
+                'actions' => array('index', 'delete', 'createBlockApp', 'DeleteBlockApp'),
                 'roles' => array('2')
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete', 'view', 'create', 'update', 'getteacherappointments','createBlockApp','DeleteBlockApp'),
+                'actions' => array('admin', 'delete', 'view', 'create', 'update', 'getteacherappointments', 'createBlockApp', 'DeleteBlockApp'),
                 'roles' => array('0', '1'),
             ),
             array('deny', // deny all users
@@ -61,38 +61,35 @@ class AppointmentController extends Controller {
         );
     }
 
-        
     public function actionCreateBlockApp() {
         $model = new BlockedAppointment();
         $model->unsetAttributes();
-        if(isset($_POST['BlockedAppointment'])) {
+        if (isset($_POST['BlockedAppointment'])) {
             $model->attributes = $_POST['BlockedAppointment'];
-            if($model->save()) {
-                Yii::app()->user->setFlash('success','Termin erfolgreich geblockt.');
+            if ($model->save()) {
+                Yii::app()->user->setFlash('success', 'Termin erfolgreich geblockt.');
                 $this->redirect(array('index'));
             }
         }
-        
-        $this->render('createBlockApp',array('model'=>$model));
+
+        $this->render('createBlockApp', array('model' => $model));
     }
-    
-    public function actionDeleteBlockApp($id,$teacherId=null) {
-        if($teacherId==null && Yii::app()->user->checkAccessNotAdmin('2')) {
-               $model = BlockedAppointments::model()->findByAttributes(array('id'=>$id, 'user_id'=>Yii::app()->user->getId()));
-        }
-        else if(Yii::app()->user->checkAccess('1')){
+
+    public function actionDeleteBlockApp($id, $teacherId = null) {
+        if ($teacherId == null && Yii::app()->user->checkAccessNotAdmin('2')) {
+            $model = BlockedAppointments::model()->findByAttributes(array('id' => $id, 'user_id' => Yii::app()->user->getId()));
+        } else if (Yii::app()->user->checkAccess('1')) {
             $model = BlockedAppointments::model()->findByPk($id);
-         } else {
-             throw new CHttpException(403, 'Kein Zugriff.');
-         }
-        if ($model != null && $model->delete()) {
-            Yii::app()->user->setFlash('success','Blockierung erfolgreich gelöscht.');
         } else {
-            Yii::app()->user->setFlash('failMsg','Fehler beim löschen.');
+            throw new CHttpException(403, 'Kein Zugriff.');
+        }
+        if ($model != null && $model->delete()) {
+            Yii::app()->user->setFlash('success', 'Blockierung erfolgreich gelöscht.');
+        } else {
+            Yii::app()->user->setFlash('failMsg', 'Fehler beim löschen.');
         }
     }
-    
-    
+
     /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
@@ -312,7 +309,20 @@ class AppointmentController extends Controller {
      */
     public function isAppointmentAvailable($teacher, $dateAndTimeId) {
         $rc = array("BELEGT", 0);
-        if (Appointment::model()->countByAttributes(array('user_id' => $teacher, 'dateAndTime_id' => $dateAndTimeId)) == '0') {
+        $check = false;
+        if (Appointment::model()->countByAttributes(array('user_id' => $teacher,
+                    'dateAndTime_id' => $dateAndTimeId)) == '0') {
+            $check = true;
+        }
+        if ($check && Yii::app()->params['allowBlockingAppointments'] &&
+                BlockedAppointment::model()->countByAttributes(array('user_id' => $teacher,
+                    'dateAndTime_id' => $dateAndTimeId)) != '0') {
+            if (Yii::app()->user->checkAccess('1')) {
+                $rc = array("BLOCKIERT", 0);
+            }
+            $check = false;
+        }
+        if ($check) {
             $rc = array("VERF&Uuml;GBAR", 1);
         }
         return $rc;
@@ -327,7 +337,7 @@ class AppointmentController extends Controller {
      * @param object $model Das model der aktuellen Ansicht
      * @param integer $appointmentId 
      */
-    public function createMakeAppointmentContent($a_dates, &$a_tabs, &$selectContent, $teacherId, $appointmentId=-1) {
+    public function createMakeAppointmentContent($a_dates, &$a_tabs, &$selectContent, $teacherId, $appointmentId = -1) {
         $tabsUiId = 0; //id der tabellen, wichtig für Javascriptfunktionen aus custom.js
         $selectContent = '<select id="form_dateAndTime" name="Appointment[dateAndTime_id]">';
         foreach ($a_dates as $a_day) {
@@ -364,38 +374,40 @@ class AppointmentController extends Controller {
         }
         $selectContent .= '</select>';
     }
-    
+
+    /**
+     * @todo Beschreibung
+     * @author David Mock <dumock@gmail.com>
+     * @param type $teacherId
+     */
     public function actionGetTeacherAppointments($teacherId) {
         header('Content-type: application/json');
         $a_tabs = null;
         $selectContent = null;
         $this->createMakeAppointmentContent($this->getDatesWithTimes(3), $a_tabs, $selectContent, $teacherId);
-        
         echo CJSON::encode($selectContent);
-        
         Yii::app()->end();
     }
-    
+
     /**
      * Suche fuer Elternkindverknuepfungen anhand von  dem Namen des 
      * Erziehungsberechtigten, optimierte Ausgabe für appointment/create
      * @param string $term Nachname des Elternteils
      * @param integer $id Falls bei einem Update schon ein Kind ausgewählt wurde
      * @author David Mock <dumock@gmail.com>
-     * echo JSON
      */
-    public function createChildrenSelect($term, $id=-1) {
+    public function createChildrenSelect($term, $id = -1) {
         $dataProvider = new ParentChild();
         $dataProvider->unsetAttributes();
         $criteria = $dataProvider->searchParentChild($term);
         $selectContent = '<select name="Appointment[parent_child_id]">';
         $a_data = ParentChild::model()->findAll($criteria);
         foreach ($a_data as $record) {
-            $selectContent .= '<option value="'.$record->id.'" ';
+            $selectContent .= '<option value="' . $record->id . '" ';
             if ($record->id == $id) {
                 $selectContent .= 'selected';
             }
-            $selectContent .= '>'.$record->child->firstname." ".$record->child->lastname.'</option>';
+            $selectContent .= '>' . $record->child->firstname . " " . $record->child->lastname . '</option>';
         }
         if (empty($a_data)) {
             $selectContent .= '<option>Keine Kinder vorhanden, bitte fügen Sie mindestens ein Kind hinzu bevor Sie fortfahren</option>';
