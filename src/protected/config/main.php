@@ -105,7 +105,7 @@ return array(
         'session' => array(// nicht ändern
             'sessionName' => 'SiteSession', // nicht ändern
             'class' => 'CDbHttpSession', // nicht ändern
-            'autoCreateSessionTable'=>true,
+            'autoCreateSessionTable'=>false, //nicht ändern
             'connectionID'=>'db',
             'autoStart' => true, // nicht ändern
         ),
