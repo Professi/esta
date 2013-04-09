@@ -81,7 +81,6 @@ $this->menu=array(
               array(  'name' => 'dateAndTime_id', 'value' => ''),
               array(  'name' => 'user_id', 'value' => ''),
               array(  'name' => 'reason', 'value' => ''),
-              array(  'name' => 'length', 'value' => ''),
               array(  'class'=>'CustomButtonColumn', 'template' => '{delete},{view}'),
           ),
       ));
