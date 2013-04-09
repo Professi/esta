@@ -71,7 +71,7 @@ class BlockedAppointment extends CActiveRecord {
     public function validate($attributes = null, $clearErrors = true) {
         $rc = false;
         if (parent::validate($attributes, $clearErrors)) {
-            if (UserRole::model()->countByAttributes(array('user_id'=>$this->user_id, 'role_id'=>2)) > 0) {
+            if (UserRole::model()->countByAttributes(array('user_id'=>$this->user_id, 'role_id'=>2)) < 1) {
                 $this->addError('user_id', 'Kein Lehrer.');
             } else if (Yii::app()->params['allowBlockingAppointments']) {
                 if (BlockedAppointment::model()->count($this->countUsedDateAndTimes()) 
