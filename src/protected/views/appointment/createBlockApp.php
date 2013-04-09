@@ -77,7 +77,7 @@ $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
 ));
 ?>
                     <?php echo $form->error($model, 'user_id'); ?>
-                    <input type="hidden" id="appointment_teacher_id" name="Appointment[user_id]" value="<?php echo $teacherValue ?>">
+                    <input type="hidden" id="appointment_teacher_id" name="BlockedAppointment[user_id]" value="<?php echo $teacherValue ?>">
                 </div>
             </div>
             <div class="row collapse">

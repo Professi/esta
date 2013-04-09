@@ -79,10 +79,10 @@ return array(
         'log' => array(
             'class' => 'CLogRouter', //nicht ändern
             'routes' => array(//nicht ändern
-//                array(
-//                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute', //auskommentieren
-//                    'ipFilters' => array('*'),
-//                    'categories' => '*'),
+                array(
+                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute', //auskommentieren
+                    'ipFilters' => array('*'),
+                    'categories' => '*'),
                 array('class' => 'CFileLogRoute', //jenachdem ob ein DateiLog benötigt - empfohlen
                     'levels' => 'error,warning',
                     'categories' => 'system.'),
@@ -104,7 +104,9 @@ return array(
 //        ),
         'session' => array(// nicht ändern
             'sessionName' => 'SiteSession', // nicht ändern
-            'class' => 'CHttpSession', // nicht ändern
+            'class' => 'CDbHttpSession', // nicht ändern
+            'autoCreateSessionTable'=>true,
+            'connectionID'=>'db',
             'autoStart' => true, // nicht ändern
         ),
         'widgetFactory' => array(// nicht ändern
