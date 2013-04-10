@@ -16,12 +16,13 @@
  */
 /* @var $this AppointmentController */
 /* @var $model Appointment */
+/** @var $a_child Array Of Childs */
+/** @todo MVC anpassen */
 ?>
 <div class="row">
     <div class="twelve columns">
         <h2 class="subheader">Termine f&uuml;r&nbsp;
-            <?php echo $model->user->title." ".$model->user->firstname." ".$model->user->lastname; ?>
-        </h2>
+            <?php echo $model->user->title." ".$model->user->firstname." ".$model->user->lastname; ?></h2>
         <hr>
         <?php
         $a_dates = $this->getDatesWithTimes(3); //Magic Number: nur die nächsten 3 Elternsprechtage werden geladen.
@@ -85,7 +86,6 @@
         <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'appointment-form',
 )); ?>
-        
             <fieldset>
                 <legend>Termin</legend>
                 <div class="row collapse">
@@ -131,12 +131,7 @@
                                 <div class="styled-select">
                                         <select name="Appointment[parent_child_id]">
                                             <?php
-                                            $userIdTemp = Yii::app()->user->getId(); //ID des Benutzers, der sich die Termine ansieht.
-                                            $a_child = $this->getChilds($userIdTemp);
-                                            if(empty($a_child)) {
-                                                Yii::app()->user->setFlash('failMsg','Sie haben keine Kinder eingetragen.');
-                                            }
-                                                for ( $i = 0; $i < ParentChild::model()->countByAttributes(array('user_id' => $userIdTemp)); $i++) {
+                                                for ( $i = 0; $i < count($a_child); $i++) {
                                             ?>
                                             <option value="<?php echo CHtml::encode($a_child[$i]['value']); ?>"><?php echo CHtml::encode($a_child[$i]['label']); ?></option>
                                             <?php

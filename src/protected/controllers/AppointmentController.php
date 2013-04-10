@@ -154,7 +154,12 @@ class AppointmentController extends Controller {
                 $this->redirect(array('index'));
             }
         }
-        $this->render('makeAppointment', array('model' => $model));
+        $a_child = $this->fillChildSelect();
+        if(empty($a_child)) {
+            $this->redirect(array('ParentChild/index'));
+        } else {
+        $this->render('makeAppointment', array('model' => $model, 'a_child' => $this->fillChildSelect()));
+        }
     }
 
     /**
@@ -418,6 +423,14 @@ class AppointmentController extends Controller {
         }
         $selectContent .='</select>';
         return $selectContent;
+    }
+
+    public function fillChildSelect() {
+        $a_child = $this->getChilds(Yii::app()->user->getId());
+        if (empty($a_child)) {
+            Yii::app()->user->setFlash('failMsg', 'Sie haben keine Kinder eingetragen. Bitte tragen Sie dies nach. Anschließend können Sie einen Termin vereinbaren.');
+        }
+        return $a_child;
     }
 
 }
