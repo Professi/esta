@@ -27,12 +27,12 @@ $this->breadcrumbs = array(
 
 $this->menu = array(
     array('label' => 'Benutzer anlegen', 'url' => array('create'), 'visible'=>Yii::app()->user->checkAccess(1)),
-    array('label' => 'Benutzer bearbeiten', 'url' => array('update', 'id' => $model->id), 'visible'=>Yii::app()->user->checkAccess(1)),
-    array('label' => 'Meine Daten aktualisieren', 'url' => array('update', 'id' => $model->id), 'visible'=>Yii::app()->user->checkAccessNotAdmin(2) || Yii::app()->user->checkAccessNotAdmin(3)),
+    array('label' => 'Benutzer bearbeiten', 'url' => array('update', 'id' => $model->id), 'visible'=>Yii::app()->user->checkAccess('1')),
+    array('label' => 'Meine Daten aktualisieren', 'url' => array('update', 'id' => $model->id), 'visible'=>Yii::app()->user->checkAccessNotAdmin('2') || Yii::app()->user->checkAccessNotAdmin('3')),
     array('label' => 'Benutzer löschen', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => 'Sind Sie sich sicher, dass Sie diesen Benutzer löschen möchten?'), 'visible'=> Yii::app()->user->checkAccess(1)),
-    array('label' => 'Eltern-Kind-Verknüpfung anlegen', 'url' => array('parentChild/create', 'id' => $model->id), 'visible' => (Yii::app()->user->checkAccess(1) && $model->role == 3)), 
-    array('label' => 'Termin anlegen', 'url' => array('appointment/create', 'parentId' => $model->id), 'visible' => (Yii::app()->user->checkAccess(1) && $model->role == 3)),
-    array('label' => 'Termin anlegen', 'url' => array('appointment/create', 'teacherId' => $model->id), 'visible' => (Yii::app()->user->checkAccess(1) && $model->role == 2)),
+    array('label' => 'Eltern-Kind-Verknüpfung anlegen', 'url' => array('parentChild/create', 'id' => $model->id), 'visible' => (Yii::app()->user->checkAccess('1') && $model->role == 3)), 
+    array('label' => 'Termin anlegen', 'url' => array('appointment/create', 'parentId' => $model->id), 'visible' => (Yii::app()->user->checkAccess('1') && $model->role == 3)),
+    array('label' => 'Termin anlegen', 'url' => array('appointment/create', 'teacherId' => $model->id), 'visible' => (Yii::app()->user->checkAccess('1') && $model->role == 2)),
     array('label' => 'Benutzer verwalten', 'url' => array('admin'), 'visible'=>Yii::app()->user->checkAccess(1)),
 );
 ?>

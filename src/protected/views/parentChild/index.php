@@ -25,7 +25,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Schüler hinzufügen', 'url'=>array('create')),
+	array('label'=>'Kinder hinzufügen', 'url'=>array('create')),
 	array('label'=>'Verwalte Elternkindverknüpfungen', 'url'=>array('admin'), 'visible'=>Yii::app()->user->checkAccess(1)),
 );
 

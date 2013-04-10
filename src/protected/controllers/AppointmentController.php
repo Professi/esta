@@ -84,7 +84,7 @@ class AppointmentController extends Controller {
         } else if (Yii::app()->user->checkAccess('1')) {
             $model = BlockedAppointment::model()->findByPk($id);
         } else {
-             $this->throwFourNullThree();
+            $this->throwFourNullThree();
         }
         if ($model != null && $model->delete()) {
             Yii::app()->user->setFlash('success', 'Blockierung erfolgreich gelöscht.');
@@ -206,7 +206,7 @@ class AppointmentController extends Controller {
             $this->render('indexTeacher', array(
                 'dataProvider' => $dataProvider->customSearch()
             ));
-        } else if(Yii::app ()->user->checkAccessNotAdmin('3')){
+        } else if (Yii::app()->user->checkAccessNotAdmin('3')) {
             $this->render('index', array(
                 'dataProvider' => Appointment::getAllAppointments(),
             ));
@@ -214,7 +214,7 @@ class AppointmentController extends Controller {
             $this->throwFourNullThree();
         }
     }
-    
+
     /**
      * Manages all models.
      */
@@ -283,7 +283,10 @@ class AppointmentController extends Controller {
     public function getDatesWithTimes($dateMax, $mergeDates = false) {
         $a_groupOfDateAndTimes = array();
         if (is_int($dateMax)) {
-            $a_dates = Date::model()->findAll(array('limit'=>$dateMax,'order'=>'date ASC'));
+            /**
+             * @todo Prüfung einbauen, dass nur Elternsprechtage angezeigt werden, die in der Zukunft liegen
+             */
+            $a_dates = Date::model()->findAll(array('limit' => $dateMax, 'order' => 'date ASC'));
             if (!$mergeDates) {
                 foreach ($a_dates as $record) {
                     $a_groupOfDateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
@@ -291,7 +294,7 @@ class AppointmentController extends Controller {
             } else if ($mergeDates) {
                 foreach ($a_dates as $key => $record) {
                     $a_tempDateAndTimes = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
-                    foreach ($a_tempDateAndTimes as $innerKey=>$value) {
+                    foreach ($a_tempDateAndTimes as $innerKey => $value) {
                         $a_tempDateAndTimes[$innerKey]['date'] = date(Yii::app()->params['dateFormat'], strtotime($a_dates[$key]->date));
                         $a_tempDateAndTimes[$innerKey]['time'] = date(Yii::app()->params['timeFormat'], strtotime($a_tempDateAndTimes[$innerKey]['time']));
                     }

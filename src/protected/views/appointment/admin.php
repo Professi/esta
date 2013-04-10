@@ -28,7 +28,7 @@ $this->breadcrumbs = array(
 
 $this->menu = array(
     array('label' => 'Termin anlegen', 'url' => array('create')),
-    array('label' => 'Termin blockieren', 'url' => array('createBlockApp')),
+    array('label' => 'Termin blockieren', 'url' => array('createBlockApp'), 'visible' => (Yii::app()->params['allowBlockingAppointments'])),
 );
 
 //Yii::app()->clientScript->registerScript('search', "
@@ -74,23 +74,21 @@ $this->widget('zii.widgets.grid.CGridView', array(
     </div>
 </div>
 
-<?php
-$this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'appointmentBlock-grid',
-    'dataProvider' => $blockedApp->search(),
-    'columns' => array(
-        'id',
-        array('name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
-        array('name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
-        array('name' => 'reason'),
-        array('class' => 'CustomButtonColumn', 'template' => '{delete},{view}', 'buttons' => array(
-                'view' => array(
-                    'url' => '$this->grid->controller->createUrl("/appointment/viesomething", array("id"=>$data->id))'
-                ),
-                'delete' => array(
-                    'url' => '$this->grid->controller->createUrl("/appointment/deleteblockapp", array("id"=>$data->id))'
-                ),
-            )),
-    ),
-));
+<?php if (Yii::app()->params['allowBlockingAppointments']) { 
+    $this->widget('zii.widgets.grid.CGridView', array(
+        'id' => 'appointmentBlock-grid',
+        'dataProvider' => $blockedApp->search(),
+        'columns' => array(
+            'id',
+            array('name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
+            array('name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
+            array('name' => 'reason'),
+            array('class' => 'CustomButtonColumn', 'template' => '{delete}', 'buttons' => array(
+                    'delete' => array(
+                        'url' => '$this->grid->controller->createUrl("/appointment/deleteblockapp", array("id"=>$data->id))'
+                    ),
+                )),
+        ),
+    ));
+}
 ?>
