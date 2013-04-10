@@ -21,14 +21,14 @@
 /* @var $model Appointment */
 /* @var $blockedApp BlockedAppointment */
 
-$this->breadcrumbs=array(
-	'Appointments'=>array('index'),
-	'Manage',
+$this->breadcrumbs = array(
+    'Appointments' => array('index'),
+    'Manage',
 );
 
-$this->menu=array(
-	array('label'=>'Termin anlegen', 'url'=>array('create')),
-        array('label'=>'Termin blockieren', 'url'=>array('createBlockApp')),
+$this->menu = array(
+    array('label' => 'Termin anlegen', 'url' => array('create')),
+    array('label' => 'Termin blockieren', 'url' => array('createBlockApp')),
 );
 
 //Yii::app()->clientScript->registerScript('search', "
@@ -53,18 +53,19 @@ $this->menu=array(
 
 
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'appointment-grid',
-	'dataProvider'=>$model->search(),
+<?php
+$this->widget('zii.widgets.grid.CGridView', array(
+    'id' => 'appointment-grid',
+    'dataProvider' => $model->search(),
 //	'filter'=>$model,
-	'columns'=>array(
-		'id',
-                array(  'name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
-		array(  'name' => 'parent_child_id', 'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'),
-		array(  'name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
-		array(  'class'=>'CustomButtonColumn',),
-	),
-      ));
+    'columns' => array(
+        'id',
+        array('name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
+        array('name' => 'parent_child_id', 'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'),
+        array('name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
+        array('class' => 'CustomButtonColumn',),
+    ),
+));
 ?>
 <div class="push"></div>
 <div class="row">
@@ -74,22 +75,22 @@ $this->menu=array(
 </div>
 
 <?php
-      $this->widget('zii.widgets.grid.CGridView', array(
-          'id'=>'appointmentBlock-grid',
-          'dataProvider'=>$blockedApp->search(),
-          'columns'=>array(
-              'id',
-              array(  'name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
-              array(  'name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
-              array(  'name' => 'reason'),
-              array(  'class'=>'CustomButtonColumn', 'template' => '{delete},{view}', 'buttons' => array(
-                  'delete' => array(
-                      'url' => '$this->grid->controller->createUrl("/appointment/deleteblockapp", array("id"=>$data->id))'
-                  ),
-                  'view' => array(
-                    'url' => '$this->grid->controller->createUrl("/appointment/viesomething", array("id"=>$data->id))'  
-                  ),
-              )),
-          ),
-      ));
+$this->widget('zii.widgets.grid.CGridView', array(
+    'id' => 'appointmentBlock-grid',
+    'dataProvider' => $blockedApp->search(),
+    'columns' => array(
+        'id',
+        array('name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
+        array('name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
+        array('name' => 'reason'),
+        array('class' => 'CustomButtonColumn', 'template' => '{delete},{view}', 'buttons' => array(
+                'view' => array(
+                    'url' => '$this->grid->controller->createUrl("/appointment/viesomething", array("id"=>$data->id))'
+                ),
+                'delete' => array(
+                    'url' => '$this->grid->controller->createUrl("/appointment/deleteblockapp", array("id"=>$data->id))'
+                ),
+            )),
+    ),
+));
 ?>

@@ -80,9 +80,9 @@ class AppointmentController extends Controller {
 
     public function actionDeleteBlockApp($id, $teacherId = null) {
         if ($teacherId == null && Yii::app()->user->checkAccessNotAdmin('2')) {
-            $model = BlockedAppointments::model()->findByAttributes(array('id' => $id, 'user_id' => Yii::app()->user->getId()));
+            $model = BlockedAppointment::model()->findByAttributes(array('id' => $id, 'user_id' => Yii::app()->user->getId()));
         } else if (Yii::app()->user->checkAccess('1')) {
-            $model = BlockedAppointments::model()->findByPk($id);
+            $model = BlockedAppointment::model()->findByPk($id);
         } else {
             throw new CHttpException(403, 'Kein Zugriff.');
         }
