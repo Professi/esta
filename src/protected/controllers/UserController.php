@@ -372,7 +372,7 @@ class UserController extends Controller {
             ));
         } else {
             Yii::app()->user->getFlash('failMsg');
-            throw new CHttpException('403', 'Noooooooooooooooooooooooo!');
+             $this->throwFourNullThree();
         }
     }
 
@@ -411,7 +411,7 @@ class UserController extends Controller {
     public function loadModel($id) {
         $model = User::model()->findByPk($id);
         if ($model === null) {
-            throw new CHttpException(404, 'Die angeforderte Seite existiert nicht.');
+            $this->throwFourNullFour();
         } else {
             $model->password_repeat = $model->password;
             $model->role = UserRole::model()->findByAttributes(array('user_id' => $id))->role_id;

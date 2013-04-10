@@ -53,7 +53,7 @@ class SiteController extends Controller {
             }
             $this->render('deleteAll', array('model' => $model));
         } else {
-            throw new CHttpException('403', 'Zugriff verweigert.');
+            $this->throwFourNullThree();
         }
     }
 
@@ -103,7 +103,7 @@ class SiteController extends Controller {
                 }
             } $this->render('config', array('model' => $model));
         } else {
-            throw new CHttpException('403', 'Sie haben keine Berechtigung um auf diese Seite zuzugreifen!');
+            $this->throwFourNullThree();
         }
     }
 

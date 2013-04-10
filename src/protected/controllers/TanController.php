@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tan Controller für das Tan Model
  */
@@ -18,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class TanController extends Controller {
-    
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -44,7 +45,7 @@ class TanController extends Controller {
         return array(
             array('allow',
                 'actions' => array('genTans'),
-                'roles' => array('2','1'),
+                'roles' => array('2', '1'),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
@@ -101,16 +102,16 @@ class TanController extends Controller {
     public function loadModel($id) {
         $model = Tan::model()->findByPk($id);
         if ($model === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
+            $this->throwFourNullFour();
         return $model;
     }
 
-/**
- * Generiert n-Tans
- * @param integer $count Anzahl der zu generierenden TAN's
- * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
- * @return array Beinhaltet TAN's
- */
+    /**
+     * Generiert n-Tans
+     * @param integer $count Anzahl der zu generierenden TAN's
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return array Beinhaltet TAN's
+     */
     public function generateTan($count) {
         $a_rc = array();
         for ($i = 0; $i < $count; ++$i) {

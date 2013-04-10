@@ -45,4 +45,25 @@ class Controller extends CController {
      */
     public $breadcrumbs = array();
 
+    /**
+     * @throws CHttpException 403
+     */
+    public function throwFourNullThree() {
+        throw new CHttpException(403,'Zugriff verweigert.');
+    }
+    
+    /**
+     * @throws CHttpException 404
+     */
+    public function throwFourNullFour() {
+        throw new CHttpException(404,'Die angeforderte Seite konnte nicht gefunden werden.');
+    }
+    /**
+     * @throws CHttpException 400
+     */
+    public function throwFourNullNull() {
+        throw new CHttpException(400,'Ihre Anfrage ist ungültig.');
+    }
+    
+    
 }

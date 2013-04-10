@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Dies ist die Controller Klasse vom Model Date.
  */
@@ -47,7 +48,7 @@ class DateController extends Controller {
                 'roles' => array('1'),
             ),
             array('allow',
-                'actions' => array('create', 'delete', 'admin', 'search','view','update'),
+                'actions' => array('create', 'delete', 'admin', 'search', 'view', 'update'),
                 'roles' => array('0'),
             ),
             array('deny',
@@ -184,7 +185,7 @@ class DateController extends Controller {
     public function loadModel($id) {
         $model = Date::model()->findByPk($id);
         if ($model === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
+            $this->throwFourNullFour();
         return $model;
     }
 
@@ -198,42 +199,37 @@ class DateController extends Controller {
             Yii::app()->end();
         }
     }
-    
+
     /**
      * Convert PHP date() style dateFormat to the equivalent jQuery UI datepicker string
      * <http://snipplr.com/view/41329/>
      * @param string $dateString string der konvertiert werden soll.
      */
-    function dateStringToDatepickerFormat($dateString)
-    {
-	$pattern = array(
- 
-		//day
-		'd',		//day of the month
-		'j',		//3 letter name of the day
-		'l',		//full name of the day
-		'z',		//day of the year
- 
-		//month
-		'F',		//Month name full
-		'M',		//Month name short
-		'n',		//numeric month no leading zeros
-		'm',		//numeric month leading zeros
- 
-		//year
-		'Y', 		//full numeric year
-		'y'		//numeric year: 2 digit
-	);
-	$replace = array(
-		'dd','d','DD','o',
-		'MM','M','m','mm',
-		'yy','y'
-	);
-	foreach($pattern as &$p)
-	{
-		$p = '/'.$p.'/';
-	}
-	return preg_replace($pattern,$replace,$dateString);
+    function dateStringToDatepickerFormat($dateString) {
+        $pattern = array(
+            //day
+            'd', //day of the month
+            'j', //3 letter name of the day
+            'l', //full name of the day
+            'z', //day of the year
+            //month
+            'F', //Month name full
+            'M', //Month name short
+            'n', //numeric month no leading zeros
+            'm', //numeric month leading zeros
+            //year
+            'Y', //full numeric year
+            'y'  //numeric year: 2 digit
+        );
+        $replace = array(
+            'dd', 'd', 'DD', 'o',
+            'MM', 'M', 'm', 'mm',
+            'yy', 'y'
+        );
+        foreach ($pattern as &$p) {
+            $p = '/' . $p . '/';
+        }
+        return preg_replace($pattern, $replace, $dateString);
     }
 
 }

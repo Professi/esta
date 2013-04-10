@@ -89,6 +89,21 @@ class Appointment extends CActiveRecord {
         );
     }
 
+        public static function getAllAppointments(){
+                    $criteria = new CDbCriteria();
+            $criteria->order = '`dateAndTime_id` ASC';
+            $pC = ParentChild::model()->findAllByAttributes(array('user_id' => Yii::app()->user->id));
+            if ($pC != null) {
+                foreach ($pC as $record) {
+                    $criteria->addCondition(array('parent_child_id=' . $record->id), 'OR');
+                }
+            } else {
+                $criteria->addCondition(array('parent_child_id' => '"impossible"'));
+            }
+            return new CActiveDataProvider('Appointment', array(
+                'criteria' => $criteria));
+    }
+    
     /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.

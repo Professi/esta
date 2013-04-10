@@ -2,7 +2,7 @@
 /**
  * Errorseite
  */
-/**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,9 @@
 /* @var $this SiteController */
 /* @var $error array */
 Yii::app()->clientScript->registerPackage('jquery');
-$this->pageTitle=Yii::app()->name . ' - Error';
-$this->breadcrumbs=array(
-	'Error',
+$this->pageTitle = Yii::app()->name . ' - Error';
+$this->breadcrumbs = array(
+    'Error',
 );
 ?>
 <div class="row">
@@ -30,11 +30,14 @@ $this->breadcrumbs=array(
         <div class="push hide-for-small"></div>
         <div class="push hide-for-small"></div>
         <div class="panel">
-        <h2>Fehler <?php echo $code; ?></h2>   
-        <br>
-        <?php echo CHtml::encode($message); ?>
+            <h2>Fehler <?php echo $code; ?></h2>   
+            <br>
+            <?php echo CHtml::encode($message); ?>
         </div>
-        <p class="text-center"><?php echo CHtml::link('<b>Zurück zur Startseite</b>', 'index.php?r=Appointment/index'); ?> </p>
+        <p class="text-center"><?php
+            echo CHtml::link('<b>Zurück zur Startseite</b>', Yii::app()->user->checkAccess('1') == TRUE ? 'index.php' :
+                            'index.php?r=Appointment/index');
+            ?> </p>
     </div>
 </div>
 

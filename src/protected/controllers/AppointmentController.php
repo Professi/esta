@@ -84,12 +84,12 @@ class AppointmentController extends Controller {
         } else if (Yii::app()->user->checkAccess('1')) {
             $model = BlockedAppointment::model()->findByPk($id);
         } else {
-            throw new CHttpException(403, 'Kein Zugriff.');
+             $this->throwFourNullThree();
         }
         if ($model != null && $model->delete()) {
             Yii::app()->user->setFlash('success', 'Blockierung erfolgreich gelöscht.');
         } else {
-            Yii::app()->user->setFlash('failMsg', 'Fehler beim löschen.');
+            Yii::app()->user->setFlash('failMsg', 'Fehler bei dem Löschen.');
         }
     }
 
@@ -129,11 +129,8 @@ class AppointmentController extends Controller {
         $model->unsetAttributes();
         $model->state = 1;
         if (isset($_GET['letter']) && strlen($_GET['letter']) <= 2) {
-            $search = array('ae', 'oe', 'ue');
-            $replace = array('Ä', 'Ö', 'Ü');
-            $letter = str_replace($search, $replace, $_GET['letter']);
-            if (strlen($letter) <= 2) {
-                $model->lastname = $letter;
+            if (strlen($_GET['letter']) <= 2) {
+                $model->lastname = $_GET['letter'];
             }
         }
         $this->render('getTeacher', array(
@@ -152,7 +149,6 @@ class AppointmentController extends Controller {
         $model->user_id = $teacher;
         if (isset($_POST['Appointment'])) {
             $model->attributes = $_POST['Appointment'];
-            $model->validate();
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'Ihr Termin wurde erfolgreich gebucht.');
                 $this->redirect(array('index'));
@@ -210,25 +206,15 @@ class AppointmentController extends Controller {
             $this->render('indexTeacher', array(
                 'dataProvider' => $dataProvider->customSearch()
             ));
-        } else {
-            $criteria = new CDbCriteria();
-            $criteria->order = '`dateAndTime_id` ASC';
-            $pC = ParentChild::model()->findAllByAttributes(array('user_id' => Yii::app()->user->id));
-            if ($pC != null) {
-                foreach ($pC as $record) {
-                    $criteria->addCondition(array('parent_child_id=' . $record->id), 'OR');
-                }
-            } else {
-                $criteria->addCondition(array('parent_child_id' => '"impossible"'));
-            }
-            $dataProvider = new CActiveDataProvider('Appointment', array(
-                'criteria' => $criteria));
+        } else if(Yii::app ()->user->checkAccessNotAdmin('3')){
             $this->render('index', array(
-                'dataProvider' => $dataProvider,
+                'dataProvider' => Appointment::getAllAppointments(),
             ));
+        } else {
+            $this->throwFourNullThree();
         }
     }
-
+    
     /**
      * Manages all models.
      */
@@ -258,7 +244,7 @@ class AppointmentController extends Controller {
     public function loadModel($id) {
         $model = Appointment::model()->findByPk($id);
         if ($model === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
+            $this->throwFourNullFour();
         return $model;
     }
 
@@ -297,10 +283,7 @@ class AppointmentController extends Controller {
     public function getDatesWithTimes($dateMax, $mergeDates = false) {
         $a_groupOfDateAndTimes = array();
         if (is_int($dateMax)) {
-            $criteria = new CDbCriteria();
-            $criteria->limit = $dateMax;
-            $criteria->order = 'date ASC';
-            $a_dates = Date::model()->findAll($criteria);
+            $a_dates = Date::model()->findAll(array('limit'=>$dateMax,'order'=>'date ASC'));
             if (!$mergeDates) {
                 foreach ($a_dates as $record) {
                     $a_groupOfDateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
@@ -308,9 +291,9 @@ class AppointmentController extends Controller {
             } else if ($mergeDates) {
                 foreach ($a_dates as $key => $record) {
                     $a_tempDateAndTimes = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
-                    foreach ($a_tempDateAndTimes as $innerKey => $value){
-                        $a_tempDateAndTimes[$innerKey]['date'] = date(Yii::app()->params['dateFormat'],strtotime($a_dates[$key]->date));
-                        $a_tempDateAndTimes[$innerKey]['time'] = date(Yii::app()->params['timeFormat'],strtotime($a_tempDateAndTimes[$innerKey]['time']));
+                    foreach ($a_tempDateAndTimes as $innerKey=>$value) {
+                        $a_tempDateAndTimes[$innerKey]['date'] = date(Yii::app()->params['dateFormat'], strtotime($a_dates[$key]->date));
+                        $a_tempDateAndTimes[$innerKey]['time'] = date(Yii::app()->params['timeFormat'], strtotime($a_tempDateAndTimes[$innerKey]['time']));
                     }
                     $a_groupOfDateAndTimes = array_merge($a_groupOfDateAndTimes, $a_tempDateAndTimes);
                 }
@@ -349,6 +332,7 @@ class AppointmentController extends Controller {
 
     /**
      * Generiert den Inhalt der Terminvereinbarung für die Rolle Eltern 
+     * @todo Verkürzen oder in mehrere Methoden aufteilen
      * @author David Mock <dumock@gmail.com>
      * @param array $a_dates Array welches die nächsten Elternsprechtagstermine enthält
      * @param array $a_tabs Array mit den Tabellen, die die Termine anzeigen
@@ -401,8 +385,7 @@ class AppointmentController extends Controller {
      */
     public function actionGetTeacherAppointments($teacherId, $name) {
         header('Content-type: application/json');
-        $selectContent = CHtml::dropDownList($name, '', 
-                CHtml::listData($this->getDatesWithTimes(3, true), 'id', 'time', 'date'));
+        $selectContent = CHtml::dropDownList($name, '', CHtml::listData($this->getDatesWithTimes(3, true), 'id', 'time', 'date'));
         echo CJSON::encode($selectContent);
         Yii::app()->end();
     }
@@ -431,7 +414,6 @@ class AppointmentController extends Controller {
             $selectContent .= '<option>Keine Kinder vorhanden, bitte fügen Sie mindestens ein Kind hinzu bevor Sie fortfahren</option>';
         }
         $selectContent .='</select>';
-
         return $selectContent;
     }
 
