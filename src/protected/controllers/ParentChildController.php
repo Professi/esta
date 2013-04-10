@@ -105,6 +105,14 @@ class ParentChildController extends Controller {
      */
     public function actionCreate() {
         $model = new ParentChild;
+        if (isset($_GET['id'])) {
+                $userTemp = User::model()->findByPk($_GET['id']);
+                $userIdTemp = $_GET['id'];
+                $userNameString = $userTemp->firstname." ".$userTemp->lastname;
+            } else {
+                $userIdTemp = '';
+                $userNameString = '';
+            }
         if (isset($_POST['ParentChild'])) {
             $model->attributes = $_POST['ParentChild'];
             if ($model->validate()) {
@@ -126,6 +134,8 @@ class ParentChildController extends Controller {
         }
         $this->render('create', array(
             'model' => $model,
+            'userIdTemp' => $userIdTemp,
+            'userNameString' => $userNameString,
         ));
     }
 

@@ -36,28 +36,20 @@ if (Yii::app()->user->checkAccess('1')) {
         </div>
         <div class="ten columns">
             <?php
-            if (isset($_GET['id'])) {
-                $userTemp = User::model()->findByPk($_GET['id']);
-                $userIdTemp = $_GET['id'];
-                $userNameString = $userTemp->firstname." ".$userTemp->lastname;
-            } else {
-                $userIdTemp = '';
-                $userNameString = '';
-            }
             $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
                 'id' => 'parentChild_user_display',
                 'name' => '',
                 'value' => $userNameString,
                 'sourceUrl' => 'index.php?r=user/search&role=3',
                 'options' => array(
-                    'minLength' => '2',
+                    'minLength' => '1',
                 ),
                 'htmlOptions' => array(
                 ),
             ));
             ?>
             <?php echo $form->error($model, 'user_id'); ?>
-            <input type="hidden" id="parentChild_user_id" name="ParentChild[user_id]" value="<?php echo $userIdTemp ?>"
+            <?php echo $form->hiddenField($model, 'user_id', array('id' => 'parentChild_user_id', 'value' => $userIdTemp)); ?>
         </div>
     </div>
 <? } ?>

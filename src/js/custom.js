@@ -68,7 +68,7 @@ if (IE) {
            e.preventDefault();
            $(this).val(ui.item.label);
            $(this).nextAll('input').val(ui.item.value);
-           $.get('index.php/?r=appointment/getteacherappointments', {teacherId: ui.item.value}, function(data) {
+           $.get('index.php/?r=appointment/getteacherappointments', {teacherId: ui.item.value, name: 'Appointment[dateAndTime_id]'}, function(data) {
                $('#appointment_dateAndTime_select').html(data);
            }, 'json'); 
         });

@@ -33,7 +33,12 @@ $this->menu=array(
     <div class="twelve columns">
         <fieldset>
             <legend>Elternsprechtag anlegen</legend>
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array(
+                                    'model'=>$model,
+                                    'a_disabled' => $a_disabled,
+                                    'timeLabel' => $timeLabel,
+                                    'dateLabel' => $dateLabel,
+                                )); ?>
         </fieldset>
     </div>
 </div>

@@ -37,7 +37,11 @@ $this->menu=array(
             <?php } else { ?>
             <legend>Eltern-Kind-Verknüpfung anlegen</legend>
             <?php } ?>
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array(
+                                    'model'=>$model,
+                                    'userIdTemp' => $userIdTemp,
+                                    'userNameString' => $userNameString,
+                                )); ?>
         </fieldset>
     </div>
 </div>

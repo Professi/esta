@@ -23,19 +23,19 @@
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'appointment-form',
 )); 
-    $selectContent = '';
+    $selectContent = array();
     $selectChildrenContent = '';
     $parentLabel = '';
     $a_tabs = array();
     if ($model->isNewRecord) {
         $teacherValue = '';
         $teacherLabel = '';
+        $dateAndTimeId = '';
         if (isset($_GET['teacherId'])) {
             $userTemp = User::model()->findByPk($_GET['teacherId']);
             $teacherValue = $_GET['teacherId'];
             $teacherLabel = $userTemp->title." ".$userTemp->firstname." ".$userTemp->lastname;
-            $this->createMakeAppointmentContent($this->getDatesWithTimes(3),$a_tabs, $selectContent, $teacherValue);
-//            $selectContent = CHtml::listData($this->getDatesWithTimes(3, true), 'id', 'time','date_id');
+            $selectContent = CHtml::listData($this->getDatesWithTimes(3, true), 'id', 'time', 'date');
         }
         if (isset($_GET['parentId'])) {
             $userTemp = User::model()->findByPk($_GET['parentId']);
@@ -48,7 +48,8 @@
         $selectChildrenContent = $this->createChildrenSelect($model->parentChild->user->lastname, $model->parentChild->id);
         $teacherValue = $model->user->id; 
         $teacherLabel = $model->user->title." ".$model->user->firstname." ".$model->user->lastname;
-        $this->createMakeAppointmentContent($this->getDatesWithTimes(3),$a_tabs, $selectContent, $model->user->id, $model->dateAndTime->id);
+        $dateAndTimeId = $model->dateAndTime->id;
+        $selectContent = CHtml::listData($this->getDatesWithTimes(3, true), 'id', 'time', 'date');
         
     }
 ?>
@@ -111,7 +112,7 @@
                             ));
                             ?>
 		<?php echo $form->error($model,'user_id'); ?>
-                <input type="hidden" id="appointment_teacher_id" name="Appointment[user_id]" value="<?php echo $teacherValue ?>">
+                <?php echo $form->hiddenField($model, 'user_id', array('id' => 'appointment_teacher_id', 'value' => $teacherValue)); ?>
             </div>
 	</div>
         <div class="row collapse">
@@ -119,7 +120,8 @@
                 <span class="prefix">Termin</span>
             </div>
             <div class="ten columns styled-select" id="appointment_dateAndTime_select">
-                <?php echo $selectContent; //echo $form->dropDownList($model, 'dateAndTime_id',$selectContent);  ?>                
+                <?php echo $form->dropDownList($model, 'dateAndTime_id',$selectContent, array('options' => array($dateAndTimeId => array('selected'=>true))) ); 
+//                        echo $selectContent;  ?>                
 		<?php echo $form->error($model,'dateAndTime_id'); ?>
                 
             </div>

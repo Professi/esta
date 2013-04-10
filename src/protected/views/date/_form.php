@@ -29,15 +29,6 @@ $form = $this->beginWidget('CActiveForm', array(
     'id' => 'date-form',
     'enableAjaxValidation' => false,
         ));
-$a_disabled = array();
-$dateLabel = '';
-$timeLabel = '';
-if (!$model->isNewRecord) {
-    $a_disabled = array('disabled' => 'disabled');
-    $a_lockAtLabel = explode(' ', date(Yii::app()->params['dateTimeFormat'], $model->lockAt));
-    $dateLabel = $a_lockAtLabel[0];
-    $timeLabel = $a_lockAtLabel[1];
-}
 ?>
 
 <div class="row collapse">
@@ -91,7 +82,6 @@ if (!$model->isNewRecord) {
     <div class="eight columns">
         <?php echo $form->textField($model, 'end', $a_disabled); ?>
 <?php echo $form->error($model, 'end'); ?>
-        <div id="slider"></div>
     </div>
     <div class="two columns">
         <span class="postfix"><?php echo Yii::app()->params['timeFormat']  ?></span>
@@ -102,7 +92,7 @@ if (!$model->isNewRecord) {
         <span class="prefix"><?php echo $form->label($model, 'lockAt'); ?></span>
     </div>
     <div class="four columns">
-        <?php // echo $form->textField($model, 'lockAt'); 
+        <?php 
         $this->widget('zii.widgets.jui.CJuiDatePicker', array(
             'model' => $model,
             'name' => 'lockAt',

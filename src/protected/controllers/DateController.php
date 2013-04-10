@@ -93,6 +93,9 @@ class DateController extends Controller {
      */
     public function actionCreate() {
         $model = new Date;
+        $a_disabled = '';
+        $timeLabel = '';
+        $dateLabel = '';
         if (isset($_POST['Date'])) {
             $model->attributes = $_POST['Date'];
             if ($model->save()) {
@@ -101,6 +104,9 @@ class DateController extends Controller {
         }
         $this->render('create', array(
             'model' => $model,
+            'a_disabled' => $a_disabled,
+            'timeLabel' => $timeLabel,
+            'dateLabel' => $dateLabel,
         ));
     }
 
@@ -112,6 +118,10 @@ class DateController extends Controller {
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
         $model->date = date('d.m.Y', strtotime($model->date));
+        $a_disabled = array('disabled' => 'disabled');
+        $a_lockAtLabel = explode(' ', date(Yii::app()->params['dateTimeFormat'], $model->lockAt));
+        $dateLabel = $a_lockAtLabel[0];
+        $timeLabel = $a_lockAtLabel[1];
         if (isset($_POST['Date'])) {
             $model->attributes = $_POST['Date'];
             if ($model->save())
@@ -120,6 +130,10 @@ class DateController extends Controller {
 
         $this->render('update', array(
             'model' => $model,
+            'a_disabled' => $a_disabled,
+            'a_lockAtLabel' => $a_lockAtLabel,
+            'dateLabel' => $dateLabel,
+            'timeLabel' => $timeLabel,
         ));
     }
 

@@ -306,8 +306,13 @@ class AppointmentController extends Controller {
                     $a_groupOfDateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
                 }
             } else if ($mergeDates) {
-                foreach ($a_dates as $record) {
-                    $a_groupOfDateAndTimes = array_merge($a_groupOfDateAndTimes, DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id)));
+                foreach ($a_dates as $key => $record) {
+                    $a_tempDateAndTimes = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
+                    foreach ($a_tempDateAndTimes as $innerKey => $value){
+                        $a_tempDateAndTimes[$innerKey]['date'] = date(Yii::app()->params['dateFormat'],strtotime($a_dates[$key]->date));
+                        $a_tempDateAndTimes[$innerKey]['time'] = date(Yii::app()->params['timeFormat'],strtotime($a_tempDateAndTimes[$innerKey]['time']));
+                    }
+                    $a_groupOfDateAndTimes = array_merge($a_groupOfDateAndTimes, $a_tempDateAndTimes);
                 }
             }
         }
@@ -394,11 +399,10 @@ class AppointmentController extends Controller {
      * @author David Mock <dumock@gmail.com>
      * @param type $teacherId
      */
-    public function actionGetTeacherAppointments($teacherId) {
+    public function actionGetTeacherAppointments($teacherId, $name) {
         header('Content-type: application/json');
-        $a_tabs = null;
-        $selectContent = null;
-        $this->createMakeAppointmentContent($this->getDatesWithTimes(3), $a_tabs, $selectContent, $teacherId);
+        $selectContent = CHtml::dropDownList($name, '', 
+                CHtml::listData($this->getDatesWithTimes(3, true), 'id', 'time', 'date'));
         echo CJSON::encode($selectContent);
         Yii::app()->end();
     }

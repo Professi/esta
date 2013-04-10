@@ -46,8 +46,8 @@ $this->widget('zii.widgets.CDetailView', array(
     'data' => $model,
     'attributes' => array(
         'id',
-        array('name' => 'time', 'value' => $model->dateAndTime->time),
-        array('name' => 'date_id', 'value' => $model->dateAndTime->date->date),
+        array('name' => 'time', 'value' => date(Yii::app()->params['timeFormat'],strtotime($model->dateAndTime->time))),
+        array('name' => 'date_id', 'value' => date(Yii::app()->params['dateFormat'],strtotime($model->dateAndTime->date->date))),
         //	'parent_child_id',
         array('name' => 'Schüler', 'value' => $model->parentChild->child->firstname . " " . $model->parentChild->child->lastname),
         array('name' => 'Erziehungsberechtigte/r', 'value' => $model->parentChild->user->firstname . " " . $model->parentChild->user->lastname),
