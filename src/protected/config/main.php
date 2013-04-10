@@ -72,6 +72,7 @@ return array(
             'password' => 'qwertzuiop', //DB Passwort bitte anpassen
             'charset' => 'utf8', //eventuell anpassen im optimalfall dabei belassen
             'tablePrefix' => '', //nicht ändern
+        //    'schemaCachingDuration'=> 3600, //Optimierung
         ),
         'errorHandler' => array(
             'errorAction' => 'site/error', //nicht ändern
