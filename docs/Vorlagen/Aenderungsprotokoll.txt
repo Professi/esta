@@ -1,0 +1,19 @@
+Änderungen in Version 1.1:
+
+Feature:
+
+ - Fehllogincounter
+ - Benutzerverwaltung: Sortierung nach Status und Rolle eingefügt
+ - Erstellung eines Installationsskripts
+ - Beim automatischen erstellen der Lehreraccounts kann das Passwort jetzt zufällig generiert werden
+ - Die Terminbuchung für Eltern kann jetzt gesperrt werden
+ - Attributsuche Benutzerverwaltung
+ - Verbergen der ID beim Autocomplete bei der Selektierung
+
+Bugfix:
+
+ - Fehlermeldung bei der Termineintragung, wenn keine Kinder in dem Account eingetragen waren
+ - Elternsprechtagserstellung: Es wurde ein Fehler behoben, der auftrat, wenn keine Zeit eingetragen wurde
+ - Kinder löschen: Es wurde ein Fehler behoben, bei dem das Löschen von fremden Kindern möglich war, indem man die ID in der Adresszeile eingetragen hat
+ - Terminanzeige für Eltern: Es wurde ein Fehler behoben, bei die echte ID und keine Nummerierung angezeigt wurde
+ - Terminbearbeitung: Es wurde ein Berechtigungsproblem behoben, da die Administratoren Termine bearbeiten konnten, die Verwaltung aber nicht
