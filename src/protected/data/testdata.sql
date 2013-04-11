@@ -23,6 +23,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `YiiSession`
+--
+
+CREATE TABLE IF NOT EXISTS `YiiSession` (
+  `id` char(32) NOT NULL,
+  `expire` int(11) DEFAULT NULL,
+  `data` longblob,
+  PRIMARY KEY (`id`),
+KEY `expire` (`expire`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
 -- Tabellenstruktur für Tabelle `appointment`
 --
 
