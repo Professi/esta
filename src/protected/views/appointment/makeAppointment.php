@@ -94,6 +94,7 @@
                     <div class="ten columns mobile-input">
                         <div class="styled-select">
                             <?php echo $this->createSelectTeacherDates($model->user->id, get_class($model), 'dateAndTime_id') ?>
+                            <?php echo $form->error($model, 'dateAndTime_id'); ?>
                         </div>
                     </div>
                 </div>
@@ -104,6 +105,7 @@
                         <div class="ten columns mobile-input">
                                 <div class="styled-select">
                                     <?php echo $this->createSelectChildren(Yii::app()->user->getId(), get_class($model), 'parent_child_id'); ?>
+                                    <?php echo $form->error($model, 'parent_child_id'); ?>
                                 </div>
                         </div>
                 </div>

@@ -183,6 +183,7 @@ table {
    border-radius: 0;
    height: 2em;
    -webkit-appearance: none;
+   -moz-appearance: none;
 }
 .styled-select>span {
 	position: absolute;

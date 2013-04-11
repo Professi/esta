@@ -144,8 +144,9 @@ class AppointmentController extends Controller {
             if (!empty($model->attributes['user_id'])) {
                 $teacherLabel = $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname;
             }
-            if (!empty($model->attributes['parent_child_id']) && is_int($model->attributes['parent_child_id'])) {
+            if (!empty($model->attributes['parent_child_id']) && ($model->attributes['parent_child_id'] != "empty")) {
                 $parentLabel = $model->parentChild->user->firstname . " " . $model->parentChild->user->lastname;
+                $parentId = $model->parentChild->user->id;
             }
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
@@ -458,10 +459,8 @@ class AppointmentController extends Controller {
         $dataProvider = new ParentChild();
         $dataProvider->unsetAttributes();
         $criteria = $dataProvider->searchParentChild($term);
-//        print_r($dataProvider->search());
         $selectContent = '<select name="Appointment[parent_child_id]">';
         $a_data = ParentChild::model()->findAll($criteria);
-        print_r($a_data);
         foreach ($a_data as $record) {
             $selectContent .= '<option value="' . $record->id . '" ';
             if ($record->id == $id) {
@@ -487,7 +486,7 @@ class AppointmentController extends Controller {
      */
     public function createSelectTeacherDates($teacherId, $nameForm, $nameField, $selectedDateAndTime = -1) {
         $selectContent = array();
-        $a_options = array();
+        $a_options = array('prompt' => 'Geben Sie einen Lehrernamen ein');
         if (!empty($teacherId)) {
             $a_optionsDisabledAppointments = array();
             $a_appointmentsStateValueLabel = array();
@@ -503,7 +502,7 @@ class AppointmentController extends Controller {
                 }
             }
             $a_optionsDisabledAppointments[$selectedDateAndTime] = array('selected' => true);
-            $a_options = array('options' => $a_optionsDisabledAppointments);
+            $a_options = array('options' => $a_optionsDisabledAppointments, 'prompt' => 'Wählen Sie einen Termin aus');
         }
         return CHtml::dropDownList($nameForm . '[' . $nameField . ']', '', $selectContent, $a_options);
     }
