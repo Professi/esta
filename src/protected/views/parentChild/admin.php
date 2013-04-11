@@ -56,7 +56,6 @@ $this->menu=array(
 	'dataProvider'=>$model->search(),
 //	'filter'=>$model,
 	'columns'=>array(
-		'id',
 		array('name' => 'user_id', 'value' => '$data->user->firstname." ".$data->user->lastname'), 
 		array('name' => 'child_id', 'value' => '$data->child->firstname." ".$data->child->lastname'),
 		array(
