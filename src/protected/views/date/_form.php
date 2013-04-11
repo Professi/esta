@@ -91,34 +91,39 @@ $form = $this->beginWidget('CActiveForm', array(
     <div class="two columns">
         <span class="prefix"><?php echo $form->label($model, 'lockAt'); ?></span>
     </div>
-    <div class="four columns">
-        <?php 
-        $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-            'model' => $model,
-            'name' => 'lockAt',
-            'id' => 'date_lockAt',
-            'value' => $dateLabel,
-            'options' => array(
-                'showAnim' => 'fold',
-                'minDate' => '0',
-                            'dateFormat' => $this->dateStringToDatepickerFormat(Yii::app()->params['dateFormat']),
-                            'nextText' => '',
-                            'prevText' => '',
-                        ),
-                        'language' => 'de',
-                        'skin' => false,
-                        'cssFile' => false,
-                        'htmlOptions'=>array(
-                            'readonly' => 'readonly',
-                        ),
-        ));
-        ?>
+    <div class="eight columns">
+        <div class="row">
+            <div class="six columns">
+                <?php 
+                $this->widget('zii.widgets.jui.CJuiDatePicker', array(
+                    'model' => $model,
+                    'name' => 'lockAt',
+                    'id' => 'date_lockAt',
+                    'value' => $dateLabel,
+                    'options' => array(
+                        'showAnim' => 'fold',
+                        'minDate' => '0',
+                                    'dateFormat' => $this->dateStringToDatepickerFormat(Yii::app()->params['dateFormat']),
+                                    'nextText' => '',
+                                    'prevText' => '',
+                                ),
+                                'language' => 'de',
+                                'skin' => false,
+                                'cssFile' => false,
+                                'htmlOptions'=>array(
+                                    'readonly' => 'readonly',
+                                ),
+                ));
+                ?>
+            </div>
+            <div class="six columns">
+                <input type="text" id="time_lockAt" value="<?php echo $timeLabel; ?>">
+            </div>
+        </div>
         <?php echo $form->hiddenField($model, 'lockAt', array('id' => 'lockAt_value')); ?>
         <?php echo $form->error($model, 'lockAt'); ?>
     </div>
-    <div class="four columns">
-        <input type="text" id="time_lockAt" value="<?php echo $timeLabel; ?>">
-    </div>
+    
     <div class="two columns">
         <span class="postfix"><?php echo Yii::app()->params['dateTimeFormat']  ?></span>
     </div>

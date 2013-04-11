@@ -49,7 +49,7 @@ if (Yii::app()->user->checkAccess('1')) {
             ));
             ?>
             <?php echo $form->error($model, 'user_id'); ?>
-            <?php echo $form->hiddenField($model, 'user_id', array('id' => 'parentChild_user_id', 'value' => $userIdTemp)); ?>
+            <?php echo $form->hiddenField($model, 'user_id', array('id' => 'parentChild_user_id', 'value' => $model->attributes['user_id'])); ?>
         </div>
     </div>
 <? } ?>

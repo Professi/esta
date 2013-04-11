@@ -65,7 +65,7 @@ $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
     ),
 ));
 ?>
-                    <?php echo $form->hiddenField($model, 'user_id', array('id' => 'appointment_teacher_id', 'value' => $model->attributes['user_id'])); ?>
+                    <?php echo $form->hiddenField($model, 'user_id', array('id' => 'appointmentBlock_teacher_id', 'value' => $model->attributes['user_id'])); ?>
                     <?php echo $form->error($model, 'user_id'); ?>
                 </div>
             </div>

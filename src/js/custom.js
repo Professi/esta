@@ -31,7 +31,7 @@ if (IE) {
             $time_text = $('#' + $time).text();
             $('#form_date').val($date_text);
             $('#form_time').val($time_text);
-            $('#Appointment_dateAndTime_id').children().each(function(i, $this) {
+            $('#Appointment_dateAndTime_id').children('*:gt(0)').each(function(i, $this) {
                 if ($($this).attr('label').match($date_text)) {
                     $($this).children().each(function(i, $this) {
                        if ($($this).text().match($time_text)) {
@@ -66,14 +66,23 @@ if (IE) {
             $(this).nextAll('input').val(ui.item.value);
         });
         
-        $('input[id$="_teacher"]').on('autocompleteselect', function (e, ui) {
+        $('#appointment_teacher').on('autocompleteselect', function (e, ui) {
            blockDefaultAction(e);
            $(this).val(ui.item.label);
            $(this).nextAll('input').val(ui.item.value);
-           $.get('index.php/?r=appointment/getteacherappointmentsajax', {teacherId: ui.item.value}, function(data) {
+           $.get('index.php/?r=appointment/getteacherappointmentsajax', {teacherId: ui.item.value, classname: 'Appointment'}, function(data) {
                $('#appointment_dateAndTime_select').html(data);
            }, 'json'); 
         });
+        
+        $('#appointmentBlock_teacher').on('autocompleteselect', function (e, ui) {
+           blockDefaultAction(e);
+           $(this).val(ui.item.label);
+           $(this).nextAll('input').val(ui.item.value);
+           $.get('index.php/?r=appointment/getteacherappointmentsajax', {teacherId: ui.item.value, classname: 'BlockedAppointment'}, function(data) {
+               $('#appointment_dateAndTime_select').html(data);
+           }, 'json'); 
+        });        
         
         $('input[id$="_teacher"]').on('autocompletefocus', function(e){blockDefaultAction(e);});
        

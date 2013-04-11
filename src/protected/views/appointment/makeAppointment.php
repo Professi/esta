@@ -76,7 +76,8 @@
                                 <span class="prefix">Am</span>
                         </div>
                         <div class="ten columns mobile-input">
-                                <input id="form_date" type="text" disabled value="" />
+                                <input id="form_date" type="text" disabled value="<?php echo $postDate; ?>" />
+                                <?php echo $form->error($model, 'dateAndTime_id'); ?>
                         </div>
                 </div>
                 <div class="row collapse js_show">
@@ -84,7 +85,8 @@
                                 <span class="prefix">Um</span>
                         </div>
                         <div class="ten columns mobile-input">
-                                <input id="form_time" type="text" disabled  value="" />
+                                <input id="form_time" type="text" disabled  value="<?php echo $postTime; ?>" />
+                                <?php echo $form->error($model, 'dateAndTime_id'); ?>
                         </div>
                 </div>
                 <div class="row collapse js_hide">
@@ -93,7 +95,7 @@
                     </div>
                     <div class="ten columns mobile-input">
                         <div class="styled-select">
-                            <?php echo $this->createSelectTeacherDates($model->user->id, get_class($model), 'dateAndTime_id') ?>
+                            <?php echo $this->createSelectTeacherDates($model->user->id, get_class($model), 'dateAndTime_id', $model->attributes['dateAndTime_id']) ?>
                             <?php echo $form->error($model, 'dateAndTime_id'); ?>
                         </div>
                     </div>

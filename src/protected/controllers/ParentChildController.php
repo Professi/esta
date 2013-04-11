@@ -107,14 +107,14 @@ class ParentChildController extends Controller {
         $model = new ParentChild;
         if (isset($_GET['id'])) {
                 $userTemp = User::model()->findByPk($_GET['id']);
-                $userIdTemp = $_GET['id'];
+                $model->user_id = $_GET['id'];
                 $userNameString = $userTemp->firstname." ".$userTemp->lastname;
             } else {
-                $userIdTemp = '';
                 $userNameString = '';
             }
         if (isset($_POST['ParentChild'])) {
             $model->attributes = $_POST['ParentChild'];
+            $userNameString = $model->user->firstname." ".$model->user->lastname;
             if ($model->validate()) {
                 if (ParentChild::model()->countByAttributes(
                                 array('user_id' => $model->attributes['user_id'])) <
@@ -134,7 +134,6 @@ class ParentChildController extends Controller {
         }
         $this->render('create', array(
             'model' => $model,
-            'userIdTemp' => $userIdTemp,
             'userNameString' => $userNameString,
         ));
     }

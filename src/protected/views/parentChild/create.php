@@ -39,7 +39,6 @@ $this->menu=array(
             <?php } ?>
 <?php echo $this->renderPartial('_form', array(
                                     'model'=>$model,
-                                    'userIdTemp' => $userIdTemp,
                                     'userNameString' => $userNameString,
                                 )); ?>
         </fieldset>

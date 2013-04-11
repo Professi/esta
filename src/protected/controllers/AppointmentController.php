@@ -144,7 +144,7 @@ class AppointmentController extends Controller {
             if (!empty($model->attributes['user_id'])) {
                 $teacherLabel = $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname;
             }
-            if (!empty($model->attributes['parent_child_id']) && ($model->attributes['parent_child_id'] != "empty")) {
+            if (!empty($model->attributes['parent_child_id']) ) {
                 $parentLabel = $model->parentChild->user->firstname . " " . $model->parentChild->user->lastname;
                 $parentId = $model->parentChild->user->id;
             }
@@ -187,6 +187,8 @@ class AppointmentController extends Controller {
         $model = new Appointment;
         $model->unsetAttributes();
         $model->user_id = $teacher;
+        $postDate = '';
+        $postTime = '';
         $a_dates = $this->getDatesWithTimes(3); //Magic Number: nur die nächsten 3 Elternsprechtage werden geladen.
         $a_tabs = $this->createMakeAppointmentContent($a_dates, $model->user->id);
         switch (count($a_tabs)) {
@@ -205,6 +207,11 @@ class AppointmentController extends Controller {
         }
         if (isset($_POST['Appointment'])) {
             $model->attributes = $_POST['Appointment'];
+            if (!empty($model->attributes['dateAndTime_id'])) {
+                $postDate = date(Yii::app()->params['dateFormat'],  strtotime($model->dateAndTime->date->date));
+                echo 'hi';
+                $postTime = date(Yii::app()->params['timeFormat'],  strtotime($model->dateAndTime->time));
+            }
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'Ihr Termin wurde erfolgreich gebucht.');
                 $this->redirect(array('index'));
@@ -215,6 +222,8 @@ class AppointmentController extends Controller {
             'a_dates' => $a_dates,
             'a_tabs' => $a_tabs,
             'columnCount' => $columnCount,
+            'postDate' => $postDate,
+            'postTime' => $postTime,
         ));
     }
 
@@ -439,11 +448,12 @@ class AppointmentController extends Controller {
      * AJAX Methode um die Termine eines bestimmten Lehrers in einem Select Element zu generieren.
      * @author David Mock <dumock@gmail.com>
      * @param int $teacherId Id des Lehrers
+     * @param string $classname Name der Klasse des Views für das ein Element erzeugt werden soll
      * echo JSON
      */
-    public function actionGetTeacherAppointmentsAjax($teacherId) {
+    public function actionGetTeacherAppointmentsAjax($teacherId, $classname) {
         header('Content-type: application/json');
-        echo CJSON::encode($this->createSelectTeacherDates($teacherId, 'Appointment', 'dateAndTime_id'));
+        echo CJSON::encode($this->createSelectTeacherDates($teacherId, $classname, 'dateAndTime_id'));
         Yii::app()->end();
     }
 
@@ -518,13 +528,13 @@ class AppointmentController extends Controller {
      */
     public function createSelectChildren($userId, $nameForm, $nameField, $selectedChild = -1) {
         $selectContent = array();
-        $a_options = array();
+        $a_options = array('prompt' => 'Geben Sie einen Elternnamen ein');
         if (!empty($userId)) {
             $dataProvider = new ParentChild();
             $dataProvider->unsetAttributes();
             $criteria = $dataProvider->searchParentChildWithId($userId);
             $a_parentChild = ParentChild::model()->findAll($criteria);
-            $selectContent = (empty($a_parentChild)) ? array('empty' => 'Bitte legen Sie mindestens ein Kind an bevor Sie fortfahren') : CHtml::listData($a_parentChild, 'id', function($post) {
+            $selectContent = (empty($a_parentChild)) ? array('prompt' => 'Bitte legen Sie mindestens ein Kind an bevor Sie fortfahren') : CHtml::listData($a_parentChild, 'id', function($post) {
                                 return $post->child->firstname . ' ' . $post->child->lastname;
                             });
             $a_optionsInner[$selectedChild] = array('selected' => true);
