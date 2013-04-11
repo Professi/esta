@@ -201,26 +201,33 @@ class Appointment extends CActiveRecord {
         if ($rc && Appointment::model()->countByAttributes(array('dateAndTime_id' => $this->dateAndTime_id,'user_id'=>  $this->user_id)) > 0) {
             $rc = false;
             if (Yii::app()->user->checkAccess('1')) {
-                Yii::app()->user->setFlash('failMsg', 'Der Benutzer hat bereits zu dieser Uhrzeit einen Termin gebucht.');
-            } else {
-                Yii::app()->user->setFlash('failMsg', 'Sie können immer nur einen Termin zur selben Zeit haben.');
+                $this->addError('dateAndTime_id', 'Der Lehrer hat bereits zu dieser Uhrzeit einen Termin.');
             }
         }
         if (!Yii::app()->user->checkAccess('1') && $rc) {
-            if (Appointment::model()->countByAttributes(array('parent_child_id' => $this->parent_child_id)) >= Yii::app()->params['maxAppointmentsPerChild']) {
+            if (Appointment::model()->countByAttributes(array('parent_child_id' => $this->parent_child_id)) > Yii::app()->params['maxAppointmentsPerChild']) {
                 $rc = false;
                 Yii::app()->user->setFlash('failMsg', 'Leider konnte Ihr Termin nicht gebucht haben, da Sie die maximale Anzahl von '
-                        . Yii::app()->params['maxAppointmentsPerChild'] . 'überschritten haben.');
-                $this->addError('parent_child_id', 'Sie haben die maximal Anzahl von Terminen überschritten.');
+                        . Yii::app()->params['maxAppointmentsPerChild'] . ' Terminen überschritten haben.');
+                $this->addError('parent_child_id', 'Sie haben die maximale Anzahl an Terminen überschritten.');
             }
         }
         if ($rc && Appointment::model()->countByAttributes(array('user_id' => $this->user_id, 'parent_child_id' => $this->parent_child_id)) >= '1') {
             $rc = false;
             Yii::app()->user->setFlash('failMsg', 'Sie können nur einen Termin bei diesem Lehrer pro Kind buchen.');
         }
+                if($rc && Appointment::model()->countByAttributes(array('parent_child_id'=> $this->parent_child_id, 'dateAndTime_id'=>$this->dateAndTime_id)) > 0) {
+          $rc = false;
+            if(Yii::app()->user->checkAccess('1')) {
+              $this->addError('dateAndTime_id', 'Dieser Benutzer hat bereits einen Termin zu dieser Uhrzeit.');
+          }  else {
+              $this->addError('dateAndTime_id', 'Sie haben bereits einen Termin zu dieser Uhrzeit.');
+          }
+        }
         if ($rc) {
             Yii::app()->user->setFlash('success', 'Ihr Termin wurde erfolgreich gebucht.');
         }
+
 
         return $rc;
     }

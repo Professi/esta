@@ -410,7 +410,7 @@ class AppointmentController extends Controller {
         }
         return $rc;
     }
-
+    
     /**
      * Generiert den Inhalt der Terminvereinbarung für die Rolle Eltern 
      * @author David Mock <dumock@gmail.com>
