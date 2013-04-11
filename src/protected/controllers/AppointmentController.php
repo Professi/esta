@@ -52,7 +52,10 @@ class AppointmentController extends Controller {
                 'roles' => array('2')
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete', 'view', 'create', 'update', 'getteacherappointments', 'createBlockApp', 'DeleteBlockApp'),
+                'actions' => array( 'admin', 'delete', 'view', 'create', 'update', 
+                                    'createBlockApp', 'DeleteBlockApp',
+                                    'getteacherappointmentsajax', 'getselectchildrenajax',
+                                  ),
                 'roles' => array('0', '1'),
             ),
             array('deny', // deny all users
@@ -64,8 +67,22 @@ class AppointmentController extends Controller {
     public function actionCreateBlockApp() {
         $model = new BlockedAppointment();
         $model->unsetAttributes();
+        $teacherValue = '';
+        $teacherLabel = '';
+        if (isset($_GET['teacherId'])) { //Weiterleitung vom user/view; eventuell auch wenn der Lehrer dann im Menü auf Termin blockieren geht? haha -> möglicher intrusion point siehe #177 ;)
+            $teacherValue = $_GET['teacherId'];
+            $userTemp = User::model()->findByPk($teacherValue);
+            $teacherLabel = $userTemp->title . " " . $userTemp->firstname . " " . $userTemp->lastname;
+            $model->user_id = $teacherValue;
+        }
+        if (Yii::app()->user->checkAccessRole('2','-1')) { 
+            $model->user_id = Yii::app()->user->getId();
+        }
         if (isset($_POST['BlockedAppointment'])) {
             $model->setAttributes($_POST['BlockedAppointment']);
+            if (!empty($model->attributes['user_id'])) {
+                $teacherLabel = $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname;
+            }
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'Termin erfolgreich geblockt.');
                 if (Yii::app()->user->checkAccessNotAdmin('2')) {
@@ -75,7 +92,7 @@ class AppointmentController extends Controller {
                 }
             }
         }
-        $this->render('createBlockApp', array('model' => $model));
+        $this->render('createBlockApp', array('model' => $model,'teacherLabel' => $teacherLabel));
     }
 
     public function actionDeleteBlockApp($id, $teacherId = null) {
@@ -109,13 +126,35 @@ class AppointmentController extends Controller {
      */
     public function actionCreate() {
         $model = new Appointment;
+        $teacherLabel = '';
+        $parentLabel = '';
+        $parentId = 0;
+        if (isset($_GET['teacherId'])) {
+            $model->user_id = $_GET['teacherId'];
+            $userTemp = User::model()->findByPk($model->user_id);
+            $teacherLabel = $userTemp->title." ".$userTemp->firstname." ".$userTemp->lastname;
+        }
+        if (isset($_GET['parentId'])) {
+            $parentId = $_GET['parentId'];
+            $userTemp = User::model()->findByPk($parentId);
+            $parentLabel = $userTemp->firstname." ".$userTemp->lastname;
+        }
         if (isset($_POST['Appointment'])) {
             $model->attributes = $_POST['Appointment'];
+            if (!empty($model->attributes['user_id'])) {
+                $teacherLabel = $model->user->title." ".$model->user->firstname." ".$model->user->lastname;
+            }
+            if (!empty($model->attributes['parent_child_id']) && is_int($model->attributes['parent_child_id']) ) {
+                $parentLabel = $model->parentChild->user->firstname." ".$model->parentChild->user->lastname;
+            }
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
         $this->render('create', array(
             'model' => $model,
+            'teacherLabel' => $teacherLabel,
+            'parentLabel' => $parentLabel,
+            'parentId' => $parentId,
         ));
     }
 
@@ -147,6 +186,22 @@ class AppointmentController extends Controller {
         $model = new Appointment;
         $model->unsetAttributes();
         $model->user_id = $teacher;
+        $a_dates = $this->getDatesWithTimes(3); //Magic Number: nur die nächsten 3 Elternsprechtage werden geladen.
+        $a_tabs = $this->createMakeAppointmentContent($a_dates, $model->user->id);
+        switch (count($a_tabs)) {
+            case 1: 
+                $columnCount = 'twelve';
+                break;
+            case 2: 
+                $columnCount = 'six';
+                break;
+            case 3:
+                $columnCount = 'four';
+                break;
+            default :
+                $columnCount = 'twelve';
+                break;
+        }
         if (isset($_POST['Appointment'])) {
             $model->attributes = $_POST['Appointment'];
             if ($model->save()) {
@@ -154,12 +209,12 @@ class AppointmentController extends Controller {
                 $this->redirect(array('index'));
             }
         }
-        $a_child = $this->fillChildSelect();
-        if(empty($a_child)) {
-            $this->redirect(array('ParentChild/index'));
-        } else {
-        $this->render('makeAppointment', array('model' => $model, 'a_child' => $this->fillChildSelect()));
-        }
+        $this->render('makeAppointment', array(
+                            'model' => $model,
+                            'a_dates' => $a_dates,
+                            'a_tabs' => $a_tabs,
+                            'columnCount' => $columnCount,
+                        ));
     }
 
     /**
@@ -169,6 +224,8 @@ class AppointmentController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
+        $parentLabel = $model->parentChild->user->firstname." ".$model->parentChild->user->lastname;
+        $teacherLabel = $model->user->title." ".$model->user->firstname." ".$model->user->lastname;
         if (isset($_POST['Appointment'])) {
             $model->attributes = $_POST['Appointment'];
             if ($model->save())
@@ -176,6 +233,9 @@ class AppointmentController extends Controller {
         }
         $this->render('update', array(
             'model' => $model,
+            'teacherLabel' => $teacherLabel,
+            'parentLabel' => $parentLabel,
+            'parentId' => $model->parentChild->user->id,
         ));
     }
 
@@ -208,13 +268,16 @@ class AppointmentController extends Controller {
         if (Yii::app()->user->checkAccessNotAdmin('2')) {
             $dataProvider = new Appointment('customSearch');
             $dataProvider->user_id = Yii::app()->user->getId();
-            $this->render('indexTeacher', array(
-                'dataProvider' => $dataProvider->customSearch()
+            $blockedApp = new BlockedAppointment();
+            $blockedApp->unsetAttributes();
+            $this->render('indexTeacherCombined', array(
+                'dataProvider' => $dataProvider,
+                'blockedApp' => $blockedApp,
             ));
         } else if (Yii::app()->user->checkAccessNotAdmin('3')) {
             $this->render('index', array(
                 'dataProvider' => Appointment::getAllAppointments(),
-            ));
+            )); 
         } else {
             $this->throwFourNullThree();
         }
@@ -340,61 +403,48 @@ class AppointmentController extends Controller {
 
     /**
      * Generiert den Inhalt der Terminvereinbarung für die Rolle Eltern 
-     * @todo Verkürzen oder in mehrere Methoden aufteilen
      * @author David Mock <dumock@gmail.com>
      * @param array $a_dates Array welches die nächsten Elternsprechtagstermine enthält
-     * @param array $a_tabs Array mit den Tabellen, die die Termine anzeigen
-     * @param string $select_content Das select-Element welches die id für den zu buchenden Termin an den Server überträgt.
-     * @param object $model Das model der aktuellen Ansicht
-     * @param integer $appointmentId 
+     * @param integer $teacherId Id des Lehrers
+     * @return array Tabelle(n) mit Status der Termine eines Lehrers
      */
-    public function createMakeAppointmentContent($a_dates, &$a_tabs, &$selectContent, $teacherId, $appointmentId = -1) {
+    public function createMakeAppointmentContent($a_dates, $teacherId) {
+        $a_tabs = array();
         $tabsUiId = 0; //id der tabellen, wichtig für Javascriptfunktionen aus custom.js
-        $selectContent = '<select id="form_dateAndTime" name="Appointment[dateAndTime_id]">';
         foreach ($a_dates as $a_day) {
             $tabsUiId++;
             $tabsName = date(Yii::app()->params['dateFormat'], strtotime($a_day[0]->date->date));
             $tabsContent = '<div style="display:none;" id="date-ui-id-' . $tabsUiId . '">' . $tabsName . '</div>'; //verstecktes Element für Javascriptfunktionen aus custom.js
             $tabsContent .= '<table><thead><th class="table-text" width="40%">Uhrzeit</th><th class="table-text" width="60%">Termin</th></thead><tbody>';
-            $selectContent .= '<optgroup label="' . $tabsName . '">';
             $datesUiId = 0; //id der einzelnen Zeiten, wichtig für Javascriptfunktionen aus custom.js
             foreach ($a_day as $key => $a_times) {
                 $datesUiId++;
                 $a_times = $this->isAppointmentAvailable($teacherId, $a_day[$key]->id); //Array in dem gespeichert wird ob ein Termin Belegt oder Frei ist.
-                $tabsContent .= '<tr><td id="time-ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="table-text">' . date(Yii::app()->params['timeFormat'], strtotime($a_day[$key]->time)) . '</td>';
-                $selectContent .= '<option value="' . $a_day[$key]->id . '"';
-                if ($a_times[1]) { //Termin verfügbar
-                    $tabsContent .= '<td id="ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="avaiable table-text">' . $a_times[0] . '</td>';
-                } else {
-                    $tabsContent .= '<td class="occupied table-text">' . $a_times[0] . '</td>';
-                    $selectContent .= ' disabled ';
-                    if ($a_day[$key]->id == $appointmentId) {
-                        $selectContent = str_replace(' disabled ', ' ', $selectContent);
-                        $selectContent .= ' selected ';
-                    }
-                }
+                $tabsContent .= '<tr><td id="time-ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="table-text">';
+                $tabsContent .= date(Yii::app()->params['timeFormat'], strtotime($a_day[$key]->time)) . '</td>';
+                $tabsContent .= ($a_times[1]) 
+                        ? '<td id="ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="avaiable table-text">' . $a_times[0] . '</td>' 
+                        : '<td class="occupied table-text">' . $a_times[0] . '</td>';
                 $tabsContent .= '</tr>';
-                $selectContent .= '>' . $tabsName . " - " . date(Yii::app()->params['timeFormat'], strtotime($a_day[$key]->time)) . '</option>';
             }
-            $selectContent .= '</optgroup>';
             $tabsContent .= '</tbody></table>';
             $a_tabs[$tabsName] = $tabsContent;
             if ($tabsUiId == 3) { //Magic Number aus makeAppointment.php nach 3 Elternsprechtagen wird die Schleife verlassen. 
                 break;
             }
         }
-        $selectContent .= '</select>';
+        return $a_tabs;
     }
 
     /**
-     * @todo Beschreibung
+     * AJAX Methode um die Termine eines bestimmten Lehrers in einem Select Element zu generieren.
      * @author David Mock <dumock@gmail.com>
-     * @param type $teacherId
+     * @param int $teacherId Id des Lehrers
+     * echo JSON
      */
-    public function actionGetTeacherAppointments($teacherId, $name) {
+    public function actionGetTeacherAppointmentsAjax($teacherId) {
         header('Content-type: application/json');
-        $selectContent = CHtml::dropDownList($name, '', CHtml::listData($this->getDatesWithTimes(3, true), 'id', 'time', 'date'));
-        echo CJSON::encode($selectContent);
+        echo CJSON::encode($this->createSelectTeacherDates($teacherId, 'Appointment', 'dateAndTime_id'));
         Yii::app()->end();
     }
 
@@ -404,13 +454,16 @@ class AppointmentController extends Controller {
      * @param string $term Nachname des Elternteils
      * @param integer $id Falls bei einem Update schon ein Kind ausgewählt wurde
      * @author David Mock <dumock@gmail.com>
+     * @deprecated since version 1.2
      */
     public function createChildrenSelect($term, $id = -1) {
         $dataProvider = new ParentChild();
         $dataProvider->unsetAttributes();
         $criteria = $dataProvider->searchParentChild($term);
+//        print_r($dataProvider->search());
         $selectContent = '<select name="Appointment[parent_child_id]">';
         $a_data = ParentChild::model()->findAll($criteria);
+        print_r($a_data);
         foreach ($a_data as $record) {
             $selectContent .= '<option value="' . $record->id . '" ';
             if ($record->id == $id) {
@@ -423,6 +476,76 @@ class AppointmentController extends Controller {
         }
         $selectContent .='</select>';
         return $selectContent;
+    }
+    
+    /**
+     * Erzeugt mittels CHtml::dropDownList ein Select Element, mit allen Terminen eines Lehrers.
+     * @author David Mock <dumock@gmail.com>
+     * @param int $teacherId Id des Lehres
+     * @param string $nameForm Name der Klasse des Forms zbsp. "Appointment" in Appointment[user_id]
+     * @param string $nameField Name des Inputfeldes der Form zbsp. "user_id" in Appointment[user_id]
+     * @param int $selectedDateAndTime Ausgewählter Termin, für /update, default = -1
+     * @return CHtml::dropDownList
+     */
+    public function createSelectTeacherDates($teacherId, $nameForm, $nameField, $selectedDateAndTime = -1) {
+        $selectContent = array();
+        $a_options = array();
+        if (!empty($teacherId)) {
+            $a_optionsDisabledAppointments = array();
+            $a_appointmentsStateValueLabel = array();
+            $selectContent = CHtml::listData($this->getDatesWithTimes(3, true), 'id', 'time', 'date');
+            foreach ($selectContent as $a_appointments) {
+                foreach ($a_appointments as $key => $value) {
+                    $a_appointmentsStateValueLabel[$key]['state'] = $this->isAppointmentAvailable($teacherId, $key);
+                    $a_appointmentsStateValueLabel[$key]['label'] = $value;
+                    $a_appointmentsStateValueLabel[$key]['value'] = $key;
+                    if (!$a_appointmentsStateValueLabel[$key]['state'][1]) {
+                        $a_optionsDisabledAppointments[$key] = array('disabled' => true);
+                    }
+                }
+            }
+            $a_optionsDisabledAppointments[$selectedDateAndTime] = array('selected' => true);
+            $a_options = array('options' => $a_optionsDisabledAppointments);
+        }
+        return CHtml::dropDownList($nameForm . '[' . $nameField . ']', '', $selectContent, $a_options);
+    }
+    
+    /**
+     * Erzeugt mittels CHtml::dropDownList ein Select Element, mit allen Kindern eines Users
+     * @author David Mock <dumock@gmail.com>
+     * @param int $userId Id des Elternteils
+     * @param string $nameForm Name der Klasse des Forms zbsp. "Appointment" in Appointment[user_id]
+     * @param string $nameField Name des Inputfeldes der Form zbsp. "user_id" in Appointment[user_id]
+     * @param int $selectedChild Ausgewähltes Kind, für /update, default = -1
+     * @return CHtml::dropDownList
+     */
+    public function createSelectChildren($userId, $nameForm, $nameField, $selectedChild = -1) {
+        $selectContent = array();
+        $a_options = array();
+        if (!empty($userId)) {
+            $dataProvider = new ParentChild();
+            $dataProvider->unsetAttributes();
+            $criteria = $dataProvider->searchParentChildWithId($userId);
+            $a_parentChild = ParentChild::model()->findAll($criteria);
+            $selectContent = (empty($a_parentChild)) 
+                    ? array('empty' => 'Bitte legen Sie mindestens ein Kind an bevor Sie fortfahren') 
+                    : CHtml::listData($a_parentChild, 'id', function($post) { return $post->child->firstname.' '.$post->child->lastname;});
+            $a_optionsInner[$selectedChild] = array('selected'=>true);
+            $a_options = array('options' => $a_optionsInner);
+        } 
+        return CHtml::dropDownList($nameForm.'['.$nameField.']', '', $selectContent, $a_options);
+    }
+    
+       /**
+     * AJAX Methode um die Kinder eines bestimmten Users in einem Select Element zu generieren.
+     * @param int $id id des Users
+     * @author David Mock <dumock@gmail.com>
+     * echo JSON
+     */
+    public function actionGetSelectChildrenAjax($id) {
+        header('Content-type: application/json');
+        echo CJSON::encode($this->createSelectChildren($id, 'Appointment', 'parent_child_id'));
+        Yii::app()->end();
     }
 
     public function fillChildSelect() {

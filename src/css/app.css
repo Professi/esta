@@ -411,3 +411,7 @@ ul.button-group li {
     height: 2.4em;
     top: -.45em;
 }
+.styled-select .errorMessage {
+    position: relative;
+    top: 1.25em;
+}

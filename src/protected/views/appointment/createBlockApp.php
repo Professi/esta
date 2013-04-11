@@ -43,26 +43,15 @@ $this->menu = array(
             $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'blockAppointment-form',
             ));
-            /**
-             * @todo eindeutig gehört das in den Controller oder model
-             */
-            $selectContent = '';
-            $teacherValue = '';
-            $teacherLabel = '';
-            if (isset($_GET['teacherId'])) { //Weiterleitung vom user/view; eventuell auch wenn der Lehrer dann im Menü auf Termin blockieren geht? haha -> möglicher intrusion point siehe #177 ;)
-                $userTemp = User::model()->findByPk($_GET['teacherId']);
-                $teacherValue = $_GET['teacherId'];
-                $teacherLabel = $userTemp->title . " " . $userTemp->firstname . " " . $userTemp->lastname;
-                $this->createMakeAppointmentContent($this->getDatesWithTimes(3), $a_tabs, $selectContent, $teacherValue);
-            }
+            if (!Yii::app()->user->checkAccessRole('2','-1')) {
             ?>
             <div class="row collapse">
                 <div class="two columns">
-                    <span class="prefix">Lehrer</span>
+                    <span class="prefix"><?php echo $form->label($model, 'user_id'); ?> </span>
                 </div>
                 <div class="ten columns">
-
-<?php
+                    
+<?php  
 $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
     'id' => 'appointmentBlock_teacher',
     'name' => '',
@@ -76,23 +65,23 @@ $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
     ),
 ));
 ?>
-                    <?php echo $form->hiddenField($model, 'user_id', array('id' => 'appointment_teacher_id')); ?>
+                    <?php echo $form->hiddenField($model, 'user_id', array('id' => 'appointment_teacher_id', 'value' => $model->attributes['user_id'])); ?>
                     <?php echo $form->error($model, 'user_id'); ?>
-                    <input type="hidden" id="appointment_teacher_id" name="BlockedAppointment[user_id]" value="<?php echo $teacherValue ?>">
                 </div>
             </div>
+            <?php } // if: User kein Lehrer ?>
             <div class="row collapse">
                 <div class="two columns">
-                    <span class="prefix">Termin</span>
+                    <span class="prefix"><?php echo $form->label($model, 'dateAndTime_id'); ?> </span>
                 </div>
-                <div class="ten columns styled-select" id="appointment_dateAndTime_select">
-<?php echo $selectContent; ?>                
+                <div class="ten columns styled-select" id="appointment_dateAndTime_select"> 
+<?php echo $this->createSelectTeacherDates($model->attributes['user_id'],get_class($model),'dateAndTime_id', $model->attributes['dateAndTime_id']); ?>
 <?php echo $form->error($model, 'dateAndTime_id'); ?>
                 </div>
             </div>
             <div class="row collapse">
                 <div class="two columns">
-                    <span class="prefix">Grund</span>
+                    <span class="prefix"><?php echo $form->label($model, 'reason'); ?> </span>
                 </div>
                 <div class="ten columns">
 <?php echo $form->textField($model, 'reason'); ?>                

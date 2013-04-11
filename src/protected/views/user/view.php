@@ -33,6 +33,7 @@ $this->menu = array(
     array('label' => 'Eltern-Kind-Verknüpfung anlegen', 'url' => array('parentChild/create', 'id' => $model->id), 'visible' => (Yii::app()->user->checkAccess('1') && $model->role == 3)), 
     array('label' => 'Termin anlegen', 'url' => array('appointment/create', 'parentId' => $model->id), 'visible' => (Yii::app()->user->checkAccess('1') && $model->role == 3)),
     array('label' => 'Termin anlegen', 'url' => array('appointment/create', 'teacherId' => $model->id), 'visible' => (Yii::app()->user->checkAccess('1') && $model->role == 2)),
+    array('label' => 'Termin blockieren', 'url' => array('appointment/createBlockApp', 'teacherId' => $model->id), 'visible' => (Yii::app()->user->checkAccess('1') && $model->role == 2)),
     array('label' => 'Benutzer verwalten', 'url' => array('admin'), 'visible'=>Yii::app()->user->checkAccess(1)),
 );
 ?>

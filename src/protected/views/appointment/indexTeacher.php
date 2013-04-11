@@ -29,9 +29,9 @@
             'dataProvider'=>$dataProvider,
             'columns'=>array(
                     array('name' => 'dateAndTime_id', 
-                          'value' => 'date("d.m.Y",  strtotime($data->dateAndTime->date->date))." - ".date("H:i", strtotime($data->dateAndTime->time))'),
+                          'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
                     array('name' => 'parent_child_id', 
-                          'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'), //$data->dateAndTime->time $data->dateAndTime->date->date
+                          'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'), 
                     array('name' => 'Kind', 
                           'value' => '$data->parentChild->child->firstname." ".$data->parentChild->child->lastname' ),
                     array(

@@ -60,6 +60,9 @@ class SiteController extends Controller {
     public function actionConfig() {
         if ((Yii::app()->user->checkAccess('0') && Yii::app()->params['installed']) || !Yii::app()->params['installed']) {
             $model = new ConfigForm();
+            $optionsMails = (isset($model->mailsActivated)&& $model->mailsActivated === 0)? array('options'=>array('disabled'=>true)):'';
+            $optionsBans = (isset($model->banUsers)&& $model->banUsers === 0)? array('options'=>array('disabled'=>true)):'';;
+            $optionsBlocks = (isset($model->allowBlockingAppointments)&& $model->allowBlockingAppointments === 0)? array('options'=>array('disabled'=>true)):'';;
             if (isset($_POST['ConfigForm'])) {
                 $createAdminUser = false;
                 $file = Yii::app()->basePath . '/config/params.inc';
@@ -101,7 +104,12 @@ class SiteController extends Controller {
                         Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert.');
                     }
                 }
-            } $this->render('config', array('model' => $model));
+            } $this->render('config', array(
+                                'model' => $model,
+                                'optionsBans' => $optionsBans,
+                                'optionsBlocks' => $optionsBlocks,
+                                'optionsMails' => $optionsMails,
+                            ));
         } else {
             $this->throwFourNullThree();
         }

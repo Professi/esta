@@ -24,25 +24,15 @@
         <h2 class="subheader">Termine f&uuml;r&nbsp;
             <?php echo $model->user->title." ".$model->user->firstname." ".$model->user->lastname; ?></h2>
         <hr>
-        <?php
-        $a_dates = $this->getDatesWithTimes(3); //Magic Number: nur die nächsten 3 Elternsprechtage werden geladen.
-        if (empty($a_dates)) {
-        ?>
+        <?php if (empty($a_dates)) { ?>
         <div class="panel">
             In n&auml;chster Zeit ist kein Elternsprechtag geplant, f&uuml;r den Sie Termine vereinbaren k&ouml;nnten.
         </div>
-        <?php
-        } else {
-        ?>
+        <?php } else { ?>
         <div class="panel js_show">
             Hier k&ouml;nnen Sie Termine mit dem Lehrer vereinbaren. 
             Klicken Sie einfach auf ein Feld mit "Verf&uuml;gbar" und best&auml;tigen Sie am Ende der Seite den Termin.
         </div>
-        <?php
-        $a_tabs = null;
-        $selectContent = null;
-        $this->createMakeAppointmentContent($a_dates, $a_tabs, $selectContent, $model->user->id);
-        ?>
         <div class="js_show">
         <?php
         $this->widget('zii.widgets.jui.CJuiTabs',array(
@@ -58,34 +48,16 @@
         ?>
         </div>
         <div class="row js_hide">
-        <?php
-                switch (count($a_tabs)) {
-                    case 1: 
-                        $columnCount = 'twelve';
-                        break;
-                    case 2: 
-                        $columnCount = 'six';
-                        break;
-                    case 3:
-                        $columnCount = 'four';
-                        break;
-                    default :
-                        $columnCount = 'twelve';
-                        break;
-                }
-                foreach ($a_tabs as $date => $table) {
-                    ?>
+        <?php foreach ($a_tabs as $date => $table) { ?>
             <div class="<?php echo $columnCount ?> columns">
                 <h4 class="subheader text-center"><?php echo $date ?></h4>
                 <?php echo $table; ?>
             </div>
-                    <?php
-                }
-        ?>
+        <?php } ?>
         </div>
         <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'appointment-form',
-)); ?>
+        )); ?>
             <fieldset>
                 <legend>Termin</legend>
                 <div class="row collapse">
@@ -93,8 +65,10 @@
                                 <span class="prefix">Mit</span>
                         </div>
                         <div class="ten columns mobile-input">
-                                <input id="Appointment[user_id]" type="text" disabled name="Appointment[user_id]"
-                                 value="<?php echo $model->user->title." ".$model->user->firstname." ".$model->user->lastname ?>" />                                
+                            <?php echo $form->textField($model, 'user_id', array(
+                                                            'value' => $model->user->title." ".$model->user->firstname." ".$model->user->lastname,
+                                                            'disabled' => true)); 
+                            ?>
                         </div>
                 </div>
                 <div class="row collapse js_show">
@@ -119,7 +93,7 @@
                     </div>
                     <div class="ten columns mobile-input">
                         <div class="styled-select">
-                            <?php echo $selectContent; ?>
+                            <?php echo $this->createSelectTeacherDates($model->user->id, get_class($model), 'dateAndTime_id') ?>
                         </div>
                     </div>
                 </div>
@@ -129,21 +103,12 @@
                         </div>
                         <div class="ten columns mobile-input">
                                 <div class="styled-select">
-                                        <select name="Appointment[parent_child_id]">
-                                            <?php
-                                                for ( $i = 0; $i < count($a_child); $i++) {
-                                            ?>
-                                            <option value="<?php echo CHtml::encode($a_child[$i]['value']); ?>"><?php echo CHtml::encode($a_child[$i]['label']); ?></option>
-                                            <?php
-                                                }
-                                            ?>
-                                        </select>
+                                    <?php echo $this->createSelectChildren(Yii::app()->user->getId(), get_class($model), 'parent_child_id'); ?>
                                 </div>
                         </div>
                 </div>
-                <input type="submit" class="button right" value="Best&auml;tigen" />
+                <?php echo CHtml::submitButton('Bestätigen',  array('class' => 'button right')); ?>
             </fieldset>
-            <input type="hidden" value="<?php echo $model->user->id; ?>" />
       <?php $this->endWidget(); ?>
     </div>
 </div>

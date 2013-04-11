@@ -182,6 +182,22 @@ class ParentChild extends CActiveRecord {
         $criteria->limit = 10;
         return $criteria;
     }
+    
+    /**
+     * Gibt Suchkriterien von ParentChild zurück
+     * @author David Mock <dumock@gmail.com>
+     * @return CDbCriteria Suchkriterien für Select Element mit Kindern
+     * @param int $id Id eines Users
+     */
+    public function searchParentChildWithId($id) {
+        $criteria = new CDbCriteria;
+        $criteria->addCondition('user.id LIKE :match');
+        $criteria->params = array(':match' => "$id%");
+        $criteria->with = array('user', 'child');
+        $criteria->select = '*';
+        $criteria->limit = 10;
+        return $criteria;
+    }
 
     /**
      * Prüft ob der angegebene Benutzer überhaupt existiert

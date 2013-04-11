@@ -36,7 +36,12 @@ $this->menu=array(
     <div class="twelve columns centered">
         <fieldset>
             <legend>Termin Nummer <?php echo $model->id; ?> bearbeiten</legend>
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array(
+                                    'model'=>$model,
+                                    'teacherLabel' => $teacherLabel,
+                                    'parentLabel' => $parentLabel,
+                                    'parentId' => $parentId,
+                                )); ?>
         </fieldset>
     </div>
 </div>

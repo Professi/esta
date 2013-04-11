@@ -31,80 +31,66 @@ if (IE) {
             $time_text = $('#' + $time).text();
             $('#form_date').val($date_text);
             $('#form_time').val($time_text);
-            $('#form_dateAndTime').children().each(function(i, $this) {
-                $($this).children().each(function(i, $this) {
-                    if ($($this).text().match($date_text + ' - ' + $time_text)) {
-                        $this['selected'] = true;
-                    };
-                });
+            $('#Appointment_dateAndTime_id').children().each(function(i, $this) {
+                if ($($this).attr('label').match($date_text)) {
+                    $($this).children().each(function(i, $this) {
+                       if ($($this).text().match($time_text)) {
+                           $this['selected'] = true;
+                       }
+                    });
+                }
             });
         });
         
         // ** JQuery UI Autocomplete Einstellungen **
             // ** Seite: appointment/getTeacher.php **
+            
+        function blockDefaultAction(e) {
+            e.preventDefault();
+        }
         
         $('#teacher-ac').on('autocompleteselect', function(e, ui) {
-            e.preventDefault();
+            blockDefaultAction(e);
             window.location.href = "index.php?r=Appointment/makeAppointment&teacher=" + ui.item.value;
         });
         
-        $('#teacher-ac').on('autocompletefocus', function(e) {
-           e.preventDefault(); 
-        });
+        $('#teacher-ac').on('autocompletefocus', function(e){blockDefaultAction(e);});
         
             // ** Seite: appointment/create.php **
         
-        $('input[id$="_display"]').on('autocompletefocus', function(e) {
-           e.preventDefault(); 
-        });
+        $('input[id$="_display"]').on('autocompletefocus', function(e){blockDefaultAction(e);});
         
         $('input[id$="_display"]').on('autocompleteselect', function(e, ui) {
-            e.preventDefault();
+            blockDefaultAction(e);
             $(this).val(ui.item.label);
             $(this).nextAll('input').val(ui.item.value);
         });
         
-        $('#appointment_teacher').on('autocompleteselect', function (e, ui) {
-           e.preventDefault();
+        $('input[id$="_teacher"]').on('autocompleteselect', function (e, ui) {
+           blockDefaultAction(e);
            $(this).val(ui.item.label);
            $(this).nextAll('input').val(ui.item.value);
-           $.get('index.php/?r=appointment/getteacherappointments', {teacherId: ui.item.value, name: 'Appointment[dateAndTime_id]'}, function(data) {
+           $.get('index.php/?r=appointment/getteacherappointmentsajax', {teacherId: ui.item.value}, function(data) {
                $('#appointment_dateAndTime_select').html(data);
            }, 'json'); 
         });
         
-        $('#appointment_teacher').on('autocompletefocus', function(e) {
-           e.preventDefault(); 
-        });
-        
-        $('#appointmentBlock_teacher').on('autocompleteselect', function (e, ui) {
-           e.preventDefault();
-           $(this).val(ui.item.label);
-           $(this).nextAll('input').val(ui.item.value);
-           $.get('index.php/?r=appointment/getteacherappointments', {teacherId: ui.item.value, name: 'BlockedAppointment[dateAndTime_id]' }, function(data) {
-               $('#appointment_dateAndTime_select').html(data);
-           }, 'json'); 
-        });
-        
-        $('#appointmentBlock_teacher').on('autocompletefocus', function(e) {
-           e.preventDefault(); 
-        });
-        
+        $('input[id$="_teacher"]').on('autocompletefocus', function(e){blockDefaultAction(e);});
+       
         $('#appointment_parent').on('autocompleteselect', function(e, ui) {
-           e.preventDefault();
+           blockDefaultAction(e);
            $(this).val(ui.item.label);
-           $.get('index.php/?r=parentChild/searchcreateappointment', {term: ui.item.label.substr((ui.item.label.lastIndexOf(' '))+1)}, function(data) {
+           $.get('index.php/?r=appointment/getselectchildrenajax', {id: ui.item.value}, function(data) {
               $('#appointment_parent_select').html(data); 
            }, 'json');
         });
         
-        $('#appointment_parent').on('autocompletefocus', function(e) {
-            e.preventDefault();
-        });
+        $('#appointment_parent').on('autocompletefocus', function(e){blockDefaultAction(e);});
         
         // ** Funktionalität für den Roten Knopf unter 'Ihr Benutzerkonto' **
+        
         $('#red-button').on('click', function(e) {
-            e.preventDefault();
+            blockDefaultAction(e);
             $answer = confirm('Alles löschen?');
             if ($answer) {
                 window.location.href = "index.php?r=user/deleteAll";
@@ -116,6 +102,7 @@ if (IE) {
         function changeLockAtContent() {
             $('#lockAt_value').val($('input[id$="_lockAt"]')[0]['value']+' '+$('input[id$="_lockAt"]')[1]['value']);
         };
+        
         $('input[id$="_lockAt"]').on({
                 change: function() {changeLockAtContent()},
                 keyup: function() {changeLockAtContent()}
@@ -126,6 +113,14 @@ if (IE) {
         $('input[id$="_dateFormat"], input[id$="_timeFormat"]').on('keyup', function() {
            $('#ConfigForm_dateTimeFormat').val($('input[id$="_dateFormat"]').val()+' '+$('input[id$="_timeFormat"]').val());
         });
+        
+        // ** Felder in Config ein-, ausschalten **
+        
+        $('select[id$="_allowBlockingAppointments"], select[id$="_banUsers"], select[id$="_mailsActivated"]').on('change', function($this) {
+            $switch = ($this.target['value'] === "0") ? true : false;
+            $($this.target).parents('fieldset').children('.row:gt(0)').children('.four').children('input').attr('disabled',$switch);
+        });
+                
         
     }(this, document, jQuery));
 }
