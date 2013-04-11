@@ -24,8 +24,6 @@
 	'id'=>'appointment-form',
 ));
 ?>
-<div><pre><?php         print_r($model->attributes); ?></pre></div>
-
         <div class="row collapse">
             <div class="two columns">
                 <span class="prefix">Elternteil</span>

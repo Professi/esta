@@ -39,7 +39,6 @@ $this->menu=array(
 	'dataProvider'=>$dataProvider,
         'summaryText'=>'',
 	'itemView'=>'_view',
-        
 )); ?>
         
     </div>

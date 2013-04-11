@@ -103,10 +103,19 @@ $form = $this->beginWidget('CActiveForm', array(
     <?php echo $form->label($model, 'role'); ?>
     <div class="styled-select">
         <?php
+        /**
+         * @todo Rollen Array bauen
+         */
         if (Yii::app()->user->checkAccess('0')) {
-            echo $form->dropDownList($model, 'role', array('0' => 'Administrator', '1' => 'Verwaltung', '2' => 'Lehrer', '3' => 'Eltern'));
+            echo $form->dropDownList($model, 'role', array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung', '0' => 'Administrator'));
         } else {
-            echo $form->dropDownList($model, 'role', array('1' =>'Verwaltung', '2' => 'Lehrer', '3' => 'Eltern'));
+            if($model->id != Yii::app()->user->getId()) {
+            echo $form->dropDownList($model, 'role', array('3' =>'Eltern', '2' => 'Lehrer'));
+            }
+            else {
+            echo $form->dropDownList($model, 'role', array('3' =>'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung'));
+            }
+            
             ?>
             <?php echo $form->error($model, 'role'); ?>
             

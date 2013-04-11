@@ -167,7 +167,12 @@ class Date extends CActiveRecord {
      * @return type
      */
     public function beforeDelete() {
-        DateAndTime::model()->deleteAllByAttributes(array('date_id' => $this->id));
+        $a_dateTimes = DateAndTime::model()->findAllByAttributes(array('date_id' => $this->id));
+        if(!empty($a_dateTimes)) {
+        foreach($a_dateTimes as $dateTime) {
+            $dateTime->delete();
+        }
+        }
         return parent::beforeDelete();
     }
 

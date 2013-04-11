@@ -198,7 +198,7 @@ class Appointment extends CActiveRecord {
      */
     public function beforeSave() {
         $rc = parent::beforeSave();
-        if ($rc && Appointment::model()->countByAttributes(array('dateAndTime_id' => $this->dateAndTime_id)) > 0) {
+        if ($rc && Appointment::model()->countByAttributes(array('dateAndTime_id' => $this->dateAndTime_id,'user_id'=>  $this->user_id)) > 0) {
             $rc = false;
             if (Yii::app()->user->checkAccess('1')) {
                 Yii::app()->user->setFlash('failMsg', 'Der Benutzer hat bereits zu dieser Uhrzeit einen Termin gebucht.');

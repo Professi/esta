@@ -270,7 +270,7 @@ class AppointmentController extends Controller {
             $dataProvider->user_id = Yii::app()->user->getId();
             $blockedApp = new BlockedAppointment();
             $blockedApp->unsetAttributes();
-            $this->render('indexTeacherCombined', array(
+            $this->render('indexTeacher', array(
                 'dataProvider' => $dataProvider,
                 'blockedApp' => $blockedApp,
             ));
