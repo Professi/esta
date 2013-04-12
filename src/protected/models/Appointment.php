@@ -83,7 +83,7 @@ class Appointment extends CActiveRecord {
             'id' => 'ID',
             'parent_child_id' => 'Eltern',
             'user_id' => 'Lehrer',
-            'dateAndTime_id' => 'Datum',
+            'dateAndTime_id' => 'Termin',
             'time' => 'Zeit',
             'date_id' => 'Datum',
         );
@@ -110,12 +110,29 @@ class Appointment extends CActiveRecord {
      */
     public function search() {
         $criteria = new CDbCriteria;
+        $criteria->with = array('user','parentChild','dateAndTime');
+        $criteria->together = true;
         $criteria->compare('id', $this->id);
-        $criteria->compare('parent_child_id', $this->parent_child_id);
-        $criteria->compare('user_id', $this->user_id, true);
-        $criteria->compare('dateAndTime_id', $this->dateAndTime_id);
+        $criteria->compare('parentChild.user_id', $this->parent_child_id,true);
+        $criteria->compare('dateAndTime.time', $this->dateAndTime_id);
+        $criteria->compare('user.lastname', $this->user_id, true);
+        $sort = new CSort;
+        $sort->attributes = array(
+                        'defaultOrder' => 'dateAndTime.id DESC',
+            'dateAndTime_id' => array(
+                'asc' => 'dateAndTime.id',
+                'desc' => 'dateAndTime.id desc'),
+            'user_id' => array(
+                'asc' => 'user.id',
+                'desc' => 'user.id desc'),
+            'parent_child_id' => array(
+                'asc' => 'parentChild.id',
+                'desc' => 'parentChild.id desc'),
+        );
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'pagination' => array('pageSize' => 20),
+            'sort' => $sort,
         ));
     }
 
