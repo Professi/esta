@@ -45,8 +45,8 @@ $this->breadcrumbs=array(
             Die Urheber sind: Christian Ehringfeld, David Mock, Matthias Unterbusch
             In Kürze finden Sie hier einen Link zum aktuellen Projektverzeichnis.
             </p>
-            <p>Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:<br>
-            <p> ZURB Foundation Framework&nbsp;&nbsp;<a href="http://foundation.zurb.com"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
+            <p> Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:<br>
+                ZURB Foundation Framework&nbsp;&nbsp;<a href="http://foundation.zurb.com"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
                 IcoMoon  Icon Fonts&nbsp;&nbsp;<a href="http://icomoon.io" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
                 Google Web Fonts&nbsp;&nbsp;<a href="http://www.google.com/webfonts" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
                 Free Stock Textures&nbsp;&nbsp;<a href="http://freestocktextures.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
