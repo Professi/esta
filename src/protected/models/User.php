@@ -352,8 +352,8 @@ class User extends CActiveRecord {
      * @return boolean Rückgabewert der Elternklassemethoden
      */
     public function beforeDelete() {
-    UserRole::model()->deleteAllByAttributes(array('user_id' => $this->id));
-    BlockedAppointment::model()->deleteAllByAttributes(array('user_id'=> $this->id));
+        UserRole::model()->deleteAllByAttributes(array('user_id' => $this->id));
+        BlockedAppointment::model()->deleteAllByAttributes(array('user_id' => $this->id));
         $a_appointment = Appointment::model()->findAllByAttributes(array('user_id' => $this->id));
         for ($x = 0; $x < count($a_appointment); $x++) {
             $a_appointment[$x]->delete();
@@ -497,6 +497,45 @@ class User extends CActiveRecord {
             $rc = true;
         }
         return $rc;
+    }
+
+    /**
+     * Setzt diverse Attribute
+     * @param type $email Email
+     * @param type $firstname Vorname
+     * @param type $lastname Nachname
+     * @param type $state Status
+     * @param type $role Rolle
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
+    public function setSomeAttributes($email, $firstname, $lastname, $state, $role) {
+        $this->email = $email;
+        $this->username = $this->email;
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
+        $this->state = $state;
+        $this->role = $role;
+    }
+
+    /**
+     * Verwendet entweder das Standardpasswort oder den Passwortgenerator
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return string Klartextpasswort zur Anzeige
+     */
+    public function generatePassword() {
+        if (Yii::app()->params['randomTeacherPassword']) {
+            $passGen = new PasswordGenerator();
+            $user->password = $passGen->generate();
+        } else {
+            $user->password = Yii::app()->params['defaultTeacherPassword'];
+        }
+        $password = $this->password;
+        $user->password_repeat = $user->password;
+        if ($user->save() && Yii::app()->params['randomTeacherPassword']) {
+            $mail = new Mail();
+            $mail->sendRandomUserPassword($user->email, $password);
+        }
+        return $password;
     }
 
 }

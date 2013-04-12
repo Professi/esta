@@ -25,13 +25,10 @@ class SiteController extends Controller {
      */
     public function actions() {
         return array(
-            // captcha action renders the CAPTCHA image displayed on the contact page
             'captcha' => array(
                 'class' => 'CCaptchaAction',
                 'backColor' => 0xFFFFFF,
             ),
-            // page action renders "static" pages stored under 'protected/views/site/pages'
-            // They can be accessed via: index.php?r=site/page&view=FileName
             'page' => array(
                 'class' => 'CViewAction',
             ),
@@ -57,12 +54,27 @@ class SiteController extends Controller {
         }
     }
 
+    /**
+     * @param type $option
+     * @return mixed
+     */
+    public static function getDisabledOptions($option) {
+        if ($option === 0) {
+            return array('options' => array('disabled' => true));
+        } else {
+            return '';
+        }
+    }
+
+    /**
+     * action für das Konfigurationsskript
+     */
     public function actionConfig() {
         if ((Yii::app()->user->checkAccess('0') && Yii::app()->params['installed']) || !Yii::app()->params['installed']) {
             $model = new ConfigForm();
-            $optionsMails = (isset($model->mailsActivated)&& $model->mailsActivated === 0)? array('options'=>array('disabled'=>true)):'';
-            $optionsBans = (isset($model->banUsers)&& $model->banUsers === 0)? array('options'=>array('disabled'=>true)):'';;
-            $optionsBlocks = (isset($model->allowBlockingAppointments)&& $model->allowBlockingAppointments === 0)? array('options'=>array('disabled'=>true)):'';;
+            $optionsMails = self::getDisabledOptions($model->mailsActivated);
+            $optionsBans = self::getDisabledOptions($model->banUsers);
+            $optionsBlocks = self::getDisabledOptions($model->allowBlockingAppointments);
             if (isset($_POST['ConfigForm'])) {
                 $createAdminUser = false;
                 $file = Yii::app()->basePath . '/config/params.inc';
@@ -76,40 +88,25 @@ class SiteController extends Controller {
                     file_put_contents($file, $str);
                     if ($createAdminUser) {
                         $user = new User();
-                        $user->email = $model->adminEmail;
-                        $user->username = $user->email;
-                        $user->firstname = 'admin';
-                        $user->lastname = 'admin';
-                        $user->state = 1;
-                        $user->role = 0;
-                        if (Yii::app()->params['randomTeacherPassword']) {
-                            $passGen = new PasswordGenerator();
-                            $user->password = $passGen->generate();
-                        } else {
-                            $user->password = Yii::app()->params['defaultTeacherPassword'];
-                        }
-                        $password = $user->password;
-                        $user->password_repeat = $user->password;
-                        if ($user->save() && Yii::app()->params['randomTeacherPassword']) {
-                            $mail = new Mail();
-                            $mail->sendRandomUserPassword($user->email, $password);
-                        }
+                        $user->setSomeAttributes($model->adminEmail, 'admin', 'admin', 1, 0);
+                        $password = $user->generatePassword();
                         $msg = "Konfiguration aktualisiert. Außerdem wurde ein Administratorkonto erstellt. Ihr Benutzerkontenname lautet: "
                                 . $user->email . " Ihr Passwort lautet:" . $password;
                         if ($model->randomTeacherPassword) {
                             $msg .= " .Sollten Sie nun eine Bestätigungsemail erhalten, wurde die Anwendung erfolgreich konfiguriert.";
                         }
+                        $model = new ConfigForm();
                         Yii::app()->user->setFlash('success', $msg);
                     } else {
                         Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert.');
                     }
                 }
             } $this->render('config', array(
-                                'model' => $model,
-                                'optionsBans' => $optionsBans,
-                                'optionsBlocks' => $optionsBlocks,
-                                'optionsMails' => $optionsMails,
-                            ));
+                'model' => $model,
+                'optionsBans' => $optionsBans,
+                'optionsBlocks' => $optionsBlocks,
+                'optionsMails' => $optionsMails,
+            ));
         } else {
             $this->throwFourNullThree();
         }
@@ -120,9 +117,6 @@ class SiteController extends Controller {
      * when an action is not explicitly requested by users.
      */
     public function actionIndex() {
-        // renders the view file 'protected/views/site/index.php'
-        // using the default layout 'protected/views/layouts/main.php'
-        //	$this->render('index');
         self::actionLogin();
     }
 

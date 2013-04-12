@@ -179,23 +179,18 @@ class UserController extends Controller {
                 if ($fp) {
                     $first = true;
                     do {
-                        if (!$first) {
-                            if ($line[0] != "Vorname" && !$line[1] != "Nachname" && $line[2] != 'Email') {
+                        if (!$first && ($line[0] != "Vorname" && !$line[1] != "Nachname" && $line[2] != 'Email')) {
                                 $model = new User();
-                                $model->firstname = self::encodingString($line[1]);
-                                $model->lastname = self::encodingString($line[0]);
                                 if ($line[2] != NULL) {
-                                    $model->email = self::encodingString($line[2]);
+                                    $email = self::encodingString($line[2]);
                                 } else {
                                     $uml = array("Ö" => "Oe", "ö" => "oe", "Ä" => "Ae", "ä" => "ae", "Ü" => "Ue", "ü" => "ue", "ß" => "ss",);
-                                    $model->email = strtolower(substr($model->firstname, 0, 1))
+                                    $email = strtolower(substr($model->firstname, 0, 1))
                                             . '.' . preg_replace("/\s+/", "", strtolower(strtr($model->lastname, $uml))) . '@'
                                             . Yii::app()->params['teacherMail'];
                                 }
-                                $model->username = $model->email;
-                                $model->title = self::encodingString($line[3]);
-                                $model->state = 1;
-                                $model->role = 2;
+                                $model->setSomeAttributes($email, self::encodingString($line[1]), self::encodingString($line[0]), 1, 2);
+                                                                $model->title = self::encodingString($line[3]);
                                 if (Yii::app()->params['randomTeacherPassword']) {
                                     $passGen = new PasswordGenerator();
                                     $model->password = $passGen->generate();
@@ -207,20 +202,17 @@ class UserController extends Controller {
                                 if ($model->save() && Yii::app()->params['randomTeacherPassword']) {
                                     $mail = new Mail();
                                     $mail->sendRandomUserPassword($model->email, $password);
-                                }
                             }
                         } else {
                             $first = false;
                         }
                     } while (($line = fgetcsv($fp, 1000, ";")) != FALSE);
                 }
+                Yii::app()->user->setFlash('success','Lehrerliste erfolgreich importiert.');
                 $this->redirect('index.php?r=/user/admin');
-            } else {
-                $this->render('importTeacher', array('model' => $model,));
-            }
-        } else {
+            } 
+        } 
             $this->render('importTeacher', array('model' => $model,));
-        }
     }
 
     public function actionCreateDummy() {
