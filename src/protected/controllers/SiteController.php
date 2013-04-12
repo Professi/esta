@@ -181,8 +181,23 @@ class SiteController extends Controller {
      * Logs out the current user and redirect to homepage.
      */
     public function actionLogout() {
-        Yii::app()->user->logout();
-        $this->redirect(Yii::app()->homeUrl);
+        if (!Yii::app()->user->isGuest()) {
+            Yii::app()->user->logout();
+            $this->redirect(Yii::app()->homeUrl);
+        } else {
+            $this->throwFourNullThree();
+        }
+    }
+
+    public function actionStatistics() {
+        if (!Yii::app()->user->isGuest()) {
+            $appointments = Appointment::model()->count() + BlockedAppointment::model()->count();
+            $teachers = UserRole::model()->countByAttributes(array('role_id'=>2));
+            $freeAppointments = (DateAndTime::model()->count() * $teachers) - $appointments;
+            $this->render('statistics', array('freeApps'=>$freeAppointments,'apps'=>$appointments,'teachers'=>$teachers));
+        } else {
+            $this->throwFourNullThree();
+        }
     }
 
 }

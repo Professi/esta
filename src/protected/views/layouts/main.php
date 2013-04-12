@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-<?php if (!Yii::app()->user->isGuest) { ?>
+            <?php if (!Yii::app()->user->isGuest) { ?>
                 <div class="row contain-to-grid sticky" id="js_menu" style="visibility:hidden">
                     <div class="twelve columns text-center">
                         <a href="" data-reveal-id="MenuModal" >
@@ -66,7 +66,7 @@
                     'items' => array(//0=Administration 1=Verwaltung 2= Lehrer 3=Eltern
                         array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span>', 'url' => array('/Appointment/index',), 'visible' => !Yii::app()->user->isAdmin() && Yii::app()->user->checkAccessRole('2', '3')),
                         array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span>', 'url' => array('/Appointment/getTeacher'), 'visible' => Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
-                        array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine blockieren</span>', 'url' => array('/Appointment/createBlockApp'), 'visible' => Yii::app()->user->checkAccessNotAdmin('2')&&  Yii::app()->params['allowBlockingAppointments']),
+                        array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine blockieren</span>', 'url' => array('/Appointment/createBlockApp'), 'visible' => Yii::app()->user->checkAccessNotAdmin('2') && Yii::app()->params['allowBlockingAppointments']),
                         array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Elternsprechtagsverwaltung</span>', 'url' => array('/Date/admin'), 'visible' => Yii::app()->user->checkAccess('0')),
                         array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Terminverwaltung</span>', 'url' => array('/Appointment/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
                         array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Eltern und Kinder</span>', 'url' => array('/ParentChild/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
@@ -80,19 +80,19 @@
                 ));
                 ?>
 
-<? } ?>
+            <? } ?>
             <div class="push"></div>
             <div class="row">
                 <div class="twelve columns centered">
-                        <?php if (Yii::app()->user->hasFlash('success')) { ?>
+                    <?php if (Yii::app()->user->hasFlash('success')) { ?>
                         <div class="alert-box">
-                        <?php echo Yii::app()->user->getFlash('success'); ?>
+                            <?php echo Yii::app()->user->getFlash('success'); ?>
                         </div>
-                        <?php } else if (Yii::app()->user->hasFlash('failMsg')) { ?>
+                    <?php } else if (Yii::app()->user->hasFlash('failMsg')) { ?>
                         <div class="alert-box">
-                        <?php echo Yii::app()->user->getFlash('failMsg'); ?>            
+                            <?php echo Yii::app()->user->getFlash('failMsg'); ?>            
                         </div>
-<?php } ?>
+                    <?php } ?>
                 </div>
             </div>
             <?php
@@ -117,9 +117,11 @@
                             $this->widget('zii.widgets.CMenu', array(
                                 'htmlOptions' => array('class' => 'link-list right'),
                                 'items' => array(
+                                    array('label' => 'Statistik', 'url' => array('/site/statistics', 'visible'=> !Yii::app()->user->isGuest())),
+                                    array('label' => 'FAQ', 'url' => array('/site/faq')),
                                     array('label' => 'Impressum', 'url' => array('/site/page', 'view' => 'impressum')),
-                                    array('label' => 'Kontakt', 'url' => array('/site/contact')
-                            ))));
+                                    array('label' => 'Kontakt', 'url' => array('/site/contact')),
+                            )));
                             ?>
                         </div>
                     </div>
