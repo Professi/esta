@@ -41,4 +41,51 @@ if (IE) {
         }
 
     })(jQuery, this);
+    
+    (function(window, document, $) {
+        
+        $('#teacher-ac').on('autocompleteselect', function(e, ui) {
+            e.preventDefault();
+            window.location.href = "index.php?r=Appointment/makeAppointment&teacher=" + ui.item.value;
+        });
+        
+        $('#teacher-ac').on('autocompletefocus', function(e){e.preventDefault;});
+        
+        $('#LoginForm_email').focus();
+        
+        $('#js_menu').css('visibility', 'visible');
+        $('#nojs_menu').css('display', 'none');
+        $('.js_show').toggle();
+        $('.js_hide').toggle();
+
+        $(document).ready(function() {
+            $('.button-group > li > a').addClass('small button');
+            $('.button-group > li.disabled > a').addClass('disabled');
+            $('#MenuModal').append($('.nojs_menu').clone()).html();
+            $('#MenuModal ul').attr('class', 'nav-bar vertical');
+            $('#MenuModal ul').attr('style', 'display:inherit;');
+            $('#MenuModal').append('<a class="close-reveal-modal" data-icon="&#xe014;" style="color:#fff;"></a>');
+        });
+        
+        $('.avaiable').css('cursor', 'pointer');
+        $('.avaiable').on('click', function() {
+            $id = $(this).attr('id');
+            $date = 'date-' + $id.substr(0, ($id.indexOf('_')));
+            $time = 'time-' + $id;
+            $date_text = $('#' + $date).text();
+            $time_text = $('#' + $time).text();
+            $('#form_date').val($date_text);
+            $('#form_time').val($time_text);
+            $('#Appointment_dateAndTime_id').children('*:gt(0)').each(function(i, $this) {
+                if ($($this).attr('label').match($date_text)) {
+                    $($this).children().each(function(i, $this) {
+                       if ($($this).text().match($time_text)) {
+                           $this['selected'] = true;
+                       }
+                    });
+                }
+            });
+        });
+        
+    }(this, document, jQuery));
 }

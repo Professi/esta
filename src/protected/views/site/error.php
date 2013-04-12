@@ -19,7 +19,6 @@
  */
 /* @var $this SiteController */
 /* @var $error array */
-Yii::app()->clientScript->registerPackage('jquery');
 $this->pageTitle = Yii::app()->name . ' - Error';
 $this->breadcrumbs = array(
     'Error',

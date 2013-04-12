@@ -2,60 +2,13 @@
 var IE = /*@cc_on @if (@_jscript_version < 9){!}@*/false;
 if (IE) {
 } else {
-    (function(window, document, $) {
-
-        $('#LoginForm_email').focus();
+    (function(window, document, $) {     
         
-        $('#js_menu').css('visibility', 'visible');
-        $('#nojs_menu').css('display', 'none');
-        $('.js_show').toggle();
-        $('.js_hide').toggle();
-
-        $(document).ready(function() {
-            $('.button-group > li > a').addClass('small button');
-            $('.button-group > li.disabled > a').addClass('disabled');
-            $('#MenuModal').append($('.nojs_menu').clone()).html();
-            $('#MenuModal ul').attr('class', 'nav-bar vertical');
-            $('#MenuModal ul').attr('style', 'display:inherit;');
-            $('#MenuModal').append('<a class="close-reveal-modal" data-icon="&#xe014;" style="color:#fff;"></a>');
-        });
+        // ** JQuery UI Autocomplete Einstellungen **    
         
-        // ** Funktionalität der Tabellen unter appointment/makeAppointment **
-        
-        $('.avaiable').css('cursor', 'pointer');
-        $('.avaiable').on('click', function() {
-            $id = $(this).attr('id');
-            $date = 'date-' + $id.substr(0, ($id.indexOf('_')));
-            $time = 'time-' + $id;
-            $date_text = $('#' + $date).text();
-            $time_text = $('#' + $time).text();
-            $('#form_date').val($date_text);
-            $('#form_time').val($time_text);
-            $('#Appointment_dateAndTime_id').children('*:gt(0)').each(function(i, $this) {
-                if ($($this).attr('label').match($date_text)) {
-                    $($this).children().each(function(i, $this) {
-                       if ($($this).text().match($time_text)) {
-                           $this['selected'] = true;
-                       }
-                    });
-                }
-            });
-        });
-        
-        // ** JQuery UI Autocomplete Einstellungen **
-            // ** Seite: appointment/getTeacher.php **
-            
         function blockDefaultAction(e) {
             e.preventDefault();
         }
-        
-        $('#teacher-ac').on('autocompleteselect', function(e, ui) {
-            blockDefaultAction(e);
-            window.location.href = "index.php?r=Appointment/makeAppointment&teacher=" + ui.item.value;
-        });
-        
-        $('#teacher-ac').on('autocompletefocus', function(e){blockDefaultAction(e);});
-        
             // ** Seite: appointment/create.php **
         
         $('input[id$="_display"]').on('autocompletefocus', function(e){blockDefaultAction(e);});
@@ -129,41 +82,6 @@ if (IE) {
             $switch = ($this.target['value'] === "0") ? true : false;
             $($this.target).parents('fieldset').children('.row:gt(0)').children('.four').children('input').attr('disabled',$switch);
         });
-        
 
-        
-                
-        
     }(this, document, jQuery));
- 
-(function(window, document, $) {
-    
-         $(document).ready(function() {
-            // ** Hack um in Terminverwaltung nach Eltern suchen zu können.
-        
-        $('#appointment-grid [name="Appointment[parent_child_id]"]').autocomplete({
-          source: window.location.origin+window.location.pathname+'?r=user/search&role=3',
-          minLength: 1,
-//          select: function(e, ui) {
-//              e.preventDefault();
-//              alert(
-//              $.get('index.php/?r=appointment/getselectchildrenajax', {"Appointment[parent_child_id]": ui.item.value,ajax:"appointment-grid",r:"Appointment/admin"}, function(data) {
-//              alert(data); 
-//           }, 'json'));
-//          },
-          focus: function(e) {e.preventDefault();},
-            }); 
-    $('.ui-helper-hidden-accessible').remove();
-         });
-         
-         $('#appointment-grid [name="Appointment[parent_child_id]"]').on('autocompleteselect', function(e,ui) {
-             e.preventDefault();
-              
-              window = $.get('index.php', {"Appointment[parent_child_id]": ui.item.value,ajax:"appointment-grid",r:"Appointment/admin"}, 'json');
-           
-         });
-         
-
-     
-}(this, document, jQuery));
 }

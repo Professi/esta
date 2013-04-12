@@ -38,8 +38,13 @@ return array(
                 ),
                 'jquery' => array(//nicht ändern
                     'baseUrl' => 'js/', //nicht ändern
-                    'js' => array('foundation.min.js', 'app.js', 'custom.js'), //nicht ändern
+//                    'js' => array('foundation.min.js', 'app.js', 'custom.js'), //nicht ändern
+                    'js' => array('foundation.min.js', 'app.js'),
                     'depends' => array('css'),
+                ),
+                'admin' => array(
+                  'baseUrl' => 'js/',
+                    'js' => array('custom.js'),
                 ),
             ),
             'scriptMap' => array(//nicht ändern

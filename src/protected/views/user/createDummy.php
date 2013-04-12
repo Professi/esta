@@ -29,7 +29,7 @@ $form = $this->beginWidget('CActiveForm', array(
                     </div>
                 </div>
 
-                <?php echo CHtml::submitButton('Erstellen', array('class' => 'button')); ?>
+                <?php echo CHtml::submitButton('Erstellen', array('class' => 'small button')); ?>
         </fieldset>
     </div>
 </div>

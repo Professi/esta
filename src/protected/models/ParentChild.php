@@ -198,6 +198,26 @@ class ParentChild extends CActiveRecord {
         $criteria->limit = 10;
         return $criteria;
     }
+    
+    /**
+     * Gibt ein Array mit höchstens 10 IDs zurück, die mit $lastname anfangen
+     * @param string $lastname Nachname der zu suchenden Eltern
+     * @return array passende IDs
+     */
+    public function searchParentId($lastname) {
+        $match = addcslashes(ucfirst($lastname), '%_');
+        $criteria = new CDbCriteria;
+        $criteria->addCondition('user.lastname LIKE :match');
+        $criteria->params = array(':match' =>"$match%");
+        $criteria->with = array('user');
+        $criteria->select= '*';
+        $criteria->limit = 10;
+        $a_data = $this->findAll($criteria);
+        foreach ($a_data as $key => $value) {
+            $a_data[$key] = $value->user->id;            
+        }
+        return $a_data;
+    }
 
     /**
      * Prüft ob der angegebene Benutzer überhaupt existiert

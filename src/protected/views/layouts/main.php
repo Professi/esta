@@ -29,6 +29,7 @@
         <?php Yii::app()->clientScript->registerPackage('css'); ?>
         <?php Yii::app()->clientScript->registerPackage('javascript'); ?>
         <?php Yii::app()->clientScript->registerPackage('jquery'); ?>
+        <?php if (Yii::app()->user->checkAccess('1')) { Yii::app()->clientScript->registerPackage('admin');} ?>
         <link rel="stylesheet" type="text/css" media="print" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css">
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/modernizr.foundation.js"></script>
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
