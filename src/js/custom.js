@@ -129,7 +129,41 @@ if (IE) {
             $switch = ($this.target['value'] === "0") ? true : false;
             $($this.target).parents('fieldset').children('.row:gt(0)').children('.four').children('input').attr('disabled',$switch);
         });
+        
+
+        
                 
         
     }(this, document, jQuery));
+ 
+(function(window, document, $) {
+    
+         $(document).ready(function() {
+            // ** Hack um in Terminverwaltung nach Eltern suchen zu können.
+        
+        $('#appointment-grid [name="Appointment[parent_child_id]"]').autocomplete({
+          source: window.location.origin+window.location.pathname+'?r=user/search&role=3',
+          minLength: 1,
+//          select: function(e, ui) {
+//              e.preventDefault();
+//              alert(
+//              $.get('index.php/?r=appointment/getselectchildrenajax', {"Appointment[parent_child_id]": ui.item.value,ajax:"appointment-grid",r:"Appointment/admin"}, function(data) {
+//              alert(data); 
+//           }, 'json'));
+//          },
+          focus: function(e) {e.preventDefault();},
+            }); 
+    $('.ui-helper-hidden-accessible').remove();
+         });
+         
+         $('#appointment-grid [name="Appointment[parent_child_id]"]').on('autocompleteselect', function(e,ui) {
+             e.preventDefault();
+              
+              window = $.get('index.php', {"Appointment[parent_child_id]": ui.item.value,ajax:"appointment-grid",r:"Appointment/admin"}, 'json');
+           
+         });
+         
+
+     
+}(this, document, jQuery));
 }

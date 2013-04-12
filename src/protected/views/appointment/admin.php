@@ -20,7 +20,8 @@
 /* @var $this AppointmentController */
 /* @var $model Appointment */
 /* @var $blockedApp BlockedAppointment */
-
+Yii::app()->clientScript->registerCoreScript('jquery.ui');
+Yii::app()->getClientScript()->registerCssFile(Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css');
 $this->breadcrumbs = array(
     'Appointments' => array('index'),
     'Manage',
