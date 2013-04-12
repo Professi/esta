@@ -35,12 +35,17 @@ $this->breadcrumbs=array(
                 Fax: 06192 2904-66<br>
                 E-Mail: <a href="mailto:office@bws-hofheim.de">office@bws-hofheim.de</a>
             </p>
-            <p> ESTA ist ein Schulprojekt der Br&uuml;hlwiesenschule. ESTA wurde mit der GNU General Public License Version 3 lizensiert:
+            <p> <b>Haftungsausschluss:</b>
+            <br>&Uuml;ber Links auf dieser Seite k&ouml;nnen Sie auf Fremdseiten und werbliche Mitteilungen Dritter gelangen,
+                f&uuml;r deren Inhalt die Br&uuml;hlwiesenschule Hofheim und die Entwickler dieser Anwendung keine Verantwortung &uuml;bernehmen können.<br>
+                Haftungsauschluss&nbsp;&nbsp;<a href="http://www.disclaimer.de/disclaimer.htm" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a>
+            </p>
+            <p> Diese Elternsprechtagsapplikation (ESTA) wurde mit der GNU General Public License Version 3 lizensiert:
             <br>GPL v3 &nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             Die Urheber sind: Christian Ehringfeld, David Mock, Matthias Unterbusch
             In Kürze finden Sie hier einen Link zum aktuellen Projektverzeichnis.
             </p>
-            <p>Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:</p>
+            <p>Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:<br>
             <p> ZURB Foundation Framework&nbsp;&nbsp;<a href="http://foundation.zurb.com"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
                 IcoMoon  Icon Fonts&nbsp;&nbsp;<a href="http://icomoon.io" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
                 Google Web Fonts&nbsp;&nbsp;<a href="http://www.google.com/webfonts" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
@@ -48,12 +53,6 @@ $this->breadcrumbs=array(
                 Yii Framework&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
                 EMailer eine Yii Extension die PHPMailer verwendet&nbsp;&nbsp;<a href="http://www.yiiframework.com/extension/mailer/" > <span aria-hiden="true" data-icon="&#xe006;">&nbsp;Link</span></a>
             </p>
-                        <p> Haftungsausschluss:
-            <br>&Uuml;ber Links auf dieser Seite k&ouml;nnen Sie auf Fremdseiten und werbliche Mitteilungen Dritter gelangen,
-                f&uuml;r deren Inhalt die Br&uuml;hlwiesenschule Hofheim und die Entwickler dieser Anwendung keine Verantwortung &uuml;bernehmen können.<br>
-                Haftungsauschluss&nbsp;&nbsp;<a href="http://www.disclaimer.de/disclaimer.htm" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a>
-            </p>
-            
             <p class="text-center"><?php echo CHtml::link('<b>Zurück zur Startseite</b>', 'index.php'); ?> </p>
     </div>
 </div>
