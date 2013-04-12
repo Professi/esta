@@ -163,8 +163,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
                 'date' => array(
                     'label' => 'Termin vereinbaren',
                     'url' => '"index.php?r=Appointment/makeAppointment&teacher=".$data->id',
-                    'imageUrl' => Yii::app()->request->baseUrl.'/img/alarm.svg',
-                    'options' => array('class' => 'column-button')
+                    'imageUrl' => Yii::app()->request->baseUrl.'/img/alarm.png',
+                    'options' => array('class' => 'column-button alarm_png', ),
                 ),
             ),
         ),

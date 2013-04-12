@@ -87,5 +87,7 @@ if (IE) {
             });
         });
         
+        $('.alarm_png').children().attr('src','/est/trunk/src/img/alarm.svg');
+        
     }(this, document, jQuery));
 }
