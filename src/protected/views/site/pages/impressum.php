@@ -42,7 +42,7 @@ $this->breadcrumbs=array(
             </p>
             <p> Diese Elternsprechtagsapplikation (ESTA) wurde mit der GNU General Public License Version 3 lizensiert:
             <br>GPL v3 &nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            Die Urheber sind: Christian Ehringfeld, David Mock, Matthias Unterbusch
+            Die Urheber sind: Christian Ehringfeld, David Mock, Matthias Unterbusch.
             In Kürze finden Sie hier einen Link zum aktuellen Projektverzeichnis.
             </p>
             <p> Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:<br>
