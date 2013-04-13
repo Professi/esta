@@ -416,3 +416,6 @@ ul.button-group li {
     position: relative;
     top: 1.25em;
 }
+.faq-ul li {
+    display: block;
+}

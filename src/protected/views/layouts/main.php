@@ -81,8 +81,8 @@
                 ?>
 
             <? } ?>
-            <div class="push"></div>
-            <div class="row">
+            <div class="push hide-on-print"></div>
+            <div class="row hide-on-print">
                 <div class="twelve columns centered">
                     <?php if (Yii::app()->user->hasFlash('success')) { ?>
                         <div class="alert-box">
@@ -93,6 +93,11 @@
                             <?php echo Yii::app()->user->getFlash('failMsg'); ?>            
                         </div>
                     <?php } ?>
+                </div>
+            </div>
+            <div class="row print-only">
+                <div class="twelve columns text-center">
+                    <h5><?php echo (!empty(Yii::app()->params['schoolName'])) ? 'Elternsprechtag der '.Yii::app()->params['schoolName'] : 'ESTA - Elternsprechtagsapplikations'; ?></h5>
                 </div>
             </div>
             <?php
@@ -109,16 +114,16 @@
                     <hr />
                     <div class="row">
                         <div class="six columns">
-                            <p>Copyright &copy; <?php echo date('Y'); ?> BWS Brühlwiesenschule Hofheim<br>
+                            <p>Copyright &copy; <?php echo date('Y').' '; echo (!empty(Yii::app()->params['schoolName'])) ? Yii::app()->params['schoolName'] : 'ESTA - Team'; ?> <br>
                             </p>
                         </div>
-                        <div class="six columns">
+                        <div class="six columns"> 
                             <?php
                             $this->widget('zii.widgets.CMenu', array(
                                 'htmlOptions' => array('class' => 'link-list right'),
                                 'items' => array(
-                                    array('label' => 'Statistik', 'url' => array('/site/statistics', 'visible'=> !Yii::app()->user->isGuest())),
-                                    array('label' => 'FAQ', 'url' => array('/site/faq')),
+                                    array('label' => 'Statistik', 'url' => array('/site/statistics'), 'visible' => !Yii::app()->user->isGuest()),
+                                    array('label' => 'FAQ', 'url' => array('/site/page', 'view' => 'faq')),
                                     array('label' => 'Impressum', 'url' => array('/site/page', 'view' => 'impressum')),
                                     array('label' => 'Kontakt', 'url' => array('/site/contact')),
                             )));

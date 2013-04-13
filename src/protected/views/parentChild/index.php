@@ -25,7 +25,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Kinder hinzufügen', 'url'=>array('create')),
+	array('label'=>'Kind hinzufügen', 'url'=>array('create')),
 	array('label'=>'Verwalte Elternkindverknüpfungen', 'url'=>array('admin'), 'visible'=>Yii::app()->user->checkAccess(1)),
 );
 
@@ -41,7 +41,7 @@ if(Yii::app()->user->checkAccess(1)) {
         <div class="panel hide-for-print">
             Falls Sie bei der Eingabe ihrer Kinder einen Fehler gemacht haben sollten, 
             drücken Sie einfach auf das "x" neben dem Namen. 
-            Der Eintrag wird daraufhin entfernt und Sie können eine neue Eingabe über "Schüler hinzufügen" tätigen.
+            Der Eintrag wird daraufhin entfernt und Sie können eine neue Eingabe über "Kind hinzufügen" tätigen.
         </div>
 <?php } ?>
   
