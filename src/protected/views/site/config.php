@@ -23,7 +23,6 @@
 Yii::app()->clientScript->registerPackage('jquery');
 ?>
 <div class="form">
-
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'config-form',
@@ -43,8 +42,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'schoolName'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'schoolName'); ?>
-                    <?php echo $form->error($model, 'schoolName'); ?>
+                    <?php
+                    echo $form->textField($model, 'schoolName');
+                    echo $form->error($model, 'schoolName');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -52,8 +53,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'adminEmail'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'adminEmail'); ?>
-                    <?php echo $form->error($model, 'adminEmail'); ?>
+                    <?php
+                    echo $form->textField($model, 'adminEmail');
+                    echo $form->error($model, 'adminEmail');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -61,8 +64,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'dateFormat'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'dateFormat'); ?>
-                    <?php echo $form->error($model, 'dateFormat'); ?>
+                    <?php
+                    echo $form->textField($model, 'dateFormat');
+                    echo $form->error($model, 'dateFormat');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -70,8 +75,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'timeFormat'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'timeFormat'); ?>
-                    <?php echo $form->error($model, 'timeFormat'); ?>
+                    <?php
+                    echo $form->textField($model, 'timeFormat');
+                    echo $form->error($model, 'timeFormat');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -79,8 +86,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'dateTimeFormat'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'dateTimeFormat', array('readonly' => 'readonly')); ?>
-                    <?php echo $form->error($model, 'dateTimeFormat'); ?>
+                    <?php
+                    echo $form->textField($model, 'dateTimeFormat', array('readonly' => 'readonly'));
+                    echo $form->error($model, 'dateTimeFormat');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -88,8 +97,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'randomTeacherPassword'); ?></span>
                 </div>
                 <div class="four columns styled-select">
-                    <?php echo $form->dropDownList($model, 'randomTeacherPassword', array('1' => 'Ja', '0' => 'Nein')); ?>
-                    <?php echo $form->error($model, 'randomTeacherPassword'); ?>
+                    <?php
+                    echo $form->dropDownList($model, 'randomTeacherPassword', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'randomTeacherPassword');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -97,8 +108,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'defaultTeacherPassword'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'defaultTeacherPassword'); ?>
-                    <?php echo $form->error($model, 'defaultTeacherPassword'); ?>
+                    <?php
+                    echo $form->textField($model, 'defaultTeacherPassword');
+                    echo $form->error($model, 'defaultTeacherPassword');
+                    ?>
                 </div>
             </div>
         </fieldset>
@@ -109,8 +122,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'maxChild'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'maxChild'); ?>
-                    <?php echo $form->error($model, 'maxChild'); ?>
+                    <?php
+                    echo $form->textField($model, 'maxChild');
+                    echo $form->error($model, 'maxChild');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -118,8 +133,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'maxAppointmentsPerChild'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'maxAppointmentsPerChild'); ?>
-                    <?php echo $form->error($model, 'maxAppointmentsPerChild'); ?>
+                    <?php
+                    echo $form->textField($model, 'maxAppointmentsPerChild');
+                    echo $form->error($model, 'maxAppointmentsPerChild');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -127,8 +144,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'minLengthPerAppointment'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'minLengthPerAppointment'); ?>
-                    <?php echo $form->error($model, 'minLengthPerAppointment'); ?>
+                    <?php
+                    echo $form->textField($model, 'minLengthPerAppointment');
+                    echo $form->error($model, 'minLengthPerAppointment');
+                    ?>
                 </div>
             </div>
         </fieldset>
@@ -139,8 +158,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'mailsActivated'); ?></span>
                 </div>
                 <div class="four columns styled-select">
-                    <?php echo $form->dropDownList($model, 'mailsActivated', array('1' => 'Ja', '0' => 'Nein')); ?>
-                    <?php echo $form->error($model, 'mailsActivated'); ?>
+                    <?php
+                    echo $form->dropDownList($model, 'mailsActivated', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'mailsActivated');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -148,8 +169,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'emailHost'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'emailHost', $optionsMails); ?>
-                    <?php echo $form->error($model, 'emailHost'); ?>
+                    <?php
+                    echo $form->textField($model, 'emailHost', $optionsMails);
+                    echo $form->error($model, 'emailHost');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -157,8 +180,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'fromMailHost'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'fromMailHost', $optionsMails); ?>
-                    <?php echo $form->error($model, 'fromMailHost'); ?>
+                    <?php
+                    echo $form->textField($model, 'fromMailHost', $optionsMails);
+                    echo $form->error($model, 'fromMailHost');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -166,8 +191,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'fromMail'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'fromMail', $optionsMails); ?>
-                    <?php echo $form->error($model, 'fromMail'); ?>
+                    <?php
+                    echo $form->textField($model, 'fromMail', $optionsMails);
+                    echo $form->error($model, 'fromMail');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -175,8 +202,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'teacherMail'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'teacherMail', $optionsMails); ?>
-                    <?php echo $form->error($model, 'teacherMail'); ?>
+                    <?php
+                    echo $form->textField($model, 'teacherMail', $optionsMails);
+                    echo $form->error($model, 'teacherMail');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -184,8 +213,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'virtualHost'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'virtualHost', $optionsMails); ?>
-                    <?php echo $form->error($model, 'virtualHost'); ?>
+                    <?php
+                    echo $form->textField($model, 'virtualHost', $optionsMails);
+                    echo $form->error($model, 'virtualHost');
+                    ?>
                 </div>
             </div>
         </fieldset>
@@ -196,8 +227,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'banUsers'); ?></span>
                 </div>
                 <div class="four columns styled-select">
-                    <?php echo $form->dropDownList($model, 'banUsers', array('1' => 'Ja', '0' => 'Nein')); ?>
-                    <?php echo $form->error($model, 'banUsers'); ?>
+                    <?php
+                    echo $form->dropDownList($model, 'banUsers', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'banUsers');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -205,8 +238,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'durationTempBans'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'durationTempBans', $optionsBans); ?>
-                    <?php echo $form->error($model, 'durationTempBans'); ?>
+                    <?php
+                    echo $form->textField($model, 'durationTempBans', $optionsBans);
+                    echo $form->error($model, 'durationTempBans');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -214,8 +249,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'maxAttemptsForLogin'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'maxAttemptsForLogin', $optionsBans); ?>
-                    <?php echo $form->error($model, 'maxAttemptsForLogin'); ?>
+                    <?php
+                    echo $form->textField($model, 'maxAttemptsForLogin', $optionsBans);
+                    echo $form->error($model, 'maxAttemptsForLogin');
+                    ?>
                 </div>
             </div>
         </fieldset>
@@ -226,8 +263,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'allowBlockingAppointments'); ?></span>
                 </div>
                 <div class="four columns styled-select">
-                    <?php echo $form->dropDownList($model, 'allowBlockingAppointments', array('1' => 'Ja', '0' => 'Nein')); ?>
-                    <?php echo $form->error($model, 'allowBlockingAppointments'); ?>
+                    <?php
+                    echo $form->dropDownList($model, 'allowBlockingAppointments', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'allowBlockingAppointments');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -235,8 +274,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'appointmentBlocksPerDate'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'appointmentBlocksPerDate', $optionsBlocks); ?>
-                    <?php echo $form->error($model, 'appointmentBlocksPerDate'); ?>
+                    <?php
+                    echo $form->textField($model, 'appointmentBlocksPerDate', $optionsBlocks);
+                    echo $form->error($model, 'appointmentBlocksPerDate');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -244,8 +285,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'lengthReasonAppointmentBlocked'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'lengthReasonAppointmentBlocked', $optionsBlocks); ?>
-                    <?php echo $form->error($model, 'lengthReasonAppointmentBlocked'); ?>
+                    <?php
+                    echo $form->textField($model, 'lengthReasonAppointmentBlocked', $optionsBlocks);
+                    echo $form->error($model, 'lengthReasonAppointmentBlocked');
+                    ?>
                 </div>
             </div>            
         </fieldset>
@@ -255,8 +298,10 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span class="prefix"><?php echo $form->label($model, 'salt'); ?></span>
                 </div>
                 <div class="four columns">
-                    <?php echo $form->textField($model, 'salt'); ?>
-                    <?php echo $form->error($model, 'salt'); ?>
+                    <?php
+                    echo $form->textField($model, 'salt');
+                    echo $form->error($model, 'salt');
+                    ?>
                 </div>
             </div>
         <?php } ?>        

@@ -19,16 +19,14 @@
  */
 /* @var $this DateController */
 /* @var $model Date */
-
-$this->breadcrumbs=array(
-	'Dates'=>array('index'),
-	$model->id,
+$this->breadcrumbs = array(
+    'Dates' => array('index'),
+    $model->id,
 );
-
-$this->menu=array(
-        array('label'=>'Elternsprechtag bearbeiten', 'url'=>array('update', 'id' => $model->id)),
-	array('label'=>'Elternsprechtag löschen', 'url'=>'#', 'linkOptions' => array( 'submit' => array( 'delete' , 'id' => $model->id ), 'confirm' => 'Möchten Sie diesen Elternsprechtag wirklich löschen?'), 'visible' => true),
-	array('label'=>'Elternsprechtage verwalten', 'url'=>array('admin')),
+$this->menu = array(
+    array('label' => 'Elternsprechtag bearbeiten', 'url' => array('update', 'id' => $model->id)),
+    array('label' => 'Elternsprechtag löschen', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => 'Möchten Sie diesen Elternsprechtag wirklich löschen?'), 'visible' => true),
+    array('label' => 'Elternsprechtage verwalten', 'url' => array('admin')),
 );
 ?>
 <div class="row">
@@ -36,19 +34,20 @@ $this->menu=array(
         <h2 class="text-center">Elternsprechtag Nummer <?php echo $model->id; ?></h2>
     </div>
 </div>
-
 <div class="row">
     <div class="twelve columns centered">
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'id',
-		array ('label' => $model->getAttributeLabel('date'), 'value' => date(Yii::app()->params['dateFormat'], strtotime($model->date))),
-		array ('label' => $model->getAttributeLabel('begin'), 'value' => date(Yii::app()->params['timeFormat'], strtotime($model->begin))),
-		array ('label' => $model->getAttributeLabel('end'), 'value' => date(Yii::app()->params['timeFormat'], strtotime($model->end))),
-            array ('label' => $model->getAttributeLabel('lockAt'), 'value' => date(Yii::app()->params['dateTimeFormat'], $model->lockAt)),
-		'durationPerAppointment',
-	),
-)); ?>
+        <?php
+        $this->widget('zii.widgets.CDetailView', array(
+            'data' => $model,
+            'attributes' => array(
+                'id',
+                array('label' => $model->getAttributeLabel('date'), 'value' => date(Yii::app()->params['dateFormat'], strtotime($model->date))),
+                array('label' => $model->getAttributeLabel('begin'), 'value' => date(Yii::app()->params['timeFormat'], strtotime($model->begin))),
+                array('label' => $model->getAttributeLabel('end'), 'value' => date(Yii::app()->params['timeFormat'], strtotime($model->end))),
+                array('label' => $model->getAttributeLabel('lockAt'), 'value' => date(Yii::app()->params['dateTimeFormat'], $model->lockAt)),
+                'durationPerAppointment',
+            ),
+        ));
+        ?>
     </div>
 </div>

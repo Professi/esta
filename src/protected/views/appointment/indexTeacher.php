@@ -24,40 +24,44 @@
     <div class="twelve columns">
         <h2 class="subheader">Ihre Termine</h2>
         <hr>
-        <?php $this->widget('zii.widgets.grid.CGridView', array(
-            'id'=>'appointment-grid',
-            'dataProvider'=>$dataProvider,
-            'columns'=>array(
-                    array('name' => 'dateAndTime_id', 
-                          'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
-                    array('name' => 'parent_child_id', 
-                          'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'), 
-                    array('name' => 'Kind', 
-                          'value' => '$data->parentChild->child->firstname." ".$data->parentChild->child->lastname' ),
-                    array(
-                        'class' => 'CustomButtonColumn', 
-                        'template' => '{delete}'
-                        ),
-                    )
-            )); ?>
+        <?php
+        $this->widget('zii.widgets.grid.CGridView', array(
+            'id' => 'appointment-grid',
+            'dataProvider' => $dataProvider,
+            'columns' => array(
+                array('name' => 'dateAndTime_id',
+                    'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
+                array('name' => 'parent_child_id',
+                    'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'),
+                array('name' => 'Kind',
+                    'value' => '$data->parentChild->child->firstname." ".$data->parentChild->child->lastname'),
+                array(
+                    'class' => 'CustomButtonColumn',
+                    'template' => '{delete}'
+                ),
+            )
+        ));
+        ?>
     </div>
 </div>
-<?php if(Yii::app()->params['allowBlockingAppointments']) { ?>
-<div class="row">
-    <div class="twelve columns">
-        <h2 class="subheader">Ihre blockierten Termine</h2>
-        <hr>
-        <?php $this->widget('zii.widgets.grid.CGridView', array(
-            'id'=>'blockedAppointment-grid',
-            'dataProvider'=>$blockedApp,
-            'columns'=>array(
+<?php if (Yii::app()->params['allowBlockingAppointments']) { ?>
+    <div class="row">
+        <div class="twelve columns">
+            <h2 class="subheader">Ihre blockierten Termine</h2>
+            <hr>
+            <?php
+            $this->widget('zii.widgets.grid.CGridView', array(
+                'id' => 'blockedAppointment-grid',
+                'dataProvider' => $blockedApp,
+                'columns' => array(
                     array('name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
                     array('name' => 'reason'),
                     array('class' => 'CustomButtonColumn', 'template' => '{delete}', 'buttons' => array(
                             'delete' => array('url' => '$this->grid->controller->createUrl("/appointment/deleteblockapp", array("id"=>$data->id))'),
                         )),
-                    )
-));  ?>
+                )
+            ));
+            ?>
+        </div>
     </div>
-</div>
 <?php } ?>

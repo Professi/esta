@@ -26,10 +26,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <link rel="icon" href="<?php echo Yii::app()->request->baseUrl; ?>/favicon.ico">
-        <?php Yii::app()->clientScript->registerPackage('css'); ?>
-        <?php Yii::app()->clientScript->registerPackage('javascript'); ?>
-        <?php Yii::app()->clientScript->registerPackage('jquery'); ?>
-        <?php if (Yii::app()->user->checkAccess('1')) { Yii::app()->clientScript->registerPackage('admin');} ?>
+        <?php
+        Yii::app()->clientScript->registerPackage('css');
+        Yii::app()->clientScript->registerPackage('javascript');
+        Yii::app()->clientScript->registerPackage('jquery');
+        if (Yii::app()->user->checkAccess('1')) {
+            Yii::app()->clientScript->registerPackage('admin');
+        }
+        ?>
         <link rel="stylesheet" type="text/css" media="print" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css">
         <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/modernizr.foundation.js"></script>
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
@@ -57,9 +61,8 @@
                     </div>
                 </div> <? } ?>
 
-            <?php if (!Yii::app()->user->isGuest) { ?>
-
-                <?
+            <?php
+            if (!Yii::app()->user->isGuest) {
                 $this->widget('zii.widgets.CMenu', array(
                     'htmlOptions' => array('class' => 'nav-bar js_hide nojs_menu'),
                     'encodeLabel' => false,
@@ -78,9 +81,8 @@
                         array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),
                     'activeCssClass' => 'active'
                 ));
-                ?>
-
-            <? } ?>
+            }
+            ?>
             <div class="push hide-on-print"></div>
             <div class="row hide-on-print">
                 <div class="twelve columns centered">
@@ -97,7 +99,7 @@
             </div>
             <div class="row print-only">
                 <div class="twelve columns text-center">
-                    <h5><?php echo (!empty(Yii::app()->params['schoolName'])) ? 'Elternsprechtag der '.Yii::app()->params['schoolName'] : 'ESTA - Elternsprechtagsapplikations'; ?></h5>
+                    <h5><?php echo (!empty(Yii::app()->params['schoolName'])) ? 'Elternsprechtag der ' . Yii::app()->params['schoolName'] : 'ESTA - Elternsprechtagsapplikations'; ?></h5>
                 </div>
             </div>
             <?php
@@ -105,7 +107,6 @@
             ?>
             <div class="push"></div>
         </div> <!-- /WRAPPER -->
-
         <!-- FOOTER -->
         <div id="footer">
             <div class="row">
@@ -114,7 +115,10 @@
                     <hr />
                     <div class="row">
                         <div class="six columns">
-                            <p>Copyright &copy; <?php echo date('Y').' '; echo (!empty(Yii::app()->params['schoolName'])) ? Yii::app()->params['schoolName'] : 'ESTA - Team'; ?> <br>
+                            <p>Copyright &copy; <?php
+                                echo date('Y') . ' ';
+                                echo (!empty(Yii::app()->params['schoolName'])) ? Yii::app()->params['schoolName'] : 'ESTA - Team';
+                                ?> <br>
                             </p>
                         </div>
                         <div class="six columns"> 

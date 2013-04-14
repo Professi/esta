@@ -21,16 +21,12 @@
 /* @var $model Date */
 /* @var $form CActiveForm */
 ?>
-
-
-
 <?php
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'date-form',
     'enableAjaxValidation' => false,
         ));
 ?>
-
 <div class="row collapse">
     <div class="two columns">
         <span class="prefix"><?php echo $form->label($model, 'date'); ?></span>
@@ -43,48 +39,50 @@ $form = $this->beginWidget('CActiveForm', array(
             'options' => array(
                 'showAnim' => 'fold',
                 'minDate' => '0',
-                            'dateFormat' => $this->dateStringToDatepickerFormat(Yii::app()->params['dateFormat']),
-                            'nextText' => '',
-                            'prevText' => '',
-                        ),
-                        'language' => 'de',
-                        'skin' => false,
-                        'cssFile' => false,
-                        'htmlOptions'=>array(
-                            'readonly' => 'readonly',
-                        ),
+                'dateFormat' => $this->dateStringToDatepickerFormat(Yii::app()->params['dateFormat']),
+                'nextText' => '',
+                'prevText' => '',
+            ),
+            'language' => 'de',
+            'skin' => false,
+            'cssFile' => false,
+            'htmlOptions' => array(
+                'readonly' => 'readonly',
+            ),
         ));
+        echo $form->error($model, 'date');
         ?>
-<?php echo $form->error($model, 'date'); ?>
     </div>
     <div class="two columns">
-        <span class="postfix"><?php echo Yii::app()->params['dateFormat']  ?></span>
+        <span class="postfix"><?php echo Yii::app()->params['dateFormat'] ?></span>
     </div>
 </div>
-
 <div class="row collapse">
     <div class="two columns">
         <span class="prefix"><?php echo $form->label($model, 'begin'); ?></span>
     </div>
     <div class="eight columns">
-        <?php echo $form->textField($model, 'begin', $a_disabled); ?>
-<?php echo $form->error($model, 'begin'); ?>
+        <?php
+        echo $form->textField($model, 'begin', $a_disabled);
+        echo $form->error($model, 'begin');
+        ?>
     </div>
     <div class="two columns">
-        <span class="postfix"><?php echo Yii::app()->params['timeFormat']  ?></span>
+        <span class="postfix"><?php echo Yii::app()->params['timeFormat'] ?></span>
     </div>
 </div>
-
 <div class="row collapse">
     <div class="two columns">
         <span class="prefix"><?php echo $form->label($model, 'end'); ?></span>
     </div>
     <div class="eight columns">
-        <?php echo $form->textField($model, 'end', $a_disabled); ?>
-<?php echo $form->error($model, 'end'); ?>
+        <?php
+        echo $form->textField($model, 'end', $a_disabled);
+        echo $form->error($model, 'end');
+        ?>
     </div>
     <div class="two columns">
-        <span class="postfix"><?php echo Yii::app()->params['timeFormat']  ?></span>
+        <span class="postfix"><?php echo Yii::app()->params['timeFormat'] ?></span>
     </div>
 </div>
 <div class="row collapse">
@@ -94,7 +92,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <div class="eight columns">
         <div class="row">
             <div class="six columns">
-                <?php 
+                <?php
                 $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                     'model' => $model,
                     'name' => 'lockAt',
@@ -103,16 +101,16 @@ $form = $this->beginWidget('CActiveForm', array(
                     'options' => array(
                         'showAnim' => 'fold',
                         'minDate' => '0',
-                                    'dateFormat' => $this->dateStringToDatepickerFormat(Yii::app()->params['dateFormat']),
-                                    'nextText' => '',
-                                    'prevText' => '',
-                                ),
-                                'language' => 'de',
-                                'skin' => false,
-                                'cssFile' => false,
-                                'htmlOptions'=>array(
-                                    'readonly' => 'readonly',
-                                ),
+                        'dateFormat' => $this->dateStringToDatepickerFormat(Yii::app()->params['dateFormat']),
+                        'nextText' => '',
+                        'prevText' => '',
+                    ),
+                    'language' => 'de',
+                    'skin' => false,
+                    'cssFile' => false,
+                    'htmlOptions' => array(
+                        'readonly' => 'readonly',
+                    ),
                 ));
                 ?>
             </div>
@@ -120,30 +118,32 @@ $form = $this->beginWidget('CActiveForm', array(
                 <input type="text" id="time_lockAt" value="<?php echo $timeLabel; ?>">
             </div>
         </div>
-        <?php echo $form->hiddenField($model, 'lockAt', array('id' => 'lockAt_value')); ?>
-        <?php echo $form->error($model, 'lockAt'); ?>
+        <?php
+        echo $form->hiddenField($model, 'lockAt', array('id' => 'lockAt_value'));
+        echo $form->error($model, 'lockAt');
+        ?>
     </div>
-    
     <div class="two columns">
-        <span class="postfix"><?php echo Yii::app()->params['dateTimeFormat']  ?></span>
+        <span class="postfix"><?php echo Yii::app()->params['dateTimeFormat'] ?></span>
     </div>
 </div>
-
-<?php // if ($model->isNewRecord) { ?>
-    <div class="row collapse">
-        <div class="two columns">
-            <span class="prefix"><?php echo $form->label($model, 'durationPerAppointment'); ?></span>
-        </div>
-        <div class="eight columns">
-            <?php echo $form->textField($model, 'durationPerAppointment', $a_disabled); ?>
-    <?php echo $form->error($model, 'durationPerAppointment'); ?>
-        </div>
-        <div class="two columns">
-            <span class="postfix">MM</span>
-        </div>
+<div class="row collapse">
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->label($model, 'durationPerAppointment'); ?></span>
     </div>
-<?php // } ?>
+    <div class="eight columns">
+        <?php
+        echo $form->textField($model, 'durationPerAppointment', $a_disabled);
+        echo $form->error($model, 'durationPerAppointment');
+        ?>
+    </div>
+    <div class="two columns">
+        <span class="postfix">MM</span>
+    </div>
+</div>
 <br>
-<?php echo CHtml::submitButton($model->isNewRecord ? 'Anlegen' : 'Speichern', array('class' => 'small button')); ?>
-<?php $this->endWidget(); ?>
+<?php
+echo CHtml::submitButton($model->isNewRecord ? 'Anlegen' : 'Speichern', array('class' => 'small button'));
+$this->endWidget();
+?>
 

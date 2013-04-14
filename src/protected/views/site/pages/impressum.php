@@ -23,7 +23,6 @@ $this->breadcrumbs=array(
 	'Impressum',
 );
 ?>
-
 <div class="row">
     <h2 class='subheader'>Impressum</h2>
     <hr>

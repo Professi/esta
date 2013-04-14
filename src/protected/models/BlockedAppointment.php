@@ -58,9 +58,9 @@ class BlockedAppointment extends CActiveRecord {
 
     public function countUsedDateAndTimes() {
         $crit = new CDbCriteria();
-            $crit->with = 'dateAndTime';
-            $crit->addCondition('user_id=' . $this->user_id , 'AND');
-            $crit->addCondition('dateAndTime.date_id=' . $this->dateAndTime->date_id, 'AND');
+        $crit->with = 'dateAndTime';
+        $crit->addCondition('user_id=' . $this->user_id, 'AND');
+        $crit->addCondition('dateAndTime.date_id=' . $this->dateAndTime->date_id, 'AND');
         return $crit;
     }
 
@@ -71,13 +71,21 @@ class BlockedAppointment extends CActiveRecord {
         );
     }
 
+    /**
+     * Prüft ob der Benutzer ein Lehrer ist, prüft ob nicht bereits zuviele Termine geblockt wurden.
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param mixed $attributes
+     * @param boolean $clearErrors
+     * @return boolean
+     */
     public function validate($attributes = null, $clearErrors = true) {
         $rc = false;
         if (parent::validate($attributes, $clearErrors)) {
             if (UserRole::model()->countByAttributes(array('user_id' => $this->user_id, 'role_id' => 2)) < 1) {
                 $this->addError('user_id', 'Kein Lehrer.');
             } else if (Yii::app()->params['allowBlockingAppointments']) {
-                if (BlockedAppointment::model()->count($this->countUsedDateAndTimes()) >= Yii::app()->params['appointmentBlocksPerDate']) {
+                if (BlockedAppointment::model()->count($this->countUsedDateAndTimes()) >=
+                        Yii::app()->params['appointmentBlocksPerDate'] && Yii::app()->checkAccessNotAdmin('2')) {
                     $this->addError('dateAndTime_id', 'Zuviele Termine berereits geblockt. Maximum liegt bei '
                             . Yii::app()->params['appointmentBlocksPerDate'] . ' pro Elternsprechtag.');
                 } else {
@@ -88,17 +96,22 @@ class BlockedAppointment extends CActiveRecord {
         return $rc;
     }
 
+    /**
+     * Suchmethode
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return \CActiveDataProvider
+     */
     public function search() {
         $criteria = new CDbCriteria;
-        $criteria->with = array('user','dateAndTime');
+        $criteria->with = array('user', 'dateAndTime');
         $criteria->together = true;
         $criteria->compare('id', $this->id);
-        $criteria->compare('reason', $this->reason,true);
+        $criteria->compare('reason', $this->reason, true);
         $criteria->compare('dateAndTime.time', $this->dateAndTime_id, true);
         $criteria->compare('user.lastname', $this->user_id, true);
         $sort = new CSort;
         $sort->attributes = array(
-                        'defaultOrder' => 'dateAndTime.id DESC',
+            'defaultOrder' => 'dateAndTime.id DESC',
             'dateAndTime_id' => array(
                 'asc' => 'dateAndTime.id',
                 'desc' => 'dateAndTime.id desc'),
@@ -111,7 +124,7 @@ class BlockedAppointment extends CActiveRecord {
         );
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
-            'pagination' => array('pageSize' => 20),
+            'pagination' => array('pageSize' => 10),
             'sort' => $sort,
         ));
     }

@@ -22,7 +22,6 @@
 /* @var $form CActiveForm */
 ?>
 <div class="form">
-
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'deleteAll-form',
@@ -41,8 +40,10 @@
                     <span class="prefix"><?php echo $form->label($model, 'tans'); ?></span>
                 </div>
                 <div class="nine columns styled-select">
-                    <?php echo $form->dropDownList($model, 'tans', array('1' => 'Ja', '0' => 'Nein')); ?>
-                    <?php echo $form->error($model, 'tans'); ?>
+                    <?php
+                    echo $form->dropDownList($model, 'tans', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'tans');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -50,8 +51,10 @@
                     <span class="prefix"><?php echo $form->label($model, 'appointments'); ?></span>
                 </div>
                 <div class="nine columns styled-select">
-                    <?php echo $form->dropDownList($model, 'appointments', array('1' => 'Ja', '0' => 'Nein')); ?>
-                    <?php echo $form->error($model, 'appointments'); ?>
+                    <?php
+                    echo $form->dropDownList($model, 'appointments', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'appointments');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -59,8 +62,10 @@
                     <span class="prefix"><?php echo $form->label($model, 'teachers'); ?></span>
                 </div>
                 <div class="nine columns styled-select">
-                    <?php echo $form->dropDownList($model, 'teachers', array('1' => 'Ja', '0' => 'Nein')); ?>
-                    <?php echo $form->error($model, 'teachers'); ?>
+                    <?php
+                    echo $form->dropDownList($model, 'teachers', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'teachers');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -68,8 +73,10 @@
                     <span class="prefix"><?php echo $form->label($model, 'dates'); ?></span>
                 </div>
                 <div class="nine columns styled-select">
-                    <?php echo $form->dropDownList($model, 'dates', array('1' => 'Ja', '0' => 'Nein')); ?>
-                    <?php echo $form->error($model, 'dates'); ?>
+                    <?php
+                    echo $form->dropDownList($model, 'dates', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'dates');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -77,8 +84,10 @@
                     <span class="prefix"><?php echo $form->label($model, 'management'); ?></span>
                 </div>
                 <div class="nine columns styled-select">
-                    <?php echo $form->dropDownList($model, 'management', array('1' => 'Ja', '0' => 'Nein')); ?>
-                    <?php echo $form->error($model, 'management'); ?>
+                    <?php
+                    echo $form->dropDownList($model, 'management', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'management');
+                    ?>
                 </div>
             </div>
             <div class="row collapse">
@@ -86,16 +95,20 @@
                     <span class="prefix"><?php echo $form->label($model, 'childs'); ?></span>
                 </div>
                 <div class="nine columns styled-select">
-                    <?php echo $form->dropDownList($model, 'childs', array('1' => 'Ja', '0' => 'Nein')); ?>
-                    <?php echo $form->error($model, 'childs'); ?>
+                    <?php
+                    echo $form->dropDownList($model, 'childs', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'childs');
+                    ?>
                 </div>
                 <div class="row collapse">
                     <div class="three columns">
                         <span class="prefix"><?php echo $form->label($model, 'parents'); ?></span>
                     </div>
                     <div class="nine columns styled-select">
-                        <?php echo $form->dropDownList($model, 'parents', array('1' => 'Ja', '0' => 'Nein')); ?>
-                        <?php echo $form->error($model, 'parents'); ?>
+                        <?php
+                        echo $form->dropDownList($model, 'parents', array('1' => 'Ja', '0' => 'Nein'));
+                        echo $form->error($model, 'parents');
+                        ?>
                     </div>
                 </div>
         </fieldset>
@@ -105,5 +118,5 @@
             <?php echo CHtml::submitButton(Yii::t('app', 'Entfernen'), array('class' => 'button')); ?>
         </div>
     </div>
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 </div><!-- form -->

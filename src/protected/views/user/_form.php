@@ -2,7 +2,7 @@
 /**
  * User Form
  */
-/**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,61 +20,56 @@
 /* @var $this UserController */
 /* @var $model User */
 /* @var $form CActiveForm */
-?>
-
-
-
-<?php
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'user-form',
         ));
 ?>
 <div class="row collapse">
     <div class="three columns">
-        <span class="prefix"><?php echo $form->label($model,'firstname'); ?></span>
+        <span class="prefix"><?php echo $form->label($model, 'firstname'); ?></span>
     </div>
     <div class="nine columns mobile-input">
-        <?php echo $form->textField($model, 'firstname', array('size' => 45, 'maxlength' => 45)); ?>
-        <?php echo $form->error($model, 'firstname'); ?>
+        <?php
+        echo $form->textField($model, 'firstname', array('size' => 45, 'maxlength' => 45));
+        echo $form->error($model, 'firstname');
+        ?>
     </div>
 </div>
-
-
 <div class="row collapse">
     <div class="three columns">
-        <span class="prefix"><?php echo $form->label($model,'lastname'); ?></span>
+        <span class="prefix"><?php echo $form->label($model, 'lastname'); ?></span>
     </div>
     <div class="nine columns mobile-input">
-        <?php echo $form->textField($model, 'lastname', array('size' => 45, 'maxlength' => 45)); ?>
-        <?php echo $form->error($model, 'lastname'); ?>
+        <?php
+        echo $form->textField($model, 'lastname', array('size' => 45, 'maxlength' => 45));
+        echo $form->error($model, 'lastname');
+        ?>
     </div>
 </div>
-
 <div class="row collapse">
     <div class="three columns">
-        <span class="prefix"><?php echo $form->label($model,'email'); ?></span>
+        <span class="prefix"><?php echo $form->label($model, 'email'); ?></span>
     </div>
     <div class="nine columns mobile-input">
-    <?php if (Yii::app()->user->CheckAccess('1') || Yii::app()->user->isGuest) { ?>
-    <?php
-    echo $form->textField($model, 'email', array('size' => 45, 'maxlength' => 45));
-} else {
-    ?>
-    <?php
-    echo $form->textField($model, 'email', array('readonly' => true, 'class' => 'form-readonly'));
-}?>
-<?php echo $form->error($model, 'email'); ?>
+        <?php
+        if (Yii::app()->user->CheckAccess('1') || Yii::app()->user->isGuest) {
+            echo $form->textField($model, 'email', array('size' => 45, 'maxlength' => 45));
+        } else {
+            echo $form->textField($model, 'email', array('readonly' => true, 'class' => 'form-readonly'));
+            echo $form->error($model, 'email');
+        }
+        ?>
     </div>
 </div>
-
-
 <div class="row collapse">
     <div class="three columns">
-        <span class="prefix"><?php echo $form->label($model,'password'); ?></span>
+        <span class="prefix"><?php echo $form->label($model, 'password'); ?></span>
     </div>
     <div class="six columns mobile-input">
-        <?php echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 64)); ?>
-        <?php echo $form->error($model, 'password'); ?>
+        <?php
+        echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 64));
+        echo $form->error($model, 'password');
+        ?>
     </div>
     <div class="three columns mobile-input">
         <span class="postfix" style="font-size:.8em;">Mindestlänge 8 Zeichen</span>
@@ -83,78 +78,72 @@ $form = $this->beginWidget('CActiveForm', array(
 <div class="show-for-small"><br></div>
 <div class="row collapse">
     <div class="three columns">
-        <span class="prefix"><?php echo $form->label($model,'password_repeat'); ?></span>
+        <span class="prefix"><?php echo $form->label($model, 'password_repeat'); ?></span>
     </div>
     <div class="nine columns mobile-input">
-        <?php echo $form->passwordField($model, 'password_repeat', array('size' => 60, 'maxlength' => 64)); ?>
-        <?php echo $form->error($model, 'password_repeat'); ?>
+        <?php
+        echo $form->passwordField($model, 'password_repeat', array('size' => 60, 'maxlength' => 64));
+        echo $form->error($model, 'password_repeat');
+        ?>
     </div>
 </div>
-
-
-<?php if (Yii::app()->user->checkAccess('1')) { ?>
-
-    <?php echo $form->label($model, 'state'); ?>
+<?php
+if (Yii::app()->user->checkAccess('1')) {
+    echo $form->label($model, 'state');
+    ?>
     <div class="styled-select">
-        <?php echo $form->dropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt')); ?>
-        <?php echo $form->error($model, 'state'); ?>
+        <?php
+        echo $form->dropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt'));
+        echo $form->error($model, 'state');
+        ?>
     </div>
-
     <?php echo $form->label($model, 'role'); ?>
     <div class="styled-select">
         <?php
-        /**
-         * @todo Rollen Array bauen
-         */
         if (Yii::app()->user->checkAccess('0')) {
             echo $form->dropDownList($model, 'role', array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung', '0' => 'Administrator'));
         } else {
-            if($model->id != Yii::app()->user->getId()) {
-            echo $form->dropDownList($model, 'role', array('3' =>'Eltern', '2' => 'Lehrer'));
+            if ($model->id != Yii::app()->user->getId()) {
+                echo $form->dropDownList($model, 'role', array('3' => 'Eltern', '2' => 'Lehrer'));
+            } else {
+                echo $form->dropDownList($model, 'role', array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung'));
             }
-            else {
-            echo $form->dropDownList($model, 'role', array('3' =>'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung'));
-            }
-            
+            echo $form->error($model, 'role');
+        }
+    }
+    ?>
+</div>
+<?php if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) { ?>
+    <div class="row collapse">
+        <div class="three columns">
+            <span class="prefix"><?php echo $form->label($model, 'tan'); ?></span>
+        </div>
+        <div class="nine columns mobile-input">
+            <?php
+            echo $form->textField($model, 'tan', array('size' => 45, 'maxlength' => Yii::app()->params['tanSize']));
+            echo $form->error($model, 'tan');
             ?>
-            <?php echo $form->error($model, 'role'); ?>
-            
-       <?php }
-        ?>
+        </div>
     </div>
-<?php } if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) { ?>
-<div class="row collapse">
-    <div class="three columns">
-        <span class="prefix"><?php echo $form->label($model,'tan'); ?></span>
+    <div class="row ">
+        <div class="three columns"></div>
+        <div class="nine columns">
+            <?php $this->widget('CCaptcha'); ?>
+        </div>
     </div>
-    <div class="nine columns mobile-input">
-        <?php echo $form->textField($model, 'tan', array('size' => 45, 'maxlength' => Yii::app()->params['tanSize'])); ?>
-        <?php echo $form->error($model, 'tan'); ?>
+    <div class="row collapse">
+        <div class="three columns">
+            <span class="prefix"><?php echo $form->label($model, 'verifyCode'); ?></span>
+        </div>
+        <div class="nine columns mobile-input">
+            <?php
+            echo $form->textField($model, 'verifyCode');
+            echo $form->error($model, 'verifyCode');
+            ?>
+            <div class="hint">&nbsp;Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>
+        </div>
     </div>
-</div>
-
-
-<div class="row ">
-    <div class="three columns"></div>
-    <div class="nine columns">
-        <?php $this->widget('CCaptcha'); ?>
-    </div>
-</div>
-
-        
-<div class="row collapse">
-    <div class="three columns">
-        <span class="prefix"><?php echo $form->label($model,'verifyCode'); ?></span>
-    </div>
-    <div class="nine columns mobile-input">
-        <?php echo $form->textField($model, 'verifyCode');?>
-        <?php echo $form->error($model, 'verifyCode');?>
-        <div class="hint">&nbsp;Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>
-    </div>
-</div>
-    
-<?php } ?>
-
-<?php echo CHtml::submitButton($model->isNewRecord ? 'Registrieren' : 'Speichern', array('class' => 'button')); ?>
-
-<?php $this->endWidget(); ?>
+    <?php
+} echo CHtml::submitButton($model->isNewRecord ? 'Registrieren' : 'Speichern', array('class' => 'button'));
+$this->endWidget();
+?>

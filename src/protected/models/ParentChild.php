@@ -158,11 +158,25 @@ class ParentChild extends CActiveRecord {
      */
     public function search() {
         $criteria = new CDbCriteria;
+        $criteria->with = array('user', 'child');
+        $criteria->together = true;
         $criteria->compare('id', $this->id);
-        $criteria->compare('user_id', $this->user_id, true);
-        $criteria->compare('child_id', $this->child_id);
+        $criteria->compare('user.lastname', $this->user_id, true);
+        $criteria->compare('child.lastname', $this->child_id, true);
+        $sort = new CSort;
+        $sort->attributes = array(
+            'defaultOrder' => 'user.lastname DESC',
+            'user_id' => array(
+                'asc' => 'user.lastname',
+                'desc' => 'user.lastname desc'),
+            'child_id' => array(
+                'asc' => 'child.lastname',
+                'desc' => 'child.lastname desc'),
+        );
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'pagination' => array('pageSize' => 10),
+            'sort' => $sort,
         ));
     }
 
@@ -182,7 +196,7 @@ class ParentChild extends CActiveRecord {
         $criteria->limit = 10;
         return $criteria;
     }
-    
+
     /**
      * Gibt Suchkriterien von ParentChild zurück
      * @author David Mock <dumock@gmail.com>
@@ -198,7 +212,7 @@ class ParentChild extends CActiveRecord {
         $criteria->limit = 10;
         return $criteria;
     }
-    
+
     /**
      * Gibt ein Array mit höchstens 10 IDs zurück, die mit $lastname anfangen
      * @param string $lastname Nachname der zu suchenden Eltern
@@ -208,13 +222,13 @@ class ParentChild extends CActiveRecord {
         $match = addcslashes(ucfirst($lastname), '%_');
         $criteria = new CDbCriteria;
         $criteria->addCondition('user.lastname LIKE :match');
-        $criteria->params = array(':match' =>"$match%");
+        $criteria->params = array(':match' => "$match%");
         $criteria->with = array('user');
-        $criteria->select= '*';
+        $criteria->select = '*';
         $criteria->limit = 10;
         $a_data = $this->findAll($criteria);
         foreach ($a_data as $key => $value) {
-            $a_data[$key] = $value->user->id;            
+            $a_data[$key] = $value->user->id;
         }
         return $a_data;
     }

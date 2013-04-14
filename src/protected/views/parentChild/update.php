@@ -2,7 +2,7 @@
 /**
  * Verknüpfung aktualisieren
  */
-/**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,24 +19,22 @@
  */
 /* @var $this ParentChildController */
 /* @var $model ParentChild */
-
-$this->breadcrumbs=array(
-	'Parent Children'=>array('index'),
-	$model->id=>array('view','id'=>$model->id),
-	'Update',
+$this->breadcrumbs = array(
+    'Parent Children' => array('index'),
+    $model->id => array('view', 'id' => $model->id),
+    'Update',
 );
-
-$this->menu=array(
-	array('label'=>'Eltern-Kind-Verknüpfung anlegen', 'url'=>array('create')),
-	array('label'=>'Eltern-Kind-Verknüpfung anzeigen', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Eltern-Kind-Verknüpfungen verwalten', 'url'=>array('admin')),
+$this->menu = array(
+    array('label' => 'Eltern-Kind-Verknüpfung anlegen', 'url' => array('create')),
+    array('label' => 'Eltern-Kind-Verknüpfung anzeigen', 'url' => array('view', 'id' => $model->id)),
+    array('label' => 'Eltern-Kind-Verknüpfungen verwalten', 'url' => array('admin')),
 );
 ?>
 <div class="row">
     <div class="twelve columns centered">
         <fieldset>
             <legend>Eltern-Kind-Verkn&uuml;pfung Nummer <?php echo $model->id; ?> bearbeiten</legend>
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+            <?php echo $this->renderPartial('_form', array('model' => $model)); ?>
         </fieldset>
     </div>
 </div>

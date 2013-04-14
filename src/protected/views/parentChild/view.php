@@ -2,7 +2,7 @@
 /**
  * Parent Child Ansicht einer Verknüpfung
  */
-/**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,16 +19,14 @@
  */
 /* @var $this ParentChildController */
 /* @var $model ParentChild */
-
-$this->breadcrumbs=array(
-	'Parent Children'=>array('index'),
-	$model->id,
+$this->breadcrumbs = array(
+    'Parent Children' => array('index'),
+    $model->id,
 );
-
-$this->menu=array(
-	array('label'=>'Eltern-Kind-Verknüpfung anlegen', 'url'=>array('create')),
-	array('label'=>'Eltern-Kind-Verknüpfung löschen', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Sind Sie sich sicher, dass Sie diese Verknüpfung löschen möchten?')),
-	array('label'=>'Eltern-Kind-Verknüpfungen verwalten', 'url'=>array('admin')),
+$this->menu = array(
+    array('label' => 'Eltern-Kind-Verknüpfung anlegen', 'url' => array('create')),
+    array('label' => 'Eltern-Kind-Verknüpfung löschen', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => 'Sind Sie sich sicher, dass Sie diese Verknüpfung löschen möchten?')),
+    array('label' => 'Eltern-Kind-Verknüpfungen verwalten', 'url' => array('admin')),
 );
 ?>
 <div class="row">
@@ -36,16 +34,17 @@ $this->menu=array(
         <h2 class="text-center">Eltern-Kind-Verknüpfung Nummer <?php echo $model->id; ?></h2>
     </div>
 </div>
-
 <div class="row">
     <div class="twelve columns centered">
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'id',
-		array ('name' => 'user_id', 'value' => $model->user->firstname." ".$model->user->lastname),
-		array ('name' => 'child_id', 'value' => $model->child->firstname." ".$model->child->lastname),
-	),
-)); ?>
+        <?php
+        $this->widget('zii.widgets.CDetailView', array(
+            'data' => $model,
+            'attributes' => array(
+                'id',
+                array('name' => 'user_id', 'value' => $model->user->firstname . " " . $model->user->lastname),
+                array('name' => 'child_id', 'value' => $model->child->firstname . " " . $model->child->lastname),
+            ),
+        ));
+        ?>
     </div>
 </div>

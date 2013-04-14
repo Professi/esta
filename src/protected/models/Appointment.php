@@ -89,49 +89,49 @@ class Appointment extends CActiveRecord {
         );
     }
 
-        public static function getAllAppointments(){
-                    $criteria = new CDbCriteria();
-            $criteria->order = '`dateAndTime_id` ASC';
-            $pC = ParentChild::model()->findAllByAttributes(array('user_id' => Yii::app()->user->id));
-            if ($pC != null) {
-                foreach ($pC as $record) {
-                    $criteria->addCondition(array('parent_child_id=' . $record->id), 'OR');
-                }
-            } else {
-                $criteria->addCondition(array('parent_child_id' => '"impossible"'));
+    public static function getAllAppointments() {
+        $criteria = new CDbCriteria();
+        $criteria->order = '`dateAndTime_id` ASC';
+        $pC = ParentChild::model()->findAllByAttributes(array('user_id' => Yii::app()->user->id));
+        if ($pC != null) {
+            foreach ($pC as $record) {
+                $criteria->addCondition(array('parent_child_id=' . $record->id), 'OR');
             }
-            return new CActiveDataProvider('Appointment', array(
-                'criteria' => $criteria));
+        } else {
+            $criteria->addCondition(array('parent_child_id' => '"impossible"'));
+        }
+        return new CActiveDataProvider('Appointment', array(
+            'criteria' => $criteria));
     }
-    
+
     /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search() {
         $criteria = new CDbCriteria;
-        $criteria->with = array('user','parentChild','dateAndTime');
+        $criteria->with = array('user', 'parentChild', 'dateAndTime');
         $criteria->together = true;
         $criteria->compare('id', $this->id);
-        $criteria->compare('parentChild.user_id', ParentChild::model()->searchParentID($this->parent_child_id),true);
+        $criteria->compare('parentChild.user_id', ParentChild::model()->searchParentID($this->parent_child_id), true);
         $criteria->compare('dateAndTime.time', $this->dateAndTime_id);
         $criteria->compare('user.lastname', $this->user_id, true);
         $sort = new CSort;
         $sort->attributes = array(
-                        'defaultOrder' => 'dateAndTime.id DESC',
+            'defaultOrder' => 'dateAndTime.id DESC',
             'dateAndTime_id' => array(
                 'asc' => 'dateAndTime.id',
                 'desc' => 'dateAndTime.id desc'),
             'user_id' => array(
-                'asc' => 'user.id',
-                'desc' => 'user.id desc'),
+                'asc' => 'user.lastname',
+                'desc' => 'user.lastname desc'),
             'parent_child_id' => array(
-                'asc' => 'parentChild.id',
-                'desc' => 'parentChild.id desc'),
+                'asc' => 'parentChild.user_id',
+                'desc' => 'parentChild.user_id desc'),
         );
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
-            'pagination' => array('pageSize' => 20),
+            'pagination' => array('pageSize' => 10),
             'sort' => $sort,
         ));
     }
@@ -215,7 +215,7 @@ class Appointment extends CActiveRecord {
      */
     public function beforeSave() {
         $rc = parent::beforeSave();
-        if ($rc && Appointment::model()->countByAttributes(array('dateAndTime_id' => $this->dateAndTime_id,'user_id'=>  $this->user_id)) > 0) {
+        if ($rc && Appointment::model()->countByAttributes(array('dateAndTime_id' => $this->dateAndTime_id, 'user_id' => $this->user_id)) > 0) {
             $rc = false;
             if (Yii::app()->user->checkAccess('1')) {
                 $this->addError('dateAndTime_id', 'Der Lehrer hat bereits zu dieser Uhrzeit einen Termin.');
@@ -233,13 +233,13 @@ class Appointment extends CActiveRecord {
             $rc = false;
             Yii::app()->user->setFlash('failMsg', 'Sie können nur einen Termin bei diesem Lehrer pro Kind buchen.');
         }
-                if($rc && Appointment::model()->countByAttributes(array('parent_child_id'=> $this->parent_child_id, 'dateAndTime_id'=>$this->dateAndTime_id)) > 0) {
-          $rc = false;
-            if(Yii::app()->user->checkAccess('1')) {
-              $this->addError('dateAndTime_id', 'Dieser Benutzer hat bereits einen Termin zu dieser Uhrzeit.');
-          }  else {
-              $this->addError('dateAndTime_id', 'Sie haben bereits einen Termin zu dieser Uhrzeit.');
-          }
+        if ($rc && Appointment::model()->countByAttributes(array('parent_child_id' => $this->parent_child_id, 'dateAndTime_id' => $this->dateAndTime_id)) > 0) {
+            $rc = false;
+            if (Yii::app()->user->checkAccess('1')) {
+                $this->addError('dateAndTime_id', 'Dieser Benutzer hat bereits einen Termin zu dieser Uhrzeit.');
+            } else {
+                $this->addError('dateAndTime_id', 'Sie haben bereits einen Termin zu dieser Uhrzeit.');
+            }
         }
         if ($rc) {
             Yii::app()->user->setFlash('success', 'Ihr Termin wurde erfolgreich gebucht.');

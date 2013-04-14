@@ -2,7 +2,7 @@
 /**
  * Basis für CGridView der Benutzerverwaltung
  */
-/**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,25 +20,19 @@
 /* @var $this UserController */
 /* @var $data User */
 ?>
-
 <div class="view">
-
     <b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
     <?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id' => $data->id)); ?>
     <br />
-
     <b><?php echo CHtml::encode($data->getAttributeLabel('username')); ?>:</b>
     <?php echo CHtml::encode($data->username); ?>
     <br />
-
     <b><?php echo CHtml::encode($data->getAttributeLabel('createtime')); ?>:</b>
     <?php echo CHtml::encode(date(Yii::app()->params['dateTimeFormat'], $data->createtime)); ?>
     <br />
-
     <b><?php echo CHtml::encode($data->getAttributeLabel('firstname')); ?>:</b>
     <?php echo CHtml::encode($data->firstname); ?>
     <br />
-
     <b><?php echo CHtml::encode($data->getAttributeLabel('state')); ?>:</b>
     <?php
     $state = "";
@@ -53,7 +47,6 @@
             $sate = "Gesperrt";
             break;
     }
-
     echo CHtml::encode($state);
     ?>
     <br />

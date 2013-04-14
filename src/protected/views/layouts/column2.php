@@ -18,9 +18,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /* @var $this Controller */
+$this->beginContent('//layouts/main');
+echo $content;
 ?>
-<?php $this->beginContent('//layouts/main'); ?>
-<?php echo $content; ?>
 <div class="push"></div>
 <div class="row">
     <div id="sidebar" class="twelve columns">

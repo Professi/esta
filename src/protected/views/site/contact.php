@@ -2,7 +2,7 @@
 /**
  * Kontaktseite
  */
-/**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,111 +20,101 @@
 /* @var $this SiteController */
 /* @var $model ContactForm */
 /* @var $form CActiveForm */
-
 $this->pageTitle = Yii::app()->name . ' - Kontakt';
 $this->breadcrumbs = array(
     'contact',
 );
 ?>
-
 <div class="row">
     <div class="twelve columns">
-        
-
-<?php if (Yii::app()->user->hasFlash('contact')): ?>
-
-    <div class="flash-success">
-        <?php echo Yii::app()->user->getFlash('contact'); ?>
-    </div>
-
-<?php else: ?>
-    <div class="panel">
-        
-            Sollten Sie Fragen oder Anregungen haben, setzen Sie sich mit uns in Kontakt indem Sie das nachfolgende Formular ausfüllen.<br>
-            Vielen Dank.
-        
-    </div>
-
-
-        <?php
-        $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'contact-form',
-            'enableClientValidation' => true,
-            'clientOptions' => array(
-                'validateOnSubmit' => true,
-            ),
-        ));
-        ?>
-    <fieldset>
-        <legend>Kontakt</legend>
-        
-        <div class="row collapse">
-            <div class="two columns">
-                <span class="prefix"><?php echo $form->label($model,'name'); ?></span>
+        <?php if (Yii::app()->user->hasFlash('contact')): ?>
+            <div class="flash-success">
+                <?php echo Yii::app()->user->getFlash('contact'); ?>
             </div>
-            <div class="ten columns mobile-input">
-                <?php echo $form->textField($model, 'name'); ?>
-                <?php echo $form->error($model, 'name'); ?>
+        <?php else: ?>
+            <div class="panel">
+                Sollten Sie Fragen oder Anregungen haben, setzen Sie sich mit uns in Kontakt indem Sie das nachfolgende Formular ausfüllen.<br>
+                Vielen Dank.
             </div>
-        </div>
-        <div class="row collapse">
-            <div class="two columns">
-                <span class="prefix"><?php echo $form->label($model,'email'); ?></span>
-            </div>
-            <div class="ten columns mobile-input">
-                <?php echo $form->textField($model, 'email'); ?>
-                <?php echo $form->error($model, 'email'); ?>
-            </div>
-        </div>
-        <div class="row collapse">
-            <div class="two columns">
-                <span class="prefix"><?php echo $form->label($model,'subject'); ?></span>
-            </div>
-            <div class="ten columns mobile-input">
-                <?php echo $form->textField($model, 'subject', array('size' => 60, 'maxlength' => 128)); ?>
-                <?php echo $form->error($model, 'subject'); ?>
-            </div>
-        </div>
-
-               <div class="row collapse">
-            <div class="twelve columns" style="padding-left:.2em;">
-                <?php echo $form->textArea($model, 'body', array('rows' => 6, 'cols' => 50, 'placeholder' => 'Ihre Nachricht')); ?>
-                
-                <?php echo $form->error($model, 'body'); ?>
-            </div>
-        </div>
-        
-
-        <?php if (CCaptcha::checkRequirements()): ?>
-        <div class="row">
-            <div class="two columns"></div>
-            <div class="ten columns">
-                <?php $this->widget('CCaptcha'); ?>
-            </div>
-        </div>
+            <?php
+            $form = $this->beginWidget('CActiveForm', array(
+                'id' => 'contact-form',
+                'enableClientValidation' => true,
+                'clientOptions' => array(
+                    'validateOnSubmit' => true,
+                ),
+            ));
+            ?>
+            <fieldset>
+                <legend>Kontakt</legend>
                 <div class="row collapse">
                     <div class="two columns">
-                        <span class="prefix"><?php echo $form->label($model,'verifyCode'); ?></span>
+                        <span class="prefix"><?php echo $form->label($model, 'name'); ?></span>
                     </div>
                     <div class="ten columns mobile-input">
-                        <?php echo $form->textField($model, 'verifyCode'); ?>
-                        <?php echo $form->error($model, 'verifyCode'); ?>
-                        <div class="hint">&nbsp;Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>
+                        <?php
+                        echo $form->textField($model, 'name');
+                        echo $form->error($model, 'name');
+                        ?>
                     </div>
                 </div>
-                
-                
-                
-        <?php endif; ?>
+                <div class="row collapse">
+                    <div class="two columns">
+                        <span class="prefix"><?php echo $form->label($model, 'email'); ?></span>
+                    </div>
+                    <div class="ten columns mobile-input">
+                        <?php
+                        echo $form->textField($model, 'email');
+                        echo $form->error($model, 'email');
+                        ?>
+                    </div>
+                </div>
+                <div class="row collapse">
+                    <div class="two columns">
+                        <span class="prefix"><?php echo $form->label($model, 'subject'); ?></span>
+                    </div>
+                    <div class="ten columns mobile-input">
+                        <?php
+                        echo $form->textField($model, 'subject', array('size' => 60, 'maxlength' => 128));
+                        echo $form->error($model, 'subject');
+                        ?>
+                    </div>
+                </div>
 
-            <?php echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
-        
-    </fieldset>
-
-        <?php $this->endWidget(); ?>
-
-    
-    <p class="text-center"><?php echo CHtml::link('<b>Zurück zur Startseite</b>', 'index.php'); ?> </p>
+                <div class="row collapse">
+                    <div class="twelve columns" style="padding-left:.2em;">
+                        <?php
+                        echo $form->textArea($model, 'body', array('rows' => 6, 'cols' => 50, 'placeholder' => 'Ihre Nachricht'));
+                        echo $form->error($model, 'body');
+                        ?>
+                    </div>
+                </div>
+                <?php if (CCaptcha::checkRequirements()): ?>
+                    <div class="row">
+                        <div class="two columns"></div>
+                        <div class="ten columns">
+                            <?php $this->widget('CCaptcha'); ?>
+                        </div>
+                    </div>
+                    <div class="row collapse">
+                        <div class="two columns">
+                            <span class="prefix"><?php echo $form->label($model, 'verifyCode'); ?></span>
+                        </div>
+                        <div class="ten columns mobile-input">
+                            <?php
+                            echo $form->textField($model, 'verifyCode');
+                            echo $form->error($model, 'verifyCode');
+                            ?>
+                            <div class="hint">&nbsp;Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>
+                        </div>
+                    </div>
+                    <?php
+                endif;
+                echo CHtml::submitButton('Absenden', array('class' => 'small button'));
+                ?>
+            </fieldset>
+            <?php $this->endWidget(); ?>
+            <p class="text-center"><?php echo CHtml::link('<b>Zurück zur Startseite</b>', 'index.php'); ?> </p>
+        </div>
     </div>
-</div>
 <?php endif; ?>

@@ -20,56 +20,56 @@
 /* @var $this AppointmentController */
 /* @var $model User */
 ?>
+<div class="row">
+    <div class="twelve columns centered">
+        <h2 class="subheader">Lehrerauswahl</h2>
+        <hr>
+        <div class="panel">
+            <p>	Klicken Sie auf einen Buchstaben um sich alle Lehrer, deren Name mit diesem Buchstaben beginnt, anzeigen zu lassen.<br> 
+                Drücken Sie auf den Stern um eine Liste mit allen Lehrer zu erhalten.
+            </p>
+            <p class="js_show" style="display: none;">Sie können alternativ auch den Namen in das Suchfeld eingeben um alle zutreffenden Möglichkeiten zu sehen.</p>
+            <p>     Wenn Sie den richtigen Lehrer gefunden haben, 
+                klicken Sie einfach auf das Uhrsymbol neben seinem Namen um zu der Terminvereinbarung des Lehres zu gelangen.
+            </p>
+        </div>
         <div class="row">
-            <div class="twelve columns centered">
-                <h2 class="subheader">Lehrerauswahl</h2>
-                <hr>
-                <div class="panel">
-                        <p>	Klicken Sie auf einen Buchstaben um sich alle Lehrer, deren Name mit diesem Buchstaben beginnt, anzeigen zu lassen.<br> 
-                                Drücken Sie auf den Stern um eine Liste mit allen Lehrer zu erhalten.
-                        </p>
-                        <p class="js_show" style="display: none;">Sie können alternativ auch den Namen in das Suchfeld eingeben um alle zutreffenden Möglichkeiten zu sehen.</p>
-                        <p>     Wenn Sie den richtigen Lehrer gefunden haben, 
-                                klicken Sie einfach auf das Uhrsymbol neben seinem Namen um zu der Terminvereinbarung des Lehres zu gelangen.
-                        </p>
-                </div>
-            <div class="row">
-                <div class="ten columns centered text-center">
-                    <fieldset>
+            <div class="ten columns centered text-center">
+                <fieldset>
                     <div class="hide-for-small" style="line-height:2em;" >
                         <div style="margin-bottom: .6em;">
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=a" class="small teacher button">A</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=b" class="small teacher button">B</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=c" class="small teacher button">C</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=d" class="small teacher button">D</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=e" class="small teacher button">E</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=f" class="small teacher button">F</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=g" class="small teacher button">G</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=h" class="small teacher button">H</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=i" class="small teacher button">I</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=j" class="small teacher button">J</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=k" class="small teacher button">K</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=l" class="small teacher button">L</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=m" class="small teacher button">M</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=n" class="small teacher button">N</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=o" class="small teacher button">O</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=a" class="small teacher button">A</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=b" class="small teacher button">B</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=c" class="small teacher button">C</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=d" class="small teacher button">D</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=e" class="small teacher button">E</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=f" class="small teacher button">F</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=g" class="small teacher button">G</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=h" class="small teacher button">H</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=i" class="small teacher button">I</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=j" class="small teacher button">J</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=k" class="small teacher button">K</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=l" class="small teacher button">L</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=m" class="small teacher button">M</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=n" class="small teacher button">N</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=o" class="small teacher button">O</a>
                         </div>
                         <div>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=p" class="small teacher button">P</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=q" class="small teacher button">Q</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=r" class="small teacher button">R</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=s" class="small teacher button">S</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=t" class="small teacher button">T</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=u" class="small teacher button">U</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=v" class="small teacher button">V</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=w" class="small teacher button">W</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=x" class="small teacher button">X</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=y" class="small teacher button">Y</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=z" class="small teacher button">Z</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=ü" class="small teacher button">&Auml;</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=ö" class="small teacher button">&Ouml;</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=ä" class="small teacher button">&Uuml;</a>
-                        <a href="index.php?r=appointment/getTeacher&amp;letter=" class="small teacher button">*</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=p" class="small teacher button">P</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=q" class="small teacher button">Q</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=r" class="small teacher button">R</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=s" class="small teacher button">S</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=t" class="small teacher button">T</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=u" class="small teacher button">U</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=v" class="small teacher button">V</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=w" class="small teacher button">W</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=x" class="small teacher button">X</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=y" class="small teacher button">Y</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=z" class="small teacher button">Z</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=ü" class="small teacher button">&Auml;</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=ö" class="small teacher button">&Ouml;</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=ä" class="small teacher button">&Uuml;</a>
+                            <a href="index.php?r=appointment/getTeacher&amp;letter=" class="small teacher button">*</a>
                         </div>
                     </div>
                     <div class="show-for-small" style="line-height:2.5em;">
@@ -124,52 +124,46 @@
                         </div>
                         <div class="nine columns mobile-input">
                             <?php
-                            $this->widget('zii.widgets.jui.CJuiAutoComplete',array(
-                                'name'=>'teacher-ac',
+                            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                                'name' => 'teacher-ac',
                                 //'source'=>$dataProvider,
                                 // additional javascript options for the autocomplete plugin
-                                'sourceUrl'=>'index.php?r=user/search&role=2',
-                                'options'=>array(
-                                    'minLength'=>'2',
+                                'sourceUrl' => 'index.php?r=user/search&role=2',
+                                'options' => array(
+                                    'minLength' => '2',
                                 ),
-                                'htmlOptions'=>array(
-                                    //'style'=>'height:20px;',
+                                'htmlOptions' => array(
+                                //'style'=>'height:20px;',
                                 ),
                             ));
                             ?>
                         </div>
                     </div>
-                    </fieldset>
-                </div>
+                </fieldset>
             </div>
-            
-
-<?php
-$this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'teacher-grid',
-    'dataProvider' => $dataProvider->searchTeacher(),
-    /**
-     * @todo Suche einbauen
-     */
-    //   'filter' => $dataProvider, 
-    'columns' => array(
-        'title',
-        'firstname',
-        'lastname',        
-        array(
-            'class' => 'CustomButtonColumn', //ändern für zB. Termin vereinbaren
-            'template' => '{date}',
-            'buttons' => array(
-                'date' => array(
-                    'label' => 'Termin vereinbaren',
-                    'url' => '"index.php?r=Appointment/makeAppointment&teacher=".$data->id',
-                    'imageUrl' => Yii::app()->request->baseUrl.'/img/alarm.png',
-                    'options' => array('class' => 'column-button alarm_png', ),
-                ),
-            ),
-        ),
-    )
-));
-?>
         </div>
+        <?php
+        $this->widget('zii.widgets.grid.CGridView', array(
+            'id' => 'teacher-grid',
+            'dataProvider' => $dataProvider->searchTeacher(),
+            'columns' => array(
+                'title',
+                'firstname',
+                'lastname',
+                array(
+                    'class' => 'CustomButtonColumn', //ändern für zB. Termin vereinbaren
+                    'template' => '{date}',
+                    'buttons' => array(
+                        'date' => array(
+                            'label' => 'Termin vereinbaren',
+                            'url' => '"index.php?r=Appointment/makeAppointment&teacher=".$data->id',
+                            'imageUrl' => Yii::app()->request->baseUrl . '/img/alarm.png',
+                            'options' => array('class' => 'column-button alarm_png',),
+                        ),
+                    ),
+                ),
+            )
+        ));
+        ?>
+    </div>
 </div>

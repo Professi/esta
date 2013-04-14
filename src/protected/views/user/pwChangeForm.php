@@ -2,7 +2,7 @@
 /**
  * View um ein neues Passwort einzutragen.
  */
-/**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,40 +26,39 @@
         <div class="alert-box secondary">
             Sie können nun Ihr Passwort ändern.
         </div>
-<?php
-$form = $this->beginWidget('CActiveForm', array(
-    'id' => 'user-form',
-        //'enableAjaxValidation' => true,
-        //'enableClientValidation'=>true,
-        // 'clientOptions'=>array('validateOnSubmit'=>true),
+        <?php
+        $form = $this->beginWidget('CActiveForm', array(
+            'id' => 'user-form',
         ));
-?>
+        ?>
         <fieldset>
-<div class="row collapse">
-    <div class="three columns">
-        <span class="prefix"><?php echo $form->label($model,'password'); ?></span>
-    </div>
-    <div class="six columns">
-        <?php echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 128)); ?>
-        <?php echo $form->error($model, 'password'); ?>
-    </div>
-    <div class="three columns">
-        <span class="postfix" style="font-size:.8em;">Mindeslänge 8 Zeichen</span>
-    </div>
-</div>
-
-<div class="row collapse">
-    <div class="three columns">
-        <span class="prefix"><?php echo $form->label($model,'password_repeat'); ?></span>
-    </div>
-    <div class="nine columns">
-        <?php echo $form->passwordField($model, 'password_repeat', array('size' => 60, 'maxlength' => 128)); ?>
-        <?php echo $form->error($model, 'password_repeat'); ?>
-    </div>
-</div>
-
-    <?php echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
+            <div class="row collapse">
+                <div class="three columns">
+                    <span class="prefix"><?php echo $form->label($model, 'password'); ?></span>
+                </div>
+                <div class="six columns">
+                    <?php
+                    echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 128));
+                    echo $form->error($model, 'password');
+                    ?>
+                </div>
+                <div class="three columns">
+                    <span class="postfix" style="font-size:.8em;">Mindeslänge 8 Zeichen</span>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="three columns">
+                    <span class="prefix"><?php echo $form->label($model, 'password_repeat'); ?></span>
+                </div>
+                <div class="nine columns">
+                    <?php
+                    echo $form->passwordField($model, 'password_repeat', array('size' => 60, 'maxlength' => 128));
+                    echo $form->error($model, 'password_repeat');
+                    ?>
+                </div>
+            </div>
+            <?php echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
         </fieldset>
-<?php $this->endWidget(); ?>
+        <?php $this->endWidget(); ?>
     </div>
 </div>

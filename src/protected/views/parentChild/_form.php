@@ -14,20 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 /* @var $this ParentChildController */
 /* @var $model ParentChild */
 /* @var $form CActiveForm */
-?>
-
-<?php
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'parent-child-form',
     'enableAjaxValidation' => false,
         ));
-?>
-
-<?php
 if (Yii::app()->user->checkAccess('1')) {
     ?>
     <div class="row collapse">
@@ -47,9 +40,9 @@ if (Yii::app()->user->checkAccess('1')) {
                 'htmlOptions' => array(
                 ),
             ));
+            echo $form->error($model, 'user_id');
+            echo $form->hiddenField($model, 'user_id', array('id' => 'parentChild_user_id', 'value' => $model->attributes['user_id']));
             ?>
-            <?php echo $form->error($model, 'user_id'); ?>
-            <?php echo $form->hiddenField($model, 'user_id', array('id' => 'parentChild_user_id', 'value' => $model->attributes['user_id'])); ?>
         </div>
     </div>
 <? } ?>
@@ -58,8 +51,10 @@ if (Yii::app()->user->checkAccess('1')) {
         <span class="prefix">Vorname</span>
     </div>
     <div class="ten columns mobile-input">
-        <?php echo $form->textField($model, 'childFirstName'); ?>
-        <?php echo $form->error($model, 'childFirstName'); ?>
+        <?php
+        echo $form->textField($model, 'childFirstName');
+        echo $form->error($model, 'childFirstName');
+        ?>
     </div>
 </div>
 
@@ -68,11 +63,14 @@ if (Yii::app()->user->checkAccess('1')) {
         <span class="prefix">Nachname</span>
     </div>
     <div class="ten columns mobile-input">
-        <?php echo $form->textField($model, 'childLastName'); ?>
-        <?php echo $form->error($model, 'childLastName'); ?>
+        <?php
+        echo $form->textField($model, 'childLastName');
+        echo $form->error($model, 'childLastName');
+        ?>
     </div>
 </div>            
 <br>
-<?php echo CHtml::submitButton($model->isNewRecord ? 'Anlegen' : 'Speichern', array('class' => 'small button')); ?>
-
-<?php $this->endWidget(); ?>
+<?php
+echo CHtml::submitButton($model->isNewRecord ? 'Anlegen' : 'Speichern', array('class' => 'small button'));
+$this->endWidget();
+?>

@@ -2,7 +2,7 @@
 /**
  * Anzeige der generierten TANs
  */
-/**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,13 +27,13 @@
 </div>
 <div class="row">
     <div class="five columns centered">
-<?php
-$this->widget('zii.widgets.grid.CGridView', array(
-    'dataProvider'=>$dataProvider,
-    'columns'=>array(
-        'tan',
-    )
-));
-?>
+        <?php
+        $this->widget('zii.widgets.grid.CGridView', array(
+            'dataProvider' => $dataProvider,
+            'columns' => array(
+                'tan',
+            )
+        ));
+        ?>
     </div>
 </div>

@@ -2,7 +2,7 @@
 /**
  * CSV Upload Form um Lehrer zu importieren
  */
-/**Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,17 +21,17 @@
 /* @var $model CsvUpload */
 /* @var $form CActiveForm */
 ?>
-
 <div class="row">
     <div class="five columns centered">
         <fieldset>
-<?php   $form=$this->beginWidget('CActiveForm', array( 'id'=>'csv-form', 'enableAjaxValidation'=>true, 'htmlOptions' => array('enctype' => 'multipart/form-data'), ));
-?>
-<?php echo $form->fileField($model,'file'); ?> 
-<?php echo $form->error($model, 'file'); ?>
-<?php echo CHtml::submitButton('Importieren', array('class' => 'button')); ?>
-
-<?php $this->endWidget(); ?>
+            <?php
+            $form = $this->beginWidget('CActiveForm', array('id' => 'csv-form', 'enableAjaxValidation' => true,
+                'htmlOptions' => array('enctype' => 'multipart/form-data'),));
+            echo $form->fileField($model, 'file');
+            echo $form->error($model, 'file');
+            echo CHtml::submitButton('Importieren', array('class' => 'button'));
+            $this->endWidget();
+            ?>
         </fieldset>
     </div>
 </div>

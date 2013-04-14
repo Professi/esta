@@ -21,7 +21,7 @@
 /* @var $model Appointment */
 /* @var $blockedApp BlockedAppointment */
 Yii::app()->clientScript->registerCoreScript('jquery.ui');
-Yii::app()->getClientScript()->registerCssFile(Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css');
+Yii::app()->getClientScript()->registerCssFile(Yii::app()->clientScript->getCoreScriptUrl() . '/jui/css/base/jquery-ui.css');
 $this->breadcrumbs = array(
     'Appointments' => array('index'),
     'Manage',
@@ -58,7 +58,7 @@ $this->menu = array(
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'appointment-grid',
     'dataProvider' => $model->search(),
-	'filter'=>$model,
+    'filter' => $model,
     'columns' => array(
         array('name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
         array('name' => 'parent_child_id', 'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'),
@@ -74,11 +74,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
     </div>
 </div>
 
-<?php if (Yii::app()->params['allowBlockingAppointments']) { 
+<?php
+if (Yii::app()->params['allowBlockingAppointments']) {
     $this->widget('zii.widgets.grid.CGridView', array(
         'id' => 'appointmentBlock-grid',
         'dataProvider' => $blockedApp->search(),
-        'filter'=>$blockedApp,
+        'filter' => $blockedApp,
         'columns' => array(
             array('name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
             array('name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),

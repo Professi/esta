@@ -19,12 +19,10 @@
  */
 /* @var $this AppointmentController */
 /* @var $model Appointment */
-
 $this->breadcrumbs = array(
     'Appointments' => array('index'),
     $model->id,
 );
-
 $this->menu = array(
     array('label' => 'Termin anlegen', 'url' => array('create')),
     array('label' => 'Termin bearbeiten', 'url' => array('update', 'id' => $model->id)),
@@ -32,30 +30,25 @@ $this->menu = array(
     array('label' => 'Termine verwalten', 'url' => array('admin')),
 );
 ?>
-
 <div class="row">
     <div class="twelve columns centered">
         <h2 class="text-center">Termin Nummer <?php echo $model->id; ?></h2>
     </div>
 </div>
-
 <div class="row">
     <div class="twelve columns centered">
-<?php
-$this->widget('zii.widgets.CDetailView', array(
-    'data' => $model,
-    'attributes' => array(
-        'id',
-        array('name' => 'time', 'value' => date(Yii::app()->params['timeFormat'],strtotime($model->dateAndTime->time))),
-        array('name' => 'date_id', 'value' => date(Yii::app()->params['dateFormat'],strtotime($model->dateAndTime->date->date))),
-        //	'parent_child_id',
-        array('name' => 'Schüler', 'value' => $model->parentChild->child->firstname . " " . $model->parentChild->child->lastname),
-        array('name' => 'Erziehungsberechtigte/r', 'value' => $model->parentChild->user->firstname . " " . $model->parentChild->user->lastname),
-        array('name' => 'Lehrer', 'value' => $model->user->title." ".$model->user->firstname." ".$model->user->lastname),
-    //array('label'=>'Status','value'=>$model->getStateName()),
-    ),
-));
-?>
-        
+        <?php
+        $this->widget('zii.widgets.CDetailView', array(
+            'data' => $model,
+            'attributes' => array(
+                'id',
+                array('name' => 'time', 'value' => date(Yii::app()->params['timeFormat'], strtotime($model->dateAndTime->time))),
+                array('name' => 'date_id', 'value' => date(Yii::app()->params['dateFormat'], strtotime($model->dateAndTime->date->date))),
+                array('name' => 'Schüler', 'value' => $model->parentChild->child->firstname . " " . $model->parentChild->child->lastname),
+                array('name' => 'Erziehungsberechtigte/r', 'value' => $model->parentChild->user->firstname . " " . $model->parentChild->user->lastname),
+                array('name' => 'Lehrer', 'value' => $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname),
+            ),
+        ));
+        ?>
     </div>
 </div>

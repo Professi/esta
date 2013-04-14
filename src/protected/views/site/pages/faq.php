@@ -35,9 +35,9 @@ $this->breadcrumbs = array(
             <li><a href="#Q4">Wie kann ich meine Benutzerdaten ändern?</a></li>
             <li><a href="#Q5">Wie kann ich einen Termin vereinbaren?</a></li>
             <?php if (Yii::app()->user->checkAccess('3') || Yii::app()->user->isGuest()) { ?>
-            <li><a href="#Q6">Wie kann ich einen Termin löschen?</a></li>
+                <li><a href="#Q6">Wie kann ich einen Termin löschen?</a></li>
             <?php } else { ?>
-            <li><a href="#Q7">Wie kann ich einen Termin löschen?</a></li>
+                <li><a href="#Q7">Wie kann ich einen Termin löschen?</a></li>
             <?php } ?>
             <li><a href="#Q8">Wie kann ich meine Termine drucken?</a></li>
             <li><a href="#Q9">Wie kann ich die Schule kontaktieren?</a></li>
@@ -50,45 +50,37 @@ $this->breadcrumbs = array(
         </p>
         <h4 class="small subheader">Was mache ich, wenn ich mein Passwort vergessen habe?</h4>
         <p id="Q2">
-            
         </p>
         <h4 class="small subheader">Wie kann ich Schüler hinzufügen?</h4>
         <p id="Q3">
-            
         </p>
         <h4 class="small subheader">Wie kann ich meine Benutzerdaten ändern?</h4>
         <p id="Q4">
-            
         </p>
         <h4 class="small subheader">Wie kann ich einen Termin vereinbaren?</h4>
         <p id="Q5">
-            
         </p>
         <?php if (Yii::app()->user->checkAccess('3') || Yii::app()->user->isGuest()) { ?>
-        <h4 class="small subheader">Wie kann ich einen Termin löschen?</h4>
-        <p id="Q6">
-            
-        </p>
+            <h4 class="small subheader">Wie kann ich einen Termin löschen?</h4>
+            <p id="Q6">
+            </p>
         <?php } else { ?>
-        <h4 class="small subheader">Wie kann ich einen Termin löschen?</h4>
-        <p id="Q7">
-            
-        </p>
+            <h4 class="small subheader">Wie kann ich einen Termin löschen?</h4>
+            <p id="Q7">
+            </p>
         <?php } ?>
         <h4 class="small subheader">Wie kann ich meine Termine drucken?</h4>
         <p id="Q8">
-            
         </p>
         <h4 class="small subheader">Wie kann ich die Schule kontaktieren?</h4>
         <p id="Q9">
-            
         </p>
-         <p class="text-center">
+        <p class="text-center">
             <?php
             echo CHtml::link('<b>Zurück zur Startseite</b>', Yii::app()->user->checkAccess('1') == TRUE ? 'index.php' :
                             'index.php?r=Appointment/index');
             ?> 
-         </p>
+        </p>
     </div>
 </div>
 

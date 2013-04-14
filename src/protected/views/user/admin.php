@@ -19,18 +19,15 @@
  */
 /* @var $this UserController */
 /* @var $model User */
-
 $this->breadcrumbs = array(
     'Users' => array('index'),
     'Manage',
 );
-
 $this->menu = array(
     array('label' => 'Benutzer erstellen', 'url' => array('create')),
     array('label' => 'Pseudobenutzer erstellen', 'url' => array('createDummy')),
     array('label' => 'Lehrer importieren', 'url' => array('importTeachers')),
 );
-
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -58,7 +55,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'username', 'header' => 'E-Mail'),
         array('name' => 'firstname',),
         'lastname',
-        array('name' => 'title', 'htmlOptions' => array ('width' => '5%')),
+        array('name' => 'title', 'htmlOptions' => array('width' => '5%')),
         array('name' => 'state',
             'value' => 'User::getFormattedState($data->state)',
             'filter' => CHtml::listData(
@@ -69,7 +66,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'filter' => CHtml::listData(Role::model()->findAll(), 'id', 'title')),
         array(
             'class' => 'CustomButtonColumn',
-            'htmlOptions' => array ('width' => '10%', 'style' => 'text-align:center;')
+            'htmlOptions' => array('width' => '10%', 'style' => 'text-align:center;')
         )
     )
 ));

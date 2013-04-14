@@ -2,7 +2,7 @@
 /**
  * ParentChild _View
  */
-/*Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,18 +20,14 @@
 /* @var $this ParentChildController */
 /* @var $data ParentChild */
 ?>
-
 <div class="view">
-       <ul class="square">
-
-    <li>
-	<?php  echo CHtml::encode($data->child->firstname." ".$data->child->lastname); ?>
-        &nbsp;
-        <a href="index.php?r=parentChild/delete&id=<?php echo $data->id ?>">
-            <span class="hide-for-print" aria-hidden="true" data-icon="&#xe014;">&nbsp;</span>
-        </a>
-    </li>
-
-        </ul>
-
+    <ul class="square">
+        <li>
+            <?php echo CHtml::encode($data->child->firstname . " " . $data->child->lastname); ?>
+            &nbsp;
+            <a href="index.php?r=parentChild/delete&id=<?php echo $data->id ?>">
+                <span class="hide-for-print" aria-hidden="true" data-icon="&#xe014;">&nbsp;</span>
+            </a>
+        </li>
+    </ul>
 </div>

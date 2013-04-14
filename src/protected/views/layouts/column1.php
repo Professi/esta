@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Spalte 1 Layout
  */
@@ -17,9 +17,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this Controller */ ?>
-<?php $this->beginContent('//layouts/main'); ?>
+/* @var $this Controller */
+$this->beginContent('//layouts/main');
+?>
 <div id="content">
-	<?php echo $content; ?>
+    <?php echo $content; ?>
 </div><!-- content -->
 <?php $this->endContent(); ?>

@@ -20,15 +20,13 @@
 /* @var $this AppointmentController */
 /* @var $data Appointment */
 ?>
-
-
 <div class="panel">
     <div class="row">
         <div class="one columns">
-            <b>#<?php echo CHtml::encode($index+1);?></b>
+            <b>#<?php echo CHtml::encode($index + 1); ?></b>
         </div>
         <div class="eleven columns">
-            <b>Am <?php echo CHtml::encode(date('d.m.Y',  strtotime($data->dateAndTime->date->date))); ?> um <?php echo CHtml::encode(date('H:i', strtotime($data->dateAndTime->time))); ?></b>
+            <b>Am <?php echo CHtml::encode(date('d.m.Y', strtotime($data->dateAndTime->date->date))); ?> um <?php echo CHtml::encode(date('H:i', strtotime($data->dateAndTime->time))); ?></b>
         </div>
     </div>
     <br>
@@ -38,7 +36,7 @@
             <i>Ihr Kind</i>
         </div>
         <div class="ten columns">
-            <?php echo CHtml::encode($data->parentChild->child->firstname.' '.$data->parentChild->child->lastname); ?>
+            <?php echo CHtml::encode($data->parentChild->child->firstname . ' ' . $data->parentChild->child->lastname); ?>
         </div>
     </div>
     <br>
@@ -48,8 +46,8 @@
             <i>bei</i>
         </div>
         <div class="ten columns">
-             <?php echo CHtml::encode($data->user->title." ".$data->user->firstname." ".$data->user->lastname); ?>
+            <?php echo CHtml::encode($data->user->title . " " . $data->user->firstname . " " . $data->user->lastname); ?>
         </div>
-        <a class="small button right hide-for-print" href="index.php?r=appointment/delete&amp;id=<?php echo CHtml::encode($data->id);?>">Termin l&ouml;schen</a>
+        <a class="small button right hide-for-print" href="index.php?r=appointment/delete&amp;id=<?php echo CHtml::encode($data->id); ?>">Termin l&ouml;schen</a>
     </div>
 </div>

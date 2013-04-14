@@ -105,16 +105,17 @@ class ParentChildController extends Controller {
      */
     public function actionCreate() {
         $model = new ParentChild;
+        $userNameString = '';
         if (isset($_GET['id'])) {
-                $userTemp = User::model()->findByPk($_GET['id']);
-                $model->user_id = $_GET['id'];
-                $userNameString = $userTemp->firstname." ".$userTemp->lastname;
-            } else {
-                $userNameString = '';
-            }
+            $userTemp = User::model()->findByPk($_GET['id']);
+            $model->user_id = $_GET['id'];
+            $userNameString = $userTemp->firstname . " " . $userTemp->lastname;
+        }
         if (isset($_POST['ParentChild'])) {
             $model->attributes = $_POST['ParentChild'];
-            $userNameString = $model->user->firstname." ".$model->user->lastname;
+            if (isset($model->user->firstname) && isset($model->user->lastname)) {
+                $userNameString = $model->user->firstname . " " . $model->user->lastname;
+            }
             if ($model->validate()) {
                 if (ParentChild::model()->countByAttributes(
                                 array('user_id' => $model->attributes['user_id'])) <
@@ -158,9 +159,9 @@ class ParentChildController extends Controller {
     public function actionAdmin() {
         $model = new ParentChild('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['ParentChild']))
+        if (isset($_GET['ParentChild'])) {
             $model->attributes = $_GET['ParentChild'];
-
+        }
         $this->render('admin', array(
             'model' => $model,
         ));
@@ -206,5 +207,5 @@ class ParentChildController extends Controller {
             Yii::app()->end();
         }
     }
-    
+
 }
