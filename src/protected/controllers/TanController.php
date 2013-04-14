@@ -54,23 +54,6 @@ class TanController extends Controller {
     }
 
     /**
-     * Creates a new model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     */
-    public function actionCreate() {
-        $model = new Tan;
-        if (isset($_POST['Tan'])) {
-            $model->attributes = $_POST['Tan'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->tan));
-        }
-
-        $this->render('create', array(
-            'model' => $model,
-        ));
-    }
-
-    /**
      * action um Tans zu generieren
      */
     public function actionGenTans() {
