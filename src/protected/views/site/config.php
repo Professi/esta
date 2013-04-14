@@ -50,6 +50,72 @@ Yii::app()->clientScript->registerPackage('jquery');
             </div>
             <div class="row collapse">
                 <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'schoolStreet'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'schoolStreet');
+                    echo $form->error($model, 'schoolStreet');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'schoolCity'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'schoolCity');
+                    echo $form->error($model, 'schoolCity');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'schoolTele'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'schoolTele');
+                    echo $form->error($model, 'schoolTele');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'schoolFax'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'schoolFax');
+                    echo $form->error($model, 'schoolFax');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'schoolEmail'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'schoolEmail');
+                    echo $form->error($model, 'schoolEmail');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'useSchoolEmailForContactForm'); ?></span>
+                </div>
+                <div class="four columns styled-select">
+                    <?php
+                    echo $form->dropDownList($model, 'useSchoolEmailForContactForm', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'useSchoolEmailForContactForm');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'adminEmail'); ?></span>
                 </div>
                 <div class="four columns">

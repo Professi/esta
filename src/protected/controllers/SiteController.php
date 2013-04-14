@@ -143,7 +143,12 @@ class SiteController extends Controller {
                 $name = '=?UTF-8?B?' . base64_encode($model->name) . '?=';
                 $subject = '=?UTF-8?B?' . base64_encode($model->subject) . '?=';
                 $mail = new Mail;
-                $mail->sendMail($subject, $model->body, Yii::app()->params['adminEmail'], $model->email, $name);
+                if (Yii::app()->params['useSchoolEmailForContactForm']) {
+                    $toMail = Yii::app()->params['schoolEmail'];
+                } else {
+                    $toMail = Yii::app()->params['adminEmail'];
+                }
+                $mail->sendMail($subject, $model->body, $toMail, $model->email, $name);
                 Yii::app()->user->setFlash('contact', 'Vielen Dank dass Sie uns kontaktieren. Wir werden Ihnen so schnell wie möglich antworten.');
                 $this->refresh();
             }
@@ -189,15 +194,20 @@ class SiteController extends Controller {
         }
     }
 
+    /**
+     * Zeigt die Statistikseite an
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
     public function actionStatistics() {
         if (!Yii::app()->user->isGuest()) {
             $appointments = Appointment::model()->count() + BlockedAppointment::model()->count();
-            $teachers = UserRole::model()->countByAttributes(array('role_id'=>2));
+            $teachers = UserRole::model()->countByAttributes(array('role_id' => 2));
             $freeAppointments = (DateAndTime::model()->count() * $teachers) - $appointments;
-            $this->render('statistics', array('freeApps'=>$freeAppointments,'apps'=>$appointments,'teachers'=>$teachers));
+            $this->render('statistics', array('freeApps' => $freeAppointments, 'apps' => $appointments, 'teachers' => $teachers));
         } else {
             $this->throwFourNullThree();
         }
     }
 
 }
+

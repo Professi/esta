@@ -42,8 +42,14 @@ class ConfigForm extends CFormModel {
     public $allowBlockingAppointments;
     public $appointmentBlocksPerDate;
     public $lengthReasonAppointmentBlocked;
-
-
+    public $schoolStreet;
+    public $schoolCity;
+    public $schoolTele;
+    public $schoolFax;
+    public $schoolEmail;
+    public $useSchoolEmailForContactForm;
+    
+    
     public function init() {
         $this->attributes = Yii::app()->params->toArray();
     }
@@ -56,13 +62,14 @@ class ConfigForm extends CFormModel {
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
                 'durationTempBans,maxAttemptsForLogin,timeFormat,dateFormat,' .
                 'allowBlockingAppointments,appointmentBlocksPerDate,' .
-                'lengthReasonAppointmentBlocked', 'required'),
-            array('fromMailHost,adminEmail', 'email'),
+                'lengthReasonAppointmentBlocked,schoolStreet,schoolCity,' .
+                'schoolTele,schoolFax,schoolEmail', 'required'),
+            array('fromMailHost,adminEmail,schoolEmail', 'email'),
             array('emailHost,fromMail,dateFormat', 'length', 'min' => 4),
             array('dateTimeFormat', 'length', 'min' => 5),
             array('defaultTeacherPassword', 'length', 'min' => 8),
             array('salt', 'length', 'min' => 16, 'max' => 64),
-            array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments',
+            array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments,useSchoolEmailForContactForm',
                 'boolean'),
             array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,'
                 . 'durationTempBans,maxAttemptsForLogin,appointmentBlocksPerDate,'
@@ -102,10 +109,14 @@ class ConfigForm extends CFormModel {
             'timeFormat' => 'Zeitformat (z.B. H:i)',
             'allowBlockingAppointments'=>'Blockieren von Terminen erlauben',
             'appointmentBlocksPerDate'=>'Anzahl der Termine die blockiert werden dürfen',
-            'lengthReasonAppointmentBlocked'=>'Minimallänge eines Grundes um einen Termin zu blocken'
+            'lengthReasonAppointmentBlocked'=>'Minimallänge eines Grundes um einen Termin zu blocken',
+            'schoolStreet'=>'Schulstraße',
+            'schoolCity'=>'Postleitzahl, Ort',
+            'schoolTele'=>'Telefonnummer',
+            'schoolFax'=>'Faxnummer',
+            'schoolEmail'=>'Allgemeine E-Mail Adresse',
+            'useSchoolEmailForContactForm'=>'Allgemeine E-Mail Adresse für das Kontaktformular verwenden',
             );
     }
-
 }
-
 ?>

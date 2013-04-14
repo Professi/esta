@@ -44,6 +44,12 @@ $array2 = array(
             'allowBlockingAppointments'=>true,
             'appointmentBlocksPerDate'=>2,
             'lengthReasonAppointmentBlocked'=>5,
+            'schoolStreet'=> 'Gartenstraße 28',
+            'schoolCity'=> '65719 Hofheim',
+            'schoolTele'=> '06192 2904-0',
+            'schoolFax'=> '06192 2904-66',
+            'schoolEmail'=> 'office@bws-hofheim.de',
+            'useSchoolEmailForContactForm'=>true,
                 );
 if(empty($arr)) {
     return $array2;
