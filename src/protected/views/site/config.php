@@ -35,8 +35,93 @@ Yii::app()->clientScript->registerPackage('jquery');
         </div>
     </div>
     <div class="row">
+        <div class="panel">
+            <div class="row">
+                <div class="two columns text-center">
+                    <span aria-hidden="true" data-icon="&#xe011;" style="font-size:2.5em;"></span>
+                </div>
+                <div class="ten columns">
+                    Bitte führen Sie auf dieser Seite keine Änderungen durch, wenn Sie sich nicht absolut sicher sind.
+                    <br> Die Änderungen haben Auswirkungen auf alle Benutzer im System und können sich negativ auf die Funktionalität der Software auswirken.
+                </div>
+            </div>
+        </div>
         <fieldset>
             <legend>Allgemein</legend>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'adminEmail'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'adminEmail');
+                    echo $form->error($model, 'adminEmail');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'dateFormat'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'dateFormat');
+                    echo $form->error($model, 'dateFormat');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'timeFormat'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'timeFormat');
+                    echo $form->error($model, 'timeFormat');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'dateTimeFormat'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'dateTimeFormat', array('readonly' => 'readonly'));
+                    echo $form->error($model, 'dateTimeFormat');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'randomTeacherPassword'); ?></span>
+                </div>
+                <div class="four columns styled-select">
+                    <?php
+                    echo $form->dropDownList($model, 'randomTeacherPassword', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'randomTeacherPassword');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'defaultTeacherPassword'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'defaultTeacherPassword');
+                    echo $form->error($model, 'defaultTeacherPassword');
+                    ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="eight columns centered panel text-center">
+                    Für Datums- und Zeitformate siehe <a href="http://php.net/manual/de/function.date.php">http://php.net/manual/de/function.date.php</a>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Kontaktinformationen</legend>
             <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'schoolName'); ?></span>
@@ -111,72 +196,6 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <?php
                     echo $form->dropDownList($model, 'useSchoolEmailForContactForm', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'useSchoolEmailForContactForm');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'adminEmail'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'adminEmail');
-                    echo $form->error($model, 'adminEmail');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'dateFormat'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'dateFormat');
-                    echo $form->error($model, 'dateFormat');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'timeFormat'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'timeFormat');
-                    echo $form->error($model, 'timeFormat');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'dateTimeFormat'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'dateTimeFormat', array('readonly' => 'readonly'));
-                    echo $form->error($model, 'dateTimeFormat');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'randomTeacherPassword'); ?></span>
-                </div>
-                <div class="four columns styled-select">
-                    <?php
-                    echo $form->dropDownList($model, 'randomTeacherPassword', array('1' => 'Ja', '0' => 'Nein'));
-                    echo $form->error($model, 'randomTeacherPassword');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'defaultTeacherPassword'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'defaultTeacherPassword');
-                    echo $form->error($model, 'defaultTeacherPassword');
                     ?>
                 </div>
             </div>

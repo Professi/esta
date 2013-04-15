@@ -88,7 +88,7 @@ class ConfigForm extends CFormModel {
     public function attributeLabels() {
         return array(
             'adminEmail' => 'Administrator E-Mail Adresse',
-            'dateTimeFormat' => 'Datums und Zeitformat (z.B. d.m.Y H:i, siehe <a href="http://php.net/manual/de/function.date.php">http://php.net/manual/de/function.date.php</a>)', //
+            'dateTimeFormat' => 'Datums und Zeitformat (z.B. d.m.Y H:i)', //
             'emailHost' => 'Hostname des SMTP Servers (z.B. localhost)',
             'fromMailHost' => 'Versender E-Mailadresse (z.B. xyz@schoolxyz.de)',
             'fromMail' => 'Absendername (z.B. ESTA-School)',
@@ -110,12 +110,12 @@ class ConfigForm extends CFormModel {
             'allowBlockingAppointments'=>'Blockieren von Terminen erlauben',
             'appointmentBlocksPerDate'=>'Anzahl der Termine die blockiert werden dürfen',
             'lengthReasonAppointmentBlocked'=>'Minimallänge eines Grundes um einen Termin zu blocken',
-            'schoolStreet'=>'Schulstraße',
+            'schoolStreet'=>'Straße',
             'schoolCity'=>'Postleitzahl, Ort',
             'schoolTele'=>'Telefonnummer',
             'schoolFax'=>'Faxnummer',
-            'schoolEmail'=>'Allgemeine E-Mail Adresse',
-            'useSchoolEmailForContactForm'=>'Allgemeine E-Mail Adresse für das Kontaktformular verwenden',
+            'schoolEmail'=>'E-Mail Adresse der Schule',
+            'useSchoolEmailForContactForm'=>'E-Mail Adresse der Schule für das Kontaktformular verwenden',
             );
     }
 }

@@ -22,10 +22,10 @@ $form = $this->beginWidget('CActiveForm', array(
         ));
 ?>
 <div class="row collapse">
-    <div class="two columns">
-        <span class="prefix">Elternteil</span>
+    <div class="three columns">
+        <span class="prefix">Erziehungsberechtigte/r</span>
     </div>
-    <div class="ten columns">
+    <div class="nine columns">
         <?php
         $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
             'id' => 'appointment_parent',
@@ -39,25 +39,25 @@ $form = $this->beginWidget('CActiveForm', array(
                 'placeholder' => 'Geben Sie einen Nachnamen ein',
             ),
         ));
-        ?>
-    </div>
-</div>
-<div class="row collapse">
-    <div class="two columns">
-        <span class="prefix">Kind</span>
-    </div>
-    <div class="ten columns styled-select" id="appointment_parent_select">
-        <?php
-        echo $this->createSelectChildren($parentId, get_class($model), 'parent_child_id', $model->attributes['parent_child_id']);
         echo $form->error($model, 'parent_child_id');
         ?>
     </div>
 </div>
 <div class="row collapse">
-    <div class="two columns">
+    <div class="three columns">
+        <span class="prefix">Kind</span>
+    </div>
+    <div class="nine columns styled-select" id="appointment_parent_select">
+        <?php
+        echo $this->createSelectChildren($parentId, get_class($model), 'parent_child_id', $model->attributes['parent_child_id']);
+        ?>
+    </div>
+</div>
+<div class="row collapse">
+    <div class="three columns">
         <span class="prefix">Lehrer</span>
     </div>
-    <div class="ten columns">
+    <div class="nine columns">
         <?php
         $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
             'id' => 'appointment_teacher',
@@ -80,10 +80,10 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
 </div>
 <div class="row collapse">
-    <div class="two columns">
+    <div class="three columns">
         <span class="prefix">Termin</span>
     </div>
-    <div class="ten columns styled-select" id="appointment_dateAndTime_select">
+    <div class="nine columns styled-select" id="appointment_dateAndTime_select">
         <?php
         echo $this->createSelectTeacherDates($model->attributes['user_id'], get_class($model), 'dateAndTime_id', $model->attributes['dateAndTime_id']);
         echo $form->error($model, 'dateAndTime_id');

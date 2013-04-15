@@ -29,9 +29,16 @@ $this->breadcrumbs = array(
         <div class="push hide-for-small"></div>
         <div class="push hide-for-small"></div>
         <div class="panel">
-            <h2>Fehler <?php echo $code; ?></h2>   
-            <br>
-            <?php echo CHtml::encode($message); ?>
+            <div class="row">
+                <div class="two columns text-center">
+                    <span aria-hidden="true" data-icon="&#xe005;" style="font-size:6em;"></span>
+                </div>
+                <div class="ten columns">
+                    <h2>Fehler <?php echo $code; ?></h2>   
+                    <?php echo CHtml::encode($message); ?>
+                </div>
+            </div>
+            
         </div>
         <p class="text-center"><?php
             echo CHtml::link('<b>Zurück zur Startseite</b>', Yii::app()->user->checkAccess('1') == TRUE ? 'index.php' :

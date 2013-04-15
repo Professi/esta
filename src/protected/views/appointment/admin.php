@@ -61,7 +61,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'filter' => $model,
     'columns' => array(
         array('name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
-        array('name' => 'parent_child_id', 'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'),
+        array('name' => 'parent_child_id', 'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname', 'header' => 'Erziehungsberechtigte/r'),
         array('name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
         array('class' => 'CustomButtonColumn',),
     ),
