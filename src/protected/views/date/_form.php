@@ -31,7 +31,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <div class="two columns">
         <span class="prefix"><?php echo $form->label($model, 'date'); ?></span>
     </div>
-    <div class="eight columns">
+    <div class="ten columns">
         <?php
         $this->widget('zii.widgets.jui.CJuiDatePicker', array(
             'model' => $model,
@@ -53,45 +53,36 @@ $form = $this->beginWidget('CActiveForm', array(
         echo $form->error($model, 'date');
         ?>
     </div>
-    <div class="two columns">
-        <span class="postfix"><?php echo Yii::app()->params['dateFormat'] ?></span>
-    </div>
 </div>
 <div class="row collapse">
     <div class="two columns">
         <span class="prefix"><?php echo $form->label($model, 'begin'); ?></span>
     </div>
-    <div class="eight columns">
+    <div class="ten columns">
         <?php
         echo $form->textField($model, 'begin', $a_disabled);
         echo $form->error($model, 'begin');
         ?>
-    </div>
-    <div class="two columns">
-        <span class="postfix"><?php echo Yii::app()->params['timeFormat'] ?></span>
     </div>
 </div>
 <div class="row collapse">
     <div class="two columns">
         <span class="prefix"><?php echo $form->label($model, 'end'); ?></span>
     </div>
-    <div class="eight columns">
+    <div class="ten columns">
         <?php
         echo $form->textField($model, 'end', $a_disabled);
         echo $form->error($model, 'end');
         ?>
-    </div>
-    <div class="two columns">
-        <span class="postfix"><?php echo Yii::app()->params['timeFormat'] ?></span>
     </div>
 </div>
 <div class="row collapse">
     <div class="two columns">
         <span class="prefix"><?php echo $form->label($model, 'lockAt'); ?></span>
     </div>
-    <div class="eight columns">
+    <div class="ten columns">
         <div class="row">
-            <div class="six columns">
+            <div class="six columns" id="date-form-fix-left">
                 <?php
                 $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                     'model' => $model,
@@ -114,7 +105,7 @@ $form = $this->beginWidget('CActiveForm', array(
                 ));
                 ?>
             </div>
-            <div class="six columns">
+            <div class="six columns" id="date-form-fix-right">
                 <input type="text" id="time_lockAt" value="<?php echo $timeLabel; ?>">
             </div>
         </div>
@@ -123,22 +114,16 @@ $form = $this->beginWidget('CActiveForm', array(
         echo $form->error($model, 'lockAt');
         ?>
     </div>
-    <div class="two columns">
-        <span class="postfix"><?php echo Yii::app()->params['dateTimeFormat'] ?></span>
-    </div>
 </div>
 <div class="row collapse">
     <div class="two columns">
         <span class="prefix"><?php echo $form->label($model, 'durationPerAppointment'); ?></span>
     </div>
-    <div class="eight columns">
+    <div class="ten columns">
         <?php
         echo $form->textField($model, 'durationPerAppointment', $a_disabled);
         echo $form->error($model, 'durationPerAppointment');
         ?>
-    </div>
-    <div class="two columns">
-        <span class="postfix">MM</span>
     </div>
 </div>
 <br>
