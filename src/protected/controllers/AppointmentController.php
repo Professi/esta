@@ -65,34 +65,40 @@ class AppointmentController extends Controller {
     }
 
     public function actionCreateBlockApp() {
-        $model = new BlockedAppointment();
-        $model->unsetAttributes();
-        $teacherValue = '';
-        $teacherLabel = '';
-        if (isset($_GET['teacherId'])) { //Weiterleitung vom user/view; eventuell auch wenn der Lehrer dann im Menü auf Termin blockieren geht? haha -> möglicher intrusion point siehe #177 ;)
-            $teacherValue = $_GET['teacherId'];
-            $userTemp = User::model()->findByPk($teacherValue);
-            $teacherLabel = $userTemp->title . " " . $userTemp->firstname . " " . $userTemp->lastname;
-            $model->user_id = $teacherValue;
-        }
-        if (Yii::app()->user->checkAccessRole('2', '-1')) {
-            $model->user_id = Yii::app()->user->getId();
-        }
-        if (isset($_POST['BlockedAppointment'])) {
-            $model->setAttributes($_POST['BlockedAppointment']);
-            if (!empty($model->attributes['user_id'])) {
-                $teacherLabel = $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname;
+        if (Yii::app()->params['allowBlockingAppointments'] &&
+                !(Yii::app()->user->checkAccessNotAdmin('2') &&
+                Yii::app()->params['allowBlockingOnlyForManagement'])) {
+            $model = new BlockedAppointment();
+            $model->unsetAttributes();
+            $teacherValue = '';
+            $teacherLabel = '';
+            if (isset($_GET['teacherId'])) { //Weiterleitung vom user/view; eventuell auch wenn der Lehrer dann im Menü auf Termin blockieren geht? haha -> möglicher intrusion point siehe #177 ;)
+                $teacherValue = $_GET['teacherId'];
+                $userTemp = User::model()->findByPk($teacherValue);
+                $teacherLabel = $userTemp->title . " " . $userTemp->firstname . " " . $userTemp->lastname;
+                $model->user_id = $teacherValue;
             }
-            if ($model->save()) {
-                Yii::app()->user->setFlash('success', 'Termin erfolgreich geblockt.');
-                if (Yii::app()->user->checkAccessNotAdmin('2')) {
-                    $this->redirect(array('index'));
-                } else {
-                    $this->redirect(array('admin'));
+            if (Yii::app()->user->checkAccessRole('2', '-1')) {
+                $model->user_id = Yii::app()->user->getId();
+            }
+            if (isset($_POST['BlockedAppointment'])) {
+                $model->setAttributes($_POST['BlockedAppointment']);
+                if (!empty($model->attributes['user_id'])) {
+                    $teacherLabel = $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname;
+                }
+                if ($model->save()) {
+                    Yii::app()->user->setFlash('success', 'Termin erfolgreich geblockt.');
+                    if (Yii::app()->user->checkAccessNotAdmin('2')) {
+                        $this->redirect(array('index'));
+                    } else {
+                        $this->redirect(array('admin'));
+                    }
                 }
             }
+            $this->render('createBlockApp', array('model' => $model, 'teacherLabel' => $teacherLabel));
+        } else {
+            throw $this->throwFourNullThree();
         }
-        $this->render('createBlockApp', array('model' => $model, 'teacherLabel' => $teacherLabel));
     }
 
     public function actionDeleteBlockApp($id, $teacherId = null) {
@@ -144,7 +150,7 @@ class AppointmentController extends Controller {
             if (!empty($model->attributes['user_id'])) {
                 $teacherLabel = $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname;
             }
-            if (!empty($model->attributes['parent_child_id']) ) {
+            if (!empty($model->attributes['parent_child_id'])) {
                 $parentLabel = $model->parentChild->user->firstname . " " . $model->parentChild->user->lastname;
                 $parentId = $model->parentChild->user->id;
             }
@@ -208,9 +214,9 @@ class AppointmentController extends Controller {
         if (isset($_POST['Appointment'])) {
             $model->attributes = $_POST['Appointment'];
             if (!empty($model->attributes['dateAndTime_id'])) {
-                $postDate = date(Yii::app()->params['dateFormat'],  strtotime($model->dateAndTime->date->date));
+                $postDate = date(Yii::app()->params['dateFormat'], strtotime($model->dateAndTime->date->date));
                 echo 'hi';
-                $postTime = date(Yii::app()->params['timeFormat'],  strtotime($model->dateAndTime->time));
+                $postTime = date(Yii::app()->params['timeFormat'], strtotime($model->dateAndTime->time));
             }
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'Ihr Termin wurde erfolgreich gebucht.');
@@ -280,10 +286,16 @@ class AppointmentController extends Controller {
             $dataProvider->user_id = Yii::app()->user->getId();
             $blockedApp = new BlockedAppointment();
             $blockedApp->unsetAttributes();
-            $this->render('indexTeacher', array(
-                'dataProvider' => $dataProvider->customSearch(),
-                'blockedApp' => $blockedApp->search(),
-            ));
+            if (Yii::app()->params['allowBlockingAppointments']) {
+                $this->render('indexTeacher', array(
+                    'dataProvider' => $dataProvider->customSearch(),
+                    'blockedApp' => $blockedApp->search(),
+                ));
+            } else {
+                $this->render('indexTeacher', array(
+                    'dataProvider' => $dataProvider->customSearch(),
+                ));
+            }
         } else if (Yii::app()->user->checkAccessNotAdmin('3')) {
             $this->render('index', array(
                 'dataProvider' => Appointment::getAllAppointments(),
@@ -410,7 +422,7 @@ class AppointmentController extends Controller {
         }
         return $rc;
     }
-    
+
     /**
      * Generiert den Inhalt der Terminvereinbarung für die Rolle Eltern 
      * @author David Mock <dumock@gmail.com>

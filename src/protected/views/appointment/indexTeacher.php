@@ -49,7 +49,14 @@
         <div class="twelve columns">
             <h2 class="subheader">Ihre blockierten Termine</h2>
             <hr>
-            <?php
+            <?php if (Yii::app()->params['allowBlockingOnlyForManagement']) { ?>
+                <div class="row">
+                    <div class="panel centeredl">
+                        <p>Termine können zurzeit nur von der Verwaltung und der Administration blockiert werden.</p>
+                    </div>
+                </div>
+                <?php
+            }
             $this->widget('zii.widgets.grid.CGridView', array(
                 'id' => 'blockedAppointment-grid',
                 'dataProvider' => $blockedApp,

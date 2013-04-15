@@ -530,10 +530,10 @@ class User extends CActiveRecord {
             $this->password = Yii::app()->params['defaultTeacherPassword'];
         }
         $password = $this->password;
-        $this->password_repeat = $user->password;
+        $this->password_repeat = $this->password;
         if ($this->save() && Yii::app()->params['randomTeacherPassword']) {
             $mail = new Mail();
-            $mail->sendRandomUserPassword($user->email, $password);
+            $mail->sendRandomUserPassword($this->email, $password);
         }
         return $password;
     }

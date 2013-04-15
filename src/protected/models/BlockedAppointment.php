@@ -88,7 +88,10 @@ class BlockedAppointment extends CActiveRecord {
                         Yii::app()->params['appointmentBlocksPerDate'] && Yii::app()->checkAccessNotAdmin('2')) {
                     $this->addError('dateAndTime_id', 'Zuviele Termine berereits geblockt. Maximum liegt bei '
                             . Yii::app()->params['appointmentBlocksPerDate'] . ' pro Elternsprechtag.');
-                } else {
+                } else if(Yii::app()->user->checkAccessNotAdmin('2') && Yii::app()->params['allowBlockingOnlyForManagement']) {
+                   Yii::app()->user->setFlash('failMsg','Nur die Verwaltung kann Termine blockieren.');
+                } 
+                else {
                     $rc = true;
                 }
             }
