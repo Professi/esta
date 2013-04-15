@@ -373,10 +373,7 @@ class AppointmentController extends Controller {
     public function getDatesWithTimes($dateMax, $mergeDates = false) {
         $a_groupOfDateAndTimes = array();
         if (is_int($dateMax)) {
-            /**
-             * @todo Prüfung einbauen, dass nur Elternsprechtage angezeigt werden, die in der Zukunft liegen
-             */
-            $a_dates = Date::model()->findAll(array('limit' => $dateMax, 'order' => 'date ASC'));
+            $a_dates = Date::model()->findAll(array('limit' => $dateMax, 'order' => 'date ASC', 'condition' => 'date >="' . date('Y-m-d', time()) . '"'));
             if (!$mergeDates) {
                 foreach ($a_dates as $record) {
                     $a_groupOfDateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
@@ -448,7 +445,7 @@ class AppointmentController extends Controller {
                 $tabsContent .= '</tr>';
             }
             $tabsContent .= '</tbody></table>';
-            $tabsContent .= '<div class="panel appointment-lockAt text-center">'.'Bedenken Sie, dass Termine nur bis zum ';
+            $tabsContent .= '<div class="panel appointment-lockAt text-center">' . 'Bedenken Sie, dass Termine nur bis zum ';
             $tabsContent .= date(Yii::app()->params['dateTimeFormat'], $a_day[0]->date->lockAt);
             $tabsContent .= ' werden können.</div>';
             $a_tabs[$tabsName] = $tabsContent;
