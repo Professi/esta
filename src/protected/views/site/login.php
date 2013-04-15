@@ -91,7 +91,10 @@ $this->breadcrumbs = array(
             <div class="show-for-small"><br><br></div>
             <?php echo CHtml::link('Passwort vergessen?', 'index.php?r=user/ChangePwd', array('class' => 'medium right')); ?>
         </fieldset>
-        <p class="text-center"><?php echo CHtml::link('<b>Ben&ouml;tigen Sie einen neuen Zugang?<br>Klicken Sie hier.</b>', 'index.php?r=user/create'); ?> </p>
-        <?php $this->endWidget(); ?>
+        <?php if (!Yii::app()->params['lockRegistration']) { ?>
+            <p class="text-center"><?php echo CHtml::link('<b>Ben&ouml;tigen Sie einen neuen Zugang?<br>Klicken Sie hier.</b>', 'index.php?r=user/create'); ?> </p>
+        <?php } else { ?>
+            <p class="text-center">Aktuell ist es leider nicht m&ouml;glich sich zu registrieren. Sofern Sie sich registrieren m&ouml;chten, f&uuml;llen Sie bitte das Kontaktformular aus.</p>
+        <?php } $this->endWidget(); ?>
     </div>
 </div>

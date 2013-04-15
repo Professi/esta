@@ -49,6 +49,7 @@ class ConfigForm extends CFormModel {
     public $schoolEmail;
     public $useSchoolEmailForContactForm;
     public $allowBlockingOnlyForManagement;
+    public $lockRegistration;
     
     
     public function init() {
@@ -64,14 +65,14 @@ class ConfigForm extends CFormModel {
                 'durationTempBans,maxAttemptsForLogin,timeFormat,dateFormat,' .
                 'allowBlockingAppointments,appointmentBlocksPerDate,' .
                 'lengthReasonAppointmentBlocked,schoolStreet,schoolCity,' .
-                'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement', 'required'),
+                'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,lockRegistration', 'required'),
             array('fromMailHost,adminEmail,schoolEmail', 'email'),
             array('emailHost,fromMail,dateFormat', 'length', 'min' => 4),
             array('dateTimeFormat', 'length', 'min' => 5),
             array('defaultTeacherPassword', 'length', 'min' => 8),
             array('salt', 'length', 'min' => 16, 'max' => 64),
             array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments,' . 
-                'useSchoolEmailForContactForm,allowBlockingOnlyForManagement',
+                'useSchoolEmailForContactForm,allowBlockingOnlyForManagement,lockRegistration',
                 'boolean'),
             array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,'
                 . 'durationTempBans,maxAttemptsForLogin,appointmentBlocksPerDate,'
@@ -118,7 +119,8 @@ class ConfigForm extends CFormModel {
             'schoolFax'=>'Faxnummer',
             'schoolEmail'=>'E-Mail Adresse der Schule',
             'useSchoolEmailForContactForm'=>'E-Mail Adresse der Schule für das Kontaktformular verwenden',
-            'allowBlockingOnlyForManagement'=>'Nur die Verwaltung und Administration dürfen Termine blockieren'
+            'allowBlockingOnlyForManagement'=>'Nur die Verwaltung und Administration dürfen Termine blockieren',
+            'lockRegistration'=>'Registrierung sperren?',
             );
     }
 }

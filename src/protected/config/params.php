@@ -51,6 +51,7 @@ $array2 = array(
             'schoolFax'=> '06192 2904-66',
             'schoolEmail'=> 'office@bws-hofheim.de',
             'useSchoolEmailForContactForm'=>true,
+            'lockRegistration'=>false,
                 );
 if(empty($arr)) {
     return $array2;

@@ -180,39 +180,39 @@ class UserController extends Controller {
                     $first = true;
                     do {
                         if (!$first && ($line[0] != "Vorname" && !$line[1] != "Nachname" && $line[2] != 'Email')) {
-                                $model = new User();
-                                if ($line[2] != NULL) {
-                                    $email = self::encodingString($line[2]);
-                                } else {
-                                    $uml = array("Ö" => "Oe", "ö" => "oe", "Ä" => "Ae", "ä" => "ae", "Ü" => "Ue", "ü" => "ue", "ß" => "ss",);
-                                    $email = strtolower(substr($model->firstname, 0, 1))
-                                            . '.' . preg_replace("/\s+/", "", strtolower(strtr($model->lastname, $uml))) . '@'
-                                            . Yii::app()->params['teacherMail'];
-                                }
-                                $model->setSomeAttributes($email, self::encodingString($line[1]), self::encodingString($line[0]), 1, 2);
-                                                                $model->title = self::encodingString($line[3]);
-                                if (Yii::app()->params['randomTeacherPassword']) {
-                                    $passGen = new PasswordGenerator();
-                                    $model->password = $passGen->generate();
-                                } else {
-                                    $model->password = Yii::app()->params['defaultTeacherPassword'];
-                                }
-                                $password = $model->password;
-                                $model->password_repeat = $model->password;
-                                if ($model->save() && Yii::app()->params['randomTeacherPassword']) {
-                                    $mail = new Mail();
-                                    $mail->sendRandomUserPassword($model->email, $password);
+                            $model = new User();
+                            if ($line[2] != NULL) {
+                                $email = self::encodingString($line[2]);
+                            } else {
+                                $uml = array("Ö" => "Oe", "ö" => "oe", "Ä" => "Ae", "ä" => "ae", "Ü" => "Ue", "ü" => "ue", "ß" => "ss",);
+                                $email = strtolower(substr($model->firstname, 0, 1))
+                                        . '.' . preg_replace("/\s+/", "", strtolower(strtr($model->lastname, $uml))) . '@'
+                                        . Yii::app()->params['teacherMail'];
+                            }
+                            $model->setSomeAttributes($email, self::encodingString($line[1]), self::encodingString($line[0]), 1, 2);
+                            $model->title = self::encodingString($line[3]);
+                            if (Yii::app()->params['randomTeacherPassword']) {
+                                $passGen = new PasswordGenerator();
+                                $model->password = $passGen->generate();
+                            } else {
+                                $model->password = Yii::app()->params['defaultTeacherPassword'];
+                            }
+                            $password = $model->password;
+                            $model->password_repeat = $model->password;
+                            if ($model->save() && Yii::app()->params['randomTeacherPassword']) {
+                                $mail = new Mail();
+                                $mail->sendRandomUserPassword($model->email, $password);
                             }
                         } else {
                             $first = false;
                         }
                     } while (($line = fgetcsv($fp, 1000, ";")) != FALSE);
                 }
-                Yii::app()->user->setFlash('success','Lehrerliste erfolgreich importiert.');
+                Yii::app()->user->setFlash('success', 'Lehrerliste erfolgreich importiert.');
                 $this->redirect('index.php?r=/user/admin');
-            } 
-        } 
-            $this->render('importTeacher', array('model' => $model,));
+            }
+        }
+        $this->render('importTeacher', array('model' => $model,));
     }
 
     public function actionCreateDummy() {
@@ -309,26 +309,30 @@ class UserController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate() {
-        $model = new User;
-        if (isset($_POST['User'])) {
-            $model->setAttributes($_POST['User']);
-            if ($model->save()) {
-                if (Yii::app()->user->checkAccess('1')) {
-                    Yii::app()->user->setFlash("success", "Benutzer wurde erstellt.");
-                    $this->redirect(array('user/admin'));
+        if (!Yii::app()->params['lockRegistration'] && !Yii::app()->user->isGuest()) {
+            $model = new User;
+            if (isset($_POST['User'])) {
+                $model->setAttributes($_POST['User']);
+                if ($model->save()) {
+                    if (Yii::app()->user->checkAccess('1')) {
+                        Yii::app()->user->setFlash("success", "Benutzer wurde erstellt.");
+                        $this->redirect(array('user/admin'));
+                    } else {
+                        Yii::app()->user->setFlash('success', "Sie konnten sich erfolgreich registrieren. Sie erhalten nun eine E-Mail mit der Sie Ihren Account aktivieren können.");
+                        $mail = new Mail();
+                        $mail->sendActivationLinkMail($model->email, $model->activationKey);
+                        $this->redirect(array('site/login'));
+                    }
                 } else {
-                    Yii::app()->user->setFlash('success', "Sie konnten sich erfolgreich registrieren. Sie erhalten nun eine E-Mail mit der Sie Ihren Account aktivieren können.");
-                    $mail = new Mail();
-                    $mail->sendActivationLinkMail($model->email, $model->activationKey);
-                    $this->redirect(array('site/login'));
+                    Yii::app()->user->setFlash("error", "Benutzer konnte nicht erstellt werden.");
                 }
-            } else {
-                Yii::app()->user->setFlash("error", "Benutzer konnte nicht erstellt werden.");
             }
+            $this->render('create', array(
+                'model' => $model,
+            ));
+        } else {
+            $this->throwFourNullThree();
         }
-        $this->render('create', array(
-            'model' => $model,
-        ));
     }
 
     /**
@@ -364,7 +368,7 @@ class UserController extends Controller {
             ));
         } else {
             Yii::app()->user->getFlash('failMsg');
-             $this->throwFourNullThree();
+            $this->throwFourNullThree();
         }
     }
 

@@ -114,6 +114,17 @@ Yii::app()->clientScript->registerPackage('jquery');
                     ?>
                 </div>
             </div>
+                        <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'lockRegistration'); ?></span>
+                </div>
+                <div class="four columns styled-select">
+                    <?php
+                    echo $form->dropDownList($model, 'lockRegistration', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'lockRegistration');
+                    ?>
+                </div>
+            </div>
             <div class="row">
                 <div class="eight columns centered panel text-center">
                     Für Datums- und Zeitformate siehe <a href="http://php.net/manual/de/function.date.php">http://php.net/manual/de/function.date.php</a>
