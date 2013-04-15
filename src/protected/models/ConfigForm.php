@@ -118,6 +118,7 @@ class ConfigForm extends CFormModel {
             'schoolFax'=>'Faxnummer',
             'schoolEmail'=>'E-Mail Adresse der Schule',
             'useSchoolEmailForContactForm'=>'E-Mail Adresse der Schule für das Kontaktformular verwenden',
+            'allowBlockingOnlyForManagement'=>'Nur die Verwaltung und Administration dürfen Termine blockieren'
             );
     }
 }
