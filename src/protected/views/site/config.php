@@ -356,6 +356,17 @@ Yii::app()->clientScript->registerPackage('jquery');
             </div>
             <div class="row collapse">
                 <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'allowBlockingOnlyForManagement'); ?></span>
+                </div>
+                <div class="four columns styled-select">
+                    <?php
+                    echo $form->dropDownList($model, 'allowBlockingOnlyForManagement', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'allowBlockingOnlyForManagement');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'appointmentBlocksPerDate'); ?></span>
                 </div>
                 <div class="four columns">

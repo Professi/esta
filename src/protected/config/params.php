@@ -42,6 +42,7 @@ $array2 = array(
             'timeFormat'=>'H:i',
             'dateFormat'=>'d.m.Y',
             'allowBlockingAppointments'=>true,
+            'allowBlockingOnlyForManagement'=>true,
             'appointmentBlocksPerDate'=>2,
             'lengthReasonAppointmentBlocked'=>5,
             'schoolStreet'=> 'Gartenstraße 28',

@@ -48,6 +48,7 @@ class ConfigForm extends CFormModel {
     public $schoolFax;
     public $schoolEmail;
     public $useSchoolEmailForContactForm;
+    public $allowBlockingOnlyForManagement;
     
     
     public function init() {
@@ -63,13 +64,14 @@ class ConfigForm extends CFormModel {
                 'durationTempBans,maxAttemptsForLogin,timeFormat,dateFormat,' .
                 'allowBlockingAppointments,appointmentBlocksPerDate,' .
                 'lengthReasonAppointmentBlocked,schoolStreet,schoolCity,' .
-                'schoolTele,schoolFax,schoolEmail', 'required'),
+                'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement', 'required'),
             array('fromMailHost,adminEmail,schoolEmail', 'email'),
             array('emailHost,fromMail,dateFormat', 'length', 'min' => 4),
             array('dateTimeFormat', 'length', 'min' => 5),
             array('defaultTeacherPassword', 'length', 'min' => 8),
             array('salt', 'length', 'min' => 16, 'max' => 64),
-            array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments,useSchoolEmailForContactForm',
+            array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments,' . 
+                'useSchoolEmailForContactForm,allowBlockingOnlyForManagement',
                 'boolean'),
             array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,'
                 . 'durationTempBans,maxAttemptsForLogin,appointmentBlocksPerDate,'
