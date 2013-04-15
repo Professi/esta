@@ -80,7 +80,7 @@ if (IE) {
         
         $('select[id$="_allowBlockingAppointments"], select[id$="_banUsers"], select[id$="_mailsActivated"]').on('change', function($this) {
             $switch = ($this.target['value'] === "0") ? true : false;
-            $($this.target).parents('fieldset').children('.row:gt(0)').children('.four').children('input').attr('disabled',$switch);
+            $($this.target).parents('fieldset').children('.row:gt(0)').children('.four').children('input, select').attr('disabled',$switch);
         });
 
     }(this, document, jQuery));

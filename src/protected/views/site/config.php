@@ -360,7 +360,7 @@ Yii::app()->clientScript->registerPackage('jquery');
                 </div>
                 <div class="four columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'allowBlockingOnlyForManagement', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->dropDownList($model, 'allowBlockingOnlyForManagement', array('1' => 'Ja', '0' => 'Nein'), $optionsBlocks);
                     echo $form->error($model, 'allowBlockingOnlyForManagement');
                     ?>
                 </div>
@@ -389,6 +389,7 @@ Yii::app()->clientScript->registerPackage('jquery');
             </div>            
         </fieldset>
         <?php if (!Yii::app()->params['installed']) { ?>
+        <div class="push"></div>
             <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'salt'); ?></span>
@@ -400,7 +401,8 @@ Yii::app()->clientScript->registerPackage('jquery');
                     ?>
                 </div>
             </div>
-        <?php } ?>        
+        <div class="push"></div>
+        <?php } ?>  
     </div><!-- row -->
     <div class="row">
         <div class="twelve columns">

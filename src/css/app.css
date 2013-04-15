@@ -419,3 +419,7 @@ ul.button-group li {
 .faq-ul li {
     display: block;
 }
+.appointment-lockAt {
+    position: relative;
+    top: -1.5em;
+}

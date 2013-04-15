@@ -436,6 +436,9 @@ class AppointmentController extends Controller {
                 $tabsContent .= '</tr>';
             }
             $tabsContent .= '</tbody></table>';
+            $tabsContent .= '<div class="panel appointment-lockAt text-center">'.'Bedenken Sie, dass Termine nur bis zum ';
+            $tabsContent .= date(Yii::app()->params['dateTimeFormat'], $a_day[0]->date->lockAt);
+            $tabsContent .= ' werden können.</div>';
             $a_tabs[$tabsName] = $tabsContent;
             if ($tabsUiId == 3) { //Magic Number aus makeAppointment.php nach 3 Elternsprechtagen wird die Schleife verlassen. 
                 break;
