@@ -114,7 +114,7 @@ class Appointment extends CActiveRecord {
         $criteria->together = true;
         $criteria->compare('id', $this->id);
         $criteria->compare('parentChild.user_id', ParentChild::model()->searchParentID($this->parent_child_id), true);
-        $criteria->compare('dateAndTime.time', $this->dateAndTime_id);
+        $criteria->compare('dateAndTime.time', $this->dateAndTime_id, true);
         $criteria->compare('user.lastname', $this->user_id, true);
         $sort = new CSort;
         $sort->attributes = array(

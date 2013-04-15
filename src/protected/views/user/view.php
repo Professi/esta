@@ -48,7 +48,7 @@ $this->menu = array(
 ?>
 <div class="row">
     <div class="twelve columns centered">
-        <h2 class="subheader">Benutzerdaten für <?php echo $model->email; ?> </h2>
+        <h2 class="subheader">Benutzerdaten für <?php echo isset($model->email) ? $model->email : $model->username; ?> </h2>
         <?php
         $this->widget('zii.widgets.CDetailView', array(
             'data' => $model,
@@ -68,14 +68,20 @@ $this->menu = array(
                     'value' => date(Yii::app()->params['dateTimeFormat'], $model->createtime)),
             ),
         ));
-        ?>
-        <?php if (Yii::app()->user->checkAccess('0') && empty($_GET['id'])) { ?> 
+        if (Yii::app()->user->checkAccess('0') && empty($_GET['id'])) { ?> 
             <fieldset class="text-center">
                 <p>Mit dem Dr&uuml;cken dieses Knopfes werden alle Daten aus der Datenbank gel&ouml;scht. Bet&auml;tigen Sie ihn nur wenn Sie sich absolut sicher sind!</p>
                 <p>Nur die Admin- und Verwaltungsbenutzer bleiben bestehen</p>
                 <img id="red-button" src="<?php echo Yii::app()->request->baseUrl; ?>/img/redbutton.png" alt="Der Rote Knopf" style="cursor:pointer;" >
                 <p>Wenn Sie nur bestimmte Daten l&ouml;schen m&ouml;chten klicken Sie <?php echo CHtml::link('hier', array('site/deleteAll')); ?></p>
             </fieldset>
-        <?php } ?>
+        <?php }
+        if (Yii::app()->user->checkAccess('0') && $model->role == 3) {
+        ?>
+        <h4 class="subheader">Kinder</h4>
+        <?php
+            $this->renderPartial('/parentChild/_view', array('data' => ParentChild::model()->find(ParentChild::model()->searchParentChildWithId($model->id))));
+        }
+        ?>
     </div>
 </div>

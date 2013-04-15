@@ -74,11 +74,6 @@ html, body {
 	position: relative;
 	top: .2em
 }
-#nojs_menu {
-/*	position: absolute;
-	float: left;
-        font-size: 1em;*/
-}
 .nojs_menu>div>ul>li>a>.nav-icons {
     font-size: 1em;
 }
@@ -136,26 +131,6 @@ table {
 .occupied {
 	background-color: black;
 	color: white;
-}
-
-@media only screen and (max-width: 767px) {
-
-	.row.contain-to-grid.sticky {
-		width: 100%;
-	}
-	.header {
-		padding-left: 0.2em;
-	}
-	.styled-select-parent {
-		left: .15em;
-	}
-        .mobile-input {
-            padding-left: .15em !important;
-            margin-right: -.15em !important;
-        }
-        .captcha-button {
-            margin-top: 1em;
-        }
 }
 #small_buttons>div {
 	display: inline-block;
@@ -422,4 +397,23 @@ ul.button-group li {
 .appointment-lockAt {
     position: relative;
     top: -1.5em;
+}
+@media only screen and (max-width: 767px) {
+
+	.row.contain-to-grid.sticky {
+		width: 100%;
+	}
+	.header {
+		padding-left: 0.2em;
+	}
+	.styled-select-parent {
+		left: .15em;
+	}
+        .mobile-input {
+            padding-left: .15em !important;
+            margin-right: -.15em !important;
+        }
+        .captcha-button {
+            margin-top: 1em;
+        }
 }
