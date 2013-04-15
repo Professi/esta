@@ -36,9 +36,6 @@ $this->breadcrumbs = array(
             E-Mail: <a href="mailto:<?php echo Yii::app()->params['schoolEmail']; ?>"><?php echo Yii::app()->params['schoolEmail']; ?></a>
             <?php } ?>
         </p>
-        <p> 
-            Haftungsauschluss&nbsp;&nbsp;<a href="http://www.disclaimer.de/disclaimer.htm" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a>
-        </p>
         <p> Diese Elternsprechtagsapplikation (ESTA) wurde mit der GNU General Public License Version 3 (&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a> ) lizensiert.
         <br>Die Urheber sind: Christian Ehringfeld, David Mock, Matthias Unterbusch.
         <i>In Kürze finden Sie hier einen Link zum aktuellen Projektverzeichnis.</i>
