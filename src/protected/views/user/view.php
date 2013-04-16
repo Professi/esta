@@ -78,9 +78,11 @@ $this->menu = array(
         <?php }
         if (Yii::app()->user->checkAccess('0') && $model->role == 3) {
         ?>
-        <h4 class="subheader">Kinder</h4>
-        <?php
-            $this->renderPartial('/parentChild/_view', array('data' => ParentChild::model()->find(ParentChild::model()->searchParentChildWithId($model->id))));
+            <h4 class="subheader">Kinder</h4>
+            <?php
+            foreach (ParentChild::model()->findAll(ParentChild::model()->searchParentChildWithId($model->id)) as $array) {
+                 $this->renderPartial('/parentChild/_view', array('data' => $array));
+            }
         }
         ?>
     </div>

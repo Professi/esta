@@ -1,7 +1,3 @@
-// IE-Hack  http://stackoverflow.com/questions/2612026/disable-javascript-on-ie-browsers
-var IE = /*@cc_on @if (@_jscript_version < 9){!}@*/false;
-if (IE) {
-} else {
     /* Modernizr 2.6.2 (Custom Build) | MIT & BSD
      * Build: http://modernizr.com/download/#-inlinesvg-svg-svgclippaths-touch-shiv-mq-cssclasses-teststyles-prefixes-ie8compat-load
      */
@@ -4108,4 +4104,3 @@ if (IE) {
             })
         }
     })(jQuery, this);
-}

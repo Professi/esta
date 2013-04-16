@@ -28,10 +28,12 @@
         <link rel="icon" href="<?php echo Yii::app()->request->baseUrl; ?>/favicon.ico">
         <?php
         Yii::app()->clientScript->registerPackage('css');
-        Yii::app()->clientScript->registerPackage('javascript');
-        Yii::app()->clientScript->registerPackage('jquery');
-        if (Yii::app()->user->checkAccess('1')) {
-            Yii::app()->clientScript->registerPackage('admin');
+        if (!preg_match('/MSIE [^9|10]/',$_SERVER['HTTP_USER_AGENT'])) {
+            Yii::app()->clientScript->registerPackage('javascript');
+            Yii::app()->clientScript->registerPackage('jquery');
+            if (Yii::app()->user->checkAccess('1')) {
+                Yii::app()->clientScript->registerPackage('admin');
+            }
         }
         ?>
         <link rel="stylesheet" type="text/css" media="print" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css">
@@ -102,7 +104,7 @@
                     <h5><?php echo (!empty(Yii::app()->params['schoolName'])) ? 'Elternsprechtag der ' . Yii::app()->params['schoolName'] : 'ESTA - Elternsprechtagsapplikations'; ?></h5>
                 </div>
             </div>
-            <?php
+            <?php    
             echo $content;
             ?>
             <div class="push"></div>
