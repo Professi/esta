@@ -82,6 +82,6 @@
             });
         });
         
-        $('.alarm_png').children().attr('src','/est/trunk/src/img/alarm.svg');
+        $('.alarm_png').children().attr('src',window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/')+1)+'/img/alarm.svg');
         
     }(this, document, jQuery));
