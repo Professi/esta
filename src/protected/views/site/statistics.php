@@ -30,18 +30,22 @@ $this->breadcrumbs = array(
         <div class="push hide-for-small"></div>
         <div class="push hide-for-small"></div>
         <div class="panel">
-            <h2>Statistik</h2>
-            <ul>
-                <li>Eingetragene Lehrer: <?php echo $teachers; ?> </li>
-                <li>Registrierte Eltern: <?php echo UserRole::model()->countByAttributes(array('role_id' => 3)); ?> </li>
-                <li>Eingetragene Schüler: <?php echo Child::model()->count(); ?> </li>
-                <li>Eingetragene Elternsprechtage: <?php echo Date::model()->count(); ?> </li>
-                <li>Vergebene Termine: <?php echo $apps; ?> </li>
-                <li>Freie Termine: <?php echo $freeApps ?> </li>
-                <?php if (!Yii::app()->user->isGuest()) { ?>
-                    <li>Generierte TANs: <?php echo Tan::model()->count(); ?> </li>
-                <?php } ?>
-            </ul>
+            <div class="row">
+                <div class="eleven columns offset-by-one">
+                    <h2>Statistik</h2>
+                    <ul class="faq-ul">
+                        <li>Eingetragene Lehrer: <?php echo $teachers; ?> </li>
+                        <li>Registrierte Eltern: <?php echo UserRole::model()->countByAttributes(array('role_id' => 3)); ?> </li>
+                        <li>Eingetragene Schüler: <?php echo Child::model()->count(); ?> </li>
+                        <li>Eingetragene Elternsprechtage: <?php echo Date::model()->count(); ?> </li>
+                        <li>Vergebene Termine: <?php echo $apps; ?> </li>
+                        <li>Freie Termine: <?php echo $freeApps ?> </li>
+                        <?php if (!Yii::app()->user->isGuest()) { ?>
+                            <li>Generierte TANs: <?php echo Tan::model()->count(); ?> </li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            </div>
         </div>
         <p class="text-center"><?php
             echo CHtml::link('<b>Zurück zur Startseite</b>', 'index.php');

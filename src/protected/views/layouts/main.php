@@ -128,7 +128,7 @@
                             $this->widget('zii.widgets.CMenu', array(
                                 'htmlOptions' => array('class' => 'link-list right'),
                                 'items' => array(
-                                    array('label' => 'Statistik', 'url' => array('/site/statistics'), 'visible' => !Yii::app()->user->isGuest()),
+                                    array('label' => 'Statistik', 'url' => array('/site/statistics'), 'visible' => (!Yii::app()->user->isGuest() && Yii::app()->user->checkAccess('0')) ),
                                     array('label' => 'FAQ', 'url' => array('/site/page', 'view' => 'faq')),
                                     array('label' => 'Impressum', 'url' => array('/site/page', 'view' => 'impressum')),
                                     array('label' => 'Kontakt', 'url' => array('/site/contact')),
