@@ -89,7 +89,7 @@ class Date extends CActiveRecord {
             'begin' => 'Anfang',
             'end' => 'Ende',
             'durationPerAppointment' => 'Dauer eines Termins',
-            'lockAt' => 'Letzte Buchung',
+            'lockAt' => 'Letzte Buchung am',
         );
     }
 

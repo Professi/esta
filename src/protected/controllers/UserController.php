@@ -309,7 +309,7 @@ class UserController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate() {
-        if (Yii::app()->params['lockRegistration'] || Yii::app()->user->checkAccess('1')) {
+        if ((!Yii::app()->params['lockRegistration'] && Yii::app()->user->isGuest())|| Yii::app()->user->checkAccess('1')) {
             $model = new User;
             if (isset($_POST['User'])) {
                 $model->setAttributes($_POST['User']);
