@@ -109,10 +109,10 @@ if (Yii::app()->user->checkAccess('1')) {
                 echo $form->dropDownList($model, 'role', array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung'));
             }
             echo $form->error($model, 'role');
-        }
-    }
-    ?>
-</div>
+        } ?>
+        </div>
+<?php  }  ?>
+
 <?php if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) { ?>
     <div class="row collapse">
         <div class="three columns">

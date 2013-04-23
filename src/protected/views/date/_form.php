@@ -58,29 +58,35 @@ $form = $this->beginWidget('CActiveForm', array(
     <div class="two columns">
         <span class="prefix"><?php echo $form->label($model, 'begin'); ?></span>
     </div>
-    <div class="ten columns">
+    <div class="eight columns">
         <?php
         echo $form->textField($model, 'begin', $a_disabled);
         echo $form->error($model, 'begin');
         ?>
+    </div>
+    <div class="two columns">
+        <span class="postfix">Uhrzeit</span>
     </div>
 </div>
 <div class="row collapse">
     <div class="two columns">
         <span class="prefix"><?php echo $form->label($model, 'end'); ?></span>
     </div>
-    <div class="ten columns">
+    <div class="eight columns">
         <?php
         echo $form->textField($model, 'end', $a_disabled);
         echo $form->error($model, 'end');
         ?>
+    </div>
+    <div class="two columns">
+        <span class="postfix">Uhrzeit</span>
     </div>
 </div>
 <div class="row collapse">
     <div class="two columns">
         <span class="prefix"><?php echo $form->label($model, 'lockAt'); ?></span>
     </div>
-    <div class="ten columns">
+    <div class="eight columns">
         <div class="row">
             <div class="six columns" id="date-form-fix-left">
                 <?php
@@ -114,16 +120,22 @@ $form = $this->beginWidget('CActiveForm', array(
         echo $form->error($model, 'lockAt');
         ?>
     </div>
+    <div class="two columns">
+        <span class="postfix">Uhrzeit</span>
+    </div>
 </div>
 <div class="row collapse">
     <div class="two columns">
         <span class="prefix"><?php echo $form->label($model, 'durationPerAppointment'); ?></span>
     </div>
-    <div class="ten columns">
+    <div class="eight columns">
         <?php
         echo $form->textField($model, 'durationPerAppointment', $a_disabled);
         echo $form->error($model, 'durationPerAppointment');
         ?>
+    </div>
+    <div class="two columns">
+        <span class="postfix">in Minuten</span>
     </div>
 </div>
 <br>
