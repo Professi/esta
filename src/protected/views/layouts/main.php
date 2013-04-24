@@ -142,5 +142,8 @@
         <!-- MODALS -->
         <div id="MenuModal" class="reveal-modal [small] nav-menu">
         </div>
+        <div class="infobox" style="display: none;">
+            <p></p>
+        </div>
     </body>
 </html>

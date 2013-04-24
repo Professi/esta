@@ -400,6 +400,27 @@ ul.button-group li {
 #date-form-fix-right {
     padding-right: .5em;
 }
+.infobox {
+    position: fixed;
+    top: 12em;
+    left: 51em;
+    width: 32em;
+    word-wrap: break-word;
+    background-color: #f2f2f2;
+    border: 2px solid #ccc;
+    padding: 3em 2em 2em;
+    text-align: center;
+}
+.infobox span {
+    font-size: 3em;
+    color: #999;
+    position: absolute;
+    left: .5em;
+    top: .2em;
+}
+.infotext {
+    display: none;
+}
 
 @media only screen and (max-width: 767px) {
 

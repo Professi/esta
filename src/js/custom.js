@@ -79,8 +79,17 @@
             $($this.target).parents('fieldset').children('.row:gt(0)').children('.four').children('input, select').attr('disabled',$switch);
         });
         
-        // ** Tooltip im appointment/admin anzeigen **
+        // **  **
         
-        $('input[name$="[dateAndTime_id]"]').tooltip({content: 'Geben Sie eine Zeit ein, um die Ergebnisse entsprechend zu filtern.'});
+        $('.infofeld').on({
+            mouseenter: function(){
+                $('.infobox').toggle();
+                $('.infobox').children('p').html($(this).siblings('.infotext').html());
+            },
+            mouseleave: function(){
+                $('.infobox').toggle();
+            }
+            
+        });
 
     }(this, document, jQuery));
