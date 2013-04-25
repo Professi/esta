@@ -63,7 +63,12 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 <div class="row collapse">
     <div class="three columns">
-        <span class="prefix"><?php echo $form->label($model, 'password'); ?></span>
+        <span class="prefix infofeld"><?php echo $form->label($model, 'password', array('class' => 'infolabel')); ?></span>
+        <div class="infotext">
+            <span aria-hidden="true" data-icon="&#xe012;"></span>
+                Bitte beachten Sie, dass das Passwort nur geändert wird, wenn Sie ein neues Passwort eintragen. 
+                Wenn Sie kein neues Passwort vergeben möchten, lassen Sie die Felder leer.
+        </div>
     </div>
     <div class="six columns mobile-input">
         <?php

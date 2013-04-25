@@ -406,7 +406,7 @@ ul.button-group li {
     word-wrap: break-word;
     background-color: #f2f2f2;
     border: 2px solid #ccc;
-    padding: 3em 2em 2em;
+    padding: 3em 4em 2em 6em;
     text-align: center;
     z-index: 2;
 }

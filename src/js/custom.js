@@ -79,8 +79,9 @@
             $($this.target).parents('fieldset').children('.row:gt(0)').children('.four').children('input, select').attr('disabled',$switch);
         });
         
-        // **  **
+        // ** Infofelder generieren **
         
+        $('.infolabel').html($('.infolabel').html()+'&nbsp;&nbsp;<span data-icon="&#xe012;"/>');
         $('.infofeld').on({
             mouseenter: function(){
                 $('.infobox').toggle();

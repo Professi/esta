@@ -85,18 +85,11 @@ $form = $this->beginWidget('CActiveForm', array(
 <div class="row collapse">
     <div class="two columns">
         <span class="prefix infofeld">
-            <?php echo $form->label($model, 'lockAt'); ?>
+            <?php echo $form->label($model, 'lockAt', array('class' => 'infolabel')); ?>
         </span>
         <div class="infotext">
             <span aria-hidden="true" data-icon="&#xe012;"></span>
-            <p>letzte, letzter, letztes<br>
-            Wortart: Adjektiv<br>
-            Bedeutung:<br>
-            Das Ende einer [Reihen]folge bildend<br></p>
-            <p>Buchung, die<br>
-            Wortart: Substantiv, feminin<br>
-            Bedeutung: <br>
-            das Registrieren[lassen] einer Bestellung</p>
+            In diesem Feld können Sie festlegen, bis wann Termine reserviert werden können. Nach diesem Zeitpunkt können Eltern keine Termine mehr vereinbaren.
         </div>
     </div>
     <div class="eight columns">
