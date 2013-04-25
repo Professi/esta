@@ -88,7 +88,7 @@ $form = $this->beginWidget('CActiveForm', array(
             <?php echo $form->label($model, 'lockAt'); ?>
         </span>
         <div class="infotext">
-            <span aria-hidden="true" data-icon="&#xe012"></span>
+            <span aria-hidden="true" data-icon="&#xe012;"></span>
             <p>letzte, letzter, letztes<br>
             Wortart: Adjektiv<br>
             Bedeutung:<br>

@@ -402,14 +402,13 @@ ul.button-group li {
 }
 .infobox {
     position: fixed;
-    top: 12em;
-    left: 51em;
-    width: 32em;
+    width: 400px;
     word-wrap: break-word;
     background-color: #f2f2f2;
     border: 2px solid #ccc;
     padding: 3em 2em 2em;
     text-align: center;
+    z-index: 2;
 }
 .infobox span {
     font-size: 3em;

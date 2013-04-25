@@ -85,6 +85,8 @@
             mouseenter: function(){
                 $('.infobox').toggle();
                 $('.infobox').children('p').html($(this).siblings('.infotext').html());
+                $('.infobox').css('left', $(document).width()/2-200);
+                $('.infobox').css('top', $(window).height()/4);
             },
             mouseleave: function(){
                 $('.infobox').toggle();

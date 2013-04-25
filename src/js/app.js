@@ -44,7 +44,7 @@
             window.location.href = "index.php?r=Appointment/makeAppointment&teacher=" + ui.item.value;
         });
         
-        $('#teacher-ac').on('autocompletefocus', function(e){e.preventDefault;});
+        $('#teacher-ac').on('autocompletefocus', function(e){e.preventDefault();});
         
         $('#LoginForm_email').focus();
         
