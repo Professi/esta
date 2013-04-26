@@ -105,7 +105,7 @@ class User extends CActiveRecord {
             array('tan', 'numerical', 'integerOnly' => TRUE,
                 'allowEmpty' => !$this->isNewRecord || !Yii::app()->user->isGuest
             ),
-            array('password', 'compare', "on" => "insert"),
+            array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat'),
             array('password_repeat', 'safe'), //allow bulk assignment
             array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
             array('id, username, firstname, state, lastname, email, role,roleName,stateName,title', 'safe', 'on' => 'search'),
@@ -468,16 +468,23 @@ class User extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean
      */
-    public function beforeValidate() {
-        $rc = parent::beforeValidate();
+    public function validate($attributes = null, $clearErrors = true) {
+        parent::validate($attributes, $clearErrors);
+        $rc = parent::validate($attributes, $clearErrors);
+        $params['{attribute}'] = $this->getAttributeLabel('password');
+        if ($this->getError('password') == Yii::t('yii', '{attribute} must be repeated exactly.', $params)) {
+            $this->addError('password_repeat', "Passwörter stimmen nicht überein.");
+        }
         if ($rc && Yii::app()->user->isGuest && $this->isNewRecord) {
             $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
             if ($tan !== null) {
                 if ($tan->used) {
                     $this->addError('tan', 'Leider wurde Ihre TAN schon benutzt.');
+                    $rc = false;
                 }
             } else {
                 $this->addError('tan', 'Leider konnte die eingegebene TAN nicht identifiziert werden.');
+                $rc = false;
             }
         }
         return $rc;
