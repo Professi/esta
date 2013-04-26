@@ -89,7 +89,7 @@ $form = $this->beginWidget('CActiveForm', array(
         </span>
         <div class="infotext">
             <span aria-hidden="true" data-icon="&#xe012;"></span>
-            In diesem Feld können Sie festlegen, bis wann Termine reserviert werden können. Nach diesem Zeitpunkt können Eltern keine Termine mehr vereinbaren.
+            In diesem Feld können Sie festlegen, bis wann Termine von Eltern reserviert werden können. Nach diesem Zeitpunkt können Eltern keine weiteren Termine mehr vereinbaren.
         </div>
     </div>
     <div class="eight columns">
@@ -127,7 +127,7 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
     <div class="two columns">
-        <span class="postfix">Uhrzeit</span>
+        <span class="postfix">Datum + Uhrzeit</span>
     </div>
 </div>
 <div class="row collapse">

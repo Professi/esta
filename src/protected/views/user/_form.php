@@ -63,12 +63,21 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 <div class="row collapse">
     <div class="three columns">
-        <span class="prefix infofeld"><?php echo $form->label($model, 'password', array('class' => 'infolabel')); ?></span>
-        <div class="infotext">
-            <span aria-hidden="true" data-icon="&#xe012;"></span>
+        <?php if (!$model->isNewRecord) { ?>  
+            <span class="prefix infofeld">
+                <?php echo $form->label($model, 'password', array('class' => 'infolabel')); ?>
+            </span>
+            <div class="infotext">
+                <span aria-hidden="true" data-icon="&#xe012;"></span>
                 Bitte beachten Sie, dass das Passwort nur geändert wird, wenn Sie ein neues Passwort eintragen. 
-                Wenn Sie kein neues Passwort vergeben möchten, lassen Sie die Felder leer.
-        </div>
+                Sollten Sie kein neues Passwort vergeben wollen, können Sie die Passwortfelder leer lassen.
+            </div>
+        <?php } else { ?>
+            <span class="prefix">
+                <?php echo $form->label($model, 'password'); ?>
+            </span>
+        <?php }
+        ?>
     </div>
     <div class="six columns mobile-input">
         <?php
@@ -114,9 +123,10 @@ if (Yii::app()->user->checkAccess('1')) {
                 echo $form->dropDownList($model, 'role', array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung'));
             }
             echo $form->error($model, 'role');
-        } ?>
-        </div>
-<?php  }  ?>
+        }
+        ?>
+    </div>
+<?php } ?>
 
 <?php if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) { ?>
     <div class="row collapse">
