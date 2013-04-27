@@ -17,7 +17,7 @@
  */
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..', //nicht ändern
-    'name' => 'Elternsprechtagsapplikation der Brühlwiesenschule', //entsprechend den eigenen Bedürfnissen anpassen
+    'name' => 'Elternsprechtagsanwendung', //entsprechend den eigenen Bedürfnissen anpassen
     'language' => 'de', //Sprache
     'preload' => array('log'), //Logkomponente - nicht ändern
     'import' => array(//nicht ändern

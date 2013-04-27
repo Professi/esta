@@ -33,24 +33,26 @@ $this->breadcrumbs = array(
             <?php echo Yii::app()->params['schoolTele']; ?><br>
             <?php echo Yii::app()->params['schoolFax']; ?><br>
             <?php if (Yii::app()->params['useSchoolEmailForContactForm']) { ?>
-            E-Mail: <a href="mailto:<?php echo Yii::app()->params['schoolEmail']; ?>"><?php echo Yii::app()->params['schoolEmail']; ?></a>
+                E-Mail: <a href="mailto:<?php echo Yii::app()->params['schoolEmail']; ?>"><?php echo Yii::app()->params['schoolEmail']; ?></a>
             <?php } ?>
         </p>
-        <p> Diese Elternsprechtagsapplikation (ESTA) wurde mit der GNU General Public License Version 3 (&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a> ) lizensiert.
-        <br>Die Urheber sind: Christian Ehringfeld, David Mock, Matthias Unterbusch.
-        <i>In Kürze finden Sie hier einen Link zum aktuellen Projektverzeichnis.</i>
+        <p> Diese Elternsprechtagsanwendung(ESTA) wurde mit der GNU General Public License Version 3 (&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a> ) lizensiert.
+            <br>Die Urheber sind: Christian Ehringfeld, David Mock, Matthias Unterbusch. </p>
+        <p>Projektverzeichnis&nbsp;&nbsp;<a href="https://github.com/Professi/esta"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
         </p>
+
         <p> Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:<br>
+            PHP&nbsp;&nbsp;<a href="http://www.php.net"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
+            Yii Framework&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
+            EMailer eine Yii Extension die PHPMailer verwendet&nbsp;&nbsp;<a href="http://www.yiiframework.com/extension/mailer/" > <span aria-hiden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             ZURB Foundation Framework&nbsp;&nbsp;<a href="http://foundation.zurb.com"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             IcoMoon  Icon Fonts&nbsp;&nbsp;<a href="http://icomoon.io" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             Google Web Fonts&nbsp;&nbsp;<a href="http://www.google.com/webfonts" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             Free Stock Textures&nbsp;&nbsp;<a href="http://freestocktextures.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            Yii Framework&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            EMailer eine Yii Extension die PHPMailer verwendet&nbsp;&nbsp;<a href="http://www.yiiframework.com/extension/mailer/" > <span aria-hiden="true" data-icon="&#xe006;">&nbsp;Link</span></a>
         </p>
         <p>
-            <h3>Haftungsausschluss:</h3>
-            Die <?php echo Yii::app()->params['schoolName']; ?> und die Entwickler dieser Anwendung, nachfolgend als "Der Autor" bezeichnet. <br>
+        <h3>Haftungsausschluss:</h3>
+        Die <?php echo Yii::app()->params['schoolName']; ?> und die Entwickler dieser Anwendung, nachfolgend als "Der Autor" bezeichnet. <br>
         </p>
         <p>
             <b>1. Inhalt des Onlineangebotes</b> <br>

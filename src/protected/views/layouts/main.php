@@ -102,7 +102,7 @@
             </div>
             <div class="row print-only">
                 <div class="twelve columns text-center">
-                    <h5><?php echo (!empty(Yii::app()->params['schoolName'])) ? 'Elternsprechtag der ' . Yii::app()->params['schoolName'] : 'ESTA - Elternsprechtagsapplikations'; ?></h5>
+                    <h5><?php echo (!empty(Yii::app()->params['schoolName'])) ? 'Elternsprechtag der ' . Yii::app()->params['schoolName'] : 'ESTA - Elternsprechtagsanwendung'; ?></h5>
                 </div>
             </div>
             <?php
