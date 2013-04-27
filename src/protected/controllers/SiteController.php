@@ -95,8 +95,8 @@ class SiteController extends Controller {
                         if ($model->randomTeacherPassword) {
                             $msg .= " .Sollten Sie nun eine Bestätigungsemail erhalten, wurde die Anwendung erfolgreich konfiguriert.";
                         }
-                        $model = new ConfigForm();
                         Yii::app()->user->setFlash('success', $msg);
+                        $this->refresh();
                     } else {
                         Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert.');
                     }
