@@ -64,6 +64,19 @@ class Controller extends CController {
     public function throwFourNullNull() {
         throw new CHttpException(400,'Ihre Anfrage ist ungültig.');
     }
+    /**
+     * Generiert einen Menu Punkt
+     * @param string $dataIcon Icon
+     * @param string $name Anzuzeigender Name
+     * @param string $url Ziel URL
+     * @param phpCode $visible Bedingungen damit der Punkt angezeigt wird
+     * @param string $cssClasses CSS Klassen
+     * @param string $ariaHidden  true/false als String  
+     * @return array
+     */
+    public function generateMenuItem($dataIcon,$name,$url,$visible,$cssClasses='"nav-icons"', $ariaHidden="true") {
+        return array('label' => '<span class='.$cssClasses.' aria-hidden="'.$ariaHidden.'" data-icon="'.$dataIcon.'">&nbsp;'.$name.'</span>', 'url' => array($url,), 'visible' => $visible);
+    }
     
     
 }

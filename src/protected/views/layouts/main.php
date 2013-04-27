@@ -28,7 +28,7 @@
         <link rel="icon" href="<?php echo Yii::app()->request->baseUrl; ?>/favicon.ico">
         <?php
         Yii::app()->clientScript->registerPackage('css');
-        if (!preg_match('/MSIE [^9|10]/',$_SERVER['HTTP_USER_AGENT'])) {
+        if (!preg_match('/MSIE [^9|10]/', $_SERVER['HTTP_USER_AGENT'])) {
             Yii::app()->clientScript->registerPackage('javascript');
             Yii::app()->clientScript->registerPackage('jquery');
             if (Yii::app()->user->checkAccess('1')) {
@@ -69,18 +69,19 @@
                     'htmlOptions' => array('class' => 'nav-bar js_hide nojs_menu'),
                     'encodeLabel' => false,
                     'items' => array(//0=Administration 1=Verwaltung 2= Lehrer 3=Eltern
-                        array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe002;">&nbsp;Ihre Termine</span>', 'url' => array('/Appointment/index',), 'visible' => !Yii::app()->user->isAdmin() && Yii::app()->user->checkAccessRole('2', '3')),
-                        array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine vereinbaren</span>', 'url' => array('/Appointment/getTeacher'), 'visible' => Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
-                        array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00b;">&nbsp;Termine blockieren</span>', 'url' => array('/Appointment/createBlockApp'), 'visible' => Yii::app()->user->checkAccessNotAdmin('2') && Yii::app()->params['allowBlockingAppointments'] && !(Yii::app()->params['allowBlockingOnlyForManagement'] && Yii::app()->user->checkAccessNotAdmin('2'))),
-                        array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Elternsprechtagsverwaltung</span>', 'url' => array('/Date/admin'), 'visible' => Yii::app()->user->checkAccess('0')),
-                        array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Terminverwaltung</span>', 'url' => array('/Appointment/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
-                        array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Eltern und Kinder</span>', 'url' => array('/ParentChild/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
-                        array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Ihre Kinder</span>', 'url' => array('/ParentChild/index'), 'visible' => Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
-                        array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe00a;">&nbsp;Benutzerverwaltung</span>', 'url' => array('/User/admin'), 'visible' => Yii::app()->user->checkAccess('1')),
-                        array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Tanverwaltung</span>', 'url' => array('Tan/genTans'), 'visible' => Yii::app()->user->checkAccessRole('2', '1') || Yii::app()->user->isAdmin()),
-                        array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Konfiguration</span>', 'url' => array('site/config'), 'visible' => Yii::app()->user->checkAccess('0')),
-                        array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe007;">&nbsp;Ihr Benutzerkonto</span>', 'url' => array('/User/account'), 'visible' => !Yii::app()->user->isGuest),
-                        array('label' => '<span class="nav-icons" aria-hidden="true" data-icon="&#xe006;">&nbsp;Logout</span>', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest)),
+                        $this->generateMenuItem("&#xe002;", "Ihre Termine", "/Appointment/index", !Yii::app()->user->isAdmin() && Yii::app()->user->checkAccessRole("2", "3")),
+                        $this->generateMenuItem("&#xe00b;", "Termine vereinbaren", "/Appointment/getTeacher", Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
+                        $this->generateMenuItem("&#xe00b;", "Termine blockieren", "/Appointment/createBlockApp", Yii::app()->user->checkAccessNotAdmin('2') && Yii::app()->params['allowBlockingAppointments'] && !(Yii::app()->params['allowBlockingOnlyForManagement'] && Yii::app()->user->checkAccessNotAdmin('2'))),
+                        $this->generateMenuItem("&#xe007;", "Elternsprechtagsverwaltung", "/Date/admin", Yii::app()->user->checkAccess('0')),
+                        $this->generateMenuItem("&#xe007;", "Terminverwaltung", "/Appointment/admin", Yii::app()->user->checkAccess('1')),
+                        $this->generateMenuItem("&#xe00a;", "Eltern und Kinder", "/ParentChild/admin", Yii::app()->user->checkAccess('1')),
+                        $this->generateMenuItem("&#xe00a;", "Ihre Kinder", "/ParentChild/index", Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
+                        $this->generateMenuItem("&#xe00a;", "Benutzerverwaltung", "/User/admin", Yii::app()->user->checkAccess('1')),
+                        $this->generateMenuItem('&#xe00a;', "Gruppenverwaltung", "Group/admin", Yii::app()->user->checkAccess('1')),
+                        $this->generateMenuItem("&#xe007;", "Tanverwaltung", "Tan/genTans", Yii::app()->user->checkAccessRole('2', '1') || Yii::app()->user->isAdmin()),
+                        $this->generateMenuItem("&#xe007;", "Konfiguration", "site/config", Yii::app()->user->checkAccess('0')),
+                        $this->generateMenuItem("&#xe007;", "Ihr Benutzerkonto", "/User/account", !Yii::app()->user->isGuest()),
+                        $this->generateMenuItem("&#xe006;", "Logout", "/site/logout", !Yii::app()->user->isGuest())),
                     'activeCssClass' => 'active'
                 ));
             }
@@ -104,7 +105,7 @@
                     <h5><?php echo (!empty(Yii::app()->params['schoolName'])) ? 'Elternsprechtag der ' . Yii::app()->params['schoolName'] : 'ESTA - Elternsprechtagsapplikations'; ?></h5>
                 </div>
             </div>
-            <?php    
+            <?php
             echo $content;
             ?>
             <div class="push"></div>
@@ -128,7 +129,7 @@
                             $this->widget('zii.widgets.CMenu', array(
                                 'htmlOptions' => array('class' => 'link-list right'),
                                 'items' => array(
-                                    array('label' => 'Statistik', 'url' => array('/site/statistics'), 'visible' => (!Yii::app()->user->isGuest() && Yii::app()->user->checkAccess('0')) ),
+                                    array('label' => 'Statistik', 'url' => array('/site/statistics'), 'visible' => (!Yii::app()->user->isGuest() && Yii::app()->user->checkAccess('0'))),
                                     array('label' => 'FAQ', 'url' => array('/site/page', 'view' => 'faq')),
                                     array('label' => 'Impressum', 'url' => array('/site/page', 'view' => 'impressum')),
                                     array('label' => 'Kontakt', 'url' => array('/site/contact')),

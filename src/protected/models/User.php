@@ -110,7 +110,7 @@ class User extends CActiveRecord {
             array('password_repeat', 'safe'), //allow bulk assignment
             array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
             array('id, username, firstname, state, lastname, email, role,roleName,stateName,title', 'safe', 'on' => 'search'),
-            array('group', 'required', 'allowEmpty' => !Yii::app()->params['allowGroups']),
+            array('group', 'required', 'except' => !Yii::app()->params['allowGroups'] || $this->role < 3 ),
         );
     }
 
@@ -159,6 +159,7 @@ class User extends CActiveRecord {
             'roleName' => 'Rolle',
             'verifyCode' => 'Sicherheitscode',
             'title' => 'Titel',
+            'group' => 'Gruppe',
         );
     }
 

@@ -63,7 +63,7 @@ class Tan extends CActiveRecord {
         return array(
             array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen']),
             array('tan, used', 'safe', 'on' => 'search'),
-            array('group','required','allowEmpty'=>!Yii::app()->params['allowGroups']),
+            array('group', 'required', 'allowEmpty' => !Yii::app()->params['allowGroups']),
         );
     }
 
@@ -86,7 +86,7 @@ class Tan extends CActiveRecord {
             'tan' => 'Tan',
             'used' => 'Benutzt',
             'tan_count' => 'Anzahl',
-            'group_id' =>'Gruppe'
+            'group_id' => 'Gruppe'
         );
     }
 

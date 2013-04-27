@@ -31,12 +31,8 @@ class GroupController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('search'),
+                'actions' => array('create', 'delete', 'admin', 'view', 'update'),
                 'roles' => array('1'),
-            ),
-            array('allow',
-                'actions' => array('create', 'delete', 'admin', 'search', 'view', 'update'),
-                'roles' => array('0'),
             ),
             array('deny',
                 'users' => array('*'),
@@ -81,6 +77,54 @@ class GroupController extends Controller {
             Yii::app()->end();
         }
     }
+        /**
+     * Creates a new model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     */
+    public function actionCreate() {
+        $model = new Group;
+        if (isset($_POST['Group'])) {
+            $model->attributes = $_POST['Group'];
+            if ($model->save()) {
+                $this->redirect(array('admin'));
+            }
+        }
+        $this->render('create', array(
+            'model' => $model,
+        ));
+    }
+
+    /**
+     * Updates a particular model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id the ID of the model to be updated
+     */
+    public function actionUpdate($id) {
+        $model = $this->loadModel($id);
+        if (isset($_POST['Group'])) {
+            $model->attributes = $_POST['Group'];
+            if ($model->save())
+                $this->redirect(array('view', 'id' => $model->id));
+        }
+        $this->render('update', array(
+            'model' => $model,
+        ));
+    }
+
+    /**
+     * Manages all models.
+     */
+    public function actionAdmin() {
+        $model = new Group('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_GET['Group']))
+            $model->attributes = $_GET['Group'];
+        $this->render('admin', array(
+            'model' => $model,
+        ));
+    }
+    
+    
 
 }
 

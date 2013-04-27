@@ -73,7 +73,7 @@ class Group extends CActiveRecord  {
     public function search() {
         $criteria = new CDbCriteria;
         $criteria->compare('id', $this->id);
-        $criteria->compare('groupname', $this->date, true);
+        $criteria->compare('groupname', $this->groupname, true);
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));

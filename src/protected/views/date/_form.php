@@ -20,8 +20,6 @@
 /* @var $this DateController */
 /* @var $model Date */
 /* @var $form CActiveForm */
-?>
-<?php
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'date-form',
     'enableAjaxValidation' => false,
