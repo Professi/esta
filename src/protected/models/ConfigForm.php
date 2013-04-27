@@ -50,7 +50,7 @@ class ConfigForm extends CFormModel {
     public $useSchoolEmailForContactForm;
     public $allowBlockingOnlyForManagement;
     public $lockRegistration;
-    
+    public $allowGroups;
     
     public function init() {
         $this->attributes = Yii::app()->params->toArray();
@@ -65,14 +65,14 @@ class ConfigForm extends CFormModel {
                 'durationTempBans,maxAttemptsForLogin,timeFormat,dateFormat,' .
                 'allowBlockingAppointments,appointmentBlocksPerDate,' .
                 'lengthReasonAppointmentBlocked,schoolStreet,schoolCity,' .
-                'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,lockRegistration', 'required'),
+                'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,lockRegistration,allowGroups', 'required'),
             array('fromMailHost,adminEmail,schoolEmail', 'email'),
             array('emailHost,fromMail,dateFormat', 'length', 'min' => 4),
             array('dateTimeFormat', 'length', 'min' => 5),
             array('defaultTeacherPassword', 'length', 'min' => 8),
             array('salt', 'length', 'min' => 16, 'max' => 64),
             array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments,' . 
-                'useSchoolEmailForContactForm,allowBlockingOnlyForManagement,lockRegistration',
+                'useSchoolEmailForContactForm,allowBlockingOnlyForManagement,lockRegistration,allowGroups',
                 'boolean'),
             array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,'
                 . 'durationTempBans,maxAttemptsForLogin,appointmentBlocksPerDate,'
@@ -97,7 +97,7 @@ class ConfigForm extends CFormModel {
             'fromMail' => 'Absendername (z.B. ESTA-School)',
             'teacherMail' => 'Domainname des SMTP Servers (z.B. schoolxyz)',
             'schoolName' => 'Schulname (z.B. Schule XYZ)',
-            'virtualHost' => 'Virtualhost-Pfad unter dem die Anwendung erreichbar ist (z.B. /est/)',
+            'virtualHost' => 'Virtualhost des Servers - Pfad unter dem die Anwendung erreichbar ist (z.B. /est/)',
             'mailsActivated' => 'E-Mails versenden?',
             'maxChild' => 'Maximal Anzahl an Kindern pro Eltern',
             'maxAppointmentsPerChild' => 'Maximal Anzahl an Terminen pro Kinder',
@@ -105,12 +105,12 @@ class ConfigForm extends CFormModel {
             'defaultTeacherPassword' => 'Standardpasswort wenn die vorherige Option deaktiviert ist',
             'minLengthPerAppointment' => 'Mindestlänge eines Termins bei einem neuzuerstellenden Elternsprechtag',
             'banUsers' => 'Temporäres Sperren eines Nutzers bei zu vielen fehlgeschlagenen Loginversuchen',
-            'durationTempBans' => 'Dauer dieser Maßnahme',
-            'maxAttemptsForLogin' => 'Maximalanzahl an fehlgeschlagenen Loginversuchen',
+            'durationTempBans' => 'Dauer der Sperre in Minuten',
+            'maxAttemptsForLogin' => 'Maximalanzahl an fehlgeschlagenen Loginversuchen bis zur Sperrung eines Kontos',
             'salt' => 'Salz für Passwörter',
             'dateFormat' => 'Datumsformat (z.B. d.m.Y)',
             'timeFormat' => 'Zeitformat (z.B. H:i)',
-            'allowBlockingAppointments'=>'Blockieren von Terminen erlauben',
+            'allowBlockingAppointments'=>'Blockieren von Terminen erlauben?',
             'appointmentBlocksPerDate'=>'Anzahl der Termine die blockiert werden dürfen',
             'lengthReasonAppointmentBlocked'=>'Minimallänge eines Grundes um einen Termin zu blocken',
             'schoolStreet'=>'Straße',
@@ -118,9 +118,10 @@ class ConfigForm extends CFormModel {
             'schoolTele'=>'Telefonnummer',
             'schoolFax'=>'Faxnummer',
             'schoolEmail'=>'E-Mail Adresse der Schule',
-            'useSchoolEmailForContactForm'=>'E-Mail Adresse der Schule für das Kontaktformular verwenden',
-            'allowBlockingOnlyForManagement'=>'Nur die Verwaltung und Administration dürfen Termine blockieren',
+            'useSchoolEmailForContactForm'=>'E-Mail Adresse der Schule für das Kontaktformular verwenden?',
+            'allowBlockingOnlyForManagement'=>'Nur Verwaltung und Administration dürfen Termine blockieren?',
             'lockRegistration'=>'Registrierung sperren?',
+            'allowGroups'=>'Gruppen erlauben?'
             );
     }
 }

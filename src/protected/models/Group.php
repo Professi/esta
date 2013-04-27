@@ -1,14 +1,12 @@
 <?php
-
-/**
- * This is the model class for table "tan".
+    /**
+ * Dies ist das Model für Gruppen.
  */
 
-/** The followings are the available columns in table 'tan':
- * @property integer $tan
- * @property boolean $used
- * Relations
- * @property Group $group
+/** The followings are the available columns in table 'date':
+ * @property integer $id
+ * @property string $groupname
+ * The followings are the available model relations:
  */
 /* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
@@ -25,82 +23,61 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class Tan extends CActiveRecord {
 
-    /** @var integer Anzahl der TANs die generiert werden sollen */
-    public $tan_count = 0;
-
-    /**
-     *
-     * @var integer ID 
-     */
-    public $id = 0;
-
-    /**
+class Group extends CActiveRecord  {
+        /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return Tan the static model class
+     * @return Date the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
 
     /**
-     * Tabellenname in der Datenbank
+     * Tabellenname
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'tan';
+        return 'group';
     }
 
     /**
-     * Validierungsregeln
+     * Regeln für Validierung
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array validation rules for model attributes.
      */
     public function rules() {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
-            array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen']),
-            array('tan, used', 'safe', 'on' => 'search'),
-            array('group','required','allowEmpty'=>!Yii::app()->params['allowGroups']),
-        );
-    }
-
-    /**
-     * Keine Relationen, liefert ein leeres Array
-     * @return array relational rules.
-     */
-    public function relations() {
-        return array(
-            array('Group', self::BELONGS_TO, 'group', 'group_id'),
+            array('groupname', 'required'),
+            array('groupname','length','max'=>10, 'min'=>1),
         );
     }
 
     /**
      * Attributlabels
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels() {
         return array(
-            'tan' => 'Tan',
-            'used' => 'Benutzt',
-            'tan_count' => 'Anzahl',
-            'group_id' =>'Gruppe'
+            'id' => 'ID',
+            'groupname' => 'Gruppenname',
         );
     }
 
     /**
-     * Individuelle Suchcriteria für View
-     * @return \CActiveDataProvider 
+     * Retrieves a list of models based on the current search/filter conditions.
+     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search() {
         $criteria = new CDbCriteria;
-        $criteria->compare('tan', $this->tan, true);
+        $criteria->compare('id', $this->id);
+        $criteria->compare('groupname', $this->date, true);
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
-            'pagination' => array('pageSize' => 20),
         ));
     }
-
+    
 }
+?>

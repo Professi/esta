@@ -12,8 +12,10 @@
  * @property string $lockAt
  * @property integer $durationPerAppointment
  * The followings are the available model relations:
- * @property Appointment[] $appointments
+ * @property Group[] $groups
+ * 
  */
+ //  @property Appointment[] $appointments
 /* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -73,7 +75,8 @@ class Date extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'appointments' => array(self::HAS_MANY, 'Appointment', 'date_id'),
+            //   'appointments' => array(self::HAS_MANY, 'Appointment', 'date_id'),
+            'groups' => array(self::HAS_MANY, 'Group', 'group_id)'),
         );
     }
 

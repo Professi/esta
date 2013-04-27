@@ -43,7 +43,7 @@ return array(
                     'depends' => array('css'),
                 ),
                 'admin' => array(
-                  'baseUrl' => 'js/',
+                    'baseUrl' => 'js/',
                     'js' => array('custom.js'),
                 ),
             ),
@@ -77,7 +77,7 @@ return array(
             'password' => 'qwertzuiop', //DB Passwort bitte anpassen
             'charset' => 'utf8', //eventuell anpassen im optimalfall dabei belassen
             'tablePrefix' => '', //nicht ändern
-           // 'schemaCachingDuration'=> 3600, //Optimierung
+        // 'schemaCachingDuration'=> 3600, //Optimierung
         ),
         'errorHandler' => array(
             'errorAction' => 'site/error', //nicht ändern
@@ -104,15 +104,17 @@ return array(
 //                    'emails' => array('c.ehringfeld@t-online.de'),)
             ),
         ),
-//        'cache' => array(// nicht ändern , kommt eventuell noch weg da aktuell nichts gecached wird
-//            'class' => 'system.caching.CDbCache',
-//            'connectionID' => 'db',
-//        ),
+        'cache' => array(// nicht ändern , kommt eventuell noch weg da aktuell nichts gecached wird
+            'class' => 'system.caching.CDbCache',
+            'connectionID' => 'db',
+            'autoCreateCacheTable' => false,
+            'cacheTableName' => 'YiiCache',
+        ),
         'session' => array(// nicht ändern
             'sessionName' => 'SiteSession', // nicht ändern
             'class' => 'CDbHttpSession', // nicht ändern
-            'autoCreateSessionTable'=>false, //nicht ändern
-            'connectionID'=>'db',
+            'autoCreateSessionTable' => false, //nicht ändern
+            'connectionID' => 'db',
             'autoStart' => true, // nicht ändern
         ),
         'widgetFactory' => array(// nicht ändern
@@ -138,7 +140,7 @@ return array(
             ),
         ),
     ),
-    'params' =>require(dirname(__FILE__).'/params.php'),
+    'params' => require(dirname(__FILE__) . '/params.php'),
 );
 
 

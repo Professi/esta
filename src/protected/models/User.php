@@ -38,6 +38,7 @@
  * @property Appointment[] $appointments
  * @property ParentChild[] $parentChildren
  * @property UserRole[] $userRoles
+ * @property Group $group
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
 class User extends CActiveRecord {
@@ -109,6 +110,7 @@ class User extends CActiveRecord {
             array('password_repeat', 'safe'), //allow bulk assignment
             array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
             array('id, username, firstname, state, lastname, email, role,roleName,stateName,title', 'safe', 'on' => 'search'),
+            array('group', 'required', 'allowEmpty' => !Yii::app()->params['allowGroups']),
         );
     }
 
@@ -117,12 +119,11 @@ class User extends CActiveRecord {
      * @return array relational rules.
      */
     public function relations() {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
             'appointments' => array(self::HAS_MANY, 'Appointment', 'user_id'),
             'parentChildren' => array(self::HAS_MANY, 'ParentChild', 'user_id'),
             'userRoles' => array(self::HAS_ONE, 'UserRole', 'user_id'),
+            'group' => array(self::HAS_ONE, 'Group', 'id'),
         );
     }
 
