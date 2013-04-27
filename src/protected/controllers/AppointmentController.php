@@ -574,5 +574,18 @@ class AppointmentController extends Controller {
         }
         return $a_child;
     }
+    
+    /**
+     * Generiert einen Link fuer appointment/getTeacher
+     * @param string $letter
+     * @return string
+     */
+    public function getTeacherLink($letter) {
+        return '<a href="index.php?r=appointment/getTeacher&amp;letter='.$letter.'" class="small teacher button">A</a>';
+    }
+    
+    public function getTeacherLinkE($letter) {
+        echo $this->getTeacherLin($letter);
+    }
 
 }

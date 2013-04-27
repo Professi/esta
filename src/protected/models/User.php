@@ -123,7 +123,7 @@ class User extends CActiveRecord {
             'appointments' => array(self::HAS_MANY, 'Appointment', 'user_id'),
             'parentChildren' => array(self::HAS_MANY, 'ParentChild', 'user_id'),
             'userRoles' => array(self::HAS_ONE, 'UserRole', 'user_id'),
-            'group' => array(self::HAS_ONE, 'Group', 'id'),
+            'group' => array(self::BELONGS_TO, 'Group', 'id'),
         );
     }
 

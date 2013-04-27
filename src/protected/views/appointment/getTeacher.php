@@ -38,6 +38,23 @@
                 <fieldset>
                     <div class="hide-for-small" style="line-height:2em;" >
                         <div style="margin-bottom: .6em;">
+                            <?php 
+                            $this->getTeacherLinkE('a');
+                            $this->getTeacherLinkE('b');
+                            $this->getTeacherLinkE('c');
+                            $this->getTeacherLinkE('d');
+                            $this->getTeacherLinkE('e');
+                            $this->getTeacherLinkE('f');
+                            $this->getTeacherLinkE('g');
+                            $this->getTeacherLinkE('h');
+                            $this->getTeacherLinkE('i');
+                            $this->getTeacherLinkE('j');
+                            $this->getTeacherLinkE('k');
+                            $this->getTeacherLinkE('l');
+                            $this->getTeacherLinkE('m');
+                            $this->getTeacherLinkE('n');
+                            $this->getTeacherLinkE('o');
+                            ?>
                             <a href="index.php?r=appointment/getTeacher&amp;letter=a" class="small teacher button">A</a>
                             <a href="index.php?r=appointment/getTeacher&amp;letter=b" class="small teacher button">B</a>
                             <a href="index.php?r=appointment/getTeacher&amp;letter=c" class="small teacher button">C</a>

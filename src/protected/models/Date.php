@@ -76,7 +76,7 @@ class Date extends CActiveRecord {
         // class name for the relations automatically generated below.
         return array(
             //   'appointments' => array(self::HAS_MANY, 'Appointment', 'date_id'),
-            'groups' => array(self::HAS_MANY, 'Group', 'group_id)'),
+            'groups' => array(self::MANY_MANY, 'Group', 'date_has_group(date_id,group_id)'),
         );
     }
 
@@ -93,6 +93,7 @@ class Date extends CActiveRecord {
             'end' => 'Ende',
             'durationPerAppointment' => 'Dauer eines Termins',
             'lockAt' => 'Letzte Buchung',
+            'groups' => 'Gruppen',
         );
     }
 
