@@ -104,13 +104,12 @@ class User extends CActiveRecord {
                 'min' => Yii::app()->params['tanSize'],
                 'max' => Yii::app()->params['tanSize'],),
             array('tan', 'numerical', 'integerOnly' => TRUE,
-                'allowEmpty' => !$this->isNewRecord || !Yii::app()->user->isGuest
+                'allowEmpty' => !$this->isNewRecord || !Yii::app()->user->isGuest || !Yii::app()->params['installed']
             ),
-            array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat'),
+            array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat', 'allowEmpty' => !Yii::app()->params['installed']),
             array('password_repeat', 'safe'), //allow bulk assignment
-            array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
+            array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements() || !Yii::app()->params['installed']),
             array('id, username, firstname, state, lastname, email, role,roleName,stateName,title', 'safe', 'on' => 'search'),
-            array('group', 'required', 'except' => !Yii::app()->params['allowGroups'] || $this->role < 3 ),
         );
     }
 
@@ -326,7 +325,7 @@ class User extends CActiveRecord {
      */
     public function afterSave() {
         if ($this->isNewRecord) {
-            if (!Yii::app()->user->checkAccess('1')) {
+            if (!Yii::app()->user->checkAccess('1') && Yii::app()->params['installed']) {
                 $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
                 $tan->used = true;
                 $tan->update();
@@ -477,16 +476,20 @@ class User extends CActiveRecord {
         if ($this->getError('password') == Yii::t('yii', '{attribute} must be repeated exactly.', $params)) {
             $this->addError('password_repeat', "Passwörter stimmen nicht überein.");
         }
-        if ($rc && Yii::app()->user->isGuest && $this->isNewRecord) {
+        if (($rc && Yii::app()->user->isGuest && $this->isNewRecord) || ($rc && !Yii::app()->params['installed'])) {
             $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
             if ($tan !== null) {
                 if ($tan->used) {
                     $this->addError('tan', 'Leider wurde Ihre TAN schon benutzt.');
                     $rc = false;
+                } else {
+                    $this->group = $tan->group;
                 }
             } else {
-                $this->addError('tan', 'Leider konnte die eingegebene TAN nicht identifiziert werden.');
-                $rc = false;
+                if (Yii::app()->params['installed']) {
+                    $this->addError('tan', 'Leider konnte die eingegebene TAN nicht identifiziert werden.');
+                    $rc = false;
+                }
             }
         }
         return $rc;
@@ -540,7 +543,7 @@ class User extends CActiveRecord {
         }
         $password = $this->password;
         $this->password_repeat = $this->password;
-        if ($this->save() && Yii::app()->params['randomTeacherPassword']) {
+        if ($this->save() && Yii::app()->params['randomTeacherPassword'] && Yii::app()->params['mailsActivated']) {
             $mail = new Mail();
             $mail->sendRandomUserPassword($this->email, $password);
         }

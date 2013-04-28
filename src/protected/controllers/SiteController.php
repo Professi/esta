@@ -83,24 +83,27 @@ class SiteController extends Controller {
                     if (Yii::app()->params['installed'] == 0) {
                         $createAdminUser = true;
                     }
-                    $model->installed = 1;
                     $str = base64_encode(serialize($model->attributes));
                     file_put_contents($file, $str);
                     if ($createAdminUser) {
-                        $model->createTables();
-                        $model->addForeignKeys();
-                        $model->createIndices();
-                        $model->fillTable();
-                        $user = new User();
-                        $user->setSomeAttributes($model->adminEmail, 'admin', 'admin', 1, 0);
-                        $password = $user->generatePassword();
-                        $msg = "Konfiguration aktualisiert. Außerdem wurde ein Administratorkonto erstellt. Ihr Benutzerkontenname lautet: "
-                                . $user->email . " Ihr Passwort lautet:" . $password;
-                        if ($model->randomTeacherPassword) {
-                            $msg .= " .Sollten Sie nun eine Bestätigungsemail erhalten, wurde die Anwendung erfolgreich konfiguriert.";
+                        if ($model->tables()) {
+                            $user = new User();
+                            $user->setSomeAttributes($model->adminEmail, 'admin', 'admin', 1, 0);
+                            $password = $user->generatePassword();
+                            $user->password_repeat = $password;
+                            $user->save();
+                            $msg = "Konfiguration aktualisiert. Außerdem wurde ein Administratorkonto erstellt. Ihr Benutzerkontenname lautet: "
+                                    . $user->email . " Ihr Passwort lautet:" . $password;
+                            if ($model->randomTeacherPassword) {
+                                $msg .= " .Sollten Sie nun eine Bestätigungsemail erhalten, wurde die Anwendung erfolgreich konfiguriert.";
+                            }
+                            $msg .= "\n Sie können sich nun einloggen.";
+                            $model->installed = 1;
+                            Yii::app()->user->setFlash('success', $msg);
+                            $this->redirect('index.php');
+                        } else {
+                            Yii::app()->user->setFlash('failMsg', 'Verbindung zur Datenbank konnte nicht hergestellt werden.');
                         }
-                        Yii::app()->user->setFlash('success', $msg);
-                        $this->refresh();
                     } else {
                         Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert.');
                     }

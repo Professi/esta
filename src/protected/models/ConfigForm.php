@@ -138,32 +138,32 @@ class ConfigForm extends CFormModel {
         );
     }
 
-    public function createTables() {
-        $command = $this->getCommand();
+    private function createTables($command) {
+
         $command->createTable("child", array(
             'id' => 'pk',
             'firstname' => 'string NOT NULL',
             'lastname' => 'string NOT NULL',
-        ));
+                ), 'DEFAULT CHARSET=utf8');
         $command->createTable("YiiSession", array(
             'id' => 'string NOT NULL',
             'expire' => 'integer',
             'data' => 'longblob',
-        ));
+                ), 'DEFAULT CHARSET=utf8');
         $command->createTable("YiiCache", array(
             'id' => 'string NOT NULL',
             'expire' => 'integer',
             'value' => 'longblob',
-        ));
+                ), 'DEFAULT CHARSET=utf8');
         $command->createTable('group', array(
             'id' => 'pk',
             'groupname' => 'string NOT NULL'
-        ));
+                ), 'DEFAULT CHARSET=utf8');
         $command->createTable('role', array(
-            'id' => 'integer',
+            'id' => 'integer PRIMARY KEY',
             'title' => 'string NOT NULL',
             'description' => 'string',
-        ));
+                ), 'DEFAULT CHARSET=utf8');
         $command->createTable('user', array(
             'id' => 'pk',
             'username' => 'string NOT NULL',
@@ -171,7 +171,7 @@ class ConfigForm extends CFormModel {
             'activationKey' => 'string NOT NULL',
             'createtime' => 'timestamp',
             'firstname' => 'string NOT NULL',
-            'lastname' => 'string NOT NULL',
+            'lastname' => 'string CHARACTER SET utf8 COLLATE utf8_bin NOT NULL',
             'title' => 'string',
             'state' => 'tinyint(3)',
             'lastLogin' => 'timestamp NULL',
@@ -179,22 +179,22 @@ class ConfigForm extends CFormModel {
             'bannedUntil' => 'timestamp NULL', //maybe Int
             'password' => 'string',
             'group_id' => 'integer',
-        ));
+                ), 'DEFAULT CHARSET=utf8');
         $command->createTable('user_role', array(
             'id' => 'pk',
             'role_id' => 'integer NOT NULL',
             'user_id' => 'integer NOT NULL',
-        ));
+                ), 'DEFAULT CHARSET=utf8');
         $command->createTable('tan', array(
             'tan' => 'integer UNIQUE',
             'used' => 'boolean',
             'group_id' => 'integer NULL',
-        ));
+                ), 'DEFAULT CHARSET=utf8');
         $command->createTable('parent_child', array(
             'id' => 'pk',
             'user_id' => 'integer NOT NULL',
             'child_id' => 'integer NOT NULL',
-        ));
+                ), 'DEFAULT CHARSET=utf8');
         $command->createTable('date', array(
             'id' => 'pk',
             'date' => 'date NOT NULL',
@@ -202,56 +202,60 @@ class ConfigForm extends CFormModel {
             'end' => 'time NOT NULL',
             'lockAt' => 'integer NOT NULL',
             'durationPerAppointment' => 'int(3)',
-        ));
+                ), 'DEFAULT CHARSET=utf8');
         $command->createTable('date_has_group', array(
             'id' => 'pk',
             'date_id' => 'integer',
             'group_id' => 'integer',
-        ));
+                ), 'DEFAULT CHARSET=utf8');
         $command->createTable('dateAndTime', array(
             'id' => 'pk',
             'time' => 'time NOT NULL',
             'date_id' => 'integer',
-        ));
+                ), 'DEFAULT CHARSET=utf8');
         $command->createTable('appointment', array(
             'id' => 'pk',
             'parent_child_id' => 'integer',
             'user_id' => 'integer',
             'dateAndTime_id' => 'integer',
-        ));
+                ), 'DEFAULT CHARSET=utf8');
         $command->createTable('blockedAppointment', array(
             'id' => 'pk',
             'reason' => 'text',
             'dateAndTime_id' => 'integer',
             'user_id' => 'integer',
-        ));
+                ), 'DEFAULT CHARSET=utf8');
     }
 
-    private function getCommand() {
-        $connection = new CDbConnection(Yii::app()->params['databaseManagementSystem'] . ':host=' . Yii::app()->params['databaseHost'] . ';dbname=' . Yii::app()->params['databaseName'], Yii::app()->params['databaseUsername'], Yii::app()->params['databasePassword']);
-        $connection->setActive(true);
-        return $connection->createCommand();
-    }
-
-    public function createIndices() {
-        $command = $this->getCommand();
+    private function createIndices($command) {
         $command->createIndex('idx_group_name', 'group', 'groupname', true);
         $command->createIndex('idx_role_title', 'role', 'title', true);
         $command->createIndex('idx_date_has_group', 'date_has_group', 'date_id,group_id', true);
         $command->createIndex('idx_blockedAppointment', 'blockedAppointment', 'dateAndTime_id,user_id', true);
+        $command->createIndex('idx_user_id','user','id');
+        $command->createIndex('idx_role_id','role','id');
+        $command->createIndex('idx_user_role_id','user_role','id');
+        $command->createIndex('idx_group_id','group','id');
+        $command->createIndex('idx_child_id','child','id');
+        $command->createIndex('idx_ parent_child_id','parent_child','id');
+        $command->createIndex('idx_date_has_group_id','date_has_group','id');
+        $command->createIndex('idx_date_id','date','id');
+        $command->createIndex('idx_dateAndTime_date_id_time','dateAndTime','time,date_id',true);
+        $command->createIndex('idx_dateAndTime_id','dateAndTime','id');
+        $command->createIndex('idx_appointment_id','appointment','id');
+        $command->createIndex('idx_blockedAppointment_id','blockedAppointment','id');
     }
 
-    public function addForeignKeys() {
-        $command = $this->getCommand();
+    private function addForeignKeys($command) {
         $command->addForeignKey('user_fk1', 'user', 'group_id', 'group', 'id', 'SET NULL', 'CASCADE');
         $command->addForeignKey('user_role_fk1', 'user_role', 'role_id', 'role', 'id', 'NO ACTION', 'NO ACTION');
         $command->addForeignKey('user_role_fk2', 'user_role', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
         $command->addForeignKey('tan_fk1', 'tan', 'group_id', 'group', 'id', 'SET NULL', 'NO ACTION');
         $command->addForeignKey('parent_child_fk1', 'parent_child', 'child_id', 'child', 'id', 'CASCADE', 'NO ACTION');
         $command->addForeignKey('parent_child_fk2', 'parent_child', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
-        $command->addForeignKey('date_has_group_fk1', 'date_has_group', 'date_id', 'date', 'date_id', 'CASCADE', 'NO ACTION');
-        $command->addForeignKey('date_has_group_fk2', 'date_has_group', 'group_id', 'group', 'group_id', 'CASCADE', 'NO ACTION');
-        $command->addForeignKey('dateAndTime_fk1', 'dateAndTime', 'date_id', 'date', 'date_id', 'CASCADE', 'NO ACTION');
+        $command->addForeignKey('date_has_group_fk1', 'date_has_group', 'date_id', 'date', 'id', 'CASCADE', 'NO ACTION');
+        $command->addForeignKey('date_has_group_fk2', 'date_has_group', 'group_id', 'group', 'id', 'CASCADE', 'NO ACTION');
+        $command->addForeignKey('dateAndTime_fk1', 'dateAndTime', 'date_id', 'date', 'id', 'CASCADE', 'NO ACTION');
         $command->addForeignKey('appointment_fk1', 'appointment', 'parent_child_id', 'parent_child', 'id', 'CASCADE', 'NO ACTION');
         $command->addForeignKey('appointment_fk2', 'appointment', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
         $command->addForeignKey('appointment_fk3', 'appointment', 'dateAndTime_id', 'dateAndTime', 'id', 'CASCADE', 'NO ACTION');
@@ -259,21 +263,44 @@ class ConfigForm extends CFormModel {
         $command->addForeignKey('blockedAppointment_fk2', 'blockedAppointment', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
     }
 
-    public function fillTable() {
-        $role1 = new Role();
-        $role1->id = 0;
-        $role1->title = 'Administration';
-        $role1->insert();
-        $role2 = new Role();
-        $role2->id = 1;
-        $role2->title = 'Verwaltung';
-        $role2->insert();
-        $role3 = new Role();
-        $role3->id = 2;
-        $role3->title = 'Lehrer';
-        $role4 = new Role();
-        $role4->id = 3;
-        $role4->title = 'Eltern';
+    private function fillTable($command) {
+        $command->insert('role', array(
+            'id' => 0,
+            'title' => 'Administration',
+        ));
+        $command->insert('role', array(
+            'id' => 1,
+            'title' => 'Verwaltung'
+        ));
+        $command->insert('role', array(
+            'id' => 2,
+            'title' => 'Lehrer',
+        ));
+        $command->insert('role', array(
+            'id' => 3,
+            'title' => 'Eltern'
+        ));
+    }
+
+    public function tables() {
+        $rc = true;
+        $connection = $this->getConnection();
+        if ($connection->active) {
+            $command = $connection->createCommand();
+            $this->createTables($command);
+            $this->addForeignKeys($command);
+            $this->createIndices($command);
+            $this->fillTable($command);
+        } else {
+            $rc = false;
+        }
+        return $rc;
+    }
+
+    public function getConnection() {
+        $connection = new CDbConnection(Yii::app()->params['databaseManagementSystem'] . ':host=' . Yii::app()->params['databaseHost'] . ';dbname=' . Yii::app()->params['databaseName'], Yii::app()->params['databaseUsername'], Yii::app()->params['databasePassword']);
+        $connection->setActive(true);
+        return $connection;
     }
 
 }
