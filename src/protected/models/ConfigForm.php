@@ -124,5 +124,62 @@ class ConfigForm extends CFormModel {
             'allowGroups'=>'Gruppen erlauben?'
             );
     }
+    
+    public function createTables() {
+        $command = Yii::app()->db->createCommand();
+        $command->createTable("child", array(
+            'id'=>'pk',
+            'firstname' =>'string NOT NULL',
+            'lastname'=>'string NOT NULL',
+        ));
+        $command->createTable("YiiSession", array(
+            'id'=>'string NOT NULL',
+            'expire'=>'integer',
+            'data'=>'binary',
+        ));
+        $command->createTable("YiiCache", array(
+            'id'=>'string NOT NULL',
+            'expire'=>'integer',
+            'value'=>'blob',
+        ));
+        $command->createTable('group', array(
+            'id'=>'pk',
+            'groupname'=>'string NOT NULL'
+        ));
+        $command->createIndex('idx_group_name', 'group', 'groupname', true);
+        $command->createTable('role', array(
+            'id'=>'pk',
+            'title'=>'string NOT NULL',
+            'description'=>'string',
+        ));
+        $command->createIndex('idx_role_title', 'role','title',true);
+        $role = new Role();
+        $role->id = 0;
+        $role->title = 'Administration';
+        $role->insert();
+        $role->id = 1;
+        $role->title = 'Verwaltung';
+        $role->insert();
+        $role->id = 2;
+        $role->title = 'Lehrer';
+        $role->id = 3;
+        $role->title = 'Eltern';
+        $command->createTable('user', array(
+            'id'=>'pk',
+            'username'=>'string NOT NULL',
+            'email'=>'string',
+            'activationKey'=>'string NOT NULL',
+            'createtime'=>'timestamp',
+            'firstname'=>'string NOT NULLL',
+            'lastname'=>'string NOT NULL',
+            'title'=>'string',
+            'state'=>'tinyint(3)',
+            'lastLogin'=>'timestamp',
+            'badLogins'=>'tinyInt(4)',
+            'bannedUntil'=>'timestamp',
+            'password'=>'string',
+        ));
+    }
+    
 }
 ?>
