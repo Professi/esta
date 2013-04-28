@@ -15,6 +15,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+$params = require(dirname(__FILE__) . '/params.php');
+$session = array();
+$cache = array();
+if ($params['installed']) {
+    $session = array('sessionName' => 'SiteSession', // nicht ändern
+        'class' => 'CDbHttpSession', // nicht ändern
+        'autoCreateSessionTable' => false, //nicht ändern
+        'connectionID' => 'db',
+        'autoStart' => false,); // nicht ändern
+    $cache = array(// nicht ändern , kommt eventuell noch weg da aktuell nichts gecached wird
+        'class' => 'system.caching.CDbCache',
+        'connectionID' => 'db',
+        'autoCreateCacheTable' => false,
+        'cacheTableName' => 'YiiCache',
+        'isInitialized' => $params['installed'],
+    );
+}
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..', //nicht ändern
     'name' => 'Elternsprechtagsanwendung', //entsprechend den eigenen Bedürfnissen anpassen
@@ -70,11 +87,11 @@ return array(
             'connectionID' => 'db', //nicht ändern
         ),
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=estdb', //entsprechen der eigenen Datenbank anpassen  Beispiel: mysql:host=HOST;dbname=DBNAME
+            'connectionString' => Yii::app()->params['databaseManagementSystem'] . ':host=' . $params['databaseHost'] . ';dbname=' . $params['databaseName'], //entsprechen der eigenen Datenbank anpassen  Beispiel: mysql:host=HOST;dbname=DBNAME
             'emulatePrepare' => true, //nicht ändern
             'enableProfiling' => true, //nicht ändern - Entwicklungsparameter wird später auf false gesetzt für Performancegewinn
-            'username' => 'estdb', //DB User bitte anpassen
-            'password' => 'qwertzuiop', //DB Passwort bitte anpassen
+            'username' => $params['databaseUsername'], //DB User bitte anpassen
+            'password' => $params['databasePassword'], //DB Passwort bitte anpassen
             'charset' => 'utf8', //eventuell anpassen im optimalfall dabei belassen
             'tablePrefix' => '', //nicht ändern
         // 'schemaCachingDuration'=> 3600, //Optimierung
@@ -99,24 +116,13 @@ return array(
                 ),
                 array('class' => 'CProfileLogRoute', // auskommentieren nur interesant für die Entwicklung
                     'report' => 'summary'),
-//                array('class' => 'CEmailLogRoute',
-//                    'levels' => 'error, warning',
-//                    'emails' => array('c.ehringfeld@t-online.de'),)
+                array('class' => 'CEmailLogRoute',
+                    'levels' => 'error, warning',
+                    'emails' => array('c.ehringfeld@t-online.de'),)
             ),
         ),
-        'cache' => array(// nicht ändern , kommt eventuell noch weg da aktuell nichts gecached wird
-            'class' => 'system.caching.CDbCache',
-            'connectionID' => 'db',
-            'autoCreateCacheTable' => false,
-            'cacheTableName' => 'YiiCache',
-        ),
-        'session' => array(// nicht ändern
-            'sessionName' => 'SiteSession', // nicht ändern
-            'class' => 'CDbHttpSession', // nicht ändern
-            'autoCreateSessionTable' => false, //nicht ändern
-            'connectionID' => 'db',
-            'autoStart' => true, // nicht ändern
-        ),
+        'cache' => $cache,
+        'session' => $session,
         'widgetFactory' => array(// nicht ändern
             'widgets' => array(// nicht ändern
                 'CBaseListView' => array(
@@ -140,7 +146,7 @@ return array(
             ),
         ),
     ),
-    'params' => require(dirname(__FILE__) . '/params.php'),
+    'params' => $params,
 );
 
 

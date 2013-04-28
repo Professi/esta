@@ -87,6 +87,10 @@ class SiteController extends Controller {
                     $str = base64_encode(serialize($model->attributes));
                     file_put_contents($file, $str);
                     if ($createAdminUser) {
+                        $model->createTables();
+                        $model->addForeignKeys();
+                        $model->createIndices();
+                        $model->fillTable();
                         $user = new User();
                         $user->setSomeAttributes($model->adminEmail, 'admin', 'admin', 1, 0);
                         $password = $user->generatePassword();

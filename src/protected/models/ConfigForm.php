@@ -51,7 +51,12 @@ class ConfigForm extends CFormModel {
     public $allowBlockingOnlyForManagement;
     public $lockRegistration;
     public $allowGroups;
-    
+    public $databaseHost;
+    public $databaseName;
+    public $databaseUsername;
+    public $databasePassword;
+    public $databaseManagementSystem;
+
     public function init() {
         $this->attributes = Yii::app()->params->toArray();
     }
@@ -65,13 +70,16 @@ class ConfigForm extends CFormModel {
                 'durationTempBans,maxAttemptsForLogin,timeFormat,dateFormat,' .
                 'allowBlockingAppointments,appointmentBlocksPerDate,' .
                 'lengthReasonAppointmentBlocked,schoolStreet,schoolCity,' .
-                'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,lockRegistration,allowGroups', 'required'),
+                'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,lockRegistration,allowGroups,' .
+                'databaseHost,databaseName,databaseUsername,databasePassword,databaseManagementSystem'
+                , 'required'),
             array('fromMailHost,adminEmail,schoolEmail', 'email'),
+            array('databaseManagementSystem', 'length', 'min' => 3),
             array('emailHost,fromMail,dateFormat', 'length', 'min' => 4),
             array('dateTimeFormat', 'length', 'min' => 5),
-            array('defaultTeacherPassword', 'length', 'min' => 8),
+            array('defaultTeacherPassword,databasePassword', 'length', 'min' => 8),
             array('salt', 'length', 'min' => 16, 'max' => 64),
-            array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments,' . 
+            array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments,' .
                 'useSchoolEmailForContactForm,allowBlockingOnlyForManagement,lockRegistration,allowGroups',
                 'boolean'),
             array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,'
@@ -110,76 +118,164 @@ class ConfigForm extends CFormModel {
             'salt' => 'Salz für Passwörter',
             'dateFormat' => 'Datumsformat (z.B. d.m.Y)',
             'timeFormat' => 'Zeitformat (z.B. H:i)',
-            'allowBlockingAppointments'=>'Blockieren von Terminen erlauben?',
-            'appointmentBlocksPerDate'=>'Anzahl der Termine die blockiert werden dürfen',
-            'lengthReasonAppointmentBlocked'=>'Minimallänge eines Grundes um einen Termin zu blocken',
-            'schoolStreet'=>'Straße',
-            'schoolCity'=>'Postleitzahl, Ort',
-            'schoolTele'=>'Telefonnummer',
-            'schoolFax'=>'Faxnummer',
-            'schoolEmail'=>'E-Mail Adresse der Schule',
-            'useSchoolEmailForContactForm'=>'E-Mail Adresse der Schule für das Kontaktformular verwenden?',
-            'allowBlockingOnlyForManagement'=>'Nur Verwaltung und Administration dürfen Termine blockieren?',
-            'lockRegistration'=>'Registrierung sperren?',
-            'allowGroups'=>'Gruppen erlauben?'
-            );
+            'allowBlockingAppointments' => 'Blockieren von Terminen erlauben?',
+            'appointmentBlocksPerDate' => 'Anzahl der Termine die blockiert werden dürfen',
+            'lengthReasonAppointmentBlocked' => 'Minimallänge eines Grundes um einen Termin zu blocken',
+            'schoolStreet' => 'Straße',
+            'schoolCity' => 'Postleitzahl, Ort',
+            'schoolTele' => 'Telefonnummer',
+            'schoolFax' => 'Faxnummer',
+            'schoolEmail' => 'E-Mail Adresse der Schule',
+            'useSchoolEmailForContactForm' => 'E-Mail Adresse der Schule für das Kontaktformular verwenden?',
+            'allowBlockingOnlyForManagement' => 'Nur Verwaltung und Administration dürfen Termine blockieren?',
+            'lockRegistration' => 'Registrierung sperren?',
+            'allowGroups' => 'Gruppen erlauben?',
+            'databaseHost' => 'Datenbankhost',
+            'databaseName' => 'Name der Tabelle in der Datenbank',
+            'databaseUsername' => 'Datenbankbenutzername',
+            'databasePassword' => 'Datenbankbenutzerpasswort',
+            'databaseManagementSystem' => 'Datenbankmanagementsystem',
+        );
     }
-    
+
     public function createTables() {
-        $command = Yii::app()->db->createCommand();
+        $command = $this->getCommand();
         $command->createTable("child", array(
-            'id'=>'pk',
-            'firstname' =>'string NOT NULL',
-            'lastname'=>'string NOT NULL',
+            'id' => 'pk',
+            'firstname' => 'string NOT NULL',
+            'lastname' => 'string NOT NULL',
         ));
         $command->createTable("YiiSession", array(
-            'id'=>'string NOT NULL',
-            'expire'=>'integer',
-            'data'=>'binary',
+            'id' => 'string NOT NULL',
+            'expire' => 'integer',
+            'data' => 'longblob',
         ));
         $command->createTable("YiiCache", array(
-            'id'=>'string NOT NULL',
-            'expire'=>'integer',
-            'value'=>'blob',
+            'id' => 'string NOT NULL',
+            'expire' => 'integer',
+            'value' => 'longblob',
         ));
         $command->createTable('group', array(
-            'id'=>'pk',
-            'groupname'=>'string NOT NULL'
+            'id' => 'pk',
+            'groupname' => 'string NOT NULL'
         ));
-        $command->createIndex('idx_group_name', 'group', 'groupname', true);
         $command->createTable('role', array(
-            'id'=>'pk',
-            'title'=>'string NOT NULL',
-            'description'=>'string',
+            'id' => 'integer',
+            'title' => 'string NOT NULL',
+            'description' => 'string',
         ));
-        $command->createIndex('idx_role_title', 'role','title',true);
-        $role = new Role();
-        $role->id = 0;
-        $role->title = 'Administration';
-        $role->insert();
-        $role->id = 1;
-        $role->title = 'Verwaltung';
-        $role->insert();
-        $role->id = 2;
-        $role->title = 'Lehrer';
-        $role->id = 3;
-        $role->title = 'Eltern';
         $command->createTable('user', array(
-            'id'=>'pk',
-            'username'=>'string NOT NULL',
-            'email'=>'string',
-            'activationKey'=>'string NOT NULL',
-            'createtime'=>'timestamp',
-            'firstname'=>'string NOT NULLL',
-            'lastname'=>'string NOT NULL',
-            'title'=>'string',
-            'state'=>'tinyint(3)',
-            'lastLogin'=>'timestamp',
-            'badLogins'=>'tinyInt(4)',
-            'bannedUntil'=>'timestamp',
-            'password'=>'string',
+            'id' => 'pk',
+            'username' => 'string NOT NULL',
+            'email' => 'string',
+            'activationKey' => 'string NOT NULL',
+            'createtime' => 'timestamp',
+            'firstname' => 'string NOT NULL',
+            'lastname' => 'string NOT NULL',
+            'title' => 'string',
+            'state' => 'tinyint(3)',
+            'lastLogin' => 'timestamp NULL',
+            'badLogins' => 'tinyint(4)',
+            'bannedUntil' => 'timestamp NULL', //maybe Int
+            'password' => 'string',
+            'group_id' => 'integer',
+        ));
+        $command->createTable('user_role', array(
+            'id' => 'pk',
+            'role_id' => 'integer NOT NULL',
+            'user_id' => 'integer NOT NULL',
+        ));
+        $command->createTable('tan', array(
+            'tan' => 'integer UNIQUE',
+            'used' => 'boolean',
+            'group_id' => 'integer NULL',
+        ));
+        $command->createTable('parent_child', array(
+            'id' => 'pk',
+            'user_id' => 'integer NOT NULL',
+            'child_id' => 'integer NOT NULL',
+        ));
+        $command->createTable('date', array(
+            'id' => 'pk',
+            'date' => 'date NOT NULL',
+            'begin' => 'time NOT NULL',
+            'end' => 'time NOT NULL',
+            'lockAt' => 'integer NOT NULL',
+            'durationPerAppointment' => 'int(3)',
+        ));
+        $command->createTable('date_has_group', array(
+            'id' => 'pk',
+            'date_id' => 'integer',
+            'group_id' => 'integer',
+        ));
+        $command->createTable('dateAndTime', array(
+            'id' => 'pk',
+            'time' => 'time NOT NULL',
+            'date_id' => 'integer',
+        ));
+        $command->createTable('appointment', array(
+            'id' => 'pk',
+            'parent_child_id' => 'integer',
+            'user_id' => 'integer',
+            'dateAndTime_id' => 'integer',
+        ));
+        $command->createTable('blockedAppointment', array(
+            'id' => 'pk',
+            'reason' => 'text',
+            'dateAndTime_id' => 'integer',
+            'user_id' => 'integer',
         ));
     }
-    
+
+    private function getCommand() {
+        $connection = new CDbConnection(Yii::app()->params['databaseManagementSystem'] . ':host=' . Yii::app()->params['databaseHost'] . ';dbname=' . Yii::app()->params['databaseName'], Yii::app()->params['databaseUsername'], Yii::app()->params['databasePassword']);
+        $connection->setActive(true);
+        return $connection->createCommand();
+    }
+
+    public function createIndices() {
+        $command = $this->getCommand();
+        $command->createIndex('idx_group_name', 'group', 'groupname', true);
+        $command->createIndex('idx_role_title', 'role', 'title', true);
+        $command->createIndex('idx_date_has_group', 'date_has_group', 'date_id,group_id', true);
+        $command->createIndex('idx_blockedAppointment', 'blockedAppointment', 'dateAndTime_id,user_id', true);
+    }
+
+    public function addForeignKeys() {
+        $command = $this->getCommand();
+        $command->addForeignKey('user_fk1', 'user', 'group_id', 'group', 'id', 'SET NULL', 'CASCADE');
+        $command->addForeignKey('user_role_fk1', 'user_role', 'role_id', 'role', 'id', 'NO ACTION', 'NO ACTION');
+        $command->addForeignKey('user_role_fk2', 'user_role', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
+        $command->addForeignKey('tan_fk1', 'tan', 'group_id', 'group', 'id', 'SET NULL', 'NO ACTION');
+        $command->addForeignKey('parent_child_fk1', 'parent_child', 'child_id', 'child', 'id', 'CASCADE', 'NO ACTION');
+        $command->addForeignKey('parent_child_fk2', 'parent_child', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
+        $command->addForeignKey('date_has_group_fk1', 'date_has_group', 'date_id', 'date', 'date_id', 'CASCADE', 'NO ACTION');
+        $command->addForeignKey('date_has_group_fk2', 'date_has_group', 'group_id', 'group', 'group_id', 'CASCADE', 'NO ACTION');
+        $command->addForeignKey('dateAndTime_fk1', 'dateAndTime', 'date_id', 'date', 'date_id', 'CASCADE', 'NO ACTION');
+        $command->addForeignKey('appointment_fk1', 'appointment', 'parent_child_id', 'parent_child', 'id', 'CASCADE', 'NO ACTION');
+        $command->addForeignKey('appointment_fk2', 'appointment', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
+        $command->addForeignKey('appointment_fk3', 'appointment', 'dateAndTime_id', 'dateAndTime', 'id', 'CASCADE', 'NO ACTION');
+        $command->addForeignKey('blockedAppointment_fk1', 'blockedAppointment', 'dateAndTime_id', 'dateAndTime', 'id', 'CASCADE', 'NO ACTION');
+        $command->addForeignKey('blockedAppointment_fk2', 'blockedAppointment', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
+    }
+
+    public function fillTable() {
+        $role1 = new Role();
+        $role1->id = 0;
+        $role1->title = 'Administration';
+        $role1->insert();
+        $role2 = new Role();
+        $role2->id = 1;
+        $role2->title = 'Verwaltung';
+        $role2->insert();
+        $role3 = new Role();
+        $role3->id = 2;
+        $role3->title = 'Lehrer';
+        $role4 = new Role();
+        $role4->id = 3;
+        $role4->title = 'Eltern';
+    }
+
 }
+
 ?>

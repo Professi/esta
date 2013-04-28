@@ -41,8 +41,12 @@ Yii::app()->clientScript->registerPackage('jquery');
                     <span aria-hidden="true" data-icon="&#xe011;" style="font-size:2.5em;"></span>
                 </div>
                 <div class="ten columns">
-                    Bitte führen Sie auf dieser Seite keine Änderungen durch, wenn Sie sich nicht absolut sicher sind.
-                    <br> Die Änderungen haben Auswirkungen auf alle Benutzer im System und können sich negativ auf die Funktionalität der Software auswirken.
+                    <?php if (Yii::app()->params['installed']) { ?>
+                        Bitte führen Sie auf dieser Seite keine Änderungen durch, wenn Sie sich nicht absolut sicher sind.
+                        <br> Die Änderungen haben Auswirkungen auf alle Benutzer im System und können sich negativ auf die Funktionalität der Software auswirken.
+                    <?php } else { ?>
+                        Bitte passen Sie die nachfolgenden Felder entsprechend Ihrer Bed&uuml;fnisse an.
+                    <?php } ?>
                 </div>
             </div>
         </div>
@@ -114,7 +118,7 @@ Yii::app()->clientScript->registerPackage('jquery');
                     ?>
                 </div>
             </div>
-                        <div class="row collapse">
+            <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'lockRegistration'); ?></span>
                 </div>
@@ -124,12 +128,12 @@ Yii::app()->clientScript->registerPackage('jquery');
                     echo $form->error($model, 'lockRegistration');
                     ?>
                 </div>
-                        </div>
-                                    <div class="row collapse">
+            </div>
+            <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'allowGroups'); ?></span>
                 </div>
-                             <div class="four columns styled-select">
+                <div class="four columns styled-select">
                     <?php
                     echo $form->dropDownList($model, 'allowGroups', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'allowGroups');
@@ -139,6 +143,70 @@ Yii::app()->clientScript->registerPackage('jquery');
             <div class="row">
                 <div class="eight columns centered panel text-center">
                     Für Datums- und Zeitformate siehe <a href="http://php.net/manual/de/function.date.php">http://php.net/manual/de/function.date.php</a>
+                </div>
+            </div>
+        </fieldset>
+        <!-- 
+            public $databaseHost;
+    public $databaseName;
+    public $databaseUsername;
+    public $databasePassword;
+        -->
+        <fieldset>
+            <legend>Datenbankinformationen</legend>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'databaseManagementSystem'); ?></span>
+                </div>
+                <div class="four columns styled-select">
+                    <?php
+                    echo $form->dropDownList($model, 'databaseManagementSystem', array('mysql' => 'MySQL', 'pgsql' => 'PostgreSQL', 'oci' => 'Oracle Datenbank', 'mssql' => 'Microsoft SQL Server'));
+                    echo $form->error($model, 'databaseManagementSystem');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'databaseHost'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'databaseHost');
+                    echo $form->error($model, 'databaseHost');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'databaseName'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'databaseName');
+                    echo $form->error($model, 'databaseName');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'databaseUsername'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'databaseUsername');
+                    echo $form->error($model, 'databaseUsername');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'databasePassword'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->passwordField($model, 'databasePassword');
+                    echo $form->error($model, 'databasePassword');
+                    ?>
                 </div>
             </div>
         </fieldset>
@@ -411,7 +479,7 @@ Yii::app()->clientScript->registerPackage('jquery');
             </div>            
         </fieldset>
         <?php if (!Yii::app()->params['installed']) { ?>
-        <div class="push"></div>
+            <div class="push"></div>
             <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'salt'); ?></span>
@@ -423,7 +491,7 @@ Yii::app()->clientScript->registerPackage('jquery');
                     ?>
                 </div>
             </div>
-        <div class="push"></div>
+            <div class="push"></div>
         <?php } ?>  
     </div><!-- row -->
     <div class="row">
