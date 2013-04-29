@@ -142,6 +142,22 @@ $form = $this->beginWidget('CActiveForm', array(
         <span class="postfix">in Minuten</span>
     </div>
 </div>
+<div class="row collapse">
+    <div class="two columns">
+        <span class="prefix infofeld"><?php echo $form->label($model, 'title', array('class' => 'infolabel')); ?></span>
+        <div class="infotext">
+            <span aria-hidden="true" data-icon="&#xe012;"></span>
+            Vergeben Sie einen beliebigen Titel an diesen Elternsprechtag, um ihre interne Organisation zu erleichtern.
+            Dieses Feld kann, wenn es nicht benötigt wird, leer gelassen werden.
+        </div>
+    </div>
+    <div class="ten columns">
+        <?php
+        echo $form->textField($model, 'title');
+        echo $form->error($model, 'title');
+        ?>
+    </div>
+</div>
 <br>
 <?php
 echo CHtml::submitButton($model->isNewRecord ? 'Anlegen' : 'Speichern', array('class' => 'small button'));

@@ -42,6 +42,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'end', 'value' => 'date(Yii::app()->params["timeFormat"], strtotime($data->end))'),
         array('name' => 'lockAt', 'value' => 'date(Yii::app()->params["dateTimeFormat"], $data->lockAt)'),
         'durationPerAppointment',
+        array('name' => 'title', 'value' => '$data->title'),
         array(
             'class' => 'CustomButtonColumn',
         ),

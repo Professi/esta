@@ -81,7 +81,10 @@
         
         // ** Infofelder generieren **
         
-        $('.infolabel').html($('.infolabel').html()+'&nbsp;&nbsp;<span data-icon="&#xe012;"/>');
+        $('.infolabel').each(function() {
+            $(this).html($(this).html()+'&nbsp;&nbsp;<span data-icon="&#xe012;"/>');
+        });
+        
         $('.infofeld').on({
             mouseenter: function(){
                 $('.infobox').toggle();

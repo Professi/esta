@@ -114,6 +114,6 @@
                 <?php echo CHtml::submitButton('Bestätigen', array('class' => 'button right')); ?>
             </fieldset>
             <?php $this->endWidget(); ?>
+        <?php } //End else: atleast one Elternsprechtag  ?>
         </div>
     </div>
-<?php } //End else: atleast one Elternsprechtag  ?>

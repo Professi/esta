@@ -46,6 +46,7 @@ $this->menu = array(
                 array('label' => $model->getAttributeLabel('end'), 'value' => date(Yii::app()->params['timeFormat'], strtotime($model->end))),
                 array('label' => $model->getAttributeLabel('lockAt'), 'value' => date(Yii::app()->params['dateTimeFormat'], $model->lockAt)),
                 'durationPerAppointment',
+                array('name' => 'title', 'visible' => !empty($model->title) ),
             ),
         ));
         ?>
