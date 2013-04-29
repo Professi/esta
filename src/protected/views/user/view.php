@@ -65,7 +65,10 @@ $this->menu = array(
                 array('label' => $model->getAttributeLabel('roleName'),
                     'value' => Role::model()->findByAttributes(array('id' => $model->role))->title),
                 array('label' => $model->getAttributeLabel('createtime'),
-                    'value' => date(Yii::app()->params['dateTimeFormat'], $model->createtime)),
+                    'value' => date(Yii::app()->params['dateTimeFormat'], strtotime($model->createtime))),
+                array('label'=> $model->getAttributeLabel('badLogins'),
+                    'value' =>  $model->badLogins==null ? '0' : $model->badLogins,
+                ),
             ),
         ));
         if (Yii::app()->user->checkAccess('0') && empty($_GET['id'])) { ?> 

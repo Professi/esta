@@ -159,6 +159,7 @@ class User extends CActiveRecord {
             'verifyCode' => 'Sicherheitscode',
             'title' => 'Titel',
             'group' => 'Gruppe',
+            'badLogins'=>'Ungültige Anmeldeversuche'
         );
     }
 
@@ -332,7 +333,7 @@ class User extends CActiveRecord {
             }
             $userRole = New UserRole();
             $userRole->user_id = $this->id;
-            if (Yii::app()->user->isGuest) {
+            if (Yii::app()->user->isGuest && Yii::app()->params['installed']) {
                 $userRole->role_id = Role::model()->findByAttributes(array('id' => '3'))->id;
             } else {
                 $userRole->role_id = Role::model()->findByAttributes(array('id' => $this->role))->id;
@@ -379,7 +380,7 @@ class User extends CActiveRecord {
      */
     public function beforeSave() {
         if ($this->isNewRecord) {
-            if (Yii::app()->user->isGuest) {
+            if (Yii::app()->user->isGuest && Yii::app()->params['installed']) {
                 $this->state = 0;
             }
             $this->activationKey = self::generateActivationKey();

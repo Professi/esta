@@ -37,7 +37,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'date-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
-        'id',
         array('name' => 'date', 'value' => 'date(Yii::app()->params["dateFormat"], strtotime($data->date))'),
         array('name' => 'begin', 'value' => 'date(Yii::app()->params["timeFormat"], strtotime($data->begin))'),
         array('name' => 'end', 'value' => 'date(Yii::app()->params["timeFormat"], strtotime($data->end))'),

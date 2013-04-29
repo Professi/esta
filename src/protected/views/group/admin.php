@@ -30,7 +30,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'group-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
-        'id',
         'groupname',
         array(
             'class' => 'CustomButtonColumn',
