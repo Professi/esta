@@ -94,6 +94,9 @@ class UserIdentity extends CUserIdentity {
         $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->_id));
         $this->setState('state', $user->state);
         $this->setState('role', $userRole->role_id);
+        if (Yii::app()->params['allowGroups']) {
+            $this->setState('group', $user->group);
+        }
         $user->lastLogin = time();
         $user->update();
     }

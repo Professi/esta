@@ -55,11 +55,8 @@
                     </div>
                 <?php } ?>
             </div>
-            <?php
-            $form = $this->beginWidget('CActiveForm', array(
-                'id' => 'appointment-form',
-            ));
-            ?>
+            <?php $form = $this->beginWidget('CActiveForm', array(
+                'id' => 'appointment-form',)); ?>
             <fieldset>
                 <legend>Termin</legend>
                 <div class="row collapse">

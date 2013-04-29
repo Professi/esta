@@ -373,7 +373,23 @@ class AppointmentController extends Controller {
     public function getDatesWithTimes($dateMax, $mergeDates = false) {
         $a_groupOfDateAndTimes = array();
         if (is_int($dateMax)) {
-            $a_dates = Date::model()->findAll(array('limit' => $dateMax, 'order' => 'date ASC', 'condition' => 'date >="' . date('Y-m-d', time()) . '"'));
+            if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccessNotAdmin('3')) {
+                $criteria = new CDbCriteria();
+                $criteria->with = array('groups');
+                $criteria->together = true;
+                $criteria->limit = $dateMax;
+                $criteria->order = 'date ASC';
+                $group = Yii::app()->user->getState('group');
+                if(!$group) {
+                    $group = "string";
+                }
+                $criteria->compare('groups.id', $group, true,'AND');
+                $criteria->addCondition('date >="' . date('Y-m-d', time()) . '"');
+                $a_dates = Date::model()->findAll($criteria);
+            } else {
+                $a_dates = Date::model()->findAll(array('limit' => $dateMax, 'order' => 'date ASC', 'condition' => 'date >="' . date('Y-m-d', time()) . '"'));
+            }
+
             if (!$mergeDates) {
                 foreach ($a_dates as $record) {
                     $a_groupOfDateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
@@ -447,7 +463,7 @@ class AppointmentController extends Controller {
             $tabsContent .= '</tbody></table>';
             $tabsContent .= '<div class="panel appointment-lockAt text-center">' . 'Bedenken Sie, dass Termine nur bis zum ';
             $tabsContent .= date(Yii::app()->params['dateTimeFormat'], $a_day[0]->date->lockAt);
-            $tabsContent .= ' werden können.</div>';
+            $tabsContent .= ' gebucht werden können.</div>';
             $a_tabs[$tabsName] = $tabsContent;
             if ($tabsUiId == 3) { //Magic Number aus makeAppointment.php nach 3 Elternsprechtagen wird die Schleife verlassen. 
                 break;
@@ -574,18 +590,18 @@ class AppointmentController extends Controller {
         }
         return $a_child;
     }
-    
+
     /**
      * Generiert einen Link fuer appointment/getTeacher
      * @param string $letter
      * @return string
      */
     public function getTeacherLink($letter) {
-        return '<a href="index.php?r=appointment/getTeacher&amp;letter='.$letter.'" class="small teacher button">A</a>';
+        return '<a href="index.php?r=appointment/getTeacher&amp;letter=' . $letter . '" class="small teacher button">' . strtoupper($letter) . '</a>';
     }
-    
+
     public function getTeacherLinkE($letter) {
-        echo $this->getTeacherLin($letter);
+        echo $this->getTeacherLink($letter);
     }
 
 }

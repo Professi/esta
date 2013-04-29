@@ -66,25 +66,31 @@ $this->menu = array(
                     'value' => Role::model()->findByAttributes(array('id' => $model->role))->title),
                 array('label' => $model->getAttributeLabel('createtime'),
                     'value' => date(Yii::app()->params['dateTimeFormat'], strtotime($model->createtime))),
-                array('label'=> $model->getAttributeLabel('badLogins'),
-                    'value' =>  $model->badLogins==null ? '0' : $model->badLogins,
+                array('label' => $model->getAttributeLabel('badLogins'),
+                    'value' => $model->badLogins == null ? '0' : $model->badLogins,
+                ),
+                array('label' => $model->getAttributeLabel('group'),
+                    'value' => $model->group,
+                    'visible' => Yii::app()->user->checkAccessNotAdmin('3') && Yii::app()->params['allowGroups'],
                 ),
             ),
         ));
-        if (Yii::app()->user->checkAccess('0') && empty($_GET['id'])) { ?> 
+        if (Yii::app()->user->checkAccess('0') && empty($_GET['id'])) {
+            ?> 
             <fieldset class="text-center">
                 <p>Mit dem Dr&uuml;cken dieses Knopfes werden alle Daten aus der Datenbank gel&ouml;scht. Bet&auml;tigen Sie ihn nur wenn Sie sich absolut sicher sind!</p>
                 <p>Nur die Admin- und Verwaltungsbenutzer bleiben bestehen</p>
                 <img id="red-button" src="<?php echo Yii::app()->request->baseUrl; ?>/img/redbutton.png" alt="Der Rote Knopf" style="cursor:pointer;" >
                 <p>Wenn Sie nur bestimmte Daten l&ouml;schen m&ouml;chten klicken Sie <?php echo CHtml::link('hier', array('site/deleteAll')); ?></p>
             </fieldset>
-        <?php }
+            <?php
+        }
         if (Yii::app()->user->checkAccess('0') && $model->role == 3) {
-        ?>
+            ?>
             <h4 class="subheader">Kinder</h4>
             <?php
             foreach (ParentChild::model()->findAll(ParentChild::model()->searchParentChildWithId($model->id)) as $array) {
-                 $this->renderPartial('/parentChild/_view', array('data' => $array));
+                $this->renderPartial('/parentChild/_view', array('data' => $array));
             }
         }
         ?>
