@@ -6,6 +6,7 @@
 
 /** The followings are the available columns in table 'date':
  * @property integer $id
+ * @property string $title
  * @property string $date
  * @property string $begin
  * @property string $end
@@ -94,6 +95,7 @@ class Date extends CActiveRecord {
             'durationPerAppointment' => 'Dauer eines Termins',
             'lockAt' => 'Letzte Buchung',
             'groups' => 'Gruppen',
+            'title' => 'Titel'
         );
     }
 

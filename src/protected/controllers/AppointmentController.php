@@ -374,6 +374,7 @@ class AppointmentController extends Controller {
         $a_groupOfDateAndTimes = array();
         if (is_int($dateMax)) {
             if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccessNotAdmin('3')) {
+                //Verwaltung kann trotzdem noch Termine an anderen Tagen für diesen Benutzer buchen
                 $criteria = new CDbCriteria();
                 $criteria->with = array('groups');
                 $criteria->together = true;
@@ -389,7 +390,6 @@ class AppointmentController extends Controller {
             } else {
                 $a_dates = Date::model()->findAll(array('limit' => $dateMax, 'order' => 'date ASC', 'condition' => 'date >="' . date('Y-m-d', time()) . '"'));
             }
-
             if (!$mergeDates) {
                 foreach ($a_dates as $record) {
                     $a_groupOfDateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
