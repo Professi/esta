@@ -160,6 +160,20 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
 </div>
+<?php if (Yii::app()->params['allowGroups']) { ?>
+<div class="row collapse">
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->label($model, 'groups'); ?></span>
+    </div>
+    <div class="ten columns">
+        <?php
+        echo $form->checkBoxList($model, 'groups', array('0' => 'blaaaargh'));
+        echo $form->error($model, 'groups');
+        ?>
+    </div>
+</div>
+    
+<?php } ?>
 <br>
 <?php
 echo CHtml::submitButton($model->isNewRecord ? 'Anlegen' : 'Speichern', array('class' => 'small button'));

@@ -44,7 +44,7 @@
             $state = "Aktiv";
             break;
         case 2:
-            $sate = "Gesperrt";
+            $state = "Gesperrt";
             break;
     }
     echo CHtml::encode($state);

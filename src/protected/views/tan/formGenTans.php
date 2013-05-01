@@ -34,17 +34,30 @@
         ?>
         <fieldset>
             <div class="row collapse">
-                <div class="two columns">
+                <div class="three columns">
                     <span class="prefix">Anzahl TANs</span>
                 </div>
-                <div class="ten columns">
+                <div class="nine columns">
                     <?php
                     echo $form->textField($model, 'tan_count', array('size' => 60, 'maxlength' => 6,));
                     echo $form->error($model, 'tan_count');
                     ?>
                 </div>
             </div>
-            <?php echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
+            <?php if (Yii::app()->params['allowGroups']) { ?>
+            <div class="row collapse">
+                <div class="three columns">
+                    <span class="prefix"><?php echo $form->label($model, 'groups'); ?></span>
+                </div>
+                <div class="nine columns">
+                    <?php
+                    echo $form->dropDownList($model, 'groups', array('0' => 'hier fehlt noch was :O'));
+                    echo $form->error($model, 'groups');
+                    ?>
+                </div>
+            </div>
+            <?php }
+            echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
         </fieldset>
         <?php $this->endWidget(); ?>
     </div>

@@ -101,32 +101,62 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
 </div>
-<?php
-if (Yii::app()->user->checkAccess('1')) {
-    echo $form->label($model, 'state');
-    ?>
-    <div class="styled-select">
-        <?php
-        echo $form->dropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt'));
-        echo $form->error($model, 'state');
-        ?>
+<?php if (Yii::app()->user->checkAccess('1')) { ?>
+    <div class="row collapse">
+        <div class="three columns">
+            <span class="prefix"><?php echo $form->label($model, 'state'); ?></span>
+        </div>
+        <div class="nine columns">
+            <div class="styled-select">
+                <?php
+                echo $form->dropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt'));
+                echo $form->error($model, 'state');
+                ?>
+            </div>
+
+        </div>
     </div>
-    <?php echo $form->label($model, 'role'); ?>
-    <div class="styled-select">
-        <?php
-        if (Yii::app()->user->checkAccess('0')) {
-            echo $form->dropDownList($model, 'role', array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung', '0' => 'Administrator'));
-        } else {
-            if ($model->id != Yii::app()->user->getId()) {
-                echo $form->dropDownList($model, 'role', array('3' => 'Eltern', '2' => 'Lehrer'));
-            } else {
-                echo $form->dropDownList($model, 'role', array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung'));
-            }
-            echo $form->error($model, 'role');
-        }
-        ?>
+    <div class="row collapse">
+        <div class="three columns">
+            <span class="prefix"><?php echo $form->label($model, 'role'); ?></span>
+        </div>
+        <div class="nine columns">
+            <div class="styled-select">
+                <?php
+                if (Yii::app()->user->checkAccess('0')) {
+                    echo $form->dropDownList($model, 'role', array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung', '0' => 'Administrator'));
+                } else {
+                    if ($model->id != Yii::app()->user->getId()) {
+                        echo $form->dropDownList($model, 'role', array('3' => 'Eltern', '2' => 'Lehrer'));
+                    } else {
+                        echo $form->dropDownList($model, 'role', array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung'));
+                    }
+                    echo $form->error($model, 'role');
+                }
+                ?>
+            </div>
+        </div>
     </div>
-<?php } ?>
+<?php if (Yii::app()->params['allowGroups']) { ?>
+    <div class="row collapse">
+        <div class="three columns">
+            <span class="prefix"><?php echo $form->label($model, 'group'); ?> </span>
+        </div>
+        <div class="nine columns">
+            <div class="styled-select">
+                <?php
+                echo $form->dropDownList($model, 'group', array('1' => 'hier fehlt noch was :O'));
+                echo $form->error($model, 'group');
+                ?>
+            </div>
+        </div>
+    </div>
+
+
+<?php 
+    } // Gruppen Auswahlliste
+} // Verwaltungszugriff
+?>
 
 <?php if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) { ?>
     <div class="row collapse">
