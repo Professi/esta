@@ -16,6 +16,7 @@
  */
 /* @var $this GroupController */
 /* @var $model Group */
+/* @var $dateHasGroup DateHasGroup */
 $this->menu = array(
     array('label' => 'Gruppe erstellen', 'url' => array('create')),
 );
@@ -37,3 +38,15 @@ $this->widget('zii.widgets.grid.CGridView', array(
         ),
     ),
 ));
+
+$this->widget('zii.widgets.grid.CGridView', array(
+    'id' => 'dateHasGroup-grid',
+    'dataProvider' => $dateHasGroup->search(),
+    'columns' => array(
+     //   array('name' => 'date', 'value' => '$data->date->date'),
+     //   array('name' => 'group', 'value' => '$data->group->groupname'),
+    )
+));
+
+
+
