@@ -102,17 +102,21 @@ class AppointmentController extends Controller {
     }
 
     public function actionDeleteBlockApp($id, $teacherId = null) {
-        if ($teacherId == null && Yii::app()->user->checkAccessNotAdmin('2')) {
-            $model = BlockedAppointment::model()->findByAttributes(array('id' => $id, 'user_id' => Yii::app()->user->getId()));
-        } else if (Yii::app()->user->checkAccess('1')) {
-            $model = BlockedAppointment::model()->findByPk($id);
+        if (!empty($id)) {
+            if ($teacherId == null && Yii::app()->user->checkAccessNotAdmin('2')) {
+                $model = BlockedAppointment::model()->findByAttributes(array('id' => $id, 'user_id' => Yii::app()->user->getId()));
+            } else if (Yii::app()->user->checkAccess('1')) {
+                $model = BlockedAppointment::model()->findByPk($id);
+            } else {
+                $this->throwFourNullThree();
+            }
+            if ($model != null && $model->delete()) {
+                Yii::app()->user->setFlash('success', 'Blockierung erfolgreich gelöscht.');
+            } else {
+                Yii::app()->user->setFlash('failMsg', 'Fehler bei dem Löschen.');
+            }
         } else {
-            $this->throwFourNullThree();
-        }
-        if ($model != null && $model->delete()) {
-            Yii::app()->user->setFlash('success', 'Blockierung erfolgreich gelöscht.');
-        } else {
-            Yii::app()->user->setFlash('failMsg', 'Fehler bei dem Löschen.');
+            $this->throwFourNullNull();
         }
     }
 
@@ -261,17 +265,19 @@ class AppointmentController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) {
-        $model = $this->loadModel($id);
-        if ($this->loadModel($id)->delete()) {
-            if (!Yii::app()->user->checkAccessNotAdmin('3')) {
-                $mail = new Mail;
-                $mail->sendAppointmentDeleted($model->parentChild->user->email, $model->user, $model->dateAndTime->time, $model->parentChild->child, $model->dateAndTime->date->date);
-            }
-            Yii::app()->user->setFlash('success', 'Termin erfolgreich entfernt.');
-            if (Yii::app()->user->checkAccess('1')) {
-                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-            } else {
-                $this->redirect('index.php?r=/appointment/index');
+        if (!empty($id)) {
+            $model = $this->loadModel($id);
+            if ($this->loadModel($id)->delete()) {
+                if (!Yii::app()->user->checkAccessNotAdmin('3')) {
+                    $mail = new Mail;
+                    $mail->sendAppointmentDeleted($model->parentChild->user->email, $model->user, $model->dateAndTime->time, $model->parentChild->child, $model->dateAndTime->date->date);
+                }
+                Yii::app()->user->setFlash('success', 'Termin erfolgreich entfernt.');
+                if (Yii::app()->user->checkAccess('1')) {
+                    $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+                } else {
+                    $this->redirect('index.php?r=/appointment/index');
+                }
             }
         }
     }
@@ -372,8 +378,8 @@ class AppointmentController extends Controller {
      */
     public function getDatesWithTimes($dateMax, $mergeDates = false) {
         $a_groupOfDateAndTimes = array();
-        if (is_int($dateMax)) {
-            if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccessNotAdmin('3')) {
+        if (!empty($dateMax)) {
+            if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccessNotAdmin('3') && Yii::app()->user->getState('group') != null) {
                 //Verwaltung kann trotzdem noch Termine an anderen Tagen für diesen Benutzer buchen
                 $criteria = new CDbCriteria();
                 $criteria->with = array('groups');
@@ -381,10 +387,10 @@ class AppointmentController extends Controller {
                 $criteria->limit = $dateMax;
                 $criteria->order = 'date ASC';
                 $group = Yii::app()->user->getState('group');
-                if(!$group) {
+                if (!$group) {
                     $group = "string";
                 }
-                $criteria->compare('groups.id', $group, true,'AND');
+                $criteria->compare('groups.id', $group, true, 'AND');
                 $criteria->addCondition('date >="' . date('Y-m-d', time()) . '"');
                 $a_dates = Date::model()->findAll($criteria);
             } else {
@@ -418,20 +424,22 @@ class AppointmentController extends Controller {
     public function isAppointmentAvailable($teacher, $dateAndTimeId) {
         $rc = array("BELEGT", 0);
         $check = false;
-        if (Appointment::model()->countByAttributes(array('user_id' => $teacher,
-                    'dateAndTime_id' => $dateAndTimeId)) == '0') {
-            $check = true;
-        }
-        if ($check && Yii::app()->params['allowBlockingAppointments'] &&
-                BlockedAppointment::model()->countByAttributes(array('user_id' => $teacher,
-                    'dateAndTime_id' => $dateAndTimeId)) != '0') {
-            if (Yii::app()->user->checkAccess('1')) {
-                $rc = array("BLOCKIERT", 0);
+        if ((Yii::app()->params['allowGroups'] && !Yii::app()->user->getState('group')) || (!Yii::app()->params['allowGroups'] || Yii::app()->user->checkAccessRole('1', '3') || Yii::app()->user->checkAccessRole('0', '2'))) {
+            if (Appointment::model()->countByAttributes(array('user_id' => $teacher,
+                        'dateAndTime_id' => $dateAndTimeId)) == '0') {
+                $check = true;
             }
-            $check = false;
-        }
-        if ($check) {
-            $rc = array("VERF&Uuml;GBAR", 1);
+            if ($check && Yii::app()->params['allowBlockingAppointments'] &&
+                    BlockedAppointment::model()->countByAttributes(array('user_id' => $teacher,
+                        'dateAndTime_id' => $dateAndTimeId)) != '0') {
+                if (Yii::app()->user->checkAccess('1')) {
+                    $rc = array("BLOCKIERT", 0);
+                }
+                $check = false;
+            }
+            if ($check) {
+                $rc = array("VERF&Uuml;GBAR", 1);
+            }
         }
         return $rc;
     }
@@ -446,6 +454,7 @@ class AppointmentController extends Controller {
     public function createMakeAppointmentContent($a_dates, $teacherId) {
         $a_tabs = array();
         $tabsUiId = 0; //id der tabellen, wichtig für Javascriptfunktionen aus custom.js
+        if(!empty($teacherId)) {
         foreach ($a_dates as $a_day) {
             $tabsUiId++;
             $tabsName = date(Yii::app()->params['dateFormat'], strtotime($a_day[0]->date->date));
@@ -468,6 +477,7 @@ class AppointmentController extends Controller {
             if ($tabsUiId == 3) { //Magic Number aus makeAppointment.php nach 3 Elternsprechtagen wird die Schleife verlassen. 
                 break;
             }
+        }
         }
         return $a_tabs;
     }
@@ -578,9 +588,11 @@ class AppointmentController extends Controller {
      * echo JSON
      */
     public function actionGetSelectChildrenAjax($id) {
-        header('Content-type: application/json');
-        echo CJSON::encode($this->createSelectChildren($id, 'Appointment', 'parent_child_id'));
-        Yii::app()->end();
+        if (!empty($id)) {
+            header('Content-type: application/json');
+            echo CJSON::encode($this->createSelectChildren($id, 'Appointment', 'parent_child_id'));
+        }
+            Yii::app()->end();
     }
 
     public function fillChildSelect() {
@@ -600,6 +612,10 @@ class AppointmentController extends Controller {
         return '<a href="index.php?r=appointment/getTeacher&amp;letter=' . $letter . '" class="small teacher button">' . strtoupper($letter) . '</a>';
     }
 
+    /**
+     * echo des Strings von getTeacherLink
+     * @param string $letter
+     */
     public function getTeacherLinkE($letter) {
         echo $this->getTeacherLink($letter);
     }

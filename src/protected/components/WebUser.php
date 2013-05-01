@@ -54,7 +54,7 @@ class WebUser extends CWebUser {
         if (empty($this->id)) {
             return false;
         }
-        return ($role1 === $this->getState('role') || $role2 == $this->getState('role'));
+        return ($role1 === $this->getState('role') || $role2 === $this->getState('role'));
     }
 
     /**

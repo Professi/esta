@@ -159,7 +159,7 @@ class User extends CActiveRecord {
             'verifyCode' => 'Sicherheitscode',
             'title' => 'Titel',
             'group' => 'Gruppe',
-            'badLogins'=>'Ungültige Anmeldeversuche'
+            'badLogins' => 'Ungültige Anmeldeversuche'
         );
     }
 
@@ -484,7 +484,9 @@ class User extends CActiveRecord {
                     $this->addError('tan', 'Leider wurde Ihre TAN schon benutzt.');
                     $rc = false;
                 } else {
-                    $this->group = $tan->group;
+                    if ($tan->group != null) {
+                        $this->group = $tan->group;
+                    }
                 }
             } else {
                 if (Yii::app()->params['installed']) {
