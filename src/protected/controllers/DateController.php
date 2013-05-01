@@ -118,11 +118,14 @@ class DateController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-        $model->date = date('d.m.Y', strtotime($model->date));
+        $model->date = date(Yii::app()->params['dateFormat'], strtotime($model->date));
+        $model->begin = date(Yii::app()->params['timeFormat'], strtotime($model->begin));
+        $model->end = date(Yii::app()->params['timeFormat'], strtotime($model->end));
         $a_disabled = array('disabled' => 'disabled');
         $a_lockAtLabel = explode(' ', date(Yii::app()->params['dateTimeFormat'], $model->lockAt));
         $dateLabel = $a_lockAtLabel[0];
         $timeLabel = $a_lockAtLabel[1];
+        $model->lockAt = $dateLabel.' '.$timeLabel;
         if (isset($_POST['Date'])) {
             $model->attributes = $_POST['Date'];
             if ($model->save())
