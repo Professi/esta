@@ -16,7 +16,7 @@
  * @property Group[] $groups
  * 
  */
- //  @property Appointment[] $appointments
+//  @property Appointment[] $appointments
 /* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -154,15 +154,17 @@ class Date extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function afterSave() {
-        $diff = (strtotime($this->end) - strtotime($this->begin)) / 60;
-        $i = 0;
-        while ($diff >= $this->durationPerAppointment) {
-            $datetime = new DateAndTime;
-            $datetime->date_id = $this->id;
-            $datetime->time = date("H:i", (strtotime($this->begin) + ($this->durationPerAppointment * $i) * 60));
-            ++$i;
-            $diff -= $this->durationPerAppointment;
-            $datetime->save();
+        if ($this->isNewRecord) {
+            $diff = (strtotime($this->end) - strtotime($this->begin)) / 60;
+            $i = 0;
+            while ($diff >= $this->durationPerAppointment) {
+                $datetime = new DateAndTime;
+                $datetime->date_id = $this->id;
+                $datetime->time = date("H:i", (strtotime($this->begin) + ($this->durationPerAppointment * $i) * 60));
+                ++$i;
+                $diff -= $this->durationPerAppointment;
+                $datetime->save();
+            }
         }
         return parent::afterSave();
     }
