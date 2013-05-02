@@ -1,5 +1,6 @@
 <?php
-    /**
+
+/**
  * Dies ist das Model für Gruppen.
  */
 
@@ -24,8 +25,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class Group extends CActiveRecord  {
-        /**
+class Group extends CActiveRecord {
+
+    /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
      * @return Date the static model class
@@ -50,7 +52,7 @@ class Group extends CActiveRecord  {
     public function rules() {
         return array(
             array('groupname', 'required'),
-            array('groupname','length','max'=>10, 'min'=>1),
+            array('groupname', 'length', 'max' => 10, 'min' => 1),
         );
     }
 
@@ -78,6 +80,23 @@ class Group extends CActiveRecord  {
             'criteria' => $criteria,
         ));
     }
-    
+
+    /**
+     * Liefert alle Gruppen zurück
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param integer $max Limit an Gruppen
+     * @return array 
+     */
+    public function getAllGroups() {
+        $a_result = Group::model()->findAll();
+        $a_temp = null;
+        if (!empty($a_result)) {
+            foreach ($a_result as $object) {
+                $a_temp[] = array($object->id => $object->groupname);
+            }
+        }
+        return $a_temp;
+    }
+
 }
 ?>
