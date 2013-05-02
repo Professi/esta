@@ -7,7 +7,7 @@
 /** The followings are the available columns in table 'tan':
  * @property integer $tan
  * @property boolean $used
- * Relations
+ * The followings are the available model relations:
  * @property Group $group
  */
 /* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
@@ -73,7 +73,7 @@ class Tan extends CActiveRecord {
      */
     public function relations() {
         return array(
-            array('Group', self::BELONGS_TO, 'group', 'group_id'),
+            'group' => array(self::BELONGS_TO, 'Group', 'id'),
         );
     }
 

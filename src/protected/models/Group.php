@@ -87,8 +87,8 @@ class Group extends CActiveRecord {
      * @param integer $max Limit an Gruppen
      * @return array 
      */
-    public function getAllGroups() {
-        $a_result = Group::model()->findAll();
+    public function getAllGroups($sort = "") {
+        $a_result = Group::model()->findAll(array('order'=>$sort));
         $a_temp = null;
         if (!empty($a_result)) {
             foreach ($a_result as $object) {
