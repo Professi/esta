@@ -156,7 +156,7 @@ class SiteController extends Controller {
                     $toMail = Yii::app()->params['adminEmail'];
                 }
                 $mail->sendMail($subject, $model->body, $toMail, $model->email, $name);
-                Yii::app()->user->setFlash('contact', 'Vielen Dank dass Sie uns kontaktieren. Wir werden Ihnen so schnell wie möglich antworten.');
+                Yii::app()->user->setFlash('success', 'Vielen Dank dass Sie uns kontaktieren. Wir werden Ihnen so schnell wie möglich antworten.');
                 $this->refresh();
             }
         }
