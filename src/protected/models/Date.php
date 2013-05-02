@@ -33,7 +33,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class Date extends CActiveRecord {
-
+    
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
