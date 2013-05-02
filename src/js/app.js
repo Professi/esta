@@ -59,7 +59,7 @@
             $('#MenuModal').append($('.nojs_menu').clone()).html();
             $('#MenuModal ul').attr('class', 'nav-bar vertical');
             $('#MenuModal ul').attr('style', 'display:inherit;');
-            $('#MenuModal').append('<a class="close-reveal-modal" data-icon="&#xe014;" style="color:#fff;"></a>');
+            $('#MenuModal').append('<a class="close-reveal-modal close-reveal-modal-fix" data-icon="&#xe014;" style="color:#fff;"></a>');
         });
         
         $('.avaiable').css('cursor', 'pointer');

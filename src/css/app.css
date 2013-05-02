@@ -420,6 +420,14 @@ ul.button-group li {
 .infotext {
     display: none;
 }
+.close-reveal-modal-fix {
+    position: absolute;
+    visibility: visible;
+    right: .5em;
+    top: .4em;
+    appearance: normal;
+    cursor: pointer;
+}
 
 @media only screen and (max-width: 767px) {
 

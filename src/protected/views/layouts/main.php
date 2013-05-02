@@ -26,9 +26,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <link rel="icon" href="<?php echo Yii::app()->request->baseUrl; ?>/favicon.ico">
+        <link rel="shortcut icon" type="image/x-icon" href="<?php echo Yii::app()->request->baseUrl; ?>/favicon.ico">
         <?php
         Yii::app()->clientScript->registerPackage('css');
-        if (!preg_match('/MSIE [^9|10]/', $_SERVER['HTTP_USER_AGENT'])) {
+        if (preg_match('/MSIE [1-7]/', $_SERVER['HTTP_USER_AGENT']) == 0) {
             Yii::app()->clientScript->registerPackage('javascript');
             Yii::app()->clientScript->registerPackage('jquery');
             if (Yii::app()->user->checkAccess('1')) {
