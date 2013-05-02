@@ -197,7 +197,7 @@ class ConfigForm extends CFormModel {
                 ), 'DEFAULT CHARSET=utf8');
         $command->createTable('date', array(
             'id' => 'pk',
-            'title'=>'string NULL',
+            'title' => 'string NULL',
             'date' => 'date NOT NULL',
             'begin' => 'time NOT NULL',
             'end' => 'time NOT NULL',
