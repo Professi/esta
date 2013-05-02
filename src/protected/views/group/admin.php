@@ -43,8 +43,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'dateHasGroup-grid',
     'dataProvider' => $dateHasGroup->search(),
     'columns' => array(
-        array('name' => 'date', 'value' => 'print_r($data->date->begin)'),
-     //   array('name' => 'group', 'value' => '$data->group->groupname'),
+        array('name' => 'date', 'value' => 'date(Yii::app()->params["dateFormat"], strtotime($data->date->date))'),
+        array('name' => 'group', 'value' => '$data->group->groupname'),
     )
 ));
 

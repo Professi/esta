@@ -62,8 +62,8 @@ class DateHasGroup extends CActiveRecord {
      */
     public function relations() {
         return array(
-            'date' => array(self::BELONGS_TO, 'Date', 'id'),
-            'group' => array(self::BELONGS_TO, 'Group', 'id'),
+            'date' => array(self::BELONGS_TO, 'Date', 'date_id'),
+            'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
         );
     }
 
@@ -83,9 +83,9 @@ class DateHasGroup extends CActiveRecord {
     public function search() {
         $criteria = new CDbCriteria;
         $criteria->compare('id', $this->id);
-        $criteria->with = array('group', 'date');
-        //        $criteria->select = array('id','group.id','date.id');
-        $criteria->together = true;
+//        $criteria->with = array('group', 'date');
+//                $criteria->select = array('*');
+//        $criteria->together = true;
         $criteria->compare('group', $this->group, true);
         $criteria->compare('date', $this->date, true);
         $sort = new CSort();

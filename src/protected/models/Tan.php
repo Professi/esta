@@ -73,7 +73,7 @@ class Tan extends CActiveRecord {
      */
     public function relations() {
         return array(
-            'group' => array(self::BELONGS_TO, 'Group', 'id'),
+            'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
         );
     }
 
