@@ -52,7 +52,6 @@ class UserIdentity extends CUserIdentity {
             $this->errorMessage = self::ERROR_MSG_ACCOUNT_NOT_ACTIVATED;
         } else if ($user->state == 1 && $user->password !== User::encryptPassword($this->password, Yii::app()->params["salt"])) {
             $this->invalidPassword($user);
-            echo $this->errorMessage;
         } else if ($user->state == 2) {
             if (is_null($user->bannedUntil) || $user->bannedUntil == 0) {
                 $this->errorCode = self::ERROR_ACCOUNT_BANNED;
