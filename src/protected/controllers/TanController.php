@@ -60,9 +60,12 @@ class TanController extends Controller {
         $model = new Tan();
         if (isset($_POST['Tan']) && Yii::app()->session['isTanGen'] != 1) {
             $model->attributes = $_POST['Tan'];
+            if (Yii::app()->params['allowGroups']) {
+                $model->group_id = $_POST['Tan']['group_id'];
+            }
             if ($model->validate()) {
                 Yii::app()->session['isTanGen'] = 1;
-                $dataProvider = new CArrayDataProvider(self::generateTan($model->tan_count), array('pagination' => array('pageSize' => Yii::app()->params['maxTanGen'])));
+                $dataProvider = new CArrayDataProvider(self::generateTan($model->tan_count, $model->group_id), array('pagination' => array('pageSize' => Yii::app()->params['maxTanGen'])));
                 $this->render('showGenTans', array('dataProvider' => $dataProvider));
             } else {
                 $this->render('formGenTans', array('model' => $model));
@@ -95,8 +98,12 @@ class TanController extends Controller {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array Beinhaltet TAN's
      */
-    public function generateTan($count) {
+    public function generateTan($count, $groupId = "") {
         $a_rc = array();
+        $ok = false;
+        if (Yii::app()->params['allowGroups'] && Group::model()->findByPk($groupId) != null) {
+            $ok = true;
+        }
         for ($i = 0; $i < $count; ++$i) {
             $tan = new Tan;
             $sTan = "";
@@ -106,6 +113,9 @@ class TanController extends Controller {
             $tan->tan = $sTan;
             $tan->used = false;
             $tan->tan_count = 1;
+            if (Yii::app()->params['allowGroups'] && $ok) {
+                $tan->group_id = $groupId;
+            }
             if (strlen($tan->tan) == Yii::app()->params['tanSize'] && Tan::model()->countByAttributes(array('tan' => $tan->tan)) == 0) {
                 if ($tan->save()) {
                     $tan->id = $i;

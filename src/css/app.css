@@ -429,6 +429,10 @@ ul.button-group li {
     cursor: pointer;
 }
 
+#Date_groups {
+    min-width: 4em;
+}
+
 @media only screen and (max-width: 767px) {
 
 	.row.contain-to-grid.sticky {

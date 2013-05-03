@@ -43,7 +43,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'lockAt', 'value' => 'date(Yii::app()->params["dateTimeFormat"], $data->lockAt)'),
         'durationPerAppointment',
         array('name' => 'title', 'value' => '$data->title'),
-//        array('name' => 'groups', 'visible' => Yii::app()->params['allowGroups']),
+   //     array('name' => 'groups', 'visible' => Yii::app()->params['allowGroups']),
         array(
             'class' => 'CustomButtonColumn',
         ),

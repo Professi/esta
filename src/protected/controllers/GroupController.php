@@ -132,6 +132,19 @@ class GroupController extends Controller {
         ));
     }
 
+    public function actionGetGroupsByIds() {
+        $groups = Group::model()->findAll("id IN (" . $_GET['ids'] . ")");
+        $results = array();
+        foreach ($groups as $g) {
+            $results[] = array(
+                'id' => $p->id,
+                'text' => $g->groupname
+            );
+        }
+        echo CJSON::encode($results);
+        Yii::app()->end();
+    }
+
 }
 
 ?>

@@ -161,18 +161,29 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
 </div>
 <?php if (Yii::app()->params['allowGroups']) { ?>
-<div class="row collapse">
-    <div class="two columns">
-        <span class="prefix"><?php echo $form->label($model, 'groups'); ?></span>
+    <div class="row collapse">
+        <div class="two columns">
+            <span class="prefix"><?php echo $form->label($model, 'groups'); ?></span>
+        </div>
+        <div class="ten columns">
+            <?php
+            if (isset($_POST['Date']['groups'])) {
+                $preselected_ids = $_POST['Date']['groups'];
+            } else {
+                $preselected_ids = '';
+            }
+            echo Select2::activeMultiSelect($model, 'groups', Group::model()->getAllGroups('DESC'), array(
+                'placeholder' => 'Hier können Sie mehrere Gruppen auswählen...',
+                'id' => 'groups-select',
+                'select2Options' => array(
+                    'allowClear' => true,
+                ),
+            ));
+            echo $form->error($model, 'groups');
+            ?>
+
+        </div>
     </div>
-    <div class="ten columns">
-        <?php
-        echo $form->checkBoxList($model, 'groups', array('0' => 'blaaaargh'));
-        echo $form->error($model, 'groups');
-        ?>
-    </div>
-</div>
-    
 <?php } ?>
 <br>
 <?php

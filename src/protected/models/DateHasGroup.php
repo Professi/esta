@@ -49,10 +49,10 @@ class DateHasGroup extends CActiveRecord {
      */
     public function rules() {
         return array(
-            array('date,group', 'required'),
-            array('date', 'exist', 'attributeName' => 'id', 'className' => 'Date'),
-            array('group', 'exist', 'attributeName' => 'id', 'classname' => 'Group'),
-            array('date,group', 'numerical', 'integerOnly' => true),
+            array('date_id,group_id', 'required'),
+            array('date_id', 'exist', 'attributeName' => 'id', 'className' => 'Date'),
+            array('group_id', 'exist', 'attributeName' => 'id', 'classname' => 'Group'),
+            array('date_id,group_id', 'numerical', 'integerOnly' => true),
         );
     }
 

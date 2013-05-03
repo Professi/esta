@@ -40,6 +40,7 @@ return array(
     'import' => array(//nicht ändern
         'application.models.*', //nicht ändern
         'application.components.*', //nicht ändern
+        'ext.select2.Select2',
     ),
     'components' => array(//nicht ändern
         'user' => array(//nicht ändern

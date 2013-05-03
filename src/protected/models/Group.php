@@ -88,11 +88,11 @@ class Group extends CActiveRecord {
      * @return array 
      */
     public function getAllGroups($sort = "") {
-        $a_result = Group::model()->findAll(array('order'=>$sort));
+        $a_result = Group::model()->findAll(array('order'=>'`groupname` '+$sort));
         $a_temp = null;
         if (!empty($a_result)) {
             foreach ($a_result as $object) {
-                $a_temp[] = array($object->id => $object->groupname);
+                $a_temp[$object->id] = $object->groupname;
             }
         }
         return $a_temp;

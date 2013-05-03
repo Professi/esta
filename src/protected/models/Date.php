@@ -33,7 +33,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class Date extends CActiveRecord {
-    
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -165,7 +165,17 @@ class Date extends CActiveRecord {
                 $diff -= $this->durationPerAppointment;
                 $datetime->save();
             }
+            if ($rc && Yii::app()->params['allowGroups']) {
+                foreach ($this->groups as $group) {
+                    $dateHasGroup = new DateHasGroup();
+                    $dateHasGroup->date_id = $this->id;
+                    $dateHasGroup->group_id = $group;
+                    $dateHasGroup->save();
+                    Yii::trace("Fehler:" . print_r($dateHasGroup->errors), 'application.models.date');
+                }
+            }
         }
+
         return parent::afterSave();
     }
 
@@ -192,7 +202,10 @@ class Date extends CActiveRecord {
      */
     public function beforeSave() {
         $this->date = date('Y-m-d', strtotime($this->date));
+
+
         return parent::beforeSave();
     }
 
 }
+

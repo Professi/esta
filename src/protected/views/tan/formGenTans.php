@@ -45,19 +45,27 @@
                 </div>
             </div>
             <?php if (Yii::app()->params['allowGroups']) { ?>
-            <div class="row collapse">
-                <div class="three columns">
-                    <span class="prefix"><?php echo $form->label($model, 'groups'); ?></span>
+                <div class="row collapse">
+                    <div class="three columns">
+                        <span class="prefix"><?php echo $form->label($model, 'group'); ?></span>
+                    </div>
+                    <div class="nine columns">
+                        <?php
+                        $this->widget('Select2', array(
+                            'model' => $model,
+                            'attribute' => 'group_id',
+                            'data' => Group::model()->getAllGroups('DESC'),
+                            'htmlOptions'=> array(
+                            'placeholder' => 'Hier können Sie eine Gruppe auswählen...'),
+                        ));
+                        echo $form->error($model, 'group');
+                        ?>
+                    </div>
                 </div>
-                <div class="nine columns">
-                    <?php
-                    echo $form->dropDownList($model, 'groups', array('0' => 'hier fehlt noch was :O'));
-                    echo $form->error($model, 'groups');
-                    ?>
-                </div>
-            </div>
-            <?php }
-            echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
+                <?php
+            }
+            echo CHtml::submitButton('Absenden', array('class' => 'small button'));
+            ?>
         </fieldset>
         <?php $this->endWidget(); ?>
     </div>

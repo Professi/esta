@@ -31,7 +31,7 @@
         $this->widget('zii.widgets.grid.CGridView', array(
             'dataProvider' => $dataProvider,
             'columns' => array(
-                'tan',
+                array('name' => 'Tan', 'value' => '$data->tan',),
             )
         ));
         ?>

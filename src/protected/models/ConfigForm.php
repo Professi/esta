@@ -174,9 +174,9 @@ class ConfigForm extends CFormModel {
             'lastname' => 'string CHARACTER SET utf8 COLLATE utf8_bin NOT NULL',
             'title' => 'string',
             'state' => 'tinyint(3)',
-            'lastLogin' => 'int(10) unsigned DEFAULT "0"',
+            'lastLogin' => 'bigint DEFAULT "0"',
             'badLogins' => 'tinyint(4)',
-            'bannedUntil' => 'int(10) unsigned DEFAULT "0"', //maybe Int
+            'bannedUntil' => 'bigint DEFAULT "0"', //maybe Int
             'password' => 'string',
             'group_id' => 'integer',
                 ), 'DEFAULT CHARSET=utf8');
