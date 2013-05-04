@@ -172,7 +172,7 @@ $form = $this->beginWidget('CActiveForm', array(
             } else {
                 $preselected_ids = '';
             }
-            echo Select2::activeMultiSelect($model, 'groups', Group::model()->getAllGroups('DESC'), array(
+            echo Select2::multiSelect(CHtml::activeName($model, 'groups'), Group::model()->getAllGroups('DESC'),Group::model()->getAllGroups('DESC'), array(
                 'placeholder' => 'Hier können Sie mehrere Gruppen auswählen...',
                 'id' => 'groups-select',
                 'select2Options' => array(

@@ -137,23 +137,30 @@ $form = $this->beginWidget('CActiveForm', array(
             </div>
         </div>
     </div>
-<?php if (Yii::app()->params['allowGroups']) { ?>
-    <div class="row collapse">
-        <div class="three columns">
-            <span class="prefix"><?php echo $form->label($model, 'group'); ?> </span>
-        </div>
-        <div class="nine columns">
-            <div class="styled-select">
-                <?php
-                echo $form->dropDownList($model, 'group', array('1' => 'hier fehlt noch was :O'));
-                echo $form->error($model, 'group');
-                ?>
+    <?php if (Yii::app()->params['allowGroups'] && ($model->role == 3 || $model->isNewRecord)) { ?>
+        <div class="row collapse">
+            <div class="three columns">
+                <span class="prefix"><?php echo $form->label($model, 'group'); ?> </span>
+            </div>
+            <div class="nine columns">
+                <div class="styled-select">
+                    <?php
+//                    $this->widget('Select2', array(
+//                        'model' => $model,
+//                        'attribute' => 'group_id',
+//                        'data' => Group::model()->getAllGroups('DESC'),
+//                        'htmlOptions' => array(
+//                            'placeholder' => 'Hier können Sie eine Gruppe auswählen...',),
+//                    ));
+                      echo $form->dropDownList($model, 'group', array(Group::model()->getAllGroups('DESC')),array('options' => array($model->group=>array('selected'=>true))));
+                    echo $form->error($model, 'group');
+                    ?>
+                </div>
             </div>
         </div>
-    </div>
 
 
-<?php 
+        <?php
     } // Gruppen Auswahlliste
 } // Verwaltungszugriff
 ?>
