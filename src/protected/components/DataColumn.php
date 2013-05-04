@@ -19,12 +19,7 @@ class DataColumn extends CDataColumn {
      * Overrides the method 'renderDataCell()' of the abstract class CGridColumn
      */
     public function renderDataCell($row) {
-
-        if (!is_null($this->grid->dataProvider->data)) {
-            $data = $this->grid->dataProvider->data[$row];
-        } else {
-            $data = '';
-        }
+        $data = $this->grid->dataProvider->data[$row];
         if ($this->evaluateHtmlOptions) {
             foreach ($this->htmlOptions as $key => $value) {
                 $options[$key] = $this->evaluateExpression($value, array('row' => $row, 'data' => $data));

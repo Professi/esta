@@ -83,9 +83,8 @@ class DateHasGroup extends CActiveRecord {
     public function search() {
         $criteria = new CDbCriteria;
         $criteria->compare('id', $this->id);
-//        $criteria->with = array('group', 'date');
-//                $criteria->select = array('*');
-//        $criteria->together = true;
+        $criteria->with = array('group', 'date');
+        $criteria->together = true;
         $criteria->compare('group', $this->group, true);
         $criteria->compare('date', $this->date, true);
         $sort = new CSort();
@@ -94,7 +93,7 @@ class DateHasGroup extends CActiveRecord {
             'id' => array(
                 'asc' => 'id',
                 'desc' => 'id desc'),
-            'group_id' => array(
+            'group' => array(
                 'asc' => 'group.groupname',
                 'desc' => 'group.groupname desc'),
             'date' => array(

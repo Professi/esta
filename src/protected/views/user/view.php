@@ -70,7 +70,7 @@ $this->menu = array(
                     'value' => $model->badLogins == null ? '0' : $model->badLogins,
                 ),
                 array('label' => $model->getAttributeLabel('group'),
-                    'value' => $model->group->groupname,
+                    'value' => User::getGroupname($model->group),
                     'visible' => $model->role == '3' && Yii::app()->params['allowGroups'] && $model->group != null,
                 ),
             ),

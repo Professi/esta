@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class DeleteAllForm extends CFormModel {
+
     public $tans = false;
     public $appointments = false;
     public $teachers;
@@ -23,26 +24,26 @@ class DeleteAllForm extends CFormModel {
     public $management;
     public $childs;
     public $parents;
+    public $groups;
 
     public function rules() {
         return array(
-            array('tans,appointments,teachers,dates,management,childs,parents','required'),
-        array('tans,appointments,teachers,dates,management,childs,parents','boolean'),
-            array('tans,appointments,teachers,dates,management,childs,parents','safe'));
-                
+            array('tans,appointments,teachers,dates,management,childs,parents,groups', 'required'),
+            array('tans,appointments,teachers,dates,management,childs,parents,groups', 'boolean'),
+            array('tans,appointments,teachers,dates,management,childs,parents,groups', 'safe'));
     }
-    
+
     public function attributeLabels() {
-        return array('tans'=>'Tans',
-            'appointments'=>'Termine',
-            'teachers'=>'Lehrer',
-            'dates'=>'Elternsprechtage',
-            'management'=>'Verwaltungsbenutzerkontos',
-            'childs'=>'Schüler',
-            'parents'=>'Elternkonten',
-            );
+        return array('tans' => 'Tans',
+            'appointments' => 'Termine',
+            'teachers' => 'Lehrer',
+            'dates' => 'Elternsprechtage',
+            'management' => 'Verwaltungsbenutzerkontos',
+            'childs' => 'Schüler',
+            'parents' => 'Elternkonten',
+        );
     }
-    
+
     /**
      * Validiert ob Abhängigkeiten erfüllt sind
      * @param array $attributes
@@ -51,53 +52,56 @@ class DeleteAllForm extends CFormModel {
      */
     public function validate($attributes = null, $clearErrors = true) {
         $rc = true;
-        if(parent::validate($attributes, $clearErrors)) {
-            if(($this->teachers || $this->dates || $this->parents) && !$this->appointments) {
+        if (parent::validate($attributes, $clearErrors)) {
+            if (($this->teachers || $this->dates || $this->parents) && !$this->appointments) {
                 $rc = false;
                 $this->addError('appointments', 'Sie müssen auch alle Termine löschen.');
             }
-            if($this->parents && !$this->childs) {
+            if ($this->parents && !$this->childs) {
                 $rc = false;
                 $this->addError('parents', 'Kinder müssen auch gelöscht werden.');
             }
-            
         } else {
             $rc = false;
         }
         return $rc;
     }
-    
+
     /**
      * Loescht entsprechend die Datensätze
      */
     public function delete() {
-        if($this->tans) {
+        if ($this->tans) {
             Tan::model()->deleteAll();
         }
-        if($this->appointments) {
+        if ($this->appointments) {
             Appointment::model()->deleteAll();
             BlockedAppointment::model()->deleteAll();
         }
-        if($this->teachers) {
+        if ($this->teachers) {
             User::model()->deleteUsersWithRole(2);
         }
-        if($this->dates) {
+        if ($this->dates) {
             DateAndTime::model()->deleteAll();
             Date::model()->deleteAll();
         }
-        if($this->management) {
+        if ($this->management) {
             User::model()->deleteUsersWithRole(1);
         }
-        if($this->childs) {
+        if ($this->childs) {
             ParentChild::model()->deleteAll();
             Child::model()->deleteAll();
         }
-        if($this->parents) {
+        if ($this->parents) {
             User::model()->deleteUsersWithRole(3);
         }
-        Yii::app()->user->setFlash('success','Erfolgreich!');
+        if ($this->groups) {
+            DateHasGroup::model()->deleteAll();
+            Group::model()->deleteAll();
+        }
+        Yii::app()->user->setFlash('success', 'Erfolgreich!');
     }
-    
-    
+
 }
+
 ?>

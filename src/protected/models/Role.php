@@ -90,15 +90,10 @@ class Role extends CActiveRecord {
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
     public function search() {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
-
         $criteria = new CDbCriteria;
-
         $criteria->compare('id', $this->id, true);
         $criteria->compare('title', $this->title, true);
         $criteria->compare('description', $this->description, true);
-
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
