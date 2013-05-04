@@ -165,18 +165,31 @@ class Date extends CActiveRecord {
                 $diff -= $this->durationPerAppointment;
                 $datetime->save();
             }
-            if ($rc && Yii::app()->params['allowGroups']) {
+            if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
                 foreach ($this->groups as $group) {
-                    $dateHasGroup = new DateHasGroup();
-                    $dateHasGroup->date_id = $this->id;
-                    $dateHasGroup->group_id = $group;
-                    $dateHasGroup->save();
-                    Yii::trace("Fehler:" . print_r($dateHasGroup->errors), 'application.models.date');
+                    $this->createDateHasGroup($group);
                 }
+            }
+        } else {
+            if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
+                foreach ($this->groups as $group) {
+                    if (DateHasGroup::model()->countByAttributes(array('date_id' => $this->id, 'group_id' => $group)) == '0') {
+                        $this->createDateHasGroup($group);
+                    }
+                }
+            } else if (Yii::app()->params['allowGroups'] && empty($this->groups)) {
+                DateHasGroup::model()->deleteAllByAttributes(array('date_id' => $this->id));
             }
         }
 
         return parent::afterSave();
+    }
+
+    public function createDateHasGroup($group) {
+        $dateHasGroup = new DateHasGroup();
+        $dateHasGroup->date_id = $this->id;
+        $dateHasGroup->group_id = $group;
+        $dateHasGroup->save();
     }
 
     /**

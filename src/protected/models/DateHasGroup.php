@@ -51,7 +51,7 @@ class DateHasGroup extends CActiveRecord {
         return array(
             array('date_id,group_id', 'required'),
             array('date_id', 'exist', 'attributeName' => 'id', 'className' => 'Date'),
-            array('group_id', 'exist', 'attributeName' => 'id', 'classname' => 'Group'),
+            array('group_id', 'exist', 'attributeName' => 'id', 'className' => 'Group'),
             array('date_id,group_id', 'numerical', 'integerOnly' => true),
         );
     }
@@ -94,7 +94,7 @@ class DateHasGroup extends CActiveRecord {
             'id' => array(
                 'asc' => 'id',
                 'desc' => 'id desc'),
-            'group' => array(
+            'group_id' => array(
                 'asc' => 'group.groupname',
                 'desc' => 'group.groupname desc'),
             'date' => array(

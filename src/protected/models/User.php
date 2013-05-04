@@ -37,7 +37,7 @@
  * The followings are the available model relations:
  * @property Appointment[] $appointments
  * @property ParentChild[] $parentChildren
- * @property UserRole[] $userRoles
+ * @property UserRole[] $userRole
  * @property Group $group
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
@@ -60,6 +60,7 @@ class User extends CActiveRecord {
 
     /** @var string TAN Nummer bei Registrierung */
     public $tan = null;
+    public $group_id = null;
 
     /** @var array Array mit den Rollennamen */
     static private $a_roleName = null;
@@ -109,20 +110,20 @@ class User extends CActiveRecord {
             array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat', 'allowEmpty' => !Yii::app()->params['installed']),
             array('password_repeat', 'safe'), //allow bulk assignment
             array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements() || !Yii::app()->params['installed']),
-            array('id, username, firstname, state, lastname, email, role,roleName,stateName,title', 'safe', 'on' => 'search'),
+            array('id, username, firstname, state, lastname, email, role,roleName,stateName,title,group,group_id', 'safe', 'on' => 'search'),
         );
     }
 
     /**
-     * Relationen ( Appointments HAS_MANY , parentChildren HAS_MANY, userRoles HAS_ONE )
+     * Relationen ( Appointments HAS_MANY , parentChildren HAS_MANY, userRole HAS_ONE )
      * @return array relational rules.
      */
     public function relations() {
         return array(
             'appointments' => array(self::HAS_MANY, 'Appointment', 'user_id'),
             'parentChildren' => array(self::HAS_MANY, 'ParentChild', 'user_id'),
-            'userRoles' => array(self::HAS_ONE, 'UserRole', 'user_id'),
-            'group' => array(self::BELONGS_TO, 'Group', 'id'),
+            'userRole' => array(self::HAS_ONE, 'UserRole', 'user_id'),
+            'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
         );
     }
 
@@ -169,7 +170,7 @@ class User extends CActiveRecord {
      */
     public function search() {
         $criteria = new CDbCriteria();
-        $criteria->with = array('userRoles');
+        $criteria->with = array('userRole', 'group');
         $criteria->together = true;
         $criteria->compare('firstname', $this->firstname, true);
         $criteria->compare('lastname', $this->lastname, true);
@@ -179,7 +180,8 @@ class User extends CActiveRecord {
         $criteria->compare('email', $this->email, true);
         $criteria->compare('state', $this->state, true);
         $criteria->compare('title', $this->title, true);
-        $criteria->compare('userRoles.role_id', $this->role, true);
+        $criteria->compare('group.groupname', $this->group, true);
+        $criteria->compare('userRole.role_id', $this->role, true);
         $sort = new CSort;
         $sort->attributes = array(
             'defaultOrder' => 'id ASC',
@@ -202,8 +204,11 @@ class User extends CActiveRecord {
                 'asc' => 'state',
                 'desc' => 'state desc'),
             'role' => array(
-                'asc' => 'userRoles.role_id',
-                'desc' => 'userRoles.role_id desc'),
+                'asc' => 'userRole.role_id',
+                'desc' => 'userRole.role_id desc'),
+            'group' => array(
+                'asc' => 'group.groupname',
+                'desc' => 'group.groupname desc'),
         );
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -237,9 +242,9 @@ class User extends CActiveRecord {
         $criteria->addCondition('lastname LIKE :match');
         $criteria->params = array(':match' => "$match%");
         $criteria->compare('state', $this->state, true);
-        $criteria->with = array('userRoles');
+        $criteria->with = array('userRole');
         $criteria->select = 'title,firstname,lastname,id';
-        $criteria->addCondition('userRoles.role_id="' . $this->role . '"');
+        $criteria->addCondition('userRole.role_id="' . $this->role . '"');
         $criteria->limit = 10;
         return $criteria;
     }
@@ -252,9 +257,9 @@ class User extends CActiveRecord {
      */
     public static function deleteAllCriteria() {
         $criteria = new CDbCriteria();
-        $criteria->with = array('userRoles');
-        $criteria->addCondition('userRoles.role_id="2"', "OR");
-        $criteria->addCondition('userRoles.role_id="3"', "OR");
+        $criteria->with = array('userRole');
+        $criteria->addCondition('userRole.role_id="2"', "OR");
+        $criteria->addCondition('userRole.role_id="3"', "OR");
         $criteria->select = 'id';
         return $criteria;
     }
@@ -267,8 +272,8 @@ class User extends CActiveRecord {
     public function deleteUsersWithRole($role) {
         if (is_int($role)) {
             $criteria = new CDbCriteria();
-            $criteria->with = array('userRoles');
-            $criteria->addCondition('userRoles.role_id="' . $role . '"');
+            $criteria->with = array('userRole');
+            $criteria->addCondition('userRole.role_id="' . $role . '"');
             $criteria->select = 'id';
             $a_delete = User::model()->findAll($criteria);
             foreach ($a_delete as $record) {
@@ -462,6 +467,20 @@ class User extends CActiveRecord {
             self::$a_roleName = Role::model()->findAll();
         }
         echo self::$a_roleName[$role]->title;
+    }
+
+    /**
+     * Prüft ob eine Gruppe null ist und wenn nicht wird der Gruppenname zurückgegeben
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param Group $group
+     * @return String
+     */
+    static public function getGroupname($group) {
+        $rc = '';
+        if (!is_null($group)) {
+            $rc = $group->groupname;
+        }
+        return $rc;
     }
 
     /**

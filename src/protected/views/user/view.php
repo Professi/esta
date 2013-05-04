@@ -60,9 +60,6 @@ $this->menu = array(
                     'value' => $model->username, 'visible' => Yii::app()->user->checkAccess('0')),
                 'firstname',
                 'lastname',
-                array('label' => $model->getAttributeLabel('group'),
-                    'value' => $model->group,
-                    'visible' => Yii::app()->params['allowGroups'] && $model->group != null),
                 array('label' => $model->getAttributeLabel('stateName'),
                     'value' => $model->getStateName()),
                 array('label' => $model->getAttributeLabel('roleName'),
@@ -73,8 +70,8 @@ $this->menu = array(
                     'value' => $model->badLogins == null ? '0' : $model->badLogins,
                 ),
                 array('label' => $model->getAttributeLabel('group'),
-                    'value' => $model->group,
-                    'visible' => Yii::app()->user->checkAccessNotAdmin('3') && Yii::app()->params['allowGroups'],
+                    'value' => $model->group->groupname,
+                    'visible' => $model->role == '3' && Yii::app()->params['allowGroups'] && $model->group != null,
                 ),
             ),
         ));
@@ -88,7 +85,7 @@ $this->menu = array(
             </fieldset>
             <?php
         }
-        if (Yii::app()->user->checkAccess('0') && $model->role == 3) {
+        if (Yii::app()->user->checkAccess('0') && $model->role == 3 && ParentChild::model()->countByAttributes(array('user_id' => $model->id))) {
             ?>
             <h4 class="subheader">Kinder</h4>
             <?php

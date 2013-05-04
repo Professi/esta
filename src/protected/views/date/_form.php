@@ -161,6 +161,9 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
 </div>
 <?php if (Yii::app()->params['allowGroups']) { ?>
+    /**
+    * @todo Bearbeiten            Vorauswahl bei einem Update funktioniert nicht 
+    */
     <div class="row collapse">
         <div class="two columns">
             <span class="prefix"><?php echo $form->label($model, 'groups'); ?></span>
@@ -172,7 +175,7 @@ $form = $this->beginWidget('CActiveForm', array(
             } else {
                 $preselected_ids = '';
             }
-            echo Select2::multiSelect(CHtml::activeName($model, 'groups'), Group::model()->getAllGroups('DESC'),Group::model()->getAllGroups('DESC'), array(
+            echo Select2::multiSelect(CHtml::activeName($model, 'groups'), CJavaScript::encode($preselected_ids), Group::model()->getAllGroups('DESC'), array(
                 'placeholder' => 'Hier können Sie mehrere Gruppen auswählen...',
                 'id' => 'groups-select',
                 'select2Options' => array(

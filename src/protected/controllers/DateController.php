@@ -99,6 +99,9 @@ class DateController extends Controller {
         $dateLabel = '';
         if (isset($_POST['Date'])) {
             $model->attributes = $_POST['Date'];
+            if (Yii::app()->params['allowGroups']) {
+                $model->groups = $_POST['Date']['groups'];
+            }
             if ($model->save()) {
                 $this->redirect(array('view', 'id' => $model->id));
             }
@@ -125,7 +128,7 @@ class DateController extends Controller {
         $a_lockAtLabel = explode(' ', date(Yii::app()->params['dateTimeFormat'], $model->lockAt));
         $dateLabel = $a_lockAtLabel[0];
         $timeLabel = $a_lockAtLabel[1];
-        $model->lockAt = $dateLabel.' '.$timeLabel;
+        $model->lockAt = $dateLabel . ' ' . $timeLabel;
         if (isset($_POST['Date'])) {
             $model->attributes = $_POST['Date'];
             if ($model->save())

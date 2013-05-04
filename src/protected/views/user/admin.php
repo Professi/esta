@@ -55,15 +55,18 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'username', 'header' => 'E-Mail'),
         array('name' => 'firstname',),
         'lastname',
-        array('name' => 'title', 'htmlOptions' => array('width' => '5%')),
-        'group',
+        //       array('name' => 'title', 'htmlOptions' => array('width' => '5%')), //nicht wirklich wichtig für die Verwaltung
+        /**
+         * @todo Gruppen anzeigen
+         */
+        array('name' => 'group', 'value' => 'User::getGroupname($data->group)', 'visible' => Yii::app()->params['allowGroups']),
         array('name' => 'state',
             'value' => 'User::getFormattedState($data->state)',
             'filter' => CHtml::listData(
                     User::getStateNameAndValue(), 'value', 'name'),
         ),
         array('name' => 'role',
-            'value' => 'User::getFormattedRole($data->userRoles->role_id)',
+            'value' => 'User::getFormattedRole($data->userRole->role_id)',
             'filter' => CHtml::listData(Role::model()->findAll(), 'id', 'title')),
         array(
             'class' => 'CustomButtonColumn',

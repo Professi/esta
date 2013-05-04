@@ -137,7 +137,11 @@ $form = $this->beginWidget('CActiveForm', array(
             </div>
         </div>
     </div>
+
     <?php if (Yii::app()->params['allowGroups'] && ($model->role == 3 || $model->isNewRecord)) { ?>
+        /**
+        * @todo Bearbeiten, Gruppe benötigt nen Placeholder und muss bei einer anderen Auswahl als Rolle Eltern ausgeblendet werden, weiß nicht inwiefern es sinn macht Lehrern Gruppen zugeben ...
+        */
         <div class="row collapse">
             <div class="three columns">
                 <span class="prefix"><?php echo $form->label($model, 'group'); ?> </span>
@@ -152,7 +156,7 @@ $form = $this->beginWidget('CActiveForm', array(
 //                        'htmlOptions' => array(
 //                            'placeholder' => 'Hier können Sie eine Gruppe auswählen...',),
 //                    ));
-                      echo $form->dropDownList($model, 'group', array(Group::model()->getAllGroups('DESC')),array('options' => array($model->group=>array('selected'=>true))));
+                    echo $form->dropDownList($model, 'group', array(Group::model()->getAllGroups('DESC')), array('options' => array($model->group => array('selected' => true))));
                     echo $form->error($model, 'group');
                     ?>
                 </div>
