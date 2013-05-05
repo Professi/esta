@@ -97,5 +97,14 @@
             }
             
         });
+        
+        $(document).ready(function() {
+            if ( $('#lockAt_value').val() !== "" ) {
+               $value = $('#lockAt_value').val();
+               $arr = $value.split(' ');
+               $('#date_lockAt').val($arr[0]);
+               $('#time_lockAt').val($arr[1]);
+            }
+        });
 
     }(this, document, jQuery));

@@ -187,7 +187,7 @@ table {
     background-color: #f2f2f2 !important;
 }
 .column-button>img {
-    width: 14px;
+    width: 1.2em;
 }
 .button-column {
     text-align: center;
@@ -427,6 +427,7 @@ ul.button-group li {
     top: .4em;
     appearance: normal;
     cursor: pointer;
+    font-size: 1.5em;
 }
 
 #Date_groups {

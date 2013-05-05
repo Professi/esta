@@ -82,6 +82,19 @@
             });
         });
         
-        $('.alarm_png').children().attr('src',window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/')+1)+'/img/alarm.svg');
+        // http://stackoverflow.com/questions/654112/how-do-you-detect-support-for-vml-or-svg-in-a-browser
+        // http://forum.jquery.com/topic/add-svg-support-verification-do-jquery-support
+        function supportsSvg() {
+            var bool = false;
+            if (document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1") 
+                    || document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Shape", "1.0") ) {
+                        bool = true;
+                    }
+            return bool;
+        }
+        
+        if (supportsSvg()) {
+            $('.alarm_png').children().attr('src',window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/'))+'/img/alarm.svg');
+        }
         
     }(this, document, jQuery));
