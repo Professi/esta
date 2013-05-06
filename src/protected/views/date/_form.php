@@ -160,34 +160,36 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
 </div>
-<?php if (Yii::app()->params['allowGroups']) { ?>
-    /**
-    * @todo Bearbeiten            Vorauswahl bei einem Update funktioniert nicht 
-    */
-    <div class="row collapse">
-        <div class="two columns">
-            <span class="prefix"><?php echo $form->label($model, 'groups'); ?></span>
-        </div>
-        <div class="ten columns">
-            <?php
-            if (isset($_POST['Date']['groups'])) {
-                $preselected_ids = $_POST['Date']['groups'];
-            } else {
-                $preselected_ids = '';
-            }
-            echo Select2::multiSelect(CHtml::activeName($model, 'groups'), CJavaScript::encode($preselected_ids), Group::model()->getAllGroups('DESC'), array(
-                'placeholder' => 'Hier können Sie mehrere Gruppen auswählen...',
-                'id' => 'groups-select',
-                'select2Options' => array(
-                    'allowClear' => true,
-                ),
-            ));
-            echo $form->error($model, 'groups');
-            ?>
+<?php
+if (Yii::app()->params['allowGroups']) {
+    $groups = Group::model()->getAllGroups('DESC');
+    if (!empty($groups)) {
+        ?>
+        <div class="row collapse">
+            <div class="two columns">
+                <span class="prefix"><?php echo $form->label($model, 'groups'); ?></span>
+            </div>
+            <div class="ten columns">
+                <?php
+                if (isset($_POST['Date']['groups'])) {
+                    $model->groups = $_POST['Date']['groups'];
+                }
+                echo Select2::activeMultiSelect($model, 'groups', $groups, array(
+                    'placeholder' => 'Hier können Sie mehrere Gruppen auswählen...',
+                    'id' => 'groups-select',
+                    'select2Options' => array(
+                        'allowClear' => true,
+                    ),
+                ));
+                echo $form->error($model, 'groups');
+                ?>
 
+            </div>
         </div>
-    </div>
-<?php } ?>
+        <?php
+    }
+}
+?>
 <br>
 <?php
 echo CHtml::submitButton($model->isNewRecord ? 'Anlegen' : 'Speichern', array('class' => 'small button'));

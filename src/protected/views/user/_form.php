@@ -138,35 +138,31 @@ $form = $this->beginWidget('CActiveForm', array(
         </div>
     </div>
 
-    <?php if (Yii::app()->params['allowGroups'] && ($model->role == 3 || $model->isNewRecord)) { ?>
-        /**
-        * @todo Bearbeiten, Gruppe benötigt nen Placeholder und muss bei einer anderen Auswahl als Rolle Eltern ausgeblendet werden, weiß nicht inwiefern es sinn macht Lehrern Gruppen zugeben ...
-        */
-        <div class="row collapse">
-            <div class="three columns">
-                <span class="prefix"><?php echo $form->label($model, 'group'); ?> </span>
-            </div>
-            <div class="nine columns">
-                <div class="styled-select">
-                    <?php
-//                    $this->widget('Select2', array(
-//                        'model' => $model,
-//                        'attribute' => 'group_id',
-//                        'data' => Group::model()->getAllGroups('DESC'),
-//                        'htmlOptions' => array(
-//                            'placeholder' => 'Hier können Sie eine Gruppe auswählen...',),
-//                    ));
-                    echo $form->dropDownList($model, 'group', array(Group::model()->getAllGroups('DESC')), array('options' => array($model->group => array('selected' => true))));
-                    echo $form->error($model, 'group');
-                    ?>
+    <?php
+    if (Yii::app()->params['allowGroups'] && ($model->role == 3 || $model->isNewRecord) && !Yii::app()->user->isGuest()) {
+        $groups = Group::model()->getAllGroups('DESC');
+        if (!empty($groups)) {
+            if ($model->isNewRecord) {
+                $model->group = '';
+            }
+            ?>
+            <div class="row collapse">
+                <div class="three columns">
+                    <span class="prefix"><?php echo $form->label($model, 'group'); ?> </span>
+                </div>
+                <div class="nine columns">
+                    <div class="styled-select">
+                        <?php
+                        echo Select2::activeDropDownList($model, 'group', $groups, array('placeholder' => 'Hier können Sie eine Gruppe auswählen...', 'allowClear' => true,));
+                        echo $form->error($model, 'group');
+                        ?>
+                    </div>
                 </div>
             </div>
-        </div>
-
-
-        <?php
-    } // Gruppen Auswahlliste
-} // Verwaltungszugriff
+            <?php
+        }
+    }
+}
 ?>
 
 <?php if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) { ?>

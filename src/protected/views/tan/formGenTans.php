@@ -44,25 +44,26 @@
                     ?>
                 </div>
             </div>
-            <?php if (Yii::app()->params['allowGroups']) { ?>
-                <div class="row collapse">
-                    <div class="three columns">
-                        <span class="prefix"><?php echo $form->label($model, 'group'); ?></span>
+            <?php
+            if (Yii::app()->params['allowGroups']) {
+                $groups = Group::model()->getAllGroups('DESC');
+                if (!empty($groups)) {
+                    ?>
+                    <div class="row collapse">
+                        <div class="three columns">
+                            <span class="prefix"><?php echo $form->label($model, 'group'); ?></span>
+                        </div>
+                        <div class="nine columns">
+                            <?php
+                            echo Select2::activeDropDownList($model, 'group_id', $groups, array(
+                                'placeholder' => 'Hier können Sie eine Gruppe auswählen...')
+                            );
+                            echo $form->error($model, 'group');
+                            ?>
+                        </div>
                     </div>
-                    <div class="nine columns">
-                        <?php
-                        $this->widget('Select2', array(
-                            'model' => $model,
-                            'attribute' => 'group_id',
-                            'data' => Group::model()->getAllGroups('DESC'),
-                            'htmlOptions'=> array(
-                            'placeholder' => 'Hier können Sie eine Gruppe auswählen...'),
-                        ));
-                        echo $form->error($model, 'group');
-                        ?>
-                    </div>
-                </div>
-                <?php
+                    <?php
+                }
             }
             echo CHtml::submitButton('Absenden', array('class' => 'small button'));
             ?>
