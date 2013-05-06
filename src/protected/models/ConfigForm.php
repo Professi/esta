@@ -178,7 +178,7 @@ class ConfigForm extends CFormModel {
             'badLogins' => 'tinyint(4)',
             'bannedUntil' => 'bigint DEFAULT "0"', //maybe Int
             'password' => 'string',
-            'group_id' => 'integer',
+            'group_id' => 'integer NULL',
                 ), 'DEFAULT CHARSET=utf8');
         $command->createTable('user_role', array(
             'id' => 'pk',

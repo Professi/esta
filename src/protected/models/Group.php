@@ -56,6 +56,14 @@ class Group extends CActiveRecord {
         );
     }
 
+    public function relations() {
+        return array(
+            'user' => array(self::HAS_ONE, 'User', 'group_id'),
+            'tan' => array(self::HAS_ONE, 'Tan', 'group_id'),
+            'dateHasGroup' => array(self::HAS_ONE, 'DateHasGroup', 'group_id'),
+        );
+    }
+
     /**
      * Attributlabels
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
@@ -88,7 +96,7 @@ class Group extends CActiveRecord {
      * @return array 
      */
     public function getAllGroups($sort = "") {
-        $a_result = Group::model()->findAll(array('order'=>'`groupname` '+$sort));
+        $a_result = Group::model()->findAll(array('order' => '`groupname` ' + $sort));
         $a_temp = null;
         if (!empty($a_result)) {
             foreach ($a_result as $object) {
@@ -99,4 +107,5 @@ class Group extends CActiveRecord {
     }
 
 }
+
 ?>
