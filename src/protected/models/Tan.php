@@ -35,9 +35,7 @@ class Tan extends CActiveRecord {
      * @var integer ID 
      */
     public $id = 0;
-    
-    public $group_id;
-    
+    public $group_id = null;
 
     /**
      * Returns the static model of the specified AR class.
@@ -105,5 +103,15 @@ class Tan extends CActiveRecord {
             'pagination' => array('pageSize' => 20),
         ));
     }
-    
+
+    public function beforeSave() {
+        $rc = parent::beforeSave();
+        if ($rc && Yii::app()->params['allowGroups']) {
+            if (!is_int($this->group_id)) {
+                $this->group_id = null;
+            }
+        }
+        return $rc;
+    }
+
 }

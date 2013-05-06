@@ -153,7 +153,7 @@ $form = $this->beginWidget('CActiveForm', array(
                 <div class="nine columns">
                     <div class="styled-select">
                         <?php
-                        echo Select2::activeDropDownList($model, 'group', $groups, array('placeholder' => 'Hier können Sie eine Gruppe auswählen...', 'allowClear' => true,));
+                        echo Select2::activeDropDownList($model, 'group', $groups, array('prompt' => 'Hier können Sie eine Gruppe auswählen...', 'allowClear' => true,));
                         echo $form->error($model, 'group');
                         ?>
                     </div>

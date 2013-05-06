@@ -503,8 +503,10 @@ class User extends CActiveRecord {
                     $this->addError('tan', 'Leider wurde Ihre TAN schon benutzt.');
                     $rc = false;
                 } else {
-                    if ($tan->group != null) {
+                    if ($tan->group != null && is_int($tan->group)) {
                         $this->group = $tan->group;
+                    } else {
+                        $this->group = null;
                     }
                 }
             } else {

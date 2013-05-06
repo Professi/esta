@@ -56,7 +56,7 @@
                         <div class="nine columns">
                             <?php
                             echo Select2::activeDropDownList($model, 'group_id', $groups, array(
-                                'placeholder' => 'Hier können Sie eine Gruppe auswählen...')
+                                'prompt' => 'Hier können Sie eine Gruppe auswählen...')
                             );
                             echo $form->error($model, 'group');
                             ?>
