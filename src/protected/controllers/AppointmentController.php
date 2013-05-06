@@ -387,10 +387,11 @@ class AppointmentController extends Controller {
                 $criteria->limit = $dateMax;
                 $criteria->order = 'date ASC';
                 $group = Yii::app()->user->getState('group');
-                if (!$group) {
+                if (!is_string($group)) {
                     $group = "string";
+                } else {
+                    $criteria->compare('groups.id', $group, true, 'AND');
                 }
-                $criteria->compare('groups.id', $group, true, 'AND');
                 $criteria->addCondition('date >="' . date('Y-m-d', time()) . '"');
                 $a_dates = Date::model()->findAll($criteria);
             } else {
@@ -454,30 +455,30 @@ class AppointmentController extends Controller {
     public function createMakeAppointmentContent($a_dates, $teacherId) {
         $a_tabs = array();
         $tabsUiId = 0; //id der tabellen, wichtig für Javascriptfunktionen aus custom.js
-        if(!empty($teacherId)) {
-        foreach ($a_dates as $a_day) {
-            $tabsUiId++;
-            $tabsName = date(Yii::app()->params['dateFormat'], strtotime($a_day[0]->date->date));
-            $tabsContent = '<div style="display:none;" id="date-ui-id-' . $tabsUiId . '">' . $tabsName . '</div>'; //verstecktes Element für Javascriptfunktionen aus custom.js
-            $tabsContent .= '<table><thead><th class="table-text" width="40%">Uhrzeit</th><th class="table-text" width="60%">Termin</th></thead><tbody>';
-            $datesUiId = 0; //id der einzelnen Zeiten, wichtig für Javascriptfunktionen aus custom.js
-            foreach ($a_day as $key => $a_times) {
-                $datesUiId++;
-                $a_times = $this->isAppointmentAvailable($teacherId, $a_day[$key]->id); //Array in dem gespeichert wird ob ein Termin Belegt oder Frei ist.
-                $tabsContent .= '<tr><td id="time-ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="table-text">';
-                $tabsContent .= date(Yii::app()->params['timeFormat'], strtotime($a_day[$key]->time)) . '</td>';
-                $tabsContent .= ($a_times[1]) ? '<td id="ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="avaiable table-text">' . $a_times[0] . '</td>' : '<td class="occupied table-text">' . $a_times[0] . '</td>';
-                $tabsContent .= '</tr>';
+        if (!empty($teacherId)) {
+            foreach ($a_dates as $a_day) {
+                $tabsUiId++;
+                $tabsName = date(Yii::app()->params['dateFormat'], strtotime($a_day[0]->date->date));
+                $tabsContent = '<div style="display:none;" id="date-ui-id-' . $tabsUiId . '">' . $tabsName . '</div>'; //verstecktes Element für Javascriptfunktionen aus custom.js
+                $tabsContent .= '<table><thead><th class="table-text" width="40%">Uhrzeit</th><th class="table-text" width="60%">Termin</th></thead><tbody>';
+                $datesUiId = 0; //id der einzelnen Zeiten, wichtig für Javascriptfunktionen aus custom.js
+                foreach ($a_day as $key => $a_times) {
+                    $datesUiId++;
+                    $a_times = $this->isAppointmentAvailable($teacherId, $a_day[$key]->id); //Array in dem gespeichert wird ob ein Termin Belegt oder Frei ist.
+                    $tabsContent .= '<tr><td id="time-ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="table-text">';
+                    $tabsContent .= date(Yii::app()->params['timeFormat'], strtotime($a_day[$key]->time)) . '</td>';
+                    $tabsContent .= ($a_times[1]) ? '<td id="ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="avaiable table-text">' . $a_times[0] . '</td>' : '<td class="occupied table-text">' . $a_times[0] . '</td>';
+                    $tabsContent .= '</tr>';
+                }
+                $tabsContent .= '</tbody></table>';
+                $tabsContent .= '<div class="panel appointment-lockAt text-center">' . 'Bedenken Sie, dass Termine nur bis zum ';
+                $tabsContent .= date(Yii::app()->params['dateTimeFormat'], $a_day[0]->date->lockAt);
+                $tabsContent .= ' gebucht werden können.</div>';
+                $a_tabs[$tabsName] = $tabsContent;
+                if ($tabsUiId == 3) { //Magic Number aus makeAppointment.php nach 3 Elternsprechtagen wird die Schleife verlassen. 
+                    break;
+                }
             }
-            $tabsContent .= '</tbody></table>';
-            $tabsContent .= '<div class="panel appointment-lockAt text-center">' . 'Bedenken Sie, dass Termine nur bis zum ';
-            $tabsContent .= date(Yii::app()->params['dateTimeFormat'], $a_day[0]->date->lockAt);
-            $tabsContent .= ' gebucht werden können.</div>';
-            $a_tabs[$tabsName] = $tabsContent;
-            if ($tabsUiId == 3) { //Magic Number aus makeAppointment.php nach 3 Elternsprechtagen wird die Schleife verlassen. 
-                break;
-            }
-        }
         }
         return $a_tabs;
     }
@@ -592,7 +593,7 @@ class AppointmentController extends Controller {
             header('Content-type: application/json');
             echo CJSON::encode($this->createSelectChildren($id, 'Appointment', 'parent_child_id'));
         }
-            Yii::app()->end();
+        Yii::app()->end();
     }
 
     public function fillChildSelect() {
