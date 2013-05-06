@@ -100,28 +100,29 @@
                     echo $form->error($model, 'childs');
                     ?>
                 </div>
-                <div class="row collapse">
-                    <div class="three columns">
-                        <span class="prefix"><?php echo $form->label($model, 'parents'); ?></span>
-                    </div>
-                    <div class="nine columns styled-select">
-                        <?php
-                        echo $form->dropDownList($model, 'parents', array('1' => 'Ja', '0' => 'Nein'));
-                        echo $form->error($model, 'parents');
-                        ?>
-                    </div>
+            </div>
+            <div class="row collapse">
+                <div class="three columns">
+                    <span class="prefix"><?php echo $form->label($model, 'parents'); ?></span>
                 </div>
-                <div class="row collapse">
-                    <div class="three columns">
-                        <span class="prefix"><?php echo $form->label($model, 'groups'); ?></span>
-                    </div>
-                    <div class="nine columns styled-select">
-                        <?php
-                        echo $form->dropDownList($model, 'groups', array('1' => 'Ja', '0' => 'Nein'));
-                        echo $form->error($model, 'groups');
-                        ?>
-                    </div>
+                <div class="nine columns styled-select">
+                    <?php
+                    echo $form->dropDownList($model, 'parents', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'parents');
+                    ?>
                 </div>
+            </div>
+            <div class="row collapse">
+                <div class="three columns">
+                    <span class="prefix"><?php echo $form->label($model, 'groups'); ?></span>
+                </div>
+                <div class="nine columns styled-select">
+                    <?php
+                    echo $form->dropDownList($model, 'groups', array('1' => 'Ja', '0' => 'Nein'));
+                    echo $form->error($model, 'groups');
+                    ?>
+                </div>
+            </div>
         </fieldset>
     </div><!-- row -->
     <div class="row">

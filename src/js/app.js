@@ -39,6 +39,17 @@
     
     (function(window, document, $) {
         
+        // http://stackoverflow.com/questions/654112/how-do-you-detect-support-for-vml-or-svg-in-a-browser
+        // http://forum.jquery.com/topic/add-svg-support-verification-do-jquery-support
+        function supportsSvg() {
+            var bool = false;
+            if (document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1") 
+                    || document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Shape", "1.0") ) {
+                        bool = true;
+                    }
+            return bool;
+        }
+        
         $('#teacher-ac').on('autocompleteselect', function(e, ui) {
             e.preventDefault();
             window.location.href = "index.php?r=Appointment/makeAppointment&teacher=" + ui.item.value;
@@ -60,6 +71,10 @@
             $('#MenuModal ul').attr('class', 'nav-bar vertical');
             $('#MenuModal ul').attr('style', 'display:inherit;');
             $('#MenuModal').append('<a class="close-reveal-modal close-reveal-modal-fix" data-icon="&#xe014;" style="color:#fff;"></a>');
+            
+            if (supportsSvg()) {
+                $('.alarm_png').children().attr('src',window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/'))+'/img/alarm.svg');
+            }
         });
         
         $('.avaiable').css('cursor', 'pointer');
@@ -81,20 +96,5 @@
                 }
             });
         });
-        
-        // http://stackoverflow.com/questions/654112/how-do-you-detect-support-for-vml-or-svg-in-a-browser
-        // http://forum.jquery.com/topic/add-svg-support-verification-do-jquery-support
-        function supportsSvg() {
-            var bool = false;
-            if (document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1") 
-                    || document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Shape", "1.0") ) {
-                        bool = true;
-                    }
-            return bool;
-        }
-        
-        if (supportsSvg()) {
-            $('.alarm_png').children().attr('src',window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/'))+'/img/alarm.svg');
-        }
         
     }(this, document, jQuery));

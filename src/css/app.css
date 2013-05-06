@@ -115,6 +115,8 @@ table {
 .menu-icon {
 	font-size: 2em;
 	color: #fff;
+        height: 100%;
+        width: 100%;
 }
 .error-icon {
 	font-size: 7em;
@@ -198,6 +200,92 @@ table {
 }
 .small.teacher.button {
     display: inline;
+}
+.filters select {
+    position: relative;
+    height: 2.4em;
+    top: -.45em;
+}
+.styled-select .errorMessage {
+    position: relative;
+    top: 1.25em;
+}
+.faq-ul li {
+    display: block;
+}
+.appointment-lockAt {
+    position: relative;
+    top: -1.5em;
+}
+#date-form-fix-left {
+    padding-left: .5em;
+}
+#date-form-fix-right {
+    padding-right: .5em;
+}
+.infobox {
+    position: fixed;
+    width: 400px;
+    word-wrap: break-word;
+    background-color: #f2f2f2;
+    border: 2px solid #ccc;
+    padding: 3em 4em 2em 6em;
+    text-align: center;
+    z-index: 2;
+}
+.infobox span {
+    font-size: 3em;
+    color: #999;
+    position: absolute;
+    left: .5em;
+    top: .2em;
+}
+.infotext {
+    display: none;
+}
+.close-reveal-modal-fix {
+    position: absolute;
+    visibility: visible;
+    right: .5em;
+    top: .4em;
+    appearance: normal;
+    cursor: pointer;
+    font-size: 1.5em;
+    z-index: 2;
+}
+
+#Date_groups {
+    min-width: 4em;
+}
+.select2-container {
+    top: 0px;
+    height: 2.3em;
+} 
+.select2-choices {
+    height: 2.3em;
+} 
+.select2-container-multi .select2-choices .select2-search-choice {
+    margin: 8px 0 3px 5px;
+}
+
+@media only screen and (max-width: 767px) {
+
+	.row.contain-to-grid.sticky {
+		width: 100%;
+	}
+	.header {
+		padding-left: 0.2em;
+	}
+	.styled-select-parent {
+		left: .15em;
+	}
+        .mobile-input {
+            padding-left: .15em !important;
+            margin-right: -.15em !important;
+        }
+        .captcha-button {
+            margin-top: 1em;
+        }
 }
 .ui-state-default {
     display: block;
@@ -376,80 +464,4 @@ ul.button-group li {
 }
 .ui-widget-header .ui-icon {
 	background-image: url(../img/ui-icons_d8e7f3_256x240.png);
-}
-
-.filters select {
-    position: relative;
-    height: 2.4em;
-    top: -.45em;
-}
-.styled-select .errorMessage {
-    position: relative;
-    top: 1.25em;
-}
-.faq-ul li {
-    display: block;
-}
-.appointment-lockAt {
-    position: relative;
-    top: -1.5em;
-}
-#date-form-fix-left {
-    padding-left: .5em;
-}
-#date-form-fix-right {
-    padding-right: .5em;
-}
-.infobox {
-    position: fixed;
-    width: 400px;
-    word-wrap: break-word;
-    background-color: #f2f2f2;
-    border: 2px solid #ccc;
-    padding: 3em 4em 2em 6em;
-    text-align: center;
-    z-index: 2;
-}
-.infobox span {
-    font-size: 3em;
-    color: #999;
-    position: absolute;
-    left: .5em;
-    top: .2em;
-}
-.infotext {
-    display: none;
-}
-.close-reveal-modal-fix {
-    position: absolute;
-    visibility: visible;
-    right: .5em;
-    top: .4em;
-    appearance: normal;
-    cursor: pointer;
-    font-size: 1.5em;
-}
-
-#Date_groups {
-    min-width: 4em;
-}
-
-@media only screen and (max-width: 767px) {
-
-	.row.contain-to-grid.sticky {
-		width: 100%;
-	}
-	.header {
-		padding-left: 0.2em;
-	}
-	.styled-select-parent {
-		left: .15em;
-	}
-        .mobile-input {
-            padding-left: .15em !important;
-            margin-right: -.15em !important;
-        }
-        .captcha-button {
-            margin-top: 1em;
-        }
 }

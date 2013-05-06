@@ -61,8 +61,9 @@ return array(
                     'depends' => array('css'),
                 ),
                 'admin' => array(
-                    'baseUrl' => 'js/',
-                    'js' => array('custom.js'),
+                    'baseUrl' => '',
+                    'css' => array( 'css/select2.css'),
+                    'js' => array('js/custom.js'),
                 ),
             ),
             'scriptMap' => array(//nicht ändern
