@@ -93,15 +93,12 @@ class DateController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate() {
-        $model = new Date;
+        $model = new Date();
         $a_disabled = '';
         $timeLabel = '';
         $dateLabel = '';
         if (isset($_POST['Date'])) {
             $model->attributes = $_POST['Date'];
-            if (Yii::app()->params['allowGroups']) {
-                $model->groups = $_POST['Date']['groups'];
-            }
             if ($model->save()) {
                 $this->redirect(array('view', 'id' => $model->id));
             }
