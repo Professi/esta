@@ -1,8 +1,6 @@
 ;
 (function(window, document, $) {
-<<<<<<< .mine    
-=======
->>>>>>> .theirs        // http://stackoverflow.com/questions/654112/how-do-you-detect-support-for-vml-or-svg-in-a-browser
+// http://stackoverflow.com/questions/654112/how-do-you-detect-support-for-vml-or-svg-in-a-browser
         // http://forum.jquery.com/topic/add-svg-support-verification-do-jquery-support
         function supportsSvg() {
             var bool = false;
