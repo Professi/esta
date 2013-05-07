@@ -201,7 +201,7 @@ class Date extends CActiveRecord {
         $a_dateTimes = DateAndTime::model()->findAllByAttributes(array('date_id' => $this->id));
         if (!empty($a_dateTimes)) {
             foreach ($a_dateTimes as $dateTime) {
-                Appointment::model()->deleteAllByAttributes(array('dateTime_id' => $dateTime->id));
+                Appointment::model()->deleteAllByAttributes(array('dateAndTime_id' => $dateTime->id));
                 $dateTime->delete();
             }
         }
