@@ -121,6 +121,7 @@ class ParentChild extends CActiveRecord {
             array('childFirstName, childLastName,user_id', 'required'),
             array('child_id', 'numerical', 'integerOnly' => true),
             array('user_id', 'length', 'max' => 11),
+            array('childFirstname,childLastname,child_id','length','max'=>255),
             array('id, user_id, child_id', 'safe', 'on' => 'search'),
         );
     }
@@ -191,22 +192,6 @@ class ParentChild extends CActiveRecord {
         $match = addcslashes(ucfirst($lastname), '%_');
         $criteria->addCondition('user.lastname LIKE :match');
         $criteria->params = array(':match' => "$match%");
-        $criteria->with = array('user', 'child');
-        $criteria->select = '*';
-        $criteria->limit = 10;
-        return $criteria;
-    }
-
-    /**
-     * Gibt Suchkriterien von ParentChild zurück
-     * @author David Mock <dumock@gmail.com>
-     * @return CDbCriteria Suchkriterien für Select Element mit Kindern
-     * @param int $id Id eines Users
-     */
-    public function searchParentChildWithId($id) {
-        $criteria = new CDbCriteria;
-        $criteria->addCondition('user.id LIKE :match');
-        $criteria->params = array(':match' => "$id%");
         $criteria->with = array('user', 'child');
         $criteria->select = '*';
         $criteria->limit = 10;

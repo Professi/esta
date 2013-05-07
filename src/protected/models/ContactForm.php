@@ -46,6 +46,7 @@ class ContactForm extends CFormModel {
             array('name, email, subject, body', 'required'),
             // email has to be a valid email address
             array('email', 'email'),
+            array('name,email,subject,body,email','length','max'=>255),
             // verifyCode needs to be entered correctly
             array('verifyCode', 'captcha', 'allowEmpty' => !CCaptcha::checkRequirements()),
         );

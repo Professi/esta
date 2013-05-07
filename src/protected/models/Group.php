@@ -52,7 +52,7 @@ class Group extends CActiveRecord {
     public function rules() {
         return array(
             array('groupname', 'required'),
-            array('groupname', 'length', 'max' => 10, 'min' => 1),
+            array('groupname', 'length', 'max' => 255, 'min' => 1),
         );
     }
 

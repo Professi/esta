@@ -497,34 +497,6 @@ class AppointmentController extends Controller {
     }
 
     /**
-     * Suche fuer Elternkindverknuepfungen anhand von  dem Namen des 
-     * Erziehungsberechtigten, optimierte Ausgabe für appointment/create
-     * @param string $term Nachname des Elternteils
-     * @param integer $id Falls bei einem Update schon ein Kind ausgewählt wurde
-     * @author David Mock <dumock@gmail.com>
-     * @deprecated since version 1.2
-     */
-    public function createChildrenSelect($term, $id = -1) {
-        $dataProvider = new ParentChild();
-        $dataProvider->unsetAttributes();
-        $criteria = $dataProvider->searchParentChild($term);
-        $selectContent = '<select name="Appointment[parent_child_id]">';
-        $a_data = ParentChild::model()->findAll($criteria);
-        foreach ($a_data as $record) {
-            $selectContent .= '<option value="' . $record->id . '" ';
-            if ($record->id == $id) {
-                $selectContent .= 'selected';
-            }
-            $selectContent .= '>' . $record->child->firstname . " " . $record->child->lastname . '</option>';
-        }
-        if (empty($a_data)) {
-            $selectContent .= '<option>Keine Kinder vorhanden, bitte fügen Sie mindestens ein Kind hinzu bevor Sie fortfahren</option>';
-        }
-        $selectContent .='</select>';
-        return $selectContent;
-    }
-
-    /**
      * Erzeugt mittels CHtml::dropDownList ein Select Element, mit allen Terminen eines Lehrers.
      * @author David Mock <dumock@gmail.com>
      * @param int $teacherId Id des Lehres
@@ -572,7 +544,9 @@ class AppointmentController extends Controller {
             $dataProvider = new ParentChild();
             $dataProvider->unsetAttributes();
             $criteria = $dataProvider->searchParentChildWithId($userId);
-            $a_parentChild = ParentChild::model()->findAll($criteria);
+            //        $criteria->with = array('user', 'child');
+//        $criteria->select = '*';
+            $a_parentChild = ParentChild::model()->findAllByAttributes(array('user_id' => $userId), array('with' => array('user', 'child'), 'select' => '*'));
             $selectContent = (empty($a_parentChild)) ? array('prompt' => 'Bitte legen Sie mindestens ein Kind an bevor Sie fortfahren') : CHtml::listData($a_parentChild, 'id', function($post) {
                                 return $post->child->firstname . ' ' . $post->child->lastname;
                             });

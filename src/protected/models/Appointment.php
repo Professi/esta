@@ -57,7 +57,7 @@ class Appointment extends CActiveRecord {
         return array(
             array('dateAndTime_id, parent_child_id, user_id', 'required'),
             array('dateAndTime_id, parent_child_id', 'numerical', 'integerOnly' => true),
-            array('user_id', 'length', 'max' => 11),
+            array('user_id,dateAndTime_id,parent_child_id', 'length', 'max' => 255),
             array('id, dateAndTime_id, parent_child_id, user_id', 'safe', 'on' => 'search'),
         );
     }
