@@ -139,7 +139,6 @@ class ConfigForm extends CFormModel {
     }
 
     private function createTables($command) {
-
         $command->createTable("child", array(
             'id' => 'pk',
             'firstname' => 'string NOT NULL',
@@ -287,15 +286,22 @@ class ConfigForm extends CFormModel {
         $rc = true;
         $connection = $this->getConnection();
         if ($connection->active) {
-            $command = $connection->createCommand();
-            $this->createTables($command);
-            $this->addForeignKeys($command);
-            $this->createIndices($command);
-            $this->fillTable($command);
+            try {
+                $command = $connection->createCommand();
+                $this->createTables($command);
+                $this->addForeignKeys($command);
+                $this->createIndices($command);
+                $this->fillTable($command);
+            } catch (Exception $e) {
+                Yii::app()->user->setFlash('failMsg', 'Die Datenbanktabellen konnten nicht angelegt werden. Entweder sind diese schon vorhanden oder es trat ein Fehler auf.');
+                Yii::log($e, CLogger::LEVEL_ERROR, 'application.models.configForm');
+                $rc = true;
+            }
         } else {
             $this->addError('databaseHost', 'Die Datenbankverbindung konnte nicht hergestellt werden.');
             $rc = false;
         }
+        
         return $rc;
     }
 

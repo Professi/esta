@@ -478,7 +478,7 @@ Yii::app()->clientScript->registerPackage('jquery');
                 </div>
             </div>            
         </fieldset>
-        <?php if (!Yii::app()->params['installed']) { ?>
+        <?php if (!Yii::app()->params['installed'] && Yii::app()->user->isGuest()) { ?>
             <div class="push"></div>
             <div class="row collapse">
                 <div class="eight columns">

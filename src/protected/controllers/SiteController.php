@@ -80,7 +80,7 @@ class SiteController extends Controller {
                 $file = Yii::app()->basePath . '/config/params.inc';
                 $model->attributes = $_POST['ConfigForm'];
                 if ($model->validate()) {
-                    if (Yii::app()->params['installed'] == 0) {
+                    if (Yii::app()->params['installed'] == 0 && Yii::app()->user->isGuest()) {
                         $createAdminUser = true;
                     }
                     $str = base64_encode(serialize($model->attributes));
@@ -102,7 +102,7 @@ class SiteController extends Controller {
                             Yii::app()->user->setFlash('success', $msg);
                             $this->redirect('index.php');
                         } else {
-                            Yii::app()->user->setFlash('failMsg', 'Verbindung zur Datenbank konnte nicht hergestellt werden.');
+                             Yii::app()->user->setFlash('failMsg', 'Verbindung zur Datenbank konnte nicht hergestellt werden.');
                         }
                     } else {
                         Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert.');
