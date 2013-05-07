@@ -543,9 +543,6 @@ class AppointmentController extends Controller {
         if (!empty($userId)) {
             $dataProvider = new ParentChild();
             $dataProvider->unsetAttributes();
-            $criteria = $dataProvider->searchParentChildWithId($userId);
-            //        $criteria->with = array('user', 'child');
-//        $criteria->select = '*';
             $a_parentChild = ParentChild::model()->findAllByAttributes(array('user_id' => $userId), array('with' => array('user', 'child'), 'select' => '*'));
             $selectContent = (empty($a_parentChild)) ? array('prompt' => 'Bitte legen Sie mindestens ein Kind an bevor Sie fortfahren') : CHtml::listData($a_parentChild, 'id', function($post) {
                                 return $post->child->firstname . ' ' . $post->child->lastname;
