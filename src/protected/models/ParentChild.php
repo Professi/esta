@@ -76,9 +76,9 @@ class ParentChild extends CActiveRecord {
     public function beforeSave() {
         $rc = parent::beforeSave();
         if ($rc) {
-            $childCheck = Child::model()->findByAttributes(array('firstname' => $this->childFirstName, 'lastname' => $this->childLastName));
+            $childCheck = Child::model()->findByAttributes(array('firstname' => $this->childFirstName, 'lastname' => $this->childLastName), array('select' => 'id'));
             if ($childCheck != null) {
-                if (ParentChild::model()->findByAttributes(array('child_id' => $childCheck->id, 'user_id' => $this->user_id)) >= '1') {
+                if (ParentChild::model()->countByAttributes(array('child_id' => $childCheck->id, 'user_id' => $this->user_id)) >= '1') {
                     $rc = false;
                     Yii::app()->user->setFlash('failMsg', 'Kind wurde bereits eingetragen.');
                 }
@@ -121,7 +121,7 @@ class ParentChild extends CActiveRecord {
             array('childFirstName, childLastName,user_id', 'required'),
             array('child_id', 'numerical', 'integerOnly' => true),
             array('user_id', 'length', 'max' => 11),
-            array('childFirstname,childLastname,child_id','length','max'=>255),
+            array('childFirstname,childLastname,child_id', 'length', 'max' => 255),
             array('id, user_id, child_id', 'safe', 'on' => 'search'),
         );
     }
