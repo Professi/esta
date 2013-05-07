@@ -73,6 +73,7 @@
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=" class="small teacher button">*</a>
                             </div>
                         </div>
+                    </div>
                         <div class="show-for-small" style="line-height:2.5em;">
                             <div class="left">
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=a" class="small teacher button">A</a>
