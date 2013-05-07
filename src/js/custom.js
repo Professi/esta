@@ -133,5 +133,13 @@
                 $('.delete').children().each(function(){$(this).attr('src',window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/'))+'/img/remove.svg');});
             }
         });
+        
+        $('#User_role').on('change', function() {
+           if ($(this).val() === 3) {
+               $('#User_group').attr('disabled', false);
+           } else {
+               $('#User_group').attr('disabled', true);
+           }
+        });
 
     }(this, document, jQuery));

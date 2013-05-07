@@ -29,20 +29,20 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 
 .select2-container .select2-choice {
     display: block;
-    height: 26px;
+    height: 31px;
     padding: 0 0 0 8px;
     overflow: hidden;
     position: relative;
 
-    border: 1px solid #aaa;
+/*    border: 1px solid #aaa;*/
     white-space: nowrap;
     line-height: 26px;
     color: #444;
     text-decoration: none;
 
-    -webkit-border-radius: 4px;
+/*    -webkit-border-radius: 4px;
        -moz-border-radius: 4px;
-            border-radius: 4px;
+            border-radius: 4px;*/
 
     -webkit-background-clip: padding-box;
        -moz-background-clip: padding;
@@ -109,7 +109,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     text-decoration: none;
 
     border: 0;
-    background: url('select2.png') right top no-repeat;
+    background: url('../img/select2.png') right top no-repeat;
     cursor: pointer;
     outline: 0;
 }
@@ -183,9 +183,9 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     top: 0;
 
     border-left: 1px solid #aaa;
-    -webkit-border-radius: 0 4px 4px 0;
+/*    -webkit-border-radius: 0 4px 4px 0;
        -moz-border-radius: 0 4px 4px 0;
-            border-radius: 0 4px 4px 0;
+            border-radius: 0 4px 4px 0;*/
 
     -webkit-background-clip: padding-box;
        -moz-background-clip: padding;
@@ -205,7 +205,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     display: block;
     width: 100%;
     height: 100%;
-    background: url('select2.png') no-repeat 0 1px;
+    background: url('../img/select2.png') no-repeat 0 1px;
 }
 
 .select2-search {
@@ -248,13 +248,13 @@ Version: @@ver@@ Timestamp: @@timestamp@@
        -moz-box-shadow: none;
             box-shadow: none;
 
-    background: #fff url('select2.png') no-repeat 100% -22px;
-    background: url('select2.png') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
-    background: url('select2.png') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, white 85%, #eeeeee 99%);
-    background: url('select2.png') no-repeat 100% -22px, -moz-linear-gradient(center bottom, white 85%, #eeeeee 99%);
-    background: url('select2.png') no-repeat 100% -22px, -o-linear-gradient(bottom, white 85%, #eeeeee 99%);
-    background: url('select2.png') no-repeat 100% -22px, -ms-linear-gradient(top, #ffffff 85%, #eeeeee 99%);
-    background: url('select2.png') no-repeat 100% -22px, linear-gradient(top, #ffffff 85%, #eeeeee 99%);
+    background: #fff url('../img/select2.png') no-repeat 100% -22px;
+    background: url('../img/select2.png') no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
+    background: url('../img/select2.png') no-repeat 100% -22px, -webkit-linear-gradient(center bottom, white 85%, #eeeeee 99%);
+    background: url('../img/select2.png') no-repeat 100% -22px, -moz-linear-gradient(center bottom, white 85%, #eeeeee 99%);
+    background: url('../img/select2.png') no-repeat 100% -22px, -o-linear-gradient(bottom, white 85%, #eeeeee 99%);
+    background: url('../img/select2.png') no-repeat 100% -22px, -ms-linear-gradient(top, #ffffff 85%, #eeeeee 99%);
+    background: url('../img/select2.png') no-repeat 100% -22px, linear-gradient(top, #ffffff 85%, #eeeeee 99%);
 }
 
 .select2-drop.select2-drop-above .select2-search input {
@@ -262,13 +262,13 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 }
 
 .select2-search input.select2-active {
-    background: #fff url('select2-spinner.gif') no-repeat 100%;
-    background: url('select2-spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
-    background: url('select2-spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, white 85%, #eeeeee 99%);
-    background: url('select2-spinner.gif') no-repeat 100%, -moz-linear-gradient(center bottom, white 85%, #eeeeee 99%);
-    background: url('select2-spinner.gif') no-repeat 100%, -o-linear-gradient(bottom, white 85%, #eeeeee 99%);
-    background: url('select2-spinner.gif') no-repeat 100%, -ms-linear-gradient(top, #ffffff 85%, #eeeeee 99%);
-    background: url('select2-spinner.gif') no-repeat 100%, linear-gradient(top, #ffffff 85%, #eeeeee 99%);
+    background: #fff url('../img/select2-spinner.gif') no-repeat 100%;
+    background: url('../img/select2-spinner.gif') no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
+    background: url('../img/select2-spinner.gif') no-repeat 100%, -webkit-linear-gradient(center bottom, white 85%, #eeeeee 99%);
+    background: url('../img/select2-spinner.gif') no-repeat 100%, -moz-linear-gradient(center bottom, white 85%, #eeeeee 99%);
+    background: url('../img/select2-spinner.gif') no-repeat 100%, -o-linear-gradient(bottom, white 85%, #eeeeee 99%);
+    background: url('../img/select2-spinner.gif') no-repeat 100%, -ms-linear-gradient(top, #ffffff 85%, #eeeeee 99%);
+    background: url('../img/select2-spinner.gif') no-repeat 100%, linear-gradient(top, #ffffff 85%, #eeeeee 99%);
 }
 
 .select2-container-active .select2-choice,
@@ -423,7 +423,7 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-more-results.select2-active {
-    background: #f4f4f4 url('select2-spinner.gif') no-repeat 100%;
+    background: #f4f4f4 url('../img/select2-spinner.gif') no-repeat 100%;
 }
 
 .select2-more-results {
@@ -460,7 +460,7 @@ disabled look for disabled choices in the results dropdown
     padding: 0;
     position: relative;
 
-    border: 1px solid #aaa;
+    border: 1px solid #ccc;
     cursor: text;
     overflow: hidden;
 
@@ -515,7 +515,7 @@ disabled look for disabled choices in the results dropdown
 }
 
 .select2-container-multi .select2-choices .select2-search-field input.select2-active {
-    background: #fff url('select2-spinner.gif') no-repeat 100% !important;
+    background: #fff url('../img/select2-spinner.gif') no-repeat 100% !important;
 }
 
 .select2-default {
@@ -577,7 +577,7 @@ disabled look for disabled choices in the results dropdown
 
     font-size: 1px;
     outline: none;
-    background: url('select2.png') right top no-repeat;
+    background: url('../img/select2.png') right top no-repeat;
 }
 
 .select2-container-multi .select2-search-choice-close {
@@ -644,7 +644,7 @@ disabled look for disabled choices in the results dropdown
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi)  {
   .select2-search input, .select2-search-choice-close, .select2-container .select2-choice abbr, .select2-container .select2-choice div b {
-      background-image: url('select2x2.png') !important;
+      background-image: url('../img/select2x2.png') !important;
       background-repeat: no-repeat !important;
       background-size: 60px 40px !important;
   }
