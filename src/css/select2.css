@@ -25,11 +25,14 @@ Version: @@ver@@ Timestamp: @@timestamp@@
      -moz-box-sizing: border-box; /* firefox */
       -ms-box-sizing: border-box; /* ie */
           box-sizing: border-box; /* css3 */
+          border: solid 1px #CCC;
+          margin-bottom: 1em;
+          
 }
 
 .select2-container .select2-choice {
     display: block;
-    height: 31px;
+    height: 30px;
     padding: 0 0 0 8px;
     overflow: hidden;
     position: relative;

@@ -121,7 +121,7 @@ class ParentChild extends CActiveRecord {
             array('childFirstName, childLastName,user_id', 'required'),
             array('child_id', 'numerical', 'integerOnly' => true),
             array('user_id', 'length', 'max' => 11),
-            array('childFirstname,childLastname,child_id', 'length', 'max' => 255),
+            array('childFirstName,childLastName,child_id', 'length', 'max' => 255),
             array('id, user_id, child_id', 'safe', 'on' => 'search'),
         );
     }
