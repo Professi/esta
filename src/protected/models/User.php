@@ -574,4 +574,14 @@ class User extends CActiveRecord {
         return $password;
     }
 
+    public function getRolePermission() {
+        if (Yii::app()->user->checkAccess('0')) {
+            return array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung', '0' => 'Administrator');
+        } else if (Yii::app()->user->checkAccessNotAdmin('1') && $this->id == Yii::app()->user->getId()) {
+            return array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung');
+        } else {
+            return array('3' => 'Eltern', '2' => 'Lehrer');
+        }
+    }
+
 }

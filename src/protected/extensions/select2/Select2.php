@@ -79,17 +79,17 @@ class Select2 extends CInputWidget {
 
         if (YII_DEBUG) {
             $cs->registerScriptFile($this->assetsDir . '/select2.js', CClientScript::POS_END);
-            //  $cs->registerCssFile($this->assetsDir . '/select2.css');
+         //     $cs->registerCssFile($this->assetsDir . '/select2.css');
         } else {
             $cs->registerScriptFile($this->assetsDir . '/select2.min.js', CClientScript::POS_END);
-            //      $cs->registerCssFile($this->assetsDir . '/select2.min.css');
+          //        $cs->registerCssFile($this->assetsDir . '/select2.min.css');
         }
 
         $lang = strtoupper(str_replace('_', '-', Yii::app()->language));
         $lang[0] = strtolower($lang[0]);
         $lang[1] = strtolower($lang[1]);
 
-        $cs->registerScriptFile($this->assetsDir . '/select2_locale_' . $lang . '.js');
+        $cs->registerScriptFile($this->assetsDir . '/select2_locale_' . $lang . '.js', CClientScript::POS_END);
 
         $settings = CJavaScript::encode($this->settings);
         $cs->registerScript("{$id}_select2", "$('#{$id}').select2({$settings});");
