@@ -180,8 +180,8 @@ class UserController extends Controller {
                 $fp = fopen($file->tempName, 'r');
                 $msg = "";
                 if ($fp) {
-                    if(!$model->createTeachers($fp,$msg)) {
-                        Yii::app()->user->setFlash('failMsg',$msg);
+                    if (!$model->createTeachers($fp, $msg)) {
+                        Yii::app()->user->setFlash('failMsg', $msg);
                     }
                     fclose($fp);
                 }
@@ -280,13 +280,13 @@ class UserController extends Controller {
             $model = new User;
             if (isset($_POST['User'])) {
                 $model->setAttributes($_POST['User']);
-                if (Yii::app()->params['allowGroups'] && isset($_POST['User']['group'])) {
-                    $model->group_id = $_POST['User']['group'];
+                if (Yii::app()->params['allowGroups'] && isset($_POST['User']['groups'])) {
+                    $model->groups = $_POST['User']['groups'];
                 }
                 if ($model->save()) {
                     if (Yii::app()->user->checkAccess('1')) {
                         Yii::app()->user->setFlash("success", "Benutzer wurde erstellt.");
-                        $this->redirect(array('user/admin'));
+                        //        $this->redirect(array('user/admin'));
                     } else {
                         Yii::app()->user->setFlash('success', "Sie konnten sich erfolgreich registrieren. Sie erhalten nun eine E-Mail mit der Sie Ihren Account aktivieren können.");
                         $mail = new Mail();
@@ -317,10 +317,14 @@ class UserController extends Controller {
             $model->password_repeat = '';
             if (isset($_POST['User'])) {
                 $model->setAttributes($_POST['User']);
+                if (Yii::app()->params['allowGroups'] && isset($_POST['User']['groups'])) {
+                    $model->groups = $_POST['User']['groups'];
+                }
+
                 if ($model->save()) {
                     if (Yii::app()->user->checkAccess('1')) {
                         Yii::app()->user->setFlash("success", "Benutzer wurde aktualisiert.");
-                        $this->redirect(array('view&id=' . $id), false);
+                        //    $this->redirect(array('view&id=' . $id), false);
                     } else {
                         Yii::app()->user->setFlash('success', 'Ihr Benutzerkonto wurde aktualisiert.');
                         $this->redirect(array('account'));

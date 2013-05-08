@@ -64,7 +64,7 @@ class Date extends CActiveRecord {
             array('date', 'date', 'format' => 'dd.MM.yyyy'),
             array('begin,end', 'date', 'format' => 'H:m'),
             array('durationPerAppointment', 'date', 'format' => 'm'),
-            array('id, date, begin, end, durationPerAppointment', 'safe', 'on' => 'search'),
+            array('id, date, begin, end, durationPerAppointment,groups', 'safe', 'on' => 'search'),
         );
     }
 
@@ -73,10 +73,7 @@ class Date extends CActiveRecord {
      * @return array relational rules.
      */
     public function relations() {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
-            //   'appointments' => array(self::HAS_MANY, 'Appointment', 'date_id'),
             'groups' => array(self::MANY_MANY, 'Group', 'date_has_group(date_id,group_id)'),
         );
     }
@@ -171,17 +168,17 @@ class Date extends CActiveRecord {
                 }
             }
         } else {
-            if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
-                foreach ($this->groups as $group) {
-                    if (DateHasGroup::model()->countByAttributes(array('date_id' => $this->id, 'group_id' => $group)) == '0') {
-                        $this->createDateHasGroup($group);
+            if (Yii::app()->params['allowGroups']) {
+                DateHasGroup::model()->deleteAllByAttributes(array('date_id' => $this->id));
+                if (!empty($this->groups)) {
+                    foreach ($this->groups as $group) {
+                        if (DateHasGroup::model()->countByAttributes(array('date_id' => $this->id, 'group_id' => $group)) == '0') {
+                            $this->createDateHasGroup($group);
+                        }
                     }
                 }
-            } else if (Yii::app()->params['allowGroups'] && empty($this->groups)) {
-                DateHasGroup::model()->deleteAllByAttributes(array('date_id' => $this->id));
             }
         }
-
         return parent::afterSave();
     }
 
@@ -205,6 +202,10 @@ class Date extends CActiveRecord {
                 $dateTime->delete();
             }
         }
+        if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
+            DateHasGroup::model()->deleteAllByAttributes(array('user_id' => $this->id));
+        }
+
         return parent::beforeDelete();
     }
 

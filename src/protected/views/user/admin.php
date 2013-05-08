@@ -59,7 +59,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
         /**
          * @todo Gruppen anzeigen
          */
-        array('name' => 'group', 'value' => 'User::getGroupname($data->group)', 'visible' => Yii::app()->params['allowGroups']),
         array('name' => 'state',
             'value' => 'User::getFormattedState($data->state)',
             'filter' => CHtml::listData(

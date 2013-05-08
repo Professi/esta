@@ -38,7 +38,7 @@
  * @property Appointment[] $appointments
  * @property ParentChild[] $parentChildren
  * @property UserRole[] $userRole
- * @property Group $group
+ * @property Group[] $groups
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
 class User extends CActiveRecord {
@@ -60,7 +60,6 @@ class User extends CActiveRecord {
 
     /** @var string TAN Nummer bei Registrierung */
     public $tan = null;
-    public $group_id = null;
 
     /** @var array Array mit den Rollennamen */
     static private $a_roleName = null;
@@ -110,7 +109,7 @@ class User extends CActiveRecord {
             array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat', 'allowEmpty' => !Yii::app()->params['installed']),
             array('password_repeat', 'safe'), //allow bulk assignment
             array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements() || !Yii::app()->params['installed']),
-            array('id, username, firstname, state, lastname, email, role,roleName,stateName,title,group,group_id', 'safe', 'on' => 'search'),
+            array('id,groups,username, firstname, state, lastname, email, role,roleName,stateName,title', 'safe', 'on' => 'search'),
         );
     }
 
@@ -123,7 +122,7 @@ class User extends CActiveRecord {
             'appointments' => array(self::HAS_MANY, 'Appointment', 'user_id'),
             'parentChildren' => array(self::HAS_MANY, 'ParentChild', 'user_id'),
             'userRole' => array(self::HAS_ONE, 'UserRole', 'user_id'),
-            'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
+            'groups' => array(self::MANY_MANY, 'Group', 'user_has_group(user_id,group_id)'),
         );
     }
 
@@ -159,7 +158,7 @@ class User extends CActiveRecord {
             'roleName' => 'Rolle',
             'verifyCode' => 'Sicherheitscode',
             'title' => 'Titel',
-            'group' => 'Gruppe',
+            'groups' => 'Gruppen',
             'badLogins' => 'Ungültige Anmeldeversuche'
         );
     }
@@ -170,7 +169,7 @@ class User extends CActiveRecord {
      */
     public function search() {
         $criteria = new CDbCriteria();
-        $criteria->with = array('userRole', 'group');
+        $criteria->with = array('userRole');
         $criteria->together = true;
         $criteria->compare('firstname', $this->firstname, true);
         $criteria->compare('lastname', $this->lastname, true);
@@ -180,7 +179,6 @@ class User extends CActiveRecord {
         $criteria->compare('email', $this->email, true);
         $criteria->compare('state', $this->state, true);
         $criteria->compare('title', $this->title, true);
-        $criteria->compare('group.groupname', $this->group, true);
         $criteria->compare('userRole.role_id', $this->role, true);
         $sort = new CSort;
         $sort->attributes = array(
@@ -206,9 +204,6 @@ class User extends CActiveRecord {
             'role' => array(
                 'asc' => 'userRole.role_id',
                 'desc' => 'userRole.role_id desc'),
-            'group' => array(
-                'asc' => 'group.groupname',
-                'desc' => 'group.groupname desc'),
         );
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -344,12 +339,26 @@ class User extends CActiveRecord {
                 $userRole->role_id = Role::model()->findByAttributes(array('id' => $this->role))->id;
             }
             $userRole->save();
+             if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
+                foreach ($this->groups as $group) {
+                    $this->createUserHasGroup($group);
+                }
+            }
         } else {
             $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
             $userRole->role_id = $this->role;
             $userRole->save();
+            if (Yii::app()->params['allowGroups']) {
+                UserHasGroup::model()->deleteAllByAttributes(array('user_id' => $this->id));
+                if (!empty($this->groups)) {
+                    foreach ($this->groups as $group) {
+                        if (UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $group)) == '0') {
+                            $this->createUserHasGroup($group);
+                        }
+                    }
+                }
+            }
         }
-
         return parent::afterSave();
     }
 
@@ -375,6 +384,10 @@ class User extends CActiveRecord {
             ParentChild::model()->deleteByPk($a_parentChild[$i]->id);
             Child::model()->deleteByPk($childId);
         }
+        if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
+            UserHasGroup::model()->deleteAllByAttributes(array('user_id' => $this->id));
+        }
+
         return parent::beforeDelete();
     }
 
@@ -475,10 +488,30 @@ class User extends CActiveRecord {
      * @param Group $group
      * @return String
      */
-    static public function getGroupname($group) {
+    private function getGroupname($group) {
         $rc = '';
         if (!is_null($group)) {
             $rc = $group->groupname;
+        }
+        return $rc;
+    }
+
+    /**
+     * Liefert alle Gruppennamen in einem String
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return string
+     */
+    public function getGroupnames() {
+        $rc = "";
+        $first = true;
+        if (!empty($this->groups)) {
+            foreach ($this->groups as $group) {
+                if ($first) {
+                    $rc .= $this->getGroupname($group);
+                } else {
+                    $rc .= "," . $this->getGroupname($group);
+                }
+            }
         }
         return $rc;
     }
@@ -496,27 +529,52 @@ class User extends CActiveRecord {
         if ($this->getError('password') == Yii::t('yii', '{attribute} must be repeated exactly.', $params)) {
             $this->addError('password_repeat', "Passwörter stimmen nicht überein.");
         }
-        if (($rc && Yii::app()->user->isGuest && $this->isNewRecord) || ($rc && !Yii::app()->params['installed'])) {
-            $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
-            if ($tan !== null) {
-                if ($tan->used) {
-                    $this->addError('tan', 'Leider wurde Ihre TAN schon benutzt.');
-                    $rc = false;
-                } else {
-                    if ($tan->group != null && is_int($tan->group)) {
-                        $this->group = $tan->group;
-                    } else {
-                        $this->group = null;
-                    }
-                }
+        if (($rc && Yii::app()->user->isGuest && $this->isNewRecord) || ($rc && Yii::app()->params['installed'])) {
+            $rc = $this->addWithTanNewGroup($this->tan);
+        }
+        return $rc;
+    }
+
+    /**
+     * Mit einer TAN wird der Benutzer zu einer Gruppe hinzugefügt
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param type $tanNo
+     * @return boolean
+     */
+    public function addWithTanNewGroup($tanNo) {
+        $rc = true;
+        $tan = Tan::model()->findByAttributes(array('tan' => $tanNo));
+        if ($tan !== null) {
+            if ($tan->used) {
+                $this->addError('tan', 'Leider wurde Ihre TAN schon benutzt.');
+                $rc = false;
             } else {
-                if (Yii::app()->params['installed']) {
-                    $this->addError('tan', 'Leider konnte die eingegebene TAN nicht identifiziert werden.');
-                    $rc = false;
+                if (Yii::app()->params['allowGroups'] && $tan->group != null && is_int($tan->group_id)) {
+                    if (!UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $tan->group_id)) > '0')
+                        $this->createUserHasGroup($tan->group_id);
+                } else {
+                    $this->addError('tan', 'Sie wurden bereits der Gruppe die bei dieser TAN hinterlegt ist, zugewiesen.');
                 }
+            }
+        } else {
+            if (Yii::app()->params['installed']) {
+                $this->addError('tan', 'Leider konnte die eingegebene TAN nicht identifiziert werden.');
+                $rc = false;
             }
         }
         return $rc;
+    }
+
+    /**
+     * Erstellt einen Datensatz in UserHasGroup
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param UserHasGroup $group
+     */
+    public function createUserHasGroup($group) {
+        $userHasGroup = new UserHasGroup();
+        $userHasGroup->user_id = $this->id;
+        $userHasGroup->group_id = $group;
+        $userHasGroup->save();
     }
 
     /**

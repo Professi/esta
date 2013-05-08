@@ -69,9 +69,9 @@ $this->menu = array(
                 array('label' => $model->getAttributeLabel('badLogins'),
                     'value' => $model->badLogins == null ? '0' : $model->badLogins,
                 ),
-                array('label' => $model->getAttributeLabel('group'),
-                    'value' => User::getGroupname($model->group),
-                    'visible' => $model->role == '3' && Yii::app()->params['allowGroups'] && $model->group != null,
+                array('label' => $model->getAttributeLabel('groups'),
+                    'value' => $model->getGroupnames(),
+                    'visible' => $model->role == '3' && Yii::app()->params['allowGroups'] && !empty($model->group),
                 ),
             ),
         ));

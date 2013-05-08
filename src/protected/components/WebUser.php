@@ -92,6 +92,10 @@ class WebUser extends CWebUser {
         return $this->isGuest;
     }
 
+    public function getGroups() {
+        return $this->getState('groups');
+    }
+
 }
 
 ?>

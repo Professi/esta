@@ -78,7 +78,7 @@ class ConfigForm extends CFormModel {
                 'databaseHost,databaseName,databaseUsername,databasePassword,databaseManagementSystem,logoPath,textHeader,language,appName'
                 , 'required'),
             array('fromMailHost,adminEmail,schoolEmail', 'email'),
-            array('language','length','min'=>2),
+            array('language', 'length', 'min' => 2),
             array('databaseManagementSystem', 'length', 'min' => 3),
             array('emailHost,fromMail,dateFormat,appName', 'length', 'min' => 4),
             array('dateTimeFormat', 'length', 'min' => 5),
@@ -142,8 +142,8 @@ class ConfigForm extends CFormModel {
             'databaseManagementSystem' => 'Datenbankmanagementsystem',
             'logoPath' => 'Pfad des Schullogos in der Anwendung',
             'textHeader' => 'Headertext',
-            'language'=>'Sprache',
-            'appName'=>'Anwendungsname',
+            'language' => 'Sprache',
+            'appName' => 'Anwendungsname',
         );
     }
 
@@ -186,7 +186,6 @@ class ConfigForm extends CFormModel {
             'badLogins' => 'tinyint(4)',
             'bannedUntil' => 'bigint DEFAULT "0"', //maybe Int
             'password' => 'string',
-            'group_id' => 'integer NULL',
                 ), 'DEFAULT CHARSET=utf8');
         $command->createTable('user_role', array(
             'id' => 'pk',
@@ -217,6 +216,11 @@ class ConfigForm extends CFormModel {
             'date_id' => 'integer',
             'group_id' => 'integer',
                 ), 'DEFAULT CHARSET=utf8');
+        $command->createTable('user_has_group', array(
+            'id' => 'pk',
+            'user_id' => 'integer',
+            'group_id' => 'integer',
+                ), 'DEFAULT CHARSET=utf8');
         $command->createTable('dateAndTime', array(
             'id' => 'pk',
             'time' => 'time NOT NULL',
@@ -239,7 +243,6 @@ class ConfigForm extends CFormModel {
     private function createIndices($command) {
         $command->createIndex('idx_group_name', 'group', 'groupname', true);
         $command->createIndex('idx_role_title', 'role', 'title', true);
-        $command->createIndex('idx_date_has_group', 'date_has_group', 'date_id,group_id', true);
         $command->createIndex('idx_blockedAppointment', 'blockedAppointment', 'dateAndTime_id,user_id', true);
         $command->createIndex('idx_user_id', 'user', 'id');
         $command->createIndex('idx_role_id', 'role', 'id');
@@ -247,7 +250,10 @@ class ConfigForm extends CFormModel {
         $command->createIndex('idx_group_id', 'group', 'id');
         $command->createIndex('idx_child_id', 'child', 'id');
         $command->createIndex('idx_ parent_child_id', 'parent_child', 'id');
-        $command->createIndex('idx_date_has_group_id', 'date_has_group', 'id');
+        $command->createIndex('idx_date_has_group1', 'date_has_group', 'date_id,group_id', true);
+        $command->createIndex('idx_date_has_group_id2', 'date_has_group', 'id');
+        $command->createIndex('idx_user_has_group1', 'user_has_group', 'user_id,group_id', true);
+        $command->createIndex('idx_user_has_group_id2', 'user_has_group', 'id');
         $command->createIndex('idx_date_id', 'date', 'id');
         $command->createIndex('idx_dateAndTime_date_id_time', 'dateAndTime', 'time,date_id', true);
         $command->createIndex('idx_dateAndTime_id', 'dateAndTime', 'id');
@@ -256,7 +262,6 @@ class ConfigForm extends CFormModel {
     }
 
     private function addForeignKeys($command) {
-        $command->addForeignKey('user_fk1', 'user', 'group_id', 'group', 'id', 'SET NULL', 'CASCADE');
         $command->addForeignKey('user_role_fk1', 'user_role', 'role_id', 'role', 'id', 'NO ACTION', 'NO ACTION');
         $command->addForeignKey('user_role_fk2', 'user_role', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
         $command->addForeignKey('tan_fk1', 'tan', 'group_id', 'group', 'id', 'SET NULL', 'NO ACTION');
@@ -264,6 +269,8 @@ class ConfigForm extends CFormModel {
         $command->addForeignKey('parent_child_fk2', 'parent_child', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
         $command->addForeignKey('date_has_group_fk1', 'date_has_group', 'date_id', 'date', 'id', 'CASCADE', 'NO ACTION');
         $command->addForeignKey('date_has_group_fk2', 'date_has_group', 'group_id', 'group', 'id', 'CASCADE', 'NO ACTION');
+        $command->addForeignKey('user_has_group_fk1', 'user_has_group', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
+        $command->addForeignKey('user_has_group_fk2', 'user_has_group', 'group_id', 'group', 'id', 'CASCADE', 'NO ACTION');
         $command->addForeignKey('dateAndTime_fk1', 'dateAndTime', 'date_id', 'date', 'id', 'CASCADE', 'NO ACTION');
         $command->addForeignKey('appointment_fk1', 'appointment', 'parent_child_id', 'parent_child', 'id', 'CASCADE', 'NO ACTION');
         $command->addForeignKey('appointment_fk2', 'appointment', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');

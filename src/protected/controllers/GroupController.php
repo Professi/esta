@@ -117,18 +117,24 @@ class GroupController extends Controller {
      */
     public function actionAdmin() {
         $model = new Group('search');
-        $relations = new DateHasGroup('search');
-        $relations->unsetAttributes();
+        $dateHasGroup = new DateHasGroup('search');
+        $userHasGroup = new \UserHasGroup('search');
+        $dateHasGroup->unsetAttributes();
+        $userHasGroup->unsetAttributes();
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Group'])) {
             $model->attributes = $_GET['Group'];
         }
         if (isset($_GET['DateHasGroup'])) {
-            $relations->attributes = $_GET['DateHasGroup'];
+            $dateHasGroup->attributes = $_GET['DateHasGroup'];
+        }
+                if (isset($_GET['UserHasGroup'])) {
+            $userHasGroup->attributes = $_GET['UserHasGroup'];
         }
         $this->render('admin', array(
             'model' => $model,
-            'dateHasGroup' => $relations,
+            'dateHasGroup' => $dateHasGroup,
+            'userHasGroup' => $userHasGroup,
         ));
     }
 

@@ -15,9 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-$file = dirname(__FILE__) . '/params.inc';
-$content = file_get_contents($file);
-$arr = unserialize(base64_decode($content));
+$arr = unserialize(base64_decode(file_get_contents(dirname(__FILE__) . '/params.inc')));
 $array2 = array(
     'installed' => false,
     'appName'=>'Elternsprechtag',
@@ -68,5 +66,6 @@ if (empty($arr)) {
     return $array2;
 } else {
     return CMap::mergeArray($array2, $arr);
+  // return array_replace($array2, $arr);
 }
 ?>

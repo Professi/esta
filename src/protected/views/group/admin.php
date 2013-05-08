@@ -17,6 +17,7 @@
 /* @var $this GroupController */
 /* @var $model Group */
 /* @var $dateHasGroup DateHasGroup */
+/* @var $userHasGroup UserHasGroup */
 $this->menu = array(
     array('label' => 'Gruppe erstellen', 'url' => array('create')),
 );
@@ -26,27 +27,38 @@ $this->menu = array(
         <h2 class="text-center">Gruppenverwaltung</h2>
     </div>
 </div>
-<?php
-$this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'group-grid',
-    'dataProvider' => $model->search(),
-    'columns' => array(
-        'groupname',
-        array(
-            'class' => 'CustomButtonColumn',
-            'template' => '{update} {delete}',
+<div>
+    <?php
+    $this->widget('zii.widgets.grid.CGridView', array(
+        'id' => 'group-grid',
+        'dataProvider' => $model->search(),
+        'columns' => array(
+            'groupname',
+            array(
+                'class' => 'CustomButtonColumn',
+                'template' => '{update} {delete}',
+            ),
         ),
-    ),
-));
+    ));
 
-$this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'dateHasGroup-grid',
-    'dataProvider' => $dateHasGroup->search(),
-    'columns' => array(
-        array('name' => 'date', 'value' => 'date(Yii::app()->params["dateFormat"], strtotime($data->date->date))'),
-        array('name' => 'group', 'value' => '$data->group->groupname'),
-    )
-));
+    $this->widget('zii.widgets.grid.CGridView', array(
+        'id' => 'dateHasGroup-grid',
+        'dataProvider' => $dateHasGroup->search(),
+        'columns' => array(
+            array('name' => 'date', 'value' => 'date(Yii::app()->params["dateFormat"], strtotime($data->date->date))'),
+            array('name' => 'group', 'value' => '$data->group->groupname'),
+        )
+    ));
+
+    $this->widget('zii.widgets.grid.CGridView', array(
+        'id' => 'userHasGroup-grid',
+        'dataProvider' => $userHasGroup->search(),
+        'columns' => array(
+            array('name' => 'user', 'value' => '$data->firstname . " " . $data->lastname))'),
+            array('name' => 'group', 'value' => '$data->group->groupname'),
+        )
+    ));
+
 
 
 

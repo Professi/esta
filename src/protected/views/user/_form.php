@@ -134,19 +134,25 @@ $form = $this->beginWidget('CActiveForm', array(
     if (Yii::app()->params['allowGroups'] && ($model->role == 3 || $model->isNewRecord) && !Yii::app()->user->isGuest()) {
         $groups = Group::model()->getAllGroups('DESC');
         if (!empty($groups)) {
-            if ($model->isNewRecord) {
-                $model->group = '';
-            }
             ?>
             <div class="row collapse">
                 <div class="three columns">
-                    <span class="prefix"><?php echo $form->label($model, 'group'); ?> </span>
+                    <span class="prefix"><?php echo $form->label($model, 'groups'); ?> </span>
                 </div>
                 <div class="nine columns">
                     <div class="styled-select">
                         <?php
-                        echo Select2::activeDropDownList($model, 'group', $groups, array('prompt' => 'Hier können Sie eine Gruppe auswählen...', 'allowClear' => true,));
-                        echo $form->error($model, 'group');
+                        if (isset($_POST['User']['groups'])) {
+                            $model->groups = $_POST['User']['groups'];
+                        }
+                        echo Select2::activeMultiSelect($model, 'groups', $groups, array(
+                            'placeholder' => 'Hier können Sie mehrere Gruppen auswählen...',
+                            'id' => 'groups-select',
+                            'select2Options' => array(
+                                'allowClear' => true,
+                            ),
+                        ));
+                        echo $form->error($model, 'groups');
                         ?>
                     </div>
                 </div>
@@ -155,9 +161,8 @@ $form = $this->beginWidget('CActiveForm', array(
         }
     }
 }
-?>
-
-<?php if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) { ?>
+if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) {
+    ?>
     <div class="row collapse">
         <div class="three columns">
             <span class="prefix"><?php echo $form->label($model, 'tan'); ?></span>
