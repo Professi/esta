@@ -34,8 +34,8 @@ if ($params['installed']) {
 }
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..', //nicht ändern
-    'name' => 'Elternsprechtagsanwendung', //entsprechend den eigenen Bedürfnissen anpassen
-    'language' => 'de', //Sprache
+    'name' => $params['appName'], //entsprechend den eigenen Bedürfnissen anpassen
+    'language' => $params['language'], //Sprache
     'preload' => array('log'), //Logkomponente - nicht ändern
     'import' => array(//nicht ändern
         'application.models.*', //nicht ändern
@@ -74,6 +74,7 @@ return array(
                 'styles.css' => false, //nicht ändern
                 'pager.css' => false, //nicht ändern
                 'default.css' => false, //nicht ändern
+       //         'jquery-ui.css' => false,
             ),
         ),
         'urlManager' => array(//nicht ändern

@@ -234,5 +234,5 @@ class DateController extends Controller {
         }
         return preg_replace($pattern, $replace, $dateString);
     }
-
+    
 }

@@ -58,6 +58,8 @@ class ConfigForm extends CFormModel {
     public $databaseManagementSystem;
     public $logoPath;
     public $textHeader;
+    public $appName;
+    public $language;
 
     public function init() {
         $this->attributes = Yii::app()->params->toArray();
@@ -73,11 +75,12 @@ class ConfigForm extends CFormModel {
                 'allowBlockingAppointments,appointmentBlocksPerDate,' .
                 'lengthReasonAppointmentBlocked,schoolStreet,schoolCity,' .
                 'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,lockRegistration,allowGroups,' .
-                'databaseHost,databaseName,databaseUsername,databasePassword,databaseManagementSystem,logoPath,textHeader'
+                'databaseHost,databaseName,databaseUsername,databasePassword,databaseManagementSystem,logoPath,textHeader,language,appName'
                 , 'required'),
             array('fromMailHost,adminEmail,schoolEmail', 'email'),
+            array('language','length','min'=>2),
             array('databaseManagementSystem', 'length', 'min' => 3),
-            array('emailHost,fromMail,dateFormat', 'length', 'min' => 4),
+            array('emailHost,fromMail,dateFormat,appName', 'length', 'min' => 4),
             array('dateTimeFormat', 'length', 'min' => 5),
             array('defaultTeacherPassword,databasePassword', 'length', 'min' => 8),
             array('salt', 'length', 'min' => 16, 'max' => 64),
@@ -139,6 +142,8 @@ class ConfigForm extends CFormModel {
             'databaseManagementSystem' => 'Datenbankmanagementsystem',
             'logoPath' => 'Pfad des Schullogos in der Anwendung',
             'textHeader' => 'Headertext',
+            'language'=>'Sprache',
+            'appName'=>'Anwendungsname',
         );
     }
 

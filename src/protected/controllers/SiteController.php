@@ -105,7 +105,7 @@ class SiteController extends Controller {
                              Yii::app()->user->setFlash('failMsg', 'Verbindung zur Datenbank konnte nicht hergestellt werden.');
                         }
                     } else {
-                        Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert.');
+                        Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert. Die Einstellungen werden bei dem nächsten Seitenaufruf verwendet.');
                     }
                 }
             } $this->render('config', array(

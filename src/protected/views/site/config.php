@@ -54,6 +54,28 @@ Yii::app()->clientScript->registerPackage('jquery');
             <legend>Allgemein</legend>
             <div class="row collapse">
                 <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'appName'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'appName');
+                    echo $form->error($model, 'appName');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'language'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'language');
+                    echo $form->error($model, 'language');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'adminEmail'); ?></span>
                 </div>
                 <div class="four columns">
@@ -151,7 +173,7 @@ Yii::app()->clientScript->registerPackage('jquery');
                     ?>
                 </div>
             </div>
-                        <div class="row collapse">
+            <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'textHeader'); ?></span>
                 </div>

@@ -20,6 +20,7 @@ $content = file_get_contents($file);
 $arr = unserialize(base64_decode($content));
 $array2 = array(
     'installed' => false,
+    'appName'=>'Elternsprechtag',
     'adminEmail' => 'c.ehringfeld@t-online.de', //Administrator E-Mail Adresse
     'salt' => 'e9HOiJFfDhyvcBMin5G8CBTR98wK', //der Applikationssalt sollte mindestens 30 Zeichen lang sein und nur aus alphanumerischen Zeichen bestehen 
     'dateTimeFormat' => 'd.m.Y H:i', //Datumsformat -  muss nicht geändert werden
@@ -61,10 +62,11 @@ $array2 = array(
     'databaseManagementSystem' => 'mysql',
     'logoPath' => '/img/logo.png',
     'textHeader' => 'der',
+    'language'=>'de',
 );
 if (empty($arr)) {
     return $array2;
 } else {
-    return array_replace($array2, $arr);
+    return CMap::mergeArray($array2, $arr);
 }
 ?>

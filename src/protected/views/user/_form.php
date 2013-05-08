@@ -109,8 +109,7 @@ $form = $this->beginWidget('CActiveForm', array(
         <div class="nine columns">
             <div class="styled-select">
                 <?php
-                echo Select2::activeDropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt'), array('required' => 'required', 'select2Options' => array(
-                        'allowClear' => "false")));
+                echo Select2::activeDropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt'));
                 echo $form->error($model, 'state');
                 ?>
             </div>

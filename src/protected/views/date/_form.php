@@ -60,7 +60,16 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
     <div class="eight columns">
         <?php
-        echo $form->textField($model, 'begin', $a_disabled);
+        $this->widget(
+                'ext.jui.EJuiDateTimePicker', array(
+            'model' => $model,
+            'attribute' => 'begin',
+            'mode' => 'time',
+            'options' => $a_disabled
+                )
+        );
+
+
         echo $form->error($model, 'begin');
         ?>
     </div>
@@ -74,7 +83,14 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
     <div class="eight columns">
         <?php
-        echo $form->textField($model, 'end', $a_disabled);
+        $this->widget(
+                'ext.jui.EJuiDateTimePicker', array(
+            'model' => $model,
+            'attribute' => 'end',
+            'mode' => 'time',
+            'options' => $a_disabled
+                )
+        );
         echo $form->error($model, 'end');
         ?>
     </div>
@@ -108,7 +124,7 @@ $form = $this->beginWidget('CActiveForm', array(
                         'nextText' => '',
                         'prevText' => '',
                     ),
-                    'language' => 'de',
+                    'language' => Yii::app()->params['language'],
                     'skin' => false,
                     'cssFile' => false,
                     'htmlOptions' => array(
@@ -118,7 +134,17 @@ $form = $this->beginWidget('CActiveForm', array(
                 ?>
             </div>
             <div class="six columns" id="date-form-fix-right">
-                <input type="text" id="time_lockAt" value="<?php echo $timeLabel; ?>">
+                <?php
+                $this->widget(
+                        'ext.jui.EJuiDateTimePicker', array(
+                    'id' => "time_lockAt",
+                    'name' => "time_lockAt",
+                    'value' => $timeLabel,
+                    'mode' => 'time',
+                    'options' => $a_disabled
+                        )
+                );
+                ?>
             </div>
         </div>
         <?php
