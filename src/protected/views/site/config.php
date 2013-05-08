@@ -102,7 +102,7 @@ Yii::app()->clientScript->registerPackage('jquery');
                 </div>
                 <div class="four columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'randomTeacherPassword', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'randomTeacherPassword', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'randomTeacherPassword');
                     ?>
                 </div>
@@ -124,7 +124,7 @@ Yii::app()->clientScript->registerPackage('jquery');
                 </div>
                 <div class="four columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'lockRegistration', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'lockRegistration', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'lockRegistration');
                     ?>
                 </div>
@@ -135,8 +135,30 @@ Yii::app()->clientScript->registerPackage('jquery');
                 </div>
                 <div class="four columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'allowGroups', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'allowGroups', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'allowGroups');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'logoPath'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'logoPath');
+                    echo $form->error($model, 'logoPath');
+                    ?>
+                </div>
+            </div>
+                        <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'textHeader'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'textHeader');
+                    echo $form->error($model, 'textHeader');
                     ?>
                 </div>
             </div>
@@ -160,7 +182,7 @@ Yii::app()->clientScript->registerPackage('jquery');
                 </div>
                 <div class="four columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'databaseManagementSystem', array('mysql' => 'MySQL', 'pgsql' => 'PostgreSQL', 'oci' => 'Oracle Datenbank', 'mssql' => 'Microsoft SQL Server'));
+                    echo Select2::activeDropDownList($model, 'databaseManagementSystem', array('mysql' => 'MySQL', 'pgsql' => 'PostgreSQL(nicht getestet)', 'oci' => 'Oracle Datenbank(nicht getestet)', 'mssql' => 'Microsoft SQL Server(nicht getestet)'));
                     echo $form->error($model, 'databaseManagementSystem');
                     ?>
                 </div>
@@ -284,7 +306,7 @@ Yii::app()->clientScript->registerPackage('jquery');
                 </div>
                 <div class="four columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'useSchoolEmailForContactForm', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'useSchoolEmailForContactForm', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'useSchoolEmailForContactForm');
                     ?>
                 </div>
@@ -334,7 +356,7 @@ Yii::app()->clientScript->registerPackage('jquery');
                 </div>
                 <div class="four columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'mailsActivated', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'mailsActivated', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'mailsActivated');
                     ?>
                 </div>
@@ -403,7 +425,7 @@ Yii::app()->clientScript->registerPackage('jquery');
                 </div>
                 <div class="four columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'banUsers', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'banUsers', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'banUsers');
                     ?>
                 </div>
@@ -439,7 +461,7 @@ Yii::app()->clientScript->registerPackage('jquery');
                 </div>
                 <div class="four columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'allowBlockingAppointments', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'allowBlockingAppointments', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'allowBlockingAppointments');
                     ?>
                 </div>
@@ -450,7 +472,7 @@ Yii::app()->clientScript->registerPackage('jquery');
                 </div>
                 <div class="four columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'allowBlockingOnlyForManagement', array('1' => 'Ja', '0' => 'Nein'), $optionsBlocks);
+                    echo Select2::activeDropDownList($model, 'allowBlockingOnlyForManagement', array('1' => 'Ja', '0' => 'Nein'), $optionsBlocks);
                     echo $form->error($model, 'allowBlockingOnlyForManagement');
                     ?>
                 </div>

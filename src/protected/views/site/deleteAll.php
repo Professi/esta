@@ -41,7 +41,7 @@
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'tans', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'tans', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'tans');
                     ?>
                 </div>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'appointments', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'appointments', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'appointments');
                     ?>
                 </div>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'teachers', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'teachers', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'teachers');
                     ?>
                 </div>
@@ -74,7 +74,7 @@
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'dates', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'dates', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'dates');
                     ?>
                 </div>
@@ -85,7 +85,7 @@
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'management', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'management', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'management');
                     ?>
                 </div>
@@ -96,7 +96,7 @@
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'childs', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'childs', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'childs');
                     ?>
                 </div>
@@ -107,7 +107,7 @@
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'parents', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'parents', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'parents');
                     ?>
                 </div>
@@ -118,7 +118,7 @@
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo $form->dropDownList($model, 'groups', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'groups', array('1' => 'Ja', '0' => 'Nein'));
                     echo $form->error($model, 'groups');
                     ?>
                 </div>

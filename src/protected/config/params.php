@@ -54,11 +54,13 @@ $array2 = array(
     'useSchoolEmailForContactForm' => true,
     'lockRegistration' => false,
     'allowGroups' => true,
-    'databaseHost'=>'localhost',
-    'databaseName'=>'estdb',
+    'databaseHost' => 'localhost',
+    'databaseName' => 'estdb',
     'databaseUsername' => 'estdb',
     'databasePassword' => 'qwertzuiop',
-    'databaseManagementSystem'=>'mysql',
+    'databaseManagementSystem' => 'mysql',
+    'logoPath' => '/img/logo.png',
+    'textHeader' => 'der',
 );
 if (empty($arr)) {
     return $array2;

@@ -56,6 +56,8 @@ class ConfigForm extends CFormModel {
     public $databaseUsername;
     public $databasePassword;
     public $databaseManagementSystem;
+    public $logoPath;
+    public $textHeader;
 
     public function init() {
         $this->attributes = Yii::app()->params->toArray();
@@ -71,7 +73,7 @@ class ConfigForm extends CFormModel {
                 'allowBlockingAppointments,appointmentBlocksPerDate,' .
                 'lengthReasonAppointmentBlocked,schoolStreet,schoolCity,' .
                 'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,lockRegistration,allowGroups,' .
-                'databaseHost,databaseName,databaseUsername,databasePassword,databaseManagementSystem'
+                'databaseHost,databaseName,databaseUsername,databasePassword,databaseManagementSystem,logoPath,textHeader'
                 , 'required'),
             array('fromMailHost,adminEmail,schoolEmail', 'email'),
             array('databaseManagementSystem', 'length', 'min' => 3),
@@ -135,6 +137,8 @@ class ConfigForm extends CFormModel {
             'databaseUsername' => 'Datenbankbenutzername',
             'databasePassword' => 'Datenbankbenutzerpasswort',
             'databaseManagementSystem' => 'Datenbankmanagementsystem',
+            'logoPath' => 'Pfad des Schullogos in der Anwendung',
+            'textHeader' => 'Headertext',
         );
     }
 
@@ -301,7 +305,7 @@ class ConfigForm extends CFormModel {
             $this->addError('databaseHost', 'Die Datenbankverbindung konnte nicht hergestellt werden.');
             $rc = false;
         }
-        
+
         return $rc;
     }
 

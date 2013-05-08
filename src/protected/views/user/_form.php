@@ -109,7 +109,8 @@ $form = $this->beginWidget('CActiveForm', array(
         <div class="nine columns">
             <div class="styled-select">
                 <?php
-                echo $form->dropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt'));
+                echo Select2::activeDropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt'), array('required' => 'required', 'select2Options' => array(
+                        'allowClear' => "false")));
                 echo $form->error($model, 'state');
                 ?>
             </div>
@@ -123,16 +124,8 @@ $form = $this->beginWidget('CActiveForm', array(
         <div class="nine columns">
             <div class="styled-select">
                 <?php
-                if (Yii::app()->user->checkAccess('0')) {
-                    echo $form->dropDownList($model, 'role', array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung', '0' => 'Administrator'));
-                } else {
-                    if ($model->id != Yii::app()->user->getId()) {
-                        echo $form->dropDownList($model, 'role', array('3' => 'Eltern', '2' => 'Lehrer'));
-                    } else {
-                        echo $form->dropDownList($model, 'role', array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung'));
-                    }
-                    echo $form->error($model, 'role');
-                }
+                echo Select2::activeDropDownList($model, 'role', $model->getRolePermission());
+                echo $form->error($model, 'role');
                 ?>
             </div>
         </div>
