@@ -95,7 +95,7 @@
                         <div class="alert-box">
                             <?php echo Yii::app()->user->getFlash('success'); ?>
                         </div>
-                    <?php } else if (Yii::app()->user->hasFlash('failMsg')) { ?>
+                    <?php } if (Yii::app()->user->hasFlash('failMsg')) { ?>
                         <div class="alert-box">
                             <?php echo Yii::app()->user->getFlash('failMsg'); ?>            
                         </div>

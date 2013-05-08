@@ -178,40 +178,15 @@ class UserController extends Controller {
             if ($model->validate() && !empty($_FILES['CsvUpload']['tmp_name']['file'])) {
                 $file = CUploadedFile::getInstance($model, 'file');
                 $fp = fopen($file->tempName, 'r');
+                $msg = "";
                 if ($fp) {
-                    $first = true;
-                    do {
-                        if (!$first && ($line[0] != "Vorname" && !$line[1] != "Nachname" && $line[2] != 'Email')) {
-                            $model = new User();
-                            if ($line[2] != NULL) {
-                                $email = self::encodingString($line[2]);
-                            } else {
-                                $uml = array("Ö" => "Oe", "ö" => "oe", "Ä" => "Ae", "ä" => "ae", "Ü" => "Ue", "ü" => "ue", "ß" => "ss",);
-                                $email = strtolower(substr($model->firstname, 0, 1))
-                                        . '.' . preg_replace("/\s+/", "", strtolower(strtr($model->lastname, $uml))) . '@'
-                                        . Yii::app()->params['teacherMail'];
-                            }
-                            $model->setSomeAttributes($email, self::encodingString($line[1]), self::encodingString($line[0]), 1, 2);
-                            $model->title = self::encodingString($line[3]);
-                            if (Yii::app()->params['randomTeacherPassword']) {
-                                $passGen = new PasswordGenerator();
-                                $model->password = $passGen->generate();
-                            } else {
-                                $model->password = Yii::app()->params['defaultTeacherPassword'];
-                            }
-                            $password = $model->password;
-                            $model->password_repeat = $model->password;
-                            if ($model->save() && Yii::app()->params['randomTeacherPassword']) {
-                                $mail = new Mail();
-                                $mail->sendRandomUserPassword($model->email, $password);
-                            }
-                        } else {
-                            $first = false;
-                        }
-                    } while (($line = fgetcsv($fp, 1000, ";")) != FALSE);
+                    if(!$model->createTeachers($fp,$msg)) {
+                        Yii::app()->user->setFlash('failMsg',$msg);
+                    }
+                    fclose($fp);
                 }
                 Yii::app()->user->setFlash('success', 'Lehrerliste erfolgreich importiert.');
-                $this->redirect('index.php?r=/user/admin');
+                //  $this->redirect('index.php?r=/user/admin');
             }
         }
         $this->render('importTeacher', array('model' => $model,));
@@ -230,16 +205,6 @@ class UserController extends Controller {
         $this->render('createDummy', array(
             'model' => $model,
         ));
-    }
-
-    /**
-     * Konvertiert eine Datei in ISO-8859-1 in UTF-8
-     * @param string $toEncode
-     * @return string
-     * 
-     */
-    static private function encodingString($toEncode) {
-        return mb_convert_encoding($toEncode, 'UTF-8', 'ISO-8859-1');
     }
 
     /**

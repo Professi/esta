@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Dies ist Formmodel um eine Lehrer CSV Datei zu importieren.
  */
@@ -18,14 +19,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class CsvUpload extends CFormModel {
+
     /** @var file CSV Datei */
     public $file;
+
     /** @var string Vorname */
     public $firstname;
-   /** @var string Nachname */
+
+    /** @var string Nachname */
     public $lastname;
+
     /** @var string Titel */
     public $title;
+
     /** @var string E-Mail Adresse */
     public $email;
 
@@ -39,12 +45,68 @@ class CsvUpload extends CFormModel {
                 'allowEmpty' => true, 'wrongType' => 'Nur CSV Dateien erlaubt.',
                 'tooLarge' => 'Datei ist zu groß. Die Begrenzung liegt bei 5 MB.'));
     }
-/**
- * Attributlabels
- * @return array Labels
- */
+
+    /**
+     * Attributlabels
+     * @return array Labels
+     */
     public function attributeLabels() {
         return array('file' => 'CSV Datei hochladen');
+    }
+
+    public function createTeachers(&$fp, &$msg) {
+        $first = true;
+        $rc = true;
+        do {
+            if (!$first && ($line[0] != "Vorname" && !$line[1] != "Nachname" && $line[2] != 'Email')) {
+                $model = new User();
+                if ($line[2] != NULL) {
+                    $email = self::encodingString($line[2]);
+                } else {
+                    $uml = array("Ö" => "Oe", "ö" => "oe", "Ä" => "Ae", "ä" => "ae", "Ü" => "Ue", "ü" => "ue", "ß" => "ss",);
+                    $email = preg_replace("/\s+/", "", strtolower(substr(strtr(self::encodingString($line[1]), $uml), 0, 1)))
+                            . '.' . preg_replace("/\s+/", "", strtolower(strtr(self::encodingString($line[0]), $uml))) . '@'
+                            . Yii::app()->params['teacherMail'];
+                }
+                $model->setSomeAttributes($email, self::encodingString($line[1]), self::encodingString($line[0]), 1, 2);
+                $model->title = self::encodingString($line[3]);
+                if (Yii::app()->params['randomTeacherPassword']) {
+                    $passGen = new PasswordGenerator();
+                    $model->password = $passGen->generate();
+                } else {
+                    $model->password = Yii::app()->params['defaultTeacherPassword'];
+                }
+                $password = $model->password;
+                $model->password_repeat = $model->password;
+                if ($model->save() && Yii::app()->params['randomTeacherPassword']) {
+                    $mail = new Mail();
+                    $mail->sendRandomUserPassword($model->email, $password);
+                }
+                if ($model->hasErrors()) {
+                    $rc = false;
+                    $msg .= "<-" . $model->email . " " . $model->firstname . " " . $model->lastname . "->" . self::convert_multi_array($model->errors) . "|<br>";
+                }
+            } else {
+                $first = false;
+            }
+        } while (($line = fgetcsv($fp, 1000, ";")) != FALSE);
+        return $rc;
+    }
+
+    /**
+     * Konvertiert eine Datei in ISO-8859-1 in UTF-8
+     * @param string $toEncode
+     * @return string
+     * 
+     */
+    static public function encodingString($toEncode, $to = 'UTF-8', $from = 'ISO-8859-1') {
+        return mb_convert_encoding($toEncode, $to, $from);
+    }
+
+    static public function convert_multi_array($array) {
+        return implode("&", array_map(function($a) {
+                            return implode("~", $a);
+                        }, $array));
     }
 
 }
