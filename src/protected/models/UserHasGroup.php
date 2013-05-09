@@ -1,20 +1,15 @@
 <?php
 
 /**
- * This is the model class for table "user_role".
+ * Dies ist das Model für User Has Group.
  */
 
-/** The followings are the available columns in table 'user_role':
+/** The followings are the available columns in table 'date':
  * @property integer $id
- * @property string $role_id
- * @property string $user_id
- *
  * The followings are the available model relations:
- * @property Role $role
+ * @property Group $group
  * @property User $user
- */
-/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
- *
+  /* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -28,78 +23,89 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class UserRole extends CActiveRecord {
+class UserHasGroup extends CActiveRecord {
 
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
-     * @return UserRole the static model class
+     * @return Date the static model class
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
 
     /**
-     * Tabellenname in der Datenbank
+     * Tabellenname
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'user_role';
+        return 'user_has_group';
     }
 
     /**
      * Regeln für Validierung
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array validation rules for model attributes.
      */
     public function rules() {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
-            array('role_id, user_id', 'required'),
-            array('role_id, user_id', 'length', 'max' => 11),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
-            array('id, role_id, user_id', 'safe', 'on' => 'search'),
+            array('user_id,group_id', 'required'),
+            array('user_id', 'exist', 'attributeName' => 'id', 'className' => 'User'),
+            array('group_id', 'exist', 'attributeName' => 'id', 'className' => 'Group'),
+            array('user_id,group_id', 'numerical', 'integerOnly' => true),
         );
     }
 
     /**
-     * Relationen mit anderen Models / DB Tabellen
+     * Relationen mit Appointment, User und Child
      * @return array relational rules.
      */
     public function relations() {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
-            'role' => array(self::BELONGS_TO, 'Role', 'role_id'),
             'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+            'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
         );
     }
 
     /**
      * Attributlabels
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'role_id' => 'RollenID',
-            'user_id' => 'UserID',
+            'user' => 'Benutzer',
+            'group' => 'Gruppe',
         );
     }
 
-    /**
-     * Retrieves a list of models based on the current search/filter conditions.
-     * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
-     */
     public function search() {
         $criteria = new CDbCriteria;
         $criteria->compare('id', $this->id);
-        $criteria->compare('role_id', $this->role_id, true);
-        $criteria->compare('user_id', $this->user_id, true);
+        $criteria->with = array('group', 'user');
+        $criteria->together = true;
+        $criteria->compare('group', $this->group, true);
+        $criteria->compare('user', $this->user, true);
+        $sort = new CSort();
+        $sort->attributes = array(
+            'defaultOrder' => 'id ASC',
+            'id' => array(
+                'asc' => 'id',
+                'desc' => 'id desc'),
+            'group' => array(
+                'asc' => 'group.groupname',
+                'desc' => 'group.groupname desc'),
+            'user' => array(
+                'asc' => 'user.lastname',
+                'desc' => 'user.lastname desc'),
+        );
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'sort' => $sort,
         ));
     }
 
 }
+
+?>

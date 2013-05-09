@@ -220,6 +220,42 @@ class Date extends CActiveRecord {
 
         return parent::beforeSave();
     }
+    
+        /**
+     * Prüft ob eine Gruppe null ist und wenn nicht wird der Gruppenname zurückgegeben
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param Group $group
+     * @return String
+     */
+    private function getGroupname($group) {
+        $rc = '';
+        if (!is_null($group)) {
+            $rc = $group->groupname;
+        }
+        return $rc;
+    }
+
+    /**
+     * Liefert alle Gruppennamen in einem String
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return string
+     */
+    public function getGroupnames() {
+        $rc = "";
+        $first = true;
+        if (!empty($this->groups)) {
+            foreach ($this->groups as $group) {
+                if ($first) {
+                    $rc .= $this->getGroupname($group);
+                    $first = false;
+                } else {
+                    $rc .= "," . $this->getGroupname($group);
+                }
+            }
+        }
+        return $rc;
+    }
+    
 
 }
 

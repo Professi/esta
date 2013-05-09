@@ -53,25 +53,26 @@ $this->menu = array(
         $this->widget('zii.widgets.CDetailView', array(
             'data' => $model,
             'attributes' => array(
-                array('label' => $model->getAttributeLabel('id'), 'value' => $model->id,
+                array('name' => 'id', 'value' => $model->id,
                     'visible' => Yii::app()->user->checkAccess('0')),
                 'email',
-                array('label' => $model->getAttributeLabel('username'),
+                array('name' => 'username',
                     'value' => $model->username, 'visible' => Yii::app()->user->checkAccess('0')),
                 'firstname',
                 'lastname',
-                array('label' => $model->getAttributeLabel('stateName'),
+                array('name' => 'stateName',
                     'value' => $model->getStateName()),
-                array('label' => $model->getAttributeLabel('roleName'),
-                    'value' => Role::model()->findByAttributes(array('id' => $model->role))->title),
-                array('label' => $model->getAttributeLabel('createtime'),
+                array('name' => 'userRole',
+                //    'value' => Role::model()->findByAttributes(array('id' => $model->role))->title),
+                    'value'=> $model->userRole->role->title),
+                array('name' => 'createtime',
                     'value' => date(Yii::app()->params['dateTimeFormat'], strtotime($model->createtime))),
-                array('label' => $model->getAttributeLabel('badLogins'),
+                array('name' => 'badLogins',
                     'value' => $model->badLogins == null ? '0' : $model->badLogins,
                 ),
-                array('label' => $model->getAttributeLabel('groups'),
+                array('name' => 'groups',
                     'value' => $model->getGroupnames(),
-                    'visible' => $model->role == '3' && Yii::app()->params['allowGroups'] && !empty($model->group),
+                    'visible' => $model->role == '3' && Yii::app()->params['allowGroups'] && $model->groupCount > 0,
                 ),
             ),
         ));
@@ -85,12 +86,23 @@ $this->menu = array(
             </fieldset>
             <?php
         }
-        if (Yii::app()->user->checkAccess('0') && $model->role == 3 && ParentChild::model()->countByAttributes(array('user_id' => $model->id))) {
+        if ($model->role == 3 && $model->childCount > 0) {
             ?>
             <h4 class="subheader">Kinder</h4>
-            <?php
-            foreach (ParentChild::model()->findAll(ParentChild::model()->searchParentChildWithId($model->id)) as $array) {
-                $this->renderPartial('/parentChild/_view', array('data' => $array));
+            <?php foreach (ParentChild::model()->findAllByAttributes(array('user_id' => $model->id)) as $parentChild) {
+                ?>
+                <div class="view">
+                    <ul class="square">
+                        <li>
+                            <?php echo CHtml::encode($parentChild->child->firstname . " " . $parentChild->child->lastname); ?>
+                            &nbsp;
+                            <a href="index.php?r=parentChild/delete&id=<?php echo $parentChild->id ?>">
+                                <span class="hide-for-print" aria-hidden="true" data-icon="&#xe014;">&nbsp;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>    
+                <?php
             }
         }
         ?>

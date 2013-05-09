@@ -41,6 +41,7 @@ class DeleteAllForm extends CFormModel {
             'management' => 'Verwaltungsbenutzerkontos',
             'childs' => 'Schüler',
             'parents' => 'Elternkonten',
+            'groups'=>'Gruppen'
         );
     }
 
@@ -97,6 +98,7 @@ class DeleteAllForm extends CFormModel {
         }
         if ($this->groups) {
             DateHasGroup::model()->deleteAll();
+            UserHasGroup::model()->deleteAll();
             Group::model()->deleteAll();
         }
         Yii::app()->user->setFlash('success', 'Erfolgreich!');

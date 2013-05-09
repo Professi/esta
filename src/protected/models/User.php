@@ -63,6 +63,9 @@ class User extends CActiveRecord {
 
     /** @var array Array mit den Rollennamen */
     static private $a_roleName = null;
+    public $groupIds = null;
+    
+    public $updateGroups = false;
 
     /**
      * Returns the static model of the specified AR class.
@@ -109,7 +112,8 @@ class User extends CActiveRecord {
             array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat', 'allowEmpty' => !Yii::app()->params['installed']),
             array('password_repeat', 'safe'), //allow bulk assignment
             array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements() || !Yii::app()->params['installed']),
-            array('id,groups,username, firstname, state, lastname, email, role,roleName,stateName,title', 'safe', 'on' => 'search'),
+            array('id,username, firstname, state, lastname, email, role,roleName,stateName,title', 'safe', 'on' => 'search'),
+            array('groups', 'safe', 'on' => 'update'),
         );
     }
 
@@ -121,8 +125,10 @@ class User extends CActiveRecord {
         return array(
             'appointments' => array(self::HAS_MANY, 'Appointment', 'user_id'),
             'parentChildren' => array(self::HAS_MANY, 'ParentChild', 'user_id'),
+            'childCount' => array(self::STAT, 'ParentChild', 'user_id'),
+            'groupCount' => array(self::STAT, 'UserHasGroup', 'user_id'),
             'userRole' => array(self::HAS_ONE, 'UserRole', 'user_id'),
-            'groups' => array(self::MANY_MANY, 'Group', 'user_has_group(user_id,group_id)'),
+            'groups' => array(self::MANY_MANY, 'Group', "user_has_group(user_id,group_id)"),
         );
     }
 
@@ -339,8 +345,8 @@ class User extends CActiveRecord {
                 $userRole->role_id = Role::model()->findByAttributes(array('id' => $this->role))->id;
             }
             $userRole->save();
-             if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
-                foreach ($this->groups as $group) {
+            if (Yii::app()->params['allowGroups'] && !empty($this->groupIds)) {
+                foreach ($this->groupIds as $group) {
                     $this->createUserHasGroup($group);
                 }
             }
@@ -348,10 +354,10 @@ class User extends CActiveRecord {
             $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
             $userRole->role_id = $this->role;
             $userRole->save();
-            if (Yii::app()->params['allowGroups']) {
+            if (Yii::app()->params['allowGroups'] && $this->updateGroups) {
                 UserHasGroup::model()->deleteAllByAttributes(array('user_id' => $this->id));
-                if (!empty($this->groups)) {
-                    foreach ($this->groups as $group) {
+                if (!empty($this->groupIds)) {
+                    foreach ($this->groupIds as $group) {
                         if (UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $group)) == '0') {
                             $this->createUserHasGroup($group);
                         }
@@ -507,6 +513,7 @@ class User extends CActiveRecord {
         if (!empty($this->groups)) {
             foreach ($this->groups as $group) {
                 if ($first) {
+                    $first = false;
                     $rc .= $this->getGroupname($group);
                 } else {
                     $rc .= "," . $this->getGroupname($group);
@@ -632,14 +639,21 @@ class User extends CActiveRecord {
         return $password;
     }
 
+    /**
+     * Gibt ein Array zurück welches die Rollen beinhaltet, mit denen Administration/Verwaltung Benutzer verändern können
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return array
+     */
     public function getRolePermission() {
+        $rc = null;
         if (Yii::app()->user->checkAccess('0')) {
-            return array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung', '0' => 'Administrator');
+            $rc = array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung', '0' => 'Administrator');
         } else if (Yii::app()->user->checkAccessNotAdmin('1') && $this->id == Yii::app()->user->getId()) {
-            return array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung');
+            $rc = array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung');
         } else {
-            return array('3' => 'Eltern', '2' => 'Lehrer');
+            $rc = array('3' => 'Eltern', '2' => 'Lehrer');
         }
+        return $rc;
     }
 
 }

@@ -67,6 +67,47 @@ class SiteController extends Controller {
     }
 
     /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param ConfigForm &$model
+     * @param type &$file
+     * @param boolean &$createAdminUser
+     */
+    public function config(&$model, &$file, &$createAdminUser) {
+        if ($model->validate()) {
+            if (Yii::app()->params['installed'] == 0 && Yii::app()->user->isGuest()) {
+                $createAdminUser = true;
+            }
+            if (file_put_contents($file, base64_encode(serialize($model->attributes)))) {
+                if ($createAdminUser) {
+                    if ($model->tables()) {
+                        $user = new User();
+                        $user->setSomeAttributes($model->adminEmail, 'admin', 'admin', 1, 0);
+                        $password = $user->generatePassword();
+                        $user->password_repeat = $password;
+                        $user->save();
+                        $msg = "Konfiguration aktualisiert. Außerdem wurde ein Administratorkonto erstellt. Ihr Benutzerkontenname lautet: "
+                                . $user->email . " Ihr Passwort lautet:" . $password;
+                        if ($model->randomTeacherPassword) {
+                            $msg .= " .Sollten Sie nun eine Bestätigungsemail erhalten, wurde die Anwendung erfolgreich konfiguriert.";
+                        }
+                        $msg .= "\n Sie können sich nun einloggen.";
+                        $model->installed = 1;
+                        Yii::app()->user->setFlash('success', $msg);
+                        $this->redirect('index.php');
+                    } else {
+                        Yii::app()->user->setFlash('failMsg', 'Verbindung zur Datenbank konnte nicht hergestellt werden.');
+                    }
+                } else {
+                    Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert. Die Einstellungen werden bei dem nächsten Seitenaufruf verwendet.');
+                }
+            } else {
+                Yii::app()->user->setFlash('failMsg', 'Die Konfiguration konnte nicht aktualisiert werden. Entweder existiert die Datei nicht oder es sind keien Schreibrechte vorhanden.');
+            }
+        }
+    }
+
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * action für das Konfigurationsskript
      */
     public function actionConfig() {
@@ -79,35 +120,7 @@ class SiteController extends Controller {
                 $createAdminUser = false;
                 $file = Yii::app()->basePath . '/config/params.inc';
                 $model->attributes = $_POST['ConfigForm'];
-                if ($model->validate()) {
-                    if (Yii::app()->params['installed'] == 0 && Yii::app()->user->isGuest()) {
-                        $createAdminUser = true;
-                    }
-                    $str = base64_encode(serialize($model->attributes));
-                    file_put_contents($file, $str);
-                    if ($createAdminUser) {
-                        if ($model->tables()) {
-                            $user = new User();
-                            $user->setSomeAttributes($model->adminEmail, 'admin', 'admin', 1, 0);
-                            $password = $user->generatePassword();
-                            $user->password_repeat = $password;
-                            $user->save();
-                            $msg = "Konfiguration aktualisiert. Außerdem wurde ein Administratorkonto erstellt. Ihr Benutzerkontenname lautet: "
-                                    . $user->email . " Ihr Passwort lautet:" . $password;
-                            if ($model->randomTeacherPassword) {
-                                $msg .= " .Sollten Sie nun eine Bestätigungsemail erhalten, wurde die Anwendung erfolgreich konfiguriert.";
-                            }
-                            $msg .= "\n Sie können sich nun einloggen.";
-                            $model->installed = 1;
-                            Yii::app()->user->setFlash('success', $msg);
-                            $this->redirect('index.php');
-                        } else {
-                             Yii::app()->user->setFlash('failMsg', 'Verbindung zur Datenbank konnte nicht hergestellt werden.');
-                        }
-                    } else {
-                        Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert. Die Einstellungen werden bei dem nächsten Seitenaufruf verwendet.');
-                    }
-                }
+                $this->config($model, $file, $createAdminUser);
             } $this->render('config', array(
                 'model' => $model,
                 'optionsBans' => $optionsBans,

@@ -370,6 +370,22 @@ class AppointmentController extends Controller {
         return $a_rc;
     }
 
+    public function criteriaForDateWithGroups($dateMax) {
+        $criteria = new CDbCriteria();
+        $criteria->with = array('groups');
+        $criteria->together = true;
+        $criteria->limit = $dateMax;
+        $criteria->order = 'date ASC';
+        $groups = Yii::app()->user->getState('groups');
+        if (!empty($groups) && is_array($groups)) {
+            foreach ($groups as $group) {
+                $criteria->addCondition('groups.id =' . $group->id, 'OR');
+            }
+        }
+        $criteria->addCondition('date >="' . date('Y-m-d', time()) . '"');
+        return $criteria;
+    }
+
     /**
      * Liefert das Datum mit DateAndTime
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
@@ -379,21 +395,9 @@ class AppointmentController extends Controller {
     public function getDatesWithTimes($dateMax, $mergeDates = false) {
         $a_groupOfDateAndTimes = array();
         if (!empty($dateMax)) {
-            if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccessNotAdmin('3') && Yii::app()->user->getState('group') != null) {
+            if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccessNotAdmin('3') && Yii::app()->user->getState('groups') != null) {
                 //Verwaltung kann trotzdem noch Termine an anderen Tagen für diesen Benutzer buchen
-                $criteria = new CDbCriteria();
-                $criteria->with = array('groups');
-                $criteria->together = true;
-                $criteria->limit = $dateMax;
-                $criteria->order = 'date ASC';
-                $group = Yii::app()->user->getState('group');
-                if (!is_string($group)) {
-                    $group = "string";
-                } else {
-                    $criteria->compare('groups.id', $group, true, 'AND');
-                }
-                $criteria->addCondition('date >="' . date('Y-m-d', time()) . '"');
-                $a_dates = Date::model()->findAll($criteria);
+                $a_dates = Date::model()->findAll($this->criteriaForDateWithGroups($dateMax));
             } else {
                 $a_dates = Date::model()->findAll(array('limit' => $dateMax, 'order' => 'date ASC', 'condition' => 'date >="' . date('Y-m-d', time()) . '"'));
             }

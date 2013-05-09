@@ -142,10 +142,13 @@ $form = $this->beginWidget('CActiveForm', array(
                 <div class="nine columns">
                     <div class="styled-select">
                         <?php
-                        if (isset($_POST['User']['groups'])) {
-                            $model->groups = $_POST['User']['groups'];
+                        if (isset($_POST['User']['groupIds'])) {
+                            $model->groupIds = $_POST['User']['groupIds'];
                         }
-                        echo Select2::activeMultiSelect($model, 'groups', $groups, array(
+                        if(!$model->isNewRecord) {
+                            $model->groupIds = $model->groups;
+                        }
+                        echo Select2::activeMultiSelect($model, 'groupIds', $groups, array(
                             'placeholder' => 'Hier können Sie mehrere Gruppen auswählen...',
                             'id' => 'groups-select',
                             'select2Options' => array(
@@ -193,6 +196,6 @@ if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) {
         </div>
     </div>
     <?php
-} echo CHtml::submitButton($model->isNewRecord ? 'Registrieren' : 'Speichern', array('class' => 'button'));
+} echo CHtml::submitButton($model->isNewRecord && Yii::app()->user->isGuest() ? 'Registrieren' : 'Speichern', array('class' => 'button'));
 $this->endWidget();
 ?>

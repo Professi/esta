@@ -41,13 +41,13 @@ $this->menu = array(
             'data' => $model,
             'attributes' => array(
                 'id',
-                array('label' => $model->getAttributeLabel('date'), 'value' => date(Yii::app()->params['dateFormat'], strtotime($model->date))),
-                array('label' => $model->getAttributeLabel('begin'), 'value' => date(Yii::app()->params['timeFormat'], strtotime($model->begin))),
-                array('label' => $model->getAttributeLabel('end'), 'value' => date(Yii::app()->params['timeFormat'], strtotime($model->end))),
-                array('label' => $model->getAttributeLabel('lockAt'), 'value' => date(Yii::app()->params['dateTimeFormat'], $model->lockAt)),
-                'durationPerAppointment',
-                array('name' => 'title', 'visible' => !empty($model->title) ), 
-//                array('name' => 'groups', 'visible' => (Yii::app()->params['allowGroups'])),
+                array('name' => 'date', 'value' => date(Yii::app()->params['dateFormat'], strtotime($model->date))),
+                array('name' => 'begin', 'value' => date(Yii::app()->params['timeFormat'], strtotime($model->begin))),
+                array('name' => 'end', 'value' => date(Yii::app()->params['timeFormat'], strtotime($model->end))),
+                array('name' => 'lockAt', 'value' => date(Yii::app()->params['dateTimeFormat'], $model->lockAt)),
+                array('name' => 'durationPerAppointment', 'value' => $model->durationPerAppointment . " Minuten"),
+                array('name' => 'title', 'visible' => !empty($model->title)),
+                array('name' => 'groups', 'value' => $model->getGroupnames(), 'visible' => (Yii::app()->params['allowGroups']) && !empty($model->groups)),
             ),
         ));
         ?>

@@ -27,7 +27,6 @@ $this->menu = array(
         <h2 class="text-center">Gruppenverwaltung</h2>
     </div>
 </div>
-<div>
     <?php
     $this->widget('zii.widgets.grid.CGridView', array(
         'id' => 'group-grid',
@@ -51,14 +50,17 @@ $this->menu = array(
     ));
 
     $this->widget('zii.widgets.grid.CGridView', array(
-        'id' => 'userHasGroup-grid',
-        'dataProvider' => $userHasGroup->search(),
-        'columns' => array(
-            array('name' => 'user', 'value' => '$data->firstname . " " . $data->lastname))'),
-            array('name' => 'group', 'value' => '$data->group->groupname'),
-        )
+    'id' => 'userHasGroup-grid',
+    'dataProvider' => $userHasGroup->search(),
+    'columns' => array(
+    array('name' => 'user', 'value' => '$data->user->firstname . " " . $data->user->lastname'),
+    array('name' => 'group', 'value' => '$data->group->groupname'),
+    )
     ));
 
 
 
 
+
+
+    

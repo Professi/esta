@@ -20,8 +20,8 @@
 /** @var $this Controller */
 ?>
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
-<!--[if gt IE 8]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="<?php echo Yii::app()->params['language']; ?>"><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" lang="<?php echo Yii::app()->params['language']; ?>"><!--<![endif]-->
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
@@ -47,7 +47,7 @@
             <!-- HEADER -->
             <div class="row contain-to-grid" id="header_row">
                 <div class="eleven columns offset-by-one">
-                    <div class="header" title="Elternsprechtag"></div>
+                    <div class="header" title="<?php echo Yii::app()->params['appName'] ?>"></div>
                     <div class="header-school-logo">
                         <div id="logo_artikel"><?php echo Yii::app()->params['textHeader']; ?>&nbsp;&nbsp;</div>
                         <div id="logo_school_border">
