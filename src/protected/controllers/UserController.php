@@ -141,7 +141,15 @@ class UserController extends Controller {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function actionAccount() {
-        $this->render('view', array('model' => $this->loadModel(Yii::app()->user->getId())));
+        $model =$this->loadModel(Yii::app()->user->getId());
+        if(isset($_POST['User']['tan'])) {
+            $model->tan = $_POST['User']['tan'];
+            if($model->validate()) {
+                $model->addWithTanNewGroup();
+            }
+        } 
+        $this->render('view', array('model' => $model));
+       
     }
 
     /**

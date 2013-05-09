@@ -63,8 +63,8 @@ $this->menu = array(
                 array('name' => 'stateName',
                     'value' => $model->getStateName()),
                 array('name' => 'userRole',
-                //    'value' => Role::model()->findByAttributes(array('id' => $model->role))->title),
-                    'value'=> $model->userRole->role->title),
+                    //    'value' => Role::model()->findByAttributes(array('id' => $model->role))->title),
+                    'value' => $model->userRole->role->title),
                 array('name' => 'createtime',
                     'value' => date(Yii::app()->params['dateTimeFormat'], strtotime($model->createtime))),
                 array('name' => 'badLogins',
@@ -86,23 +86,39 @@ $this->menu = array(
             </fieldset>
             <?php
         }
-        if ($model->role == 3 && $model->childCount > 0) {
-            ?>
-            <h4 class="subheader">Kinder</h4>
-            <?php foreach (ParentChild::model()->findAllByAttributes(array('user_id' => $model->id)) as $parentChild) {
+        if ($model->role == 3) {
+            if (Yii::app()->user->getId() == $model->id && Yii::app()->params['allowGroups']) {
                 ?>
-                <div class="view">
-                    <ul class="square">
-                        <li>
-                            <?php echo CHtml::encode($parentChild->child->firstname . " " . $parentChild->child->lastname); ?>
-                            &nbsp;
-                            <a href="index.php?r=parentChild/delete&id=<?php echo $parentChild->id ?>">
-                                <span class="hide-for-print" aria-hidden="true" data-icon="&#xe014;">&nbsp;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>    
-                <?php
+                <h4 class="subheader">Weitere TAN hinzufügen</h4>
+                <fieldset>
+                    <?php
+                    $form = $this->beginWidget('CActiveForm', array(
+                        'id' => 'user-form',
+                    ));
+                    ?>
+                    <div class="row collapse">
+                        <div class="three columns">
+                            <span class="prefix"><?php echo $form->label($model, 'tan'); ?></span>
+                        </div>
+                        <div class="nine columns mobile-input">
+                            <?php
+                            echo $form->textField($model, 'tan', array('size' => 45, 'maxlength' => Yii::app()->params['tanSize']));
+                            echo $form->error($model, 'tan');
+                            ?>
+                        </div>
+                    </div>
+                    <?php
+                    echo CHtml::submitButton('Absenden', array('class' => 'button'));
+                    $this->endWidget();
+                    ?>
+                </fieldset>
+
+            <?php } if ($model->childCount > 0) {
+                ?>
+                <h4 class="subheader">Kinder</h4>
+                <?php foreach (ParentChild::model()->findAllByAttributes(array('user_id' => $model->id)) as $parentChild) {
+                     $this->renderPartial('/parentChild/_view', array('data' => $parentChild));
+                }
             }
         }
         ?>

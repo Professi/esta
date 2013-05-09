@@ -85,8 +85,8 @@ class ParentChild extends CActiveRecord {
             }
             if ($rc) {
                 $child = new Child;
-                $child->firstname = $this->childFirstName;
-                $child->lastname = $this->childLastName;
+                $child->firstname = ucfirst($this->childFirstName);
+                $child->lastname = ucfirst($this->childLastName);
                 $child->save();
                 $child->id = Child::model()->findByAttributes(array('firstname' => $this->childFirstName, 'lastname' => $this->childLastName))->id;
                 $this->child_id = $child->id;

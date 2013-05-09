@@ -64,7 +64,6 @@ class User extends CActiveRecord {
     /** @var array Array mit den Rollennamen */
     static private $a_roleName = null;
     public $groupIds = null;
-    
     public $updateGroups = false;
 
     /**
@@ -548,26 +547,32 @@ class User extends CActiveRecord {
      * @param type $tanNo
      * @return boolean
      */
-    public function addWithTanNewGroup($tanNo) {
+    public function addWithTanNewGroup(&$errorMsg = "") {
         $rc = true;
-        $tan = Tan::model()->findByAttributes(array('tan' => $tanNo));
+        $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
         if ($tan !== null) {
             if ($tan->used) {
-                $this->addError('tan', 'Leider wurde Ihre TAN schon benutzt.');
+                $errorMsg = 'Leider wurde Ihre TAN schon benutzt.';
                 $rc = false;
             } else {
                 if (Yii::app()->params['allowGroups'] && $tan->group != null && is_int($tan->group_id)) {
-                    if (!UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $tan->group_id)) > '0')
+                    if (!UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $tan->group_id)) > '0') {
                         $this->createUserHasGroup($tan->group_id);
-                } else {
-                    $this->addError('tan', 'Sie wurden bereits der Gruppe die bei dieser TAN hinterlegt ist, zugewiesen.');
+                        Yii::app()->user->setFlash('success', 'Sie wurden erfolgreich der Gruppe hinzugefügt.');
+                        Yii::app()->user->setGroups($this->groups);
+                    } else {
+                        $errorMsg = 'Sie wurden bereits der Gruppe die bei dieser TAN hinterlegt ist, zugewiesen.';
+                    }
                 }
             }
         } else {
-            if (Yii::app()->params['installed']) {
-                $this->addError('tan', 'Leider konnte die eingegebene TAN nicht identifiziert werden.');
+            if ((Yii::app()->params['installed'] && Yii::app()->user->isGuest()) || !Yii::app()->params['installed']) {
+                $errorMsg = 'Leider konnte die eingegebene TAN nicht identifiziert werden.';
                 $rc = false;
             }
+        }
+        if (!$rc) {
+            $this->addError('tan', $errorMsg);
         }
         return $rc;
     }

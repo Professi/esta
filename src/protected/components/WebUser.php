@@ -95,6 +95,11 @@ class WebUser extends CWebUser {
     public function getGroups() {
         return $this->getState('groups');
     }
+    
+    public function setGroups($groups) {
+        $this->setState('groups', $groups);
+    }
+    
 
 }
 
