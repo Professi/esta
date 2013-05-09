@@ -535,7 +535,7 @@ class User extends CActiveRecord {
         if ($this->getError('password') == Yii::t('yii', '{attribute} must be repeated exactly.', $params)) {
             $this->addError('password_repeat', "Passwörter stimmen nicht überein.");
         }
-        if (($rc && Yii::app()->user->isGuest && $this->isNewRecord) || ($rc && Yii::app()->params['installed'])) {
+        if (($rc && Yii::app()->user->isGuest && $this->isNewRecord && Yii::app()->params['installed'])) {
             $rc = $this->addWithTanNewGroup($this->tan);
         }
         return $rc;
