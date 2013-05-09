@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 02. Mai 2013 um 17:02
+-- Erstellungszeit: 09. Mai 2013 um 16:02
 -- Server Version: 5.5.31-0ubuntu0.13.04.1
 -- PHP-Version: 5.4.9-4ubuntu2
 
@@ -67,8 +67,7 @@ CREATE TABLE IF NOT EXISTS `child` (
   `lastname` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_child_id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -78,15 +77,15 @@ CREATE TABLE IF NOT EXISTS `child` (
 
 CREATE TABLE IF NOT EXISTS `date` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
   `date` date NOT NULL,
   `begin` time NOT NULL,
   `end` time NOT NULL,
   `lockAt` int(11) NOT NULL,
   `durationPerAppointment` int(3) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_date_id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -102,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `dateAndTime` (
   UNIQUE KEY `idx_dateAndTime_date_id_time` (`time`,`date_id`),
   KEY `dateAndTime_fk1` (`date_id`),
   KEY `idx_dateAndTime_id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -115,11 +114,10 @@ CREATE TABLE IF NOT EXISTS `date_has_group` (
   `date_id` int(11) DEFAULT NULL,
   `group_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_date_has_group` (`date_id`,`group_id`),
+  UNIQUE KEY `idx_date_has_group1` (`date_id`,`group_id`),
   KEY `date_has_group_fk2` (`group_id`),
-  KEY `idx_date_has_group_id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
-
+  KEY `idx_date_has_group_id2` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -133,8 +131,7 @@ CREATE TABLE IF NOT EXISTS `group` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_group_name` (`groupname`),
   KEY `idx_group_id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -150,7 +147,7 @@ CREATE TABLE IF NOT EXISTS `parent_child` (
   KEY `parent_child_fk1` (`child_id`),
   KEY `parent_child_fk2` (`user_id`),
   KEY `idx_ parent_child_id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -207,15 +204,13 @@ CREATE TABLE IF NOT EXISTS `user` (
   `lastname` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `title` varchar(255) DEFAULT NULL,
   `state` tinyint(3) DEFAULT NULL,
-  `lastLogin` int(10) unsigned DEFAULT '0',
+  `lastLogin` bigint(20) DEFAULT '0',
   `badLogins` tinyint(4) DEFAULT NULL,
-  `bannedUntil` int(10) unsigned DEFAULT '0',
+  `bannedUntil` bigint(20) DEFAULT '0',
   `password` varchar(255) DEFAULT NULL,
-  `group_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_fk1` (`group_id`),
   KEY `idx_user_id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Daten für Tabelle `user`
@@ -223,6 +218,22 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`id`, `username`, `email`, `activationKey`, `createtime`, `firstname`, `lastname`, `title`, `state`, `lastLogin`, `badLogins`, `bannedUntil`, `password`, `group_id`) VALUES
 (1, 'admin@admin.de', 'admin@admin.de', 'bb907ba9379992565e7baa09d2681b7a1636719e', '2013-04-29 14:36:46', 'Admin', 'Admin', NULL, 1, 1367422688, 3, 0, 'cd613e9e5557f026ce9f11d91afc2dcca40c30cb608e756d4ad62edc50b1263098c80e161481d1b9a5e5413994072430f007b6d1c4633b0ff92c239c367954e1', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `user_has_group`
+--
+
+CREATE TABLE IF NOT EXISTS `user_has_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `group_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_user_has_group1` (`user_id`,`group_id`),
+  KEY `user_has_group_fk2` (`group_id`),
+  KEY `idx_user_has_group_id2` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -238,21 +249,33 @@ CREATE TABLE IF NOT EXISTS `user_role` (
   KEY `user_role_fk1` (`role_id`),
   KEY `user_role_fk2` (`user_id`),
   KEY `idx_user_role_id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 INSERT INTO `user_role` (`id`, `role_id`, `user_id`) VALUES
 (1, 0, 1);
 
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `YiiCache`
+--
+
 CREATE TABLE IF NOT EXISTS `YiiCache` (
   `id` varchar(255) NOT NULL,
   `expire` int(11) DEFAULT NULL,
-  `value` LONGBLOB
+  `value` longblob
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `YiiSession`
+--
 
 CREATE TABLE IF NOT EXISTS `YiiSession` (
   `id` varchar(255) NOT NULL,
   `expire` int(11) DEFAULT NULL,
-  `data` LONGBLOB
+  `data` longblob
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -263,16 +286,16 @@ CREATE TABLE IF NOT EXISTS `YiiSession` (
 -- Constraints der Tabelle `appointment`
 --
 ALTER TABLE `appointment`
+  ADD CONSTRAINT `appointment_fk3` FOREIGN KEY (`dateAndTime_id`) REFERENCES `dateAndTime` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `appointment_fk1` FOREIGN KEY (`parent_child_id`) REFERENCES `parent_child` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `appointment_fk2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `appointment_fk3` FOREIGN KEY (`dateAndTime_id`) REFERENCES `dateAndTime` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `appointment_fk2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `blockedAppointment`
 --
 ALTER TABLE `blockedAppointment`
-  ADD CONSTRAINT `blockedAppointment_fk1` FOREIGN KEY (`dateAndTime_id`) REFERENCES `dateAndTime` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `blockedAppointment_fk2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `blockedAppointment_fk2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `blockedAppointment_fk1` FOREIGN KEY (`dateAndTime_id`) REFERENCES `dateAndTime` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `dateAndTime`
@@ -284,15 +307,15 @@ ALTER TABLE `dateAndTime`
 -- Constraints der Tabelle `date_has_group`
 --
 ALTER TABLE `date_has_group`
-  ADD CONSTRAINT `date_has_group_fk1` FOREIGN KEY (`date_id`) REFERENCES `date` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `date_has_group_fk2` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `date_has_group_fk2` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `date_has_group_fk1` FOREIGN KEY (`date_id`) REFERENCES `date` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `parent_child`
 --
 ALTER TABLE `parent_child`
-  ADD CONSTRAINT `parent_child_fk1` FOREIGN KEY (`child_id`) REFERENCES `child` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `parent_child_fk2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `parent_child_fk2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `parent_child_fk1` FOREIGN KEY (`child_id`) REFERENCES `child` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `tan`
@@ -301,17 +324,18 @@ ALTER TABLE `tan`
   ADD CONSTRAINT `tan_fk1` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
 
 --
--- Constraints der Tabelle `user`
+-- Constraints der Tabelle `user_has_group`
 --
-ALTER TABLE `user`
-  ADD CONSTRAINT `user_fk1` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `user_has_group`
+  ADD CONSTRAINT `user_has_group_fk2` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `user_has_group_fk1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `user_role`
 --
 ALTER TABLE `user_role`
-  ADD CONSTRAINT `user_role_fk1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `user_role_fk2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `user_role_fk2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `user_role_fk1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
