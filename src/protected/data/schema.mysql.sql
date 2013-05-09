@@ -216,8 +216,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Daten für Tabelle `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `email`, `activationKey`, `createtime`, `firstname`, `lastname`, `title`, `state`, `lastLogin`, `badLogins`, `bannedUntil`, `password`, `group_id`) VALUES
-(1, 'admin@admin.de', 'admin@admin.de', 'bb907ba9379992565e7baa09d2681b7a1636719e', '2013-04-29 14:36:46', 'Admin', 'Admin', NULL, 1, 1367422688, 3, 0, 'cd613e9e5557f026ce9f11d91afc2dcca40c30cb608e756d4ad62edc50b1263098c80e161481d1b9a5e5413994072430f007b6d1c4633b0ff92c239c367954e1', NULL);
+INSERT INTO `user` (`id`, `username`, `email`, `activationKey`, `createtime`, `firstname`, `lastname`, `title`, `state`, `lastLogin`, `badLogins`, `bannedUntil`, `password`) VALUES
+(1, 'admin@admin.de', 'admin@admin.de', 'bb907ba9379992565e7baa09d2681b7a1636719e', '2013-04-29 14:36:46', 'Admin', 'Admin', NULL, 1, 1367422688, 3, 0, 'cd613e9e5557f026ce9f11d91afc2dcca40c30cb608e756d4ad62edc50b1263098c80e161481d1b9a5e5413994072430f007b6d1c4633b0ff92c239c367954e1');
 
 -- --------------------------------------------------------
 
