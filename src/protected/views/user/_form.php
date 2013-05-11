@@ -107,13 +107,10 @@ $form = $this->beginWidget('CActiveForm', array(
             <span class="prefix"><?php echo $form->label($model, 'state'); ?></span>
         </div>
         <div class="nine columns">
-            <div class="styled-select">
                 <?php
-                echo Select2::activeDropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt'));
+                echo Select2::activeDropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt'),array('select2Options' => array('minimumResultsForSearch' => 10)));
                 echo $form->error($model, 'state');
                 ?>
-            </div>
-
         </div>
     </div>
     <div class="row collapse">
@@ -121,12 +118,10 @@ $form = $this->beginWidget('CActiveForm', array(
             <span class="prefix"><?php echo $form->label($model, 'role'); ?></span>
         </div>
         <div class="nine columns">
-            <div class="styled-select">
                 <?php
-                echo Select2::activeDropDownList($model, 'role', $model->getRolePermission());
+                echo Select2::activeDropDownList($model, 'role', $model->getRolePermission(),array('select2Options' => array('minimumResultsForSearch' => 10)));
                 echo $form->error($model, 'role');
                 ?>
-            </div>
         </div>
     </div>
 
@@ -140,7 +135,6 @@ $form = $this->beginWidget('CActiveForm', array(
                     <span class="prefix"><?php echo $form->label($model, 'groups'); ?> </span>
                 </div>
                 <div class="nine columns">
-                    <div class="styled-select">
                         <?php
                         if (isset($_POST['User']['groupIds'])) {
                             $model->groupIds = $_POST['User']['groupIds'];
@@ -157,13 +151,12 @@ $form = $this->beginWidget('CActiveForm', array(
                         ));
                         echo $form->error($model, 'groups');
                         ?>
-                    </div>
                 </div>
             </div>
             <?php
         }
     }
-}
+} 
 if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) {
     ?>
     <div class="row collapse">

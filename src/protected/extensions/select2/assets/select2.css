@@ -1,7 +1,8 @@
-/*
+﻿/*
 Version: @@ver@@ Timestamp: @@timestamp@@
 */
 .select2-container {
+    margin: 0;
     position: relative;
     display: inline-block;
     /* inline-block for ie7 */
@@ -98,7 +99,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 }
 
 .select2-container .select2-choice abbr {
-    display: inline-block;
+    display: none;
     width: 12px;
     height: 12px;
     position: absolute;
@@ -113,6 +114,11 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     cursor: pointer;
     outline: 0;
 }
+
+.select2-container.select2-allowclear .select2-choice abbr {
+    display: inline-block;
+}
+
 .select2-container .select2-choice abbr:hover {
     background-position: right -11px;
     cursor: pointer;
@@ -123,11 +129,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     left: 0;
     top: 0;
     z-index: 9998;
-    background-color: #fff;
-    opacity: 0;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; /* works in IE 8 */
-        filter: "alpha(opacity=0)"; /* expected to work in IE 8 */
-        filter: alpha(opacity=0); /* IE 4-7 */
 }
 
 .select2-drop {
@@ -220,12 +221,6 @@ Version: @@ver@@ Timestamp: @@timestamp@@
     z-index: 10000;
 
     white-space: nowrap;
-}
-
-.select2-search-hidden {
-    display: block;
-    position: absolute;
-    left: -10000px;
 }
 
 .select2-search input {
@@ -341,6 +336,7 @@ Version: @@ver@@ Timestamp: @@timestamp@@
 
 .select2-results ul.select2-result-sub {
     margin: 0;
+    padding-left: 0;
 }
 
 .select2-results ul.select2-result-sub > li .select2-result-label { padding-left: 20px }
@@ -617,15 +613,17 @@ disabled look for disabled choices in the results dropdown
     text-decoration: underline;
 }
 
-.select2-offscreen {
-    border: 0;
+.select2-offscreen, .select2-offscreen:focus {
     clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
     width: 1px;
+    height: 1px;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
+    outline: 0;
+    left: 0px;
 }
 
 .select2-display-none {

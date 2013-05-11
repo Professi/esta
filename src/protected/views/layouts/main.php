@@ -35,6 +35,7 @@
             Yii::app()->clientScript->registerPackage('jquery');
             if (Yii::app()->user->checkAccess('1')) {
                 Yii::app()->clientScript->registerPackage('admin');
+                Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScriptUrl().'/jui/css/base/jquery-ui.css');
             }
         }
         ?>

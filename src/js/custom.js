@@ -1,6 +1,6 @@
 ;
 (function(window, document, $) {
-// http://stackoverflow.com/questions/654112/how-do-you-detect-support-for-vml-or-svg-in-a-browser
+        // http://stackoverflow.com/questions/654112/how-do-you-detect-support-for-vml-or-svg-in-a-browser
         // http://forum.jquery.com/topic/add-svg-support-verification-do-jquery-support
         function supportsSvg() {
             var bool = false;
@@ -81,10 +81,10 @@
         
         $('input[id$="_lockAt"]').on({
         change: function() {
-            changeLockAtContent()
+            changeLockAtContent();
         },
         keyup: function() {
-            changeLockAtContent()
+            changeLockAtContent();
         }
         });
         
@@ -121,7 +121,7 @@
         });
         
         $(document).ready(function() {
-        if ($('#lockAt_value').val() !== "" && typeof $('#lockAt_value').val() === 'string') {
+            if ($('#lockAt_value').val() !== "" && typeof $('#lockAt_value').val() === 'string') {
                $value = $('#lockAt_value').val();
                $arr = $value.split(' ');
                $('#date_lockAt').val($arr[0]);
@@ -132,13 +132,19 @@
                 $('.update').children().each(function(){$(this).attr('src',window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/'))+'/img/pencil.svg');});
                 $('.delete').children().each(function(){$(this).attr('src',window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/'))+'/img/remove.svg');});
             }
+            
         });
         
-        $('#User_role').on('change', function() {
-           if ($(this).val() === 3) {
-               $('#User_group').attr('disabled', false);
+        $(document).ajaxComplete(function() {
+            $('abbr[class^="select2-search-choice-close"]').remove();
+        });
+        
+        $('#User_role').on('change', function(event) {
+           if (event.val == 3) {
+               $('#groups-select').select2("enable", true);
            } else {
-               $('#User_group').attr('disabled', true);
+               $('#groups-select').select2("enable", false);
+               $('#groups-select').select2("val","");
            }
         });
 

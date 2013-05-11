@@ -31,6 +31,10 @@
             'columns' => array(
                 array('name' => 'dateAndTime_id',
                     'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
+                array('name' => 'Titel',
+                    'value' => '$data->dateAndTime->date->title',
+//                    'visible' => !empty($data->dateAndTime->date->title)
+                    ),
                 array('name' => 'parent_child_id',
                     'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'),
                 array('name' => 'Kind',

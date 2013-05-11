@@ -463,6 +463,9 @@ class AppointmentController extends Controller {
             foreach ($a_dates as $a_day) {
                 $tabsUiId++;
                 $tabsName = date(Yii::app()->params['dateFormat'], strtotime($a_day[0]->date->date));
+                if (!empty($a_day[0]->date->title)) {
+                    $tabsName .= " (".$a_day[0]->date->title.")";
+                }
                 $tabsContent = '<div style="display:none;" id="date-ui-id-' . $tabsUiId . '">' . $tabsName . '</div>'; //verstecktes Element für Javascriptfunktionen aus custom.js
                 $tabsContent .= '<table><thead><th class="table-text" width="40%">Uhrzeit</th><th class="table-text" width="60%">Termin</th></thead><tbody>';
                 $datesUiId = 0; //id der einzelnen Zeiten, wichtig für Javascriptfunktionen aus custom.js

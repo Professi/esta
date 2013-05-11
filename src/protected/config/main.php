@@ -56,7 +56,6 @@ return array(
                 ),
                 'jquery' => array(//nicht ändern
                     'baseUrl' => 'js/', //nicht ändern
-//                    'js' => array('foundation.min.js', 'app.js', 'custom.js'), //nicht ändern
                     'js' => array('foundation.min.js', 'app.js'),
                     'depends' => array('css'),
                 ),
@@ -74,7 +73,7 @@ return array(
                 'styles.css' => false, //nicht ändern
                 'pager.css' => false, //nicht ändern
                 'default.css' => false, //nicht ändern
-       //         'jquery-ui.css' => false,
+                'jquery-ui.css' => false,
             ),
         ),
         'urlManager' => array(//nicht ändern

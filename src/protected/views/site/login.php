@@ -94,7 +94,9 @@ $this->breadcrumbs = array(
         <?php if (!Yii::app()->params['lockRegistration']) { ?>
             <p class="text-center"><?php echo CHtml::link('<b>Ben&ouml;tigen Sie einen neuen Zugang?<br>Klicken Sie hier.</b>', 'index.php?r=user/create'); ?> </p>
         <?php } else { ?>
-            <p class="text-center">Aktuell ist es leider nicht m&ouml;glich sich zu registrieren. Sofern Sie sich registrieren m&ouml;chten, f&uuml;llen Sie bitte das Kontaktformular aus.</p>
+            <div class="panel">
+                <p class="text-center">Aktuell ist es leider nicht m&ouml;glich sich zu registrieren. Sofern Sie sich registrieren m&ouml;chten, f&uuml;llen Sie bitte das Kontaktformular aus.</p>
+            </div>
         <?php } $this->endWidget(); ?>
     </div>
 </div>

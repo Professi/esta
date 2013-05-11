@@ -79,17 +79,17 @@ class Select2 extends CInputWidget {
 
         if (YII_DEBUG) {
             $cs->registerScriptFile($this->assetsDir . '/select2.js', CClientScript::POS_END);
-         //     $cs->registerCssFile($this->assetsDir . '/select2.css');
+//            $cs->registerCssFile($this->assetsDir . '/select2.css');
         } else {
             $cs->registerScriptFile($this->assetsDir . '/select2.min.js', CClientScript::POS_END);
-          //        $cs->registerCssFile($this->assetsDir . '/select2.min.css');
+//            $cs->registerCssFile($this->assetsDir . '/select2.min.css');
         }
-
+        
         $lang = strtoupper(str_replace('_', '-', Yii::app()->language));
         $lang[0] = strtolower($lang[0]);
         $lang[1] = strtolower($lang[1]);
-
-        $cs->registerScriptFile($this->assetsDir . '/select2_locale_' . $lang . '.js', CClientScript::POS_END);
+        
+        $cs->registerScriptFile($this->assetsDir . '/select2_locale_'.$lang.'.js', CClientScript::POS_END);
 
         $settings = CJavaScript::encode($this->settings);
         $cs->registerScript("{$id}_select2", "$('#{$id}').select2({$settings});");
@@ -98,11 +98,11 @@ class Select2 extends CInputWidget {
     /** Single item select */
     public static function dropDownList($name, $select, $data, $htmlOptions = array()) {
         return Yii::app()->getController()->widget(__CLASS__, array(
-                    'name' => $name,
+                    'name'  => $name,
                     'value' => $select,
-                    'data' => $data,
+                    'data'  => $data,
                     'htmlOptions' => $htmlOptions,
-                        ), true);
+               ), true);
     }
 
     public static function activeDropDownList($model, $attribute, $data, $htmlOptions = array()) {
@@ -117,11 +117,11 @@ class Select2 extends CInputWidget {
                     'data' => $data,
                     'htmlOptions' => $htmlOptions,
                     'multiple' => true,
-                        ), true);
+               ), true);
     }
 
     public static function activeMultiSelect($model, $attribute, $data, $htmlOptions = array()) {
-        return self::multiSelect(CHtml::activeName($model, $attribute) . '[]', CHtml::value($model, $attribute), $data, $htmlOptions);
+        return self::multiSelect(CHtml::activeName($model, $attribute).'[]', CHtml::value($model, $attribute), $data, $htmlOptions);
     }
 
 }
