@@ -287,7 +287,7 @@ table {
             margin-top: 1em;
         }
         .ui-tabs-nav {
-            height: auto;
+            height: auto !important;
         }
         .ui-tabs ul {
             position: relative;
