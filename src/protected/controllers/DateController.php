@@ -179,8 +179,6 @@ class DateController extends Controller {
         if (isset($_GET['Date'])) {
             $model->attributes = $_GET['Date'];
         }
-        
-
         $this->render('admin', array(
             'model' => $model,
         ));

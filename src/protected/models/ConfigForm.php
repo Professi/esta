@@ -141,7 +141,7 @@ class ConfigForm extends CFormModel {
             'databasePassword' => 'Datenbankbenutzerpasswort',
             'databaseManagementSystem' => 'Datenbankmanagementsystem',
             'logoPath' => 'Pfad des Schullogos in der Anwendung',
-            'textHeader' => 'Headertext',
+            'textHeader' => 'Headertext zwischen Anwendungslogo und Schullogo',
             'language' => 'Sprache',
             'appName' => 'Anwendungsname',
         );

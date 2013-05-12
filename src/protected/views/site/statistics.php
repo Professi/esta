@@ -19,8 +19,7 @@
  */
 /* @var $this SiteController */
 /* @var $error array */
-Yii::app()->clientScript->registerPackage('jquery');
-$this->pageTitle = Yii::app()->name . ' - Statistics';
+$this->pageTitle = Yii::app()->name . ' - Statistik';
 $this->breadcrumbs = array(
     'Error',
 );
