@@ -19,6 +19,7 @@
  */
 /* @var $this ParentChildController */
 /* @var $dataProvider CActiveDataProvider */
+$this->setPageTitle(Yii::app()->name . ' - ' .'Ihre Kinder');
 $this->breadcrumbs = array(
     'Parent Children',
 );
@@ -26,21 +27,17 @@ $this->menu = array(
     array('label' => 'Kind hinzufügen', 'url' => array('create')),
     array('label' => 'Verwalte Elternkindverknüpfungen', 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess(1)),
 );
-if (Yii::app()->user->checkAccess(1)) {
-    ?> <h1>Elternkindverknüpfungen</h1> <?
-} else {
-    ?>
-    <div class="row">
-        <div class="twelve columns">
-            <h2 class="subheader">Ihre Kinder</h2>
-            <hr/>
-            <div class="panel hide-for-print">
-                Falls Sie bei der Eingabe ihrer Kinder einen Fehler gemacht haben sollten, 
-                drücken Sie einfach auf das "x" neben dem Namen. 
-                Der Eintrag wird daraufhin entfernt und Sie können eine neue Eingabe über "Kind hinzufügen" tätigen.
-            </div>
-            <?php
-        }
+?>
+<div class="row">
+    <div class="twelve columns">
+        <h2 class="subheader">Ihre Kinder</h2>
+        <hr/>
+        <div class="panel hide-for-print">
+            Falls Sie bei der Eingabe ihrer Kinder einen Fehler gemacht haben sollten, 
+            drücken Sie einfach auf das "x" neben dem Namen. 
+            Der Eintrag wird daraufhin entfernt und Sie können eine neue Eingabe über "Kind hinzufügen" tätigen.
+        </div>
+        <?php
         $this->widget('zii.widgets.CListView', array(
             'dataProvider' => $dataProvider,
             'summaryText' => '',

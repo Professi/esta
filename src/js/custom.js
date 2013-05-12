@@ -1,5 +1,6 @@
 ;
 (function(window, document, $) {
+    
         // http://stackoverflow.com/questions/654112/how-do-you-detect-support-for-vml-or-svg-in-a-browser
         // http://forum.jquery.com/topic/add-svg-support-verification-do-jquery-support
         function supportsSvg() {
@@ -34,6 +35,7 @@
            $(this).nextAll('input').val(ui.item.value);
            $.get('index.php/?r=appointment/getteacherappointmentsajax', {teacherId: ui.item.value, classname: 'Appointment'}, function(data) {
                $('#appointment_dateAndTime_select').html(data);
+               $('#appointment_dateAndTime_select').children('select').select2();
            }, 'json'); 
         });
         
@@ -43,6 +45,7 @@
            $(this).nextAll('input').val(ui.item.value);
            $.get('index.php/?r=appointment/getteacherappointmentsajax', {teacherId: ui.item.value, classname: 'BlockedAppointment'}, function(data) {
                $('#appointment_dateAndTime_select').html(data);
+               $('#appointment_dateAndTime_select').children('select').select2();
            }, 'json'); 
         });        
         
@@ -54,7 +57,8 @@
            blockDefaultAction(e);
            $(this).val(ui.item.label);
            $.get('index.php/?r=appointment/getselectchildrenajax', {id: ui.item.value}, function(data) {
-              $('#appointment_parent_select').html(data); 
+              $('#appointment_parent_select').html(data);
+              $('#appointment_parent_select').children('select').select2();
            }, 'json');
         });
         
@@ -96,9 +100,14 @@
         
         // ** Felder in Config ein-, ausschalten **
         
-        $('select[id$="_allowBlockingAppointments"], select[id$="_banUsers"], select[id$="_mailsActivated"]').on('change', function($this) {
-            $switch = ($this.target['value'] === "0") ? true : false;
-            $($this.target).parents('fieldset').children('.row:gt(0)').children('.four').children('input, select').attr('disabled',$switch);
+        $('select[id$="_allowBlockingAppointments"], select[id$="_banUsers"], select[id$="_mailsActivated"]').on('change', function(event) {
+            $switch = (event.target['value'] === "0") ? true : false;
+            $(event.target).parents('fieldset').children('.row:gt(0)').children('.four').children('input, select').attr('disabled',$switch);
+        });
+        
+        $('select[id$="_randomTeacherPassword"]').on('change', function(event) {
+            $switch = (event.target['value'] === "0") ? false : true;
+            $('input[id$="_defaultTeacherPassword"]').attr('disabled', $switch);
         });
         
         // ** Infofelder generieren **
@@ -121,12 +130,14 @@
         });
         
         $(document).ready(function() {
+            // ** Elterntagfeld lockAt mit Daten aus dem hidden input füllen. **
             if ($('#lockAt_value').val() !== "" && typeof $('#lockAt_value').val() === 'string') {
                $value = $('#lockAt_value').val();
                $arr = $value.split(' ');
                $('#date_lockAt').val($arr[0]);
                $('#time_lockAt').val($arr[1]);
             }
+            // ** Wenn der Browser SVG unterstützt die PNGs ersetzen. **
             if (supportsSvg()) {
                 $('.view').children().each(function(){$(this).attr('src',window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/'))+'/img/search.svg');});
                 $('.update').children().each(function(){$(this).attr('src',window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/'))+'/img/pencil.svg');});
@@ -135,9 +146,7 @@
             
         });
         
-        $(document).ajaxComplete(function() {
-            $('abbr[class^="select2-search-choice-close"]').remove();
-        });
+        // ** Gruppenauswahl deaktivieren wenn ein zu erstellender Benutzer nicht die Rolle Eltern hat. **
         
         $('#User_role').on('change', function(event) {
            if (event.val == 3) {

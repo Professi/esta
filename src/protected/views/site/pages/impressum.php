@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /* @var $this SiteController */
-$this->pageTitle = Yii::app()->name . ' - Impressum';
+$this->setPageTitle(Yii::app()->name . ' - ' .'Impressum');
 $this->breadcrumbs = array(
     'Impressum',
 );

@@ -18,6 +18,8 @@
 /* @var $model Appointment */
 /** @var $a_child Array Of Childs */
 /** @todo MVC anpassen */
+$this->setPageTitle(Yii::app()->name . ' - ' .'Termin vereinbaren');
+Yii::app()->clientScript->registerCssFile( Yii::app()->request->baseUrl."/css/select2.css");
 ?>
 <div class="row">
     <div class="twelve columns">
@@ -105,10 +107,8 @@
                         <span class="prefix">Für</span>
                     </div>
                     <div class="ten columns mobile-input">
-                        <div class="styled-select">
                             <?php echo $this->createSelectChildren(Yii::app()->user->getId(), get_class($model), 'parent_child_id'); ?>
                             <?php echo $form->error($model, 'parent_child_id'); ?>
-                        </div>
                     </div>
                 </div>
                 <?php echo CHtml::submitButton('Bestätigen', array('class' => 'button right')); ?>

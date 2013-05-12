@@ -19,6 +19,7 @@
  */
 /* @var $this DateController */
 /* @var $model Date */
+$this->setPageTitle(Yii::app()->name . ' - ' .'Elternsprechtag bearbeiten');
 $this->breadcrumbs = array(
     'Dates' => array('index'),
     $model->id => array('view', 'id' => $model->id),

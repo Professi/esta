@@ -20,6 +20,7 @@
 /* @var $this UserController */
 /* @var $model NewPw */
 /* @var $form CActiveForm */
+$this->setPageTitle(Yii::app()->name . ' - ' .'Passwort ändern');
 ?>
 <div class="row">
     <div class="eight columns centered">

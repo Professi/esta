@@ -19,6 +19,7 @@
  */
 /* @var $this AppointmentController */
 /* @var $dataProvider CActiveDataProvider */
+$this->setPageTitle(Yii::app()->name . ' - ' .'Ihre Termine');
 $this->breadcrumbs = array(
     'Appointments',
 );

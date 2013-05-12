@@ -19,7 +19,7 @@
  */
 /* @var $this SiteController */
 /* @var $error array */
-$this->pageTitle = Yii::app()->name . ' - Statistik';
+$this->setPageTitle(Yii::app()->name . ' - ' .'Statistik');
 $this->breadcrumbs = array(
     'Error',
 );

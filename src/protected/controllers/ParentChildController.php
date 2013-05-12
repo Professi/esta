@@ -139,7 +139,7 @@ class ParentChildController extends Controller {
         if (!isset($_GET['ajax']) && Yii::app()->user->checkAccess('1')) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
         } else {
-            $this->redirect('index.php?r=/parentChild/index');
+           $this->redirect(array('index'));
         }
     }
 

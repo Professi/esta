@@ -20,7 +20,7 @@
 /* @var $this SiteController */
 /* @var $model ContactForm */
 /* @var $form CActiveForm */
-$this->pageTitle = Yii::app()->name . ' - Kontakt';
+$this->setPageTitle(Yii::app()->name . ' - ' .'Kontakt');
 $this->breadcrumbs = array(
     'contact',
 );

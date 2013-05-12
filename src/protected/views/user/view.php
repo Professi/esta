@@ -19,6 +19,7 @@
  */
 /* @var $this UserController */
 /* @var $model User */
+$this->setPageTitle(Yii::app()->name . ' - ' .'Benutzerkonto');
 $this->breadcrumbs = array(
     'Users' => array('index'),
     $model->id,
@@ -113,7 +114,7 @@ $this->menu = array(
                     ?>
                 </fieldset>
 
-            <?php } if ($model->childCount > 0) {
+            <?php } if ($model->childCount > 0 && Yii::app()->user->checkAccess('1')) {
                 ?>
                 <h4 class="subheader">Kinder</h4>
                 <?php foreach (ParentChild::model()->findAllByAttributes(array('user_id' => $model->id)) as $parentChild) {

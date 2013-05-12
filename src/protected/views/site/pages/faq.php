@@ -19,7 +19,7 @@
  */
 /* @var $this SiteController */
 /* @var $error array */
-$this->pageTitle = Yii::app()->name . ' - FAQ';
+$this->setPageTitle(Yii::app()->name . ' - ' .'FAQ');
 $this->breadcrumbs = array(
     'FAQ',
 );

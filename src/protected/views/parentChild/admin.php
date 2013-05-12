@@ -19,6 +19,7 @@
  */
 /* @var $this ParentChildController */
 /* @var $model ParentChild */
+$this->setPageTitle(Yii::app()->name . ' - ' .'Eltern-Kind Verwaltung');
 
 $this->breadcrumbs = array(
     'Parent Children' => array('index'),
@@ -43,7 +44,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'child_id', 'value' => '$data->child->firstname." ".$data->child->lastname'),
         array(
             'class' => 'CustomButtonColumn',
-            'template' => '{view} {delete}',
+            'template' => '{delete}',
         ),
     ),
 ));

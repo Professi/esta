@@ -532,7 +532,8 @@ class AppointmentController extends Controller {
             $a_optionsDisabledAppointments[$selectedDateAndTime] = array('selected' => true);
             $a_options = array('options' => $a_optionsDisabledAppointments, 'prompt' => 'Wählen Sie einen Termin aus');
         }
-        return CHtml::dropDownList($nameForm . '[' . $nameField . ']', '', $selectContent, $a_options);
+        return Select2::dropDownList($nameForm . '[' . $nameField . ']', '', $selectContent, $a_options);
+//        return CHtml::dropDownList($nameForm . '[' . $nameField . ']', '', $selectContent, $a_options);
     }
 
     /**
@@ -557,7 +558,8 @@ class AppointmentController extends Controller {
             $a_optionsInner[$selectedChild] = array('selected' => true);
             $a_options = array('options' => $a_optionsInner);
         }
-        return CHtml::dropDownList($nameForm . '[' . $nameField . ']', '', $selectContent, $a_options);
+        return Select2::dropDownList($nameForm . '[' . $nameField . ']', '', $selectContent, $a_options);
+//        return CHtml::dropDownList($nameForm . '[' . $nameField . ']', '', $selectContent, $a_options);
     }
 
     /**

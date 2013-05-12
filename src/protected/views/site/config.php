@@ -134,9 +134,10 @@ $this->setPageTitle(Yii::app()->name . ' - ' .'Konfiguration');
         <div class="eight columns">
             <span class="prefix"><?php echo $form->label($model, 'randomTeacherPassword'); ?></span>
         </div>
-        <div class="four columns styled-select">
+        <div class="four columns ">
             <?php
-            echo $form->dropDownList($model, 'randomTeacherPassword', array('1' => 'Ja', '0' => 'Nein'));
+//            echo $form->dropDownList($model, 'randomTeacherPassword', array('1' => 'Ja', '0' => 'Nein'));
+            echo Select2::activeDropDownList($model, 'randomTeacherPassword', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
             echo $form->error($model, 'randomTeacherPassword');
             ?>
         </div>
@@ -156,9 +157,10 @@ $this->setPageTitle(Yii::app()->name . ' - ' .'Konfiguration');
         <div class="eight columns">
             <span class="prefix"><?php echo $form->label($model, 'lockRegistration'); ?></span>
         </div>
-        <div class="four columns styled-select">
+        <div class="four columns">
             <?php
-            echo $form->dropDownList($model, 'lockRegistration', array('1' => 'Ja', '0' => 'Nein'));
+//            echo $form->dropDownList($model, 'lockRegistration', array('1' => 'Ja', '0' => 'Nein'));
+            echo Select2::activeDropDownList($model, 'lockRegistration', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
             echo $form->error($model, 'lockRegistration');
             ?>
         </div>
@@ -175,9 +177,10 @@ $this->setPageTitle(Yii::app()->name . ' - ' .'Konfiguration');
                         Damit kann der Zugriff von Benutzern auf Elternsprechtage beschr&auml;nkt werden. Jeder TAN kann eine bestimmte Gruppe zugewiesen werden. Elternsprechtage ohne Gruppen sind frei zugänglich für registrierte Benutzer. Benutzer ohne Gruppe können an jedem Elternsprechtag Termine buchen.
                     </div>
                 </div>
-        <div class="four columns styled-select">
+        <div class="four columns">
             <?php
-            echo $form->dropDownList($model, 'allowGroups', array('1' => 'Ja', '0' => 'Nein'));
+//            echo $form->dropDownList($model, 'allowGroups', array('1' => 'Ja', '0' => 'Nein'));
+            echo Select2::activeDropDownList($model, 'allowGroups', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
             echo $form->error($model, 'allowGroups');
             ?>
         </div>
@@ -216,9 +219,18 @@ $this->setPageTitle(Yii::app()->name . ' - ' .'Konfiguration');
         <div class="eight columns">
             <span class="prefix"><?php echo $form->label($model, 'databaseManagementSystem'); ?></span>
         </div>
-        <div class="four columns styled-select">
+        <div class="four columns">
             <?php
-            echo $form->dropDownList($model, 'databaseManagementSystem', array('mysql' => 'MySQL', 'pgsql' => 'PostgreSQL(nicht getestet)', 'oci' => 'Oracle Datenbank(nicht getestet)', 'mssql' => 'Microsoft SQL Server(nicht getestet)'));
+//            echo $form->dropDownList($model, 'databaseManagementSystem', array('mysql' => 'MySQL', 'pgsql' => 'PostgreSQL(nicht getestet)', 'oci' => 'Oracle Datenbank(nicht getestet)', 'mssql' => 'Microsoft SQL Server(nicht getestet)'));
+            echo Select2::activeDropDownList($model,
+                                            'databaseManagementSystem',
+                                            array('mysql' => 'MySQL',
+                                                'pgsql' => 'PostgreSQL(nicht getestet)',
+                                                'oci' => 'Oracle Datenbank(nicht getestet)',
+                                                'mssql' => 'Microsoft SQL Server(nicht getestet)'
+                                                ),
+                                            array('select2Options' => array('minimumResultsForSearch' => 10))
+                                            );
             echo $form->error($model, 'databaseManagementSystem');
             ?>
         </div>
@@ -340,9 +352,10 @@ $this->setPageTitle(Yii::app()->name . ' - ' .'Konfiguration');
         <div class="eight columns">
             <span class="prefix"><?php echo $form->label($model, 'useSchoolEmailForContactForm'); ?></span>
         </div>
-        <div class="four columns styled-select">
+        <div class="four columns">
             <?php
-            echo $form->dropDownList($model, 'useSchoolEmailForContactForm', array('1' => 'Ja', '0' => 'Nein'));
+//            echo $form->dropDownList($model, 'useSchoolEmailForContactForm', array('1' => 'Ja', '0' => 'Nein'));
+            echo Select2::activeDropDownList($model, 'useSchoolEmailForContactForm', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
             echo $form->error($model, 'useSchoolEmailForContactForm');
             ?>
         </div>
@@ -390,9 +403,10 @@ $this->setPageTitle(Yii::app()->name . ' - ' .'Konfiguration');
         <div class="eight columns">
             <span class="prefix"><?php echo $form->label($model, 'mailsActivated'); ?></span>
         </div>
-        <div class="four columns styled-select">
+        <div class="four columns">
             <?php
-            echo $form->dropDownList($model, 'mailsActivated', array('1' => 'Ja', '0' => 'Nein'));
+//            echo $form->dropDownList($model, 'mailsActivated', array('1' => 'Ja', '0' => 'Nein'));
+            echo Select2::activeDropDownList($model, 'mailsActivated', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
             echo $form->error($model, 'mailsActivated');
             ?>
         </div>
@@ -459,9 +473,10 @@ $this->setPageTitle(Yii::app()->name . ' - ' .'Konfiguration');
         <div class="eight columns">
             <span class="prefix"><?php echo $form->label($model, 'banUsers'); ?></span>
         </div>
-        <div class="four columns styled-select">
+        <div class="four columns">
             <?php
-            echo $form->dropDownList($model, 'banUsers', array('1' => 'Ja', '0' => 'Nein'));
+//            echo $form->dropDownList($model, 'banUsers', array('1' => 'Ja', '0' => 'Nein'));
+            echo Select2::activeDropDownList($model, 'banUsers', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
             echo $form->error($model, 'banUsers');
             ?>
         </div>
@@ -495,9 +510,10 @@ $this->setPageTitle(Yii::app()->name . ' - ' .'Konfiguration');
         <div class="eight columns">
             <span class="prefix"><?php echo $form->label($model, 'allowBlockingAppointments'); ?></span>
         </div>
-        <div class="four columns styled-select">
+        <div class="four columns">
             <?php
-            echo $form->dropDownList($model, 'allowBlockingAppointments', array('1' => 'Ja', '0' => 'Nein'));
+//            echo $form->dropDownList($model, 'allowBlockingAppointments', array('1' => 'Ja', '0' => 'Nein'));
+            echo Select2::activeDropDownList($model, 'allowBlockingAppointments', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
             echo $form->error($model, 'allowBlockingAppointments');
             ?>
         </div>
@@ -506,9 +522,10 @@ $this->setPageTitle(Yii::app()->name . ' - ' .'Konfiguration');
         <div class="eight columns">
             <span class="prefix"><?php echo $form->label($model, 'allowBlockingOnlyForManagement'); ?></span>
         </div>
-        <div class="four columns styled-select">
+        <div class="four columns">
             <?php
-            echo $form->dropDownList($model, 'allowBlockingOnlyForManagement', array('1' => 'Ja', '0' => 'Nein'), $optionsBlocks);
+//            echo $form->dropDownList($model, 'allowBlockingOnlyForManagement', array('1' => 'Ja', '0' => 'Nein'), $optionsBlocks);
+            echo Select2::activeDropDownList($model, 'allowBlockingOnlyForManagement', array('1' => 'Ja', '0' => 'Nein'), array($optionsBlocks, 'select2Options' => array('minimumResultsForSearch' => 10)));
             echo $form->error($model, 'allowBlockingOnlyForManagement');
             ?>
         </div>

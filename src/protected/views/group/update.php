@@ -16,6 +16,7 @@
  */
 /* @var $this GroupController */
 /* @var $model Group */
+$this->setPageTitle(Yii::app()->name . ' - ' .'Gruppe bearbeiten');
 $this->breadcrumbs = array(
     'Group' => array('index'),
     $model->id => array('view', 'id' => $model->id),

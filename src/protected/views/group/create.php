@@ -16,6 +16,7 @@
  */
 /* @var $this GroupController */
 /* @var $model Group */
+$this->setPageTitle(Yii::app()->name . ' - ' .'Gruppe anlegen');
 $this->breadcrumbs = array(
     'Groups' => array('admin'),
     'Create',

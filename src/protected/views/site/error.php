@@ -19,7 +19,7 @@
  */
 /* @var $this SiteController */
 /* @var $error array */
-$this->pageTitle = Yii::app()->name . ' - Error';
+$this->setPageTitle(Yii::app()->name . ' - ' .'Fehler');
 $this->breadcrumbs = array(
     'Error',
 );

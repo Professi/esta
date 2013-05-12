@@ -47,7 +47,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <div class="three columns">
         <span class="prefix">Kind</span>
     </div>
-    <div class="nine columns styled-select" id="appointment_parent_select">
+    <div class="nine columns" id="appointment_parent_select">
         <?php
         echo $this->createSelectChildren($parentId, get_class($model), 'parent_child_id', $model->attributes['parent_child_id']);
         ?>
@@ -83,7 +83,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <div class="three columns">
         <span class="prefix">Termin</span>
     </div>
-    <div class="nine columns styled-select" id="appointment_dateAndTime_select">
+    <div class="nine columns" id="appointment_dateAndTime_select">
         <?php
         echo $this->createSelectTeacherDates($model->attributes['user_id'], get_class($model), 'dateAndTime_id', $model->attributes['dateAndTime_id']);
         echo $form->error($model, 'dateAndTime_id');

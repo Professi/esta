@@ -19,6 +19,7 @@
  */
 /* @var $this UserController */
 /* @var $model ChangePwd */
+$this->setPageTitle(Yii::app()->name . ' - ' .'Passwort zurücksetzen');
 ?>
 <div class="row">
     <div class="nine columns centered">

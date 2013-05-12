@@ -19,6 +19,7 @@
  */
 /* @var $this TanController */
 /* @var $model tan */
+$this->setPageTitle(Yii::app()->name . ' - ' .'Tan Generierung');
 Yii::app()->clientScript->registerCssFile( Yii::app()->request->baseUrl."/css/select2.css");
 ?>
 <div class="row">
