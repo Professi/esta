@@ -20,7 +20,7 @@
 /* @var $this TanController */
 /* @var $model tan */
 $this->setPageTitle(Yii::app()->name . ' - ' .'Tan Generierung');
-Yii::app()->clientScript->registerCssFile( Yii::app()->request->baseUrl."/css/select2.css");
+Yii::app()->clientScript->registerCssFile( Yii::app()->request->baseUrl."/css/select2.min.css");
 ?>
 <div class="row">
     <div class="twelve columns centered">

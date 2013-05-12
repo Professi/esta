@@ -342,7 +342,7 @@ ul.button-group li {
 	padding: .2em .2em 0;
 	display: none;
 }
-.ui-datepicker .ui-datepicker-header {
+.ui-datepicker .ui-datepicker-header, .ui-timepicker-div .ui-widget-header  {
         background: rgba(0, 0, 0, 0.46);
 	position: relative;
 	padding: .2em 0;
@@ -481,7 +481,7 @@ ul.button-group li {
 	background-image: url(../img/ui-icons_d8e7f3_256x240.png);
 }
 .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
-.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl { text-align: left; padding: 0.5em; }
 .ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
 .ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
 .ui-timepicker-div td { font-size: 90%; }
@@ -518,6 +518,7 @@ background-position:0 0;
 height:.8em;
 width: 12em;
 margin-top: 5px;
+border: 1px solid #ccc;
 }
 
 .ui-slider-horizontal .ui-slider-handle {

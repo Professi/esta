@@ -52,17 +52,17 @@ return array(
             'packages' => array(//nicht ändern
                 'css' => array(//nicht ändern
                     'baseUrl' => 'css/', //nicht ändern
-                    'css' => array('foundation.min.css', 'icons.css', 'app.css') //nicht ändern
+                    'css' => array('foundation.min.css', 'icons.min.css', 'app.min.css') //nicht ändern
                 ),
                 'jquery' => array(//nicht ändern
                     'baseUrl' => 'js/', //nicht ändern
-                    'js' => array('foundation.min.js', 'app.js'),
+                    'js' => array('foundation.min.js', 'app.min.js'),
                     'depends' => array('css'),
                 ),
                 'admin' => array(
                     'baseUrl' => '',
-                    'css' => array( 'css/select2.css'),
-                    'js' => array('js/custom.js'),
+                    'css' => array( 'css/select2.min.css'),
+                    'js' => array('js/custom.min.js'),
                 ),
             ),
             'scriptMap' => array(//nicht ändern

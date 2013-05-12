@@ -19,7 +19,7 @@
 /** @var $a_child Array Of Childs */
 /** @todo MVC anpassen */
 $this->setPageTitle(Yii::app()->name . ' - ' .'Termin vereinbaren');
-Yii::app()->clientScript->registerCssFile( Yii::app()->request->baseUrl."/css/select2.css");
+Yii::app()->clientScript->registerCssFile( Yii::app()->request->baseUrl."/css/select2.min.css");
 ?>
 <div class="row">
     <div class="twelve columns">
