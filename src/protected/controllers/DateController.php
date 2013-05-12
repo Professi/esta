@@ -176,8 +176,10 @@ class DateController extends Controller {
     public function actionAdmin() {
         $model = new Date('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Date']))
+        if (isset($_GET['Date'])) {
             $model->attributes = $_GET['Date'];
+        }
+        
 
         $this->render('admin', array(
             'model' => $model,

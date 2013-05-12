@@ -111,7 +111,7 @@ class Date extends CActiveRecord {
             'criteria' => $criteria,
         ));
     }
-
+    
     /**
      * Prüft nach der erfolgreichen Validierung ob das Ende vor dem Anfang liegt.
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
