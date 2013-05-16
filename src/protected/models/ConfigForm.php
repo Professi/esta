@@ -17,6 +17,11 @@
  */
 class ConfigForm extends CFormModel {
 
+    const pgsql = 'pgsql';
+    const mysql = 'mysql';
+    const oracle = 'oci';
+    const mssql = 'mssql';
+
     public $adminEmail;
     public $dateTimeFormat;
     public $emailHost;
@@ -152,26 +157,26 @@ class ConfigForm extends CFormModel {
             'id' => 'pk',
             'firstname' => 'string NOT NULL',
             'lastname' => 'string NOT NULL',
-                ), 'DEFAULT CHARSET=utf8');
+                ), $this->getCollation());
         $command->createTable("YiiSession", array(
             'id' => 'string NOT NULL',
             'expire' => 'integer',
             'data' => 'longblob',
-                ), 'DEFAULT CHARSET=utf8');
+                ), $this->getCollation());
         $command->createTable("YiiCache", array(
             'id' => 'string NOT NULL',
             'expire' => 'integer',
             'value' => 'longblob',
-                ), 'DEFAULT CHARSET=utf8');
+                ), $this->getCollation());
         $command->createTable('group', array(
             'id' => 'pk',
             'groupname' => 'string NOT NULL'
-                ), 'DEFAULT CHARSET=utf8');
+                ), $this->getCollation());
         $command->createTable('role', array(
             'id' => 'integer PRIMARY KEY',
             'title' => 'string NOT NULL',
             'description' => 'string',
-                ), 'DEFAULT CHARSET=utf8');
+                ), $this->getCollation());
         $command->createTable('user', array(
             'id' => 'pk',
             'username' => 'string NOT NULL',
@@ -179,29 +184,29 @@ class ConfigForm extends CFormModel {
             'activationKey' => 'string NOT NULL',
             'createtime' => 'timestamp',
             'firstname' => 'string NOT NULL',
-            'lastname' => 'string CHARACTER SET utf8 COLLATE utf8_bin NOT NULL',
+            'lastname' => 'string ' . $this->getCollation(true) . ' NOT NULL',
             'title' => 'string',
             'state' => 'tinyint(3)',
             'lastLogin' => 'bigint DEFAULT "0"',
             'badLogins' => 'tinyint(4)',
             'bannedUntil' => 'bigint DEFAULT "0"', //maybe Int
             'password' => 'string',
-                ), 'DEFAULT CHARSET=utf8');
+                ), $this->getCollation());
         $command->createTable('user_role', array(
             'id' => 'pk',
             'role_id' => 'integer NOT NULL',
             'user_id' => 'integer NOT NULL',
-                ), 'DEFAULT CHARSET=utf8');
+                ), $this->getCollation());
         $command->createTable('tan', array(
             'tan' => 'integer UNIQUE',
             'used' => 'boolean',
             'group_id' => 'integer NULL',
-                ), 'DEFAULT CHARSET=utf8');
+                ), $this->getCollation());
         $command->createTable('parent_child', array(
             'id' => 'pk',
             'user_id' => 'integer NOT NULL',
             'child_id' => 'integer NOT NULL',
-                ), 'DEFAULT CHARSET=utf8');
+                ), $this->getCollation());
         $command->createTable('date', array(
             'id' => 'pk',
             'title' => 'string NULL',
@@ -210,34 +215,63 @@ class ConfigForm extends CFormModel {
             'end' => 'time NOT NULL',
             'lockAt' => 'integer NOT NULL',
             'durationPerAppointment' => 'int(3)',
-                ), 'DEFAULT CHARSET=utf8');
+                ), $this->getCollation());
         $command->createTable('date_has_group', array(
             'id' => 'pk',
             'date_id' => 'integer',
             'group_id' => 'integer',
-                ), 'DEFAULT CHARSET=utf8');
+                ), $this->getCollation());
         $command->createTable('user_has_group', array(
             'id' => 'pk',
             'user_id' => 'integer',
             'group_id' => 'integer',
-                ), 'DEFAULT CHARSET=utf8');
+                ), $this->getCollation());
         $command->createTable('dateAndTime', array(
             'id' => 'pk',
             'time' => 'time NOT NULL',
             'date_id' => 'integer',
-                ), 'DEFAULT CHARSET=utf8');
+                ), $this->getCollation());
         $command->createTable('appointment', array(
             'id' => 'pk',
             'parent_child_id' => 'integer',
             'user_id' => 'integer',
             'dateAndTime_id' => 'integer',
-                ), 'DEFAULT CHARSET=utf8');
+                ), $this->getCollation());
         $command->createTable('blockedAppointment', array(
             'id' => 'pk',
             'reason' => 'text',
             'dateAndTime_id' => 'integer',
             'user_id' => 'integer',
-                ), 'DEFAULT CHARSET=utf8');
+                ), $this->getCollation());
+    }
+
+    private function mysqlCharset() {
+        return 'DEFAULT CHARSET=utf8';
+    }
+
+    private function pgsqlCharset() {
+        return 'ENCODING "UTF8"';
+    }
+
+    private function mysqlCSColumnCharset() {
+        return 'CHARACTER SET utf8 COLLATE utf8_bin';
+    }
+
+    private function pgsqlCSColumnCharset() {
+        return 'COLLATE ' . strtolower($this->getParam('language')) . '_' . strtoupper($this->getParam('language'));
+    }
+
+    public function getCollation($column = false) {
+        $rc = '';
+        switch ($this->getDBMS()) {
+            case ConfigForm::mysql:
+                $rc = $column ? $this->mysqlCSColumnCharset() : $this->mysqlCharset();
+                break;
+            case ConfigForm::pgsql:
+                $rc = $column ? $this->pgsqlCSColumnCharset() : $this->pgsqlCharset();
+                break;
+        }
+        return $rc;
     }
 
     private function createIndices($command) {
@@ -321,8 +355,21 @@ class ConfigForm extends CFormModel {
         return $rc;
     }
 
+    public function getDBMS() {
+        return $this->getParam('databaseManagementSystem');
+    }
+
+    public function getParam($param) {
+        $params = $this->getParams();
+        return $params[$param];
+    }
+
+    public function getParams() {
+        return Yii::app()->params;
+    }
+
     public function getConnection() {
-        $connection = new CDbConnection(Yii::app()->params['databaseManagementSystem'] . ':host=' . Yii::app()->params['databaseHost'] . ';dbname=' . Yii::app()->params['databaseName'], Yii::app()->params['databaseUsername'], Yii::app()->params['databasePassword']);
+        $connection = new CDbConnection($this->getDBMS() . ':host=' . $this->getParam('databaseHost') . ';dbname=' . $this->getParam('databaseName'), $this->getParam('databaseUsername'), $this->getParam('databasePassword'));
         $connection->setActive(true);
         return $connection;
     }

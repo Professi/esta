@@ -21,6 +21,7 @@
 /* @var $model ConfigForm */
 /* @var $form CActiveForm */
 $this->setPageTitle(Yii::app()->name . ' - ' .'Konfiguration');
+                Yii::app()->clientScript->registerPackage('admin');
 ?>
 <div class="form">
     <?php
@@ -226,8 +227,6 @@ $this->setPageTitle(Yii::app()->name . ' - ' .'Konfiguration');
                                             'databaseManagementSystem',
                                             array('mysql' => 'MySQL',
                                                 'pgsql' => 'PostgreSQL(nicht getestet)',
-                                                'oci' => 'Oracle Datenbank(nicht getestet)',
-                                                'mssql' => 'Microsoft SQL Server(nicht getestet)'
                                                 ),
                                             array('select2Options' => array('minimumResultsForSearch' => 10))
                                             );
