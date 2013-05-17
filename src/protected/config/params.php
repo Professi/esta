@@ -66,6 +66,7 @@ if (empty($arr)) {
     return $array2;
 } else {
     return CMap::mergeArray($array2, $arr);
+    
   // return array_replace($array2, $arr);
 }
 ?>
