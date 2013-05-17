@@ -96,9 +96,7 @@ class SiteController extends Controller {
                         $model->installed = 1;
                         Yii::app()->user->setFlash('success', $msg);
                         $this->redirect('index.php');
-                    } else {
-                        Yii::app()->user->setFlash('failMsg', 'Verbindung zur Datenbank konnte nicht hergestellt werden.');
-                    }
+                    } 
                 } else {
                     Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert. Die Einstellungen werden bei dem nächsten Seitenaufruf verwendet.');
                 }

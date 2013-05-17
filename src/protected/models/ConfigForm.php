@@ -56,6 +56,7 @@ class ConfigForm extends CFormModel {
     public $lockRegistration;
     public $allowGroups;
     public $databaseHost;
+    public $databasePort;
     public $databaseName;
     public $databaseUsername;
     public $databasePassword;
@@ -64,6 +65,8 @@ class ConfigForm extends CFormModel {
     public $textHeader;
     public $appName;
     public $language;
+    private $firstRead = true;
+    private $params;
 
     public function init() {
         $this->attributes = Yii::app()->params->toArray();
@@ -78,7 +81,7 @@ class ConfigForm extends CFormModel {
                 'durationTempBans,maxAttemptsForLogin,timeFormat,dateFormat,' .
                 'allowBlockingAppointments,appointmentBlocksPerDate,' .
                 'lengthReasonAppointmentBlocked,schoolStreet,schoolCity,' .
-                'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,lockRegistration,allowGroups,' .
+                'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,lockRegistration,allowGroups,databasePort,' .
                 'databaseHost,databaseName,databaseUsername,databasePassword,databaseManagementSystem,logoPath,textHeader,language,appName'
                 , 'required'),
             array('fromMailHost,adminEmail,schoolEmail', 'email'),
@@ -93,7 +96,7 @@ class ConfigForm extends CFormModel {
                 'boolean'),
             array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,'
                 . 'durationTempBans,maxAttemptsForLogin,appointmentBlocksPerDate,'
-                . 'lengthReasonAppointmentBlocked',
+                . 'lengthReasonAppointmentBlocked,databasePort',
                 'numerical', 'integerOnly' => true),
             array('adminEmail,dateTimeFormat,emailHost,fromMailHost,fromMail' .
                 ',teacherMail,schoolName,virtualHost,mailsActivated,maxChild,'
@@ -342,9 +345,9 @@ class ConfigForm extends CFormModel {
                 $this->addForeignKeys($command);
                 $this->createIndices($command);
                 $this->fillTable($command);
-            } catch (Exception $e) {
+            } catch (CException $e) {
                 Yii::app()->user->setFlash('failMsg', 'Die Datenbanktabellen konnten nicht angelegt werden. Entweder sind diese schon vorhanden oder es trat ein Fehler auf.');
-                Yii::log($e, CLogger::LEVEL_ERROR, 'application.models.configForm');
+                Yii::log($e->getMessage(), CLogger::LEVEL_ERROR, 'application.models.configForm');
                 $rc = true;
             }
         } else {
@@ -357,6 +360,7 @@ class ConfigForm extends CFormModel {
 
     public function getDBMS() {
         return $this->getParam('databaseManagementSystem');
+        
     }
 
     public function getParam($param) {
@@ -365,12 +369,22 @@ class ConfigForm extends CFormModel {
     }
 
     public function getParams() {
-        return Yii::app()->params;
+        if ($this->firstRead) {
+            $this->firstRead = false;
+            $this->params = require (__DIR__ . '/../config/params.php');
+        }
+        return $this->params;
     }
 
     public function getConnection() {
         $connection = new CDbConnection($this->getDBMS() . ':host=' . $this->getParam('databaseHost') . ';dbname=' . $this->getParam('databaseName'), $this->getParam('databaseUsername'), $this->getParam('databasePassword'));
+       try{
         $connection->setActive(true);
+       } catch(CException $ex) {
+            Yii::log($ex->getMessage(), CLogger::LEVEL_ERROR, 'application.models.configForm');
+           Yii::app()->user->setFlash('failMsg','Verbindung zur Datenbank konnte nicht hergestellt werden. <br>' . $ex->getMessage());
+       }
+        echo $this->getDBMS();
         return $connection;
     }
 

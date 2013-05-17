@@ -57,6 +57,7 @@ $array2 = array(
     'databaseName' => 'estdb',
     'databaseUsername' => 'estdb',
     'databasePassword' => 'qwertzuiop',
+    'databasePort' => '3306',
     'databaseManagementSystem' => 'mysql',
     'logoPath' => '/img/logo.png',
     'textHeader' => 'der',
@@ -66,7 +67,6 @@ if (empty($arr)) {
     return $array2;
 } else {
     return CMap::mergeArray($array2, $arr);
-    
   // return array_replace($array2, $arr);
 }
 ?>

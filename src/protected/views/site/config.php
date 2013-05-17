@@ -245,6 +245,17 @@ $this->setPageTitle(Yii::app()->name . ' - ' .'Konfiguration');
             ?>
         </div>
     </div>
+        <div class="row collapse">
+        <div class="eight columns">
+            <span class="prefix"><?php echo $form->label($model, 'databasePort'); ?></span>
+        </div>
+        <div class="four columns">
+            <?php
+            echo $form->passwordField($model, 'databasePort');
+            echo $form->error($model, 'databasePort');
+            ?>
+        </div>
+    </div>
     <div class="row collapse">
         <div class="eight columns">
             <span class="prefix"><?php echo $form->label($model, 'databaseName'); ?></span>

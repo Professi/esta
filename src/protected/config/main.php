@@ -89,7 +89,7 @@ return array(
             'connectionID' => 'db', //nicht ändern
         ),
         'db' => array(
-            'connectionString' => $params['databaseManagementSystem'] . ':host=' . $params['databaseHost'] . ';dbname=' . $params['databaseName'], //entsprechen der eigenen Datenbank anpassen  Beispiel: mysql:host=HOST;dbname=DBNAME
+            'connectionString' => $params['databaseManagementSystem'] . ':host=' . $params['databaseHost'] . ';port=' . $params['databasePort'].';dbname=' . $params['databaseName'], //entsprechen der eigenen Datenbank anpassen  Beispiel: mysql:host=HOST;dbname=DBNAME
             'emulatePrepare' => true, //nicht ändern
             'enableProfiling' => true, //nicht ändern - Entwicklungsparameter wird später auf false gesetzt für Performancegewinn
             'username' => $params['databaseUsername'], //DB User bitte anpassen

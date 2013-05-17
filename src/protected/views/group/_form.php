@@ -27,7 +27,7 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
     <div class="nine columns mobile-input">
         <?php
-        echo $form->textField($model, 'groupname', array('size' => 10, 'maxlength' => 10));
+        echo $form->textField($model, 'groupname', array('size' => 10, 'maxlength' => 255));
         echo $form->error($model, 'groupname');
         ?>
     </div>
