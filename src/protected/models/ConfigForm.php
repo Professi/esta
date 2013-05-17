@@ -151,6 +151,7 @@ class ConfigForm extends CFormModel {
             'textHeader' => 'Headertext zwischen Anwendungslogo und Schullogo',
             'language' => 'Sprache',
             'appName' => 'Anwendungsname',
+            'databasePort' => 'Datenbankport',
         );
     }
 

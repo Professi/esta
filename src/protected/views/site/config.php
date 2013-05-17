@@ -251,7 +251,7 @@ $this->setPageTitle(Yii::app()->name . ' - ' .'Konfiguration');
         </div>
         <div class="four columns">
             <?php
-            echo $form->passwordField($model, 'databasePort');
+            echo $form->textField($model, 'databasePort');
             echo $form->error($model, 'databasePort');
             ?>
         </div>
