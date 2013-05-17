@@ -19,7 +19,6 @@ class ConfigForm extends CFormModel {
 
     const pgsql = 'pgsql';
     const mysql = 'mysql';
-    const oracle = 'oci';
     const mssql = 'mssql';
 
     public $adminEmail;
@@ -161,12 +160,12 @@ class ConfigForm extends CFormModel {
         $command->createTable("YiiSession", array(
             'id' => 'string NOT NULL',
             'expire' => 'integer',
-            'data' => 'longblob',
+            'data' => 'binary',
                 ), $this->getCollation());
         $command->createTable("YiiCache", array(
             'id' => 'string NOT NULL',
             'expire' => 'integer',
-            'value' => 'longblob',
+            'value' => 'binary',
                 ), $this->getCollation());
         $command->createTable('group', array(
             'id' => 'pk',
@@ -182,14 +181,14 @@ class ConfigForm extends CFormModel {
             'username' => 'string NOT NULL',
             'email' => 'string',
             'activationKey' => 'string NOT NULL',
-            'createtime' => 'timestamp',
+            'createtime' => 'bigint',
             'firstname' => 'string NOT NULL',
             'lastname' => 'string ' . $this->getCollation(true) . ' NOT NULL',
             'title' => 'string',
-            'state' => 'tinyint(3)',
-            'lastLogin' => 'bigint DEFAULT "0"',
-            'badLogins' => 'tinyint(4)',
-            'bannedUntil' => 'bigint DEFAULT "0"', //maybe Int
+            'state' => 'smallint',
+            'lastLogin' => 'bigint DEFAULT 0',
+            'badLogins' => 'smallint DEFAULT 0',
+            'bannedUntil' => 'bigint DEFAULT 0',
             'password' => 'string',
                 ), $this->getCollation());
         $command->createTable('user_role', array(
@@ -213,8 +212,8 @@ class ConfigForm extends CFormModel {
             'date' => 'date NOT NULL',
             'begin' => 'time NOT NULL',
             'end' => 'time NOT NULL',
-            'lockAt' => 'integer NOT NULL',
-            'durationPerAppointment' => 'int(3)',
+            'lockAt' => 'bigint NOT NULL',
+            'durationPerAppointment' => 'smallint',
                 ), $this->getCollation());
         $command->createTable('date_has_group', array(
             'id' => 'pk',
@@ -250,7 +249,7 @@ class ConfigForm extends CFormModel {
     }
 
     private function pgsqlCharset() {
-        return 'ENCODING "UTF8"';
+        return 'ENCODING \'UTF8\'';
     }
 
     private function mysqlCSColumnCharset() {
@@ -258,7 +257,7 @@ class ConfigForm extends CFormModel {
     }
 
     private function pgsqlCSColumnCharset() {
-        return 'COLLATE ' . strtolower($this->getParam('language')) . '_' . strtoupper($this->getParam('language'));
+        return 'COLLATE "' . strtolower($this->getParam('language')) . '_' . strtoupper($this->getParam('language') . '"');
     }
 
     public function getCollation($column = false) {
@@ -268,7 +267,8 @@ class ConfigForm extends CFormModel {
                 $rc = $column ? $this->mysqlCSColumnCharset() : $this->mysqlCharset();
                 break;
             case ConfigForm::pgsql:
-                $rc = $column ? $this->pgsqlCSColumnCharset() : $this->pgsqlCharset();
+                // $rc = $column ? $this->pgsqlCSColumnCharset() : $this->pgsqlCharset();
+                $rc = '';
                 break;
         }
         return $rc;

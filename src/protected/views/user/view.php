@@ -67,7 +67,7 @@ $this->menu = array(
                     //    'value' => Role::model()->findByAttributes(array('id' => $model->role))->title),
                     'value' => $model->userRole->role->title),
                 array('name' => 'createtime',
-                    'value' => date(Yii::app()->params['dateTimeFormat'], strtotime($model->createtime))),
+                    'value' => date(Yii::app()->params['dateTimeFormat'], $model->createtime)),
                 array('name' => 'badLogins',
                     'value' => $model->badLogins == null ? '0' : $model->badLogins,
                 ),

@@ -85,14 +85,14 @@ class SiteController extends Controller {
                         $password = $user->generatePassword();
                         $user->password_repeat = $password;
                         $msg = "";
-                        if ($user->insert()) {
+                     //   if ($user->insert()) {
                             $msg = "Konfiguration aktualisiert. Außerdem wurde ein Administratorkonto erstellt. Ihr Benutzerkontenname lautet: "
                                     . $user->email . " Ihr Passwort lautet:" . $password;
                             if ($model->randomTeacherPassword) {
                                 $msg .= " .Sollten Sie nun eine Bestätigungsemail erhalten, wurde die Anwendung erfolgreich konfiguriert.";
                             }
                             $msg .= "\n Sie können sich nun einloggen.";
-                        } 
+                     //   } 
                         $model->installed = 1;
                         Yii::app()->user->setFlash('success', $msg);
                         $this->redirect('index.php');

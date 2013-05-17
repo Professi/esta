@@ -60,7 +60,7 @@ class TanController extends Controller {
         $model = new Tan();
         if (isset($_POST['Tan']) && Yii::app()->session['isTanGen'] != 1) {
             $model->attributes = $_POST['Tan'];
-            if (Yii::app()->params['allowGroups']) {
+            if (Yii::app()->params['allowGroups'] && isset($_POST['Tan']['group_id'])) {
                 $model->group_id = $_POST['Tan']['group_id'];
             }
             if ($model->validate()) {

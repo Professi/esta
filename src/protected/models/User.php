@@ -238,13 +238,13 @@ class User extends CActiveRecord {
      */
     public function searchCriteriaTeacherAutoComplete() {
         $criteria = new CDbCriteria;
+                $criteria->with = array('userRole');
         $match = addcslashes(ucfirst($this->lastname), '%_');
         $criteria->addCondition('lastname LIKE :match');
         $criteria->params = array(':match' => "$match%");
         $criteria->compare('state', $this->state, true);
-        $criteria->with = array('userRole');
         $criteria->select = 'title,firstname,lastname,id';
-        $criteria->addCondition('userRole.role_id="' . $this->role . '"');
+        $criteria->addCondition('"userRole.role_id"=' . $this->role . '');
         $criteria->limit = 10;
         return $criteria;
     }
@@ -258,8 +258,9 @@ class User extends CActiveRecord {
     public static function deleteAllCriteria() {
         $criteria = new CDbCriteria();
         $criteria->with = array('userRole');
-        $criteria->addCondition('userRole.role_id="2"', "OR");
-        $criteria->addCondition('userRole.role_id="3"', "OR");
+        $criteria->together = true;
+        $criteria->addCondition('"userRole".role_id=2', "OR");
+        $criteria->addCondition('"userRole".role_id=3', "OR");
         $criteria->select = 'id';
         return $criteria;
     }
