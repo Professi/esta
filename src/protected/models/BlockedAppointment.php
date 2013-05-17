@@ -59,8 +59,10 @@ class BlockedAppointment extends CActiveRecord {
     public function countUsedDateAndTimes() {
         $crit = new CDbCriteria();
         $crit->with = 'dateAndTime';
-        $crit->addCondition('user_id=' . $this->user_id, 'AND');
-        $crit->addCondition('dateAndTime.date_id=' . $this->dateAndTime->date_id, 'AND');
+        $crit->addCondition('user_id=:user_id', 'AND');
+        $crit->addCondition('dateAndTime.date_id=:date_id', 'AND');
+        $crit->params = array(':user_id'=>  $this->user_id,':date_id'=>  $this->dateAndTime->date_id);
+        
         return $crit;
     }
 
@@ -127,7 +129,6 @@ class BlockedAppointment extends CActiveRecord {
         );
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
-            'pagination' => array('pageSize' => 10),
             'sort' => $sort,
         ));
     }

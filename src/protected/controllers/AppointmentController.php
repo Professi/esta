@@ -382,7 +382,9 @@ class AppointmentController extends Controller {
                 $criteria->addCondition('groups.id =' . $group->id, 'OR');
             }
         }
-        $criteria->addCondition('date >="' . date('Y-m-d', time()) . '"');
+        $criteria->addCondition('date >=:date');
+        $criteria->params = array(':date'=> date('Y-m-d', time()));
+        
         return $criteria;
     }
 

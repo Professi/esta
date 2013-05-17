@@ -164,7 +164,8 @@ class User extends CActiveRecord {
             'verifyCode' => 'Sicherheitscode',
             'title' => 'Titel',
             'groups' => 'Gruppen',
-            'badLogins' => 'Ungültige Anmeldeversuche'
+            'badLogins' => 'Ungültige Anmeldeversuche',
+            'userRole'=>'Benutzerrolle',
         );
     }
 
@@ -174,15 +175,13 @@ class User extends CActiveRecord {
      */
     public function search() {
         $criteria = new CDbCriteria();
-        $criteria->with = array('userRole');
-        $criteria->together = true;
+        $criteria->with = array('userRole'=>array('together'=>true));
         $criteria->compare('firstname', $this->firstname, true);
         $criteria->compare('lastname', $this->lastname, true);
         $criteria->compare('id', $this->id, true);
         $criteria->compare('username', $this->username, true);
-        $criteria->compare('state', $this->state);
+        $criteria->compare('state', $this->state,true);
         $criteria->compare('email', $this->email, true);
-        $criteria->compare('state', $this->state, true);
         $criteria->compare('title', $this->title, true);
         $criteria->compare('userRole.role_id', $this->role, true);
         $sort = new CSort;
@@ -258,8 +257,9 @@ class User extends CActiveRecord {
     public static function deleteAllCriteria() {
         $criteria = new CDbCriteria();
         $criteria->with = array('userRole');
-        $criteria->addCondition('userRole.role_id=2', "OR");
-        $criteria->addCondition('userRole.role_id=3', "OR");
+        $criteria->addCondition('userRole.role_id=:role_id1', "OR");
+        $criteria->addCondition('userRole.role_id=:role_id2', "OR");
+        $criteria->params = array(':role_id1'=>2, ':role_id2'=>3);
         $criteria->select = 'id';
         return $criteria;
     }
@@ -273,7 +273,8 @@ class User extends CActiveRecord {
         if (is_int($role)) {
             $criteria = new CDbCriteria();
             $criteria->with = array('userRole');
-            $criteria->addCondition('userRole.role_id="' . $role . '"');
+            $criteria->addCondition('userRole.role_id=:role_id');
+            $criteria->params = array(':role_id'=>$role);
             $criteria->select = 'id';
             $a_delete = User::model()->findAll($criteria);
             foreach ($a_delete as $record) {

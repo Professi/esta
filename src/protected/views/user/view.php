@@ -64,7 +64,6 @@ $this->menu = array(
                 array('name' => 'stateName',
                     'value' => $model->getStateName()),
                 array('name' => 'userRole',
-                    //    'value' => Role::model()->findByAttributes(array('id' => $model->role))->title),
                     'value' => $model->userRole->role->title),
                 array('name' => 'createtime',
                     'value' => date(Yii::app()->params['dateTimeFormat'], $model->createtime)),

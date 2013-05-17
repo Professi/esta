@@ -190,7 +190,7 @@ class ParentChild extends CActiveRecord {
     public function searchParentChild($lastname) {
         $criteria = new CDbCriteria;
         $match = addcslashes(ucfirst($lastname), '%_');
-        $criteria->addCondition('"user"."lastname" LIKE :match');
+        $criteria->addCondition('user.lastname LIKE :match');
         $criteria->params = array(':match' => "$match%");
         $criteria->with = array('user', 'child');
         $criteria->select = '*';
