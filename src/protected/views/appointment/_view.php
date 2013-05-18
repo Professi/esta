@@ -48,6 +48,6 @@
         <div class="ten columns">
             <?php echo CHtml::encode($data->user->title . " " . $data->user->firstname . " " . $data->user->lastname); ?>
         </div>
-        <a class="small button right hide-for-print" href="index.php?r=appointment/delete&amp;id=<?php echo CHtml::encode($data->id); ?>">Termin l&ouml;schen</a>
+        <a class="small button right hide-for-print delete-appointment" href="index.php?r=appointment/delete&amp;id=<?php echo CHtml::encode($data->id); ?>">Termin l&ouml;schen</a>
     </div>
 </div>

@@ -97,4 +97,16 @@
             });
         });
         
+        $('.delete-children').on('click', function() {
+           if (!confirm('Wenn Sie dieses Kind löschen werden auch alle Termine des Kindes gelöscht.')) {
+               return false;
+           }
+        });
+        
+        $('.delete-appointment').on('click', function() {
+           if (!confirm('Termin wirklich löschen?')) {
+               return false;
+           } 
+        });
+        
     }(this, document, jQuery));
