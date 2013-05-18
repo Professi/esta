@@ -83,43 +83,23 @@ class Controller extends CController {
         return array('label' => '<span class=' . $cssClasses . ' aria-hidden="' . $ariaHidden . '" data-icon="' . $dataIcon . '">&nbsp;' . $name . '</span>', 'url' => array($url,), 'visible' => $visible);
     }
 
-    public function registerPackages() {
-        Yii::app()->clientScript->registerPackage('css');
-        $userAgent = preg_match('/MSIE [1-7]/', $_SERVER['HTTP_USER_AGENT']);
-        if (empty($userAgent)) {
-            if (YII_DEBUG) {
-                Yii::app()->clientScript->registerPackage('javascript');
-                Yii::app()->clientScript->registerPackage('jquery');
-                if (Yii::app()->user->checkAccess('1')) {
-                    Yii::app()->clientScript->registerPackage('admin');
-                }
-            } else {
-                Yii::app()->clientScript->registerPackage('javascriptDebug');
-                Yii::app()->clientScript->registerPackage('jqueryDebug');
-                if (Yii::app()->user->checkAccess('1')) {
-                    Yii::app()->clientScript->registerPackage('adminDebug');
-                }
-            }
-        }
-    }
-
     public function registerScripts() {
         $cs = Yii::app()->getClientScript();
 
-        $cs->registerCssFile($this->assetsDir . '/css/print.min.css', 'print');
+      //  $cs->registerCssFile($this->assetsDir . '/css/print.min.css', 'print');
         $userAgent = preg_match('/MSIE [1-7]/', $_SERVER['HTTP_USER_AGENT']);
         $cs->addPackage('css', array(//nicht ändern
             'baseUrl' => $this->assetsDir . '/css/', //nicht ändern
-            'css' => array('foundation.min.css', !YII_DEBUG ? 'icons.min.css' : 'icons.css', !YII_DEBUG ? 'app.min.css' : 'app.css') //nicht ändern
+            'css' => array('foundation.min.css',!YII_DEBUG ? 'icons.min.css' : 'icons.css', !YII_DEBUG ? 'app.min.css' : 'app.css') //nicht ändern
         ));
-        $cs->addPackage('jqueryNew', array(//nicht ändern
+        $cs->addPackage('jquery.js', array(//nicht ändern
             'baseUrl' => $this->assetsDir . '/js/', //nicht ändern
-            'js' => array('foundation.min.js', !YII_DEBUG ? 'app.min.js' : 'app.js'),
+            'js' => array(!YII_DEBUG ? 'app.min.js' : 'app.js'),
             'depends' => array('css'),
         ));
         $cs->registerPackage('css');
         if (empty($userAgent)) {
-            $cs->registerPackage('jqueryNew');
+            $cs->registerCoreScript('jquery.js');
         }
         $this->registerAdminScripts();
     }
@@ -129,10 +109,10 @@ class Controller extends CController {
         if (Yii::app()->user->checkAccess('1') || $admin) {
             $cs = Yii::app()->getClientScript();
             $cs->addPackage('admin', array(
-                'baseUrl' => $this->assetsDir . '/css/',
-                'css' => array(!YII_DEBUG ? 'select2.min.css' : 'select2.css'),
-                'js' => array(!YII_DEBUG ? 'custom.min.js' : 'custom.js'),
-                'depends' => array('jqueryNew'),
+                'baseUrl' => $this->assetsDir,
+                'css' => array(!YII_DEBUG ? '/css/select2.min.css' : '/css/select2.css'),
+                'js' => array(!YII_DEBUG ? '/js/custom.min.js' : '/js/custom.js'),
+                'depends' => array('jquery'),
             ));
             $cs->registerPackage('admin');
         }

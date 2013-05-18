@@ -137,5 +137,6 @@
         <div class="infobox" style="display: none;">
             <p></p>
         </div>
+                <script type="text/javascript" src="<?php echo $this->assetsDir; ?>/js/foundation.min.js"></script>
     </body>
 </html>
