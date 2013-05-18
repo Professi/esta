@@ -82,7 +82,7 @@
             $id = $(this).attr('id');
             $date = 'date-' + $id.substr(0, ($id.indexOf('_')));
             $time = 'time-' + $id;
-            $date_text = $('#' + $date).text();
+            $date_text = $('#' + $date).text().match(/[^\s\(\)]+/);
             $time_text = $('#' + $time).text();
             $('#form_date').val($date_text);
             $('#form_time').val($time_text);
