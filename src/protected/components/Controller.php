@@ -85,8 +85,7 @@ class Controller extends CController {
 
     public function registerScripts() {
         $cs = Yii::app()->getClientScript();
-
-      //  $cs->registerCssFile($this->assetsDir . '/css/print.min.css', 'print');
+        $cs->registerCssFile($this->assetsDir . '/css/print.min.css', 'print');
         $userAgent = preg_match('/MSIE [1-7]/', $_SERVER['HTTP_USER_AGENT']);
         $cs->addPackage('css', array(//nicht ändern
             'baseUrl' => $this->assetsDir . '/css/', //nicht ändern
@@ -105,7 +104,6 @@ class Controller extends CController {
     }
 
     public function registerAdminScripts($admin = false) {
-
         if (Yii::app()->user->checkAccess('1') || $admin) {
             $cs = Yii::app()->getClientScript();
             $cs->addPackage('admin', array(
