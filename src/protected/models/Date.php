@@ -64,7 +64,7 @@ class Date extends CActiveRecord {
             array('date', 'date', 'format' => 'dd.MM.yyyy'),
             array('begin,end', 'date', 'format' => 'H:m'),
             array('durationPerAppointment', 'date', 'format' => 'm'),
-            array('id, date, begin, end, durationPerAppointment,groups', 'safe', 'on' => 'search'),
+            array('id, date, begin, end, durationPerAppointment,groups,title', 'safe', 'on' => 'search'),
         );
     }
 
@@ -106,7 +106,8 @@ class Date extends CActiveRecord {
         $criteria->compare('date', $this->date, true);
         $criteria->compare('begin', $this->begin, true);
         $criteria->compare('end', $this->end, true);
-        $criteria->compare('durationPerAppointment', $this->durationPerAppointment);
+        $criteria->compare('durationPerAppointment', $this->durationPerAppointment,true);
+        $criteria->compare('title',  $this->title,true);
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));

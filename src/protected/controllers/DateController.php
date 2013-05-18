@@ -99,9 +99,7 @@ class DateController extends Controller {
         $dateLabel = '';
         if (isset($_POST['Date'])) {
             $model->attributes = $_POST['Date'];
-            if (Yii::app()->params['allowGroups'] && isset($_POST['Date']['groups'])) {
-                $model->groups = $_POST['Date']['groups'];
-            }
+            $this->setPostAttribute($model);
             if ($model->save()) {
                 $this->redirect(array('view', 'id' => $model->id));
             }
@@ -114,6 +112,16 @@ class DateController extends Controller {
         ));
     }
 
+    private function setPostAttribute($model) {
+            if (Yii::app()->params['allowGroups'] && isset($_POST['Date']['groups'])) {
+                $model->groups = $_POST['Date']['groups'];
+            }
+            if(isset($_POST['Date']['title'])) {
+                $model->title = $_POST['Date']['title'];
+            }
+    }
+    
+    
     /**
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -130,9 +138,7 @@ class DateController extends Controller {
         $timeLabel = $a_lockAtLabel[1];
         $model->lockAt = $dateLabel . ' ' . $timeLabel;
         if (isset($_POST['Date'])) {
-            if (Yii::app()->params['allowGroups'] && isset($_POST['Date']['groups'])) {
-                $model->groups = $_POST['Date']['groups'];
-            }
+            $this->setPostAttribute($model);
             if ($model->save()) {
                    $this->redirect(array('view', 'id' => $model->id));
             }
