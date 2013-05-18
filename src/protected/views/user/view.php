@@ -81,7 +81,7 @@ $this->menu = array(
             <fieldset class="text-center">
                 <p>Mit dem Dr&uuml;cken dieses Knopfes werden alle Daten aus der Datenbank gel&ouml;scht. Bet&auml;tigen Sie ihn nur wenn Sie sich absolut sicher sind!</p>
                 <p>Nur die Admin- und Verwaltungsbenutzer bleiben bestehen</p>
-                <img id="red-button" src="<?php echo Yii::app()->request->baseUrl; ?>/img/redbutton.png" alt="Der Rote Knopf" style="cursor:pointer;" >
+                <img id="red-button" src="<?php echo $this->assetsDir; ?>/img/redbutton.png" alt="Der Rote Knopf" style="cursor:pointer;" >
                 <p>Wenn Sie nur bestimmte Daten l&ouml;schen m&ouml;chten klicken Sie <?php echo CHtml::link('hier', array('site/deleteAll')); ?></p>
             </fieldset>
             <?php

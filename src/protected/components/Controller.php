@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Controller ist die angepasste Basis CController Klasse
  */
@@ -25,6 +26,7 @@ define('PARENTS', 3);
 /*
  * Klasse Controller überschreibt die Standard Yii Controller Klasse
  */
+
 class Controller extends CController {
 
     /**
@@ -44,26 +46,29 @@ class Controller extends CController {
      * for more details on how to specify this property.
      */
     public $breadcrumbs = array();
+    public $assetsDir;
 
     /**
      * @throws CHttpException 403
      */
     public function throwFourNullThree() {
-        throw new CHttpException(403,'Zugriff verweigert.');
+        throw new CHttpException(403, 'Zugriff verweigert.');
     }
-    
+
     /**
      * @throws CHttpException 404
      */
     public function throwFourNullFour() {
-        throw new CHttpException(404,'Die angeforderte Seite konnte nicht gefunden werden.');
+        throw new CHttpException(404, 'Die angeforderte Seite konnte nicht gefunden werden.');
     }
+
     /**
      * @throws CHttpException 400
      */
     public function throwFourNullNull() {
-        throw new CHttpException(400,'Ihre Anfrage ist ungültig.');
+        throw new CHttpException(400, 'Ihre Anfrage ist ungültig.');
     }
+
     /**
      * Generiert einen Menu Punkt
      * @param string $dataIcon Icon
@@ -74,9 +79,69 @@ class Controller extends CController {
      * @param string $ariaHidden  true/false als String  
      * @return array
      */
-    public function generateMenuItem($dataIcon,$name,$url,$visible,$cssClasses='"nav-icons"', $ariaHidden="true") {
-        return array('label' => '<span class='.$cssClasses.' aria-hidden="'.$ariaHidden.'" data-icon="'.$dataIcon.'">&nbsp;'.$name.'</span>', 'url' => array($url,), 'visible' => $visible);
+    public function generateMenuItem($dataIcon, $name, $url, $visible, $cssClasses = '"nav-icons"', $ariaHidden = "true") {
+        return array('label' => '<span class=' . $cssClasses . ' aria-hidden="' . $ariaHidden . '" data-icon="' . $dataIcon . '">&nbsp;' . $name . '</span>', 'url' => array($url,), 'visible' => $visible);
     }
-    
-    
+
+    public function registerPackages() {
+        Yii::app()->clientScript->registerPackage('css');
+        $userAgent = preg_match('/MSIE [1-7]/', $_SERVER['HTTP_USER_AGENT']);
+        if (empty($userAgent)) {
+            if (YII_DEBUG) {
+                Yii::app()->clientScript->registerPackage('javascript');
+                Yii::app()->clientScript->registerPackage('jquery');
+                if (Yii::app()->user->checkAccess('1')) {
+                    Yii::app()->clientScript->registerPackage('admin');
+                }
+            } else {
+                Yii::app()->clientScript->registerPackage('javascriptDebug');
+                Yii::app()->clientScript->registerPackage('jqueryDebug');
+                if (Yii::app()->user->checkAccess('1')) {
+                    Yii::app()->clientScript->registerPackage('adminDebug');
+                }
+            }
+        }
+    }
+
+    public function registerScripts() {
+        $cs = Yii::app()->getClientScript();
+
+        $cs->registerCssFile($this->assetsDir . '/css/print.min.css', 'print');
+        $userAgent = preg_match('/MSIE [1-7]/', $_SERVER['HTTP_USER_AGENT']);
+        $cs->addPackage('css', array(//nicht ändern
+            'baseUrl' => $this->assetsDir . '/css/', //nicht ändern
+            'css' => array('foundation.min.css', !YII_DEBUG ? 'icons.min.css' : 'icons.css', !YII_DEBUG ? 'app.min.css' : 'app.css') //nicht ändern
+        ));
+        $cs->addPackage('jqueryNew', array(//nicht ändern
+            'baseUrl' => $this->assetsDir . '/js/', //nicht ändern
+            'js' => array('foundation.min.js', !YII_DEBUG ? 'app.min.js' : 'app.js'),
+            'depends' => array('css'),
+        ));
+        $cs->registerPackage('css');
+        if (empty($userAgent)) {
+            $cs->registerPackage('jqueryNew');
+        }
+        $this->registerAdminScripts();
+    }
+
+    public function registerAdminScripts($admin = false) {
+
+        if (Yii::app()->user->checkAccess('1') || $admin) {
+            $cs = Yii::app()->getClientScript();
+            $cs->addPackage('admin', array(
+                'baseUrl' => $this->assetsDir . '/css/',
+                'css' => array(!YII_DEBUG ? 'select2.min.css' : 'select2.css'),
+                'js' => array(!YII_DEBUG ? 'custom.min.js' : 'custom.js'),
+                'depends' => array('jqueryNew'),
+            ));
+            $cs->registerPackage('admin');
+        }
+    }
+
+    public function init() {
+        $dir = dirname(__FILE__) . '/../assets';
+        $this->assetsDir = Yii::app()->assetManager->publish($dir);
+        return parent::init();
+    }
+
 }

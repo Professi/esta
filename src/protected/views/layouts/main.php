@@ -25,21 +25,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
-        <link rel="icon" href="<?php echo Yii::app()->request->baseUrl; ?>/favicon.ico">
-        <link rel="shortcut icon" type="image/x-icon" href="<?php echo Yii::app()->request->baseUrl; ?>/favicon.ico">
-        <?php
-        Yii::app()->clientScript->registerPackage('css');
-        $userAgent = preg_match('/MSIE [1-7]/', $_SERVER['HTTP_USER_AGENT']);
-        if (empty($userAgent)) {
-            Yii::app()->clientScript->registerPackage('javascript');
-            Yii::app()->clientScript->registerPackage('jquery');
-            if (Yii::app()->user->checkAccess('1')) {
-                Yii::app()->clientScript->registerPackage('admin');
-            }
-        }
-        ?>
-        <link rel="stylesheet" type="text/css" media="print" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.min.css">
-        <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/modernizr.foundation.js"></script>
+        <link rel="icon" href="<?php echo $this->assetsDir; ?>/favicon.ico">
+        <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->assetsDir; ?>/favicon.ico">
+        <script type="text/javascript" src="<?php echo $this->assetsDir; ?>/js/modernizr.foundation.js"></script>
+        <?php $this->registerScripts(); ?>
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
     </head>
     <body>
@@ -51,7 +40,7 @@
                     <div class="header-school-logo">
                         <div id="logo_artikel"><?php echo Yii::app()->params['textHeader']; ?>&nbsp;&nbsp;</div>
                         <div id="logo_school_border">
-                            <img id="logo_school" src="<?php echo Yii::app()->request->baseUrl . Yii::app()->params['logoPath']; ?>" alt="<?php echo Yii::app()->params['schoolName'] ?>">
+                            <img id="logo_school" src="<?php echo $this->assetsDir . Yii::app()->params['logoPath']; ?>" alt="<?php echo Yii::app()->params['schoolName'] ?>">
                         </div>
                     </div>
                 </div>

@@ -20,6 +20,11 @@
 html, body {
 	height: 100%;
 }
+
+.view > img {
+    background-image: url(/search.svg);
+}
+
 .wrapper {
 	min-height: 95%;
 	height: auto !important;

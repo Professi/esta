@@ -49,22 +49,6 @@ return array(
         ),
         'clientScript' => array(//nicht ändern
             'coreScriptPosition' => CClientScript::POS_END, //nicht ändern
-            'packages' => array(//nicht ändern
-                'css' => array(//nicht ändern
-                    'baseUrl' => 'css/', //nicht ändern
-                    'css' => array('foundation.min.css', 'icons.min.css', 'app.min.css') //nicht ändern
-                ),
-                'jquery' => array(//nicht ändern
-                    'baseUrl' => 'js/', //nicht ändern
-                    'js' => array('foundation.min.js', 'app.min.js'),
-                    'depends' => array('css'),
-                ),
-                'admin' => array(
-                    'baseUrl' => '',
-                    'css' => array( 'css/select2.min.css'),
-                    'js' => array('js/custom.min.js'),
-                ),
-            ),
             'scriptMap' => array(//nicht ändern
                 'jquery.js' => false,
                 'jquery.min.js' => false,
@@ -89,7 +73,7 @@ return array(
             'connectionID' => 'db', //nicht ändern
         ),
         'db' => array(
-            'connectionString' => $params['databaseManagementSystem'] . ':host=' . $params['databaseHost'] . ';port=' . $params['databasePort'].';dbname=' . $params['databaseName'], //entsprechen der eigenen Datenbank anpassen  Beispiel: mysql:host=HOST;dbname=DBNAME
+            'connectionString' => $params['databaseManagementSystem'] . ':host=' . $params['databaseHost'] . ';port=' . $params['databasePort'] . ';dbname=' . $params['databaseName'], //entsprechen der eigenen Datenbank anpassen  Beispiel: mysql:host=HOST;dbname=DBNAME
             'emulatePrepare' => true, //nicht ändern
             'enableProfiling' => true, //nicht ändern - Entwicklungsparameter wird später auf false gesetzt für Performancegewinn
             'username' => $params['databaseUsername'], //DB User bitte anpassen
