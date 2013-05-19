@@ -47,6 +47,14 @@ $this->menu = array(
         'columns' => array(
             array('name' => 'date', 'value' => 'date(Yii::app()->params["dateFormat"], strtotime($data->date->date))'),
             array('name' => 'group', 'value' => '$data->group->groupname'),
+            array('class' => 'CustomButtonColumn', 'template' => '{delete} {update}', 'buttons' => array(
+                    'delete' => array(
+                        'url' => '$this->grid->controller->createUrl("/date/delete", array("id"=>$data->date->id))'
+                    ),
+                    'update' => array(
+                        'url' => '$this->grid->controller->createUrl("/date/update", array("id"=>$data->date->id))'
+                    )
+                )),
         )
     ));
 
@@ -54,8 +62,16 @@ $this->menu = array(
     'id' => 'userHasGroup-grid',
     'dataProvider' => $userHasGroup->search(),
     'columns' => array(
-    array('name' => 'user', 'value' => '$data->user->firstname . " " . $data->user->lastname'),
-    array('name' => 'group', 'value' => '$data->group->groupname'),
+        array('name' => 'user', 'value' => '$data->user->firstname . " " . $data->user->lastname'),
+        array('name' => 'group', 'value' => '$data->group->groupname'),
+        array('class' => 'CustomButtonColumn', 'template' => '{delete} {update}', 'buttons' => array(
+                    'delete' => array(
+                        'url' => '$this->grid->controller->createUrl("/user/delete", array("id"=>$data->user->id))'
+                    ),
+                    'update' => array(
+                        'url' => '$this->grid->controller->createUrl("/user/update", array("id"=>$data->user->id))'
+                    )
+                )),
     )
     ));
 
