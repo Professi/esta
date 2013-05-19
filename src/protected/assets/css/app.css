@@ -144,7 +144,7 @@ table {
 }
 #small_buttons>div {
 	display: inline-block;
-	font-family: Courier;
+	font-family: Courier, 'Droid Sans Mono';
 }
 #teacher_table>tr>td {
 	cursor: pointer;
