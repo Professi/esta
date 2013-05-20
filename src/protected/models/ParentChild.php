@@ -163,17 +163,17 @@ class ParentChild extends CActiveRecord {
         $criteria->with = array('user', 'child');
         $criteria->together = true;
         $criteria->compare('id', $this->id);
-        $criteria->compare('"user"."lastname"', $this->user_id, true);
-        $criteria->compare('"child"."lastname"', $this->child_id, true);
+        $criteria->compare('user".lastname', $this->user_id, true);
+        $criteria->compare('child".lastname', $this->child_id, true);
         $sort = new CSort;
         $sort->attributes = array(
-            'defaultOrder' => '"user"."lastname" DESC',
+            'defaultOrder' => 'user.lastname DESC',
             'user_id' => array(
-                'asc' => '"user"."lastname"',
-                'desc' => '"user"."lastname" desc'),
+                'asc' => 'user.lastname',
+                'desc' => 'user.lastname desc'),
             'child_id' => array(
-                'asc' => '"child"."lastname"',
-                'desc' => '"child.lastname" desc'),
+                'asc' => 'child.lastname',
+                'desc' => 'child.lastname desc'),
         );
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
