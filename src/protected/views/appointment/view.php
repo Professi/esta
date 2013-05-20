@@ -43,10 +43,10 @@ $this->menu = array(
             'data' => $model,
             'attributes' => array(
                 'id',
-                array('name' => 'time', 'value' => date(Yii::app()->params['timeFormat'], strtotime($model->dateAndTime->time))),
-                array('name' => 'date_id', 'value' => date(Yii::app()->params['dateFormat'], strtotime($model->dateAndTime->date->date))),
-                array('name' => 'Schüler', 'value' => $model->parentChild->child->firstname . " " . $model->parentChild->child->lastname),
-                array('name' => 'Erziehungsberechtigte/r', 'value' => $model->parentChild->user->firstname . " " . $model->parentChild->user->lastname),
+                array('name' => 'time', 'value' => date(Yii::app()->params['timeFormat'], strtotime($model->dateandtime->time))),
+                array('name' => 'date_id', 'value' => date(Yii::app()->params['dateFormat'], strtotime($model->dateandtime->date->date))),
+                array('name' => 'Schüler', 'value' => $model->parentchild->child->firstname . " " . $model->parentchild->child->lastname),
+                array('name' => 'Erziehungsberechtigte/r', 'value' => $model->parentchild->user->firstname . " " . $model->parentchild->user->lastname),
                 array('name' => 'Lehrer', 'value' => $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname),
             ),
         ));

@@ -203,8 +203,8 @@ class Date extends CActiveRecord {
                 $dateTime->delete();
             }
         }
-        if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
-            DateHasGroup::model()->deleteAllByAttributes(array('user_id' => $this->id));
+        if (!empty($this->groups)) {
+            DateHasGroup::model()->deleteAllByAttributes(array('date_id' => $this->id));
         }
 
         return parent::beforeDelete();
@@ -217,8 +217,6 @@ class Date extends CActiveRecord {
      */
     public function beforeSave() {
         $this->date = date('Y-m-d', strtotime($this->date));
-
-
         return parent::beforeSave();
     }
     

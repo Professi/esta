@@ -155,8 +155,8 @@ class AppointmentController extends Controller {
                 $teacherLabel = $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname;
             }
             if (!empty($model->attributes['parent_child_id'])) {
-                $parentLabel = $model->parentChild->user->firstname . " " . $model->parentChild->user->lastname;
-                $parentId = $model->parentChild->user->id;
+                $parentLabel = $model->parentchild->user->firstname . " " . $model->parentchild->user->lastname;
+                $parentId = $model->parentchild->user->id;
             }
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
@@ -218,9 +218,9 @@ class AppointmentController extends Controller {
         if (isset($_POST['Appointment'])) {
             $model->attributes = $_POST['Appointment'];
             if (!empty($model->attributes['dateAndTime_id'])) {
-                $postDate = date(Yii::app()->params['dateFormat'], strtotime($model->dateAndTime->date->date));
+                $postDate = date(Yii::app()->params['dateFormat'], strtotime($model->dateandtime->date->date));
                 echo 'hi';
-                $postTime = date(Yii::app()->params['timeFormat'], strtotime($model->dateAndTime->time));
+                $postTime = date(Yii::app()->params['timeFormat'], strtotime($model->dateandtime->time));
             }
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', 'Ihr Termin wurde erfolgreich gebucht.');
@@ -244,7 +244,7 @@ class AppointmentController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-        $parentLabel = $model->parentChild->user->firstname . " " . $model->parentChild->user->lastname;
+        $parentLabel = $model->parentchild->user->firstname . " " . $model->parentchild->user->lastname;
         $teacherLabel = $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname;
         if (isset($_POST['Appointment'])) {
             $model->attributes = $_POST['Appointment'];
@@ -255,7 +255,7 @@ class AppointmentController extends Controller {
             'model' => $model,
             'teacherLabel' => $teacherLabel,
             'parentLabel' => $parentLabel,
-            'parentId' => $model->parentChild->user->id,
+            'parentId' => $model->parentchild->user->id,
         ));
     }
 
@@ -270,7 +270,7 @@ class AppointmentController extends Controller {
             if ($this->loadModel($id)->delete()) {
                 if (!Yii::app()->user->checkAccessNotAdmin('3')) {
                     $mail = new Mail;
-                    $mail->sendAppointmentDeleted($model->parentChild->user->email, $model->user, $model->dateAndTime->time, $model->parentChild->child, $model->dateAndTime->date->date);
+                    $mail->sendAppointmentDeleted($model->parentchild->user->email, $model->user, $model->dateandtime->time, $model->parentchild->child, $model->dateandtime->date->date);
                 }
                 Yii::app()->user->setFlash('success', 'Termin erfolgreich entfernt.');
                 if (Yii::app()->user->checkAccess('1')) {
@@ -401,7 +401,7 @@ class AppointmentController extends Controller {
                 //Verwaltung kann trotzdem noch Termine an anderen Tagen für diesen Benutzer buchen
                 $a_dates = Date::model()->findAll($this->criteriaForDateWithGroups($dateMax));
             } else {
-                $a_dates = Date::model()->findAll(array('limit' => $dateMax, 'order' => 'date ASC', 'condition' => 'date >="' . date('Y-m-d', time()) . '"'));
+                $a_dates = Date::model()->findAll(array('limit' => $dateMax, 'order' => 'date ASC', 'condition' => 'date >=:date', 'params'=>array(':date'=>date('Y-m-d', time()))));
             }
             if (!$mergeDates) {
                 foreach ($a_dates as $record) {

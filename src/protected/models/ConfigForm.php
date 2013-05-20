@@ -156,17 +156,17 @@ class ConfigForm extends CFormModel {
     }
 
     private function createTables($command) {
-        $command->createTable("child", array(
+        $command->createTable('child', array(
             'id' => 'pk',
             'firstname' => 'string NOT NULL',
             'lastname' => 'string NOT NULL',
                 ), $this->getCollation());
-        $command->createTable("YiiSession", array(
+        $command->createTable('YiiSession', array(
             'id' => 'string NOT NULL',
             'expire' => 'integer',
             'data' => 'binary',
                 ), $this->getCollation());
-        $command->createTable("YiiCache", array(
+        $command->createTable('YiiCache', array(
             'id' => 'string NOT NULL',
             'expire' => 'integer',
             'value' => 'binary',

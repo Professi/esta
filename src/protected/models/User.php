@@ -37,7 +37,7 @@
  * The followings are the available model relations:
  * @property Appointment[] $appointments
  * @property ParentChild[] $parentChildren
- * @property UserRole[] $userRole
+ * @property UserRole[] $userrole
  * @property Group[] $groups
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
@@ -117,16 +117,16 @@ class User extends CActiveRecord {
     }
 
     /**
-     * Relationen ( Appointments HAS_MANY , parentChildren HAS_MANY, userRole HAS_ONE )
+     * Relationen ( Appointments HAS_MANY , parentChildren HAS_MANY, userrole HAS_ONE )
      * @return array relational rules.
      */
     public function relations() {
         return array(
             'appointments' => array(self::HAS_MANY, 'Appointment', 'user_id'),
-            'parentChildren' => array(self::HAS_MANY, 'ParentChild', 'user_id'),
-            'childCount' => array(self::STAT, 'ParentChild', 'user_id'),
-            'groupCount' => array(self::STAT, 'UserHasGroup', 'user_id'),
-            'userRole' => array(self::HAS_ONE, 'UserRole', 'user_id'),
+            'parentchildren' => array(self::HAS_MANY, 'ParentChild', 'user_id'),
+            'childcount' => array(self::STAT, 'ParentChild', 'user_id'),
+            'groupcount' => array(self::STAT, 'UserHasGroup', 'user_id'),
+            'userrole' => array(self::HAS_ONE, 'UserRole', 'user_id'),
             'groups' => array(self::MANY_MANY, 'Group', "user_has_group(user_id,group_id)"),
         );
     }
@@ -165,7 +165,7 @@ class User extends CActiveRecord {
             'title' => 'Titel',
             'groups' => 'Gruppen',
             'badLogins' => 'Ungültige Anmeldeversuche',
-            'userRole'=>'Benutzerrolle',
+            'userrole'=>'Benutzerrolle',
         );
     }
 
@@ -175,15 +175,16 @@ class User extends CActiveRecord {
      */
     public function search() {
         $criteria = new CDbCriteria();
-        $criteria->with = array('userRole'=>array('together'=>true));
+        $criteria->with = array('userrole'=>array('together'=>true));
         $criteria->compare('firstname', $this->firstname, true);
         $criteria->compare('lastname', $this->lastname, true);
         $criteria->compare('id', $this->id, true);
         $criteria->compare('username', $this->username, true);
-        $criteria->compare('state', $this->state,true);
+        $criteria->compare('state', $this->state);
         $criteria->compare('email', $this->email, true);
         $criteria->compare('title', $this->title, true);
-        $criteria->compare('userRole.role_id', $this->role, true);
+        $criteria->compare('userrole.role_id', $this->role);
+        
         $sort = new CSort;
         $sort->attributes = array(
             'defaultOrder' => 'id ASC',
@@ -206,8 +207,8 @@ class User extends CActiveRecord {
                 'asc' => 'state',
                 'desc' => 'state desc'),
             'role' => array(
-                'asc' => 'userRole.role_id',
-                'desc' => 'userRole.role_id desc'),
+                'asc' => 'userrole.role_id',
+                'desc' => 'userrole.role_id desc'),
         );
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -237,13 +238,13 @@ class User extends CActiveRecord {
      */
     public function searchCriteriaTeacherAutoComplete() {
         $criteria = new CDbCriteria;
-                $criteria->with = array('userRole');
+                $criteria->with = array('userrole');
         $match = addcslashes(ucfirst($this->lastname), '%_');
         $criteria->addCondition('lastname LIKE :match');
         $criteria->params = array(':match' => "$match%");
         $criteria->compare('state', $this->state, true);
         $criteria->select = 'title,firstname,lastname,id';
-        $criteria->addCondition('userRole.role_id=' . $this->role . '');
+        $criteria->addCondition('userrole.role_id=' . $this->role . '');
         $criteria->limit = 10;
         return $criteria;
     }
@@ -256,9 +257,9 @@ class User extends CActiveRecord {
      */
     public static function deleteAllCriteria() {
         $criteria = new CDbCriteria();
-        $criteria->with = array('userRole');
-        $criteria->addCondition('userRole.role_id=:role_id1', "OR");
-        $criteria->addCondition('userRole.role_id=:role_id2', "OR");
+        $criteria->with = array('userrole');
+        $criteria->addCondition('userrole.role_id=:role_id1', "OR");
+        $criteria->addCondition('userrole.role_id=:role_id2', "OR");
         $criteria->params = array(':role_id1'=>2, ':role_id2'=>3);
         $criteria->select = 'id';
         return $criteria;
@@ -272,8 +273,8 @@ class User extends CActiveRecord {
     public function deleteUsersWithRole($role) {
         if (is_int($role)) {
             $criteria = new CDbCriteria();
-            $criteria->with = array('userRole');
-            $criteria->addCondition('userRole.role_id=:role_id');
+            $criteria->with = array('userrole');
+            $criteria->addCondition('userrole.role_id=:role_id');
             $criteria->params = array(':role_id'=>$role);
             $criteria->select = 'id';
             $a_delete = User::model()->findAll($criteria);
@@ -337,23 +338,23 @@ class User extends CActiveRecord {
                 $tan->used = true;
                 $tan->update();
             }
-            $userRole = New UserRole();
-            $userRole->user_id = $this->id;
+            $userrole = New UserRole();
+            $userrole->user_id = $this->id;
             if (Yii::app()->user->isGuest && Yii::app()->params['installed']) {
-                $userRole->role_id = Role::model()->findByAttributes(array('id' => '3'))->id;
+                $userrole->role_id = Role::model()->findByAttributes(array('id' => '3'))->id;
             } else {
-                $userRole->role_id = Role::model()->findByAttributes(array('id' => $this->role))->id;
+                $userrole->role_id = Role::model()->findByAttributes(array('id' => $this->role))->id;
             }
-            $userRole->save();
+            $userrole->save();
             if (Yii::app()->params['allowGroups'] && !empty($this->groupIds)) {
                 foreach ($this->groupIds as $group) {
                     $this->createUserHasGroup($group);
                 }
             }
         } else {
-            $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
-            $userRole->role_id = $this->role;
-            $userRole->save();
+            $userrole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
+            $userrole->role_id = $this->role;
+            $userrole->save();
             if (Yii::app()->params['allowGroups'] && $this->updateGroups) {
                 UserHasGroup::model()->deleteAllByAttributes(array('user_id' => $this->id));
                 if (!empty($this->groupIds)) {

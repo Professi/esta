@@ -68,8 +68,8 @@ class Appointment extends CActiveRecord {
      */
     public function relations() {
         return array(
-            'dateAndTime' => array(self::BELONGS_TO, 'DateAndTime', 'dateAndTime_id'),
-            'parentChild' => array(self::BELONGS_TO, 'ParentChild', 'parent_child_id'),
+            'dateandtime' => array(self::BELONGS_TO, 'DateAndTime', 'dateAndTime_id'),
+            'parentchild' => array(self::BELONGS_TO, 'ParentChild', 'parent_child_id'),
             'user' => array(self::BELONGS_TO, 'User', 'user_id'),
         );
     }
@@ -110,24 +110,27 @@ class Appointment extends CActiveRecord {
      */
     public function search() {
         $criteria = new CDbCriteria;
-        $criteria->with = array('user', 'parentChild', 'dateAndTime');
+        $criteria->with = array('user', 'parentchild', 'dateandtime');
         $criteria->together = true;
         $criteria->compare('id', $this->id);
-        $criteria->compare('parentChild.user_id', ParentChild::model()->searchParentID($this->parent_child_id), true);
-        $criteria->compare('dateAndTime.time', $this->dateAndTime_id, true);
+        $criteria->compare('parentchild.user_id', ParentChild::model()->searchParentID($this->parent_child_id), true);
+        if ($this->dateAndTime_id != null) {
+            $criteria->addCondition('dateandtime.time LIKE time(:time)');
+            $criteria->params = array('time' => $this->dateAndTime_id);
+        }
         $criteria->compare('user.lastname', $this->user_id, true);
         $sort = new CSort;
         $sort->attributes = array(
-            'defaultOrder' => 'dateAndTime.id DESC',
+            'defaultOrder' => 'dateandtime.id DESC',
             'dateAndTime_id' => array(
-                'asc' => 'dateAndTime.id',
-                'desc' => 'dateAndTime.id desc'),
+                'asc' => 'dateandtime.id',
+                'desc' => 'dateandtime.id desc'),
             'user_id' => array(
                 'asc' => 'user.lastname',
                 'desc' => 'user.lastname desc'),
             'parent_child_id' => array(
-                'asc' => 'parentChild.user_id',
-                'desc' => 'parentChild.user_id desc'),
+                'asc' => 'parentchild.user_id',
+                'desc' => 'parentchild.user_id desc'),
         );
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -144,7 +147,7 @@ class Appointment extends CActiveRecord {
         $criteria = new CDbCriteria();
         $criteria->order = '`dateAndTime_id` ASC';
         $criteria->addCondition(array('user_id=:user_id'));
-        $criteria->params = array(':user_id'=>  $this->user_id);
+        $criteria->params = array(':user_id' => $this->user_id);
         return new CActiveDataProvider($this, array('criteria' => $criteria));
     }
 
@@ -157,7 +160,7 @@ class Appointment extends CActiveRecord {
     public function validate($attributes = null, $clearErrors = true) {
         $rc = true;
         if (parent::validate($attributes, $clearErrors)) {
-            $date = $this->dateAndTime->date;
+            $date = $this->dateandtime->date;
             if (Yii::app()->user->checkAccessNotAdmin('3')) {
                 if ($date->lockAt < time()) {
                     $rc = false;
@@ -261,7 +264,7 @@ class Appointment extends CActiveRecord {
                 $rc = false;
             }
         } else if ($rc && Yii::app()->user->checkAccessNotAdmin('3')) {
-            if ($this->parentChild->user_id != Yii::app()->user->id) {
+            if ($this->parentchild->user_id != Yii::app()->user->id) {
                 $rc = false;
             }
         }
@@ -276,7 +279,7 @@ class Appointment extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function afterDelete() {
-        Yii::trace($this->parentChild->user->email . ' ' . $this->dateAndTime->time . ' ' . $this->parentChild->child->firstname . ' ' . $this->dateAndTime->date->date, 'application.models.appointment');
+        Yii::trace($this->parentchild->user->email . ' ' . $this->dateandtime->time . ' ' . $this->parentchild->child->firstname . ' ' . $this->dateandtime->date->date, 'application.models.appointment');
         Yii::app()->user->setFlash('success', 'Benutzer erfolgreich entfernt.');
         return parent::afterDelete();
     }

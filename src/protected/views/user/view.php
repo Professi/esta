@@ -63,7 +63,7 @@ $this->menu = array(
                 'lastname',
                 array('name' => 'stateName',
                     'value' => $model->getStateName()),
-                array('name' => 'userRole',
+                array('name' => 'userrole',
                     'value' => $model->userRole->role->title),
                 array('name' => 'createtime',
                     'value' => date(Yii::app()->params['dateTimeFormat'], $model->createtime)),

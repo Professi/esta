@@ -59,8 +59,8 @@ class Group extends CActiveRecord {
     public function relations() {
         return array(
             'tan' => array(self::HAS_ONE, 'Tan', 'group_id'),
-            'dateHasGroup' => array(self::MANY_MANY, 'DateHasGroup', 'date_has_group(group_id,date_id)'),
-            'userHasGroup' => array(self::MANY_MANY, 'UserHasGroup', 'user_has_group(group_id,user_id)'),
+            'datehasgroup' => array(self::MANY_MANY, 'DateHasGroup', 'date_has_group(group_id,date_id)'),
+            'userhasgroup' => array(self::MANY_MANY, 'UserHasGroup', 'user_has_group(group_id,user_id)'),
         );
     }
 

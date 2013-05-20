@@ -62,7 +62,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     User::getStateNameAndValue(), 'value', 'name'),
         ),
         array('name' => 'role',
-            'value' => 'User::getFormattedRole($data->userRole->role_id)',
+            'value' => 'User::getFormattedRole($data->userrole->role_id)',
             'filter' => CHtml::listData(Role::model()->findAll(), 'id', 'title')),
         array(
             'class' => 'CustomButtonColumn',

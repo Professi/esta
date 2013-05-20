@@ -31,15 +31,15 @@ $this->setPageTitle(Yii::app()->name . ' - ' .'Ihre Termine');
             'dataProvider' => $dataProvider,
             'columns' => array(
                 array('name' => 'dateAndTime_id',
-                    'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
+                    'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateandtime->date->date . $data->dateandtime->time))'),
                 array('name' => 'Titel',
-                    'value' => '$data->dateAndTime->date->title',
-//                    'visible' => !empty($data->dateAndTime->date->title)
+                    'value' => '$data->dateandtime->date->title',
+//                    'visible' => !empty($data->dateandtime->date->title)
                     ),
                 array('name' => 'parent_child_id',
-                    'value' => '$data->parentChild->user->firstname." ".$data->parentChild->user->lastname'),
+                    'value' => '$data->parentchild->user->firstname." ".$data->parentchild->user->lastname'),
                 array('name' => 'Kind',
-                    'value' => '$data->parentChild->child->firstname." ".$data->parentChild->child->lastname'),
+                    'value' => '$data->parentchild->child->firstname." ".$data->parentchild->child->lastname'),
                 array(
                     'class' => 'CustomButtonColumn',
                     'template' => '{delete}'
@@ -66,7 +66,7 @@ $this->setPageTitle(Yii::app()->name . ' - ' .'Ihre Termine');
                 'id' => 'blockedAppointment-grid',
                 'dataProvider' => $blockedApp,
                 'columns' => array(
-                    array('name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateAndTime->date->date . $data->dateAndTime->time))'),
+                    array('name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateandtime->date->date . $data->dateandtime->time))'),
                     array('name' => 'reason'),
                     array('class' => 'CustomButtonColumn', 'template' => '{delete}', 'buttons' => array(
                             'delete' => array('url' => '$this->grid->controller->createUrl("/appointment/deleteblockapp", array("id"=>$data->id))'),

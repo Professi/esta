@@ -26,7 +26,7 @@
             <b>#<?php echo CHtml::encode($index + 1); ?></b>
         </div>
         <div class="eleven columns">
-            <b>Am <?php echo CHtml::encode(date('d.m.Y', strtotime($data->dateAndTime->date->date))); ?> um <?php echo CHtml::encode(date('H:i', strtotime($data->dateAndTime->time))); ?></b>
+            <b>Am <?php echo CHtml::encode(date('d.m.Y', strtotime($data->dateandtime->date->date))); ?> um <?php echo CHtml::encode(date('H:i', strtotime($data->dateandtime->time))); ?></b>
         </div>
     </div>
     <br>
@@ -36,7 +36,7 @@
             <i>Ihr Kind</i>
         </div>
         <div class="ten columns">
-            <?php echo CHtml::encode($data->parentChild->child->firstname . ' ' . $data->parentChild->child->lastname); ?>
+            <?php echo CHtml::encode($data->parentchild->child->firstname . ' ' . $data->parentchild->child->lastname); ?>
         </div>
     </div>
     <br>

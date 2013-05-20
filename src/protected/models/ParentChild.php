@@ -87,9 +87,10 @@ class ParentChild extends CActiveRecord {
                 $child = new Child;
                 $child->firstname = ucfirst($this->childFirstName);
                 $child->lastname = ucfirst($this->childLastName);
-                $child->save();
-                $child->id = Child::model()->findByAttributes(array('firstname' => $this->childFirstName, 'lastname' => $this->childLastName))->id;
-                $this->child_id = $child->id;
+                if ($child->save()) {
+                    $child->id = Child::model()->findByAttributes(array('firstname' => $child->firstname, 'lastname' => $child->lastname))->id;
+                    $this->child_id = $child->id;
+                }
             }
         }
         return $rc;
@@ -187,12 +188,12 @@ class ParentChild extends CActiveRecord {
      * @return CDbCriteria Suchkriterien für Autocomplete
      * @param string $lastname Nachname eines Erziehungsberechtigten
      */
-    public function searchParentChild($lastname) {
+    public function searchParentChild($lastname, $with = array('user', 'child')) {
         $criteria = new CDbCriteria;
         $match = addcslashes(ucfirst($lastname), '%_');
         $criteria->addCondition('user.lastname LIKE :match');
         $criteria->params = array(':match' => "$match%");
-        $criteria->with = array('user', 'child');
+        $criteria->with = $with;
         $criteria->select = '*';
         $criteria->limit = 10;
         return $criteria;
@@ -204,14 +205,7 @@ class ParentChild extends CActiveRecord {
      * @return array passende IDs
      */
     public function searchParentId($lastname) {
-        $match = addcslashes(ucfirst($lastname), '%_');
-        $criteria = new CDbCriteria;
-        $criteria->addCondition('"user"."lastname" LIKE :match');
-        $criteria->params = array(':match' => "$match%");
-        $criteria->with = array('user');
-        $criteria->select = '*';
-        $criteria->limit = 10;
-        $a_data = $this->findAll($criteria);
+        $a_data = $this->findAll($this->searchParentChild($lastname, array('user')));
         foreach ($a_data as $key => $value) {
             $a_data[$key] = $value->user->id;
         }

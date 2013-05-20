@@ -50,7 +50,6 @@ class BlockedAppointment extends CActiveRecord {
         return array(
             array('dateAndTime_id,user_id,reason', 'required'),
             array('user_id', 'exist', 'className' => 'UserRole'),
-            //     array('user_id','exist'),
             array('reason', 'length', 'min' => Yii::app()->params['lengthReasonAppointmentBlocked']),
             array('dateAndTime_id, user_id', 'safe', 'on' => 'search'),
         );
@@ -58,17 +57,17 @@ class BlockedAppointment extends CActiveRecord {
 
     public function countUsedDateAndTimes() {
         $crit = new CDbCriteria();
-        $crit->with = 'dateAndTime';
+        $crit->with = array('dateandtime');
         $crit->addCondition('user_id=:user_id', 'AND');
         $crit->addCondition('dateAndTime.date_id=:date_id', 'AND');
-        $crit->params = array(':user_id'=>  $this->user_id,':date_id'=>  $this->dateAndTime->date_id);
+        $crit->params = array(':user_id'=>  $this->user_id,':date_id'=>  $this->dateandtime->date_id);
         
         return $crit;
     }
 
     public function relations() {
         return array(
-            'dateAndTime' => array(self::BELONGS_TO, 'DateAndTime', 'dateAndTime_id'),
+            'dateandtime' => array(self::BELONGS_TO, 'DateAndTime', 'dateAndTime_id'),
             'user' => array(self::BELONGS_TO, 'User', 'user_id'),
         );
     }
@@ -108,7 +107,7 @@ class BlockedAppointment extends CActiveRecord {
      */
     public function search() {
         $criteria = new CDbCriteria;
-        $criteria->with = array('user', 'dateAndTime');
+        $criteria->with = array('user', 'dateandtime');
         $criteria->together = true;
         $criteria->compare('id', $this->id);
         $criteria->compare('reason', $this->reason, true);

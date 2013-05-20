@@ -65,7 +65,7 @@ class Child extends CActiveRecord {
      */
     public function relations() {
         return array(
-            'parentChildren' => array(self::BELONGS_TO, 'ParentChild', 'child_id'),
+            'parentchildren' => array(self::BELONGS_TO, 'ParentChild', 'child_id'),
         );
     }
 
