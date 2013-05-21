@@ -72,7 +72,7 @@ $this->menu = array(
                 ),
                 array('name' => 'groups',
                     'value' => $model->getGroupnames(),
-                    'visible' => $model->role == '3' && Yii::app()->params['allowGroups'] && $model->groupCount > 0,
+                    'visible' => $model->role == '3' && Yii::app()->params['allowGroups'] && $model->groupcount > 0,
                 ),
             ),
         ));

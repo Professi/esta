@@ -31,7 +31,7 @@ class GroupController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('create', 'delete', 'admin', 'view', 'update'),
+                'actions' => array('create', 'delete', 'admin', 'view', 'update','deleteUserGroup','deleteUserDate'),
                 'roles' => array('1'),
             ),
             array('deny',
@@ -47,8 +47,18 @@ class GroupController extends Controller {
      */
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
+        if (!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+    }
 
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+    public function actionDeleteUserGroup($id) {
+        $this->loadModelUserGroup($id)->delete();
+        if (!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+    }
+
+    public function actionDeleteDateGroup($id) {
+        $this->loadModelDateGroup($id)->delete();
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
@@ -62,9 +72,26 @@ class GroupController extends Controller {
      */
     public function loadModel($id) {
         $model = Group::model()->findByPk($id);
-        if ($model === null)
-            $this->throwFourNullFour();
+        $this->checkModelNull($model);
         return $model;
+    }
+
+    public function loadModelDateGroup($id) {
+        $model = DateHasGroup::model()->findByPk($id);
+        $this->checkModelNull($model);
+        return $model;
+    }
+
+    public function loadModelUserGroup($id) {
+        $model = UserHasGroup::model()->findByPk($id);
+        $this->checkModelNull($model);
+        return $model;
+    }
+
+    public function checkModelNull($model) {
+        if ($model === null) {
+            $this->throwFourNullFour();
+        }
     }
 
     /**
@@ -128,7 +155,7 @@ class GroupController extends Controller {
         if (isset($_GET['DateHasGroup'])) {
             $dateHasGroup->attributes = $_GET['DateHasGroup'];
         }
-                if (isset($_GET['UserHasGroup'])) {
+        if (isset($_GET['UserHasGroup'])) {
             $userHasGroup->attributes = $_GET['UserHasGroup'];
         }
         $this->render('admin', array(
