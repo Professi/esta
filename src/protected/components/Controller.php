@@ -118,7 +118,7 @@ class Controller extends CController {
 
     public function init() {
         $dir = dirname(__FILE__) . '/../assets';
-        $this->assetsDir = Yii::app()->assetManager->publish($dir);
+        $this->assetsDir = Yii::app()->assetManager->publish($dir,false, -1 , YII_DEBUG);
         return parent::init();
     }
 

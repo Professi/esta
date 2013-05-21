@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(255) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `activationKey` varchar(255) NOT NULL,
-  `createtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `createtime` bigint(20) NOT NULL DEFAULT '0',
   `firstname` varchar(255) NOT NULL,
   `lastname` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `title` varchar(255) DEFAULT NULL,
