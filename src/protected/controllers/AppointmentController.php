@@ -535,7 +535,6 @@ class AppointmentController extends Controller {
             $a_options = array('options' => $a_optionsDisabledAppointments, 'prompt' => 'Wählen Sie einen Termin aus');
         }
         return Select2::dropDownList($nameForm . '[' . $nameField . ']', '', $selectContent, $a_options);
-//        return CHtml::dropDownList($nameForm . '[' . $nameField . ']', '', $selectContent, $a_options);
     }
 
     /**

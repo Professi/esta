@@ -113,7 +113,7 @@ $this->menu = array(
                     ?>
                 </fieldset>
 
-            <?php } if ($model->childCount > 0 && Yii::app()->user->checkAccess('1')) {
+            <?php } if ($model->childcount > 0 && Yii::app()->user->checkAccess('1')) {
                 ?>
                 <h4 class="subheader">Kinder</h4>
                 <?php foreach (ParentChild::model()->findAllByAttributes(array('user_id' => $model->id)) as $parentChild) {

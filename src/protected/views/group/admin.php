@@ -48,7 +48,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'group', 'value' => '$data->group->groupname'),
         array('class' => 'CustomButtonColumn', 'template' => '{update} {delete}', 'buttons' => array(
                 'delete' => array(
-                    'url' => '$this->grid->controller->createUrl("/group/deleteDateGroup", array("id"=>$data->date->id))'
+                    'url' => '$this->grid->controller->createUrl("/group/deleteDateGroup", array("id"=>$data->id))'
                 ),
                 'update' => array(
                     'url' => '$this->grid->controller->createUrl("/date/update", array("id"=>$data->date->id))'
@@ -64,7 +64,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'group', 'value' => '$data->group->groupname'),
         array('class' => 'CustomButtonColumn', 'template' => '{update} {delete}', 'buttons' => array(
                 'delete' => array(
-                    'url' => '$this->grid->controller->createUrl("/group/deleteUserGroup", array("id"=>$data->user->id))'
+                    'url' => '$this->grid->controller->createUrl("/group/deleteUserGroup", array("id"=>$data->id))'
                 ),
                 'update' => array(
                     'url' => '$this->grid->controller->createUrl("/user/update", array("id"=>$data->user->id))'

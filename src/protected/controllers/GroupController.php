@@ -31,7 +31,7 @@ class GroupController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('create', 'delete', 'admin', 'view', 'update','deleteUserGroup','deleteUserDate'),
+                'actions' => array('create', 'delete', 'admin', 'view', 'update', 'deleteUserGroup', 'deleteDateGroup'),
                 'roles' => array('1'),
             ),
             array('deny',
@@ -47,20 +47,23 @@ class GroupController extends Controller {
      */
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
-        if (!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        $this->redirectUrl();
     }
 
     public function actionDeleteUserGroup($id) {
         $this->loadModelUserGroup($id)->delete();
-        if (!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        $this->redirectUrl();
     }
 
     public function actionDeleteDateGroup($id) {
         $this->loadModelDateGroup($id)->delete();
-        if (!isset($_GET['ajax']))
+        $this->redirectUrl();
+    }
+
+    public function redirectUrl() {
+        if (!isset($_GET['ajax'])) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        }
     }
 
     /**
@@ -89,7 +92,7 @@ class GroupController extends Controller {
     }
 
     public function checkModelNull($model) {
-        if ($model === null) {
+        if ($model == null) {
             $this->throwFourNullFour();
         }
     }
