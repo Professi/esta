@@ -479,8 +479,7 @@ class User extends CActiveRecord {
      * @return string 0=NichtAktiv 1=Aktiv 2=Gesperrt
      */
     public function getStateName($state = null) {
-        $stateName = '';
-        switch ($state == null ? $this->state : $state) {
+        switch ($state) {
             case 0:
                 $stateName = 'Nicht aktiv';
                 break;
@@ -504,7 +503,7 @@ class User extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param integer $state Status ID des Users
      */
-    static public function getFormattedState($state) {
+    public function getFormattedState($state) {
         echo $this->getStateName($state);
     }
 

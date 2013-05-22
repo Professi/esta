@@ -57,7 +57,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'firstname',),
         'lastname',
         array('name' => 'state',
-            'value' => 'User::getFormattedState($data->state)',
+            'value' => '$data->getFormattedState($data->state)',
             'filter' => CHtml::listData(
                     User::getStateNameAndValue(), 'value', 'name'),
         ),
