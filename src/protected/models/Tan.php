@@ -38,8 +38,9 @@ class Tan extends CActiveRecord {
     public $group_id = null;
     public $used_by_user_id = null;
     public $child_id = null;
-    
-    
+    public $childFirstname;
+    public $childLastname;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -64,8 +65,8 @@ class Tan extends CActiveRecord {
     public function rules() {
         return array(
             array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen']),
-            array('child_id','numerical','integerOnly'=>true),
-            array('child_id','exist','allowEmpty'=>Yii::app()->params['allowParentsToManageChilds']),
+            array('child_id', 'numerical', 'integerOnly' => true),
+            array('child_id', 'exist', 'allowEmpty' => Yii::app()->params['allowParentsToManageChilds']),
             array('tan, used', 'safe', 'on' => 'search'),
         );
     }
@@ -94,7 +95,9 @@ class Tan extends CActiveRecord {
             'group_id' => 'Gruppe',
             'group' => 'Gruppe',
             'child' => 'Schüler',
-            'used_by_user' => 'Erziehungsberechtigter'
+            'childFirstname' =>'Vorname des Schülers',
+            'childLastname' => 'Nachname des Schülers',
+            'used_by_user' => 'Erziehungsberechtigter',
         );
     }
 
@@ -113,12 +116,39 @@ class Tan extends CActiveRecord {
 
     public function beforeSave() {
         $rc = parent::beforeSave();
-        if ($rc && Yii::app()->params['allowGroups']) {
-            if (!is_int($this->group_id)) {
-                $this->group_id = null;
+        if ($rc) {
+            if (Yii::app()->params['allowGroups']) {
+                $this->isIntElseNull($this->group_id);
+            }
+            if (!Yii::app()->params['allowParentsToManageChilds']) {
+                $this->isIntElseNull($this->child_id);
             }
         }
         return $rc;
+    }
+
+    public function beforeValidate() {
+        $rc = parent::beforeValidate();
+        if ($rc && !Yii::app()->params['allowParentsToManageChilds'] &&
+                is_string($this->childFirstname) && is_string($this->childLastname) &&
+                $this->child_id == null) {
+            $this->child_id = $this->createChild();
+        }
+    }
+
+    private function isIntElseNull(&$var) {
+        if ($var != null && !is_int($var)) {
+            $var = null;
+        }
+    }
+
+    private function createChild() {
+        $child = new Child();
+        $child->firstname = $this->childFirstname;
+        $child->lastname = $this->childLastname;
+        if ($child->save()) {
+            return $child->id;
+        }
     }
 
 }

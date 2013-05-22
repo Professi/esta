@@ -21,6 +21,10 @@
 /* @var $model tan */
 $this->setPageTitle('Tan Generierung');
 Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.css");
+$groups = array();
+if (Yii::app()->params['allowGroups']) {
+    $groups = Group::model()->getAllGroups('DESC');
+}
 ?>
 <div class="row">
     <div class="twelve columns centered">
@@ -41,35 +45,88 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                 </div>
                 <div class="nine columns">
                     <?php
-                    echo $form->textField($model, 'tan_count', array('size' => 60, 'maxlength' => 6,));
+                    echo $form->textField($model, 'tan_count', array('size' => 60));
                     echo $form->error($model, 'tan_count');
                     ?>
                 </div>
             </div>
             <?php
-            if (Yii::app()->params['allowGroups']) {
-                $groups = Group::model()->getAllGroups('DESC');
-                if (!empty($groups)) {
-                    ?>
-                    <div class="row collapse">
-                        <div class="three columns">
-                            <span class="prefix"><?php echo $form->label($model, 'group'); ?></span>
-                        </div>
-                        <div class="nine columns">
-                            <?php
-                            echo Select2::activeDropDownList($model, 'group_id', $groups, array(
-                                'prompt' => 'Hier können Sie eine Gruppe auswählen...')
-                            );
-                            echo $form->error($model, 'group');
-                            ?>
-                        </div>
+            if (Yii::app()->params['allowGroups'] && !empty($groups)) {
+                ?>
+                <div class="row collapse">
+                    <div class="three columns">
+                        <span class="prefix"><?php echo $form->label($model, 'group'); ?></span>
                     </div>
-                    <?php
-                }
+                    <div class="nine columns">
+                        <?php
+                        echo Select2::activeDropDownList($model, 'group_id', $groups, array(
+                            'prompt' => 'Hier können Sie eine Gruppe auswählen...')
+                        );
+                        echo $form->error($model, 'group');
+                        ?>
+                    </div>
+                </div>
+                <?php
             }
             echo CHtml::submitButton('Absenden', array('class' => 'small button'));
             ?>
         </fieldset>
         <?php $this->endWidget(); ?>
     </div>
+    <?php
+    if (!Yii::app()->params['allowParentsToManageChils']) {
+        $form = $this->beginWidget('CActiveForm', array(
+            'id' => 'tans-form',
+        ));
+        ?>
+        <fieldset>
+            <div class="row collapse">
+                <div class="three columns">
+                    <span class="prefix"><?php echo $form->label($model, 'childFirstname'); ?></span>
+                </div>
+                <div class="nine columns">
+                    <?php
+                    echo $form->textField($model, 'childFirstname', array('size' => 60));
+                    echo $form->error($model, 'childFirstname');
+                    ?>
+                </div>
+            </div>
+
+            <div class="row collapse">
+                <div class="three columns">
+                    <span class="prefix"><?php echo $form->label($model, 'childLastname'); ?></span>
+                </div>
+                <div class="nine columns">
+                    <?php
+                    echo $form->textField($model, 'childLastname', array('size' => 60));
+                    echo $form->error($model, 'childLastname');
+                    ?>
+                </div>
+            </div>
+            <?php
+            if (Yii::app()->params['allowGroups'] && !empty($groups)) {
+                ?>
+                <div class="row collapse">
+                    <div class="three columns">
+                        <span class="prefix"><?php echo $form->label($model, 'group'); ?></span>
+                    </div>
+                    <div class="nine columns">
+                        <?php
+                        echo Select2::activeDropDownList($model, 'group_id', $groups, array(
+                            'prompt' => 'Hier können Sie eine Gruppe auswählen...')
+                        );
+                        echo $form->error($model, 'group');
+                        ?>
+                    </div>
+                </div>
+                <?php
+            }
+            echo CHtml::submitButton('Absenden', array('class' => 'small button'));
+            ?>
+        </fieldset>
+        <?php
+        $this->endWidget();
+    }
+    ?>
 </div>
+
