@@ -20,7 +20,7 @@
 /* @var $this AppointmentController */
 /* @var $model Appointment */
 /* @var $blockedApp BlockedAppointment */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Terminverwaltung');
+$this->setPageTitle('Terminverwaltung');
 Yii::app()->clientScript->registerCoreScript('jquery.ui');
 Yii::app()->getClientScript()->registerCssFile(Yii::app()->clientScript->getCoreScriptUrl() . '/jui/css/base/jquery-ui.css');
 $this->breadcrumbs = array(

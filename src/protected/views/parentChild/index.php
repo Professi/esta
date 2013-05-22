@@ -19,7 +19,7 @@
  */
 /* @var $this ParentChildController */
 /* @var $dataProvider CActiveDataProvider */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Ihre Kinder');
+$this->setPageTitle('Ihre Kinder');
 $this->breadcrumbs = array(
     'Parent Children',
 );

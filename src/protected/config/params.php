@@ -62,6 +62,7 @@ $array2 = array(
     'logoPath' => '/img/logo.png',
     'textHeader' => 'der',
     'language'=>'de',
+    'allowParentsToManageChilds'=> false,
 );
 if (empty($arr)) {
     return $array2;

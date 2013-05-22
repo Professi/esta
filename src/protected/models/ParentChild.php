@@ -83,7 +83,7 @@ class ParentChild extends CActiveRecord {
                     Yii::app()->user->setFlash('failMsg', 'Kind wurde bereits eingetragen.');
                 }
             }
-            if ($rc) {
+            if ($rc && $this->child_id == null) {
                 $child = new Child;
                 $child->firstname = ucfirst($this->childFirstName);
                 $child->lastname = ucfirst($this->childLastName);
@@ -119,9 +119,10 @@ class ParentChild extends CActiveRecord {
      */
     public function rules() {
         return array(
-            array('childFirstName, childLastName,user_id', 'required'),
+            array('user_id', 'required'),
             array('child_id', 'numerical', 'integerOnly' => true),
             array('user_id', 'length', 'max' => 11),
+            array('childFirstName, childLastName', 'length','min'=>1, 'allowEmpty'=>  $this->child_id != null),
             array('childFirstName,childLastName,child_id', 'length', 'max' => 255),
             array('id, user_id, child_id', 'safe', 'on' => 'search'),
         );
@@ -222,6 +223,11 @@ class ParentChild extends CActiveRecord {
         if ($rc && User::model()->countByAttributes(array('user_id' => $this->user_id)) != '1') {
             $rc = false;
             $this->addError('user_id', 'Der angegebene Benutzer existiert nicht.');
+        }
+        if ($rc && ParentChild::model()->countByAttributes(array('user_id' => $this->user_id)) > Yii::app()->params['maxChild'] && Yii::app()->params['allowParentsToManageChilds']) {
+            $rc = false;
+            $this->addError('child_id', 'Maximale Kinderanzahl erreicht.');
+            Yii::app()->user->setFlash('failMsg', 'Sie haben die Anzahl der maximal eintragbaren Kinder überschritten.');
         }
         return $rc;
     }

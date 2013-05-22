@@ -19,7 +19,7 @@
  */
 /* @var $this UserController */
 /* @var $model User */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Benutzerkonto');
+$this->setPageTitle('Benutzerkonto');
 $this->breadcrumbs = array(
     'Users' => array('index'),
     $model->id,

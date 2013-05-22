@@ -19,7 +19,7 @@
  */
 /* @var $this UserController */
 /* @var $model User */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Benutzerkonto bearbeiten');
+$this->setPageTitle('Benutzerkonto bearbeiten');
 $this->breadcrumbs = array(
     'Users' => array('index'),
     $model->id => array('view', 'id' => $model->id),

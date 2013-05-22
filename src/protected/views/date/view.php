@@ -19,7 +19,7 @@
  */
 /* @var $this DateController */
 /* @var $model Date */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Detailansicht Elternsprechtag');
+$this->setPageTitle('Detailansicht Elternsprechtag');
 $this->breadcrumbs = array(
     'Dates' => array('index'),
     $model->id,

@@ -19,8 +19,8 @@
  */
 /* @var $this TanController */
 /* @var $model tan */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Tan Generierung');
-Yii::app()->clientScript->registerCssFile( $this->assetsDir ."/css/select2.min.css");
+$this->setPageTitle('Tan Generierung');
+Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.css");
 ?>
 <div class="row">
     <div class="twelve columns centered">

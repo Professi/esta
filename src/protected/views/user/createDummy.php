@@ -19,7 +19,7 @@
  */
 /* @var $this UserController */
 /* @var $model User */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Pseudobenutzer anlegen');
+$this->setPageTitle('Pseudobenutzer anlegen');
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'user-form',
         ));

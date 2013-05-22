@@ -19,7 +19,7 @@
  */
 /* @var $this ParentChildController */
 /* @var $model ParentChild */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Eltern-Kind-Verknüpfung anlegen');
+$this->setPageTitle('Eltern-Kind-Verknüpfung anlegen');
 $this->breadcrumbs = array(
     'Parent Children' => array('index'),
     'Create',

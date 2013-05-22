@@ -18,7 +18,7 @@
 /* @var $model Appointment */
 /** @var $a_child Array Of Childs */
 /** @todo MVC anpassen */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Termin vereinbaren');
+$this->setPageTitle('Termin vereinbaren');
 Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 ?>
 <div class="row">

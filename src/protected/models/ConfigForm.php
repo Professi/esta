@@ -65,6 +65,7 @@ class ConfigForm extends CFormModel {
     public $textHeader;
     public $appName;
     public $language;
+    public $allowParentsToManageChilds;
     private $firstRead = true;
     private $params;
 
@@ -81,7 +82,8 @@ class ConfigForm extends CFormModel {
                 'durationTempBans,maxAttemptsForLogin,timeFormat,dateFormat,' .
                 'allowBlockingAppointments,appointmentBlocksPerDate,' .
                 'lengthReasonAppointmentBlocked,schoolStreet,schoolCity,' .
-                'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,lockRegistration,allowGroups,databasePort,' .
+                'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,' .
+                'lockRegistration,allowGroups,databasePort,allowParentsToManageChilds,' .
                 'databaseHost,databaseName,databaseUsername,databasePassword,databaseManagementSystem,logoPath,textHeader,language,appName'
                 , 'required'),
             array('fromMailHost,adminEmail,schoolEmail', 'email'),
@@ -92,7 +94,8 @@ class ConfigForm extends CFormModel {
             array('defaultTeacherPassword,databasePassword', 'length', 'min' => 8),
             array('salt', 'length', 'min' => 16, 'max' => 64),
             array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments,' .
-                'useSchoolEmailForContactForm,allowBlockingOnlyForManagement,lockRegistration,allowGroups',
+                'useSchoolEmailForContactForm,allowBlockingOnlyForManagement,lockRegistration,' .
+                'allowParentsToManageChilds,allowGroups',
                 'boolean'),
             array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,'
                 . 'durationTempBans,maxAttemptsForLogin,appointmentBlocksPerDate,'
@@ -204,6 +207,8 @@ class ConfigForm extends CFormModel {
             'tan' => 'integer UNIQUE',
             'used' => 'boolean',
             'group_id' => 'integer NULL',
+            'child_id' => 'integer NULL',
+            'used_by_user_id' => 'integer NULL'
                 ), $this->getCollation());
         $command->createTable('parent_child', array(
             'id' => 'pk',
@@ -303,6 +308,8 @@ class ConfigForm extends CFormModel {
         $command->addForeignKey('user_role_fk1', 'user_role', 'role_id', 'role', 'id', 'NO ACTION', 'NO ACTION');
         $command->addForeignKey('user_role_fk2', 'user_role', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
         $command->addForeignKey('tan_fk1', 'tan', 'group_id', 'group', 'id', 'SET NULL', 'NO ACTION');
+        $command->addForeignKey('tan_fk2', 'tan', 'child_id', 'child', 'id', 'SET NULL', 'NO ACTION');
+        $command->addForeignKey('tan_fk3', 'tan', 'used_by_user_id', 'user', 'id', 'SET NULL', 'NO ACTION');
         $command->addForeignKey('parent_child_fk1', 'parent_child', 'child_id', 'child', 'id', 'CASCADE', 'NO ACTION');
         $command->addForeignKey('parent_child_fk2', 'parent_child', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
         $command->addForeignKey('date_has_group_fk1', 'date_has_group', 'date_id', 'date', 'id', 'CASCADE', 'NO ACTION');
@@ -361,7 +368,6 @@ class ConfigForm extends CFormModel {
 
     public function getDBMS() {
         return $this->getParam('databaseManagementSystem');
-        
     }
 
     public function getParam($param) {
@@ -379,12 +385,12 @@ class ConfigForm extends CFormModel {
 
     public function getConnection() {
         $connection = new CDbConnection($this->getDBMS() . ':host=' . $this->getParam('databaseHost') . ';dbname=' . $this->getParam('databaseName'), $this->getParam('databaseUsername'), $this->getParam('databasePassword'));
-       try{
-        $connection->setActive(true);
-       } catch(CException $ex) {
+        try {
+            $connection->setActive(true);
+        } catch (CException $ex) {
             Yii::log($ex->getMessage(), CLogger::LEVEL_ERROR, 'application.models.configForm');
-           Yii::app()->user->setFlash('failMsg','Verbindung zur Datenbank konnte nicht hergestellt werden. <br>' . $ex->getMessage());
-       }
+            Yii::app()->user->setFlash('failMsg', 'Verbindung zur Datenbank konnte nicht hergestellt werden. <br>' . $ex->getMessage());
+        }
         echo $this->getDBMS();
         return $connection;
     }

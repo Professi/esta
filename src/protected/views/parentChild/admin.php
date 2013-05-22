@@ -19,7 +19,7 @@
  */
 /* @var $this ParentChildController */
 /* @var $model ParentChild */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Eltern-Kind Verwaltung');
+$this->setPageTitle('Eltern-Kind Verwaltung');
 
 $this->breadcrumbs = array(
     'Parent Children' => array('index'),

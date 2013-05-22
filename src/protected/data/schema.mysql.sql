@@ -184,6 +184,8 @@ CREATE TABLE IF NOT EXISTS `tan` (
   `tan` int(11) DEFAULT NULL,
   `used` tinyint(1) DEFAULT NULL,
   `group_id` int(11) DEFAULT NULL,
+  `used_by_user_id` int(11) DEFAULT NULL,
+  `child_id` int(11) DEFAULT NULL,
   UNIQUE KEY `tan` (`tan`),
   KEY `tan_fk1` (`group_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -322,7 +324,8 @@ ALTER TABLE `parent_child`
 --
 ALTER TABLE `tan`
   ADD CONSTRAINT `tan_fk1` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
-
+  ADD CONSTRAINT `tan_fk2` FOREIGN KEY (`child_id`) REFERENCES `child` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
+ ADD CONSTRAINT `tan_fk3` FOREIGN KEY (`used_by_user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
 --
 -- Constraints der Tabelle `user_has_group`
 --

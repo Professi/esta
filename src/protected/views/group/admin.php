@@ -18,7 +18,7 @@
 /* @var $model Group */
 /* @var $dateHasGroup DateHasGroup */
 /* @var $userHasGroup UserHasGroup */
-$this->setPageTitle(Yii::app()->name . ' - ' . 'Gruppenverwaltung');
+$this->setPageTitle( 'Gruppenverwaltung');
 $this->menu = array(
     array('label' => 'Gruppe erstellen', 'url' => array('create')),
 );

@@ -20,7 +20,7 @@
 /* @var $this UserController */
 /* @var $model CsvUpload */
 /* @var $form CActiveForm */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Lehrer importieren');
+$this->setPageTitle('Lehrer importieren');
 ?>
 <div class="row">
     <div class="five columns centered">

@@ -20,7 +20,7 @@
 /* @var $this SiteController */
 /* @var $model DeleteAllForm */
 /* @var $form CActiveForm */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Anwendung zurücksetzen');
+$this->setPageTitle('Anwendung zurücksetzen');
 ?>
 <div class="form">
     <?php

@@ -36,7 +36,10 @@ class Tan extends CActiveRecord {
      */
     public $id = 0;
     public $group_id = null;
-
+    public $used_by_user_id = null;
+    public $child_id = null;
+    
+    
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -59,10 +62,10 @@ class Tan extends CActiveRecord {
      * @return array validation rules for model attributes.
      */
     public function rules() {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
             array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen']),
+            array('child_id','numerical','integerOnly'=>true),
+            array('child_id','exist','allowEmpty'=>Yii::app()->params['allowParentsToManageChilds']),
             array('tan, used', 'safe', 'on' => 'search'),
         );
     }
@@ -74,6 +77,8 @@ class Tan extends CActiveRecord {
     public function relations() {
         return array(
             'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
+            'child' => array(self::BELONGS_TO, 'Child', 'child_id'),
+            'used_by_user' => array(self::BELONGS_TO, 'User', 'used_by_user_id'),
         );
     }
 
@@ -83,11 +88,13 @@ class Tan extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'tan' => 'Tan',
+            'tan' => 'TAN',
             'used' => 'Benutzt',
             'tan_count' => 'Anzahl',
             'group_id' => 'Gruppe',
             'group' => 'Gruppe',
+            'child' => 'Schüler',
+            'used_by_user' => 'Erziehungsberechtigter'
         );
     }
 

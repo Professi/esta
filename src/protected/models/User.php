@@ -165,7 +165,7 @@ class User extends CActiveRecord {
             'title' => 'Titel',
             'groups' => 'Gruppen',
             'badLogins' => 'Ungültige Anmeldeversuche',
-            'userrole'=>'Benutzerrolle',
+            'userrole' => 'Benutzerrolle',
         );
     }
 
@@ -175,7 +175,7 @@ class User extends CActiveRecord {
      */
     public function search() {
         $criteria = new CDbCriteria();
-        $criteria->with = array('userrole'=>array('together'=>true));
+        $criteria->with = array('userrole' => array('together' => true));
         $criteria->compare('firstname', $this->firstname, true);
         $criteria->compare('lastname', $this->lastname, true);
         $criteria->compare('id', $this->id, true);
@@ -184,7 +184,6 @@ class User extends CActiveRecord {
         $criteria->compare('email', $this->email, true);
         $criteria->compare('title', $this->title, true);
         $criteria->compare('userrole.role_id', $this->role);
-        
         $sort = new CSort;
         $sort->attributes = array(
             'defaultOrder' => 'id ASC',
@@ -238,7 +237,7 @@ class User extends CActiveRecord {
      */
     public function searchCriteriaTeacherAutoComplete() {
         $criteria = new CDbCriteria;
-                $criteria->with = array('userrole');
+        $criteria->with = array('userrole');
         $match = addcslashes(ucfirst($this->lastname), '%_');
         $criteria->addCondition('lastname LIKE :match');
         $criteria->params = array(':match' => "$match%");
@@ -260,7 +259,7 @@ class User extends CActiveRecord {
         $criteria->with = array('userrole');
         $criteria->addCondition('userrole.role_id=:role_id1', "OR");
         $criteria->addCondition('userrole.role_id=:role_id2', "OR");
-        $criteria->params = array(':role_id1'=>2, ':role_id2'=>3);
+        $criteria->params = array(':role_id1' => 2, ':role_id2' => 3);
         $criteria->select = 'id';
         return $criteria;
     }
@@ -275,7 +274,7 @@ class User extends CActiveRecord {
             $criteria = new CDbCriteria();
             $criteria->with = array('userrole');
             $criteria->addCondition('userrole.role_id=:role_id');
-            $criteria->params = array(':role_id'=>$role);
+            $criteria->params = array(':role_id' => $role);
             $criteria->select = 'id';
             $a_delete = User::model()->findAll($criteria);
             foreach ($a_delete as $record) {
@@ -326,47 +325,87 @@ class User extends CActiveRecord {
         parent::setAttribute($name, $value);
     }
 
+    private function updateTan($tan = '') {
+        if (!Yii::app()->user->checkAccess('1') && Yii::app()->params['installed']) {
+            if ($tan == '') {
+                $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
+            }
+            $tan->used = true;
+            $tan->used_by_user_id = $this->id;
+            $tan->update();
+        }
+    }
+
+    private function getRoleId($no) {
+        try {
+            return Role::model()->findByAttributes(array('id' => $no))->id;
+        } catch (CException $ex) {
+            throw $ex;
+        }
+    }
+
     /**
      * weist einem neuen Nutzer eine Rolle zu
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Rückgabewert der Methode afterSave() CActiveRecord
      */
-    public function afterSave() {
-        if ($this->isNewRecord) {
-            if (!Yii::app()->user->checkAccess('1') && Yii::app()->params['installed']) {
-                $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
-                $tan->used = true;
-                $tan->update();
-            }
-            $userrole = New UserRole();
-            $userrole->user_id = $this->id;
-            if (Yii::app()->user->isGuest && Yii::app()->params['installed']) {
-                $userrole->role_id = Role::model()->findByAttributes(array('id' => '3'))->id;
-            } else {
-                $userrole->role_id = Role::model()->findByAttributes(array('id' => $this->role))->id;
-            }
-            $userrole->save();
+    private function createUserRole() {
+        $rc = true;
+        $userrole = New UserRole();
+        $userrole->user_id = $this->id;
+        if (Yii::app()->user->isGuest && Yii::app()->params['installed']) {
+            $userrole->role_id = $this->getRoleId('3');
+        } else {
+            $userrole->role_id = $this->getRoleId($this->role);
+        }
+        if (!$userrole->save()) {
+            $this->delete();
+            $rc = false;
+            $this->addError('role', 'Rolle konnte nicht erstellt werden. Benutzer wird präventiv gelöscht');
+        }
+        return $rc;
+    }
+
+    private function saveNewRecord() {
+        if ($this->createUserRole()) {
+            $this->updateTan();
             if (Yii::app()->params['allowGroups'] && !empty($this->groupIds)) {
                 foreach ($this->groupIds as $group) {
                     $this->createUserHasGroup($group);
                 }
             }
         } else {
-            $userrole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
-            $userrole->role_id = $this->role;
-            $userrole->save();
-            if (Yii::app()->params['allowGroups'] && $this->updateGroups) {
-                UserHasGroup::model()->deleteAllByAttributes(array('user_id' => $this->id));
-                if (!empty($this->groupIds)) {
-                    foreach ($this->groupIds as $group) {
-                        if (UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $group)) == '0') {
-                            $this->createUserHasGroup($group);
-                        }
+            $rc = false;
+        }
+    }
+
+    private function saveExistingRecord() {
+        $userrole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
+        $userrole->role_id = $this->role;
+        $userrole->save();
+        if (Yii::app()->params['allowGroups'] && $this->updateGroups) {
+            UserHasGroup::model()->deleteAllByAttributes(array('user_id' => $this->id));
+            if (!empty($this->groupIds)) {
+                foreach ($this->groupIds as $group) {
+                    if (UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $group)) == '0') {
+                        $this->createUserHasGroup($group);
                     }
                 }
             }
         }
-        return parent::afterSave();
+    }
+
+    public function afterSave() {
+        $rc = true;
+        if ($this->isNewRecord) {
+            $rc = $this->saveNewRecord();
+        } else {
+            $this->saveExistingRecord();
+        }
+        if ($rc) {
+            $rc = parent::afterSave();
+        }
+        return $rc;
     }
 
     /**
@@ -381,6 +420,14 @@ class User extends CActiveRecord {
         for ($x = 0; $x < count($a_appointment); $x++) {
             $a_appointment[$x]->delete();
         }
+        $this->deleteParentChilds();
+        if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
+            UserHasGroup::model()->deleteAllByAttributes(array('user_id' => $this->id));
+        }
+        return parent::beforeDelete();
+    }
+
+    private function deleteParentChilds() {
         $a_parentChild = ParentChild::model()->findAllByAttributes(array('user_id' => $this->id));
         for ($i = 0; $i < count($a_parentChild); $i++) {
             $a_appointment = Appointment::model()->findAllByAttributes(array('parent_child_id' => $a_parentChild[$i]->id));
@@ -391,11 +438,6 @@ class User extends CActiveRecord {
             ParentChild::model()->deleteByPk($a_parentChild[$i]->id);
             Child::model()->deleteByPk($childId);
         }
-        if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
-            UserHasGroup::model()->deleteAllByAttributes(array('user_id' => $this->id));
-        }
-
-        return parent::beforeDelete();
     }
 
     /**
@@ -436,21 +478,25 @@ class User extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return string 0=NichtAktiv 1=Aktiv 2=Gesperrt
      */
-    public function getStateName() {
-        switch ($this->state) {
+    public function getStateName($state = null) {
+        $stateName = '';
+        switch ($state == null ? $this->state : $state) {
             case 0:
-                $this->stateName = 'Nicht aktiv';
+                $stateName = 'Nicht aktiv';
                 break;
             case 1:
-                $this->stateName = 'Aktiv';
+                $stateName = 'Aktiv';
                 break;
             case 2:
-                $this->stateName = 'Gesperrt';
+                $stateName = 'Gesperrt';
                 break;
             default:
-                $this->stateName = $this->state;
+                $stateName = $this->state;
         }
-        return $this->stateName;
+        if ($state == null) {
+            $this->stateName = $stateName;
+        }
+        return $stateName;
     }
 
     /**
@@ -459,17 +505,7 @@ class User extends CActiveRecord {
      * @param integer $state Status ID des Users
      */
     static public function getFormattedState($state) {
-        switch ($state) {
-            case '0':
-                echo 'Nicht aktiv';
-                break;
-            case '1':
-                echo 'Aktiv';
-                break;
-            case '2':
-                echo 'Gesperrt';
-                break;
-        }
+        echo $this->getStateName($state);
     }
 
     public static function getStateNameAndValue() {
@@ -558,14 +594,12 @@ class User extends CActiveRecord {
                 $rc = false;
             } else {
                 if (Yii::app()->params['allowGroups'] && $tan->group != null && is_int($tan->group_id)) {
-                    if (!UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $tan->group_id)) > '0') {
-                        $this->createUserHasGroup($tan->group_id);
-                        Yii::app()->user->setFlash('success', 'Sie wurden erfolgreich der Gruppe hinzugefügt.');
-                        Yii::app()->user->setGroups($this->groups);
-                    } else {
-                        $errorMsg = 'Sie wurden bereits der Gruppe die bei dieser TAN hinterlegt ist, zugewiesen.';
+                    $errorMsg = $this->addUserHasGroup($tan);
+                    if (empty($errorMsg)) {
+                        $this->updateTan($tan);
                     }
                 }
+                $this->addParentChildWithTan($tan);
             }
         } else {
             if ((Yii::app()->params['installed'] && Yii::app()->user->isGuest()) || !Yii::app()->params['installed']) {
@@ -577,6 +611,31 @@ class User extends CActiveRecord {
             $this->addError('tan', $errorMsg);
         }
         return $rc;
+    }
+
+    private function addParentChildWithTan(&$tan) {
+        if ($tan->child != null) {
+            $pc = $this->createParentChild($this->id, $tan->child->id);
+            if ($pc->save()) {
+                $flash = '';
+                if (Yii::app()->user->hasFlash('success')) {
+                    $flash = Yii::app()->user->getFlash('success') . "<br>";
+                }
+                Yii::app()->user->setFlash('success', 'Schüler hinzugefügt.' . $flash);
+            }
+        }
+    }
+
+    private function addUserHasGroup($tan) {
+        $errorMsg = '';
+        if (!UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $tan->group_id)) > '0') {
+            $this->createUserHasGroup($tan->group_id);
+            Yii::app()->user->setFlash('success', 'Sie wurden erfolgreich der Gruppe hinzugefügt.');
+            Yii::app()->user->setGroups($this->groups);
+        } else {
+            $errorMsg = 'Sie wurden bereits der Gruppe die bei dieser TAN hinterlegt ist, zugewiesen.';
+        }
+        return $errorMsg;
     }
 
     /**
@@ -661,6 +720,13 @@ class User extends CActiveRecord {
             $rc = array('3' => 'Eltern', '2' => 'Lehrer');
         }
         return $rc;
+    }
+
+    public function createParentChild($user_id, $child_id) {
+        $pc = new ParentChild();
+        $pc->child_id = $child_id;
+        $pc->user_id = $user_id;
+        return $pc;
     }
 
 }

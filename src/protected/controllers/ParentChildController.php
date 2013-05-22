@@ -106,16 +106,8 @@ class ParentChildController extends Controller {
             if (isset($model->user->firstname) && isset($model->user->lastname)) {
                 $userNameString = $model->user->firstname . " " . $model->user->lastname;
             }
-            if ($model->validate()) {
-                if (ParentChild::model()->countByAttributes(
-                                array('user_id' => $model->attributes['user_id'])) <
-                        Yii::app()->params['maxChild']) {
-                    if ($model->save()) {
-                        Yii::app()->user->setFlash('success', 'Kind erfolgreich hinzugefügt.');
-                    }
-                } else {
-                    Yii::app()->user->setFlash('failMsg', 'Sie haben die Anzahl der maximal eintragbaren Kinder überschritten.');
-                }
+            if ($model->save()) {
+                Yii::app()->user->setFlash('success', 'Kind erfolgreich hinzugefügt.');
                 if (Yii::app()->user->checkAccess('1')) {
                     $this->redirect(array('admin'));
                 } else {
@@ -139,7 +131,7 @@ class ParentChildController extends Controller {
         if (!isset($_GET['ajax']) && Yii::app()->user->checkAccess('1')) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
         } else {
-           $this->redirect(array('index'));
+            $this->redirect(array('index'));
         }
     }
 

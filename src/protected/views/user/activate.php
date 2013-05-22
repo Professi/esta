@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /* @var $this UserController */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Konto aktiviert');
+$this->setPageTitle('Konto aktiviert');
 ?>
 <div class="row">
     <div class="twelve columns ">    

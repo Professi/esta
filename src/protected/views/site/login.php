@@ -20,7 +20,7 @@
 /* @var $this SiteController */
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Login');
+$this->setPageTitle('Login');
 $this->breadcrumbs = array(
     'Login',
 );

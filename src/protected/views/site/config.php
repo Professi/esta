@@ -20,9 +20,10 @@
 /* @var $this SiteController */
 /* @var $model ConfigForm */
 /* @var $form CActiveForm */
-$this->setPageTitle(Yii::app()->name . ' - ' . 'Konfiguration');
+$this->setPageTitle('Konfiguration');
 $this->registerAdminScripts(true);
 ?>
+
 <div class="form">
     <?php
     $form = $this->beginWidget('CActiveForm', array(
@@ -137,7 +138,6 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns ">
                     <?php
-//            echo $form->dropDownList($model, 'randomTeacherPassword', array('1' => 'Ja', '0' => 'Nein'));
                     echo Select2::activeDropDownList($model, 'randomTeacherPassword', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'randomTeacherPassword');
                     ?>
@@ -160,7 +160,6 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns">
                     <?php
-//            echo $form->dropDownList($model, 'lockRegistration', array('1' => 'Ja', '0' => 'Nein'));
                     echo Select2::activeDropDownList($model, 'lockRegistration', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'lockRegistration');
                     ?>
@@ -180,7 +179,6 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns">
                     <?php
-//            echo $form->dropDownList($model, 'allowGroups', array('1' => 'Ja', '0' => 'Nein'));
                     echo Select2::activeDropDownList($model, 'allowGroups', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowGroups');
                     ?>
@@ -189,6 +187,11 @@ $this->registerAdminScripts(true);
             <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'logoPath'); ?></span>
+
+                    <div class="infotext">
+                        <span aria-hidden="true" data-icon="&#xe012;"></span>
+                        Wenn diese Option aktiviert ist, können Eltern ihre Kinder beliebig verwalten. Falls diese Option deaktiviert wurde, müssen bei der TAN Erstellung die Namen der Kinder angegeben werden. Eltern können weitere Kinder nur durch TAN's hinzufügen.
+                    </div>
                 </div>
                 <div class="four columns">
                     <?php
@@ -208,6 +211,17 @@ $this->registerAdminScripts(true);
                     ?>
                 </div>
             </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix infofeld"><?php echo $form->label($model, 'allowParentsToManageChilds'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo Select2::activeDropDownList($model, 'allowParentsToManageChilds', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo $form->error($model, 'allowParentsToManageChilds');
+                    ?>
+                </div>
+            </div>
             <div class="row">
                 <div class="eight columns centered panel text-center">
                     Für Datums- und Zeitformate siehe <a href="http://php.net/manual/de/function.date.php">http://php.net/manual/de/function.date.php</a>
@@ -222,7 +236,6 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns">
                     <?php
-//            echo $form->dropDownList($model, 'databaseManagementSystem', array('mysql' => 'MySQL', 'pgsql' => 'PostgreSQL(nicht getestet)', 'oci' => 'Oracle Datenbank(nicht getestet)', 'mssql' => 'Microsoft SQL Server(nicht getestet)'));
                     echo Select2::activeDropDownList($model, 'databaseManagementSystem', array('mysql' => 'MySQL',
                         'pgsql' => 'PostgreSQL(nicht getestet)',
                             ), array('select2Options' => array('minimumResultsForSearch' => 10))
@@ -361,7 +374,6 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns">
                     <?php
-//            echo $form->dropDownList($model, 'useSchoolEmailForContactForm', array('1' => 'Ja', '0' => 'Nein'));
                     echo Select2::activeDropDownList($model, 'useSchoolEmailForContactForm', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'useSchoolEmailForContactForm');
                     ?>
@@ -412,7 +424,6 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns">
                     <?php
-//            echo $form->dropDownList($model, 'mailsActivated', array('1' => 'Ja', '0' => 'Nein'));
                     echo Select2::activeDropDownList($model, 'mailsActivated', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'mailsActivated');
                     ?>
@@ -482,7 +493,6 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns">
                     <?php
-//            echo $form->dropDownList($model, 'banUsers', array('1' => 'Ja', '0' => 'Nein'));
                     echo Select2::activeDropDownList($model, 'banUsers', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'banUsers');
                     ?>
@@ -519,7 +529,6 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns">
                     <?php
-//            echo $form->dropDownList($model, 'allowBlockingAppointments', array('1' => 'Ja', '0' => 'Nein'));
                     echo Select2::activeDropDownList($model, 'allowBlockingAppointments', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowBlockingAppointments');
                     ?>
@@ -531,7 +540,6 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns">
                     <?php
-//            echo $form->dropDownList($model, 'allowBlockingOnlyForManagement', array('1' => 'Ja', '0' => 'Nein'), $optionsBlocks);
                     echo Select2::activeDropDownList($model, 'allowBlockingOnlyForManagement', array('1' => 'Ja', '0' => 'Nein'), array($optionsBlocks, 'select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowBlockingOnlyForManagement');
                     ?>

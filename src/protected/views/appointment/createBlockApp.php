@@ -20,7 +20,7 @@
 /* @var $this AppointmentController */
 /* @var $model BlockedAppointment */
 /* @var $form CActiveForm */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Termin blockieren');
+$this->setPageTitle('Termin blockieren');
 ?>
 <?php
 $this->breadcrumbs = array(

@@ -19,7 +19,7 @@
  */
 /* @var $this AppointmentController */
 /* @var $model User */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Lehrerauswahl');
+$this->setPageTitle('Lehrerauswahl');
 ?>
 <div class="row">
     <div class="twelve columns centered">

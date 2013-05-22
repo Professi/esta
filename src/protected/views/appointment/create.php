@@ -19,7 +19,7 @@
  */
 /* @var $this AppointmentController */
 /* @var $model Appointment */
-$this->setPageTitle(Yii::app()->name . ' - ' .'Termin anlegen');
+$this->setPageTitle('Termin anlegen');
 $this->breadcrumbs = array(
     'Appointments' => array('index'),
     'Create',

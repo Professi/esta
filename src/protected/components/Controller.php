@@ -121,5 +121,9 @@ class Controller extends CController {
         $this->assetsDir = Yii::app()->assetManager->publish($dir,false, -1 , YII_DEBUG);
         return parent::init();
     }
+    
+    public function setPageTitle($name) {
+        parent::setPageTitle(Yii::app()->name . ' - ' . $name);
+    }
 
 }
