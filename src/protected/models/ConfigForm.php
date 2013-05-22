@@ -155,6 +155,7 @@ class ConfigForm extends CFormModel {
             'language' => 'Sprache',
             'appName' => 'Anwendungsname',
             'databasePort' => 'Datenbankport',
+            'allowParentsToManageChilds' => 'Sollen Eltern die Daten über Ihre Kinder verwalten können?'
         );
     }
 
