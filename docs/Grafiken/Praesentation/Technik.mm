@@ -96,8 +96,7 @@
       <font color="#000000" size="5">Framework</font>
     </p>
   </body>
-</html>
-</richcontent>
+</html></richcontent>
 <edge COLOR="#00b439" WIDTH="2"/>
 <font NAME="SansSerif" SIZE="12"/>
 </node>
@@ -143,17 +142,18 @@
 <edge COLOR="#00b439" WIDTH="2"/>
 <font NAME="SansSerif" SIZE="12"/>
 </node>
-<node COLOR="#00b439" CREATED="1369306314726" HGAP="18" ID="ID_1546960258" MODIFIED="1369312494564" POSITION="left" VSHIFT="-2">
+<node COLOR="#00b439" CREATED="1369306314726" HGAP="18" ID="ID_1546960258" MODIFIED="1369317524687" POSITION="left" VSHIFT="-2">
 <richcontent TYPE="NODE"><html>
   <head>
     
   </head>
   <body>
     <p>
-      <font color="#000000" size="5">Google Webs Fonts</font>
+      <font size="5" color="#000000">Google Web Fonts</font>
     </p>
   </body>
-</html></richcontent>
+</html>
+</richcontent>
 <edge COLOR="#00b439" WIDTH="2"/>
 <font NAME="SansSerif" SIZE="12"/>
 </node>
