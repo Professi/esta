@@ -181,7 +181,7 @@ INSERT INTO `role` (`id`, `title`, `description`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `tan` (
-  `tan` int(11) DEFAULT NULL,
+  `tan` varchar(11) DEFAULT NULL,
   `used` tinyint(1) DEFAULT NULL,
   `group_id` int(11) DEFAULT NULL,
   `used_by_user_id` int(11) DEFAULT NULL,

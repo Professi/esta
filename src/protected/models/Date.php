@@ -157,7 +157,7 @@ class Date extends CActiveRecord {
             $i = 0;
             while ($diff >= $this->durationPerAppointment) {
                 $datetime = new DateAndTime;
-                $datetime->date_id = $this->id;
+                $datetime->date_id = $this->getPrimaryKey();
                 $datetime->time = date("H:i", (strtotime($this->begin) + ($this->durationPerAppointment * $i) * 60));
                 ++$i;
                 $diff -= $this->durationPerAppointment;
@@ -185,7 +185,7 @@ class Date extends CActiveRecord {
 
     public function createDateHasGroup($group) {
         $dateHasGroup = new DateHasGroup();
-        $dateHasGroup->date_id = $this->id;
+        $dateHasGroup->date_id = $this->getPrimaryKey();
         $dateHasGroup->group_id = $group;
         $dateHasGroup->save();
     }

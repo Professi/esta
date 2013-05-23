@@ -34,7 +34,7 @@ $this->menu = array(
 <div class="row">
     <div class="twelve columns">
         <fieldset>
-            <legend>Elternsprechtag Nummer <?php echo $model->id; ?> bearbeiten</legend>
+            <legend>Elternsprechtag Nummer <?php echo $model->getPrimaryKey(); ?> bearbeiten</legend>
             <?php
             echo $this->renderPartial('_form', array(
                 'model' => $model,

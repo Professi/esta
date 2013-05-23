@@ -32,10 +32,9 @@ $this->setPageTitle('Generierte TAN\'s');
         $this->widget('zii.widgets.grid.CGridView', array(
             'dataProvider' => $dataProvider,
             'columns' => array(
-                'tan',
-                array('name' => 'childFirstname', 'value' => '$data->child->firstname', 'visible' => !Yii::app()->params['allowParentsToManageChilds']),
-                array('name' => 'childLastname', 'value' => '$data->child->lastname', 'visible' => !Yii::app()->params['allowParentsToManageChilds']),
-            // array('name' => 'TAN', 'value' => '$data->tan',),
+                array('name' => 'TAN', 'value' => '$data->tan',),
+                array('name' => 'Vorname', 'value' => '$data->child->firstname', 'visible' => !Yii::app()->params['allowParentsToManageChilds']),
+                array('name' => 'Nachname', 'value' => '$data->child->lastname', 'visible' => !Yii::app()->params['allowParentsToManageChilds']),
             )
         ));
         ?>

@@ -37,7 +37,6 @@ class Tan extends CActiveRecord {
     public $id = 0;
     public $group_id = null;
     public $used_by_user_id = null;
-    public $child_id = null;
     public $childFirstname;
     public $childLastname;
 
@@ -64,14 +63,8 @@ class Tan extends CActiveRecord {
      */
     public function rules() {
         return array(
-            array('tan_count', 'numerical',
-                'integerOnly' => true, 'min' => 1,
-                'max' => Yii::app()->params['maxTanGen'],
-                'allowEmpty' => !self::allowParents()),
-            array('child_id', 'numerical', 'integerOnly' => true,
-                'allowEmpty' => !self::allowParents()),
-            array('child_id', 'exist',
-                'allowEmpty' => self::allowParents()),
+            array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen'], 'allowEmpty' => !self::allowParents()),
+            array('childFirstname,childLastname', 'length', 'min' => 1, 'allowEmpty' => self::allowParents()),
             array('tan, used,group_id', 'safe', 'on' => 'search'),
         );
     }
@@ -89,7 +82,7 @@ class Tan extends CActiveRecord {
         );
     }
 
-    private static function allowParents() {
+    public static function allowParents() {
         return Yii::app()->params['allowParentsToManageChilds'];
     }
 
@@ -134,9 +127,6 @@ class Tan extends CActiveRecord {
             if (Yii::app()->params['allowGroups']) {
                 $this->isIntElseNull($this->group_id);
             }
-            if (!Yii::app()->params['allowParentsToManageChilds']) {
-                $this->isIntElseNull($this->child_id);
-            }
         }
         return $rc;
     }
@@ -147,10 +137,10 @@ class Tan extends CActiveRecord {
     public function beforeValidate() {
         $rc = parent::beforeValidate();
         if ($rc && !Yii::app()->params['allowParentsToManageChilds'] &&
-                is_string($this->childFirstname) && is_string($this->childLastname) &&
                 $this->child_id == null) {
-            $this->child_id = $this->createChild();
+            $this->createChild();
         }
+        return $rc;
     }
 
     /**
@@ -172,7 +162,8 @@ class Tan extends CActiveRecord {
         $child->firstname = $this->childFirstname;
         $child->lastname = $this->childLastname;
         if ($child->save()) {
-            return $child->id;
+            $this->child = $child;
+            $this->child_id = $child->getPrimaryKey();
         }
     }
 
@@ -180,22 +171,16 @@ class Tan extends CActiveRecord {
      * Generiert n-TANs
      * @param integer $count Anzahl der zu generierenden TAN's
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return array Beinhaltet TAN's
      */
-    public function generateTan($groupId = "") {
-        if (!Yii::app()->params['allowParentsToManageChilds']) {
-            $this->child_id = $this->createChild();
+    public function generateTan($save = true) {
+        if (!self::allowParents()) {
+            $this->createChild();
         }
-        $rc = false;
         $this->tan = $this->randNumber();
         $this->used = false;
-        if (Yii::app()->params['allowGroups'] && $groupId != null && Group::model()->findByPk($groupId) != null) {
-            $this->group_id = $groupId;
+        if($save) {
+        $this->insert();
         }
-        if ($this->save()) {
-            $rc = $this;
-        }
-        return $rc;
     }
 
     /**

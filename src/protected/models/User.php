@@ -331,14 +331,14 @@ class User extends CActiveRecord {
                 $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
             }
             $tan->used = true;
-            $tan->used_by_user_id = $this->id;
+            $tan->used_by_user_id = $this->getPrimaryKey();
             $tan->update();
         }
     }
 
     private function getRoleId($no) {
         try {
-            return Role::model()->findByAttributes(array('id' => $no))->id;
+            return Role::model()->findByAttributes(array('id' => $no))->getPrimaryKey();
         } catch (CException $ex) {
             throw $ex;
         }
@@ -352,7 +352,7 @@ class User extends CActiveRecord {
     private function createUserRole() {
         $rc = true;
         $userrole = New UserRole();
-        $userrole->user_id = $this->id;
+        $userrole->user_id = $this->getPrimaryKey();
         if (Yii::app()->user->isGuest && Yii::app()->params['installed']) {
             $userrole->role_id = $this->getRoleId('3');
         } else {
@@ -644,7 +644,7 @@ class User extends CActiveRecord {
      */
     public function createUserHasGroup($group) {
         $userHasGroup = new UserHasGroup();
-        $userHasGroup->user_id = $this->id;
+        $userHasGroup->user_id = $this->getPrimaryKey();
         $userHasGroup->group_id = $group;
         $userHasGroup->save();
     }

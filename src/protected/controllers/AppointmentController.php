@@ -156,7 +156,7 @@ class AppointmentController extends Controller {
             }
             if (!empty($model->attributes['parent_child_id'])) {
                 $parentLabel = $model->parentchild->user->firstname . " " . $model->parentchild->user->lastname;
-                $parentId = $model->parentchild->user->id;
+                $parentId = $model->parentchild->user->getPrimaryKey();
             }
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));

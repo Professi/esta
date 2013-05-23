@@ -88,8 +88,8 @@ class ParentChild extends CActiveRecord {
                 $child->firstname = ucfirst($this->childFirstName);
                 $child->lastname = ucfirst($this->childLastName);
                 if ($child->save()) {
-                    $child->id = Child::model()->findByAttributes(array('firstname' => $child->firstname, 'lastname' => $child->lastname))->id;
-                    $this->child_id = $child->id;
+                    $child->id = Child::model()->findByAttributes(array('firstname' => $child->firstname, 'lastname' => $child->lastname))->getPrimaryKey();
+                    $this->child_id = $child->getPrimaryKey();
                 }
             }
         }
@@ -208,7 +208,7 @@ class ParentChild extends CActiveRecord {
     public function searchParentId($lastname) {
         $a_data = $this->findAll($this->searchParentChild($lastname, array('user')));
         foreach ($a_data as $key => $value) {
-            $a_data[$key] = $value->user->id;
+            $a_data[$key] = $value->user->getPrimaryKey();
         }
         return $a_data;
     }

@@ -71,7 +71,7 @@ if (Yii::app()->params['allowGroups']) {
                 ?>
             </fieldset>
             <?php $this->endWidget(); ?><?php
-        } else if (!Yii::app()->params['allowParentsToManageChils']) {
+        } else if (!Yii::app()->params['allowParentsToManageChilds']) {
             echo CHtml::beginForm();
             foreach ($model as $i => $tanObj) {
                 ?>
@@ -83,6 +83,7 @@ if (Yii::app()->params['allowGroups']) {
                         <div class="nine columns">
                             <?php
                             echo CHtml::activeTextField($tanObj, "[$i]childFirstname");
+                            echo CHtml::error($tanObj,"[$i]childFirstname");
                             ?>
                         </div>
                     </div>

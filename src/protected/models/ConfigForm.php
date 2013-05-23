@@ -205,7 +205,7 @@ class ConfigForm extends CFormModel {
             'user_id' => 'integer NOT NULL',
                 ), $this->getCollation());
         $command->createTable('tan', array(
-            'tan' => 'integer UNIQUE',
+            'tan' => 'string UNIQUE NOT NULL',
             'used' => 'boolean',
             'group_id' => 'integer NULL',
             'child_id' => 'integer NULL',
@@ -223,34 +223,34 @@ class ConfigForm extends CFormModel {
             'begin' => 'time NOT NULL',
             'end' => 'time NOT NULL',
             'lockAt' => 'bigint NOT NULL',
-            'durationPerAppointment' => 'smallint',
+            'durationPerAppointment' => 'smallint NOT NULL',
                 ), $this->getCollation());
         $command->createTable('date_has_group', array(
             'id' => 'pk',
-            'date_id' => 'integer',
-            'group_id' => 'integer',
+            'date_id' => 'integer NOT NULL',
+            'group_id' => 'integer NOT NULL',
                 ), $this->getCollation());
         $command->createTable('user_has_group', array(
             'id' => 'pk',
-            'user_id' => 'integer',
-            'group_id' => 'integer',
+            'user_id' => 'integer NOT NULL',
+            'group_id' => 'integer NOT NULL',
                 ), $this->getCollation());
         $command->createTable('dateAndTime', array(
             'id' => 'pk',
             'time' => 'time NOT NULL',
-            'date_id' => 'integer',
+            'date_id' => 'integer NOT NULL',
                 ), $this->getCollation());
         $command->createTable('appointment', array(
             'id' => 'pk',
-            'parent_child_id' => 'integer',
-            'user_id' => 'integer',
-            'dateAndTime_id' => 'integer',
+            'parent_child_id' => 'integer NOT NULL',
+            'user_id' => 'integer NOT NULL',
+            'dateAndTime_id' => 'integer NOT NULL',
                 ), $this->getCollation());
         $command->createTable('blockedAppointment', array(
             'id' => 'pk',
             'reason' => 'text',
-            'dateAndTime_id' => 'integer',
-            'user_id' => 'integer',
+            'dateAndTime_id' => 'integer NOT NULL',
+            'user_id' => 'integer NOT NULL',
                 ), $this->getCollation());
     }
 

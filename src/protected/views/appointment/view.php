@@ -33,7 +33,7 @@ $this->menu = array(
 ?>
 <div class="row">
     <div class="twelve columns centered">
-        <h2 class="text-center">Termin Nummer <?php echo $model->id; ?></h2>
+        <h2 class="text-center">Termin Nummer <?php echo $model->getPrimaryKey(); ?></h2>
     </div>
 </div>
 <div class="row">
