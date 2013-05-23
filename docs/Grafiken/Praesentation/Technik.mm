@@ -1,155 +1,198 @@
 <map version="0.9.0">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
-<node COLOR="#0033ff" CREATED="1368542790464" ID="ID_1867870570" MODIFIED="1368607461330">
+<node COLOR="#0033ff" CREATED="1368542790464" ID="ID_1867870570" MODIFIED="1369307624462">
 <richcontent TYPE="NODE"><html>
   <head>
     
   </head>
   <body>
-    <p>
-      <font size="6">Realisierung (Ziele)</font>
+    <p style="text-align: center">
+      <font size="6">Technik</font>
     </p>
   </body>
-</html></richcontent>
+</html>
+</richcontent>
 <edge COLOR="#0033ff" WIDTH="4"/>
-<node COLOR="#00b439" CREATED="1368542868325" ID="ID_1850041085" MODIFIED="1368608421670" POSITION="right" VSHIFT="-14">
+<font NAME="SansSerif" SIZE="12"/>
+<node COLOR="#00b439" CREATED="1369306652110" HGAP="17" ID="ID_187390548" MODIFIED="1369307779021" POSITION="right" VSHIFT="-5">
 <richcontent TYPE="NODE"><html>
   <head>
     
   </head>
   <body>
     <p>
-      <font size="5">Barrierefreiheit</font>
+      <font color="#000000" size="5">MVC</font>
     </p>
   </body>
-</html></richcontent>
+</html>
+</richcontent>
 <edge COLOR="#00b439" WIDTH="2"/>
-<node COLOR="#990000" CREATED="1368544378850" ID="ID_969072851" MODIFIED="1368607545671" VSHIFT="-7">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+<node COLOR="#00b439" CREATED="1369306221530" HGAP="17" ID="ID_1454344363" MODIFIED="1369307790393" POSITION="right" VSHIFT="-10">
 <richcontent TYPE="NODE"><html>
   <head>
     
   </head>
   <body>
     <p>
-      Javascript nur
-    </p>
-    <p>
-      als Erg&#228;nzung
+      <font color="#000000" size="5">PHP 5</font>
     </p>
   </body>
-</html></richcontent>
-<edge COLOR="#990000" WIDTH="1"/>
-</node>
-<node COLOR="#990000" CREATED="1368544446169" ID="ID_1036951395" MODIFIED="1368607545671" TEXT="Starke Kontraste">
-<edge COLOR="#990000" WIDTH="1"/>
-</node>
-</node>
-<node COLOR="#00b439" CREATED="1368543111447" HGAP="26" ID="ID_1008786131" MODIFIED="1368608427332" POSITION="left" VSHIFT="-25">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      <font size="5">Benutzerfreundlichkeit</font>
-    </p>
-  </body>
-</html></richcontent>
+</html>
+</richcontent>
 <edge COLOR="#00b439" WIDTH="2"/>
-<arrowlink DESTINATION="ID_1008786131" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Arrow_ID_1981276619" STARTARROW="None" STARTINCLINATION="0;0;"/>
-<node COLOR="#990000" CREATED="1368545378402" ID="ID_1666698513" MODIFIED="1368607545671" TEXT="Einfaches Men&#xfc;">
-<edge COLOR="#990000" WIDTH="1"/>
+<font NAME="SansSerif" SIZE="12"/>
 </node>
-<node COLOR="#990000" CREATED="1368545393736" ID="ID_601705208" MODIFIED="1368607545671" TEXT="Viele Kurzanleitungen">
-<edge COLOR="#990000" WIDTH="1"/>
-</node>
-</node>
-<node COLOR="#00b439" CREATED="1368544565267" HGAP="23" ID="ID_1019230123" MODIFIED="1368607545671" POSITION="right" VSHIFT="10">
+<node COLOR="#00b439" CREATED="1369306666851" HGAP="19" ID="ID_1578141463" MODIFIED="1369307635958" POSITION="left" VSHIFT="-10">
 <richcontent TYPE="NODE"><html>
   <head>
     
   </head>
   <body>
     <p>
-      <font size="5">Sicherheit</font>
+      <font color="#000000" size="5">OOP</font>
     </p>
   </body>
-</html></richcontent>
+</html>
+</richcontent>
 <edge COLOR="#00b439" WIDTH="2"/>
-<arrowlink DESTINATION="ID_1019230123" ENDARROW="Default" ENDINCLINATION="0;0;" ID="Arrow_ID_1972835388" STARTARROW="None" STARTINCLINATION="0;0;"/>
-<node COLOR="#990000" CREATED="1368544605732" ID="ID_299960578" MODIFIED="1368607545671">
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+<node COLOR="#00b439" CREATED="1369306229727" HGAP="16" ID="ID_1412937547" MODIFIED="1369307654006" POSITION="left" VSHIFT="-7">
 <richcontent TYPE="NODE"><html>
   <head>
     
   </head>
   <body>
     <p>
-      Keine SQL-Incentions m&#246;glich
+      <font color="#000000" size="5">Yii Framework</font>
     </p>
   </body>
-</html></richcontent>
-<edge COLOR="#990000" WIDTH="1"/>
-</node>
-<node COLOR="#990000" CREATED="1368544637485" ID="ID_1540721660" MODIFIED="1368607545671" TEXT="Kein Cross Site Scripting m&#xf6;glich">
-<edge COLOR="#990000" WIDTH="1"/>
-</node>
-</node>
-<node COLOR="#00b439" CREATED="1368543173383" HGAP="23" ID="ID_562573080" MODIFIED="1368608423120" POSITION="right" VSHIFT="21">
-<richcontent TYPE="NODE"><html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      <font size="5">Datenschutz</font>
-    </p>
-  </body>
-</html></richcontent>
+</html>
+</richcontent>
 <edge COLOR="#00b439" WIDTH="2"/>
-<node COLOR="#990000" CREATED="1368544678933" ID="ID_563129468" MODIFIED="1368607545671" TEXT="Passwortverschl&#xfc;sselung">
-<edge COLOR="#990000" WIDTH="1"/>
+<font NAME="SansSerif" SIZE="12"/>
 </node>
-</node>
-<node COLOR="#00b439" CREATED="1368543322105" HGAP="34" ID="ID_1950464932" MODIFIED="1368608434009" POSITION="left">
+<node COLOR="#00b439" CREATED="1369306241263" HGAP="21" ID="ID_90909791" MODIFIED="1369307803886" POSITION="right" VSHIFT="-12">
 <richcontent TYPE="NODE"><html>
   <head>
     
   </head>
   <body>
     <p>
-      <font size="5">Fehlerfreie Software</font>
+      <font color="#000000" size="5">HTML</font>
     </p>
   </body>
-</html></richcontent>
+</html>
+</richcontent>
 <edge COLOR="#00b439" WIDTH="2"/>
-<node COLOR="#990000" CREATED="1368545210466" ID="ID_1043455915" MODIFIED="1368607545671" TEXT="Ausf&#xfc;hrliches Testen">
-<edge COLOR="#990000" WIDTH="1"/>
+<font NAME="SansSerif" SIZE="12"/>
 </node>
-<node COLOR="#990000" CREATED="1368545221135" ID="ID_838074226" MODIFIED="1368607545671" TEXT="Unabh&#xe4;ngige Tester">
-<edge COLOR="#990000" WIDTH="1"/>
-</node>
-</node>
-<node COLOR="#00b439" CREATED="1368543330607" ID="ID_624250770" MODIFIED="1368608424743" POSITION="left" VSHIFT="28">
+<node COLOR="#00b439" CREATED="1369306248774" HGAP="18" ID="ID_1822212796" MODIFIED="1369307712113" POSITION="left" VSHIFT="-8">
 <richcontent TYPE="NODE"><html>
   <head>
     
   </head>
   <body>
     <p>
-      <font size="5">Plattforumunabh&#228;ngigkeit</font>
+      <font color="#000000" size="5">ZURB Foundation Framework</font>
     </p>
   </body>
-</html></richcontent>
+</html>
+</richcontent>
 <edge COLOR="#00b439" WIDTH="2"/>
-<node COLOR="#990000" CREATED="1368607479801" ID="ID_261308755" MODIFIED="1368607545687" TEXT="Funktioniert auf allen Medien">
-<edge COLOR="#990000" WIDTH="1"/>
+<font NAME="SansSerif" SIZE="12"/>
 </node>
-<node COLOR="#990000" CREATED="1368607490502" ID="ID_1349996459" MODIFIED="1368607545687" TEXT="Funktioniert mit allen Browsern">
-<edge COLOR="#990000" WIDTH="1"/>
+<node COLOR="#00b439" CREATED="1369306286032" HGAP="19" ID="ID_523346275" MODIFIED="1369307815648" POSITION="right" VSHIFT="5">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      <font color="#000000" size="5">Javascript</font>
+    </p>
+  </body>
+</html>
+</richcontent>
+<edge COLOR="#00b439" WIDTH="2"/>
+<font NAME="SansSerif" SIZE="12"/>
 </node>
-<node COLOR="#990000" CREATED="1368607508473" ID="ID_1807044905" MODIFIED="1368607545687" TEXT="Funktioniert auf allen Plattformen">
-<edge COLOR="#990000" WIDTH="1"/>
+<node COLOR="#00b439" CREATED="1369306292935" ID="ID_252590189" MODIFIED="1369307747028" POSITION="left" VSHIFT="2">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      <font color="#000000" size="5">IcoMoon Icon Fonts</font>
+    </p>
+  </body>
+</html>
+</richcontent>
+<edge COLOR="#00b439" WIDTH="2"/>
+<font NAME="SansSerif" SIZE="12"/>
 </node>
+<node COLOR="#00b439" CREATED="1369306310491" ID="ID_401908544" MODIFIED="1369307825959" POSITION="right" VSHIFT="7">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      <font color="#000000" size="5">Ajax</font>
+    </p>
+  </body>
+</html>
+</richcontent>
+<edge COLOR="#00b439" WIDTH="2"/>
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+<node COLOR="#00b439" CREATED="1369306314726" HGAP="18" ID="ID_1546960258" MODIFIED="1369307756933" POSITION="left" VSHIFT="5">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      <font color="#000000" size="5">Google Webs Fonts</font>
+    </p>
+  </body>
+</html>
+</richcontent>
+<edge COLOR="#00b439" WIDTH="2"/>
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+<node COLOR="#00b439" CREATED="1369306557728" ID="ID_1586463543" MODIFIED="1369307834975" POSITION="right" VSHIFT="7">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      <font color="#000000" size="5">MySQL</font>
+    </p>
+  </body>
+</html>
+</richcontent>
+<edge COLOR="#00b439" WIDTH="2"/>
+<font NAME="SansSerif" SIZE="12"/>
+</node>
+<node COLOR="#00b439" CREATED="1369306581727" HGAP="13" ID="ID_1092410006" MODIFIED="1369307765809" POSITION="left" VSHIFT="7">
+<richcontent TYPE="NODE"><html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      <font color="#000000" size="5">Free Stock Textures</font>
+    </p>
+  </body>
+</html>
+</richcontent>
+<edge COLOR="#00b439" WIDTH="2"/>
+<font NAME="SansSerif" SIZE="12"/>
 </node>
 </node>
 </map>
