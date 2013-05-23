@@ -64,14 +64,20 @@ class Tan extends CActiveRecord {
      */
     public function rules() {
         return array(
-            array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen']),
-            array('child_id', 'numerical', 'integerOnly' => true),
-            array('child_id', 'exist', 'allowEmpty' => Yii::app()->params['allowParentsToManageChilds']),
-            array('tan, used', 'safe', 'on' => 'search'),
+            array('tan_count', 'numerical',
+                'integerOnly' => true, 'min' => 1,
+                'max' => Yii::app()->params['maxTanGen'],
+                'allowEmpty' => !self::allowParents()),
+            array('child_id', 'numerical', 'integerOnly' => true,
+                'allowEmpty' => !self::allowParents()),
+            array('child_id', 'exist',
+                'allowEmpty' => self::allowParents()),
+            array('tan, used,group_id', 'safe', 'on' => 'search'),
         );
     }
 
     /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * Keine Relationen, liefert ein leeres Array
      * @return array relational rules.
      */
@@ -81,6 +87,10 @@ class Tan extends CActiveRecord {
             'child' => array(self::BELONGS_TO, 'Child', 'child_id'),
             'used_by_user' => array(self::BELONGS_TO, 'User', 'used_by_user_id'),
         );
+    }
+
+    private static function allowParents() {
+        return Yii::app()->params['allowParentsToManageChilds'];
     }
 
     /**
@@ -95,8 +105,8 @@ class Tan extends CActiveRecord {
             'group_id' => 'Gruppe',
             'group' => 'Gruppe',
             'child' => 'Schüler',
-            'childFirstname' =>'Vorname des Schülers',
-            'childLastname' => 'Nachname des Schülers',
+            'childFirstname' => 'Vorname',
+            'childLastname' => 'Nachname',
             'used_by_user' => 'Erziehungsberechtigter',
         );
     }
@@ -114,6 +124,10 @@ class Tan extends CActiveRecord {
         ));
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     * @return type
+     */
     public function beforeSave() {
         $rc = parent::beforeSave();
         if ($rc) {
@@ -127,6 +141,9 @@ class Tan extends CActiveRecord {
         return $rc;
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     */
     public function beforeValidate() {
         $rc = parent::beforeValidate();
         if ($rc && !Yii::app()->params['allowParentsToManageChilds'] &&
@@ -136,12 +153,20 @@ class Tan extends CActiveRecord {
         }
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     * @param null $var
+     */
     private function isIntElseNull(&$var) {
         if ($var != null && !is_int($var)) {
             $var = null;
         }
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     * @return type
+     */
     private function createChild() {
         $child = new Child();
         $child->firstname = $this->childFirstname;
@@ -149,6 +174,47 @@ class Tan extends CActiveRecord {
         if ($child->save()) {
             return $child->id;
         }
+    }
+
+    /**
+     * Generiert n-TANs
+     * @param integer $count Anzahl der zu generierenden TAN's
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return array Beinhaltet TAN's
+     */
+    public function generateTan($groupId = "") {
+        if (!Yii::app()->params['allowParentsToManageChilds']) {
+            $this->child_id = $this->createChild();
+        }
+        $rc = false;
+        $this->tan = $this->randNumber();
+        $this->used = false;
+        if (Yii::app()->params['allowGroups'] && $groupId != null && Group::model()->findByPk($groupId) != null) {
+            $this->group_id = $groupId;
+        }
+        if ($this->save()) {
+            $rc = $this;
+        }
+        return $rc;
+    }
+
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     * @return string
+     */
+    private function randNumber() {
+        $break = true;
+        do {
+            $sTan = '';
+            for ($x = 0; $x < Yii::app()->params['tanSize']; ++$x) {
+                $sTan .= rand(0, 9);
+            }
+            if (strlen($sTan) == Yii::app()->params['tanSize'] && Tan::model()->countByAttributes(array('tan' => $sTan)) == '0') {
+                $this->tan = $sTan;
+                $break = false;
+            }
+        } while ($break);
+        return $sTan;
     }
 
 }

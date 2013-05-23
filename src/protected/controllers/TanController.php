@@ -54,27 +54,85 @@ class TanController extends Controller {
     }
 
     /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
+    private function tansForParentsManagement(&$model) {
+        $model->attributes = $_POST['Tan'];
+        if (Yii::app()->params['allowGroups'] && isset($_POST['Tan']['group_id'])) {
+            $model->group_id = $_POST['Tan']['group_id'];
+        }
+        if ($model->validate() && is_int($model->tan_count)) {
+            $tans = array();
+            for ($i = 0; $i < $model->tan_count; $i++) {
+                $tan = new Tan();
+                $tans[] = $tan->generateTan($model->group_id);
+            }
+            Yii::app()->session['isTanGen'] = 1;
+            $dataProvider = new CArrayDataProvider($tans, array('pagination' => array('pageSize' => Yii::app()->params['maxTanGen'])));
+            $this->render('showGenTans', array('dataProvider' => $dataProvider));
+        } else {
+            $this->render('formGenTans', array('model' => $model));
+        }
+    }
+
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
      * action um Tans zu generieren
      */
     public function actionGenTans() {
         $model = new Tan();
         if (isset($_POST['Tan']) && Yii::app()->session['isTanGen'] != 1) {
-            $model->attributes = $_POST['Tan'];
-            if (Yii::app()->params['allowGroups'] && isset($_POST['Tan']['group_id'])) {
-                $model->group_id = $_POST['Tan']['group_id'];
-            }
-            if ($model->validate()) {
-                Yii::app()->session['isTanGen'] = 1;
-                $dataProvider = new CArrayDataProvider(self::generateTan($model->tan_count, $model->group_id), array('pagination' => array('pageSize' => Yii::app()->params['maxTanGen'])));
-                $this->render('showGenTans', array('dataProvider' => $dataProvider));
+            if (Yii::app()->params['allowParentsToManageChilds']) {
+                $this->tansForParentsManagement($model);
             } else {
-                $this->render('formGenTans', array('model' => $model));
+                $this->tansNotForParentsManagement($model);
             }
         } else {
             if (isset(Yii::app()->session['isTanGen'])) {
                 unset(Yii::app()->session['isTanGen']);
             }
-            $this->render('formGenTans', array('model' => $model));
+            if (!Yii::app()->params['allowParentsToManageChilds']) {
+                $model = array();
+                $tan = new Tan();
+                $tan->unsetAttributes();
+                $model[] = $tan;
+            }
+            $this->renderFormGenTans($model);
+        }
+    }
+
+    private function renderNewFormGenTans() {
+        $model = array();
+        $tan = new Tan();
+        $tan->unsetAttributes();
+        $model[] = $tan;
+        $this->renderFormGenTans($model);
+    }
+
+    private function renderFormGenTans($model) {
+        $this->render('formGenTans', array('model' => $model));
+    }
+
+    private function tansNotForParentsManagement(&$model) {
+        $model = array();
+        $tans = $_POST['Tan'];
+        foreach ($tans as $i => $oneTan) {
+            if (isset($_POST['Tan'][$i])) {
+                $tan = new Tan();
+                $tan->setAttributes($oneTan, false);
+                $tan->childFirstname = $_POST['Tan'][$i]['childFirstname'];
+                $tan->childLastname = $_POST['Tan'][$i]['childLastname'];
+                if ($tan->generateTan()) {
+                    $model[] = $tan;
+                }
+            }
+            if (!empty($model)) {
+                $dataProvider = new CArrayDataProvider($tans, array('pagination' => array('pageSize' => Yii::app()->params['maxTanGen'])));
+                $this->render('showGenTans', array('dataProvider' => $dataProvider));
+            } else {
+                Yii::app()->user->setFlash('failMsg','Leider ist bei dem Versuch neue Tans zu generieren etwas schief gegangen.');
+                $this->renderNewFormGenTans();
+            }
         }
     }
 
@@ -90,42 +148,6 @@ class TanController extends Controller {
         if ($model === null)
             $this->throwFourNullFour();
         return $model;
-    }
-
-    /**
-     * Generiert n-Tans
-     * @param integer $count Anzahl der zu generierenden TAN's
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return array Beinhaltet TAN's
-     */
-    public function generateTan($count, $groupId = "") {
-        $a_rc = array();
-        $ok = false;
-        if (Yii::app()->params['allowGroups'] && Group::model()->findByPk($groupId) != null) {
-            $ok = true;
-        }
-        for ($i = 0; $i < $count; ++$i) {
-            $tan = new Tan;
-            $sTan = "";
-            for ($x = 0; $x < Yii::app()->params['tanSize']; ++$x) {
-                $sTan .= rand(0, 9);
-            }
-            $tan->tan = $sTan;
-            $tan->used = false;
-            $tan->tan_count = 1;
-            if (Yii::app()->params['allowGroups'] && $ok) {
-                $tan->group_id = $groupId;
-            }
-            if (strlen($tan->tan) == Yii::app()->params['tanSize'] && Tan::model()->countByAttributes(array('tan' => $tan->tan)) == 0) {
-                if ($tan->save()) {
-                    $tan->id = $i;
-                    $a_rc[] = $tan;
-                }
-            } else {
-                --$i;
-            }
-        }
-        return $a_rc;
     }
 
 }

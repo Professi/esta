@@ -19,10 +19,11 @@
  */
 /* @var $this TanController */
 /* @var $model tan */
+$this->setPageTitle('Generierte TAN\'s');
 ?>
 <div class="row">
     <div class="twelve columns centered">
-        <h2 class="text-center">Generierte Tans</h2>
+        <h2 class="text-center">Generierte TAN's</h2>
     </div>
 </div>
 <div class="row">
@@ -31,7 +32,10 @@
         $this->widget('zii.widgets.grid.CGridView', array(
             'dataProvider' => $dataProvider,
             'columns' => array(
-                array('name' => 'Tan', 'value' => '$data->tan',),
+                'tan',
+                array('name' => 'childFirstname', 'value' => '$data->child->firstname', 'visible' => !Yii::app()->params['allowParentsToManageChilds']),
+                array('name' => 'childLastname', 'value' => '$data->child->lastname', 'visible' => !Yii::app()->params['allowParentsToManageChilds']),
+            // array('name' => 'TAN', 'value' => '$data->tan',),
             )
         ));
         ?>

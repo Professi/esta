@@ -19,7 +19,7 @@
  */
 /* @var $this TanController */
 /* @var $model tan */
-$this->setPageTitle('Tan Generierung');
+$this->setPageTitle('TAN Generierung');
 Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.css");
 $groups = array();
 if (Yii::app()->params['allowGroups']) {
@@ -33,100 +33,90 @@ if (Yii::app()->params['allowGroups']) {
 </div>
 <div class="row">
     <div class="eight columns centered">
+
         <?php
-        $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'tan-form',
-        ));
-        ?>
-        <fieldset>
-            <div class="row collapse">
-                <div class="three columns">
-                    <span class="prefix">Anzahl TANs</span>
-                </div>
-                <div class="nine columns">
-                    <?php
-                    echo $form->textField($model, 'tan_count', array('size' => 60));
-                    echo $form->error($model, 'tan_count');
-                    ?>
-                </div>
-            </div>
-            <?php
-            if (Yii::app()->params['allowGroups'] && !empty($groups)) {
-                ?>
+        if (Yii::app()->params['allowParentsToManageChilds']) {
+            $form = $this->beginWidget('CActiveForm', array(
+                'id' => 'tan-form',
+            ));
+            ?>        <fieldset>
                 <div class="row collapse">
                     <div class="three columns">
-                        <span class="prefix"><?php echo $form->label($model, 'group'); ?></span>
+                        <span class="prefix">Anzahl TANs</span>
                     </div>
                     <div class="nine columns">
                         <?php
-                        echo Select2::activeDropDownList($model, 'group_id', $groups, array(
-                            'prompt' => 'Hier können Sie eine Gruppe auswählen...')
-                        );
-                        echo $form->error($model, 'group');
+                        echo $form->textField($model, 'tan_count', array('size' => 60));
+                        echo $form->error($model, 'tan_count');
                         ?>
                     </div>
                 </div>
                 <?php
+                if (Yii::app()->params['allowGroups'] && !empty($groups)) {
+                    ?>
+                    <div class="row collapse">
+                        <div class="three columns">
+                            <span class="prefix"><?php echo $form->label($model, 'group'); ?></span>
+                        </div>
+                        <div class="nine columns">
+                            <?php
+                            echo Select2::activeDropDownList($model, 'group_id', $groups, array(
+                                'prompt' => 'Hier können Sie eine Gruppe auswählen...')
+                            );
+                            echo $form->error($model, 'group');
+                            ?>
+                        </div>
+                    </div>
+                <?php } echo CHtml::submitButton('Absenden', array('class' => 'small button'));
+                ?>
+            </fieldset>
+            <?php $this->endWidget(); ?><?php
+        } else if (!Yii::app()->params['allowParentsToManageChils']) {
+            echo CHtml::beginForm();
+            foreach ($model as $i => $tanObj) {
+                ?>
+                <div class="customChild">
+                    <div class="row collapse">
+                        <div class="three columns">
+                            <span class="prefix"><?php  echo CHtml::activeLabel($tanObj, "childFirstname"); ?></span>
+                        </div>
+                        <div class="nine columns">
+                            <?php
+                            echo CHtml::activeTextField($tanObj, "[$i]childFirstname");
+                            ?>
+                        </div>
+                    </div>
+                    <div class="row collapse">
+                        <div class="three columns">
+                            <span class="prefix"><?php  echo CHtml::activeLabel($tanObj, "childLastname"); ?></span>
+                        </div>
+                        <div class="nine columns">
+                            <?php
+                            echo CHtml::activeTextField($tanObj, "[$i]childLastname", array('size' => 60));
+                            ?>
+                        </div>
+                    </div>
+                    <?php
+                    if (Yii::app()->params['allowGroups'] && !empty($groups)) {
+                        ?>
+                        <div class="row collapse">
+                            <div class="three columns">
+                                <span class="prefix"><?php  echo CHtml::activeLabel($tanObj, "group"); ?></span>
+                            </div>
+                            <div class="nine columns">
+                                <?php
+                                echo Select2::activeDropDownList($tanObj, "[$i]group_id", $groups, array(
+                                    'prompt' => 'Hier können Sie eine Gruppe auswählen...')
+                                );
+                                ?>
+                            </div>
+                        </div>
+                    <?php } echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
+                </div>
+                <?php
             }
-            echo CHtml::submitButton('Absenden', array('class' => 'small button'));
-            ?>
-        </fieldset>
-        <?php $this->endWidget(); ?>
+            echo CHtml::endForm();
+        }
+        ?>
     </div>
-    <?php
-    if (!Yii::app()->params['allowParentsToManageChils']) {
-        $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'tans-form',
-        ));
-        ?>
-        <fieldset>
-            <div class="row collapse">
-                <div class="three columns">
-                    <span class="prefix"><?php echo $form->label($model, 'childFirstname'); ?></span>
-                </div>
-                <div class="nine columns">
-                    <?php
-                    echo $form->textField($model, 'childFirstname', array('size' => 60));
-                    echo $form->error($model, 'childFirstname');
-                    ?>
-                </div>
-            </div>
-
-            <div class="row collapse">
-                <div class="three columns">
-                    <span class="prefix"><?php echo $form->label($model, 'childLastname'); ?></span>
-                </div>
-                <div class="nine columns">
-                    <?php
-                    echo $form->textField($model, 'childLastname', array('size' => 60));
-                    echo $form->error($model, 'childLastname');
-                    ?>
-                </div>
-            </div>
-            <?php
-            if (Yii::app()->params['allowGroups'] && !empty($groups)) {
-                ?>
-                <div class="row collapse">
-                    <div class="three columns">
-                        <span class="prefix"><?php echo $form->label($model, 'group'); ?></span>
-                    </div>
-                    <div class="nine columns">
-                        <?php
-                        echo Select2::activeDropDownList($model, 'group_id', $groups, array(
-                            'prompt' => 'Hier können Sie eine Gruppe auswählen...')
-                        );
-                        echo $form->error($model, 'group');
-                        ?>
-                    </div>
-                </div>
-                <?php
-            }
-            echo CHtml::submitButton('Absenden', array('class' => 'small button'));
-            ?>
-        </fieldset>
-        <?php
-        $this->endWidget();
-    }
-    ?>
 </div>
-
