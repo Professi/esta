@@ -62,7 +62,7 @@ $this->menu = array(
                 'firstname',
                 'lastname',
                 array('name' => 'stateName',
-                    'value' => $model->getStateName()),
+                    'value' => $model->getStateName($model->state)),
                 array('name' => 'userrole',
                     'value' => $model->userrole->role->title),
                 array('name' => 'createtime',

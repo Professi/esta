@@ -96,6 +96,7 @@ if (Yii::app()->params['allowGroups']) {
                         <div class="nine columns">
                             <?php
                             echo CHtml::activeTextField($tanObj, "[$i]childLastname", array('size' => 60));
+                            echo CHtml::error($tanObj, "[$i]childLastname");
                             ?>
                         </div>
                     </div>

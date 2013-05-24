@@ -52,7 +52,7 @@ $array2 = array(
     'schoolEmail' => 'office@bws-hofheim.de',
     'useSchoolEmailForContactForm' => true,
     'lockRegistration' => false,
-    'allowGroups' => true,
+    'allowGroups' => false,
     'databaseHost' => 'localhost',
     'databaseName' => 'estdb',
     'databaseUsername' => 'estdb',
@@ -62,7 +62,7 @@ $array2 = array(
     'logoPath' => '/img/logo.png',
     'textHeader' => 'der',
     'language'=>'de',
-    'allowParentsToManageChilds'=> false,
+    'allowParentsToManageChilds'=> true,
 );
 if (empty($arr)) {
     return $array2;

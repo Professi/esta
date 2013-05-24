@@ -482,6 +482,7 @@ class User extends CActiveRecord {
         switch ($state) {
             case 0:
                 $stateName = 'Nicht aktiv';
+
                 break;
             case 1:
                 $stateName = 'Aktiv';
@@ -495,6 +496,7 @@ class User extends CActiveRecord {
         if ($state == null) {
             $this->stateName = $stateName;
         }
+
         return $stateName;
     }
 

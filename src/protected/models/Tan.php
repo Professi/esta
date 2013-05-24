@@ -157,13 +157,15 @@ class Tan extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
      * @return type
      */
-    private function createChild() {
+    private function createChild($save = true) {
         $child = new Child();
         $child->firstname = $this->childFirstname;
         $child->lastname = $this->childLastname;
-        if ($child->save()) {
+        if ($save && $child->save()) {
             $this->child = $child;
             $this->child_id = $child->getPrimaryKey();
+        } else {
+            $this->child = $child;
         }
     }
 
@@ -174,7 +176,7 @@ class Tan extends CActiveRecord {
      */
     public function generateTan($save = true) {
         if (!self::allowParents()) {
-            $this->createChild();
+            $this->createChild($save);
         }
         $this->tan = $this->randNumber();
         $this->used = false;

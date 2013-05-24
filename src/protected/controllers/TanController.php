@@ -102,12 +102,12 @@ class TanController extends Controller {
         }
     }
 
-    private function renderNewFormGenTans() {
+    private function getEmptyTanModel() {
         $model = array();
         $tan = new Tan();
         $tan->unsetAttributes();
         $model[] = $tan;
-        $this->renderFormGenTans($model);
+        return $model;
     }
 
     private function renderFormGenTans($model) {
@@ -115,6 +115,7 @@ class TanController extends Controller {
     }
 
     private function iterateOverTans($tans, &$validate) {
+        $model = array();
         foreach ($tans as $i => $oneTan) {
             if (isset($_POST['Tan'][$i])) {
                 $tan = new Tan();
@@ -125,10 +126,13 @@ class TanController extends Controller {
                     $tan->generateTan(false);
                     $model[] = $tan;
                 } else {
+                    $model[] = $tan;
                     $validate = false;
-                    $model = $tans;
                 }
             }
+        }
+        if (empty($model)) {
+            $model = $this->getEmptyTanModel();
         }
         return $model;
     }
@@ -138,10 +142,13 @@ class TanController extends Controller {
         $model = $this->iterateOverTans($_POST['Tan'], $validate);
         if ($validate) {
             foreach ($model as $newTan) {
-                $newTan->insert();
+                if ($newTan->child instanceof Child && $newTan->child->save()) {
+                    $newTan->child_id = $newTan->child->getPrimaryKey();
+                    $newTan->insert();
+                }
             }
         }
-        if (!empty($model)) {
+        if (!empty($model) && $validate) {
             $dataProvider = new CArrayDataProvider($model, array('pagination' => array('pageSize' => Yii::app()->params['maxTanGen'])));
             $this->render('showGenTans', array('dataProvider' => $dataProvider));
         } else {
