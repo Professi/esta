@@ -73,7 +73,7 @@
             $('#MenuModal').append('<a class="close-reveal-modal close-reveal-modal-fix" data-icon="&#xe014;" style="color:#fff;"></a>');
             
             if (supportsSvg()) {
-                $('.alarm_png').children().attr('src',window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/'))+'/img/alarm.svg');
+                $('.alarm_png').children().attr('src',path+'/img/alarm.svg');
             }
         });
         

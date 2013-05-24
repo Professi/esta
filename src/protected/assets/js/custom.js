@@ -139,9 +139,9 @@
             }
             // ** Wenn der Browser SVG unterstützt die PNGs ersetzen. **
             if (supportsSvg()) {
-                $('.view').children().each(function(){$(this).attr('src',window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/'))+'/img/search.svg');});
-                $('.update').children().each(function(){$(this).attr('src',window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/'))+'/img/pencil.svg');});
-                $('.delete').children().each(function(){$(this).attr('src',window.location.pathname.substr(0,window.location.pathname.lastIndexOf('/'))+'/img/remove.svg');});
+                $('.view').children().each(function(){$(this).attr('src',path+'/img/search.svg');});
+                $('.update').children().each(function(){$(this).attr('src',path+'/img/pencil.svg');});
+                $('.delete').children().each(function(){$(this).attr('src',path+'/img/remove.svg');});
             }
             
         });

@@ -21,10 +21,6 @@ html, body {
 	height: 100%;
 }
 
-.view > img {
-    background-image: url(/search.svg);
-}
-
 .wrapper {
 	min-height: 95%;
 	height: auto !important;
@@ -264,6 +260,11 @@ table {
 
 #Date_groups {
     min-width: 4em;
+}
+.no-js ul.button-group li {
+    border: 1px solid #ccc;
+    background: #f2f2f2;
+    padding: .2em;
 }
 .select2-container {
     top: 0px;

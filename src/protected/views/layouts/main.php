@@ -28,6 +28,7 @@
         <link rel="icon" href="<?php echo $this->assetsDir; ?>/favicon.ico">
         <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->assetsDir; ?>/favicon.ico">
         <script type="text/javascript" src="<?php echo $this->assetsDir; ?>/js/modernizr.foundation.js"></script>
+        <script type="text/javascript">/*<![CDATA[*/ var path = '<?php echo $this->assetsDir; ?>';/*]]>*/</script>
         <?php $this->registerScripts(); ?>
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
     </head>
