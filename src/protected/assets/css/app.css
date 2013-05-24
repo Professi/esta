@@ -140,7 +140,7 @@ table {
 }
 #small_buttons>div {
 	display: inline-block;
-	font-family: Courier, 'Droid Sans Mono';
+	font-family: Courier, 'Droid Sans Mono',monospace;
 }
 #teacher_table>tr>td {
 	cursor: pointer;
@@ -213,6 +213,9 @@ table {
 }
 .faq-ul li {
     display: block;
+}
+.push-faq {
+    margin-bottom: 4em;
 }
 .appointment-lockAt {
     position: relative;
