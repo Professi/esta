@@ -115,7 +115,24 @@ class DateAndTime extends CActiveRecord {
         $criteria->limit = 10;
         return $criteria;
     }
-    
+
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param type $term
+     * @return string
+     */
+    public function searchFormattedArrayDateAndTime($term) {
+        $this->time = $term;
+        $a_rc = array();
+        $a_data = DateAndTime::model()->findAll($this->searchDateAndTime());
+        foreach ($a_data as $record) {
+            $a_rc[] = array('label' => date('d.m.Y', strtotime($record->date->date)) . " "
+                . date('H:i', strtotime($record->time))
+                , 'value' => $record->id);
+        }
+        return $a_rc;
+    }
+
     /**
      * 
      * Löscht alle Termine von einem DateAndTime
@@ -124,9 +141,9 @@ class DateAndTime extends CActiveRecord {
      */
     public function beforeDelete() {
         $rc = false;
-        if(parent::beforeDelete()) {
-            BlockedAppointment::model()->deleteAllByAttributes(array('dateAndTime_id'=>  $this->id));
-            Appointment::model()->deleteAllByAttributes(array('dateAndTime_id'=>  $this->id));
+        if (parent::beforeDelete()) {
+            BlockedAppointment::model()->deleteAllByAttributes(array('dateAndTime_id' => $this->id));
+            Appointment::model()->deleteAllByAttributes(array('dateAndTime_id' => $this->id));
             $rc = true;
         }
         return $rc;

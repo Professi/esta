@@ -130,7 +130,7 @@ class Date extends CActiveRecord {
             } else if (time() >= strtotime($this->date)) {
                 $rc = false;
                 $this->addError('date', 'Datum liegt in der Vergangenheit');
-            } else if (!is_int((strtotime($this->end)) - (strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
+            } else if (!is_int((strtotime($this->end) - strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
                 $rc = false;
                 $this->addError('durationPerAppointment', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.');
             } else if (strtotime($this->date . $this->begin) < strtotime($this->lockAt)) {

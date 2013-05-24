@@ -66,16 +66,7 @@ class DateController extends Controller {
     public function actionSearch($term) {
         $dataProvider = new DateAndTime();
         $dataProvider->unsetAttributes();
-        $dataProvider->time = $term;
-        $criteria = $dataProvider->searchDateAndTime();
-        $a_rc = array();
-        $a_data = DateAndTime::model()->findAll($criteria);
-        foreach ($a_data as $record) {
-            $a_rc[] = array('label' => date('d.m.Y', strtotime($record->date->date)) . " "
-                . date('H:i', strtotime($record->time))
-                , 'value' => $record->id);
-        }
-        echo CJSON::encode($a_rc);
+        echo CJSON::encode($dataProvider->searchFormattedArrayDateAndTime($term));
     }
 
     /**
@@ -113,15 +104,14 @@ class DateController extends Controller {
     }
 
     private function setPostAttribute($model) {
-            if (Yii::app()->params['allowGroups'] && isset($_POST['Date']['groups'])) {
-                $model->groups = $_POST['Date']['groups'];
-            }
-            if(isset($_POST['Date']['title'])) {
-                $model->title = $_POST['Date']['title'];
-            }
+        if (Yii::app()->params['allowGroups'] && isset($_POST['Date']['groups'])) {
+            $model->groups = $_POST['Date']['groups'];
+        }
+        if (isset($_POST['Date']['title'])) {
+            $model->title = $_POST['Date']['title'];
+        }
     }
-    
-    
+
     /**
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -140,7 +130,7 @@ class DateController extends Controller {
         if (isset($_POST['Date'])) {
             $this->setPostAttribute($model);
             if ($model->save()) {
-                   $this->redirect(array('view', 'id' => $model->id));
+                $this->redirect(array('view', 'id' => $model->id));
             }
         }
 
