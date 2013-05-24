@@ -67,16 +67,15 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('class' => 'CustomButtonColumn',),
     ),
 ));
-?>
+
+if (Yii::app()->params['allowBlockingAppointments']) { ?>
 <div class="push"></div>
-<div class="row">
-    <div class="twelve columns centered">
-        <h2 class="text-center">Blockierte Termine</h2>
+    <div class="row">
+        <div class="twelve columns centered">
+            <h2 class="text-center">Blockierte Termine</h2>
     </div>
 </div>
-
 <?php
-if (Yii::app()->params['allowBlockingAppointments']) {
     $this->widget('zii.widgets.grid.CGridView', array(
         'id' => 'appointmentBlock-grid',
         'dataProvider' => $blockedApp->search(),

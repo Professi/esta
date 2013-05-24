@@ -155,6 +155,35 @@
                $('#groups-select').select2("enable", false);
                $('#groups-select').select2("val","");
            }
+        }); 
+        
+        //** Mehr Felder für die Eingabe von Schülern zu TANs generieren. **
+        
+        var tanGensId = 0;
+        
+        $('.add-child-tan').on('click', function() {
+            tanGensId++;
+            $div = $('.customChild:first').clone();
+            $($div).children().each(function() {
+               $input = $(this).find('input');
+               $select = false;
+               if ($input.hasClass('select2-focusser')) {
+                   $input = $(this).find('select');
+                   $select = true;
+               } 
+               if ($input.length !== 0) {
+                    $($input).attr('name', $($input).attr('name').replace(/\d/, tanGensId));
+                    $($input).attr('id', $($input).attr('id').replace(/\d/, tanGensId));
+                    $($input).val('');
+               }
+               if ($select) {
+                   $($input).attr('tabindex','');
+                   $($input).attr('class','');
+                   $(this).children('.nine').html($input);
+               }
+            });
+            $('.customChild:last').after($($div));
+            $($div).find('select').select2();
         });
 
     }(this, document, jQuery));

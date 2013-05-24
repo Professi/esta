@@ -258,6 +258,9 @@ table {
     font-size: 1.5em;
     z-index: 2;
 }
+.add-child-tan {
+    float: right;
+}
 
 #Date_groups {
     min-width: 4em;

@@ -72,24 +72,26 @@ if (Yii::app()->params['allowGroups']) {
             </fieldset>
             <?php $this->endWidget(); ?><?php
         } else if (!Yii::app()->params['allowParentsToManageChilds']) {
-            echo CHtml::beginForm();
+            echo CHtml::beginForm(); ?>
+        <fieldset>
+            <?php
             foreach ($model as $i => $tanObj) {
                 ?>
                 <div class="customChild">
                     <div class="row collapse">
                         <div class="three columns">
-                            <span class="prefix"><?php  echo CHtml::activeLabel($tanObj, "childFirstname"); ?></span>
+                            <span class="prefix"><?php echo CHtml::activeLabel($tanObj, "childFirstname"); ?></span>
                         </div>
                         <div class="nine columns">
                             <?php
                             echo CHtml::activeTextField($tanObj, "[$i]childFirstname");
-                            echo CHtml::error($tanObj,"[$i]childFirstname");
+                            echo CHtml::error($tanObj, "[$i]childFirstname");
                             ?>
                         </div>
                     </div>
                     <div class="row collapse">
                         <div class="three columns">
-                            <span class="prefix"><?php  echo CHtml::activeLabel($tanObj, "childLastname"); ?></span>
+                            <span class="prefix"><?php echo CHtml::activeLabel($tanObj, "childLastname"); ?></span>
                         </div>
                         <div class="nine columns">
                             <?php
@@ -102,7 +104,7 @@ if (Yii::app()->params['allowGroups']) {
                         ?>
                         <div class="row collapse">
                             <div class="three columns">
-                                <span class="prefix"><?php  echo CHtml::activeLabel($tanObj, "group"); ?></span>
+                                <span class="prefix"><?php echo CHtml::activeLabel($tanObj, "group"); ?></span>
                             </div>
                             <div class="nine columns">
                                 <?php
@@ -112,12 +114,18 @@ if (Yii::app()->params['allowGroups']) {
                                 ?>
                             </div>
                         </div>
-                    <?php } echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
+                    <?php } ?>
+
                 </div>
-                <?php
-            }
-            echo CHtml::endForm();
+                <?php }
+            ?>
+            <div class="tiny button add-child-tan">+</div>
+            <div>
+            <?php echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
+                </fieldset>
+        <?php
+        echo CHtml::endForm();
         }
-        ?>
+        ?></div>
     </div>
 </div>

@@ -38,5 +38,6 @@ $this->setPageTitle('Generierte TAN\'s');
             )
         ));
         ?>
+        <p class="text-center"><?php echo CHtml::link('<b>Zurück zur vorherigen Seite</b>', 'index.php?r=Tan/genTans'); ?> </p>
     </div>
 </div>
