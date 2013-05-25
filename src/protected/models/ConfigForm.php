@@ -66,6 +66,7 @@ class ConfigForm extends CFormModel {
     public $appName;
     public $language;
     public $allowParentsToManageChilds;
+    public $hashCost;
     private $firstRead = true;
     private $params;
 
@@ -84,7 +85,7 @@ class ConfigForm extends CFormModel {
                 'lengthReasonAppointmentBlocked,schoolStreet,schoolCity,' .
                 'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,' .
                 'lockRegistration,allowGroups,databasePort,allowParentsToManageChilds,' .
-                'databaseHost,databaseName,databaseUsername,databasePassword,databaseManagementSystem,logoPath,textHeader,language,appName'
+                'databaseHost,databaseName,databaseUsername,databasePassword,databaseManagementSystem,logoPath,textHeader,language,appName,hashCost'
                 , 'required'),
             array('fromMailHost,adminEmail,schoolEmail', 'email'),
             array('language', 'length', 'min' => 2),
@@ -92,7 +93,7 @@ class ConfigForm extends CFormModel {
             array('emailHost,fromMail,dateFormat,appName', 'length', 'min' => 4),
             array('dateTimeFormat', 'length', 'min' => 5),
             array('defaultTeacherPassword,databasePassword', 'length', 'min' => 8),
-            array('salt', 'length', 'min' => 16, 'max' => 64),
+            array('salt', 'length', 'min' => 16, 'max' => 255),
             array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments,' .
                 'useSchoolEmailForContactForm,allowBlockingOnlyForManagement,lockRegistration,' .
                 'allowParentsToManageChilds,allowGroups',
@@ -100,7 +101,8 @@ class ConfigForm extends CFormModel {
             array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,'
                 . 'durationTempBans,maxAttemptsForLogin,appointmentBlocksPerDate,'
                 . 'lengthReasonAppointmentBlocked,databasePort',
-                'numerical', 'integerOnly' => true),
+                'numerical', 'integerOnly' => true, 'min'=>1),
+            array('hashCost','numerical','integerOnly'=>true,'min'=>13),
             array('adminEmail,dateTimeFormat,emailHost,fromMailHost,fromMail' .
                 ',teacherMail,schoolName,virtualHost,mailsActivated,maxChild,'
                 . 'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,' .
@@ -131,6 +133,7 @@ class ConfigForm extends CFormModel {
             'durationTempBans' => 'Dauer der Sperre in Minuten',
             'maxAttemptsForLogin' => 'Maximalanzahl an fehlgeschlagenen Loginversuchen bis zur Sperrung eines Kontos',
             'salt' => 'Salz für Passwörter',
+            'hashCost' => 'Rechenaufwand für das Hashen der Passwörter',
             'dateFormat' => 'Datumsformat (z.B. d.m.Y)',
             'timeFormat' => 'Zeitformat (z.B. H:i)',
             'allowBlockingAppointments' => 'Blockieren von Terminen erlauben?',

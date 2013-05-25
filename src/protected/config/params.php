@@ -21,6 +21,7 @@ $array2 = array(
     'appName'=>'Elternsprechtag',
     'adminEmail' => 'c.ehringfeld@t-online.de', //Administrator E-Mail Adresse
     'salt' => 'e9HOiJFfDhyvcBMin5G8CBTR98wK', //der Applikationssalt sollte mindestens 30 Zeichen lang sein und nur aus alphanumerischen Zeichen bestehen 
+    'hashCost' => 13,
     'dateTimeFormat' => 'd.m.Y H:i', //Datumsformat -  muss nicht geändert werden
     'emailHost' => 'localhost', //Sofern der SMTP Server auf dem selben Server läuft einfach localhost
     'fromMailHost' => 'est@h1963533.stratoserver.net', //Absender der Mails wird wohl später dann EST@bws-hofheim.de

@@ -43,6 +43,7 @@ class UserIdentity extends CUserIdentity {
      */
     public function authenticate() {
         $user = User::model()->findByAttributes(array('email' => $this->username));
+        echo $this->password;
         //     $this->errorMessage = '';
         if ($user === null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
@@ -50,7 +51,7 @@ class UserIdentity extends CUserIdentity {
         } else if ($user->state == 0) {
             $this->errorCode = self::ERROR_ACCOUNT_NOT_ACTIVATED;
             $this->errorMessage = self::ERROR_MSG_ACCOUNT_NOT_ACTIVATED;
-        } else if ($user->state == 1 && $user->password !== User::encryptPassword($this->password, Yii::app()->params["salt"])) {
+        } else if ($user->state == 1 && !$user->verifyPassword($this->password)) {
             $this->invalidPassword($user);
         } else if ($user->state == 2) {
             if (is_null($user->bannedUntil) || $user->bannedUntil == 0) {

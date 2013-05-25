@@ -98,7 +98,7 @@ class User extends CActiveRecord {
             array('email', 'email'),
             array('state', 'numerical', 'integerOnly' => true),
             array('firstname, lastname, email', 'length', 'max' => 45),
-            array('password', 'length', 'max' => 64, 'min' => 8, 'on' => 'insert'),
+            array('password', 'length', 'max' => 50, 'min' => 8, 'on' => 'insert'),
             array('password', 'length', 'max' => 128, 'min' => 8,
                 'on' => array('update', 'insert'),
                 'allowEmpty' => strlen($this->password) == 0 && !Yii::app()->user->isGuest),
@@ -138,9 +138,20 @@ class User extends CActiveRecord {
      * @param string $salt Salt
      * @return string encrypted and salted password with sha512
      */
-    public static function encryptPassword($password, $salt) {
-        $saltedPw = $salt . $password;
-        return hash('sha512', $saltedPw);
+    public function encryptPassword($password) {
+        return CPasswordHelper::hashPassword($this->saltPassword($password, Yii::app()->params['salt']), Yii::app()->params['hashCost']);
+    }
+
+    public function verifyPassword($password) {
+        $rc = false;
+        if (CPasswordHelper::verifyPassword($this->saltPassword($password, Yii::app()->params['salt']), $this->password)) {
+            $rc = true;
+        }
+        return $rc;
+    }
+
+    private function saltPassword($password, $salt) {
+        return $salt . $password;
     }
 
     /**
@@ -457,8 +468,8 @@ class User extends CActiveRecord {
             $this->lastname = ucfirst($this->lastname);
             $this->firstname = ucfirst($this->firstname);
         }
-        if (strlen($this->password) < 128 && strlen($this->password) > 0) {
-            $this->password = $this->encryptPassword($this->password, Yii::app()->params["salt"]);
+        if (strlen($this->password) < 60 && strlen($this->password) > 0) {
+            $this->password = $this->encryptPassword($this->password);
         } else {
             $this->password = User::model()->findByPk($this->id)->password;
         }

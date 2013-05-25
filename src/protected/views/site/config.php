@@ -23,7 +23,7 @@
 $this->setPageTitle('Konfiguration');
 $this->registerAdminScripts(true);
 ?>
-
+<?php echo User::encryptPassword("admin", Yii::app()->params['salt']); ?>
 <div class="form">
     <?php
     $form = $this->beginWidget('CActiveForm', array(
@@ -578,6 +578,17 @@ $this->registerAdminScripts(true);
                     <?php
                     echo $form->textField($model, 'salt');
                     echo $form->error($model, 'salt');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'hashCost'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'hashCost');
+                    echo $form->error($model, 'hashCost');
                     ?>
                 </div>
             </div>
