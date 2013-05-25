@@ -395,10 +395,9 @@ class ConfigForm extends CFormModel {
             Yii::log($ex->getMessage(), CLogger::LEVEL_ERROR, 'application.models.configForm');
             Yii::app()->user->setFlash('failMsg', 'Verbindung zur Datenbank konnte nicht hergestellt werden. <br>' . $ex->getMessage());
         }
-        echo $this->getDBMS();
         return $connection;
     }
-
+    
 }
 
 ?>

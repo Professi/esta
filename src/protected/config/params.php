@@ -18,7 +18,7 @@
 $arr = unserialize(base64_decode(file_get_contents(dirname(__FILE__) . '/params.inc')));
 $array2 = array(
     'installed' => false,
-    'appName'=>'Elternsprechtag',
+    'appName' => 'Elternsprechtag',
     'adminEmail' => 'c.ehringfeld@t-online.de', //Administrator E-Mail Adresse
     'salt' => 'e9HOiJFfDhyvcBMin5G8CBTR98wK', //der Applikationssalt sollte mindestens 30 Zeichen lang sein und nur aus alphanumerischen Zeichen bestehen 
     'hashCost' => 13,
@@ -62,13 +62,12 @@ $array2 = array(
     'databaseManagementSystem' => 'mysql',
     'logoPath' => '/img/logo.png',
     'textHeader' => 'der',
-    'language'=>'de',
-    'allowParentsToManageChilds'=> true,
+    'language' => 'de',
+    'allowParentsToManageChilds' => true,
 );
 if (empty($arr)) {
     return $array2;
 } else {
     return CMap::mergeArray($array2, $arr);
-  // return array_replace($array2, $arr);
 }
 ?>

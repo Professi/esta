@@ -29,9 +29,9 @@ if ($params['installed']) {
         'connectionID' => 'db',
         'autoCreateCacheTable' => false,
         'cacheTableName' => 'YiiCache',
-        'isInitialized' => $params['installed'],
     );
 }
+
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..', //nicht ändern
     'name' => $params['appName'], //entsprechend den eigenen Bedürfnissen anpassen
@@ -43,9 +43,14 @@ return array(
         'ext.select2.Select2',
     ),
     'components' => array(//nicht ändern
+        'request' => array(
+            'enableCsrfValidation' => true,
+            'enableCookieValidation' => true,
+        ),
         'user' => array(//nicht ändern
             'class' => 'WebUser', //nicht ändern
             'allowAutoLogin' => true, //nicht ändern
+            'autoUpdateFlash' => false,
         ),
         'clientScript' => array(//nicht ändern
             'coreScriptPosition' => CClientScript::POS_END, //nicht ändern
@@ -80,7 +85,7 @@ return array(
             'password' => $params['databasePassword'], //DB Passwort bitte anpassen
             'charset' => 'utf8', //eventuell anpassen im optimalfall dabei belassen
             'tablePrefix' => '', //nicht ändern
-        // 'schemaCachingDuration'=> 3600, //Optimierung
+            'schemaCachingDuration' => YII_DEBUG || !$params['installed'] ? 0 : 86400, //3600 oder 86400
         ),
         'errorHandler' => array(
             'errorAction' => 'site/error', //nicht ändern
@@ -89,22 +94,16 @@ return array(
             'class' => 'CLogRouter', //nicht ändern
             'routes' => array(//nicht ändern
                 array(
-                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute', //auskommentieren
+                    'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute',
                     'ipFilters' => array('*'),
-                    'categories' => '*'),
-                array('class' => 'CFileLogRoute', //jenachdem ob ein DateiLog benötigt - empfohlen
-                    'levels' => 'error,warning',
-                    'categories' => 'system.'),
-                array(
-                    'class' => 'CFileLogRoute',
-                    'levels' => 'trace, info',
-                    'categories' => 'application.*',
+                    'categories' => '*',
+                    'enabled' => YII_DEBUG,),
+                array('class' => 'CFileLogRoute',
+                    'levels' => 'error,warning,trace,info',),
+                array('class' => 'CProfileLogRoute',
+                    'report' => 'summary',
+                    'enabled' => YII_DEBUG,
                 ),
-//                array('class' => 'CProfileLogRoute', // auskommentieren nur interesant für die Entwicklung
-//                    'report' => 'summary'),
-                array('class' => 'CEmailLogRoute',
-                    'levels' => 'error, warning',
-                    'emails' => array('c.ehringfeld@t-online.de'),)
             ),
         ),
         'cache' => $cache,

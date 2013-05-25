@@ -23,7 +23,6 @@
 $this->setPageTitle('Konfiguration');
 $this->registerAdminScripts(true);
 ?>
-<?php echo User::encryptPassword("admin", Yii::app()->params['salt']); ?>
 <div class="form">
     <?php
     $form = $this->beginWidget('CActiveForm', array(
@@ -228,6 +227,33 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
         </fieldset>
+                <?php if (!Yii::app()->params['installed'] && Yii::app()->user->isGuest()) { ?>
+        <fieldset>
+            <legend>Installierung</legend>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'salt'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'salt');
+                    echo $form->error($model, 'salt');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'hashCost'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'hashCost');
+                    echo $form->error($model, 'hashCost');
+                    ?>
+                </div>
+            </div>
+        </fieldset>
+        <?php } ?>  
         <fieldset>
             <legend>Datenbankinformationen</legend>
             <div class="row collapse">
@@ -568,32 +594,6 @@ $this->registerAdminScripts(true);
                 </div>
             </div>            
         </fieldset>
-        <?php if (!Yii::app()->params['installed'] && Yii::app()->user->isGuest()) { ?>
-            <div class="push"></div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'salt'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'salt');
-                    echo $form->error($model, 'salt');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'hashCost'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'hashCost');
-                    echo $form->error($model, 'hashCost');
-                    ?>
-                </div>
-            </div>
-            <div class="push"></div>
-        <?php } ?>  
     </div><!-- row -->
     <div class="row">
         <div class="twelve columns">

@@ -219,7 +219,6 @@ class AppointmentController extends Controller {
             $model->attributes = $_POST['Appointment'];
             if (!empty($model->attributes['dateAndTime_id'])) {
                 $postDate = date(Yii::app()->params['dateFormat'], strtotime($model->dateandtime->date->date));
-                echo 'hi';
                 $postTime = date(Yii::app()->params['timeFormat'], strtotime($model->dateandtime->time));
             }
             if ($model->save()) {

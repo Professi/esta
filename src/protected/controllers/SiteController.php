@@ -80,23 +80,25 @@ class SiteController extends Controller {
             if (file_put_contents($file, base64_encode(serialize($model->attributes)))) {
                 if ($createAdminUser) {
                     if ($model->tables()) {
+                        $params = $model->getParams();
                         $user = new User();
-                        $user->setSomeAttributes($model->adminEmail, 'admin', 'admin', 1, 0);
+                        $user->setSomeAttributes($params['adminEmail'], 'admin', 'admin', 1, 0);
                         $password = $user->generatePassword();
                         $user->password_repeat = $password;
                         $msg = "";
-                     //   if ($user->insert()) {
-                            $msg = "Konfiguration aktualisiert. Außerdem wurde ein Administratorkonto erstellt. Ihr Benutzerkontenname lautet: "
-                                    . $user->email . " Ihr Passwort lautet:" . $password;
-                            if ($model->randomTeacherPassword) {
-                                $msg .= " .Sollten Sie nun eine Bestätigungsemail erhalten, wurde die Anwendung erfolgreich konfiguriert.";
-                            }
-                            $msg .= "\n Sie können sich nun einloggen.";
-                     //   } 
+                        //   if ($user->insert()) {
+                        $msg = "Konfiguration aktualisiert. Außerdem wurde ein Administratorkonto erstellt. Ihr Benutzerkontenname lautet: "
+                                . $user->email . " Ihr Passwort lautet:" . $password;
+                        if ($params['randomTeacherPassword']) {
+                            $msg .= " .Sollten Sie nun eine Bestätigungsemail erhalten, wurde die Anwendung erfolgreich konfiguriert.";
+                        }
+                        $msg .= "\n Sie können sich nun einloggen.";
+                        //   } 
                         $model->installed = 1;
+                        file_put_contents($file, base64_encode(serialize($model->attributes)));
                         Yii::app()->user->setFlash('success', $msg);
-                        $this->redirect('index.php');
-                    } 
+                        $this->redirect("index");
+                    }
                 } else {
                     Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert. Die Einstellungen werden bei dem nächsten Seitenaufruf verwendet.');
                 }
@@ -137,7 +139,7 @@ class SiteController extends Controller {
      * when an action is not explicitly requested by users.
      */
     public function actionIndex() {
-        self::actionLogin();
+        $this->actionLogin();
     }
 
     /**
