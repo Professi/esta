@@ -46,7 +46,7 @@ $this->registerAdminScripts(true);
                         Bitte führen Sie auf dieser Seite keine Änderungen durch, wenn Sie sich nicht absolut sicher sind.
                         <br> Die Änderungen haben Auswirkungen auf alle Benutzer im System und können sich negativ auf die Funktionalität der Software auswirken.
                     <?php } else { ?>
-                        Bitte passen Sie die nachfolgenden Felder entsprechend Ihrer Bed&uuml;fnisse an.
+                        Bitte passen Sie die nachfolgenden Felder entsprechend Ihrer Bed&uuml;fnisse an. Wenn die Anwendung erfolgreich konfiguriert wurde, können Sie sich mit dem Benutzernamen "admin" und dem Passwort "admin" einloggen. Dies erkennen Sie daran, wenn Sie das nachfolgende Formular absenden und Sie keine Meldung erhalten. Anschließend sollten Sie unbedingt Ihre Kontodaten verändern.
                     <?php } ?>
                 </div>
             </div>
@@ -227,32 +227,32 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
         </fieldset>
-                <?php if (!Yii::app()->params['installed'] && Yii::app()->user->isGuest()) { ?>
-        <fieldset>
-            <legend>Installierung</legend>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'salt'); ?></span>
+        <?php if (!Yii::app()->params['installed'] && Yii::app()->user->isGuest()) { ?>
+            <fieldset>
+                <legend>Installierung</legend>
+                <div class="row collapse">
+                    <div class="eight columns">
+                        <span class="prefix"><?php echo $form->label($model, 'salt'); ?></span>
+                    </div>
+                    <div class="four columns">
+                        <?php
+                        echo $form->textField($model, 'salt');
+                        echo $form->error($model, 'salt');
+                        ?>
+                    </div>
                 </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'salt');
-                    echo $form->error($model, 'salt');
-                    ?>
+                <div class="row collapse">
+                    <div class="eight columns">
+                        <span class="prefix"><?php echo $form->label($model, 'hashCost'); ?></span>
+                    </div>
+                    <div class="four columns">
+                        <?php
+                        echo $form->textField($model, 'hashCost');
+                        echo $form->error($model, 'hashCost');
+                        ?>
+                    </div>
                 </div>
-            </div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'hashCost'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'hashCost');
-                    echo $form->error($model, 'hashCost');
-                    ?>
-                </div>
-            </div>
-        </fieldset>
+            </fieldset>
         <?php } ?>  
         <fieldset>
             <legend>Datenbankinformationen</legend>

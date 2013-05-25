@@ -74,30 +74,25 @@ class SiteController extends Controller {
      */
     public function config(&$model, &$file, &$createAdminUser) {
         if ($model->validate()) {
-            if (Yii::app()->params['installed'] == 0 && Yii::app()->user->isGuest()) {
+            if (Yii::app()->params['installed'] == 0) {
                 $createAdminUser = true;
             }
             if (file_put_contents($file, base64_encode(serialize($model->attributes)))) {
                 if ($createAdminUser) {
                     if ($model->tables()) {
-                        $params = $model->getParams();
                         $user = new User();
-                        $user->setSomeAttributes($params['adminEmail'], 'admin', 'admin', 1, 0);
-                        $password = $user->generatePassword();
-                        $user->password_repeat = $password;
+                        $user->setSomeAttributes('admin', 'admin', 'admin', 1, 0);
+                        $user->password = "admin";
+                        $user->password_repeat = $user->password;
                         $msg = "";
-                        //   if ($user->insert()) {
                         $msg = "Konfiguration aktualisiert. Außerdem wurde ein Administratorkonto erstellt. Ihr Benutzerkontenname lautet: "
-                                . $user->email . " Ihr Passwort lautet:" . $password;
-                        if ($params['randomTeacherPassword']) {
-                            $msg .= " .Sollten Sie nun eine Bestätigungsemail erhalten, wurde die Anwendung erfolgreich konfiguriert.";
-                        }
+                                . "admin" . " Ihr Passwort lautet:" . "admin";
                         $msg .= "\n Sie können sich nun einloggen.";
-                        //   } 
                         $model->installed = 1;
-                        file_put_contents($file, base64_encode(serialize($model->attributes)));
+                        $user->insert();
                         Yii::app()->user->setFlash('success', $msg);
-                        $this->redirect(array('site/index'),false);
+                        file_put_contents($file, base64_encode(serialize($model->attributes)));
+                        $this->redirect(array('site/index'));
                     }
                 } else {
                     Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert. Die Einstellungen werden bei dem nächsten Seitenaufruf verwendet.');

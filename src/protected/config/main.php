@@ -21,8 +21,9 @@ if ($params['installed']) {
     $session = array('sessionName' => 'SiteSession', // nicht ändern
         'class' => 'CDbHttpSession', // nicht ändern
         'autoCreateSessionTable' => false, //nicht ändern
+        'sessionTableName' => 'YiiSession',
         'connectionID' => 'db',
-        'autoStart' => false,);
+        'autoStart' => true,);
 }
 $cache = array(// nicht ändern , kommt eventuell noch weg da aktuell nichts gecached wird
     'class' => 'system.caching.CDbCache',
@@ -96,7 +97,8 @@ return array(
                     'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute',
                     'ipFilters' => array('*'),
                     'categories' => '*',
-                    'enabled' => YII_DEBUG,),
+                    'enabled' => YII_DEBUG,
+                ),
                 array('class' => 'CFileLogRoute',
                     'levels' => 'error,warning,trace,info',),
                 array('class' => 'CProfileLogRoute',

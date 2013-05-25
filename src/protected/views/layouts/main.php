@@ -72,8 +72,8 @@
                         $this->generateMenuItem("&#xe00a;", "Gruppenverwaltung", "Group/admin", Yii::app()->user->checkAccess('1') && Yii::app()->params['allowGroups']),
                         $this->generateMenuItem("&#xe007;", "Tanverwaltung", "Tan/genTans", Yii::app()->user->checkAccessRole('2', '1') || Yii::app()->user->isAdmin()),
                         $this->generateMenuItem("&#xe007;", "Konfiguration", "site/config", Yii::app()->user->checkAccess('0')),
-                        $this->generateMenuItem("&#xe007;", "Ihr Benutzerkonto", "/User/account", !Yii::app()->user->isGuest()),
-                        $this->generateMenuItem("&#xe006;", "Logout", "/site/logout", !Yii::app()->user->isGuest())),
+                        $this->generateMenuItem("&#xe007;", "Ihr Benutzerkonto", "/User/account", true),
+                        $this->generateMenuItem("&#xe006;", "Logout", "/site/logout", true)),
                     'activeCssClass' => 'active'
                 ));
             }
@@ -138,6 +138,6 @@
         <div class="infobox" style="display: none;">
             <p></p>
         </div>
-                <script type="text/javascript" src="<?php echo $this->assetsDir; ?>/js/foundation.min.js"></script>
+        <script type="text/javascript" src="<?php echo $this->assetsDir; ?>/js/foundation.min.js"></script>
     </body>
 </html>
