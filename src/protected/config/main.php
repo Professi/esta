@@ -42,14 +42,14 @@ return array(
         'ext.select2.Select2',
     ),
     'components' => array(//nicht ändern
-        'request' => array(
-            'enableCsrfValidation' => true,
-            'enableCookieValidation' => true,
-        ),
+//        'request' => array(
+//            'enableCsrfValidation' => true,
+//            'enableCookieValidation' => true,
+//        ),
         'user' => array(//nicht ändern
             'class' => 'WebUser', //nicht ändern
             'allowAutoLogin' => true, //nicht ändern
-            'autoUpdateFlash' => false,
+      //      'autoUpdateFlash' => true,
         ),
         'clientScript' => array(//nicht ändern
             'coreScriptPosition' => CClientScript::POS_END, //nicht ändern

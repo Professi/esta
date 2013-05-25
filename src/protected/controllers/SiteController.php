@@ -97,7 +97,7 @@ class SiteController extends Controller {
                         $model->installed = 1;
                         file_put_contents($file, base64_encode(serialize($model->attributes)));
                         Yii::app()->user->setFlash('success', $msg);
-                        $this->redirect("index");
+                        $this->redirect(array('site/index'),false);
                     }
                 } else {
                     Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert. Die Einstellungen werden bei dem nächsten Seitenaufruf verwendet.');

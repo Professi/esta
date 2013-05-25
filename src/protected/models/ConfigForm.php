@@ -291,21 +291,9 @@ class ConfigForm extends CFormModel {
         $command->createIndex('idx_group_name', 'group', 'groupname', true);
         $command->createIndex('idx_role_title', 'role', 'title', true);
         $command->createIndex('idx_blockedAppointment', 'blockedAppointment', 'dateAndTime_id,user_id', true);
-        $command->createIndex('idx_user_id', 'user', 'id');
-        $command->createIndex('idx_role_id', 'role', 'id');
-        $command->createIndex('idx_user_role_id', 'user_role', 'id');
-        $command->createIndex('idx_group_id', 'group', 'id');
-        $command->createIndex('idx_child_id', 'child', 'id');
-        $command->createIndex('idx_ parent_child_id', 'parent_child', 'id');
         $command->createIndex('idx_date_has_group1', 'date_has_group', 'date_id,group_id', true);
-        $command->createIndex('idx_date_has_group_id2', 'date_has_group', 'id');
         $command->createIndex('idx_user_has_group1', 'user_has_group', 'user_id,group_id', true);
-        $command->createIndex('idx_user_has_group_id2', 'user_has_group', 'id');
-        $command->createIndex('idx_date_id', 'date', 'id');
         $command->createIndex('idx_dateAndTime_date_id_time', 'dateAndTime', 'time,date_id', true);
-        $command->createIndex('idx_dateAndTime_id', 'dateAndTime', 'id');
-        $command->createIndex('idx_appointment_id', 'appointment', 'id');
-        $command->createIndex('idx_blockedAppointment_id', 'blockedAppointment', 'id');
     }
 
     private function addForeignKeys($command) {
