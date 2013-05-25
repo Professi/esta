@@ -37,6 +37,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array(
             'class' => 'CustomButtonColumn',
             'template' => '{update} {delete}',
+            'headerHtmlOptions' => array('style' => 'text-align:center;width: 10%;'),
         ),
     ),
 ));
@@ -44,32 +45,38 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'dateHasGroup-grid',
     'dataProvider' => $dateHasGroup->search(),
     'columns' => array(
-        array('name' => 'date', 'value' => 'date(Yii::app()->params["dateFormat"], strtotime($data->date->date))'),
-        array('name' => 'group', 'value' => '$data->group->groupname'),
-        array('class' => 'CustomButtonColumn', 'template' => '{update} {delete}', 'buttons' => array(
-                'delete' => array(
-                    'url' => '$this->grid->controller->createUrl("/group/deleteDateGroup", array("id"=>$data->id))'
+        array('name' => 'date', 'value' => 'date(Yii::app()->params["dateFormat"], strtotime($data->date->date))','headerHtmlOptions' => array('style' => 'width: 45%;')),
+        array('name' => 'group', 'value' => '$data->group->groupname','headerHtmlOptions' => array('style' => 'width: 45%;')),
+        array('class' => 'CustomButtonColumn', 'template' => '{update} {delete}',
+              'buttons' => array(
+                    'delete' => array(
+                        'url' => '$this->grid->controller->createUrl("/group/deleteDateGroup", array("id"=>$data->id))'
+                    ),
+                    'update' => array(
+                        'url' => '$this->grid->controller->createUrl("/date/update", array("id"=>$data->date->id))'
+                    )
                 ),
-                'update' => array(
-                    'url' => '$this->grid->controller->createUrl("/date/update", array("id"=>$data->date->id))'
-                )
-            )),
+            'headerHtmlOptions' => array('style' => 'text-align:center;width: 10%;')
+            ),
     )
 ));
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'userHasGroup-grid',
     'dataProvider' => $userHasGroup->search(),
     'columns' => array(
-        array('name' => 'user', 'value' => '$data->user->firstname . " " . $data->user->lastname'),
-        array('name' => 'group', 'value' => '$data->group->groupname'),
-        array('class' => 'CustomButtonColumn', 'template' => '{update} {delete}', 'buttons' => array(
-                'delete' => array(
-                    'url' => '$this->grid->controller->createUrl("/group/deleteUserGroup", array("id"=>$data->id))'
+        array('name' => 'user', 'value' => '$data->user->firstname . " " . $data->user->lastname','headerHtmlOptions' => array('style' => 'width: 45%;')),
+        array('name' => 'group', 'value' => '$data->group->groupname','headerHtmlOptions' => array('style' => 'width: 45%;')),
+        array('class' => 'CustomButtonColumn', 'template' => '{update} {delete}', 
+                'buttons' => array(
+                    'delete' => array(
+                        'url' => '$this->grid->controller->createUrl("/group/deleteUserGroup", array("id"=>$data->id))'
+                    ),
+                    'update' => array(
+                        'url' => '$this->grid->controller->createUrl("/user/update", array("id"=>$data->user->id))'
+                    )
                 ),
-                'update' => array(
-                    'url' => '$this->grid->controller->createUrl("/user/update", array("id"=>$data->user->id))'
-                )
-            )),
+            'headerHtmlOptions' => array('style' => 'text-align:center;width: 10%;')
+            ),
     )
 ));
 
