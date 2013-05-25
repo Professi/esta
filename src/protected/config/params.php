@@ -65,7 +65,7 @@ $array2 = array(
     'language' => 'de',
     'allowParentsToManageChilds' => true,
 );
-if (empty($arr)) {
+if (!is_array($arr) || empty($arr)) {
     return $array2;
 } else {
     return CMap::mergeArray($array2, $arr);

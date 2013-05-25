@@ -17,21 +17,20 @@
  */
 $params = require(dirname(__FILE__) . '/params.php');
 $session = array();
-$cache = array();
 if ($params['installed']) {
     $session = array('sessionName' => 'SiteSession', // nicht ändern
         'class' => 'CDbHttpSession', // nicht ändern
         'autoCreateSessionTable' => false, //nicht ändern
         'connectionID' => 'db',
-        'autoStart' => false,); // nicht ändern
-    $cache = array(// nicht ändern , kommt eventuell noch weg da aktuell nichts gecached wird
-        'class' => 'system.caching.CDbCache',
-        'connectionID' => 'db',
-        'autoCreateCacheTable' => false,
-        'cacheTableName' => 'YiiCache',
-    );
+        'autoStart' => false,);
 }
-
+$cache = array(// nicht ändern , kommt eventuell noch weg da aktuell nichts gecached wird
+    'class' => 'system.caching.CDbCache',
+    'connectionID' => 'db',
+    'autoCreateCacheTable' => false,
+    'cacheTableName' => 'YiiCache',
+    'enabled' => $params['installed'],
+);
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..', //nicht ändern
     'name' => $params['appName'], //entsprechend den eigenen Bedürfnissen anpassen
