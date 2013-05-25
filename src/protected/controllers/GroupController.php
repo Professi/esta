@@ -50,16 +50,27 @@ class GroupController extends Controller {
         $this->redirectUrl();
     }
 
+    /**
+     * action for deleting usergroup
+     * @param integer $id
+     */
     public function actionDeleteUserGroup($id) {
         $this->loadModelUserGroup($id)->delete();
         $this->redirectUrl();
     }
 
+    /**
+     * action to delete DateGroup
+     * @param integer $id
+     */
     public function actionDeleteDateGroup($id) {
         $this->loadModelDateGroup($id)->delete();
         $this->redirectUrl();
     }
 
+    /**
+     * redirect Url 
+     */
     public function redirectUrl() {
         if (!isset($_GET['ajax'])) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
@@ -71,7 +82,6 @@ class GroupController extends Controller {
      * If the data model is not found, an HTTP exception will be raised.
      * @param integer $id the ID of the model to be loaded
      * @return Date the loaded model
-     * @throws CHttpException
      */
     public function loadModel($id) {
         $model = Group::model()->findByPk($id);
@@ -79,18 +89,32 @@ class GroupController extends Controller {
         return $model;
     }
 
+    /**
+     * returns $model for DateHasGroup
+     * @param integer $id
+     * @return DateHasGroup
+     */
     public function loadModelDateGroup($id) {
         $model = DateHasGroup::model()->findByPk($id);
         $this->checkModelNull($model);
         return $model;
     }
 
+    /**
+     * returns model for UserHasGroup
+     * @param integer $id
+     * @return UserHasGroup
+     */
     public function loadModelUserGroup($id) {
         $model = UserHasGroup::model()->findByPk($id);
         $this->checkModelNull($model);
         return $model;
     }
 
+    /**
+     * checks if model for null 
+     * @param Object $model
+     */
     public function checkModelNull($model) {
         if ($model == null) {
             $this->throwFourNullFour();
@@ -168,6 +192,9 @@ class GroupController extends Controller {
         ));
     }
 
+    /**
+     * echo CJSON for groups with their ids over $_GET['ids']
+     */
     public function actionGetGroupsByIds() {
         $groups = Group::model()->findAll("id IN (" . $_GET['ids'] . ")");
         $results = array();

@@ -21,7 +21,7 @@
 class Mail {
 
     /**
-     * Versendet eine E-Mail
+     * sends a mail
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param string $subject Betreff einer E-Mail
      * @param string $message Nachricht einer E-Mail
@@ -44,7 +44,7 @@ class Mail {
     }
 
     /**
-     * Sendet einen Aktivierungslink um das Passwort zu ändern.
+     * sends activation link to change password
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $email E-Mail des Empfängers
      * @param type $activationKey Aktivierungsschlüssel
@@ -62,7 +62,7 @@ class Mail {
     }
 
     /**
-     * Sendet ein Aktivierungslink
+     * sends activation link
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $email E-Mail des Empfängers
      * @param type $activationKey  Aktivierungsschlüssel
@@ -82,6 +82,7 @@ class Mail {
 
     /**
      * Sendet eine Benachrichtungsemail dass ein Termin gelöscht wurde.
+     * sends a notification mail that a appointment were deleted
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $email E-Mail Adresse des zu Informierenden
      * @param type $user Lehrer
@@ -99,6 +100,13 @@ class Mail {
         $this->send("Einer Ihrer Termine bei der " . Yii::app()->name . " wurde gel&oeml;scht", $body, $email);
     }
 
+    /**
+     * sends random user password
+     * @param string $email
+     * @param string $password
+     * @param boolean $isTeacher
+          * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
     public function sendRandomUserPassword($email, $password, $isTeacher = true) {
         $body = "<html><head><title></title></head>";
         if ($isTeacher) {
@@ -116,7 +124,7 @@ class Mail {
     }
 
     /**
-     * Fuegt einen Infotext an
+     * inserts infotext to $body
      * @param string &$body Inhalt einer E-Mail
      */
     private function addInfo(&$body) {
@@ -125,6 +133,14 @@ class Mail {
         $body .= "<p>(Dies ist eine automatisch versendete E-Mail. Bitte antworten Sie nicht auf diese Nachricht, da die E-Mail-Adresse nur zum Versenden, nicht aber zum Empfang von E-Mails eingerichtet ist.)</p>";
     }
 
+    
+    /**
+     * sends mail
+     * @param string $subject
+     * @param string $body
+     * @param string $email
+          * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
     private function send($subject, &$body, $email) {
         Yii::trace($body, 'application.components.mail');
         $this->sendMail($subject, $body, $email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);

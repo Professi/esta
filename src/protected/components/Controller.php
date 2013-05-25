@@ -70,26 +70,31 @@ class Controller extends CController {
     }
 
     /**
-     * Generiert einen Menu Punkt
+     * Generates a menu item
      * @param string $dataIcon Icon
      * @param string $name Anzuzeigender Name
      * @param string $url Ziel URL
      * @param phpCode $visible Bedingungen damit der Punkt angezeigt wird
      * @param string $cssClasses CSS Klassen
-     * @param string $ariaHidden  true/false als String  
+     * @param string $ariaHidden  true/false als String
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array
      */
     public function generateMenuItem($dataIcon, $name, $url, $visible, $cssClasses = '"nav-icons"', $ariaHidden = "true") {
         return array('label' => '<span class=' . $cssClasses . ' aria-hidden="' . $ariaHidden . '" data-icon="' . $dataIcon . '">&nbsp;' . $name . '</span>', 'url' => array($url,), 'visible' => $visible);
     }
 
+    /**
+     * adds css and js packages
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
     public function registerScripts() {
         $cs = Yii::app()->getClientScript();
         $cs->registerCssFile($this->assetsDir . '/css/print.min.css', 'print');
         $userAgent = preg_match('/MSIE [1-7]/', $_SERVER['HTTP_USER_AGENT']);
         $cs->addPackage('css', array(//nicht ändern
             'baseUrl' => $this->assetsDir . '/css/', //nicht ändern
-            'css' => array('foundation.min.css',!YII_DEBUG ? 'icons.min.css' : 'icons.css', !YII_DEBUG ? 'app.min.css' : 'app.css') //nicht ändern
+            'css' => array('foundation.min.css', !YII_DEBUG ? 'icons.min.css' : 'icons.css', !YII_DEBUG ? 'app.min.css' : 'app.css') //nicht ändern
         ));
         $cs->addPackage('jquery.js', array(//nicht ändern
             'baseUrl' => $this->assetsDir . '/js/', //nicht ändern
@@ -103,6 +108,12 @@ class Controller extends CController {
         $this->registerAdminScripts();
     }
 
+    /**
+     * registers css and js files for admin Sites, 
+     * checks for adminUser, when $admin true, checkAccess ignored
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param boolean $admin
+     */
     public function registerAdminScripts($admin = false) {
         if (Yii::app()->user->checkAccess('1') || $admin) {
             $cs = Yii::app()->getClientScript();
@@ -116,12 +127,22 @@ class Controller extends CController {
         }
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * publishes all assets
+     * @return parent::init
+     */
     public function init() {
         $dir = dirname(__FILE__) . '/../assets';
-        $this->assetsDir = Yii::app()->assetManager->publish($dir,false, -1 , YII_DEBUG);
+        $this->assetsDir = Yii::app()->assetManager->publish($dir, false, -1, YII_DEBUG);
         return parent::init();
     }
-    
+
+    /**
+     * sets Page Title with app->name and $name
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param string $name
+     */
     public function setPageTitle($name) {
         parent::setPageTitle(Yii::app()->name . ' - ' . $name);
     }

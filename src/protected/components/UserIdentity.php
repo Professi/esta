@@ -37,9 +37,9 @@ class UserIdentity extends CUserIdentity {
     private $_id;
 
     /**
-     * Authentifiziert einen Benutzer
+     * authenticates a user
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return integer gibt einen Fehlercode zurück
+     * @return integer errorcode
      */
     public function authenticate() {
         $user = User::model()->findByAttributes(array('email' => $this->username));
@@ -74,6 +74,7 @@ class UserIdentity extends CUserIdentity {
     /**
      * @param User &$user User Objekt
      * entbannt einen Benutzer
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function unbanUser(&$user) {
         $user->state = 1;
@@ -84,6 +85,7 @@ class UserIdentity extends CUserIdentity {
     /**
      * Loggt einen Benutzer ein und aktualisiert lastLogin
      * @param User &$user User Objekt
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function login(&$user) {
         $this->errorCode = self::ERROR_NONE;

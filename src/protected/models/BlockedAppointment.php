@@ -46,6 +46,10 @@ class BlockedAppointment extends CActiveRecord {
         return 'blockedAppointment';
     }
 
+    /**
+     * rules
+     * @return array
+     */
     public function rules() {
         return array(
             array('dateAndTime_id,user_id,reason', 'required'),
@@ -55,16 +59,24 @@ class BlockedAppointment extends CActiveRecord {
         );
     }
 
+    /**
+     * counts UsedDateAndTimes
+     * @return \CDbCriteria
+     */
     public function countUsedDateAndTimes() {
         $crit = new CDbCriteria();
         $crit->with = array('dateandtime');
         $crit->addCondition('user_id=:user_id', 'AND');
         $crit->addCondition('dateAndTime.date_id=:date_id', 'AND');
-        $crit->params = array(':user_id'=>  $this->user_id,':date_id'=>  $this->dateandtime->date_id);
-        
+        $crit->params = array(':user_id' => $this->user_id, ':date_id' => $this->dateandtime->date_id);
+
         return $crit;
     }
 
+    /**
+     * 
+     * Relations
+     */
     public function relations() {
         return array(
             'dateandtime' => array(self::BELONGS_TO, 'DateAndTime', 'dateAndTime_id'),
@@ -89,10 +101,9 @@ class BlockedAppointment extends CActiveRecord {
                         Yii::app()->params['appointmentBlocksPerDate'] && Yii::app()->checkAccessNotAdmin('2')) {
                     $this->addError('dateAndTime_id', 'Zuviele Termine berereits geblockt. Maximum liegt bei '
                             . Yii::app()->params['appointmentBlocksPerDate'] . ' pro Elternsprechtag.');
-                } else if(Yii::app()->user->checkAccessNotAdmin('2') && Yii::app()->params['allowBlockingOnlyForManagement']) {
-                   Yii::app()->user->setFlash('failMsg','Nur die Verwaltung kann Termine blockieren.');
-                } 
-                else {
+                } else if (Yii::app()->user->checkAccessNotAdmin('2') && Yii::app()->params['allowBlockingOnlyForManagement']) {
+                    Yii::app()->user->setFlash('failMsg', 'Nur die Verwaltung kann Termine blockieren.');
+                } else {
                     $rc = true;
                 }
             }
@@ -132,6 +143,9 @@ class BlockedAppointment extends CActiveRecord {
         ));
     }
 
+    /**
+     * attribute Labels
+     */
     public function attributeLabels() {
         return array(
             'id' => 'ID',

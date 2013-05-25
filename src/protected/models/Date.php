@@ -255,6 +255,27 @@ class Date extends CActiveRecord {
         return $rc;
     }
     
+    /**
+     * Criteria to get Date with Groups
+     * @param integer $dateMax
+     * @return \CDbCriteria
+     */
+    public static function criteriaForDateWithGroups($dateMax) {
+        $criteria = new CDbCriteria();
+        $criteria->with = array('groups');
+        $criteria->together = true;
+        $criteria->limit = $dateMax;
+        $criteria->order = 'date ASC';
+        $groups = Yii::app()->user->getState('groups');
+        if (!empty($groups) && is_array($groups)) {
+            foreach ($groups as $group) {
+                $criteria->addCondition('groups.id =' . $group->id, 'OR');
+            }
+        }
+        $criteria->addCondition('date >=:date');
+        $criteria->params = array(':date' => date('Y-m-d', time()));
+        return $criteria;
+    }    
 
 }
 

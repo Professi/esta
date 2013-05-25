@@ -21,10 +21,10 @@
 class PasswordGenerator {
 
     /**
-     * Generiert ein Passwort
+     * generates a passsword
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @param int $length Laenge eines Passworts, Default 8
-     * @return string Ein Passwort
+     * @param int $length lengths of password
+     * @return string a password
      */
     public function generate($length = 8) {
         $password = "";
@@ -55,8 +55,7 @@ class PasswordGenerator {
     }
 
     /**
-     * Waehlt ein Zeichen aus einem Array, falls ein Array ohne Elemente uebergeben wird,
-     * wird false zurueckgegeben
+     * chosing a character from array, if array empty returns false
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param array $array
      * @return boolean/char 
@@ -72,10 +71,10 @@ class PasswordGenerator {
     }
 
     /**
-     * Generiert mehrere Passwoerter
+     * generates passwords
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @param int $length Laenge eines Passworts Default 8
-     * @param int $count Anzahl der Passwoerter Default 1
+     * @param int $length length of one password
+     * @param int $count number of passwords
      * @return array
      */
     public function generateMore($length = 8, $count = 1) {

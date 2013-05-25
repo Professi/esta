@@ -92,12 +92,24 @@ class WebUser extends CWebUser {
         return $this->isGuest;
     }
 
+    /**
+     * returns all groups which set as state for the user
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return array all user groups
+     */
     public function getGroups() {
         return $this->getState('groups');
     }
 
+    /**
+     * sets all groups
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param array $groups 
+     */
     public function setGroups($groups) {
-        $this->setState('groups', $groups);
+        if (is_array($groups)) {
+            $this->setState('groups', $groups);
+        }
     }
 
 }

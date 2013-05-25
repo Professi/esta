@@ -54,6 +54,7 @@ class TanController extends Controller {
     }
 
     /**
+     * tans for Parents Management
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     private function tansForParentsManagement(&$model) {
@@ -102,6 +103,11 @@ class TanController extends Controller {
         }
     }
 
+    /**
+     * returns empty Tan Model in a array with only one object
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     * @return \Tan
+     */
     private function getEmptyTanModel() {
         $model = array();
         $tan = new Tan();
@@ -110,10 +116,22 @@ class TanController extends Controller {
         return $model;
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     * renders formGenTans
+     * @param Tan $model
+     */
     private function renderFormGenTans($model) {
         $this->render('formGenTans', array('model' => $model));
     }
 
+    /**
+     * iterates over Tan Array
+     * @param array $tans
+     * @param boolean $validate
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     * @return Tan
+     */
     private function iterateOverTans($tans, &$validate) {
         $model = array();
         foreach ($tans as $i => $oneTan) {
@@ -137,6 +155,11 @@ class TanController extends Controller {
         return $model;
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     * renders showGenTans when allowParentsToManageChilds activated
+     * @param Tan $model
+     */
     private function tansNotForParentsManagement(&$model) {
         $validate = true;
         $model = $this->iterateOverTans($_POST['Tan'], $validate);
