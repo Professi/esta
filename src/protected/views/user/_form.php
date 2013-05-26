@@ -54,6 +54,7 @@ $form = $this->beginWidget('CActiveForm', array(
         <?php
         if (Yii::app()->user->CheckAccess('1') || Yii::app()->user->isGuest) {
             echo $form->textField($model, 'email', array('size' => 45, 'maxlength' => 45));
+            echo $form->error($model, 'email');
         } else {
             echo $form->textField($model, 'email', array('readonly' => true, 'class' => 'form-readonly'));
             echo $form->error($model, 'email');
