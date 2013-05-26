@@ -343,9 +343,12 @@ class ConfigForm extends CFormModel {
         $command->createIndex('idx_group_name', 'group', 'groupname', true);
         $command->createIndex('idx_role_title', 'role', 'title', true);
         $command->createIndex('idx_blockedAppointment', 'blockedAppointment', 'dateAndTime_id,user_id', true);
+        $command->createIndex('idx_appointment_2', 'appointment','parent_child_id,user_id,dateAndTime_id',true);
         $command->createIndex('idx_date_has_group1', 'date_has_group', 'date_id,group_id', true);
         $command->createIndex('idx_user_has_group1', 'user_has_group', 'user_id,group_id', true);
         $command->createIndex('idx_dateAndTime_date_id_time', 'dateAndTime', 'time,date_id', true);
+        $command->createIndex('idx_user_username', 'user', 'username',true);
+        $command->createIndex('idx_parentChild_unq1', 'parent_child', 'user_id,child_id',true);
     }
 
     /**

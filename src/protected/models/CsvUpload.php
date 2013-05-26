@@ -76,7 +76,7 @@ class CsvUpload extends CFormModel {
                             . '.' . preg_replace("/\s+/", "", strtolower(strtr(self::encodingString($line[0]), $uml))) . '@'
                             . Yii::app()->params['teacherMail'];
                 }
-                $model = $this->setTeacherModel($email, self::encodingString($line[0]), self::encodingString($line[1]), 1, 2, self::encodingString($line[3]), $stdPassword);
+                $model = $this->setTeacherModel($email, self::encodingString($line[1]), self::encodingString($line[0]), 1, 2, self::encodingString($line[3]), $stdPassword);
                 set_time_limit(0);
                 if ($model->insert() && Yii::app()->params['randomTeacherPassword']) {
                     $mail = new Mail();
