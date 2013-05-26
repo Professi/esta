@@ -158,10 +158,10 @@ class UserController extends Controller {
      */
     public function actionActivate($activationKey) {
         $user = User::model()->findByAttributes(array('activationKey' => $activationKey));
-        if ($user !== NULL) {
+        if ($user != NULL) {
             if ($user->state == 0) {
                 $user->setAttribute('state', 1);
-                $user->save();
+                $user->update();
                 Yii::app()->user->setFlash('success', 'Ihr Benutzerkonto wurde erfolgreich aktiviert. Sie können Sich nun einloggen.');
             } else if ($user->state == 1) {
                 Yii::app()->user->setFlash('failMsg', 'Ihr Benutzerkonto wurde bereits aktiviert.');

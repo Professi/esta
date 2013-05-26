@@ -23,6 +23,19 @@
 $this->setPageTitle('Lehrer importieren');
 ?>
 <div class="row">
+    <?php if (Yii::app()->params['defaultTeacherPassword']) { ?>
+        <div class="panel">
+            <div class="row">
+                <div class="two columns text-center">
+                    <span aria-hidden="true" data-icon="&#xe011;" style="font-size:2.5em;"></span>
+                </div>
+                <div class="ten columns">
+                    Da Sie in der Konfiguration die Option "Lehrerpasswörter bei deren Erstellung zufällig generieren?" aktiviert haben, kann der Lehrerimport sehr lange dauern.
+                    Sollten Sie bei dem Import der Lehrer eine Fehlermeldung von PHP oder Ihrem Webserver erhalten, müssen Sie entweder zum Beispiel die "maximum_execution_time" hochsetzen oder Ihre CSV Datei aufteilen.
+                </div>
+            </div>
+        </div>
+    <?php } ?>
     <div class="five columns centered">
         <fieldset>
             <?php

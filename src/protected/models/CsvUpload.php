@@ -57,6 +57,7 @@ class CsvUpload extends CFormModel {
     /**
      * Creates Teachers with csv file
      * csv must have these columns: Nachname, Vorname, Email, Titel
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param resource $fp
      * @param string $msg
      * @return boolean
@@ -76,8 +77,7 @@ class CsvUpload extends CFormModel {
                             . Yii::app()->params['teacherMail'];
                 }
                 $model = $this->setTeacherModel($email, self::encodingString($line[0]), self::encodingString($line[1]), 1, 2, self::encodingString($line[3]), $stdPassword);
-
-                if ($model->save() && Yii::app()->params['randomTeacherPassword']) {
+                if ($model->insert() && Yii::app()->params['randomTeacherPassword']) {
                     $mail = new Mail();
                     $mail->sendRandomUserPassword($model->email, $model->password);
                 }
@@ -92,6 +92,18 @@ class CsvUpload extends CFormModel {
         return $rc;
     }
 
+    /**
+     * creates new Teacher Model and sets the attributes
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param string $email
+     * @param string $lastname
+     * @param string $firstname
+     * @param integer $state
+     * @param integer $role
+     * @param string $title
+     * @param string $stdPassword
+     * @return \User
+     */
     private function setTeacherModel($email, $lastname, $firstname, $state, $role, $title, &$stdPassword = "") {
         $model = new User();
         $model->setSomeAttributes($email, $lastname, $firstname, $state, $role);
@@ -99,7 +111,7 @@ class CsvUpload extends CFormModel {
         if (Yii::app()->params['randomTeacherPassword']) {
             $passGen = new PasswordGenerator();
             $model->password = $passGen->generate();
-        } else if ($stdPassword != '' && strlen($stdPassword) > 59) {
+        } else if ($stdPassword != "" && strlen($stdPassword) > 59) {
             $model->password = $stdPassword;
         } else {
             $stdPassword = $model->encryptPassword(Yii::app()->params['defaultTeacherPassword']);
@@ -119,6 +131,11 @@ class CsvUpload extends CFormModel {
         return mb_convert_encoding($toEncode, $to, $from);
     }
 
+    /**
+     * creates nicely formatted string from array
+     * @param array $array
+     * @return string
+     */
     static public function convert_multi_array($array) {
         return implode("&", array_map(function($a) {
                             return implode("~", $a);
