@@ -36,7 +36,7 @@ class CsvUpload extends CFormModel {
     public $email;
 
     /**
-     * Validierungsregeln
+     * validation rules
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array validation rules for model attributes.
      */
@@ -54,12 +54,19 @@ class CsvUpload extends CFormModel {
         return array('file' => 'CSV Datei hochladen');
     }
 
+    /**
+     * Creates Teachers with csv file
+     * csv must have these columns: Nachname, Vorname, Email, Titel
+     * @param resource $fp
+     * @param string $msg
+     * @return boolean
+     */
     public function createTeachers(&$fp, &$msg) {
         $first = true;
         $rc = true;
+        $stdPassword = "";
         do {
             if (!$first && ($line[0] != "Vorname" && !$line[1] != "Nachname" && $line[2] != 'Email')) {
-                $model = new User();
                 if ($line[2] != NULL) {
                     $email = self::encodingString($line[2]);
                 } else {
@@ -68,19 +75,11 @@ class CsvUpload extends CFormModel {
                             . '.' . preg_replace("/\s+/", "", strtolower(strtr(self::encodingString($line[0]), $uml))) . '@'
                             . Yii::app()->params['teacherMail'];
                 }
-                $model->setSomeAttributes($email, self::encodingString($line[1]), self::encodingString($line[0]), 1, 2);
-                $model->title = self::encodingString($line[3]);
-                if (Yii::app()->params['randomTeacherPassword']) {
-                    $passGen = new PasswordGenerator();
-                    $model->password = $passGen->generate();
-                } else {
-                    $model->password = Yii::app()->params['defaultTeacherPassword'];
-                }
-                $password = $model->password;
-                $model->password_repeat = $model->password;
+                $model = $this->setTeacherModel($email, self::encodingString($line[0]), self::encodingString($line[1]), 1, 2, self::encodingString($line[3]), $stdPassword);
+
                 if ($model->save() && Yii::app()->params['randomTeacherPassword']) {
                     $mail = new Mail();
-                    $mail->sendRandomUserPassword($model->email, $password);
+                    $mail->sendRandomUserPassword($model->email, $model->password);
                 }
                 if ($model->hasErrors()) {
                     $rc = false;
@@ -91,6 +90,23 @@ class CsvUpload extends CFormModel {
             }
         } while (($line = fgetcsv($fp, 1000, ";")) != FALSE);
         return $rc;
+    }
+
+    private function setTeacherModel($email, $lastname, $firstname, $state, $role, $title, &$stdPassword = "") {
+        $model = new User();
+        $model->setSomeAttributes($email, $lastname, $firstname, $state, $role);
+        $model->title = $title;
+        if (Yii::app()->params['randomTeacherPassword']) {
+            $passGen = new PasswordGenerator();
+            $model->password = $passGen->generate();
+        } else if ($stdPassword != '' && strlen($stdPassword) > 59) {
+            $model->password = $stdPassword;
+        } else {
+            $stdPassword = $model->encryptPassword(Yii::app()->params['defaultTeacherPassword']);
+            $model->password = $stdPassword;
+        }
+        $model->password_repeat = $model->password;
+        return $model;
     }
 
     /**

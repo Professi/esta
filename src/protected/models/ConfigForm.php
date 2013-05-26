@@ -15,6 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+/**
+ * model class for configurations view
+ * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+ */
 class ConfigForm extends CFormModel {
 
     const pgsql = 'pgsql';
@@ -70,10 +75,19 @@ class ConfigForm extends CFormModel {
     private $firstRead = true;
     private $params;
 
+    /**
+     * setting all attributes
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
     public function init() {
         $this->attributes = Yii::app()->params->toArray();
     }
 
+    /**
+     * validation rules
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return array
+     */
     public function rules() {
         return array(
             array('adminEmail,dateTimeFormat,emailHost,fromMailHost,fromMail' .
@@ -101,8 +115,8 @@ class ConfigForm extends CFormModel {
             array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,'
                 . 'durationTempBans,maxAttemptsForLogin,appointmentBlocksPerDate,'
                 . 'lengthReasonAppointmentBlocked,databasePort',
-                'numerical', 'integerOnly' => true, 'min'=>1),
-            array('hashCost','numerical','integerOnly'=>true,'min'=>13),
+                'numerical', 'integerOnly' => true, 'min' => 1),
+            array('hashCost', 'numerical', 'integerOnly' => true, 'min' => 13),
             array('adminEmail,dateTimeFormat,emailHost,fromMailHost,fromMail' .
                 ',teacherMail,schoolName,virtualHost,mailsActivated,maxChild,'
                 . 'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,' .
@@ -113,6 +127,10 @@ class ConfigForm extends CFormModel {
         );
     }
 
+    /**
+     * attributeLabels
+     * @return array
+     */
     public function attributeLabels() {
         return array(
             'adminEmail' => 'Administrator E-Mail Adresse',
@@ -162,6 +180,11 @@ class ConfigForm extends CFormModel {
         );
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * creates all database tables
+     * @param CdbCommand $command
+     */
     private function createTables($command) {
         $command->createTable('child', array(
             'id' => 'pk',
@@ -257,22 +280,46 @@ class ConfigForm extends CFormModel {
                 ), $this->getCollation());
     }
 
+    /**
+     * default charset for mysql Databases
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return string
+     */
     private function mysqlCharset() {
         return 'DEFAULT CHARSET=utf8';
     }
 
+    /**
+     * default charset for postgresql databases
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return string
+     */
     private function pgsqlCharset() {
         return 'ENCODING \'UTF8\'';
     }
 
+    /**
+     * mysql charset for columns with case sensitives char collation
+     * @return string
+     */
     private function mysqlCSColumnCharset() {
         return 'CHARACTER SET utf8 COLLATE utf8_bin';
     }
 
+    /**
+     * postgre sql charset for columns with case sensitive char collation
+     * @return string
+     */
     private function pgsqlCSColumnCharset() {
         return 'COLLATE "' . strtolower($this->getParam('language')) . '_' . strtoupper($this->getParam('language') . '"');
     }
 
+    /**
+     * returns collation for database
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param boolean $column
+     * @return string
+     */
     public function getCollation($column = false) {
         $rc = '';
         switch ($this->getDBMS()) {
@@ -287,6 +334,11 @@ class ConfigForm extends CFormModel {
         return $rc;
     }
 
+    /**
+     * creates database indices
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param CdbCommand $command
+     */
     private function createIndices($command) {
         $command->createIndex('idx_group_name', 'group', 'groupname', true);
         $command->createIndex('idx_role_title', 'role', 'title', true);
@@ -296,6 +348,11 @@ class ConfigForm extends CFormModel {
         $command->createIndex('idx_dateAndTime_date_id_time', 'dateAndTime', 'time,date_id', true);
     }
 
+    /**
+     * sets foreign keys 
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param cdbCommand $command
+     */
     private function addForeignKeys($command) {
         $command->addForeignKey('user_role_fk1', 'user_role', 'role_id', 'role', 'id', 'NO ACTION', 'NO ACTION');
         $command->addForeignKey('user_role_fk2', 'user_role', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
@@ -316,6 +373,10 @@ class ConfigForm extends CFormModel {
         $command->addForeignKey('blockedAppointment_fk2', 'blockedAppointment', 'user_id', 'user', 'id', 'CASCADE', 'NO ACTION');
     }
 
+    /**
+     * fills role Table
+     * @param CdbCommand $command
+     */
     private function fillTable($command) {
         $command->insert('role', array(
             'id' => 0,
@@ -335,6 +396,11 @@ class ConfigForm extends CFormModel {
         ));
     }
 
+    /**
+     * creates all database stuff which is important for this application
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return boolean
+     */
     public function tables() {
         $rc = true;
         $connection = $this->getConnection();
@@ -358,15 +424,29 @@ class ConfigForm extends CFormModel {
         return $rc;
     }
 
+    /**
+     * returns database Management System
+     * @return string
+     */
     public function getDBMS() {
         return $this->getParam('databaseManagementSystem');
     }
 
+    /**
+     * returns param from params.php / params.inc
+     * @param string $param
+     * @return string
+     */
     public function getParam($param) {
         $params = $this->getParams();
         return $params[$param];
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * gets all params from /config/params.php
+     * @return array 
+     */
     public function getParams() {
         if ($this->firstRead) {
             $this->firstRead = false;
@@ -375,6 +455,11 @@ class ConfigForm extends CFormModel {
         return $this->params;
     }
 
+    /**
+     * sets connection
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return \CDbConnection
+     */
     public function getConnection() {
         $connection = new CDbConnection($this->getDBMS() . ':host=' . $this->getParam('databaseHost') . ';dbname=' . $this->getParam('databaseName'), $this->getParam('databaseUsername'), $this->getParam('databasePassword'));
         try {
@@ -385,7 +470,7 @@ class ConfigForm extends CFormModel {
         }
         return $connection;
     }
-    
+
 }
 
 ?>
