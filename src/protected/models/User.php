@@ -514,7 +514,7 @@ class User extends CActiveRecord {
         }
         if (strlen($this->password) < 60 && strlen($this->password) > 0) {
             $this->password = $this->encryptPassword($this->password);
-        } else {
+        } else if (!$this->isNewRecord) {
             $this->password = User::model()->findByPk($this->id)->password;
         }
         return parent::beforeSave();
