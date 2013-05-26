@@ -82,7 +82,7 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
     <div class="six columns mobile-input">
         <?php
-        echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 64));
+        echo $form->passwordField($model, 'password', array('size' => 45, 'maxlength' => 45));
         echo $form->error($model, 'password');
         ?>
     </div>
@@ -97,7 +97,7 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
     <div class="nine columns mobile-input">
         <?php
-        echo $form->passwordField($model, 'password_repeat', array('size' => 60, 'maxlength' => 64));
+        echo $form->passwordField($model, 'password_repeat', array('size' => 45, 'maxlength' => 45));
         echo $form->error($model, 'password_repeat');
         ?>
     </div>
@@ -108,10 +108,10 @@ $form = $this->beginWidget('CActiveForm', array(
             <span class="prefix"><?php echo $form->label($model, 'state'); ?></span>
         </div>
         <div class="nine columns">
-                <?php
-                echo Select2::activeDropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt'),array('select2Options' => array('minimumResultsForSearch' => 10)));
-                echo $form->error($model, 'state');
-                ?>
+            <?php
+            echo Select2::activeDropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt'), array('select2Options' => array('minimumResultsForSearch' => 10)));
+            echo $form->error($model, 'state');
+            ?>
         </div>
     </div>
     <div class="row collapse">
@@ -119,10 +119,10 @@ $form = $this->beginWidget('CActiveForm', array(
             <span class="prefix"><?php echo $form->label($model, 'role'); ?></span>
         </div>
         <div class="nine columns">
-                <?php
-                echo Select2::activeDropDownList($model, 'role', $model->getRolePermission(),array('select2Options' => array('minimumResultsForSearch' => 10)));
-                echo $form->error($model, 'role');
-                ?>
+            <?php
+            echo Select2::activeDropDownList($model, 'role', $model->getRolePermission(), array('select2Options' => array('minimumResultsForSearch' => 10)));
+            echo $form->error($model, 'role');
+            ?>
         </div>
     </div>
 
@@ -136,28 +136,28 @@ $form = $this->beginWidget('CActiveForm', array(
                     <span class="prefix"><?php echo $form->label($model, 'groups'); ?> </span>
                 </div>
                 <div class="nine columns">
-                        <?php
-                        if (isset($_POST['User']['groupIds'])) {
-                            $model->groupIds = $_POST['User']['groupIds'];
-                        }
-                        if(!$model->isNewRecord) {
-                            $model->groupIds = $model->groups;
-                        }
-                        echo Select2::activeMultiSelect($model, 'groupIds', $groups, array(
-                            'placeholder' => 'Hier können Sie mehrere Gruppen auswählen...',
-                            'id' => 'groups-select',
-                            'select2Options' => array(
-                                'allowClear' => true,
-                            ),
-                        ));
-                        echo $form->error($model, 'groups');
-                        ?>
+                    <?php
+                    if (isset($_POST['User']['groupIds'])) {
+                        $model->groupIds = $_POST['User']['groupIds'];
+                    }
+                    if (!$model->isNewRecord) {
+                        $model->groupIds = $model->groups;
+                    }
+                    echo Select2::activeMultiSelect($model, 'groupIds', $groups, array(
+                        'placeholder' => 'Hier können Sie mehrere Gruppen auswählen...',
+                        'id' => 'groups-select',
+                        'select2Options' => array(
+                            'allowClear' => true,
+                        ),
+                    ));
+                    echo $form->error($model, 'groups');
+                    ?>
                 </div>
             </div>
             <?php
         }
     }
-} 
+}
 if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) {
     ?>
     <div class="row collapse">

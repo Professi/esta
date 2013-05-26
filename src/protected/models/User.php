@@ -98,7 +98,7 @@ class User extends CActiveRecord {
             array('email', 'email'),
             array('state', 'numerical', 'integerOnly' => true),
             array('firstname, lastname, email', 'length', 'max' => 45),
-            array('password', 'length', 'max' => 50, 'min' => 8, 'on' => 'insert'),
+            array('password', 'length', 'max' => 64, 'min' => 8, 'on' => array('insert')),
             array('password', 'length', 'max' => 128, 'min' => 8,
                 'on' => array('update', 'insert'),
                 'allowEmpty' => strlen($this->password) == 0 && !Yii::app()->user->isGuest),
