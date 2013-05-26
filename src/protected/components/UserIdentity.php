@@ -98,6 +98,7 @@ class UserIdentity extends CUserIdentity {
             $this->setState('groups', $user->groups);
         }
         $user->lastLogin = time();
+        $user->badLogins = 0;
         $user->update();
     }
 

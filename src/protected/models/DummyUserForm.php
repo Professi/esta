@@ -24,12 +24,20 @@ class DummyUserForm extends CFormModel {
     public $state;
     public $role;
 
+    /**
+     * validation rules
+     * @return array
+     */
     public function rules() {
         return array(
             array('firstname,lastname', 'required'),
         );
     }
 
+    /**
+     * validation rules
+     * @return array
+     */
     public function attributeLabels() {
         return array(
             'username' => 'Benutzername',
@@ -40,6 +48,10 @@ class DummyUserForm extends CFormModel {
         );
     }
 
+    /**
+     * inserts dummy user with firstname and lastname
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
     public function insert() {
         $user = new User();
         $user->firstname = $this->firstname;

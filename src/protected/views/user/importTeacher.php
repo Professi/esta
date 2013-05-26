@@ -23,7 +23,7 @@
 $this->setPageTitle('Lehrer importieren');
 ?>
 <div class="row">
-    <?php if (Yii::app()->params['defaultTeacherPassword']) { ?>
+    <?php if (Yii::app()->params['randomTeacherPassword']) { ?>
         <div class="panel">
             <div class="row">
                 <div class="two columns text-center">
@@ -38,6 +38,7 @@ $this->setPageTitle('Lehrer importieren');
     <?php } ?>
     <div class="five columns centered">
         <fieldset>
+            <legend>Lehrer importieren</legend>
             <?php
             $form = $this->beginWidget('CActiveForm', array('id' => 'csv-form', 'enableAjaxValidation' => true,
                 'htmlOptions' => array('enctype' => 'multipart/form-data'),));

@@ -132,7 +132,7 @@ class User extends CActiveRecord {
     }
 
     /**
-     * Verschlüsselt ein Passwort mit Applikationssalt in sha512
+     * Verschlüsselt ein Passwort mit Applikationssalt mit Hilfe des CPasswordHelpers
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param string $password Zu salzendes Passwort
      * @param string $salt Salt
@@ -142,6 +142,12 @@ class User extends CActiveRecord {
         return CPasswordHelper::hashPassword($this->saltPassword($password, Yii::app()->params['salt']), Yii::app()->params['hashCost']);
     }
 
+    /**
+     * verifys Password with CPasswordHelper
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param string $password
+     * @return boolean
+     */
     public function verifyPassword($password) {
         $rc = false;
         if (CPasswordHelper::verifyPassword($this->saltPassword($password, Yii::app()->params['salt']), $this->password)) {
@@ -150,6 +156,12 @@ class User extends CActiveRecord {
         return $rc;
     }
 
+    /**
+     * Builds a salted Password
+     * @param string $password
+     * @param string $salt
+     * @return string
+     */
     private function saltPassword($password, $salt) {
         return $salt . $password;
     }
@@ -336,6 +348,11 @@ class User extends CActiveRecord {
         parent::setAttribute($name, $value);
     }
 
+    /**
+     * updates a tan, sets used to true and used_by_user_id = this user_id
+     * @param Tan $tan
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
     private function updateTan($tan = '') {
         if (!Yii::app()->user->checkAccess('1') && Yii::app()->params['installed']) {
             if ($tan == '') {
@@ -347,6 +364,13 @@ class User extends CActiveRecord {
         }
     }
 
+    /**
+     * returns roleId
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param integer $no
+     * @return 
+     * @throws CException NullPointerException 
+     */
     private function getRoleId($no) {
         try {
             return Role::model()->findByAttributes(array('id' => $no))->getPrimaryKey();
@@ -377,8 +401,14 @@ class User extends CActiveRecord {
         return $rc;
     }
 
+    /**
+     * basics for working user account, creates userrole, updates tan and creates userHasGroup
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return boolean 
+     */
     private function saveNewRecord() {
         if ($this->createUserRole()) {
+            $rc = true;
             $this->updateTan();
             if (Yii::app()->params['allowGroups'] && !empty($this->groupIds)) {
                 foreach ($this->groupIds as $group) {
@@ -388,8 +418,13 @@ class User extends CActiveRecord {
         } else {
             $rc = false;
         }
+        return $rc;
     }
 
+    /**
+     * saves a already existing user entry
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
     private function saveExistingRecord() {
         $userrole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
         $userrole->role_id = $this->role;
@@ -406,6 +441,11 @@ class User extends CActiveRecord {
         }
     }
 
+    /**
+     * if new record it Invokes saveNewRecord() , else saveExistingRecord
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return boolean
+     */
     public function afterSave() {
         $rc = true;
         if ($this->isNewRecord) {
@@ -438,6 +478,10 @@ class User extends CActiveRecord {
         return parent::beforeDelete();
     }
 
+    /**
+     * deletes all parentChilds which linked to this user
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
     private function deleteParentChilds() {
         $a_parentChild = ParentChild::model()->findAllByAttributes(array('user_id' => $this->id));
         for ($i = 0; $i < count($a_parentChild); $i++) {
@@ -520,6 +564,11 @@ class User extends CActiveRecord {
         echo $this->getStateName($state);
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * returns array with state Id and name
+     * @return array
+     */
     public static function getStateNameAndValue() {
         return array(array('value' => '0', 'name' => 'Nicht aktiv'), array('value' => '1', 'name' => 'Aktiv'), array('value' => '2', 'name' => 'Gesperrt'));
     }
@@ -625,6 +674,11 @@ class User extends CActiveRecord {
         return $rc;
     }
 
+    /**
+     * creates new parentChild Link for this user with a TAN
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param Tan $tan
+     */
     private function addParentChildWithTan(&$tan) {
         if ($tan->child != null) {
             $pc = $this->createParentChild($this->id, $tan->child->id);
@@ -638,6 +692,12 @@ class User extends CActiveRecord {
         }
     }
 
+    /**
+     * adds userHasGroup for this user
+     * @param Tan $tan
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @return string
+     */
     private function addUserHasGroup($tan) {
         $errorMsg = '';
         if (!UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $tan->group_id)) > '0') {
@@ -734,6 +794,12 @@ class User extends CActiveRecord {
         return $rc;
     }
 
+    /**
+     * creates new ParentChild and returns it
+     * @param integer $user_id
+     * @param integer $child_id
+     * @return \ParentChild
+     */
     public function createParentChild($user_id, $child_id) {
         $pc = new ParentChild();
         $pc->child_id = $child_id;

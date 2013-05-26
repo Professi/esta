@@ -80,6 +80,10 @@ class UserHasGroup extends CActiveRecord {
         );
     }
 
+    /**
+     * Search method for UserHasGroup
+     * @return \CActiveDataProvider
+     */
     public function search() {
         $criteria = new CDbCriteria;
         $criteria->compare('id', $this->id);

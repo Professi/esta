@@ -106,13 +106,13 @@ class Date extends CActiveRecord {
         $criteria->compare('date', $this->date, true);
         $criteria->compare('begin', $this->begin, true);
         $criteria->compare('end', $this->end, true);
-        $criteria->compare('durationPerAppointment', $this->durationPerAppointment,true);
-        $criteria->compare('title',  $this->title,true);
+        $criteria->compare('durationPerAppointment', $this->durationPerAppointment, true);
+        $criteria->compare('title', $this->title, true);
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
     }
-    
+
     /**
      * Prüft nach der erfolgreichen Validierung ob das Ende vor dem Anfang liegt.
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
@@ -183,6 +183,11 @@ class Date extends CActiveRecord {
         return parent::afterSave();
     }
 
+    /**
+     * Creates a group for this date with group_id
+     * @param integer $group
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
     public function createDateHasGroup($group) {
         $dateHasGroup = new DateHasGroup();
         $dateHasGroup->date_id = $this->getPrimaryKey();
@@ -219,8 +224,8 @@ class Date extends CActiveRecord {
         $this->date = date('Y-m-d', strtotime($this->date));
         return parent::beforeSave();
     }
-    
-        /**
+
+    /**
      * Prüft ob eine Gruppe null ist und wenn nicht wird der Gruppenname zurückgegeben
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param Group $group
@@ -254,7 +259,7 @@ class Date extends CActiveRecord {
         }
         return $rc;
     }
-    
+
     /**
      * Criteria to get Date with Groups
      * @param integer $dateMax
@@ -275,7 +280,7 @@ class Date extends CActiveRecord {
         $criteria->addCondition('date >=:date');
         $criteria->params = array(':date' => date('Y-m-d', time()));
         return $criteria;
-    }    
+    }
 
 }
 

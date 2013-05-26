@@ -26,6 +26,10 @@ class DeleteAllForm extends CFormModel {
     public $parents;
     public $groups;
 
+    /**
+     * validationRules
+     * @return array
+     */
     public function rules() {
         return array(
             array('tans,appointments,teachers,dates,management,childs,parents,groups', 'required'),
@@ -33,6 +37,10 @@ class DeleteAllForm extends CFormModel {
             array('tans,appointments,teachers,dates,management,childs,parents,groups', 'safe'));
     }
 
+    /**
+     * attribute Labels
+     * @return array
+     */
     public function attributeLabels() {
         return array('tans' => 'Tans',
             'appointments' => 'Termine',
@@ -41,7 +49,7 @@ class DeleteAllForm extends CFormModel {
             'management' => 'Verwaltungsbenutzerkontos',
             'childs' => 'Schüler',
             'parents' => 'Elternkonten',
-            'groups'=>'Gruppen'
+            'groups' => 'Gruppen'
         );
     }
 
