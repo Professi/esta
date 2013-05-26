@@ -22,7 +22,7 @@
 /* @var $form CActiveForm */
 $this->setPageTitle('Anwendung zurücksetzen');
 ?>
-<div class="form">
+<div class="form delete-all">
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'deleteAll-form',
@@ -42,7 +42,7 @@ $this->setPageTitle('Anwendung zurücksetzen');
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo Select2::activeDropDownList($model, 'tans', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'tans', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'tans');
                     ?>
                 </div>
@@ -53,7 +53,7 @@ $this->setPageTitle('Anwendung zurücksetzen');
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo Select2::activeDropDownList($model, 'appointments', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'appointments', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'appointments');
                     ?>
                 </div>
@@ -64,7 +64,7 @@ $this->setPageTitle('Anwendung zurücksetzen');
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo Select2::activeDropDownList($model, 'teachers', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'teachers', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'teachers');
                     ?>
                 </div>
@@ -75,7 +75,7 @@ $this->setPageTitle('Anwendung zurücksetzen');
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo Select2::activeDropDownList($model, 'dates', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'dates', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'dates');
                     ?>
                 </div>
@@ -86,7 +86,7 @@ $this->setPageTitle('Anwendung zurücksetzen');
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo Select2::activeDropDownList($model, 'management', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'management', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'management');
                     ?>
                 </div>
@@ -97,7 +97,7 @@ $this->setPageTitle('Anwendung zurücksetzen');
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo Select2::activeDropDownList($model, 'childs', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'childs', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'childs');
                     ?>
                 </div>
@@ -108,7 +108,7 @@ $this->setPageTitle('Anwendung zurücksetzen');
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo Select2::activeDropDownList($model, 'parents', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'parents', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'parents');
                     ?>
                 </div>
@@ -119,7 +119,7 @@ $this->setPageTitle('Anwendung zurücksetzen');
                 </div>
                 <div class="nine columns styled-select">
                     <?php
-                    echo Select2::activeDropDownList($model, 'groups', array('1' => 'Ja', '0' => 'Nein'));
+                    echo Select2::activeDropDownList($model, 'groups', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'groups');
                     ?>
                 </div>

@@ -269,6 +269,9 @@ table {
     background: #f2f2f2;
     padding: .2em;
 }
+.delete-all .errorMessage {
+    top: 0;
+}
 .select2-container {
     top: 0px;
     height: 2.3em;
