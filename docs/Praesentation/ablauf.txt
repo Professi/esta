@@ -1,0 +1,13 @@
+Admin:
+Elternsprechtagsverwaltung zeigen
+Elternsprechtag erstellen
+Eltern und- Kinderverwaltung zeigen
+
+Konfiguration
+	- Lehrerpasswörter bei deren Erstellung zufällig generieren
+	- Registrierung sperren
+	- Gruppen erlauben
+	- Sollen Eltern Ihre Kinder verwalten können?
+	- Anti-Spam
+	- Blockieren von Terminen erlauben?
+
