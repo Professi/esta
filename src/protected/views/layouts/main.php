@@ -70,7 +70,7 @@
                         $this->generateMenuItem("&#xe00a;", "Ihre Kinder", "/ParentChild/index", Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
                         $this->generateMenuItem("&#xe00a;", "Benutzerverwaltung", "/User/admin", Yii::app()->user->checkAccess('1')),
                         $this->generateMenuItem("&#xe00a;", "Gruppenverwaltung", "Group/admin", Yii::app()->user->checkAccess('1') && Yii::app()->params['allowGroups']),
-                        $this->generateMenuItem("&#xe007;", "TAN- verwaltung", "Tan/genTans", Yii::app()->user->checkAccessRole('2', '1') || Yii::app()->user->isAdmin()),
+                        $this->generateMenuItem("&#xe007;", "TAN - verwaltung", "Tan/genTans", Yii::app()->user->checkAccessRole('2', '1') || Yii::app()->user->isAdmin()),
                         $this->generateMenuItem("&#xe007;", "Konfiguration", "site/config", Yii::app()->user->checkAccess('0')),
                         $this->generateMenuItem("&#xe007;", "Ihr Benutzerkonto", "/User/account", true),
                         $this->generateMenuItem("&#xe006;", "Logout", "/site/logout", true)),
@@ -97,6 +97,23 @@
                     <h5><?php echo (!empty(Yii::app()->params['schoolName'])) ? 'Elternsprechtag der ' . Yii::app()->params['schoolName'] : 'ESTA - Elternsprechtagsanwendung'; ?></h5>
                 </div>
             </div>
+            
+                <?php 
+                if (!empty(Yii::app()->user->id)) { ?>
+            <div style="text-align: center;font-size: 2em;background-color: #f2f2f2;border: dotted 1px;width: 550px;padding: .2em;margin-left: 120px;">
+                <?php
+                    $droelf =  User::model()->findByPk(Yii::app()->user->id);
+                    echo $droelf->firstname.' '.$droelf->lastname.' (Rolle: '; 
+                    echo Yii::app()->user->role == 0 ? 'Administration' : '';
+                    echo Yii::app()->user->role == 1 ? 'Verwaltung' : '';
+                    echo Yii::app()->user->role == 2 ? 'Lehrer' : '';
+                    echo Yii::app()->user->role == 3 ? 'Eltern' : '';
+                    echo')'; ?>
+                    </div>
+              <?php  }
+
+                ?>
+            
             <?php
             echo $content;
             ?>
