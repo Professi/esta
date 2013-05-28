@@ -1,3 +1,16 @@
+Eltern:
+Passwort vergessen (nicht klicken)
+Registrierung
+Startseite - Eltern
+Kind anlegen
+Lehrerauswahl --> Gruening
+Termin anlegen
+Kind löschen
+
+Lehrer:
+Termin löschen
+Tan generieren
+
 Admin:
 Elternsprechtagsverwaltung zeigen
 Elternsprechtag erstellen
@@ -10,4 +23,6 @@ Konfiguration
 	- Sollen Eltern Ihre Kinder verwalten können?
 	- Anti-Spam
 	- Blockieren von Terminen erlauben?
+ELternsprechtage Schreibfehler pro Kind - 
+
 

@@ -143,7 +143,7 @@ class ConfigForm extends CFormModel {
             'virtualHost' => 'Virtualhost des Servers - Pfad unter dem die Anwendung erreichbar ist (z.B. /est/)',
             'mailsActivated' => 'E-Mails versenden?',
             'maxChild' => 'Maximale Anzahl an Kindern pro Eltern',
-            'maxAppointmentsPerChild' => 'Maximale Anzahl an Terminen pro Kinder',
+            'maxAppointmentsPerChild' => 'Maximale Anzahl an Terminen pro Kind',
             'randomTeacherPassword' => 'Lehrerpasswörter bei deren Erstellung zufällig generieren?',
             'defaultTeacherPassword' => 'Standardpasswort wenn die vorherige Option deaktiviert ist',
             'minLengthPerAppointment' => 'Mindestlänge eines Termins bei einem neuzuerstellenden Elternsprechtag',

@@ -205,7 +205,7 @@ class ParentChild extends CActiveRecord {
      * @param string $lastname Nachname der zu suchenden Eltern
      * @return array passende IDs
      */
-    public function searchParentId($lastname) {
+    public function searchParentId($lastname = '') {
         $a_data = $this->findAll($this->searchParentChild($lastname, array('user')));
         foreach ($a_data as $key => $value) {
             $a_data[$key] = $value->user->getPrimaryKey();

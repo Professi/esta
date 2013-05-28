@@ -28,7 +28,7 @@ if (Yii::app()->params['allowGroups']) {
 ?>
 <div class="row">
     <div class="twelve columns centered">
-        <h2 class="text-center">Tan Generierung</h2>
+        <h2 class="text-center">TAN Generierung</h2>
     </div>
 </div>
 <div class="row">

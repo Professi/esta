@@ -70,7 +70,7 @@
                         $this->generateMenuItem("&#xe00a;", "Ihre Kinder", "/ParentChild/index", Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
                         $this->generateMenuItem("&#xe00a;", "Benutzerverwaltung", "/User/admin", Yii::app()->user->checkAccess('1')),
                         $this->generateMenuItem("&#xe00a;", "Gruppenverwaltung", "Group/admin", Yii::app()->user->checkAccess('1') && Yii::app()->params['allowGroups']),
-                        $this->generateMenuItem("&#xe007;", "Tanverwaltung", "Tan/genTans", Yii::app()->user->checkAccessRole('2', '1') || Yii::app()->user->isAdmin()),
+                        $this->generateMenuItem("&#xe007;", "TAN- verwaltung", "Tan/genTans", Yii::app()->user->checkAccessRole('2', '1') || Yii::app()->user->isAdmin()),
                         $this->generateMenuItem("&#xe007;", "Konfiguration", "site/config", Yii::app()->user->checkAccess('0')),
                         $this->generateMenuItem("&#xe007;", "Ihr Benutzerkonto", "/User/account", true),
                         $this->generateMenuItem("&#xe006;", "Logout", "/site/logout", true)),
