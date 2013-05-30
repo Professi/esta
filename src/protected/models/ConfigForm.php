@@ -44,7 +44,7 @@ class ConfigForm extends CFormModel {
     public $banUsers;
     public $durationTempBans;
     public $maxAttemptsForLogin;
-    public $salt;
+    public $pepper;
     public $installed;
     public $timeFormat;
     public $dateFormat;
@@ -107,7 +107,7 @@ class ConfigForm extends CFormModel {
             array('emailHost,fromMail,dateFormat,appName', 'length', 'min' => 4),
             array('dateTimeFormat', 'length', 'min' => 5),
             array('defaultTeacherPassword,databasePassword', 'length', 'min' => 8),
-            array('salt', 'length', 'min' => 16, 'max' => 255),
+            array('pepper', 'length', 'min' => 16, 'max' => 255),
             array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments,' .
                 'useSchoolEmailForContactForm,allowBlockingOnlyForManagement,lockRegistration,' .
                 'allowParentsToManageChilds,allowGroups',
@@ -150,7 +150,7 @@ class ConfigForm extends CFormModel {
             'banUsers' => 'Temporäres Sperren eines Nutzers bei zu vielen fehlgeschlagenen Loginversuchen',
             'durationTempBans' => 'Dauer der Sperre in Minuten',
             'maxAttemptsForLogin' => 'Maximalanzahl an fehlgeschlagenen Loginversuchen bis zur Sperrung eines Kontos',
-            'salt' => 'Salz für Passwörter',
+            'pepper' => 'Pfeffer für Passwörter',
             'hashCost' => 'Rechenaufwand für das Hashen der Passwörter',
             'dateFormat' => 'Datumsformat (z.B. d.m.Y)',
             'timeFormat' => 'Zeitformat (z.B. H:i)',
@@ -343,12 +343,12 @@ class ConfigForm extends CFormModel {
         $command->createIndex('idx_group_name', 'group', 'groupname', true);
         $command->createIndex('idx_role_title', 'role', 'title', true);
         $command->createIndex('idx_blockedAppointment', 'blockedAppointment', 'dateAndTime_id,user_id', true);
-        $command->createIndex('idx_appointment_2', 'appointment','parent_child_id,user_id,dateAndTime_id',true);
+        $command->createIndex('idx_appointment_2', 'appointment', 'parent_child_id,user_id,dateAndTime_id', true);
         $command->createIndex('idx_date_has_group1', 'date_has_group', 'date_id,group_id', true);
         $command->createIndex('idx_user_has_group1', 'user_has_group', 'user_id,group_id', true);
         $command->createIndex('idx_dateAndTime_date_id_time', 'dateAndTime', 'time,date_id', true);
-        $command->createIndex('idx_user_username', 'user', 'username',true);
-        $command->createIndex('idx_parentChild_unq1', 'parent_child', 'user_id,child_id',true);
+        $command->createIndex('idx_user_username', 'user', 'username', true);
+        $command->createIndex('idx_parentChild_unq1', 'parent_child', 'user_id,child_id', true);
     }
 
     /**

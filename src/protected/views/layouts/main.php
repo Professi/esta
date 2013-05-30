@@ -97,24 +97,7 @@
                     <h5><?php echo (!empty(Yii::app()->params['schoolName'])) ? 'Elternsprechtag der ' . Yii::app()->params['schoolName'] : 'ESTA - Elternsprechtagsanwendung'; ?></h5>
                 </div>
             </div>
-            
                 <?php 
-                if (!empty(Yii::app()->user->id)) { ?>
-            <div style="text-align: center;font-size: 2em;background-color: #f2f2f2;border: dotted 1px;width: 550px;padding: .2em;margin-left: 120px;">
-                <?php
-                    $droelf =  User::model()->findByPk(Yii::app()->user->id);
-                    echo $droelf->firstname.' '.$droelf->lastname.' (Rolle: '; 
-                    echo Yii::app()->user->role == 0 ? 'Administration' : '';
-                    echo Yii::app()->user->role == 1 ? 'Verwaltung' : '';
-                    echo Yii::app()->user->role == 2 ? 'Lehrer' : '';
-                    echo Yii::app()->user->role == 3 ? 'Eltern' : '';
-                    echo')'; ?>
-                    </div>
-              <?php  }
-
-                ?>
-            
-            <?php
             echo $content;
             ?>
             <div class="push"></div>

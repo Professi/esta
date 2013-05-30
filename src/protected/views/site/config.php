@@ -216,7 +216,7 @@ $this->registerAdminScripts(true);
                 <legend>Installierung</legend>
                 <div class="row collapse">
                     <div class="eight columns">
-                        <span class="prefix infofeld"><?php echo $form->label($model, 'salt', array('class' => 'infolabel')); ?></span>
+                        <span class="prefix infofeld"><?php echo $form->label($model, 'pepper', array('class' => 'infolabel')); ?></span>
                         <div class="infotext">
                             <span aria-hidden="true" data-icon="&#xe012;"></span>
                             Bei der Generierung eines Passwortes wird dieser Salt verwendet.
@@ -224,8 +224,8 @@ $this->registerAdminScripts(true);
                     </div>
                     <div class="four columns">
                         <?php
-                        echo $form->textField($model, 'salt');
-                        echo $form->error($model, 'salt');
+                        echo $form->textField($model, 'pepper');
+                        echo $form->error($model, 'pepper');
                         ?>
                     </div>
                 </div>

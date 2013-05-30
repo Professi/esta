@@ -139,7 +139,7 @@ class User extends CActiveRecord {
      * @return string encrypted and salted password with sha512
      */
     public function encryptPassword($password) {
-        return CPasswordHelper::hashPassword($this->saltPassword($password, Yii::app()->params['salt']), Yii::app()->params['hashCost']);
+        return CPasswordHelper::hashPassword($this->saltPassword($password, Yii::app()->params['pepper']), Yii::app()->params['hashCost']);
     }
 
     /**
@@ -150,7 +150,7 @@ class User extends CActiveRecord {
      */
     public function verifyPassword($password) {
         $rc = false;
-        if (CPasswordHelper::verifyPassword($this->saltPassword($password, Yii::app()->params['salt']), $this->password)) {
+        if (CPasswordHelper::verifyPassword($this->saltPassword($password, Yii::app()->params['pepper']), $this->password)) {
             $rc = true;
         }
         return $rc;
@@ -163,7 +163,7 @@ class User extends CActiveRecord {
      * @return string
      */
     private function saltPassword($password, $salt) {
-        return $salt . $password;
+        return $password . $salt;
     }
 
     /**
