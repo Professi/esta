@@ -35,6 +35,7 @@ $cache = array(// nicht ändern , kommt eventuell noch weg da aktuell nichts gec
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..', //nicht ändern
     'name' => $params['appName'], //entsprechend den eigenen Bedürfnissen anpassen
+    'sourceLanguage'=>'de_de',
     'language' => $params['language'], //Sprache
     'preload' => array('log'), //Logkomponente - nicht ändern
     'import' => array(//nicht ändern

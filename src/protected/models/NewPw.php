@@ -50,8 +50,8 @@ class NewPw extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'password' => 'Passwort',
-            'password_repeat' => 'Passwort wiederholen',
+            'password' => Yii::t('app', 'Passwort'),
+            'password_repeat' => Yii::t('app', 'Passwort wiederholen'),
         );
     }
 

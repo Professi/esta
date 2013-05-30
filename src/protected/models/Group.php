@@ -72,7 +72,7 @@ class Group extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'groupname' => 'Gruppenname',
+            'groupname' => Yii::t('app','Gruppenname'),
         );
     }
 

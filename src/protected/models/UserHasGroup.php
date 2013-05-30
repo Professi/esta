@@ -75,8 +75,8 @@ class UserHasGroup extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'user' => 'Benutzer',
-            'group' => 'Gruppe',
+            'user' => Yii::t('app', 'Benutzer'),
+            'group' => Yii::t('app', 'Gruppe'),
         );
     }
 

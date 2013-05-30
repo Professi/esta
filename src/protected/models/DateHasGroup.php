@@ -75,8 +75,8 @@ class DateHasGroup extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'date' => 'Datum',
-            'group' => 'Gruppe',
+            'date' => Yii::t('app', 'Datum'),
+            'group' => Yii::t('app', 'Gruppe'),
         );
     }
 

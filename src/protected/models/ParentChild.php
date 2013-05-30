@@ -50,7 +50,7 @@ class ParentChild extends CActiveRecord {
                 Appointment::model()->deleteAllByAttributes(array('parent_child_id' => $this->id));
             }
         } else {
-            throw new CHttpException(403, 'Keine Berechtigung.');
+            throw new CHttpException(403, Yii::t('app', 'Keine Berechtigung.'));
         }
         return $rc;
     }
@@ -80,7 +80,7 @@ class ParentChild extends CActiveRecord {
             if ($childCheck != null) {
                 if (ParentChild::model()->countByAttributes(array('child_id' => $childCheck->id, 'user_id' => $this->user_id)) >= '1') {
                     $rc = false;
-                    Yii::app()->user->setFlash('failMsg', 'Kind wurde bereits eingetragen.');
+                    Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Kind wurde bereits eingetragen.'));
                 }
             }
             if ($rc && $this->child_id == null) {
@@ -122,7 +122,7 @@ class ParentChild extends CActiveRecord {
             array('user_id', 'required'),
             array('child_id', 'numerical', 'integerOnly' => true),
             array('user_id', 'length', 'max' => 11),
-            array('childFirstName, childLastName', 'length','min'=>1, 'allowEmpty'=>  $this->child_id != null),
+            array('childFirstName, childLastName', 'length', 'min' => 1, 'allowEmpty' => $this->child_id != null),
             array('childFirstName,childLastName,child_id', 'length', 'max' => 255),
             array('id, user_id, child_id', 'safe', 'on' => 'search'),
         );
@@ -147,11 +147,11 @@ class ParentChild extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'user_id' => 'Erziehungsberechtigte/r',
-            'child_id' => 'Kind',
-            'childFirstName' => 'Vorname Ihres Kindes',
-            'childLastName' => 'Nachname Ihres Kindes',
-            'class' => 'Klasse',
+            'user_id' => Yii::t('app', 'Erziehungsberechtigte/r'),
+            'child_id' => Yii::t('app', 'Kind'),
+            'childFirstName' => Yii::t('app', 'Vorname Ihres Kindes'),
+            'childLastName' => Yii::t('app', 'Nachname Ihres Kindes'),
+            'class' => Yii::t('app', 'Klasse'),
         );
     }
 
@@ -222,12 +222,12 @@ class ParentChild extends CActiveRecord {
         $rc = parent::afterValidate();
         if ($rc && User::model()->countByAttributes(array('user_id' => $this->user_id)) != '1') {
             $rc = false;
-            $this->addError('user_id', 'Der angegebene Benutzer existiert nicht.');
+            $this->addError('user_id', Yii::t('app', 'Der angegebene Benutzer existiert nicht.'));
         }
         if ($rc && ParentChild::model()->countByAttributes(array('user_id' => $this->user_id)) > Yii::app()->params['maxChild'] && Yii::app()->params['allowParentsToManageChilds']) {
             $rc = false;
-            $this->addError('child_id', 'Maximale Kinderanzahl erreicht.');
-            Yii::app()->user->setFlash('failMsg', 'Sie haben die Anzahl der maximal eintragbaren Kinder überschritten.');
+            $this->addError('child_id', Yii::t('app', 'Maximale Kinderanzahl erreicht.'));
+            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie haben die Anzahl der maximal eintragbaren Kinder überschritten.'));
         }
         return $rc;
     }

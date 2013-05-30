@@ -42,14 +42,14 @@ class DeleteAllForm extends CFormModel {
      * @return array
      */
     public function attributeLabels() {
-        return array('tans' => 'Tans',
-            'appointments' => 'Termine',
-            'teachers' => 'Lehrer',
-            'dates' => 'Elternsprechtage',
-            'management' => 'Verwaltungsbenutzerkontos',
-            'childs' => 'Schüler',
-            'parents' => 'Elternkonten',
-            'groups' => 'Gruppen'
+        return array('tans' => Yii::t('app', 'Tans'),
+            'appointments' => Yii::t('app', 'Termine'),
+            'teachers' => Yii::t('app', 'Lehrer'),
+            'dates' => Yii::t('app', 'Elternsprechtage'),
+            'management' => Yii::t('app', 'Verwaltungsbenutzerkontos'),
+            'childs' => Yii::t('app', 'Schüler'),
+            'parents' => Yii::t('app', 'Elternkonten'),
+            'groups' => Yii::t('app', 'Gruppen'),
         );
     }
 
@@ -64,11 +64,11 @@ class DeleteAllForm extends CFormModel {
         if (parent::validate($attributes, $clearErrors)) {
             if (($this->teachers || $this->dates || $this->parents) && !$this->appointments) {
                 $rc = false;
-                $this->addError('appointments', 'Sie müssen auch alle Termine löschen.');
+                $this->addError('appointments', Yii::t('app', 'Sie müssen auch alle Termine löschen.'));
             }
             if ($this->parents && !$this->childs) {
                 $rc = false;
-                $this->addError('parents', 'Kinder müssen auch gelöscht werden.');
+                $this->addError('parents', Yii::t('app', 'Kinder müssen auch gelöscht werden.'));
             }
         } else {
             $rc = false;
@@ -109,7 +109,7 @@ class DeleteAllForm extends CFormModel {
             UserHasGroup::model()->deleteAll();
             Group::model()->deleteAll();
         }
-        Yii::app()->user->setFlash('success', 'Erfolgreich!');
+        Yii::app()->user->setFlash('success', Yii::t('app', 'Erfolgreich!'));
     }
 
 }

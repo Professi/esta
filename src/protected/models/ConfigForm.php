@@ -133,50 +133,50 @@ class ConfigForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'adminEmail' => 'Administrator E-Mail Adresse',
-            'dateTimeFormat' => 'Datums und Zeitformat (z.B. d.m.Y H:i)', //
-            'emailHost' => 'Hostname des SMTP Servers (z.B. localhost)',
-            'fromMailHost' => 'Versender E-Mailadresse (z.B. xyz@schoolxyz.de)',
-            'fromMail' => 'Absendername (z.B. ESTA-School)',
-            'teacherMail' => 'Domainname des SMTP Servers (z.B. schoolxyz)',
-            'schoolName' => 'Schulname (z.B. Schule XYZ)',
-            'virtualHost' => 'Virtualhost des Servers - Pfad unter dem die Anwendung erreichbar ist (z.B. /est/)',
-            'mailsActivated' => 'E-Mails versenden?',
-            'maxChild' => 'Maximale Anzahl an Kindern pro Eltern',
-            'maxAppointmentsPerChild' => 'Maximale Anzahl an Terminen pro Kind',
-            'randomTeacherPassword' => 'Lehrerpasswörter bei deren Erstellung zufällig generieren?',
-            'defaultTeacherPassword' => 'Standardpasswort wenn die vorherige Option deaktiviert ist',
-            'minLengthPerAppointment' => 'Mindestlänge eines Termins bei einem neuzuerstellenden Elternsprechtag',
-            'banUsers' => 'Temporäres Sperren eines Nutzers bei zu vielen fehlgeschlagenen Loginversuchen',
-            'durationTempBans' => 'Dauer der Sperre in Minuten',
-            'maxAttemptsForLogin' => 'Maximalanzahl an fehlgeschlagenen Loginversuchen bis zur Sperrung eines Kontos',
-            'pepper' => 'Pfeffer für Passwörter',
-            'hashCost' => 'Rechenaufwand für das Hashen der Passwörter',
-            'dateFormat' => 'Datumsformat (z.B. d.m.Y)',
-            'timeFormat' => 'Zeitformat (z.B. H:i)',
-            'allowBlockingAppointments' => 'Blockieren von Terminen erlauben?',
-            'appointmentBlocksPerDate' => 'Anzahl der Termine die blockiert werden dürfen',
-            'lengthReasonAppointmentBlocked' => 'Minimallänge eines Grundes um einen Termin zu blocken',
-            'schoolStreet' => 'Straße',
-            'schoolCity' => 'Postleitzahl, Ort',
-            'schoolTele' => 'Telefonnummer',
-            'schoolFax' => 'Faxnummer',
-            'schoolEmail' => 'E-Mail Adresse der Schule',
-            'useSchoolEmailForContactForm' => 'E-Mail Adresse der Schule für das Kontaktformular verwenden?',
-            'allowBlockingOnlyForManagement' => 'Nur Verwaltung und Administration dürfen Termine blockieren?',
-            'lockRegistration' => 'Registrierung sperren?',
-            'allowGroups' => 'Gruppen erlauben?',
-            'databaseHost' => 'Datenbankhost',
-            'databaseName' => 'Name der Tabelle in der Datenbank',
-            'databaseUsername' => 'Datenbankbenutzername',
-            'databasePassword' => 'Datenbankbenutzerpasswort',
-            'databaseManagementSystem' => 'Datenbankmanagementsystem',
-            'logoPath' => 'Pfad des Schullogos in der Anwendung',
-            'textHeader' => 'Headertext zwischen Anwendungslogo und Schullogo',
-            'language' => 'Sprache',
-            'appName' => 'Anwendungsname',
-            'databasePort' => 'Datenbankport',
-            'allowParentsToManageChilds' => 'Sollen Eltern die Daten über Ihre Kinder verwalten können?'
+            'adminEmail' => Yii::t('app', 'Administrator E-Mail Adresse'),
+            'dateTimeFormat' => Yii::t('app', 'Datums und Zeitformat (z.B. d.m.Y H:i)'),
+            'emailHost' => Yii::t('app', 'Hostname des SMTP Servers (z.B. localhost)'),
+            'fromMailHost' => Yii::t('app', 'Versender E-Mailadresse (z.B. xyz@schoolxyz.de)'),
+            'fromMail' => Yii::t('app', 'Absendername (z.B. ESTA-School)'),
+            'teacherMail' => Yii::t('app', 'Domainname des SMTP Servers (z.B. schoolxyz)'),
+            'schoolName' => Yii::t('app', 'Schulname (z.B. Schule XYZ)'),
+            'virtualHost' => Yii::t('app', 'Virtualhost des Servers - Pfad unter dem die Anwendung erreichbar ist (z.B. /est/)'),
+            'mailsActivated' => Yii::t('app', 'E-Mails versenden?'),
+            'maxChild' => Yii::t('app', 'Maximale Anzahl an Kindern pro Eltern'),
+            'maxAppointmentsPerChild' => Yii::t('app', 'Maximale Anzahl an Terminen pro Kind'),
+            'randomTeacherPassword' => Yii::t('app', 'Lehrerpasswörter bei deren Erstellung zufällig generieren?'),
+            'defaultTeacherPassword' => Yii::t('app', 'Standardpasswort wenn die vorherige Option deaktiviert ist'),
+            'minLengthPerAppointment' => Yii::t('app', 'Mindestlänge eines Termins bei einem neuzuerstellenden Elternsprechtag'),
+            'banUsers' => Yii::t('app', 'Temporäres Sperren eines Nutzers bei zu vielen fehlgeschlagenen Loginversuchen'),
+            'durationTempBans' => Yii::t('app', 'Dauer der Sperre in Minuten'),
+            'maxAttemptsForLogin' => Yii::t('app', 'Maximalanzahl an fehlgeschlagenen Loginversuchen bis zur Sperrung eines Kontos'),
+            'pepper' => Yii::t('app', 'Pfeffer für Passwörter'),
+            'hashCost' => Yii::t('app', 'Rechenaufwand für das Hashen der Passwörter'),
+            'dateFormat' => Yii::t('app', 'Datumsformat (z.B. d.m.Y)'),
+            'timeFormat' => Yii::t('app', 'Zeitformat (z.B. H:i)'),
+            'allowBlockingAppointments' => Yii::t('app', 'Blockieren von Terminen erlauben?'),
+            'appointmentBlocksPerDate' => Yii::t('app', 'Anzahl der Termine die blockiert werden dürfen'),
+            'lengthReasonAppointmentBlocked' => Yii::t('app', 'Minimallänge eines Grundes um einen Termin zu blocken'),
+            'schoolStreet' => Yii::t('app', 'Straße'),
+            'schoolCity' => Yii::t('app', 'Postleitzahl, Ort'),
+            'schoolTele' => Yii::t('app', 'Telefonnummer'),
+            'schoolFax' => Yii::t('app', 'Faxnummer'),
+            'schoolEmail' => Yii::t('app', 'E-Mail Adresse der Schule'),
+            'useSchoolEmailForContactForm' => Yii::t('app', 'E-Mail Adresse der Schule für das Kontaktformular verwenden?'),
+            'allowBlockingOnlyForManagement' => Yii::t('app', 'Nur Verwaltung und Administration dürfen Termine blockieren?'),
+            'lockRegistration' => Yii::t('app', 'Registrierung sperren?'),
+            'allowGroups' => Yii::t('app', 'Gruppen erlauben?'),
+            'databaseHost' => Yii::t('app', 'Datenbankhost'),
+            'databaseName' => Yii::t('app', 'Name der Tabelle in der Datenbank'),
+            'databaseUsername' => Yii::t('app', 'Datenbankbenutzername'),
+            'databasePassword' => Yii::t('app', 'Datenbankbenutzerpasswort'),
+            'databaseManagementSystem' => Yii::t('app', 'Datenbankmanagementsystem'),
+            'logoPath' => Yii::t('app', 'Pfad des Schullogos in der Anwendung'),
+            'textHeader' => Yii::t('app', 'Headertext zwischen Anwendungslogo und Schullogo'),
+            'language' => Yii::t('app', 'Sprache'),
+            'appName' => Yii::t('app', 'Anwendungsname'),
+            'databasePort' => Yii::t('app', 'Datenbankport'),
+            'allowParentsToManageChilds' => Yii::t('app', 'Sollen Eltern die Daten über Ihre Kinder verwalten können?'),
         );
     }
 
@@ -383,19 +383,19 @@ class ConfigForm extends CFormModel {
     private function fillTable($command) {
         $command->insert('role', array(
             'id' => 0,
-            'title' => 'Administration',
+            'title' => Yii::t('app', 'Administration'),
         ));
         $command->insert('role', array(
             'id' => 1,
-            'title' => 'Verwaltung'
+            'title' => Yii::t('app', 'Verwaltung')
         ));
         $command->insert('role', array(
             'id' => 2,
-            'title' => 'Lehrer',
+            'title' => Yii::t('app', 'Lehrer'),
         ));
         $command->insert('role', array(
             'id' => 3,
-            'title' => 'Eltern'
+            'title' => Yii::t('app', 'Eltern'),
         ));
     }
 
@@ -415,12 +415,12 @@ class ConfigForm extends CFormModel {
                 $this->createIndices($command);
                 $this->fillTable($command);
             } catch (CException $e) {
-                Yii::app()->user->setFlash('failMsg', 'Die Datenbanktabellen konnten nicht angelegt werden. Entweder sind diese schon vorhanden oder es trat ein Fehler auf.');
+                Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Die Datenbanktabellen konnten nicht angelegt werden. Entweder sind diese schon vorhanden oder es trat ein Fehler auf.'));
                 Yii::log($e->getMessage(), CLogger::LEVEL_ERROR, 'application.models.configForm');
                 $rc = true;
             }
         } else {
-            $this->addError('databaseHost', 'Die Datenbankverbindung konnte nicht hergestellt werden.');
+            $this->addError('databaseHost', Yii::t('app', 'Die Datenbankverbindung konnte nicht hergestellt werden.'));
             $rc = false;
         }
 
@@ -469,7 +469,7 @@ class ConfigForm extends CFormModel {
             $connection->setActive(true);
         } catch (CException $ex) {
             Yii::log($ex->getMessage(), CLogger::LEVEL_ERROR, 'application.models.configForm');
-            Yii::app()->user->setFlash('failMsg', 'Verbindung zur Datenbank konnte nicht hergestellt werden. <br>' . $ex->getMessage());
+            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Verbindung zur Datenbank konnte nicht hergestellt werden.') . '<br>' . $ex->getMessage());
         }
         return $connection;
     }

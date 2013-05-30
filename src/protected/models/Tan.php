@@ -93,14 +93,14 @@ class Tan extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'tan' => 'TAN',
-            'used' => 'Benutzt',
-            'tan_count' => 'Anzahl',
-            'group_id' => 'Gruppe',
-            'group' => 'Gruppe',
-            'child' => 'Schüler',
-            'childFirstname' => 'Vorname',
-            'childLastname' => 'Nachname',
-            'used_by_user' => 'Erziehungsberechtigter',
+            'used' => Yii::t('app', 'Benutzt'),
+            'tan_count' => Yii::t('app', 'Anzahl'),
+            'group_id' => Yii::t('app', 'Gruppe'),
+            'group' => Yii::t('app', 'Gruppe'),
+            'child' => Yii::t('app', 'Schüler'),
+            'childFirstname' => Yii::t('app', 'Vorname'),
+            'childLastname' => Yii::t('app', 'Nachname'),
+            'used_by_user' => Yii::t('app', 'Erziehungsberechtigter'),
         );
     }
 
@@ -180,8 +180,8 @@ class Tan extends CActiveRecord {
         }
         $this->tan = $this->randNumber();
         $this->used = false;
-        if($save) {
-        $this->insert();
+        if ($save) {
+            $this->insert();
         }
     }
 

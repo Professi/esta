@@ -50,15 +50,15 @@ class Mail {
      * @param type $activationKey Aktivierungsschlüssel
      */
     public function sendChangePasswordMail($email, $activationKey) {
-        $body = "<html><head><title></title></head><body>\n";
-        $body .= "<p>Bitte klicken Sie auf folgenden Link um ein neues Passwort für Ihr Benutzerkonto zu setzen</p>\n";
-        $body .= "<p><a href=\"" . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $activationKey . "\">Link f&uuml;r die Passwortwahl</a></p>\n";
-        $body .= "<p>Sollten Sie Probleme beim Aufrufen der Aktivierung haben kopieren Sie bitte den folgenden Link in die Adressleiste ihres Browser.</p>\n";
+        $body = '<html><head><title></title></head><body>\n';
+        $body .= '<p>' . Yii::t('app', 'Bitte klicken Sie auf folgenden Link um ein neues Passwort für Ihr Benutzerkonto zu setzen.') . '</p>\n';
+        $body .= '<p><a href="' . 'http://' . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=$activationKey\">" . Yii::t('app', 'Link f&uuml;r die Passwortwahl') . '</a></p>\n';
+        $body .= '<p>' . Yii::t('app', 'Sollten Sie Probleme beim Aufrufen der Aktivierung haben kopieren Sie bitte den folgenden Link in die Adressleiste ihres Browser.') . '</p>\n';
         $body .= "<p>http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $activationKey . "</p>\n";
-        $body .= "<p>Falls Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese Nachricht.</p>\n";
+        $body .= '<p>' . Yii::t('app', 'Falls Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese Nachricht.') . '</p>\n';
         $this->addInfo($body);
         $body .= "</body></html>\n";
-        $this->send("Ihre Passwortzurücksetzung bei der " . Yii::app()->name, $body, $email);
+        $this->send(Yii::t('app', 'Ihre Passwortzurücksetzung bei der ') . Yii::app()->name, $body, $email);
     }
 
     /**
@@ -105,7 +105,7 @@ class Mail {
      * @param string $email
      * @param string $password
      * @param boolean $isTeacher
-          * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function sendRandomUserPassword($email, $password, $isTeacher = true) {
         $body = "<html><head><title></title></head>";
@@ -133,13 +133,12 @@ class Mail {
         $body .= "<p>(Dies ist eine automatisch versendete E-Mail. Bitte antworten Sie nicht auf diese Nachricht, da die E-Mail-Adresse nur zum Versenden, nicht aber zum Empfang von E-Mails eingerichtet ist.)</p>";
     }
 
-    
     /**
      * sends mail
      * @param string $subject
      * @param string $body
      * @param string $email
-          * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     private function send($subject, &$body, $email) {
         Yii::trace($body, 'application.components.mail');

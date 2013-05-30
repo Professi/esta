@@ -76,8 +76,8 @@ class Child extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'firstname' => 'Vorname',
-            'lastname' => 'Nachname',
+            'firstname' => Yii::t('app', 'Vorname'),
+            'lastname' => Yii::t('app', 'Nachname'),
         );
     }
 

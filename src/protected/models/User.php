@@ -173,22 +173,22 @@ class User extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'username' => 'Benutzername',
-            'password' => 'Passwort',
-            'password_repeat' => 'Passwort wiederholen',
-            'firstname' => 'Vorname',
-            'state' => 'Status',
-            'stateName' => 'Status',
-            'lastname' => 'Nachname',
-            'email' => 'E-Mail',
-            'createtime' => 'Registrierungsdatum',
-            'role' => 'Rolle',
-            'roleName' => 'Rolle',
-            'verifyCode' => 'Sicherheitscode',
-            'title' => 'Titel',
-            'groups' => 'Gruppen',
-            'badLogins' => 'Ungültige Anmeldeversuche',
-            'userrole' => 'Benutzerrolle',
+            'username' => Yii::t('app', 'Benutzername'),
+            'password' => Yii::t('app', 'Passwort'),
+            'password_repeat' => Yii::t('app', 'Passwort wiederholen'),
+            'firstname' => Yii::t('app', 'Vorname'),
+            'state' => Yii::t('app', 'Status'),
+            'stateName' => Yii::t('app', 'Status'),
+            'lastname' => Yii::t('app', 'Nachname'),
+            'email' => Yii::t('app', 'E-Mail'),
+            'createtime' => Yii::t('app', 'Registrierungsdatum'),
+            'role' => Yii::t('app', 'Rolle'),
+            'roleName' => Yii::t('app', 'Rolle'),
+            'verifyCode' => Yii::t('app', 'Sicherheitscode'),
+            'title' => Yii::t('app', 'Titel'),
+            'groups' => Yii::t('app', 'Gruppen'),
+            'badLogins' => Yii::t('app', 'Ungültige Anmeldeversuche'),
+            'userrole' => Yii::t('app', 'Benutzerrolle'),
         );
     }
 
@@ -396,7 +396,7 @@ class User extends CActiveRecord {
         if (!$userrole->save()) {
             $this->delete();
             $rc = false;
-            $this->addError('role', 'Rolle konnte nicht erstellt werden. Benutzer wird präventiv gelöscht');
+            $this->addError('role', Yii::t('app', 'Rolle konnte nicht erstellt werden. Benutzer wird präventiv gelöscht'));
         }
         return $rc;
     }
@@ -536,14 +536,14 @@ class User extends CActiveRecord {
     public function getStateName($state = null) {
         switch ($state) {
             case 0:
-                $stateName = 'Nicht aktiv';
+                $stateName = Yii::t('app', 'Nicht aktiv');
 
                 break;
             case 1:
-                $stateName = 'Aktiv';
+                $stateName = Yii::t('app', 'Aktiv');
                 break;
             case 2:
-                $stateName = 'Gesperrt';
+                $stateName = Yii::t('app', 'Gesperrt');
                 break;
             default:
                 $stateName = $this->state;
@@ -570,7 +570,7 @@ class User extends CActiveRecord {
      * @return array
      */
     public static function getStateNameAndValue() {
-        return array(array('value' => '0', 'name' => 'Nicht aktiv'), array('value' => '1', 'name' => 'Aktiv'), array('value' => '2', 'name' => 'Gesperrt'));
+        return array(array('value' => '0', 'name' => Yii::t('app', 'Nicht aktiv')), array('value' => '1', 'name' => Yii::t('app', 'Aktiv')), array('value' => '2', 'name' => Yii::t('app', 'Gesperrt')));
     }
 
     /**
@@ -632,7 +632,7 @@ class User extends CActiveRecord {
         $rc = parent::validate($attributes, $clearErrors);
         $params['{attribute}'] = $this->getAttributeLabel('password');
         if ($this->getError('password') == Yii::t('yii', '{attribute} must be repeated exactly.', $params)) {
-            $this->addError('password_repeat', "Passwörter stimmen nicht überein.");
+            $this->addError('password_repeat', Yii::t('app', 'Passwörter stimmen nicht überein.'));
         }
         if (($rc && Yii::app()->user->isGuest && $this->isNewRecord && Yii::app()->params['installed'])) {
             $rc = $this->addWithTanNewGroup($this->tan);
@@ -651,7 +651,7 @@ class User extends CActiveRecord {
         $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
         if ($tan !== null) {
             if ($tan->used) {
-                $errorMsg = 'Leider wurde Ihre TAN schon benutzt.';
+                $errorMsg = Yii::t('app', 'Leider wurde Ihre TAN schon benutzt.');
                 $rc = false;
             } else {
                 if (Yii::app()->params['allowGroups'] && $tan->group != null && is_int($tan->group_id)) {
@@ -664,7 +664,7 @@ class User extends CActiveRecord {
             }
         } else {
             if ((Yii::app()->params['installed'] && Yii::app()->user->isGuest()) || !Yii::app()->params['installed']) {
-                $errorMsg = 'Leider konnte die eingegebene TAN nicht identifiziert werden.';
+                $errorMsg = Yii::t('app', 'Leider konnte die eingegebene TAN nicht identifiziert werden.');
                 $rc = false;
             }
         }
@@ -687,7 +687,7 @@ class User extends CActiveRecord {
                 if (Yii::app()->user->hasFlash('success')) {
                     $flash = Yii::app()->user->getFlash('success') . "<br>";
                 }
-                Yii::app()->user->setFlash('success', 'Schüler hinzugefügt.' . $flash);
+                Yii::app()->user->setFlash('success', Yii::t('app', 'Schüler hinzugefügt.') . $flash);
             }
         }
     }
@@ -702,10 +702,10 @@ class User extends CActiveRecord {
         $errorMsg = '';
         if (!UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $tan->group_id)) > '0') {
             $this->createUserHasGroup($tan->group_id);
-            Yii::app()->user->setFlash('success', 'Sie wurden erfolgreich der Gruppe hinzugefügt.');
+            Yii::app()->user->setFlash('success', Yii::t('app', 'Sie wurden erfolgreich der Gruppe hinzugefügt.'));
             Yii::app()->user->setGroups($this->groups);
         } else {
-            $errorMsg = 'Sie wurden bereits der Gruppe die bei dieser TAN hinterlegt ist, zugewiesen.';
+            $errorMsg = Yii::t('app', 'Sie wurden bereits der Gruppe die bei dieser TAN hinterlegt ist, zugewiesen.');
         }
         return $errorMsg;
     }
@@ -785,11 +785,11 @@ class User extends CActiveRecord {
     public function getRolePermission() {
         $rc = null;
         if (Yii::app()->user->checkAccess('0')) {
-            $rc = array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung', '0' => 'Administrator');
+            $rc = array('3' => Yii::t('app', 'Eltern'), '2' => Yii::t('app', 'Lehrer'), '1' => Yii::t('app', 'Verwaltung'), '0' => Yii::t('app', 'Administrator'));
         } else if (Yii::app()->user->checkAccessNotAdmin('1') && $this->id == Yii::app()->user->getId()) {
-            $rc = array('3' => 'Eltern', '2' => 'Lehrer', '1' => 'Verwaltung');
+            $rc = array('3' => Yii::t('app', 'Eltern'), '2' => Yii::t('app', 'Lehrer'), '1' => Yii::t('app', 'Verwaltung'));
         } else {
-            $rc = array('3' => 'Eltern', '2' => 'Lehrer');
+            $rc = array('3' => Yii::t('app', 'Eltern'), '2' => Yii::t('app', 'Lehrer'));
         }
         return $rc;
     }

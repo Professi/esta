@@ -95,14 +95,13 @@ class BlockedAppointment extends CActiveRecord {
         $rc = false;
         if (parent::validate($attributes, $clearErrors)) {
             if (UserRole::model()->countByAttributes(array('user_id' => $this->user_id, 'role_id' => 2)) < 1) {
-                $this->addError('user_id', 'Kein Lehrer.');
+                $this->addError('user_id', Yii::t('app', 'Kein Lehrer.'));
             } else if (Yii::app()->params['allowBlockingAppointments']) {
                 if (BlockedAppointment::model()->count($this->countUsedDateAndTimes()) >=
                         Yii::app()->params['appointmentBlocksPerDate'] && Yii::app()->checkAccessNotAdmin('2')) {
-                    $this->addError('dateAndTime_id', 'Zuviele Termine berereits geblockt. Maximum liegt bei '
-                            . Yii::app()->params['appointmentBlocksPerDate'] . ' pro Elternsprechtag.');
+                    $this->addError('dateAndTime_id', Yii::t('app', 'Zuviele Termine berereits geblockt. Maximum liegt bei {appBlockPerDate} pro Elternsprechtag.', array('{appBlockPerDate}' => Yii::app()->params['appointmentBlocksPerDate'])));
                 } else if (Yii::app()->user->checkAccessNotAdmin('2') && Yii::app()->params['allowBlockingOnlyForManagement']) {
-                    Yii::app()->user->setFlash('failMsg', 'Nur die Verwaltung kann Termine blockieren.');
+                    Yii::app()->user->setFlash('failMsg', Yii::t('app','Nur die Verwaltung kann Termine blockieren.'));
                 } else {
                     $rc = true;
                 }
@@ -149,9 +148,9 @@ class BlockedAppointment extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'user_id' => 'Lehrer',
-            'dateAndTime_id' => 'Termin',
-            'reason' => 'Grund',
+            'user_id' => Yii::t('app','Lehrer'),
+            'dateAndTime_id' => Yii::t('app','Termin'),
+            'reason' => Yii::t('app','Grund'),
         );
     }
 

@@ -81,8 +81,8 @@ class DateAndTime extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'time' => 'Zeit',
-            'date_id' => 'Datum',
+            'time' => Yii::t('app','Zeit'),
+            'date_id' => Yii::t('app','Datum'),
         );
     }
 

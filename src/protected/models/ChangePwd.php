@@ -44,8 +44,8 @@ class ChangePwd extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'verifyCode' => 'Sicherheitscode',
-            'email' => 'E-Mail',
+            'verifyCode' => Yii::t('app', 'Sicherheitscode'),
+            'email' => Yii::t('app', 'E-Mail'),
         );
     }
 

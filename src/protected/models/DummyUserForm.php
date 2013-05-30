@@ -40,11 +40,11 @@ class DummyUserForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'username' => 'Benutzername',
-            'firstname' => 'Vorname',
-            'lastname' => 'Nachname',
-            'state' => 'Status',
-            'role' => 'Rolle',
+            'username' => Yii::t('app', 'Benutzername'),
+            'firstname' => Yii::t('app', 'Vorname'),
+            'lastname' => Yii::t('app', 'Nachname'),
+            'state' => Yii::t('app', 'Status'),
+            'role' => Yii::t('app', 'Rolle'),
         );
     }
 
@@ -73,7 +73,7 @@ class DummyUserForm extends CFormModel {
         }
         $user->username = $this->username;
         if ($user->insert()) {
-            Yii::app()->user->setFlash('success', 'Benutzer erstellt.');
+            Yii::app()->user->setFlash('success', Yii::t('app', 'Benutzer erstellt.'));
         }
     }
 

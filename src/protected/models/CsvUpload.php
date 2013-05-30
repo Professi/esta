@@ -42,8 +42,8 @@ class CsvUpload extends CFormModel {
      */
     public function rules() {
         return array(array('file', 'file', 'types' => 'csv', 'maxSize' => 5242880,
-                'allowEmpty' => true, 'wrongType' => 'Nur CSV Dateien erlaubt.',
-                'tooLarge' => 'Datei ist zu groß. Die Begrenzung liegt bei 5 MB.'));
+                'allowEmpty' => true, 'wrongType' => Yii::t('app', 'Nur CSV Dateien erlaubt.'),
+                'tooLarge' => Yii::t('app', 'Datei ist zu groß. Die Begrenzung liegt bei 5 MB.')));
     }
 
     /**
@@ -51,7 +51,7 @@ class CsvUpload extends CFormModel {
      * @return array Labels
      */
     public function attributeLabels() {
-        return array('file' => 'CSV Datei hochladen');
+        return array('file' => Yii::t('app', 'CSV Datei hochladen'));
     }
 
     /**
@@ -67,7 +67,7 @@ class CsvUpload extends CFormModel {
         $rc = true;
         $stdPassword = "";
         do {
-            if (!$first && ($line[0] != "Vorname" && !$line[1] != "Nachname" && $line[2] != 'Email')) {
+            if (!$first && ($line[0] != Yii::t('app', 'Vorname') && !$line[1] != Yii::t('app', 'Nachname') && $line[2] != 'Email')) {
                 if ($line[2] != NULL) {
                     $email = self::encodingString($line[2]);
                 } else {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ContactForm ist die Datenstruktur um Kontaktformdaten zu behalten. 
  */
@@ -46,7 +47,7 @@ class ContactForm extends CFormModel {
             array('name, email, subject, body', 'required'),
             // email has to be a valid email address
             array('email', 'email'),
-            array('name,email,subject,body,email','length','max'=>255),
+            array('name,email,subject,body,email', 'length', 'max' => 255),
             // verifyCode needs to be entered correctly
             array('verifyCode', 'captcha', 'allowEmpty' => !CCaptcha::checkRequirements()),
         );
@@ -59,11 +60,11 @@ class ContactForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'verifyCode' => 'Sicherheitscode',
-            'name' => 'Name',
-            'email' => 'E-Mail',
-            'subject' => 'Betreff',
-            'body' => 'Ihre Nachricht',
+            'verifyCode' => Yii::t('app', 'Sicherheitscode'),
+            'name' => Yii::t('app', 'Name'),
+            'email' => Yii::t('app', 'E-Mail'),
+            'subject' => Yii::t('app', 'Betreff'),
+            'body' => Yii::t('app', 'Ihre Nachricht'),
         );
     }
 

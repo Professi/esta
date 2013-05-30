@@ -86,13 +86,13 @@ class Date extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'date' => 'Datum',
-            'begin' => 'Anfang',
-            'end' => 'Ende',
-            'durationPerAppointment' => 'Dauer eines Termins',
-            'lockAt' => 'Letzte Buchung',
-            'groups' => 'Gruppen',
-            'title' => 'Titel'
+            'date' => Yii::t('app', 'Datum'),
+            'begin' => Yii::t('app', 'Anfang'),
+            'end' => Yii::t('app', 'Ende'),
+            'durationPerAppointment' => Yii::t('app', 'Dauer eines Termins'),
+            'lockAt' => Yii::t('app', 'Letzte Buchung'),
+            'groups' => Yii::t('app', 'Gruppen'),
+            'title' => Yii::t('app', 'Titel'),
         );
     }
 
@@ -120,22 +120,21 @@ class Date extends CActiveRecord {
      */
     public function validate($attributes = NULL, $clearErrors = true) {
         $rc = true;
-        Yii::trace('Aktuelle Zeit: ' . time(), 'application.models.date');
-        Yii::trace('Eingegebenes Datum: ' . strtotime($this->date), 'application.models.date');
+        Yii::trace(Yii::t('app', 'Aktuelle Zeit: ') . time(), 'application.models.date');
+        Yii::trace(Yii::t('app', 'Eingegebenes Datum: ') . strtotime($this->date), 'application.models.date');
         if (parent::validate($attributes, $clearErrors)) {
-            Yii::trace('Created by User:' . Yii::app()->user->getId(), 'application.models.date');
             if (strtotime($this->end) <= strtotime($this->begin)) {
                 $rc = false;
-                $this->addError('end', 'Das Ende darf nicht vor dem Beginn liegen.');
+                $this->addError('end', Yii::t('app', 'Das Ende darf nicht vor dem Beginn liegen.'));
             } else if (time() >= strtotime($this->date)) {
                 $rc = false;
-                $this->addError('date', 'Datum liegt in der Vergangenheit');
+                $this->addError('date', Yii::t('app', 'Datum liegt in der Vergangenheit'));
             } else if (!is_int((strtotime($this->end) - strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
                 $rc = false;
-                $this->addError('durationPerAppointment', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.');
+                $this->addError('durationPerAppointment', Yii::t('app', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.'));
             } else if (strtotime($this->date . $this->begin) < strtotime($this->lockAt)) {
                 $rc = false;
-                $this->addError('lockAt', 'Die Sperrfrist muss vor oder auf dem Anfang liegen.');
+                $this->addError('lockAt', Yii::t('app', 'Die Sperrfrist muss vor oder auf dem Anfang liegen.'));
             }
         } else {
             $rc = false;
