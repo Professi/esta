@@ -37,7 +37,7 @@ if (Yii::app()->user->checkAccess('1')) {
                 'options' => array(
                     'minLength' => '1',
                 ),
-                'htmlOptions' => array(
+                'htmlOptions' => array( 'disabled' => $parent_disabled,
                 ),
             ));
             echo $form->error($model, 'user_id');

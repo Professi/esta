@@ -26,7 +26,6 @@ $this->breadcrumbs = array(
 );
 $this->menu = array(
     array('label' => 'Eltern-Kind-Verknüpfung anlegen', 'url' => array('create')),
-    array('label' => 'Eltern-Kind-Verknüpfung anzeigen', 'url' => array('view', 'id' => $model->id)),
     array('label' => 'Eltern-Kind-Verknüpfungen verwalten', 'url' => array('admin')),
 );
 ?>
@@ -34,7 +33,7 @@ $this->menu = array(
     <div class="twelve columns centered">
         <fieldset>
             <legend>Eltern-Kind-Verkn&uuml;pfung Nummer <?php echo $model->getPrimaryKey(); ?> bearbeiten</legend>
-            <?php echo $this->renderPartial('_form', array('model' => $model)); ?>
+            <?php echo $this->renderPartial('_form', array('model' => $model,'userNameString'=>$userNameString,'parent_disabled' => true)); ?>
         </fieldset>
     </div>
 </div>

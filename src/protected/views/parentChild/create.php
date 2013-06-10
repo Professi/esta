@@ -40,6 +40,7 @@ $this->menu = array(
             echo $this->renderPartial('_form', array(
                 'model' => $model,
                 'userNameString' => $userNameString,
+                'parent_disabled' => false,
             ));
             ?>
         </fieldset>

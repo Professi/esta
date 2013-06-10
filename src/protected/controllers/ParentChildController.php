@@ -134,6 +134,33 @@ class ParentChildController extends Controller {
             $this->redirect(array('index'));
         }
     }
+    
+    public function actionUpdate($id) {
+        $model = $this->loadModel($id);
+        $tempParent = User::model()->findByPk($model->attributes['user_id']);
+        $tempChild = Child::model()->findByPk($model->attributes['child_id']);
+        $model->childFirstName = $tempChild->firstname;
+        $model->childLastName = $tempChild->lastname;
+        $userNameString = $tempParent->firstname." ".$tempParent->lastname;
+        if (isset($_POST['ParentChild'])) {
+            $this->setPostAttribute($model);
+            $tempChild->firstname = $model->childFirstName;
+            $tempChild->lastname = $model->childLastName;
+            if ($model->save() && $tempChild->save()) {
+                $this->redirect(array('admin', 'id' => $model->id));
+            }
+        }
+        $this->render('update', array('model'=>$model,'userNameString'=>$userNameString));
+        
+    }
+    
+    
+    private function setPostAttribute(&$model) {
+        if (!Yii::app()->params['allowParentsToManageChilds'] && isset($_POST['ParentChild'])) {
+            $model->childFirstName = $_POST['ParentChild']['childFirstName'];
+            $model->childLastName = $_POST['ParentChild']['childLastName'];
+        }
+    }
 
     /**
      * Manages all models.

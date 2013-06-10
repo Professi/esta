@@ -44,7 +44,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'child_id', 'value' => '$data->child->firstname." ".$data->child->lastname'),
         array(
             'class' => 'CustomButtonColumn',
-            'template' => '{delete}',
+            'template' => '{update} {delete}',
         ),
     ),
 ));
