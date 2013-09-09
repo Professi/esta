@@ -219,7 +219,7 @@ $this->registerAdminScripts(true);
                         <span class="prefix infofeld"><?php echo $form->label($model, 'pepper', array('class' => 'infolabel')); ?></span>
                         <div class="infotext">
                             <span aria-hidden="true" data-icon="&#xe012;"></span>
-                            Bei der Generierung eines Passwortes wird dieser Salt verwendet.
+                            Bei der Generierung eines Passwortes wird dieser Pepper verwendet.
                         </div>
                     </div>
                     <div class="four columns">
