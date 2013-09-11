@@ -119,6 +119,9 @@ class BlockedAppointment extends CActiveRecord {
         $criteria = new CDbCriteria;
         $criteria->with = array('user', 'dateandtime');
         $criteria->together = true;
+        if (Yii::app()->user->checkAccessNotAdmin('2')) {
+            $criteria->compare('user_id', Yii::app()->user->id);
+        }
         $criteria->compare('id', $this->id);
         $criteria->compare('reason', $this->reason, true);
         $criteria->compare('dateAndTime.time', $this->dateAndTime_id, true);
