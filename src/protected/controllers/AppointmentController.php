@@ -70,7 +70,7 @@ class AppointmentController extends Controller {
      * @return string 
      */
     private function teacherLabel(&$user) {
-        return $user->title . " " . $user->firstname . " " . $user->lastname;
+        return $user->title  . " " . $user->firstname . " " . $user->lastname;
     }
 
     /**
@@ -108,7 +108,7 @@ class AppointmentController extends Controller {
             if (isset($_POST['BlockedAppointment'])) {
                 $model->setAttributes($_POST['BlockedAppointment']);
                 if (!empty($model->attributes['user_id'])) {
-                    $teacherLabel = $this->teacherLabel($model);
+                    $teacherLabel = $this->teacherLabel(User::model()->findByPk($model->attributes['user_id']));
                 }
                 if ($model->save()) {
                     Yii::app()->user->setFlash('success', 'Termin erfolgreich geblockt.');

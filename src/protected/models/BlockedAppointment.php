@@ -67,7 +67,7 @@ class BlockedAppointment extends CActiveRecord {
         $crit = new CDbCriteria();
         $crit->with = array('dateandtime');
         $crit->addCondition('user_id=:user_id', 'AND');
-        $crit->addCondition('dateAndTime.date_id=:date_id', 'AND');
+        $crit->addCondition('dateandtime.date_id=:date_id', 'AND');
         $crit->params = array(':user_id' => $this->user_id, ':date_id' => $this->dateandtime->date_id);
 
         return $crit;
