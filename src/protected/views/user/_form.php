@@ -158,7 +158,6 @@ $form = $this->beginWidget('CActiveForm', array(
         }
     }
 }
-if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) {
     ?>
     <div class="row collapse">
         <div class="three columns">
@@ -171,6 +170,7 @@ if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) {
             ?>
         </div>
     </div>
+<? if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) { ?>
     <div class="row ">
         <div class="three columns"></div>
         <div class="nine columns">
