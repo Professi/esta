@@ -128,13 +128,13 @@ class BlockedAppointment extends CActiveRecord {
         $criteria->compare('user.lastname', $this->user_id, true);
         $sort = new CSort;
         $sort->attributes = array(
-            'defaultOrder' => 'dateAndTime.id DESC',
+            'defaultOrder' => 'dateandtime.id DESC',
             'dateAndTime_id' => array(
-                'asc' => 'dateAndTime.id',
-                'desc' => 'dateAndTime.id desc'),
+                'asc' => 'dateandtime.id',
+                'desc' => 'dateandtime.id desc'),
             'user_id' => array(
-                'asc' => 'user.id',
-                'desc' => 'user.id desc'),
+                'asc' => 'user.lastname',
+                'desc' => 'user.lastname desc'),
             'reason' => array(
                 'asc' => 'reason',
                 'desc' => 'reason desc'),

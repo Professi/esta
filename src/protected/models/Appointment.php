@@ -110,7 +110,7 @@ class Appointment extends CActiveRecord {
      */
     public function search() {
         $criteria = new CDbCriteria;
-        $criteria->with = array('user', 'parentchild', 'dateandtime');
+        $criteria->with = array('parentchild'=>array('with'=>array('user'=>array('alias'=>'pc_user','select'=>array('id','firstname','lastname')))), 'dateandtime','user'=>array('select'=>array('id','firstname','lastname')));
         $criteria->together = true;
         if ($this->parent_child_id != '') {
             $criteria->compare('parentchild.user_id', ParentChild::model()->searchParentID($this->parent_child_id), true);
@@ -122,7 +122,7 @@ class Appointment extends CActiveRecord {
         $criteria->compare('user.lastname', $this->user_id, true);
         $sort = new CSort;
         $sort->attributes = array(
-            'defaultOrder' => 'dateandtime.id DESC',
+            'defaultOrder' => 'dateandtime.id',
             'dateAndTime_id' => array(
                 'asc' => 'dateandtime.id',
                 'desc' => 'dateandtime.id desc'),
@@ -130,9 +130,10 @@ class Appointment extends CActiveRecord {
                 'asc' => 'user.lastname',
                 'desc' => 'user.lastname desc'),
             'parent_child_id' => array(
-                'asc' => 'parentchild.user_id',
-                'desc' => 'parentchild.user_id desc'),
+                'asc' => 'pc_user.lastname',
+                'desc' => 'pc_user.lastname desc'),
         );
+       
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'sort' => $sort,
