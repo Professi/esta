@@ -110,7 +110,7 @@ class Appointment extends CActiveRecord {
      */
     public function search() {
         $criteria = new CDbCriteria;
-        $criteria->with = array('parentchild'=>array('with'=>array('user'=>array('alias'=>'pc_user','select'=>array('id','firstname','lastname')))), 'dateandtime','user'=>array('select'=>array('id','firstname','lastname')));
+        $criteria->with = array('parentchild' => array('with' => array('user' => array('alias' => 'pc_user', 'select' => array('id', 'firstname', 'lastname')))), 'dateandtime', 'user' => array('select' => array('id', 'firstname', 'lastname')));
         $criteria->together = true;
         if ($this->parent_child_id != '') {
             $criteria->compare('parentchild.user_id', ParentChild::model()->searchParentID($this->parent_child_id), true);
@@ -133,7 +133,7 @@ class Appointment extends CActiveRecord {
                 'asc' => 'pc_user.lastname',
                 'desc' => 'pc_user.lastname desc'),
         );
-       
+
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'sort' => $sort,
@@ -237,7 +237,7 @@ class Appointment extends CActiveRecord {
             $rc = false;
             Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie können nur einen Termin bei diesem Lehrer pro Kind buchen.'));
         }
-        if ($rc && Appointment::model()->countByAttributes(array('parent_child_id' => $this->parent_child_id, 'dateAndTime_id' => $this->dateAndTime_id)) > 0) {
+        if ($rc && Appointment::model()->count($this->getCriteriaForAppCount()) > 0) {
             $rc = false;
             if (Yii::app()->user->checkAccess('1')) {
                 $this->addError('dateAndTime_id', Yii::t('app', 'Dieser Benutzer hat bereits einen Termin zu dieser Uhrzeit.'));
@@ -247,10 +247,18 @@ class Appointment extends CActiveRecord {
         }
         if ($rc) {
             Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Termin wurde erfolgreich gebucht.'));
+        } else if (!$rc && !Yii::app()->user->hasFlash('failMsg')) {
+            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Leider konnte ihr Termin nicht gebucht werden.'));
         }
-
-
         return $rc;
+    }
+
+    private function getCriteriaForAppCount() {
+        $crit = new CDbCriteria();
+        $crit->with = array('parentchild');
+        $crit->compare('parentchild.user_id', $this->parentchild->user->id);
+        $crit->compare('dateAndTime_id', $this->dateAndTime_id);
+        return $crit;
     }
 
     /**
