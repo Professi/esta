@@ -46,7 +46,7 @@ $this->registerAdminScripts(true);
                         Bitte führen Sie auf dieser Seite keine Änderungen durch, wenn Sie sich nicht absolut sicher sind.
                         <br> Die Änderungen haben Auswirkungen auf alle Benutzer im System und können sich negativ auf die Funktionalität der Software auswirken.
                     <?php } else { ?>
-                        Bitte passen Sie die nachfolgenden Felder entsprechend Ihrer Bed&uuml;fnisse an. Wenn die Anwendung erfolgreich konfiguriert wurde, können Sie sich mit dem Benutzernamen "admin" und dem Passwort "admin" einloggen. Dies erkennen Sie daran, wenn Sie das nachfolgende Formular absenden und Sie keine Meldung erhalten. Anschließend sollten Sie unbedingt Ihre Kontodaten verändern.
+                        Bitte passen Sie die nachfolgenden Felder entsprechend Ihrer Bed&uuml;fnisse an. Falls Sie korrekte Daten eingetragen haben, wird nach der ersten Betätigung des "Speichern" Buttons die Datenbanktabellen angelegt. Nach der zweiten Betätigung des Buttons wird das "admin" Konto angelegt. Wenn die Anwendung erfolgreich konfiguriert wurde, können Sie sich mit dem Benutzernamen "admin" und dem Passwort "admin" einloggen. Dies erkennen Sie daran, wenn Sie das nachfolgende Formular absenden und Sie keine Meldung erhalten. Anschließend sollten Sie unbedingt Ihre Kontodaten verändern.
                     <?php } ?>
                 </div>
             </div>
@@ -506,17 +506,6 @@ $this->registerAdminScripts(true);
                     ?>
                 </div>
             </div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'virtualHost'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'virtualHost', $optionsMails);
-                    echo $form->error($model, 'virtualHost');
-                    ?>
-                </div>
-            </div>
         </fieldset>
         <fieldset>
             <legend>Anti-Spam</legend>
@@ -575,6 +564,17 @@ $this->registerAdminScripts(true);
                     <?php
                     echo Select2::activeDropDownList($model, 'allowBlockingOnlyForManagement', array('1' => 'Ja', '0' => 'Nein'), array($optionsBlocks, 'select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowBlockingOnlyForManagement');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'teacherAllowBlockTeacherApps'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo Select2::activeDropDownList($model, 'teacherAllowBlockTeacherApps', array('1' => 'Ja', '0' => 'Nein'), array($optionsBlocks, 'select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo $form->error($model, 'teacherAllowBlockTeacherApps');
                     ?>
                 </div>
             </div>

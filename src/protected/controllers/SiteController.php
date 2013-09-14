@@ -80,6 +80,7 @@ class SiteController extends Controller {
             if (file_put_contents($file, base64_encode(serialize($model->attributes)))) {
                 if ($createAdminUser) {
                     if ($model->tables()) {
+                        try{
                         $user = new User();
                         $user->setSomeAttributes('admin', 'admin', 'admin', 1, 0);
                         $user->password = "admin";
@@ -93,7 +94,10 @@ class SiteController extends Controller {
                         Yii::app()->user->setFlash('success', $msg);
                         file_put_contents($file, base64_encode(serialize($model->attributes)));
                         $this->redirect(array('site/index'));
-                    }
+                        } catch(CDbException $e) {
+                            $e->getMessage();
+                        }
+                        }
                 } else {
                     Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert. Die Einstellungen werden bei dem nächsten Seitenaufruf verwendet.');
                 }

@@ -28,7 +28,6 @@ $array2 = array(
     'fromMail' => 'ESTA-BWS', //Der Absendername bsp. BWS-Hofhei,
     'teacherMail' => 'bws-hofheim.de',
     'schoolName' => 'Brühlwiesenschule Hofheim',
-    'virtualHost' => '/~est/est_trunk/', //unbedingt anpassen damit E-Mails mit korrektem Aktivierungslink versendet werden können
     'mailsActivated' => true, //ob Mails versendet werden solen
     'maxChild' => 3, //Maximal Anzahl von eintragbaren Kindern pro Benutzer mit Elternrolle
     'tanSize' => 6, //Länge der Tans

@@ -52,9 +52,9 @@ class Mail {
     public function sendChangePasswordMail($email, $activationKey) {
         $body = '<html><head><title></title></head><body>\n';
         $body .= '<p>' . Yii::t('app', 'Bitte klicken Sie auf folgenden Link um ein neues Passwort für Ihr Benutzerkonto zu setzen.') . '</p>\n';
-        $body .= '<p><a href="' . 'http://' . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=$activationKey\">" . Yii::t('app', 'Link f&uuml;r die Passwortwahl') . '</a></p>\n';
+        $body .= '<p><a href="' . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=$activationKey\">" . Yii::t('app', 'Link f&uuml;r die Passwortwahl') . '</a></p>\n';
         $body .= '<p>' . Yii::t('app', 'Sollten Sie Probleme beim Aufrufen der Aktivierung haben kopieren Sie bitte den folgenden Link in die Adressleiste ihres Browser.') . '</p>\n';
-        $body .= "<p>http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $activationKey . "</p>\n";
+        $body .= "<p>" . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=" . $activationKey . "</p>\n";
         $body .= '<p>' . Yii::t('app', 'Falls Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese Nachricht.') . '</p>\n';
         $this->addInfo($body);
         $body .= "</body></html>\n";
@@ -72,12 +72,16 @@ class Mail {
         $body .= "<body><p>Vielen Dank f&uuml;r Ihre Registrierung bei der " . Yii::app()->name . ".</p>";
         $body .= "<p>Ihr Benutzername lautet:" . $email . "</p>";
         $body .= "<p>Um Ihre Registrierung abzuschlie&szlig;en und die Anwendung in Anspruch nehmen zu k&ouml;nnen klicken Sie bitte auf den folgenden Link.</p>";
-        $body .= "<p><a href=\"" . "http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/activate&activationKey=" . $activationKey . "\">Link f&uuml;r die Aktivierung</a></p>";
+        $body .= "<p><a href=\"" . $this->getScriptUrl() . "?r=/User/activate&activationKey=" . $activationKey . "\">Link f&uuml;r die Aktivierung</a></p>";
         $body .= "<p>Sollten Sie Probleme beim Aufrufen der Aktivierung haben kopieren Sie bitte den folgenden Link in die Adressleiste ihres Browser.</p>";
-        $body .= "<p>http://" . $_SERVER["HTTP_HOST"] . Yii::app()->params['virtualHost'] . "/index.php?r=/User/NewPw&activationKey=" . $activationKey . "</p>";
+        $body .= "<p>" . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=" . $activationKey . "</p>";
         $this->addInfo($body);
         $body .= "</body></html>";
         $this->send("Ihre Registrierung bei der " . Yii::app()->name, $body, $email);
+    }
+
+    private function getScriptUrl() {
+        return Yii::app()->getBaseUrl(true) . '/index.php';
     }
 
     /**
