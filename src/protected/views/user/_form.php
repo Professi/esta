@@ -158,7 +158,8 @@ $form = $this->beginWidget('CActiveForm', array(
         }
     }
 }
-    if(Yii::app()->user->isGuest) {?>
+if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) {
+    ?>
     <div class="row collapse">
         <div class="three columns">
             <span class="prefix"><?php echo $form->label($model, 'tan'); ?></span>
@@ -170,7 +171,6 @@ $form = $this->beginWidget('CActiveForm', array(
             ?>
         </div>
     </div>
-<? } if (CCaptcha::checkRequirements()) { ?>
     <div class="row ">
         <div class="three columns"></div>
         <div class="nine columns">
