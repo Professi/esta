@@ -101,7 +101,7 @@ return array(
                     'enabled' => YII_DEBUG,
                 ),
                 array('class' => 'CFileLogRoute',
-                    'levels' => 'error,warning',),
+                    'levels' => 'error,warning,info',),
                 array('class' => 'CProfileLogRoute',
                     'report' => 'summary',
                     'enabled' => YII_DEBUG,
