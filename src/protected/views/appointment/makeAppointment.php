@@ -57,6 +57,11 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                     </div>
                 <?php } ?>
             </div>
+        <div class="panel text-center" style="margin-top:-3em;">
+            Keinen passenden Termin gefunden? Kontaktieren Sie 
+                <?php echo $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname; ?>
+            per <a href="mailto:<?php echo $model->user->email; ?>"><span aria-hidden="true" data-icon="&#xe017;"></span>&nbsp;E-Mail</a>
+        </div>
             <?php $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'appointment-form',)); ?>
             <fieldset>

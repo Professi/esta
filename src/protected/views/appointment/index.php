@@ -33,6 +33,15 @@ $this->menu = array(
         <h2 class="subheader">Ihre Termine</h2>
         <hr>
         <?php
+        if ($no_children) { ?>
+        <div class="panel">
+            <p>Sie haben noch keine Kinder angelegt. Ohne Kinder können keine Termine vereinbart werden.
+                <br>
+                Klicken Sie <?php echo CHtml::link('hier', 'index.php?r=parentChild/create'); ?> um Kinder anzulegen.                
+            </p>
+        </div>
+        <?php    
+        }
         $this->widget('zii.widgets.CListView', array(
             'dataProvider' => $dataProvider,
             'summaryText' => '',

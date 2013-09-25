@@ -21,6 +21,7 @@
 /* @var $model BlockedAppointment */
 /* @var $form CActiveForm */
 $this->setPageTitle('Termin blockieren');
+Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 ?>
 <?php
 $this->breadcrumbs = array(

@@ -345,8 +345,12 @@ class AppointmentController extends Controller {
                 ));
             }
         } else if (Yii::app()->user->checkAccessNotAdmin('3')) {
+            $no_children = count(ParentChild::model()->findAllByAttributes(
+                    array('user_id' => Yii::app()->user->getId())
+                    )) == 0 ? true : false;
             $this->render('index', array(
                 'dataProvider' => Appointment::getAllAppointments(),
+                'no_children' => $no_children,
             ));
         } else {
             $this->throwFourNullThree();
