@@ -20,6 +20,7 @@
 /* @var $this AppointmentController */
 /* @var $model Appointment */
 $this->setPageTitle('Termin anlegen');
+Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 $this->breadcrumbs = array(
     'Appointments' => array('index'),
     'Create',

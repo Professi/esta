@@ -90,7 +90,7 @@ class UserController extends Controller {
         $dataProvider->lastname = $term;
         if (Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()) {
             $dataProvider->role = 2;
-        } else if (Yii::app()->user->checkAccess('1')) {
+        } else if (Yii::app()->user->checkAccess('1') || Yii::app()->params['teacherAllowBlockTeacherApps']) {
             $dataProvider->role = $role;
         }
         $criteria = $dataProvider->searchCriteriaTeacherAutoComplete();

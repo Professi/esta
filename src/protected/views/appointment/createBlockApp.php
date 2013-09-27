@@ -40,7 +40,7 @@ $this->menu = array(
             $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'blockAppointment-form',
             ));
-            if (!Yii::app()->user->checkAccessRole('2', '-1')) {
+            if (!Yii::app()->user->checkAccessRole('2', '-1') || Yii::app()->params['teacherAllowBlockTeacherApps']) {
                 ?>
                 <div class="row collapse">
                     <div class="two columns">

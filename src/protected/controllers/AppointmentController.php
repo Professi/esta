@@ -48,7 +48,8 @@ class AppointmentController extends Controller {
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
-                'actions' => array('index', 'delete', 'createBlockApp', 'DeleteBlockApp'),
+                'actions' => array('index', 'delete', 'create', 'createBlockApp', 'DeleteBlockApp',
+                                    'getteacherappointmentsajax', 'getselectchildrenajax',),
                 'roles' => array('2')
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -103,7 +104,7 @@ class AppointmentController extends Controller {
             if (Yii::app()->user->checkAccessRole('2', '-1')) {
                 $model->user_id = Yii::app()->user->getId();
             } else {
-                $model->user_id = $appId;
+//                $model->user_id = $appId;
             }
             if (isset($_POST['BlockedAppointment'])) {
                 $model->setAttributes($_POST['BlockedAppointment']);
@@ -192,7 +193,11 @@ class AppointmentController extends Controller {
                 $parentId = $model->parentchild->user->getPrimaryKey();
             }
             if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
+                if (Yii::app()->user->checkAccessNotAdmin('2')) {
+                    $this->redirect('index.php?r=Appointment/index');
+                } else {
+                    $this->redirect(array('view', 'id' => $model->id));
+                }
         }
         $this->render('create', array(
             'model' => $model,

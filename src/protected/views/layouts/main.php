@@ -63,7 +63,8 @@
                     'items' => array(//0=Administration 1=Verwaltung 2= Lehrer 3=Eltern
                         $this->generateMenuItem("&#xe002;", "Ihre Termine", "/Appointment/index", !Yii::app()->user->isAdmin() && Yii::app()->user->checkAccessRole("2", "3")),
                         $this->generateMenuItem("&#xe00b;", "Termine vereinbaren", "/Appointment/getTeacher", Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
-                        $this->generateMenuItem("&#xe00b;", "Termine blockieren", "/Appointment/createBlockApp", Yii::app()->user->checkAccessNotAdmin('2') && Yii::app()->params['allowBlockingAppointments'] && !(Yii::app()->params['allowBlockingOnlyForManagement'] && Yii::app()->user->checkAccessNotAdmin('2'))),
+                        $this->generateMenuItem("&#xe00b;", "Termine anlegen", "/Appointment/create", Yii::app()->user->checkAccessNotAdmin('2') && Yii::app()->params['teacherAllowBlockTeacherApps']),
+                        $this->generateMenuItem("&#xe00b;", "Termine blockieren", "/Appointment/createBlockApp", Yii::app()->user->checkAccessNotAdmin('2') && Yii::app()->params['allowBlockingAppointments'] && !(Yii::app()->params['allowBlockingOnlyForManagement'])),
                         $this->generateMenuItem("&#xe007;", "Elternsprechtagsverwaltung", "/Date/admin", Yii::app()->user->checkAccess('0')),
                         $this->generateMenuItem("&#xe007;", "Terminverwaltung", "/Appointment/admin", Yii::app()->user->checkAccess('1')),
                         $this->generateMenuItem("&#xe00a;", "Eltern und Kinder", "/ParentChild/admin", Yii::app()->user->checkAccess('1')),
