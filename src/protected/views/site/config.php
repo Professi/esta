@@ -586,6 +586,28 @@ $this->registerAdminScripts(true);
                     ?>
                 </div>
             </div>
+                        <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'maxTanGen'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'maxTanGen', $optionsBans);
+                    echo $form->error($model, 'maxTanGen');
+                    ?>
+                </div>
+            </div>
+                                    <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'tanSize'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'tanSize', $optionsBans);
+                    echo $form->error($model, 'tanSize');
+                    ?>
+                </div>
+            </div>
         </fieldset>
         <fieldset>
             <legend>Terminblockierung</legend>
