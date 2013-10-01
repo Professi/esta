@@ -31,7 +31,7 @@ class Mail {
      */
     public function sendMail($subject, $message, $to, $from, $fromName) {
         $mailer = Yii::createComponent('application.extensions.mailer.EMailer');
-        $mailer->IsSMTP();
+        $mailer->isSMTP();
         $mailer->SMTPAuth = Yii::app()->params['smtpAuth'];
         if (Yii::app()->params['smtpLocal']) {
             $mailer->Host = 'localhost';
@@ -47,7 +47,8 @@ class Mail {
         $mailer->Port = Yii::app()->params['smtpPort'];
         $mailer->From = $from;
         $mailer->isHTML(true);
-        $mailer->AddAddress($to);
+        Yii::log($to, 'application.components.mail');
+        $mailer->addAddress($to);
         $mailer->FromName = $fromName;
         $mailer->CharSet = 'UTF-8';
         $mailer->ContentType = 'text/html';

@@ -145,6 +145,8 @@ class EMailer {
      * @return mixed
      */
     public function __call($method, $params) {
+        //if (is_object($this->_myMailer) && get_class($this->_myMailer)==='PHPMailer')
+        // return call_user_func_array(array($this->_myMailer, $method), $params);
         if (is_object($this->_myMailer) && get_class($this->_myMailer) === 'PHPMailer') {
             return call_user_method($method, $this->_myMailer, $params);
         } else {
