@@ -31,12 +31,17 @@ class Mail {
      */
     public function sendMail($subject, $message, $to, $from, $fromName) {
         $mailer = Yii::createComponent('application.extensions.mailer.EMailer');
-        $mailer->Host = Yii::app()->params['emailHost'];
         $mailer->IsSMTP();
         $mailer->SMTPAuth = Yii::app()->params['smtpAuth'];
-        if (Yii::app()->params['smtpAuth']) {
-            $mailer->Username = Yii::app()->params['fromMailHost'];
-            $mailer->Password = Yii::app()->params['smtpPassword'];
+        if (Yii::app()->params['smtpLocal']) {
+            $mailer->Host = 'localhost';
+        } else {
+            $mailer->Host = Yii::app()->params['emailHost'];
+            if (Yii::app()->params['smtpAuth']) {
+
+                $mailer->Username = Yii::app()->params['fromMailHost'];
+                $mailer->Password = Yii::app()->params['smtpPassword'];
+            }
         }
         $mailer->SMTPSecure = Yii::app()->params['smtpSecure'];
         $mailer->Port = Yii::app()->params['smtpPort'];

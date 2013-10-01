@@ -462,13 +462,24 @@ $this->registerAdminScripts(true);
                     ?>
                 </div>
             </div>
+                        <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'smtpLocal'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo Select2::activeDropDownList($model, 'smtpLocal', array(1 => 'Ja', 0 => 'Nein'));
+                    echo $form->error($model, 'smtpLocal');
+                    ?>
+                </div>
+            </div>
             <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'smtpAuth'); ?></span>
                 </div>
                 <div class="four columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'smtpAuth', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'smtpAuth', array(1 => 'Ja', 0 => 'Nein'));
                     echo $form->error($model, 'smtpAuth');
                     ?>
                 </div>

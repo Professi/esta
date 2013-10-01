@@ -61,6 +61,7 @@ $array2 = array(
     'databaseManagementSystem' => 'mysql',
     'logoPath' => '/img/logo.png',
     'smtpAuth' => false,
+    'smtpLocal' => true,
     'smtpPort' => 25,
     'smtpSecure' => '',
     'smtpPassword' => '',
