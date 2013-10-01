@@ -28,10 +28,11 @@ class ConfigForm extends CFormModel {
 
     public $adminEmail;
     public $dateTimeFormat;
-    public $emailHost;
+    public $smtpAuth;
+    public $smtpPassword;
     public $fromMailHost;
     public $fromMail;
-    public $teacherMail;
+    public $emailHost;
     public $schoolName;
     public $mailsActivated;
     public $maxChild;
@@ -69,6 +70,8 @@ class ConfigForm extends CFormModel {
     public $textHeader;
     public $appName;
     public $language;
+    public $smtpSecure;
+    public $smtpPort;
     public $allowParentsToManageChilds;
     public $hashCost;
     public $teacherAllowBlockTeacherApps;
@@ -91,7 +94,7 @@ class ConfigForm extends CFormModel {
     public function rules() {
         return array(
             array('adminEmail,dateTimeFormat,emailHost,fromMailHost,fromMail' .
-                ',teacherMail,schoolName,mailsActivated,maxChild,'
+                ',schoolName,mailsActivated,maxChild,'
                 . 'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,' .
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
                 'durationTempBans,maxAttemptsForLogin,timeFormat,dateFormat,' .
@@ -101,12 +104,11 @@ class ConfigForm extends CFormModel {
                 'lockRegistration,allowGroups,databasePort,allowParentsToManageChilds,' .
                 'databaseHost,databaseName,databaseUsername,databasePassword,'.
                 'databaseManagementSystem,logoPath,textHeader,language,appName,hashCost,' .
-                'teacherAllowBlockTeacherApps'
-                , 'required'),
-            array('fromMailHost,adminEmail,schoolEmail', 'email'),
+                'teacherAllowBlockTeacherApps,smtpPort', 'required'),
+            array('adminEmail,schoolEmail', 'email'),
             array('language', 'length', 'min' => 2),
             array('databaseManagementSystem', 'length', 'min' => 3),
-            array('emailHost,fromMail,dateFormat,appName', 'length', 'min' => 4),
+            array('emailHost,fromMail,dateFormat,appName', 'length', 'min' => 3),
             array('dateTimeFormat', 'length', 'min' => 5),
             array('defaultTeacherPassword,databasePassword', 'length', 'min' => 5),
             array('pepper', 'length', 'min' => 16, 'max' => 255),
@@ -116,11 +118,11 @@ class ConfigForm extends CFormModel {
                 'boolean'),
             array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,'
                 . 'durationTempBans,maxAttemptsForLogin,appointmentBlocksPerDate,'
-                . 'lengthReasonAppointmentBlocked,databasePort',
+                . 'lengthReasonAppointmentBlocked,databasePort,smtpPort',
                 'numerical', 'integerOnly' => true, 'min' => 1),
             array('hashCost', 'numerical', 'integerOnly' => true, 'min' => 13),
             array('adminEmail,dateTimeFormat,emailHost,fromMailHost,fromMail' .
-                ',teacherMail,schoolName,mailsActivated,maxChild,'
+                ',schoolName,mailsActivated,maxChild,'
                 . 'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,' .
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
                 'durationTempBans,maxAttemptsForLogin,salt,installed,dateFormat,timeFormat,' .
@@ -137,10 +139,9 @@ class ConfigForm extends CFormModel {
         return array(
             'adminEmail' => Yii::t('app', 'Administrator E-Mail Adresse'),
             'dateTimeFormat' => Yii::t('app', 'Datums und Zeitformat (z.B. d.m.Y H:i)'),
-            'emailHost' => Yii::t('app', 'Hostname des SMTP Servers (z.B. localhost)'),
-            'fromMailHost' => Yii::t('app', 'Versender E-Mailadresse (z.B. xyz@schoolxyz.de)'),
+            'fromMailHost' => Yii::t('app', 'Versender E-Mailadresse (z.B. esta)'),
             'fromMail' => Yii::t('app', 'Absendername (z.B. ESTA-School)'),
-            'teacherMail' => Yii::t('app', 'Domainname des SMTP Servers (z.B. schoolxyz)'),
+            'emailHost' => Yii::t('app', 'Domainname des SMTP Servers (z.B. schoolxyz.de)'),
             'schoolName' => Yii::t('app', 'Schulname (z.B. Schule XYZ)'),
             'mailsActivated' => Yii::t('app', 'E-Mails versenden?'),
             'maxChild' => Yii::t('app', 'Maximale Anzahl an Kindern pro Eltern'),
@@ -163,6 +164,8 @@ class ConfigForm extends CFormModel {
             'schoolTele' => Yii::t('app', 'Telefonnummer'),
             'schoolFax' => Yii::t('app', 'Faxnummer'),
             'schoolEmail' => Yii::t('app', 'E-Mail Adresse der Schule'),
+            'smtpAuth' => Yii::t('app', 'SMTP Authentifizierung?'),
+            'smtpPassword' => Yii::t('app', 'SMTP Passwort'),
             'useSchoolEmailForContactForm' => Yii::t('app', 'E-Mail Adresse der Schule für das Kontaktformular verwenden?'),
             'allowBlockingOnlyForManagement' => Yii::t('app', 'Nur Verwaltung und Administration dürfen Termine blockieren?'),
             'lockRegistration' => Yii::t('app', 'Registrierung sperren?'),
@@ -177,6 +180,8 @@ class ConfigForm extends CFormModel {
             'language' => Yii::t('app', 'Sprache'),
             'appName' => Yii::t('app', 'Anwendungsname'),
             'databasePort' => Yii::t('app', 'Datenbankport'),
+            'smtpSecure' => Yii::t('app', 'SMTP- Sicherheit'),
+            'smtpPort' => Yii::t('app', 'SMTP- Port'),
             'allowParentsToManageChilds' => Yii::t('app', 'Sollen Eltern die Daten über Ihre Kinder verwalten können?'),
             'teacherAllowBlockTeacherApps' => Yii::t('app', 'Dürfen Lehrer Termine anderer Lehrer blockieren?'),
             );

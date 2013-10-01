@@ -464,12 +464,45 @@ $this->registerAdminScripts(true);
             </div>
             <div class="row collapse">
                 <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'emailHost'); ?></span>
+                    <span class="prefix"><?php echo $form->label($model, 'smtpAuth'); ?></span>
                 </div>
                 <div class="four columns">
                     <?php
-                    echo $form->textField($model, 'emailHost', $optionsMails);
-                    echo $form->error($model, 'emailHost');
+                    echo Select2::activeDropDownList($model, 'smtpAuth', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo $form->error($model, 'smtpAuth');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'smtpPassword'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->passwordField($model, 'smtpPassword', $optionsMails);
+                    echo $form->error($model, 'smtpPassword');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'smtpSecure'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'smtpSecure', $optionsMails);
+                    echo $form->error($model, 'smtpSecure');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'smtpPort'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'smtpPort', $optionsMails);
+                    echo $form->error($model, 'smtpPort');
                     ?>
                 </div>
             </div>
@@ -497,12 +530,12 @@ $this->registerAdminScripts(true);
             </div>
             <div class="row collapse">
                 <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'teacherMail'); ?></span>
+                    <span class="prefix"><?php echo $form->label($model, 'emailHost'); ?></span>
                 </div>
                 <div class="four columns">
                     <?php
-                    echo $form->textField($model, 'teacherMail', $optionsMails);
-                    echo $form->error($model, 'teacherMail');
+                    echo $form->textField($model, 'emailHost', $optionsMails);
+                    echo $form->error($model, 'emailHost');
                     ?>
                 </div>
             </div>
