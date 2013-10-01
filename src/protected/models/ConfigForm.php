@@ -181,7 +181,7 @@ class ConfigForm extends CFormModel {
         'language' => Yii::t('app', 'Sprache'),
         'appName' => Yii::t('app', 'Anwendungsname'),
         'databasePort' => Yii::t('app', 'Datenbankport'),
-        'smtpSecure' => Yii::t('app', 'SMTP- Sicherheit'),
+        'smtpSecure' => Yii::t('app', 'SMTP- Sicherheit(z.B. ssl oder tls), kann leer gelassen werden'),
         'smtpPort' => Yii::t('app', 'SMTP- Port'),
         'smtpLocal' => Yii::t('app', 'Lokaler SMTP Server?'),
         'allowParentsToManageChilds' => Yii::t('app', 'Sollen Eltern die Daten über Ihre Kinder verwalten können?'),
