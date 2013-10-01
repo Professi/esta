@@ -45,6 +45,7 @@ $this->breadcrumbs = array(
             PHP&nbsp;&nbsp;<a href="http://www.php.net"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             Yii Framework&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             EMailer eine Yii Extension die PHPMailer verwendet&nbsp;&nbsp;<a href="http://www.yiiframework.com/extension/mailer/" > <span aria-hiden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
+            PHPMailer&nbsp;&nbsp;<a href="https://github.com/Synchro/PHPMailer" > <span aria-hiden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             ZURB Foundation Framework&nbsp;&nbsp;<a href="http://foundation.zurb.com"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             IcoMoon  Icon Fonts&nbsp;&nbsp;<a href="http://icomoon.io" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             Google Web Fonts&nbsp;&nbsp;<a href="http://www.google.com/webfonts" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>

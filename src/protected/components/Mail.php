@@ -53,7 +53,7 @@ class Mail {
         $mailer->ContentType = 'text/html';
         $mailer->Subject = $subject;
         $mailer->Body = $message;
-        $mailer->Send();
+        $mailer->send();
     }
 
     /**
