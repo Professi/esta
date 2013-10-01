@@ -38,7 +38,6 @@ class Mail {
         } else {
             $mailer->Host = Yii::app()->params['emailHost'];
             if (Yii::app()->params['smtpAuth']) {
-
                 $mailer->Username = Yii::app()->params['fromMailHost'];
                 $mailer->Password = Yii::app()->params['smtpPassword'];
             }
@@ -47,7 +46,6 @@ class Mail {
         $mailer->Port = Yii::app()->params['smtpPort'];
         $mailer->From = $from;
         $mailer->isHTML(true);
-        Yii::log($to, 'application.components.mail');
         $mailer->addAddress($to);
         $mailer->FromName = $fromName;
         $mailer->CharSet = 'UTF-8';

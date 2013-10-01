@@ -128,7 +128,7 @@ class ConfigForm extends CFormModel {
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
                 'durationTempBans,maxAttemptsForLogin,salt,installed,dateFormat,timeFormat,' .
                 'allowBlockingAppointments,appointmentBlocksPerDate,' .
-                'lengthReasonAppointmentBlocked,smtpAuth,smtpSecure,smtpPort,smtpLocal', 'safe'),
+                'lengthReasonAppointmentBlocked,smtpAuth,smtpSecure,smtpPort,smtpLocal,tanSize,smtpPassword', 'safe'),
         );
     }
 

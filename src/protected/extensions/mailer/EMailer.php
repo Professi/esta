@@ -30,7 +30,7 @@
  * Include the the PHPMailer class.
  */
 require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'phpmailer' . DIRECTORY_SEPARATOR . 'class.phpmailer.php');
-
+include(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'phpmailer' . DIRECTORY_SEPARATOR ."class.smtp.php");
 /**
  * EMailer is a simple wrapper for the PHPMailer library.
  * @see http://phpmailer.codeworxtech.com/index.php?pg=phpmailer
@@ -145,13 +145,9 @@ class EMailer {
      * @return mixed
      */
     public function __call($method, $params) {
-        //if (is_object($this->_myMailer) && get_class($this->_myMailer)==='PHPMailer')
-        // return call_user_func_array(array($this->_myMailer, $method), $params);
-        if (is_object($this->_myMailer) && get_class($this->_myMailer) === 'PHPMailer') {
-            return call_user_method($method, $this->_myMailer, $params);
-        } else {
-            throw new CException(Yii::t('EMailer', 'Can not call a method of a non existent object'));
-        }
+        if (is_object($this->_myMailer) && get_class($this->_myMailer)==='PHPMailer')
+         return call_user_func_array(array($this->_myMailer, $method), $params);
+        else throw new CException(Yii::t('EMailer', 'Can not call a method of a non existent object'));
     }
 
     /**

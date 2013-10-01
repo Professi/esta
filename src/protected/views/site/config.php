@@ -462,7 +462,7 @@ $this->registerAdminScripts(true);
                     ?>
                 </div>
             </div>
-                        <div class="row collapse">
+            <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'smtpLocal'); ?></span>
                 </div>
