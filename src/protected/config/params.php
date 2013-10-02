@@ -26,7 +26,6 @@ $array2 = array(
     'emailHost' => 'localhost', //Sofern der SMTP Server auf dem selben Server läuft einfach localhost
     'fromMailHost' => '', //Absender der Mails wird wohl später dann EST@bws-hofheim.de
     'fromMail' => 'ESTA', //Der Absendername bsp. BWS-Hofhei,
-    'teacherMail' => 'schuldomain.de',
     'schoolName' => 'Schulname',
     'mailsActivated' => true, //ob Mails versendet werden solen
     'maxChild' => 3, //Maximal Anzahl von eintragbaren Kindern pro Benutzer mit Elternrolle
