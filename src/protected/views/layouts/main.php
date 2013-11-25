@@ -41,7 +41,7 @@
                     <div class="header-school-logo">
                         <div id="logo_artikel"><?php echo Yii::app()->params['textHeader']; ?>&nbsp;&nbsp;</div>
                         <div id="logo_school_border">
-                            <a href="http://bws-hofheim.de/"><img id="logo_school" src="<?php echo $this->assetsDir . Yii::app()->params['logoPath']; ?>" alt="<?php echo Yii::app()->params['schoolName'] ?>"></a>
+                            <a href="http://bws-hofheim.de/" target="_blank"><img id="logo_school" src="<?php echo $this->assetsDir . Yii::app()->params['logoPath']; ?>" alt="<?php echo Yii::app()->params['schoolName'] ?>"></a>
                         </div>
                     </div>
                 </div>
