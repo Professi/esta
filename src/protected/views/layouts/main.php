@@ -37,7 +37,7 @@
             <!-- HEADER -->
             <div class="row contain-to-grid" id="header_row">
                 <div class="eleven columns offset-by-one">
-                    <div class="header" title="<?php echo Yii::app()->params['appName'] ?>"></div>
+                    <?php echo CHtml::link('<div class="header" title="'.Yii::app()->params['appName'].'"></div>','index.php');?>
                     <div class="header-school-logo">
                         <div id="logo_artikel"><?php echo Yii::app()->params['textHeader']; ?>&nbsp;&nbsp;</div>
                         <div id="logo_school_border">
