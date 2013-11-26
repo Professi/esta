@@ -158,7 +158,7 @@ class Mail {
      */
     private function send($subject, &$body, $email) {
         Yii::trace($body, 'application.components.mail');
-        $this->sendMail($subject, $body, $email, Yii::app()->params['fromMailHost'] . Yii::app()->params['emailHost'], Yii::app()->params['fromMail']);
+        $this->sendMail($subject, $body, $email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
         Yii::trace('Subject:' . Yii::app()->params['fromMail'] . $subject . ' to:' . $email . ' fromMailHost:' . Yii::app()->params['fromMailHost'] . ' fromMail:' . Yii::app()->params['fromMail'], 'application.components.mail');
     }
 
