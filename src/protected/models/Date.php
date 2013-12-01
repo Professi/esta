@@ -64,7 +64,7 @@ class Date extends CActiveRecord {
             array('date', 'date', 'format' => 'dd.MM.yyyy'),
             array('begin,end', 'date', 'format' => 'H:m'),
             array('durationPerAppointment', 'date', 'format' => 'm'),
-            array('id, date, begin, end, durationPerAppointment,groups,title', 'safe', 'on' => 'search'),
+            array('id, date, begin, end, durationPerAppointment,groups,title,lockAt', 'safe', 'on' => 'search'),
         );
     }
 
@@ -120,8 +120,6 @@ class Date extends CActiveRecord {
      */
     public function validate($attributes = NULL, $clearErrors = true) {
         $rc = true;
-        Yii::trace(Yii::t('app', 'Aktuelle Zeit: ') . time(), 'application.models.date');
-        Yii::trace(Yii::t('app', 'Eingegebenes Datum: ') . strtotime($this->date), 'application.models.date');
         if (parent::validate($attributes, $clearErrors)) {
             if (strtotime($this->end) <= strtotime($this->begin)) {
                 $rc = false;
