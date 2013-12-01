@@ -173,7 +173,7 @@ class ConfigForm extends CFormModel {
             'lockRegistration' => Yii::t('app', 'Registrierung sperren?'),
             'allowGroups' => Yii::t('app', 'Gruppen erlauben?'),
             'databaseHost' => Yii::t('app', 'Datenbankhost'),
-            'databaseName' => Yii::t('app', 'Name der Tabelle in der Datenbank'),
+            'databaseName' => Yii::t('app', 'Datenbankname'),
             'databaseUsername' => Yii::t('app', 'Datenbankbenutzername'),
             'databasePassword' => Yii::t('app', 'Datenbankbenutzerpasswort'),
             'databaseManagementSystem' => Yii::t('app', 'Datenbankmanagementsystem'),

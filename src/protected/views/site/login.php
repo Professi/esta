@@ -29,8 +29,8 @@ $this->breadcrumbs = array(
     <div class="twelve columns ">
         <div class="panel">
             <h4> Liebe Eltern,</h4>
-            <p> Willkommen auf der elektronischen Elternsprechtagsplattform der Brühlwiesenschule Hofheim.<br>
-                Melden Sie sich an oder registrieren Sie sich um ihre Termine einzusehen oder neue Termine zu vereinbaren.
+            <p> Willkommen auf der elektronischen Elternsprechtagsplattform der <?php echo Yii::app()->params['schoolName']; ?>.<br>
+                Melden Sie sich an oder registrieren Sie sich um Ihre Termine einzusehen oder neue Termine zu vereinbaren.
             </p>
         </div>
     </div>
