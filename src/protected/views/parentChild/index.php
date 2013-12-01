@@ -25,6 +25,7 @@ $this->breadcrumbs = array(
 );
 $this->menu = array(
     array('label' => 'Kind hinzufügen', 'url' => array('create')),
+    array('label' => 'Termin vereinbaren', 'url' => array('appointment/getTeacher')),
     array('label' => 'Verwalte Elternkindverknüpfungen', 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess(1)),
 );
 ?>
