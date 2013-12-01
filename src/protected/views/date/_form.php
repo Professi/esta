@@ -56,50 +56,6 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 <div class="row collapse">
     <div class="two columns">
-        <span class="prefix"><?php echo $form->label($model, 'begin'); ?></span>
-    </div>
-    <div class="eight columns">
-        <?php
-        $this->widget(
-                'ext.jui.EJuiDateTimePicker', array(
-            'model' => $model,
-            'attribute' => 'begin',
-            'mode' => 'time',
-            'options' => $a_disabled
-                )
-        );
-
-
-        echo $form->error($model, 'begin');
-        ?>
-    </div>
-    <div class="two columns">
-        <span class="postfix">Uhrzeit</span>
-    </div>
-</div>
-<div class="row collapse">
-    <div class="two columns">
-        <span class="prefix"><?php echo $form->label($model, 'end'); ?></span>
-    </div>
-    <div class="eight columns">
-        <?php
-        $this->widget(
-                'ext.jui.EJuiDateTimePicker', array(
-            'model' => $model,
-            'attribute' => 'end',
-            'mode' => 'time',
-            'options' => $a_disabled
-                )
-        );
-        echo $form->error($model, 'end');
-        ?>
-    </div>
-    <div class="two columns">
-        <span class="postfix">Uhrzeit</span>
-    </div>
-</div>
-<div class="row collapse">
-    <div class="two columns">
         <span class="prefix infofeld">
             <?php echo $form->label($model, 'lockAt', array('class' => 'infolabel')); ?>
         </span>
@@ -141,7 +97,7 @@ $form = $this->beginWidget('CActiveForm', array(
                     'name' => "time_lockAt",
                     'value' => $timeLabel,
                     'mode' => 'time',
-                    'options' => $a_disabled
+                   // 'options' => $a_disabled
                         )
                 );
                 ?>
@@ -154,6 +110,50 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
     <div class="two columns">
         <span class="postfix">Datum + Uhrzeit</span>
+    </div>
+</div>
+<div class="row collapse">
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->label($model, 'begin'); ?></span>
+    </div>
+    <div class="eight columns">
+        <?php
+        $this->widget(
+                'ext.jui.EJuiDateTimePicker', array(
+            'model' => $model,
+            'attribute' => 'begin',
+            'mode' => 'time',
+            'options' => $a_disabled
+                )
+        );
+
+
+        echo $form->error($model, 'begin');
+        ?>
+    </div>
+    <div class="two columns">
+        <span class="postfix">Uhrzeit</span>
+    </div>
+</div>
+<div class="row collapse">
+    <div class="two columns">
+        <span class="prefix"><?php echo $form->label($model, 'end'); ?></span>
+    </div>
+    <div class="eight columns">
+        <?php
+        $this->widget(
+                'ext.jui.EJuiDateTimePicker', array(
+            'model' => $model,
+            'attribute' => 'end',
+            'mode' => 'time',
+            'options' => $a_disabled
+                )
+        );
+        echo $form->error($model, 'end');
+        ?>
+    </div>
+    <div class="two columns">
+        <span class="postfix">Uhrzeit</span>
     </div>
 </div>
 <div class="row collapse">
