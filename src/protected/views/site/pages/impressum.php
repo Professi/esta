@@ -38,9 +38,8 @@ $this->breadcrumbs = array(
         </p>
         <p> Diese Elternsprechtagsanwendung(ESTA) wurde mit der GNU General Public License Version 3 (&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a> ) lizensiert.
             <br>Die Urheber sind: Christian Ehringfeld, David Mock, Matthias Unterbusch. </p>
-        <p>Projektverzeichnis&nbsp;&nbsp;<a href="https://github.com/Professi/esta"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
+        <p>Projektverzeichnis&nbsp;&nbsp;<a href="http://synlos.net/redmine/projects/est"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
         </p>
-
         <p> Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:<br>
             PHP&nbsp;&nbsp;<a href="http://www.php.net"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             Yii Framework&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>

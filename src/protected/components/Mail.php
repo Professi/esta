@@ -157,9 +157,7 @@ class Mail {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     private function send($subject, &$body, $email) {
-        Yii::trace($body,'info', 'application.components.mail');
         $this->sendMail($subject, $body, $email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
-        Yii::trace('Subject:' . Yii::app()->params['fromMail'] . $subject . ' to:' . $email . ' fromMailHost:' . Yii::app()->params['fromMailHost'] . ' fromMail:' . Yii::app()->params['fromMail'],'info', 'application.components.mail');
     }
 
 }
