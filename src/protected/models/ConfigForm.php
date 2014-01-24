@@ -77,6 +77,7 @@ class ConfigForm extends CFormModel {
     public $hashCost;
     public $tanSize;
     public $teacherAllowBlockTeacherApps;
+    public $schoolWebsiteLink;
     private $firstRead = true;
     private $params;
 
@@ -106,7 +107,7 @@ class ConfigForm extends CFormModel {
                 'lockRegistration,allowGroups,databasePort,allowParentsToManageChilds,' .
                 'databaseHost,databaseName,databaseUsername,databasePassword,' .
                 'databaseManagementSystem,logoPath,textHeader,language,appName,hashCost,' .
-                'teacherAllowBlockTeacherApps,smtpPort,smtpLocal,tanSize', 'required'),
+                'teacherAllowBlockTeacherApps,smtpPort,smtpLocal,tanSize,schoolWebsiteLink', 'required'),
             array('adminEmail,schoolEmail', 'email'),
             array('language', 'length', 'min' => 2),
             array('databaseManagementSystem', 'length', 'min' => 3),
@@ -129,7 +130,7 @@ class ConfigForm extends CFormModel {
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
                 'durationTempBans,maxAttemptsForLogin,salt,installed,dateFormat,timeFormat,' .
                 'allowBlockingAppointments,appointmentBlocksPerDate,' .
-                'lengthReasonAppointmentBlocked,smtpAuth,smtpSecure,smtpPort,smtpLocal,smtpPassword,tanSize', 'safe'),
+                'lengthReasonAppointmentBlocked,smtpAuth,smtpSecure,smtpPort,smtpLocal,smtpPassword,tanSize,schoolWebsiteLink', 'safe'),
         );
     }
 
@@ -189,6 +190,7 @@ class ConfigForm extends CFormModel {
             'tanSize' => Yii::t('app', 'Länge einer TAN'),
             'allowParentsToManageChilds' => Yii::t('app', 'Sollen Eltern die Daten über Ihre Kinder verwalten können?'),
             'teacherAllowBlockTeacherApps' => Yii::t('app', 'Dürfen Lehrer Termine anderer Lehrer blockieren?'),
+            'schoolWebsiteLink' => Yii::t('app', 'Schullink')
         );
     }
 

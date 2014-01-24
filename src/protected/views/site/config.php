@@ -393,6 +393,17 @@ $this->registerAdminScripts(true);
                     ?>
                 </div>
             </div>
+                        <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'schoolWebsiteLink'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'schoolWebsiteLink');
+                    echo $form->error($model, 'schoolWebsiteLink');
+                    ?>
+                </div>
+            </div>
         </fieldset>
         <fieldset>
             <legend>Elternsprechtage</legend>
