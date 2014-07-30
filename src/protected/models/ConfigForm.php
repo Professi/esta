@@ -21,10 +21,7 @@
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
 class ConfigForm extends CFormModel {
-
-    const pgsql = 'pgsql';
     const mysql = 'mysql';
-    const mssql = 'mssql';
 
     public $adminEmail;
     public $dateTimeFormat;
@@ -96,7 +93,7 @@ class ConfigForm extends CFormModel {
      */
     public function rules() {
         return array(
-            array('adminEmail,dateTimeFormat,emailHost,fromMailHost,fromMail' .
+            array('adminEmail,dateTimeFormat,emailHost,fromMail' .
                 ',schoolName,mailsActivated,maxChild,'
                 . 'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,' .
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
@@ -112,8 +109,9 @@ class ConfigForm extends CFormModel {
             array('language', 'length', 'min' => 2),
             array('databaseManagementSystem', 'length', 'min' => 3),
             array('emailHost,fromMail,dateFormat,appName', 'length', 'min' => 3),
+            array('databasePassword', 'length', 'min' => 4),
             array('dateTimeFormat', 'length', 'min' => 5),
-            array('defaultTeacherPassword,databasePassword', 'length', 'min' => 5),
+            array('defaultTeacherPassword', 'length', 'min' => 5),
             array('pepper', 'length', 'min' => 16, 'max' => 255),
             array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments,' .
                 'useSchoolEmailForContactForm,allowBlockingOnlyForManagement,lockRegistration,' .
@@ -304,30 +302,13 @@ class ConfigForm extends CFormModel {
     }
 
     /**
-     * default charset for postgresql databases
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return string
-     */
-    private function pgsqlCharset() {
-        return 'ENCODING \'UTF8\'';
-    }
-
-    /**
      * mysql charset for columns with case sensitives char collation
      * @return string
      */
     private function mysqlCSColumnCharset() {
         return 'CHARACTER SET utf8 COLLATE utf8_bin';
     }
-
-    /**
-     * postgre sql charset for columns with case sensitive char collation
-     * @return string
-     */
-    private function pgsqlCSColumnCharset() {
-        return 'COLLATE "' . strtolower($this->getParam('language')) . '_' . strtoupper($this->getParam('language') . '"');
-    }
-
+    
     /**
      * returns collation for database
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
@@ -339,10 +320,6 @@ class ConfigForm extends CFormModel {
         switch ($this->getDBMS()) {
             case ConfigForm::mysql:
                 $rc = $column ? $this->mysqlCSColumnCharset() : $this->mysqlCharset();
-                break;
-            case ConfigForm::pgsql:
-                // $rc = $column ? $this->pgsqlCSColumnCharset() : $this->pgsqlCharset();
-                $rc = '';
                 break;
         }
         return $rc;
@@ -434,10 +411,9 @@ class ConfigForm extends CFormModel {
                 $rc = true;
             }
         } else {
-            $this->addError('databaseHost', Yii::t('app', 'Die Datenbankverbindung konnte nicht hergestellt werden.'));
+            $this->addError('databaseHost', Yii::t('app', 'Zur Datenbank konnte keine Verbindung hergestellt werden.'));
             $rc = false;
         }
-
         return $rc;
     }
 
@@ -483,11 +459,9 @@ class ConfigForm extends CFormModel {
             $connection->setActive(true);
         } catch (CException $ex) {
             Yii::log($ex->getMessage(), CLogger::LEVEL_ERROR, 'application.models.configForm');
-            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Verbindung zur Datenbank konnte nicht hergestellt werden.') . '<br>' . $ex->getMessage());
+            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Zur Datenbank konnte keine Verbindung hergestellt werden.') . '<br>' . $ex->getMessage());
         }
         return $connection;
     }
-
 }
-
 ?>

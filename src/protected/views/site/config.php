@@ -171,9 +171,9 @@ $this->registerAdminScripts(true);
                         </span>
                         <div class="infotext">
                             <span aria-hidden="true" data-icon="&#xe012;"></span>
-                            Mit dieser Option können Sie Gruppen aktivieren. 
-                            Für jeden Elternsprechtag und Benutzer können bestimmte Gruppen festgelegt werden.
-                            Damit kann der Zugriff von Benutzern auf Elternsprechtage beschr&auml;nkt werden. Jeder TAN kann eine bestimmte Gruppe zugewiesen werden. Elternsprechtage ohne Gruppen sind frei zugänglich für registrierte Benutzer. Benutzer ohne Gruppe können an jedem Elternsprechtag Termine buchen.
+                            <?php echo Yii::t('app', 'Mit dieser Option können Sie Gruppen aktivieren.');
+                            echo Yii::t('app', 'Für jeden Elternsprechtag und Benutzer können bestimmte Gruppen festgelegt werden.');
+                            echo Yii::t('app', 'Damit kann der Zugriff von Benutzern auf Elternsprechtage beschr&auml;nkt werden. Jeder TAN kann eine bestimmte Gruppe zugewiesen werden. Elternsprechtage ohne Gruppen sind frei zugänglich für registrierte Benutzer. Benutzer ohne Gruppe können an jedem Elternsprechtag Termine buchen.'); ?>
                         </div>
                     </div>
                     <div class="four columns">
@@ -250,10 +250,8 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'databaseManagementSystem', array('mysql' => 'MySQL',
-                        'pgsql' => 'PostgreSQL(nicht getestet)',
-                            ), array('select2Options' => array('minimumResultsForSearch' => 10))
-                    );
+                    echo Select2::activeDropDownList($model, 'databaseManagementSystem', array('mysql' => 'MySQL'),
+                            array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'databaseManagementSystem');
                     ?>
                 </div>

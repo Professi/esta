@@ -148,7 +148,7 @@ class Appointment extends CActiveRecord {
     public function customSearch() {
         $criteria = new CDbCriteria();
         $criteria->order = '`dateAndTime_id` ASC';
-        $criteria->addCondition(array('user_id=:user_id'));
+        $criteria->addCondition(array('"user_id"=:user_id'));
         $criteria->params = array(':user_id' => $this->user_id);
         return new CActiveDataProvider($this, array('criteria' => $criteria));
     }
@@ -256,8 +256,8 @@ class Appointment extends CActiveRecord {
     private function getCriteriaForAppCount() {
         $crit = new CDbCriteria();
         $crit->with = array('parentchild');
-        $crit->compare('parentchild.user_id', $this->parentchild->user->id);
-        $crit->compare('dateAndTime_id', $this->dateAndTime_id);
+        $crit->compare('"parentchild.user_id"', $this->parentchild->user->id);
+        $crit->compare('"dateAndTime_id"', $this->dateAndTime_id);
         return $crit;
     }
 
