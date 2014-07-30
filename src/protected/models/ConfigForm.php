@@ -21,6 +21,7 @@
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
 class ConfigForm extends CFormModel {
+
     const mysql = 'mysql';
 
     public $adminEmail;
@@ -58,12 +59,6 @@ class ConfigForm extends CFormModel {
     public $allowBlockingOnlyForManagement;
     public $lockRegistration;
     public $allowGroups;
-    public $databaseHost;
-    public $databasePort;
-    public $databaseName;
-    public $databaseUsername;
-    public $databasePassword;
-    public $databaseManagementSystem;
     public $logoPath;
     public $textHeader;
     public $appName;
@@ -102,14 +97,11 @@ class ConfigForm extends CFormModel {
                 'lengthReasonAppointmentBlocked,schoolStreet,schoolCity,' .
                 'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,' .
                 'lockRegistration,allowGroups,databasePort,allowParentsToManageChilds,' .
-                'databaseHost,databaseName,databaseUsername,databasePassword,' .
-                'databaseManagementSystem,logoPath,textHeader,language,appName,hashCost,' .
+                'logoPath,textHeader,language,appName,hashCost,' .
                 'teacherAllowBlockTeacherApps,smtpPort,smtpLocal,tanSize,schoolWebsiteLink', 'required'),
             array('adminEmail,schoolEmail', 'email'),
             array('language', 'length', 'min' => 2),
-            array('databaseManagementSystem', 'length', 'min' => 3),
             array('emailHost,fromMail,dateFormat,appName', 'length', 'min' => 3),
-            array('databasePassword', 'length', 'min' => 4),
             array('dateTimeFormat', 'length', 'min' => 5),
             array('defaultTeacherPassword', 'length', 'min' => 5),
             array('pepper', 'length', 'min' => 16, 'max' => 255),
@@ -171,11 +163,6 @@ class ConfigForm extends CFormModel {
             'allowBlockingOnlyForManagement' => Yii::t('app', 'Nur Verwaltung und Administration dürfen Termine blockieren?'),
             'lockRegistration' => Yii::t('app', 'Registrierung sperren?'),
             'allowGroups' => Yii::t('app', 'Gruppen erlauben?'),
-            'databaseHost' => Yii::t('app', 'Datenbankhost'),
-            'databaseName' => Yii::t('app', 'Datenbankname'),
-            'databaseUsername' => Yii::t('app', 'Datenbankbenutzername'),
-            'databasePassword' => Yii::t('app', 'Datenbankbenutzerpasswort'),
-            'databaseManagementSystem' => Yii::t('app', 'Datenbankmanagementsystem'),
             'logoPath' => Yii::t('app', 'Pfad des Schullogos in der Anwendung'),
             'textHeader' => Yii::t('app', 'Headertext zwischen Anwendungslogo und Schullogo'),
             'language' => Yii::t('app', 'Sprache'),
@@ -290,6 +277,10 @@ class ConfigForm extends CFormModel {
             'dateAndTime_id' => 'integer NOT NULL',
             'user_id' => 'integer NOT NULL',
                 ), $this->getCollation());
+        $command->createTable('configs', array(
+            'key' => 'string pk NOT NULL',
+            'value' => 'string NOT NULL',
+        ));
     }
 
     /**
@@ -308,7 +299,7 @@ class ConfigForm extends CFormModel {
     private function mysqlCSColumnCharset() {
         return 'CHARACTER SET utf8 COLLATE utf8_bin';
     }
-    
+
     /**
      * returns collation for database
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
@@ -316,13 +307,7 @@ class ConfigForm extends CFormModel {
      * @return string
      */
     public function getCollation($column = false) {
-        $rc = '';
-        switch ($this->getDBMS()) {
-            case ConfigForm::mysql:
-                $rc = $column ? $this->mysqlCSColumnCharset() : $this->mysqlCharset();
-                break;
-        }
-        return $rc;
+        return $column ? $this->mysqlCSColumnCharset() : $this->mysqlCharset();
     }
 
     /**
@@ -405,6 +390,7 @@ class ConfigForm extends CFormModel {
                 $this->addForeignKeys($command);
                 $this->createIndices($command);
                 $this->fillTable($command);
+                $this->createConfig($command);
             } catch (CException $e) {
                 Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Die Datenbanktabellen konnten nicht angelegt werden. Entweder sind diese schon vorhanden oder es trat ein Fehler auf.'));
                 Yii::log($e->getMessage(), CLogger::LEVEL_ERROR, 'application.models.configForm');
@@ -415,14 +401,6 @@ class ConfigForm extends CFormModel {
             $rc = false;
         }
         return $rc;
-    }
-
-    /**
-     * returns database Management System
-     * @return string
-     */
-    public function getDBMS() {
-        return $this->getParam('databaseManagementSystem');
     }
 
     /**
@@ -448,13 +426,68 @@ class ConfigForm extends CFormModel {
         return $this->params;
     }
 
+    public function createConfig($command) {
+        $config = $this->getInitConfig();
+        foreach ($config as $key => $value) {
+            $command->insert('configs', array(
+                'key' => $key, 'value' => $value));
+        }
+    }
+
+    public function getInitConfig() {
+        return array(
+            'appName' => Yii::t('app', 'Elternsprechtag'),
+            'adminEmail' => 'test@test.de', //Administrator E-Mail Adresse
+            'hashCost' => 13,
+            'dateTimeFormat' => 'd.m.Y H:i', //Datumsformat -  muss nicht geändert werden
+            'emailHost' => 'localhost', //Sofern der SMTP Server auf dem selben Server läuft einfach localhost
+            'fromMailHost' => '', //Absender der Mails wird wohl später dann EST@school.de
+            'fromMail' => 'ESTA', //Der Absendername bsp. BWS-Hofheim,
+            'schoolName' => Yii::t('app', 'Schulname'),
+            'mailsActivated' => true, //ob Mails versendet werden solen
+            'maxChild' => 3, //Maximal Anzahl von eintragbaren Kindern pro Benutzer mit Elternrolle
+            'tanSize' => 6, //Länge der Tans
+            'maxTanGen' => 100, //Maximal auf einmal generierbare Anzahl an TANs
+            'maxAppointmentsPerChild' => 5, //Maximal Anzahl an Terminen pro Kind
+            'defaultTeacherPassword' => 'DONNERSTAG01', //Standardlehrerpasswort sofern randomTeacherPassword false ist sollte dieses gesetzt werden
+            'randomTeacherPassword' => 0, //true or false
+            'minLengthPerAppointment' => 5, //Minimallänge eines Termins bei Elternsprechtagserstellung
+            'banUsers' => true, //Automatische Usersperrung bei n-Versuchen , true Aktiviert - False Deaktiviert
+            'durationTempBans' => 5, //Dauer die ein Account gesperrt wird bei 3-facher Fehleingabe des Passworts
+            'maxAttemptsForLogin' => 5, //Maximalanzahl von Loginversuchen bis zur Sperrung
+            'timeFormat' => 'H:i',
+            'dateFormat' => 'd.m.Y',
+            'allowBlockingAppointments' => true,
+            'allowBlockingOnlyForManagement' => true,
+            'appointmentBlocksPerDate' => 2,
+            'lengthReasonAppointmentBlocked' => 5,
+            'schoolStreet' => '',
+            'schoolCity' => Yii::t('app', 'PLZ Ort'),
+            'schoolTele' => Yii::t('app', 'Telefonnummer'),
+            'schoolFax' => Yii::t('app', 'Faxnummer'),
+            'schoolEmail' => 'office@schuldomain.de',
+            'useSchoolEmailForContactForm' => true,
+            'lockRegistration' => false,
+            'allowGroups' => false,
+            'logoPath' => '/img/logo.png',
+            'schoolWebsiteLink' => 'schooldomain.de',
+            'smtpAuth' => false,
+            'smtpLocal' => true,
+            'smtpPort' => 25,
+            'smtpSecure' => '',
+            'smtpPassword' => '',
+            'textHeader' => Yii::t('der'),
+            'language' => 'de',
+            'allowParentsToManageChilds' => true);
+    }
+
     /**
      * sets connection
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return \CDbConnection
      */
     public function getConnection() {
-        $connection = new CDbConnection($this->getDBMS() . ':host=' . $this->getParam('databaseHost') . ';dbname=' . $this->getParam('databaseName'), $this->getParam('databaseUsername'), $this->getParam('databasePassword'));
+        $connection = new CDbConnection('mysql:host=' . $this->getParam('databaseHost') . ';dbname=' . $this->getParam('databaseName'), $this->getParam('databaseUsername'), $this->getParam('databasePassword'));
         try {
             $connection->setActive(true);
         } catch (CException $ex) {
@@ -463,5 +496,7 @@ class ConfigForm extends CFormModel {
         }
         return $connection;
     }
+
 }
+
 ?>

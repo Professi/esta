@@ -29,6 +29,7 @@ return array (
  'Absendername (z.B. ESTA-School)' => '',
  'Domainname des SMTP Servers (z.B. schoolxyz.de)' => '',
  'Schulname (z.B. Schule XYZ)' => '',
+ 'Schulname' => 'Schoolname',
  'E-Mails versenden?' => '',
  'Maximale Anzahl an Kindern pro Eltern' => '',
  'Maximale Anzahl an Terminen pro Kind' => '',
@@ -56,11 +57,6 @@ return array (
  'Nur Verwaltung und Administration dürfen Termine blockieren?' => '',
  'Registrierung sperren?' => '',
  'Gruppen erlauben?' => '',
- 'Datenbankhost' => '',
- 'Datenbankname' => '',
- 'Datenbankbenutzername' => '',
- 'Datenbankbenutzerpasswort' => '',
- 'Datenbankmanagementsystem' => '',
  'Pfad des Schullogos in der Anwendung' => '',
  'Headertext zwischen Anwendungslogo und Schullogo' => '',
  'Sprache' => '',
@@ -77,5 +73,13 @@ return array (
  'Mit dieser Option können Sie Gruppen aktivieren.' => '',
  'Für jeden Elternsprechtag und Benutzer können bestimmte Gruppen festgelegt werden.' => '',
  'Damit kann der Zugriff von Benutzern auf Elternsprechtage beschr&auml;nkt werden. Jeder TAN kann eine bestimmte Gruppe zugewiesen werden. Elternsprechtage ohne Gruppen sind frei zugänglich für registrierte Benutzer. Benutzer ohne Gruppe können an jedem Elternsprechtag Termine buchen.' => '',
+ 'Schl&uuml;ssel' => 'Key',
+ 'Wert' => 'Value',
+ 'Elternsprechtag' => '',
+ 'PLZ Ort' => 'Citycode and City',
+ 'Telefonnummer' => 'Phone number',
+ 'Faxnummer' => 'Fax number',
+ 'der' => 'of',
+
  
 );
