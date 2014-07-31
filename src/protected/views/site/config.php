@@ -88,7 +88,7 @@ $this->registerAdminScripts(true);
                     echo $form->error($model, 'language');
                     ?>
                 </div>
-            </div>-->
+            </div>
             <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'adminEmail'); ?></span>
@@ -209,14 +209,6 @@ $this->registerAdminScripts(true);
                     ?>
                 </div>
             </div>
-            <div class="row">
-                <div class="eight columns centered panel text-center">
-                    <?php echo Yii::t('app', 'Für Datums- und Zeitformate siehe <a href="http://php.net/manual/de/function.date.php">http://php.net/manual/de/function.date.php</a>'); ?> 
-                </div>
-            </div>
-        </fieldset>
-        <fieldset>
-            <legend>Hash</legend>
             <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'hashCost'); ?></span>
@@ -228,6 +220,12 @@ $this->registerAdminScripts(true);
                     ?>
                 </div>
             </div>
+            <div class="row">
+                <div class="eight columns centered panel text-center">
+                    <?php echo Yii::t('app', 'Für Datums- und Zeitformate siehe <a href="http://php.net/manual/de/function.date.php">http://php.net/manual/de/function.date.php</a>'); ?> 
+                </div>
+            </div>
+
         </fieldset>
         <fieldset>
             <legend>Kontaktinformationen</legend>

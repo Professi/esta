@@ -20,8 +20,8 @@
  * model class for configurations view
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
-class ConfigForm extends CActiveRecord {
-
+class ConfigForm extends CFormModel {
+    
     public $adminEmail;
     public $dateTimeFormat;
     public $smtpAuth;
