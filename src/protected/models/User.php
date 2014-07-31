@@ -106,11 +106,11 @@ class User extends CActiveRecord {
                 'min' => Yii::app()->params['tanSize'],
                 'max' => Yii::app()->params['tanSize'],),
             array('tan', 'numerical', 'integerOnly' => TRUE,
-                'allowEmpty' => !$this->isNewRecord || !Yii::app()->user->isGuest || !Yii::app()->params['installed']
+                'allowEmpty' => !$this->isNewRecord || !Yii::app()->user->isGuest
             ),
-            array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat', 'allowEmpty' => !Yii::app()->params['installed']),
+            array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat'),
             array('password_repeat', 'safe'), //allow bulk assignment
-            array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements() || !Yii::app()->params['installed']),
+            array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
             array('id,username, firstname, state, lastname, email, role,roleName,stateName,title', 'safe', 'on' => 'search'),
             array('groups', 'safe', 'on' => 'update'),
         );
@@ -344,7 +344,7 @@ class User extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     private function updateTan($tan = '') {
-        if (!Yii::app()->user->checkAccess('1') && Yii::app()->params['installed']) {
+        if (!Yii::app()->user->checkAccess('1')) {
             if ($tan == '') {
                 $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
             }
@@ -378,7 +378,7 @@ class User extends CActiveRecord {
         $rc = true;
         $userrole = New UserRole();
         $userrole->user_id = $this->getPrimaryKey();
-        if (Yii::app()->user->isGuest && Yii::app()->params['installed']) {
+        if (Yii::app()->user->isGuest) {
             $userrole->role_id = $this->getRoleId('3');
         } else {
             $userrole->role_id = $this->getRoleId($this->role);
@@ -492,7 +492,7 @@ class User extends CActiveRecord {
      */
     public function beforeSave() {
         if ($this->isNewRecord) {
-            if (Yii::app()->user->isGuest && Yii::app()->params['installed']) {
+            if (Yii::app()->user->isGuest) {
                 $this->state = 0;
             }
             $this->activationKey = self::generateActivationKey();
@@ -624,7 +624,7 @@ class User extends CActiveRecord {
         if ($this->getError('password') == Yii::t('yii', '{attribute} must be repeated exactly.', $params)) {
             $this->addError('password_repeat', Yii::t('app', 'Passwörter stimmen nicht überein.'));
         }
-        if (($rc && Yii::app()->user->isGuest && $this->isNewRecord && Yii::app()->params['installed'])) {
+        if ($rc && Yii::app()->user->isGuest && $this->isNewRecord) {
             $rc = $this->addWithTanNewGroup($this->tan);
         }
         return $rc;
@@ -653,7 +653,7 @@ class User extends CActiveRecord {
                 $this->addParentChildWithTan($tan);
             }
         } else {
-            if ((Yii::app()->params['installed'] && Yii::app()->user->isGuest()) || !Yii::app()->params['installed']) {
+            if (Yii::app()->user->isGuest()) {
                 $errorMsg = Yii::t('app', 'Leider konnte die eingegebene TAN nicht identifiziert werden.');
                 $rc = false;
             }

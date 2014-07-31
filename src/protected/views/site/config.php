@@ -215,37 +215,20 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
         </fieldset>
-        <?php if (!Yii::app()->params['installed'] && Yii::app()->user->isGuest()) { ?>
-            <fieldset>
-                <legend>Installierung</legend>
-                <div class="row collapse">
-                    <div class="eight columns">
-                        <span class="prefix infofeld"><?php echo $form->label($model, 'pepper', array('class' => 'infolabel')); ?></span>
-                        <div class="infotext">
-                            <span aria-hidden="true" data-icon="&#xe012;"></span>
-                            Bei der Generierung eines Passwortes wird dieser Pepper verwendet.
-                        </div>
-                    </div>
-                    <div class="four columns">
-                        <?php
-                        echo $form->textField($model, 'pepper');
-                        echo $form->error($model, 'pepper');
-                        ?>
-                    </div>
+        <fieldset>
+            <legend>Hash</legend>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'hashCost'); ?></span>
                 </div>
-                <div class="row collapse">
-                    <div class="eight columns">
-                        <span class="prefix"><?php echo $form->label($model, 'hashCost'); ?></span>
-                    </div>
-                    <div class="four columns">
-                        <?php
-                        echo $form->textField($model, 'hashCost');
-                        echo $form->error($model, 'hashCost');
-                        ?>
-                    </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'hashCost');
+                    echo $form->error($model, 'hashCost');
+                    ?>
                 </div>
-            </fieldset>
-        <?php } ?>  
+            </div>
+        </fieldset>
         <fieldset>
             <legend>Kontaktinformationen</legend>
             <div class="row collapse">

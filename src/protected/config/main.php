@@ -16,20 +16,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 $params = Yii::app()->params;
-$session = array();
-if ($params['installed']) {
-    $session = array('sessionName' => 'SiteSession',
-        'class' => 'CDbHttpSession',
-        'autoCreateSessionTable' => false,
-        'sessionTableName' => 'YiiSession',
-        'connectionID' => 'db',
-        'autoStart' => true,);
-}
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
-    'name' => $params['appName'],
+    'name' => array_key_exists('appName', $params) ? 'ESTA' : $params['appName'],
     'sourceLanguage' => 'de',
-    'language' => $params['language'],
+    'language' => array_key_exists('language', $params) ? 'de' : $params['language'],
     'preload' => array('log'),
     'import' => array(
         'application.models.*',
@@ -79,7 +70,7 @@ return array(
             'password' => $params['databasePassword'],
             'charset' => 'utf8',
             'tablePrefix' => '',
-            'schemaCachingDuration' => YII_DEBUG || !$params['installed'] ? 0 : 86400, //3600 oder 86400
+            'schemaCachingDuration' => YII_DEBUG ? 0 : 86400, //3600 oder 86400
         ),
         'errorHandler' => array(
             'errorAction' => 'site/error',
@@ -106,9 +97,14 @@ return array(
             'connectionID' => 'db',
             'autoCreateCacheTable' => false,
             'cacheTableName' => 'YiiCache',
-            'enabled' => $params['installed'],
+            'enabled' => !YII_DEBUG,
         ),
-        'session' => $session,
+        'session' => array('sessionName' => 'SiteSession',
+            'class' => 'CDbHttpSession',
+            'autoCreateSessionTable' => false,
+            'sessionTableName' => 'YiiSession',
+            'connectionID' => 'db',
+            'autoStart' => true,),
         'widgetFactory' => array(// nicht ändern
             'widgets' => array(// nicht ändern
                 'CBaseListView' => array(

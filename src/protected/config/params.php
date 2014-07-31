@@ -15,13 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-$array = array(
+return array(
     'databaseHost' => 'localhost',
     'databaseName' => 'estdb',
     'databaseUsername' => 'estdb',
     'databasePassword' => 'estdb', //should be a better password
     'databasePort' => '3306',
-    'installed' => false,
     );
-    return $array;
 ?>

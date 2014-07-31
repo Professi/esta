@@ -71,37 +71,11 @@ class SiteController extends Controller {
      * @param ConfigForm &$model
      * @param type &$file
      * @param boolean &$createAdminUser
+     * @TODO Ändern
      */
     public function config(&$model, &$file, &$createAdminUser) {
         if ($model->validate()) {
-            if (Yii::app()->params['installed'] == 0) {
-                $createAdminUser = true;
-            }
-            if (file_put_contents($file, base64_encode(serialize($model->attributes)))) {
-                if ($createAdminUser && $model->tables()) {
-                        try {
-                        $user = new User();
-                        $user->setSomeAttributes('admin', 'admin', 'admin', 1, 0);
-                        $user->password = "admin";
-                        $user->password_repeat = $user->password;
-                        $msg = "";
-                        $msg = "Konfiguration aktualisiert. Außerdem wurde ein Administratorkonto erstellt. Ihr Benutzerkontenname lautet: "
-                                . "admin" . " Ihr Passwort lautet:" . "admin";
-                        $msg .= "\n Sie können sich nun einloggen.";
-                        $model->installed = 1;
-                        $user->insert();
-                        Yii::app()->user->setFlash('success', $msg);
-                        file_put_contents($file, base64_encode(serialize($model->attributes)));
-                        $this->redirect(array('site/index'));
-                        } catch(CDbException $e) {
-                            $e->getMessage();
-                        }
-                } else {
-                    Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert. Die Einstellungen werden bei dem nächsten Seitenaufruf verwendet.');
-                }
-            } else {
-                Yii::app()->user->setFlash('failMsg', 'Die Konfiguration konnte nicht aktualisiert werden. Entweder existiert die Datei nicht oder es sind keien Schreibrechte vorhanden.');
-            }
+
         }
     }
 
@@ -110,14 +84,13 @@ class SiteController extends Controller {
      * action für das Konfigurationsskript
      */
     public function actionConfig() {
-        if ((Yii::app()->user->checkAccess('0') && Yii::app()->params['installed']) || !Yii::app()->params['installed']) {
+        if (Yii::app()->user->checkAccess('0')) {
             $model = new ConfigForm();
             $optionsMails = self::getDisabledOptions($model->mailsActivated);
             $optionsBans = self::getDisabledOptions($model->banUsers);
             $optionsBlocks = self::getDisabledOptions($model->allowBlockingAppointments);
             if (isset($_POST['ConfigForm'])) {
                 $createAdminUser = false;
-                $file = Yii::app()->basePath . '/config/params.inc';
                 $model->attributes = $_POST['ConfigForm'];
                 $this->config($model, $file, $createAdminUser);
             } $this->render('config', array(
@@ -169,7 +142,7 @@ class SiteController extends Controller {
                     $toMail = Yii::app()->params['adminEmail'];
                 }
                 $mail->sendMail($subject, $model->body, $toMail, $model->email, $name);
-                Yii::app()->user->setFlash('success', 'Vielen Dank dass Sie uns kontaktieren. Wir werden Ihnen so schnell wie möglich antworten.');
+                Yii::app()->user->setFlash('success', Yii::t('app','Vielen Dank dass Sie uns kontaktieren. Wir werden Ihnen so schnell wie möglich antworten.'));
                 $this->refresh();
             }
         }
