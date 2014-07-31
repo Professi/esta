@@ -28,9 +28,10 @@ defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
 
 require_once($yii);
 $app = Yii::createWebApplication($config);
-$configs = ConfigEntry::model()->findAll();
-foreach ($configs as $value) {
-    $app->params->add($config->key, $config->value);
+if ($app->params['installed']) {
+    $configs = ConfigEntry::model()->findAll();
+    foreach ($configs as $value) {
+        $app->params->add($config->key, $config->value);
+    }
 }
-
 $app->run();

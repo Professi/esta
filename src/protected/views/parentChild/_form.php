@@ -45,7 +45,7 @@ if (Yii::app()->user->checkAccess('1')) {
             ?>
         </div>
     </div>
-<? } ?>
+<?php } ?>
 <div class="row collapse">
     <div class="two columns">
         <span class="prefix">Vorname</span>

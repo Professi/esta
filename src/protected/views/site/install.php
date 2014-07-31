@@ -1,6 +1,5 @@
 <?php
-
-/** Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,13 +14,5 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-$array = array(
-    'databaseHost' => 'localhost',
-    'databaseName' => 'estdb',
-    'databaseUsername' => 'estdb',
-    'databasePassword' => 'estdb', //should be a better password
-    'databasePort' => '3306',
-    'installed' => false,
-    );
-    return $array;
+
 ?>

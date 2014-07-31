@@ -78,9 +78,8 @@ class SiteController extends Controller {
                 $createAdminUser = true;
             }
             if (file_put_contents($file, base64_encode(serialize($model->attributes)))) {
-                if ($createAdminUser) {
-                    if ($model->tables()) {
-                        try{
+                if ($createAdminUser && $model->tables()) {
+                        try {
                         $user = new User();
                         $user->setSomeAttributes('admin', 'admin', 'admin', 1, 0);
                         $user->password = "admin";
@@ -96,7 +95,6 @@ class SiteController extends Controller {
                         $this->redirect(array('site/index'));
                         } catch(CDbException $e) {
                             $e->getMessage();
-                        }
                         }
                 } else {
                     Yii::app()->user->setFlash('success', 'Konfiguration aktualisiert. Die Einstellungen werden bei dem nächsten Seitenaufruf verwendet.');
@@ -146,10 +144,11 @@ class SiteController extends Controller {
      */
     public function actionError() {
         if ($error = Yii::app()->errorHandler->error) {
-            if (Yii::app()->request->isAjaxRequest)
+            if (Yii::app()->request->isAjaxRequest) {
                 echo $error['message'];
-            else
+            } else {
                 $this->render('error', $error);
+            }
         }
     }
 
