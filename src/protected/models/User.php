@@ -135,11 +135,10 @@ class User extends CActiveRecord {
      * Verschlüsselt ein Passwort mit Applikationssalt mit Hilfe des CPasswordHelpers
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param string $password Zu salzendes Passwort
-     * @param string $salt Salt
-     * @return string encrypted and salted password with sha512
+     * @return string password
      */
     public function encryptPassword($password) {
-        return CPasswordHelper::hashPassword($password, Yii::app()->params['hashCost']);
+        return CPasswordHelper::hashPassword($password, $hashCost);
     }
 
     /**

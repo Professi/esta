@@ -1,5 +1,4 @@
 <?php
-
 /**
  * ParentChild Controller für Model ParentChild 
  */
@@ -107,7 +106,7 @@ class ParentChildController extends Controller {
                 $userNameString = $model->user->firstname . " " . $model->user->lastname;
             }
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', 'Kind erfolgreich hinzugefügt.');
+                Yii::app()->user->setFlash('success', Yii::t('app','Kind erfolgreich hinzugefügt.'));
                 if (Yii::app()->user->checkAccess('1')) {
                     $this->redirect(array('admin'));
                 } else {

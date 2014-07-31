@@ -269,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `activationKey`, `createtime`, `firstname`, `lastname`, `title`, `state`, `lastLogin`, `badLogins`, `bannedUntil`, `password`) VALUES
-(1, 'admin', 'admin', '9848a467b94293fcbdb5f08f36d68f5fd5544113', 1406822209, 'Admin', 'Admin', NULL, 1, 0, 0, 0, '$2a$13$kdCLhLuVOxdPWJ5rS8lMeu/lMdQ.6GZvjyagRStVFNMZudP2zbal6');
+(1, 'admin', 'admin', '9848a467b94293fcbdb5f08f36d68f5fd5544113', 1406822209, 'Admin', 'Admin', NULL, 1, 0, 0, 0, '$2a$13$hwK.QA5hXUg94isY0kP6AuERtW7A5yJkjvh3IEXClunnLB.8GM.ju');
 
 -- --------------------------------------------------------
 

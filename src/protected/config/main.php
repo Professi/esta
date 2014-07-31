@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-$params = Yii::app()->params;
+$params = require(dirname(__FILE__) . '/params.php');
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
-    'name' => array_key_exists('appName', $params) ? 'ESTA' : $params['appName'],
+    'name' => 'ESTA',
     'sourceLanguage' => 'de',
-    'language' => array_key_exists('language', $params) ? 'de' : $params['language'],
+    'language' => 'de',
     'preload' => array('log'),
     'import' => array(
         'application.models.*',
@@ -63,7 +63,7 @@ return array(
             'connectionID' => 'db',
         ),
         'db' => array(
-            'connectionString' => 'mysql:host=' . $params['databaseHost'] . ';port=' . $params['databasePort'] . ';dbname=' . $params['databaseName'], //entsprechen der eigenen Datenbank anpassen  Beispiel: mysql:host=HOST;dbname=DBNAME
+            'connectionString' => 'mysql:host=' . $params['databaseHost'] . ';port=' . $params['databasePort'] . ';dbname=' . $params['databaseName'],
             'emulatePrepare' => true,
             'enableProfiling' => YII_DEBUG,
             'username' => $params['databaseUsername'], //DB User bitte anpassen

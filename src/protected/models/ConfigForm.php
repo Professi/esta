@@ -67,11 +67,6 @@ class ConfigForm extends CActiveRecord {
     public $teacherAllowBlockTeacherApps;
     public $schoolWebsiteLink;
 
-    /**
-     * validation rules
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return array
-     */
     public function rules() {
         return array(
             array('adminEmail,dateTimeFormat,emailHost,fromMail' .
@@ -82,7 +77,7 @@ class ConfigForm extends CActiveRecord {
                 'allowBlockingAppointments,appointmentBlocksPerDate,' .
                 'lengthReasonAppointmentBlocked,schoolStreet,schoolCity,' .
                 'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,' .
-                'lockRegistration,allowGroups,databasePort,allowParentsToManageChilds,' .
+                'lockRegistration,allowGroups,allowParentsToManageChilds,' .
                 'logoPath,textHeader,language,appName,hashCost,' .
                 'teacherAllowBlockTeacherApps,smtpPort,smtpLocal,tanSize,schoolWebsiteLink', 'required'),
             array('adminEmail,schoolEmail', 'email'),
@@ -96,7 +91,7 @@ class ConfigForm extends CActiveRecord {
                 'boolean'),
             array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,'
                 . 'durationTempBans,maxAttemptsForLogin,appointmentBlocksPerDate,'
-                . 'lengthReasonAppointmentBlocked,databasePort,smtpPort,maxTanGen,tanSize',
+                . 'lengthReasonAppointmentBlocked,smtpPort,maxTanGen,tanSize',
                 'numerical', 'integerOnly' => true, 'min' => 1),
             array('hashCost', 'numerical', 'integerOnly' => true, 'min' => 13),
             array('adminEmail,dateTimeFormat,emailHost,fromMailHost,fromMail' .
@@ -109,10 +104,6 @@ class ConfigForm extends CActiveRecord {
         );
     }
 
-    /**
-     * attributeLabels
-     * @return array
-     */
     public function attributeLabels() {
         return array(
             'adminEmail' => Yii::t('app', 'Administrator E-Mail Adresse'),
@@ -151,7 +142,6 @@ class ConfigForm extends CActiveRecord {
             'textHeader' => Yii::t('app', 'Headertext zwischen Anwendungslogo und Schullogo'),
             'language' => Yii::t('app', 'Sprache'),
             'appName' => Yii::t('app', 'Anwendungsname'),
-            'databasePort' => Yii::t('app', 'Datenbankport'),
             'smtpSecure' => Yii::t('app', 'SMTP- Sicherheit(z.B. ssl oder tls), kann leer gelassen werden'),
             'smtpPort' => Yii::t('app', 'SMTP- Port'),
             'smtpLocal' => Yii::t('app', 'Lokaler SMTP Server?'),
