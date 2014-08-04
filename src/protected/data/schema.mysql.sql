@@ -89,12 +89,13 @@ INSERT INTO `configs` (`key`, `value`) VALUES
 ('hashCost','13'),
 ('dateTimeFormat','d.m.Y H:i'),
 ('emailHost','localhost'),
-('fromMailHost',''),
+('fromMailHost','esta'),
+('fromMail','ESTA-School'),
 ('schoolName','Schulname'),
 ('mailsActivated','true'),
 ('maxChild','3'),
 ('tanSize','6'),
-('maxTenGen','100'),
+('maxTanGen','100'),
 ('maxAppointmentsPerChild','5'),
 ('defaultTeacherPassword','DONNERSTAG01'),
 ('randomTeacherPassword','0'),
@@ -104,7 +105,7 @@ INSERT INTO `configs` (`key`, `value`) VALUES
 ('maxAttemptsForLogin','5'),
 ('timeFormat','H:i'),
 ('dateFormat','d.m.Y'),
-('allowBlockingAppoinments','true'),
+('allowBlockingAppointments','true'),
 ('allowBlockingOnlyForManagement','true'),
 ('appointmentBlocksPerDate','2'),
 ('lengthReasonAppointmentBlocked','5'),
@@ -125,7 +126,8 @@ INSERT INTO `configs` (`key`, `value`) VALUES
 ('smtpPassword',''),
 ('textHeader','der'),
 ('language','de'),
-('allowParentsToManageChilds','');
+('teacherAllowBlockTeacherApps', 'false'),
+('allowParentsToManageChilds','true');
 
 -- --------------------------------------------------------
 

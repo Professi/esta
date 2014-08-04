@@ -66,15 +66,14 @@ class SiteController extends Controller {
         }
     }
 
-    /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @param ConfigForm &$model
-     * @param type &$file
-     * @param boolean &$createAdminUser
-     * @TODO Ändern
-     */
-    public function config(&$model, &$file, &$createAdminUser) {
+    public function config(&$model, &$reflectionClass) {
         if ($model->validate()) {
+            $properties = $reflectionClass->getProperties();
+            foreach ($properties as $prop) {
+                $entry = ConfigEntry::model()->findByPk($prop->getName());
+                $entry->value = $prop->getValue($model);
+                $entry->update();
+            }
         }
     }
 
@@ -88,15 +87,16 @@ class SiteController extends Controller {
             $model = new ConfigForm();
             $class = new ReflectionClass('ConfigForm');
             foreach ($configList as $value) {
-                $class->getProperty($value->key)->setValue($model,$value->value);
+                $class->getProperty($value->key)->setValue($model, $value->value);
             }
             $optionsMails = self::getDisabledOptions($model->mailsActivated);
             $optionsBans = self::getDisabledOptions($model->banUsers);
             $optionsBlocks = self::getDisabledOptions($model->allowBlockingAppointments);
             if (isset($_POST['ConfigForm'])) {
                 $model->attributes = $_POST['ConfigForm'];
-                $this->config($model, $file, $createAdminUser);
-            } $this->render('config', array(
+                $this->config($model, $class);
+            }
+            $this->render('config', array(
                 'model' => $model,
                 'optionsBans' => $optionsBans,
                 'optionsBlocks' => $optionsBlocks,
@@ -145,7 +145,7 @@ class SiteController extends Controller {
                     $toMail = Yii::app()->params['adminEmail'];
                 }
                 $mail->sendMail($subject, $model->body, $toMail, $model->email, $name);
-                Yii::app()->user->setFlash('success', Yii::t('app','Vielen Dank dass Sie uns kontaktieren. Wir werden Ihnen so schnell wie möglich antworten.'));
+                Yii::app()->user->setFlash('success', Yii::t('app', 'Vielen Dank dass Sie uns kontaktieren. Wir werden Ihnen so schnell wie möglich antworten.'));
                 $this->refresh();
             }
         }
@@ -206,4 +206,3 @@ class SiteController extends Controller {
     }
 
 }
-

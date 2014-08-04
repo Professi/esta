@@ -130,4 +130,12 @@ return array(
     'Benutzerrolle' => '', 
     'Bitte führen Sie auf dieser Seite nur Änderungen durch, wenn Sie sich absolut sicher sind.' => '',
     'Die Änderungen haben Auswirkungen auf alle Benutzer im System und können sich negativ auf die Funktionalität der Software auswirken.' => '',
+    'Eingetragene Lehrer' => '',
+    'Registrierte Eltern' => '',
+    'Eingetragene Sch&uuml;ler' => '',
+    'Eingetragene Elternsprechtage' => '',
+    'Vergebene Termine' => '',
+    'Freie Termine' => '',
+    'Generierte TANs' => '',
+    'Zur&uuml;ck zur Startseite' => '',
 );
