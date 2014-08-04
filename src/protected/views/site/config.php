@@ -42,15 +42,24 @@ $this->registerAdminScripts(true);
                     <span aria-hidden="true" data-icon="&#xe011;" style="font-size:2.5em;"></span>
                 </div>
                 <div class="ten columns">
-                    <?php if (!Yii::app()->user->isGuest()) { ?>
-                        Bitte führen Sie auf dieser Seite keine Änderungen durch, wenn Sie sich nicht absolut sicher sind.
-                        <br> Die Änderungen haben Auswirkungen auf alle Benutzer im System und können sich negativ auf die Funktionalität der Software auswirken.
-                    <?php } else { ?>
-                        Bitte passen Sie die nachfolgenden Felder entsprechend Ihrer Bed&uuml;fnisse an. Falls Sie korrekte Daten eingetragen haben, wird nach der ersten Betätigung des "Speichern" Buttons die Datenbanktabellen angelegt. Nach der zweiten Betätigung des Buttons wird das "admin" Konto angelegt. Wenn die Anwendung erfolgreich konfiguriert wurde, können Sie sich mit dem Benutzernamen "admin" und dem Passwort "admin" einloggen. Dies erkennen Sie daran, wenn Sie das nachfolgende Formular absenden und Sie keine Meldung erhalten. Anschließend sollten Sie unbedingt Ihre Kontodaten verändern.
-                    <?php } ?>
+                    <?php
+                        echo Yii::t('app', 'Bitte führen Sie auf dieser Seite nur Änderungen durch, wenn Sie sich absolut sicher sind.') . '<br>';
+                        echo Yii::t('app', 'Die Änderungen haben Auswirkungen auf alle Benutzer im System und können sich negativ auf die Funktionalität der Software auswirken.');
+                    ?>
                 </div>
             </div>
         </div>
+        <?php if($model->hasErrors()) { ?>
+                <div class="panel alert-box alert">
+            <div class="row">
+                <div class="ten columns">
+                    <?php
+                        echo CHtml::errorSummary($model);
+                    ?>
+                </div>
+            </div>
+        </div>
+        <?php } ?>
         <fieldset>
             <legend>Allgemein</legend>
             <div class="row collapse">
@@ -71,246 +80,159 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <!--                <div class="eight columns">
-                                    <span class="prefix infofeld">
-                <?php // echo $form->label($model, 'language', array('class' => 'infolabel')); ?>
-                                    </span>
-                                    <div class="infotext">
-                                        <span aria-hidden="true" data-icon="&#xe012;"></span>
-                                        Länderkürzel (bisher wurden noch keine Übersetzungen eingebaut)
-                                    </div>
-                                </div>
-                                <div class="four columns">
-                <?php
-//                    echo $form->textField($model, 'language');
-//                    echo $form->error($model, 'language');
-                ?>
-                                </div>
-                            </div>-->
-                <div class="row collapse">
-                    <div class="eight columns">
-                        <span class="prefix"><?php echo $form->label($model, 'adminEmail'); ?></span>
-                    </div>
-                    <div class="four columns">
-                        <?php
-                        echo $form->textField($model, 'adminEmail');
-                        echo $form->error($model, 'adminEmail');
-                        ?>
-                    </div>
-                </div>
-                <div class="row collapse">
-                    <div class="eight columns">
-                        <span class="prefix"><?php echo $form->label($model, 'dateFormat'); ?></span>
-                    </div>
-                    <div class="four columns">
-                        <?php
-                        echo $form->textField($model, 'dateFormat');
-                        echo $form->error($model, 'dateFormat');
-                        ?>
-                    </div>
-                </div>
-                <div class="row collapse">
-                    <div class="eight columns">
-                        <span class="prefix"><?php echo $form->label($model, 'timeFormat'); ?></span>
-                    </div>
-                    <div class="four columns">
-                        <?php
-                        echo $form->textField($model, 'timeFormat');
-                        echo $form->error($model, 'timeFormat');
-                        ?>
-                    </div>
-                </div>
-                <div class="row collapse">
-                    <div class="eight columns">
-                        <span class="prefix"><?php echo $form->label($model, 'dateTimeFormat'); ?></span>
-                    </div>
-                    <div class="four columns">
-                        <?php
-                        echo $form->textField($model, 'dateTimeFormat', array('readonly' => 'readonly'));
-                        echo $form->error($model, 'dateTimeFormat');
-                        ?>
-                    </div>
-                </div>
-                <div class="row collapse">
-                    <div class="eight columns">
-                        <span class="prefix"><?php echo $form->label($model, 'randomTeacherPassword'); ?></span>
-                    </div>
-                    <div class="four columns ">
-                        <?php
-                        echo Select2::activeDropDownList($model, 'randomTeacherPassword', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
-                        echo $form->error($model, 'randomTeacherPassword');
-                        ?>
-                    </div>
-                </div>
-                <div class="row collapse">
-                    <div class="eight columns">
-                        <span class="prefix"><?php echo $form->label($model, 'defaultTeacherPassword'); ?></span>
-                    </div>
-                    <div class="four columns">
-                        <?php
-                        echo $form->textField($model, 'defaultTeacherPassword');
-                        echo $form->error($model, 'defaultTeacherPassword');
-                        ?>
-                    </div>
-                </div>
-                <div class="row collapse">
-                    <div class="eight columns">
-                        <span class="prefix"><?php echo $form->label($model, 'lockRegistration'); ?></span>
-                    </div>
-                    <div class="four columns">
-                        <?php
-                        echo Select2::activeDropDownList($model, 'lockRegistration', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
-                        echo $form->error($model, 'lockRegistration');
-                        ?>
-                    </div>
-                </div>
-                <div class="row collapse">
-                    <div class="eight columns">
-                        <span class="prefix infofeld">
-                            <?php echo $form->label($model, 'allowGroups', array('class' => 'infolabel')); ?>
-                        </span>
-                        <div class="infotext">
-                            <span aria-hidden="true" data-icon="&#xe012;"></span>
-                            <?php echo Yii::t('app', 'Mit dieser Option können Sie Gruppen aktivieren.');
-                            echo Yii::t('app', 'Für jeden Elternsprechtag und Benutzer können bestimmte Gruppen festgelegt werden.');
-                            echo Yii::t('app', 'Damit kann der Zugriff von Benutzern auf Elternsprechtage beschr&auml;nkt werden. Jeder TAN kann eine bestimmte Gruppe zugewiesen werden. Elternsprechtage ohne Gruppen sind frei zugänglich für registrierte Benutzer. Benutzer ohne Gruppe können an jedem Elternsprechtag Termine buchen.'); ?>
-                        </div>
-                    </div>
-                    <div class="four columns">
-                        <?php
-                        echo Select2::activeDropDownList($model, 'allowGroups', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
-                        echo $form->error($model, 'allowGroups');
-                        ?>
-                    </div>
-                </div>
-                <div class="row collapse">
-                    <div class="eight columns">
-                        <span class="prefix"><?php echo $form->label($model, 'logoPath'); ?></span>
-                    </div>
-                    <div class="four columns">
-                        <?php
-                        echo $form->textField($model, 'logoPath');
-                        echo $form->error($model, 'logoPath');
-                        ?>
-                    </div>
-                </div>
-                <div class="row collapse">
-                    <div class="eight columns">
-                        <span class="prefix"><?php echo $form->label($model, 'textHeader'); ?></span>
-                    </div>
-                    <div class="four columns">
-                        <?php
-                        echo $form->textField($model, 'textHeader');
-                        echo $form->error($model, 'textHeader');
-                        ?>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="eight columns centered panel text-center">
-                        Für Datums- und Zeitformate siehe <a href="http://php.net/manual/de/function.date.php">http://php.net/manual/de/function.date.php</a>
-                    </div>
-                </div>
-        </fieldset>
-        <?php if (!Yii::app()->params['installed'] && Yii::app()->user->isGuest()) { ?>
-            <fieldset>
-                <legend>Installierung</legend>
-                <div class="row collapse">
-                    <div class="eight columns">
-                        <span class="prefix infofeld"><?php echo $form->label($model, 'pepper', array('class' => 'infolabel')); ?></span>
-                        <div class="infotext">
-                            <span aria-hidden="true" data-icon="&#xe012;"></span>
-                            Bei der Generierung eines Passwortes wird dieser Pepper verwendet.
-                        </div>
-                    </div>
-                    <div class="four columns">
-                        <?php
-                        echo $form->textField($model, 'pepper');
-                        echo $form->error($model, 'pepper');
-                        ?>
-                    </div>
-                </div>
-                <div class="row collapse">
-                    <div class="eight columns">
-                        <span class="prefix"><?php echo $form->label($model, 'hashCost'); ?></span>
-                    </div>
-                    <div class="four columns">
-                        <?php
-                        echo $form->textField($model, 'hashCost');
-                        echo $form->error($model, 'hashCost');
-                        ?>
-                    </div>
-                </div>
-            </fieldset>
-        <?php } ?>  
-        <fieldset>
-            <legend>Datenbankinformationen</legend>
-            <div class="row collapse">
                 <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'databaseManagementSystem'); ?></span>
+                    <span class="prefix infofeld">
+                        <?php echo $form->label($model, 'language', array('class' => 'infolabel')); ?>
+                    </span>
+                    <div class="infotext">
+                        <span aria-hidden="true" data-icon="&#xe012;"></span>
+                        Länderkürzel (bisher wurden noch keine Übersetzungen eingebaut)
+                    </div>
                 </div>
                 <div class="four columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'databaseManagementSystem', array('mysql' => 'MySQL'),
-                            array('select2Options' => array('minimumResultsForSearch' => 10)));
-                    echo $form->error($model, 'databaseManagementSystem');
+                    echo $form->textField($model, 'language');
+                    echo $form->error($model, 'language');
                     ?>
                 </div>
             </div>
             <div class="row collapse">
                 <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'databaseHost'); ?></span>
+                    <span class="prefix"><?php echo $form->label($model, 'adminEmail'); ?></span>
                 </div>
                 <div class="four columns">
                     <?php
-                    echo $form->textField($model, 'databaseHost');
-                    echo $form->error($model, 'databaseHost');
+                    echo $form->textField($model, 'adminEmail');
+                    echo $form->error($model, 'adminEmail');
                     ?>
                 </div>
             </div>
             <div class="row collapse">
                 <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'databasePort'); ?></span>
+                    <span class="prefix"><?php echo $form->label($model, 'dateFormat'); ?></span>
                 </div>
                 <div class="four columns">
                     <?php
-                    echo $form->textField($model, 'databasePort');
-                    echo $form->error($model, 'databasePort');
+                    echo $form->textField($model, 'dateFormat');
+                    echo $form->error($model, 'dateFormat');
                     ?>
                 </div>
             </div>
             <div class="row collapse">
                 <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'databaseName'); ?></span>
+                    <span class="prefix"><?php echo $form->label($model, 'timeFormat'); ?></span>
                 </div>
                 <div class="four columns">
                     <?php
-                    echo $form->textField($model, 'databaseName');
-                    echo $form->error($model, 'databaseName');
+                    echo $form->textField($model, 'timeFormat');
+                    echo $form->error($model, 'timeFormat');
                     ?>
                 </div>
             </div>
             <div class="row collapse">
                 <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'databaseUsername'); ?></span>
+                    <span class="prefix"><?php echo $form->label($model, 'dateTimeFormat'); ?></span>
                 </div>
                 <div class="four columns">
                     <?php
-                    echo $form->textField($model, 'databaseUsername');
-                    echo $form->error($model, 'databaseUsername');
+                    echo $form->textField($model, 'dateTimeFormat', array('readonly' => 'readonly'));
+                    echo $form->error($model, 'dateTimeFormat');
                     ?>
                 </div>
             </div>
             <div class="row collapse">
                 <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'databasePassword'); ?></span>
+                    <span class="prefix"><?php echo $form->label($model, 'randomTeacherPassword'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="four columns ">
                     <?php
-                    echo $form->passwordField($model, 'databasePassword');
-                    echo $form->error($model, 'databasePassword');
+                    echo Select2::activeDropDownList($model, 'randomTeacherPassword', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo $form->error($model, 'randomTeacherPassword');
                     ?>
                 </div>
             </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'defaultTeacherPassword'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'defaultTeacherPassword');
+                    echo $form->error($model, 'defaultTeacherPassword');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'lockRegistration'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo Select2::activeDropDownList($model, 'lockRegistration', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo $form->error($model, 'lockRegistration');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix infofeld">
+                        <?php echo $form->label($model, 'allowGroups', array('class' => 'infolabel')); ?>
+                    </span>
+                    <div class="infotext">
+                        <span aria-hidden="true" data-icon="&#xe012;"></span>
+                        <?php
+                        echo Yii::t('app', 'Mit dieser Option können Sie Gruppen aktivieren.');
+                        echo Yii::t('app', 'Für jeden Elternsprechtag und Benutzer können bestimmte Gruppen festgelegt werden.');
+                        echo Yii::t('app', 'Damit kann der Zugriff von Benutzern auf Elternsprechtage beschr&auml;nkt werden. Jeder TAN kann eine bestimmte Gruppe zugewiesen werden. Elternsprechtage ohne Gruppen sind frei zugänglich für registrierte Benutzer. Benutzer ohne Gruppe können an jedem Elternsprechtag Termine buchen.');
+                        ?>
+                    </div>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo Select2::activeDropDownList($model, 'allowGroups', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo $form->error($model, 'allowGroups');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'logoPath'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'logoPath');
+                    echo $form->error($model, 'logoPath');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'textHeader'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'textHeader');
+                    echo $form->error($model, 'textHeader');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'hashCost'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'hashCost');
+                    echo $form->error($model, 'hashCost');
+                    ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="eight columns centered panel text-center">
+                    <?php echo Yii::t('app', 'Für Datums- und Zeitformate siehe <a href="http://php.net/manual/de/function.date.php">http://php.net/manual/de/function.date.php</a>'); ?> 
+                </div>
+            </div>
+
         </fieldset>
         <fieldset>
             <legend>Kontaktinformationen</legend>
@@ -386,12 +308,12 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'useSchoolEmailForContactForm', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'useSchoolEmailForContactForm', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'useSchoolEmailForContactForm');
                     ?>
                 </div>
             </div>
-                        <div class="row collapse">
+            <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'schoolWebsiteLink'); ?></span>
                 </div>
@@ -410,12 +332,12 @@ $this->registerAdminScripts(true);
                     <span class="prefix infofeld"><?php echo $form->label($model, 'allowParentsToManageChilds', array('class' => 'infolabel')); ?></span>
                     <div class="infotext">
                         <span aria-hidden="true" data-icon="&#xe012;"></span>
-                        Wenn diese Option aktiviert ist, können Eltern ihre Kinder beliebig verwalten. Falls diese Option deaktiviert wurde, müssen bei der TAN Erstellung die Namen der Kinder angegeben werden. Eltern können weitere Kinder nur durch TAN's hinzufügen.
+                        <?php echo Yii::t('app', 'Wenn diese Option aktiviert ist, können Eltern ihre Kinder beliebig verwalten. Falls diese Option deaktiviert wurde, müssen bei der TAN Erstellung die Namen der Kinder angegeben werden. Eltern können weitere Kinder nur durch TAN\'s hinzufügen.'); ?>
                     </div>
                 </div>
                 <div class="four columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'allowParentsToManageChilds', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'allowParentsToManageChilds', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowParentsToManageChilds');
                     ?>
                 </div>
@@ -466,7 +388,7 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'mailsActivated', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'mailsActivated', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'mailsActivated');
                     ?>
                 </div>
@@ -568,7 +490,7 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'banUsers', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'banUsers', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'banUsers');
                     ?>
                 </div>
@@ -626,7 +548,7 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'allowBlockingAppointments', array('1' => 'Ja', '0' => 'Nein'), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'allowBlockingAppointments', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowBlockingAppointments');
                     ?>
                 </div>
@@ -637,7 +559,7 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'allowBlockingOnlyForManagement', array('1' => 'Ja', '0' => 'Nein'), array($optionsBlocks, 'select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'allowBlockingOnlyForManagement', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array($optionsBlocks, 'select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowBlockingOnlyForManagement');
                     ?>
                 </div>
@@ -648,7 +570,7 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="four columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'teacherAllowBlockTeacherApps', array('1' => 'Ja', '0' => 'Nein'), array($optionsBlocks, 'select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'teacherAllowBlockTeacherApps', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array($optionsBlocks, 'select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'teacherAllowBlockTeacherApps');
                     ?>
                 </div>

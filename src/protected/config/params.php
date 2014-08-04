@@ -15,63 +15,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-$arr = unserialize(base64_decode(file_get_contents(dirname(__FILE__) . '/params.inc')));
-$array2 = array(
-    'installed' => false,
-    'appName' => 'Elternsprechtag',
-    'adminEmail' => '', //Administrator E-Mail Adresse
-    'pepper' => 'e9HOiJFfDhyvcBMin5G8CBTR98wK', //der Applikationssalt sollte mindestens 30 Zeichen lang sein und nur aus alphanumerischen Zeichen bestehen 
-    'hashCost' => 13,
-    'dateTimeFormat' => 'd.m.Y H:i', //Datumsformat -  muss nicht geändert werden
-    'emailHost' => 'localhost', //Sofern der SMTP Server auf dem selben Server läuft einfach localhost
-    'fromMailHost' => '', //Absender der Mails wird wohl später dann EST@school.de
-    'fromMail' => 'ESTA', //Der Absendername bsp. BWS-Hofheim,
-    'schoolName' => 'Schulname',
-    'mailsActivated' => true, //ob Mails versendet werden solen
-    'maxChild' => 3, //Maximal Anzahl von eintragbaren Kindern pro Benutzer mit Elternrolle
-    'tanSize' => 6, //Länge der Tans
-    'maxTanGen' => 100, //Maximal auf einmal generierbare Anzahl an TANs
-    'maxAppointmentsPerChild' => 5, //Maximal Anzahl an Terminen pro Kind
-    'defaultTeacherPassword' => 'DONNERSTAG01', //Standardlehrerpasswort sofern randomTeacherPassword false ist sollte dieses gesetzt werden
-    'randomTeacherPassword' => 0, //true or false
-    'minLengthPerAppointment' => 5, //Minimallänge eines Termins bei Elternsprechtagserstellung
-    'banUsers' => true, //Automatische Usersperrung bei n-Versuchen , true Aktiviert - False Deaktiviert
-    'durationTempBans' => 5, //Dauer die ein Account gesperrt wird bei 3-facher Fehleingabe des Passworts
-    'maxAttemptsForLogin' => 5, //Maximalanzahl von Loginversuchen bis zur Sperrung
-    'timeFormat' => 'H:i',
-    'dateFormat' => 'd.m.Y',
-    'allowBlockingAppointments' => true,
-    'allowBlockingOnlyForManagement' => true,
-    'appointmentBlocksPerDate' => 2,
-    'lengthReasonAppointmentBlocked' => 5,
-    'schoolStreet' => '',
-    'schoolCity' => 'PLZ Ort',
-    'schoolTele' => 'Telefonnummer',
-    'schoolFax' => 'Faxnummer',
-    'schoolEmail' => 'office@schuldomain.de',
-    'useSchoolEmailForContactForm' => true,
-    'lockRegistration' => false,
-    'allowGroups' => false,
+return array(
     'databaseHost' => 'localhost',
     'databaseName' => 'estdb',
     'databaseUsername' => 'estdb',
-    'databasePassword' => '',
+    'databasePassword' => 'estdb', //should be a better password
     'databasePort' => '3306',
-    'databaseManagementSystem' => 'mysql',
-    'logoPath' => '/img/logo.png',
-    'schoolWebsiteLink' => 'schooldomain.de',
-    'smtpAuth' => false,
-    'smtpLocal' => true,
-    'smtpPort' => 25,
-    'smtpSecure' => '',
-    'smtpPassword' => '',
-    'textHeader' => 'der',
-    'language' => 'de',
-    'allowParentsToManageChilds' => true,
-);
-if (!is_array($arr) || empty($arr)) {
-    return $array2;
-} else {
-    return CMap::mergeArray($array2, $arr);
-}
+    );
 ?>

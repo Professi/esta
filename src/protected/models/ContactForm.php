@@ -1,11 +1,4 @@
 <?php
-
-/**
- * ContactForm ist die Datenstruktur um Kontaktformdaten zu behalten. 
- */
-/*
- * Es wird in der 'contact' action von 'SiteController' verwendet.
- */
 /* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +13,10 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
+ * ContactForm ist die Datenstruktur um Kontaktformdaten zu behalten. 
+ * Es wird in der 'contact' action von 'SiteController' verwendet.
  */
 class ContactForm extends CFormModel {
 

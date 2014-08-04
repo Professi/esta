@@ -16,84 +16,68 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 $params = require(dirname(__FILE__) . '/params.php');
-$session = array();
-if ($params['installed']) {
-    $session = array('sessionName' => 'SiteSession', // nicht ändern
-        'class' => 'CDbHttpSession', // nicht ändern
-        'autoCreateSessionTable' => false, //nicht ändern
-        'sessionTableName' => 'YiiSession',
-        'connectionID' => 'db',
-        'autoStart' => true,);
-}
-$cache = array(// nicht ändern , kommt eventuell noch weg da aktuell nichts gecached wird
-    'class' => 'system.caching.CDbCache',
-    'connectionID' => 'db',
-    'autoCreateCacheTable' => false,
-    'cacheTableName' => 'YiiCache',
-    'enabled' => $params['installed'],
-);
 return array(
-    'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..', //nicht ändern
-    'name' => $params['appName'], //entsprechend den eigenen Bedürfnissen anpassen
-    'sourceLanguage'=>'de_de',
-    'language' => $params['language'], //Sprache
-    'preload' => array('log'), //Logkomponente - nicht ändern
-    'import' => array(//nicht ändern
-        'application.models.*', //nicht ändern
-        'application.components.*', //nicht ändern
+    'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
+    'name' => 'ESTA',
+    'sourceLanguage' => 'de',
+    'language' => 'de',
+    'preload' => array('log'),
+    'import' => array(
+        'application.models.*',
+        'application.components.*',
         'ext.select2.Select2',
     ),
-    'components' => array(//nicht ändern
+    'components' => array(
         'request' => array(
             'enableCsrfValidation' => true,
             'enableCookieValidation' => true,
         ),
-        'user' => array(//nicht ändern
-            'class' => 'WebUser', //nicht ändern
-            'allowAutoLogin' => true, //nicht ändern
+        'user' => array(
+            'class' => 'WebUser',
+            'allowAutoLogin' => true,
             'autoUpdateFlash' => false,
         ),
-        'clientScript' => array(//nicht ändern
-            'coreScriptPosition' => CClientScript::POS_END, //nicht ändern
-            'scriptMap' => array(//nicht ändern
+        'clientScript' => array(
+            'coreScriptPosition' => CClientScript::POS_END,
+            'scriptMap' => array(
                 'jquery.js' => false,
                 'jquery.min.js' => false,
-                'jquery.cookie.js' => false, //nicht ändern
-                'core.css' => false, //nicht ändern
-                'styles.css' => false, //nicht ändern
-                'pager.css' => false, //nicht ändern
-                'default.css' => false, //nicht ändern
+                'jquery.cookie.js' => false,
+                'core.css' => false,
+                'styles.css' => false,
+                'pager.css' => false,
+                'default.css' => false,
                 'jquery-ui.css' => false,
             ),
         ),
-        'urlManager' => array(//nicht ändern
-            'rules' => array(//nicht ändern
-                '<controller:\w+>/<id:\d+>' => '<controller>/view', //nicht ändern
-                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>', //nicht ändern
-                '<controller:\w+>/<action:\w+>' => '<controller>/<action>', //nicht ändern
-                '<action>' => 'site/<action>' //nicht ändern
+        'urlManager' => array(
+            'rules' => array(
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                '<action>' => 'site/<action>'
             ),
         ),
-        'authManager' => array(//nicht ändern
-            'class' => 'CDbAuthManager', //nicht ändern
-            'connectionID' => 'db', //nicht ändern
+        'authManager' => array(
+            'class' => 'CDbAuthManager',
+            'connectionID' => 'db',
         ),
         'db' => array(
-            'connectionString' => $params['databaseManagementSystem'] . ':host=' . $params['databaseHost'] . ';port=' . $params['databasePort'] . ';dbname=' . $params['databaseName'], //entsprechen der eigenen Datenbank anpassen  Beispiel: mysql:host=HOST;dbname=DBNAME
-            'emulatePrepare' => true, //nicht ändern
-            'enableProfiling' => true, //nicht ändern - Entwicklungsparameter wird später auf false gesetzt für Performancegewinn
+            'connectionString' => 'mysql:host=' . $params['databaseHost'] . ';port=' . $params['databasePort'] . ';dbname=' . $params['databaseName'],
+            'emulatePrepare' => true,
+            'enableProfiling' => YII_DEBUG,
             'username' => $params['databaseUsername'], //DB User bitte anpassen
-            'password' => $params['databasePassword'], //DB Passwort bitte anpassen
-            'charset' => 'utf8', //eventuell anpassen im optimalfall dabei belassen
-            'tablePrefix' => '', //nicht ändern
-            'schemaCachingDuration' => YII_DEBUG || !$params['installed'] ? 0 : 86400, //3600 oder 86400
+            'password' => $params['databasePassword'],
+            'charset' => 'utf8',
+            'tablePrefix' => '',
+            'schemaCachingDuration' => YII_DEBUG ? 0 : 86400, //3600 oder 86400
         ),
         'errorHandler' => array(
-            'errorAction' => 'site/error', //nicht ändern
+            'errorAction' => 'site/error',
         ),
         'log' => array(
-            'class' => 'CLogRouter', //nicht ändern
-            'routes' => array(//nicht ändern
+            'class' => 'CLogRouter',
+            'routes' => array(
                 array(
                     'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute',
                     'ipFilters' => array('*'),
@@ -108,24 +92,35 @@ return array(
                 ),
             ),
         ),
-        'cache' => $cache,
-        'session' => $session,
+        'cache' => array(
+            'class' => 'system.caching.CDbCache',
+            'connectionID' => 'db',
+            'autoCreateCacheTable' => false,
+            'cacheTableName' => 'YiiCache',
+            'enabled' => !YII_DEBUG,
+        ),
+        'session' => array('sessionName' => 'SiteSession',
+            'class' => 'CDbHttpSession',
+            'autoCreateSessionTable' => false,
+            'sessionTableName' => 'YiiSession',
+            'connectionID' => 'db',
+            'autoStart' => true,),
         'widgetFactory' => array(// nicht ändern
             'widgets' => array(// nicht ändern
                 'CBaseListView' => array(
                     '$pagerCssClass' => 'pagination-centered',
                 ),
                 'CLinkPager' => array(// nicht ändern
-                    'header' => '', // nicht ändern
-                    'nextPageLabel' => '&rsaquo;', // nicht ändern
-                    'prevPageLabel' => '&lsaquo;', // nicht ändern
-                    'firstPageLabel' => '&laquo;', // nicht ändern
-                    'lastPageLabel' => '&raquo;', // nicht ändern
-                    'firstPageCssClass' => 'arrow', // nicht ändern
-                    'lastPageCssClass' => 'arrow', // nicht ändern
-                    'hiddenPageCssClass' => 'unavailable', // nicht ändern
-                    'selectedPageCssClass' => 'current', // nicht ändern
-                    'htmlOptions' => array('class' => 'pagination'), // nicht ändern
+                    'header' => '',
+                    'nextPageLabel' => '&rsaquo;',
+                    'prevPageLabel' => '&lsaquo;',
+                    'firstPageLabel' => '&laquo;',
+                    'lastPageLabel' => '&raquo;',
+                    'firstPageCssClass' => 'arrow',
+                    'lastPageCssClass' => 'arrow',
+                    'hiddenPageCssClass' => 'unavailable',
+                    'selectedPageCssClass' => 'current',
+                    'htmlOptions' => array('class' => 'pagination'),
                 ),
                 'CCaptcha' => array(
                     'buttonOptions' => array('class' => 'tiny button captcha-button'),
