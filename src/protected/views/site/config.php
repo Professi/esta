@@ -44,10 +44,10 @@ $this->registerAdminScripts(true);
                 <div class="ten columns">
                     <?php
                     if (!Yii::app()->user->isGuest()) {
-                        echo Yii::t('app', 'Bitte führen Sie auf dieser Seite keine Änderungen durch, wenn Sie sich nicht absolut sicher sind.');
+                        echo Yii::t('app', 'Bitte führen Sie auf dieser Seite nur Änderungen durch, wenn Sie sich absolut sicher sind.');
                         ?>
                         <br><?php
-                        Yii::t('app', 'Die Änderungen haben Auswirkungen auf alle Benutzer im System und können sich negativ auf die Funktionalität der Software auswirken.');
+                        echo Yii::t('app', 'Die Änderungen haben Auswirkungen auf alle Benutzer im System und können sich negativ auf die Funktionalität der Software auswirken.');
                     }
                     ?>
                 </div>

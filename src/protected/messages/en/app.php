@@ -128,4 +128,6 @@ return array(
     'Gruppen' => 'groups',
     'Ung&uuml;ltige Anmeldeversuche' => '',
     'Benutzerrolle' => '', 
+    'Bitte führen Sie auf dieser Seite nur Änderungen durch, wenn Sie sich absolut sicher sind.' => '',
+    'Die Änderungen haben Auswirkungen auf alle Benutzer im System und können sich negativ auf die Funktionalität der Software auswirken.' => '',
 );

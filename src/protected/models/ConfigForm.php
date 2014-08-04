@@ -66,6 +66,8 @@ class ConfigForm extends CFormModel {
     public $tanSize;
     public $teacherAllowBlockTeacherApps;
     public $schoolWebsiteLink;
+    public $allowBlockingAppoinments;
+    public $maxTenGen;
 
     public function rules() {
         return array(

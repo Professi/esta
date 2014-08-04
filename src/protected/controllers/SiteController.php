@@ -75,7 +75,6 @@ class SiteController extends Controller {
      */
     public function config(&$model, &$file, &$createAdminUser) {
         if ($model->validate()) {
-
         }
     }
 
@@ -85,12 +84,16 @@ class SiteController extends Controller {
      */
     public function actionConfig() {
         if (Yii::app()->user->checkAccess('0')) {
+            $configList = ConfigEntry::model()->findAll();
             $model = new ConfigForm();
+            $class = new ReflectionClass('ConfigForm');
+            foreach ($configList as $value) {
+                $class->getProperty($value->key)->setValue($model,$value->value);
+            }
             $optionsMails = self::getDisabledOptions($model->mailsActivated);
             $optionsBans = self::getDisabledOptions($model->banUsers);
             $optionsBlocks = self::getDisabledOptions($model->allowBlockingAppointments);
             if (isset($_POST['ConfigForm'])) {
-                $createAdminUser = false;
                 $model->attributes = $_POST['ConfigForm'];
                 $this->config($model, $file, $createAdminUser);
             } $this->render('config', array(
