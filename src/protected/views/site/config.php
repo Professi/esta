@@ -43,22 +43,22 @@ $this->registerAdminScripts(true);
                 </div>
                 <div class="ten columns">
                     <?php
-                        echo Yii::t('app', 'Bitte führen Sie auf dieser Seite nur Änderungen durch, wenn Sie sich absolut sicher sind.') . '<br>';
-                        echo Yii::t('app', 'Die Änderungen haben Auswirkungen auf alle Benutzer im System und können sich negativ auf die Funktionalität der Software auswirken.');
+                    echo Yii::t('app', 'Bitte führen Sie auf dieser Seite nur Änderungen durch, wenn Sie sich absolut sicher sind.') . '<br>';
+                    echo Yii::t('app', 'Die Änderungen haben Auswirkungen auf alle Benutzer im System und können sich negativ auf die Funktionalität der Software auswirken.');
                     ?>
                 </div>
             </div>
         </div>
-        <?php if($model->hasErrors()) { ?>
-                <div class="panel alert-box alert">
-            <div class="row">
-                <div class="ten columns">
-                    <?php
+        <?php if ($model->hasErrors()) { ?>
+            <div class="panel alert-box alert">
+                <div class="row">
+                    <div class="ten columns">
+                        <?php
                         echo CHtml::errorSummary($model);
-                    ?>
+                        ?>
+                    </div>
                 </div>
             </div>
-        </div>
         <?php } ?>
         <fieldset>
             <legend>Allgemein</legend>
@@ -395,23 +395,45 @@ $this->registerAdminScripts(true);
             </div>
             <div class="row collapse">
                 <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'smtpLocal'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo Select2::activeDropDownList($model, 'smtpLocal', array(1 => 'Ja', 0 => 'Nein'));
-                    echo $form->error($model, 'smtpLocal');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'smtpAuth'); ?></span>
                 </div>
                 <div class="four columns">
                     <?php
                     echo Select2::activeDropDownList($model, 'smtpAuth', array(1 => 'Ja', 0 => 'Nein'));
                     echo $form->error($model, 'smtpAuth');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'emailHost'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'emailHost', $optionsMails);
+                    echo $form->error($model, 'emailHost');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'fromMail'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'fromMail', $optionsMails);
+                    echo $form->error($model, 'fromMail');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'fromMailHost'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'fromMailHost', $optionsMails);
+                    echo $form->error($model, 'fromMailHost');
                     ?>
                 </div>
             </div>
@@ -445,39 +467,6 @@ $this->registerAdminScripts(true);
                     <?php
                     echo $form->textField($model, 'smtpPort', $optionsMails);
                     echo $form->error($model, 'smtpPort');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'fromMailHost'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'fromMailHost', $optionsMails);
-                    echo $form->error($model, 'fromMailHost');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'fromMail'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'fromMail', $optionsMails);
-                    echo $form->error($model, 'fromMail');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'emailHost'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'emailHost', $optionsMails);
-                    echo $form->error($model, 'emailHost');
                     ?>
                 </div>
             </div>

@@ -138,7 +138,7 @@ class User extends CActiveRecord {
      * @return string password
      */
     public function encryptPassword($password) {
-        return CPasswordHelper::hashPassword($password, $hashCost);
+        return CPasswordHelper::hashPassword($password, Yii::app()->params['hashCost']);
     }
 
     /**

@@ -88,8 +88,6 @@ INSERT INTO `configs` (`key`, `value`) VALUES
 ('adminEmail','test@test.de'),
 ('hashCost','13'),
 ('dateTimeFormat','d.m.Y H:i'),
-('emailHost','localhost'),
-('fromMailHost','esta'),
 ('fromMail','ESTA-School'),
 ('schoolName','Schulname'),
 ('mailsActivated','true'),
@@ -119,11 +117,12 @@ INSERT INTO `configs` (`key`, `value`) VALUES
 ('allowGroups','false'),
 ('logoPath','/img/logo.png'),
 ('schoolWebsiteLink','schooldomain.de'),
+('emailHost','exampleHost.de'),
+('fromMailHost','esta'),
 ('smtpAuth','false'),
-('smtpLocal','true'),
 ('smtpPort','25'),
 ('smtpSecure',''),
-('smtpPassword',''),
+('smtpPassword','your_password'),
 ('textHeader','der'),
 ('language','de'),
 ('teacherAllowBlockTeacherApps', 'false'),
@@ -271,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `activationKey`, `createtime`, `firstname`, `lastname`, `title`, `state`, `lastLogin`, `badLogins`, `bannedUntil`, `password`) VALUES
-(1, 'admin', 'admin', '9848a467b94293fcbdb5f08f36d68f5fd5544113', 1406822209, 'Admin', 'Admin', NULL, 1, 0, 0, 0, '$2a$13$hwK.QA5hXUg94isY0kP6AuERtW7A5yJkjvh3IEXClunnLB.8GM.ju');
+(1, 'admin', 'admin', '9848a467b94293fcbdb5f08f36d68f5fd5544113', 0, 'Admin', 'Admin', NULL, 1, 0, 0, 0, '$2a$13$hwK.QA5hXUg94isY0kP6AuERtW7A5yJkjvh3IEXClunnLB.8GM.ju');
 
 -- --------------------------------------------------------
 
