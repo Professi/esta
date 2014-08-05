@@ -1,8 +1,4 @@
 <?php
-
-/**
- * Mail ist eine Klasse um Mails zu versenden die die Extension EMailer verwendet
- */
 /* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,6 +13,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
+ * Mail ist eine Klasse um Mails zu versenden die die Extension EMailer verwendet
  */
 class Mail {
 
@@ -66,7 +65,7 @@ class Mail {
         $body .= '<p>' . Yii::t('app', 'Falls Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese Nachricht.') . '</p>\n';
         $this->addInfo($body);
         $body .= "</body></html>\n";
-        $this->send(Yii::t('app', 'Ihre Passwortzuruecksetzung bei der ') . Yii::app()->name, $body, $email);
+        $this->send(Yii::t('app', 'Ihre Passwortzur&uuml;cksetzung bei der ') . Yii::app()->name, $body, $email);
     }
 
     /**
@@ -109,7 +108,7 @@ class Mail {
         $body .= "mit ihrem Kind <b>" . $child->firstname . " " . $child->lastname . "</b> <br>abgesagt wurde.</p>";
         $this->addInfo($body);
         $body .= "</body></html>";
-        $this->send("Einer Ihrer Termine bei " . Yii::app()->name . " wurde geloescht", $body, $email);
+        $this->send("Einer Ihrer Termine bei " . Yii::app()->name . " wurde gel&ouml;scht", $body, $email);
     }
 
     /**
@@ -155,7 +154,5 @@ class Mail {
     private function send($subject, &$body, $email) {
         $this->sendMail($subject, $body, $email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
     }
-
 }
-
 ?>
