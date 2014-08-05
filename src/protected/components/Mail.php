@@ -77,14 +77,14 @@ class Mail {
     public function sendActivationLinkMail($email, $activationKey) {
         $body = "<html><head><title></title></head>";
         $body .= "<body><p>Vielen Dank f&uuml;r Ihre Registrierung bei " . Yii::app()->name . ".</p>";
-        $body .= "<p>Ihr Benutzername lautet:" . $email . "</p>";
+        $body .= "<p>Ihr Benutzername lautet: <b>" . $email . "</b></p>";
         $body .= "<p>Um Ihre Registrierung abzuschlie&szlig;en und die Anwendung in Anspruch nehmen zu k&ouml;nnen, klicken Sie bitte auf den folgenden Link.</p>";
         $body .= "<p><a href=\"" . $this->getScriptUrl() . "?r=/User/activate&activationKey=" . $activationKey . "\">Link f&uuml;r die Aktivierung</a></p>";
         $body .= "<p>Sollten Sie Probleme beim Aufrufen der Aktivierung haben, kopieren Sie bitte den folgenden Link in die Adressleiste Ihres Browser.</p>";
         $body .= "<p>" . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=" . $activationKey . "</p>";
         $this->addInfo($body);
         $body .= "</body></html>";
-        $this->send("Ihre Registrierung bei der " . Yii::app()->name, $body, $email);
+        $this->send("Ihre Registrierung bei " . Yii::app()->name, $body, $email);
     }
 
     private function getScriptUrl() {
@@ -96,7 +96,7 @@ class Mail {
      * sends a notification mail that a appointment were deleted
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $email E-Mail Adresse des zu Informierenden
-     * @param type $user Lehrer
+     * @param type $teacher Lehrer
      * @param type $time Uhrzeit
      * @param type $child Kind
      * @param type $date Datum
@@ -125,10 +125,10 @@ class Mail {
         } else {
             $body .= "<body><p>Sie wurden bei der " . Yii::app()->name . " registriert.</p>";
         }
-        $body .= "<p>Ihr Benutzername lautet:" . $email . "</p>";
-        $body .= "<p>Ihr Passwort lautet: \"";
-        $body .= $password . "\"</p>";
-        $body .= "<p>Bitte &auml;ndern Sie dieses Passwort <b>SOFORT</b> nach der ersten Anmeldung unter \"Ihr Benutzerkonto->Meine Daten aktualisieren\"</p>";
+        $body .= "<p>Ihr Benutzername lautet: <b>" . $email . "</b></p>";
+        $body .= "<p>Ihr Passwort lautet: <b>";
+        $body .= $password . "</b></p>";
+        $body .= "<p>Bitte &auml;ndern Sie dieses Passwort <b>direkt</b> nach der ersten Anmeldung unter \"Ihr Benutzerkonto->Meine Daten aktualisieren\"</p>";
         $this->addInfo($body);
         $body .= "</body></html>";
         $this->send('Willkommen bei ' . Yii::app()->name, $body, $email);
@@ -155,4 +155,5 @@ class Mail {
         $this->sendMail($subject, $body, $email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
     }
 }
+
 ?>
