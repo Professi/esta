@@ -27,7 +27,7 @@ $this->breadcrumbs = array('Login');
         <div class="panel">
             <h4> <?php echo Yii::t('app', 'Liebe Eltern,'); ?></h4>
             <p> <?php echo Yii::t('app', 'Willkommen auf der elektronischen Elternsprechtagsplattform der ') . Yii::app()->params['schoolName']; ?>.<br>
-                <?php echo Yii::t('app', 'Melden Sie sich an oder registrieren Sie sich um Ihre Termine einzusehen oder neue Termine zu vereinbaren.'); ?>
+                <?php echo Yii::t('app', 'Melden Sie sich an oder registrieren Sie sich um Ihre Termine einzusehen oder um neue Termine zu vereinbaren.'); ?>
             </p>
         </div>
     </div>
