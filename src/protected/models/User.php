@@ -1,8 +1,4 @@
 <?php
-
-/**
- * Dies ist die Modelklasse für Tabelle "user".
- */
 /* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-/** The followings are the available columns in table 'user':
+/** 
+ * Dies ist die Modelklasse für Tabelle "user".
+ * The followings are the available columns in table 'user':
  * @property string $id
  * @property string $username
  * @property string $password
@@ -99,7 +96,7 @@ class User extends CActiveRecord {
             array('state', 'numerical', 'integerOnly' => true),
             array('firstname, lastname, email', 'length', 'max' => 45),
             array('password', 'length', 'max' => 64, 'min' => 8, 'on' => array('insert')),
-            array('password', 'length', 'max' => 128, 'min' => 8,
+            array('password', 'length', 'max' => 256, 'min' => 8,
                 'on' => array('update', 'insert'),
                 'allowEmpty' => strlen($this->password) == 0 && !Yii::app()->user->isGuest),
             array('tan', 'length',
@@ -111,7 +108,7 @@ class User extends CActiveRecord {
             array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat'),
             array('password_repeat', 'safe'), //allow bulk assignment
             array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
-            array('id,username, firstname, state, lastname, email, role,roleName,stateName,title', 'safe', 'on' => 'search'),
+            array('id, username, firstname, state, lastname, email, role, roleName, stateName, title', 'safe'),
             array('groups', 'safe', 'on' => 'update'),
         );
     }
@@ -314,30 +311,6 @@ class User extends CActiveRecord {
     }
 
     /**
-     * Setzt auch nicht in DB persistierte Variablen
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @param array $attributes Attribute die festgelegt werden sollen 
-     * @param boolean $safe
-     * @return boolean
-     */
-    public function setAttributes($attributes, $safe = true) {
-        foreach ($attributes as $name => $value) {
-            $this->setAttribute($name, $value);
-        }
-        return true;
-    }
-
-    /**
-     * Setzt ein Attribut
-     * @param string $name
-     * @param string $value
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     */
-    public function setAttribute($name, $value) {
-        parent::setAttribute($name, $value);
-    }
-
-    /**
      * updates a tan, sets used to true and used_by_user_id = this user_id
      * @param Tan $tan
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
@@ -378,14 +351,13 @@ class User extends CActiveRecord {
         $userrole = New UserRole();
         $userrole->user_id = $this->getPrimaryKey();
         if (Yii::app()->user->isGuest) {
-            $userrole->role_id = $this->getRoleId('3');
+            $userrole->role_id = $this->getRoleId(3);
         } else {
             $userrole->role_id = $this->getRoleId($this->role);
         }
         if (!$userrole->save()) {
-            $this->delete();
             $rc = false;
-            $this->addError('role', Yii::t('app', 'Rolle konnte nicht erstellt werden. Benutzer wird präventiv gelöscht'));
+            $this->addError('role', Yii::t('app', 'Rolle konnte nicht erstellt werden. Benutzer wird pr&auml;ventiv gelöscht'));
         }
         return $rc;
     }
@@ -526,7 +498,6 @@ class User extends CActiveRecord {
         switch ($state) {
             case 0:
                 $stateName = Yii::t('app', 'Nicht aktiv');
-
                 break;
             case 1:
                 $stateName = Yii::t('app', 'Aktiv');
@@ -621,7 +592,7 @@ class User extends CActiveRecord {
         $rc = parent::validate($attributes, $clearErrors);
         $params['{attribute}'] = $this->getAttributeLabel('password');
         if ($this->getError('password') == Yii::t('yii', '{attribute} must be repeated exactly.', $params)) {
-            $this->addError('password_repeat', Yii::t('app', 'Passwörter stimmen nicht überein.'));
+            $this->addError('password_repeat', Yii::t('app', 'Passw&ouml;rter stimmen nicht überein.'));
         }
         if ($rc && Yii::app()->user->isGuest && $this->isNewRecord) {
             $rc = $this->addWithTanNewGroup($this->tan);
@@ -676,7 +647,7 @@ class User extends CActiveRecord {
                 if (Yii::app()->user->hasFlash('success')) {
                     $flash = Yii::app()->user->getFlash('success') . "<br>";
                 }
-                Yii::app()->user->setFlash('success', Yii::t('app', 'Schüler hinzugefügt.') . $flash);
+                Yii::app()->user->setFlash('success', Yii::t('app', 'Sch&uuml;ler hinzugefügt.') . $flash);
             }
         }
     }
@@ -691,7 +662,7 @@ class User extends CActiveRecord {
         $errorMsg = '';
         if (!UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $tan->group_id)) > '0') {
             $this->createUserHasGroup($tan->group_id);
-            Yii::app()->user->setFlash('success', Yii::t('app', 'Sie wurden erfolgreich der Gruppe hinzugefügt.'));
+            Yii::app()->user->setFlash('success', Yii::t('app', 'Sie wurden erfolgreich der Gruppe hinzugef&uuml;gt.'));
             Yii::app()->user->setGroups($this->groups);
         } else {
             $errorMsg = Yii::t('app', 'Sie wurden bereits der Gruppe die bei dieser TAN hinterlegt ist, zugewiesen.');

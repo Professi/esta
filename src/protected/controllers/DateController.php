@@ -48,9 +48,7 @@ class DateController extends Controller {
                 'roles' => array('1'),
             ),
             array('allow',
-                'actions' => array('create', 'delete', 'admin', 'search', 'view', 'update'),
-                'roles' => array('0'),
-            ),
+                'roles' => array('0')),
             array('deny',
                 'users' => array('*'),
             ),
@@ -110,8 +108,8 @@ class DateController extends Controller {
         if (isset($_POST['Date']['title'])) {
             $model->title = $_POST['Date']['title'];
         }
-        if(isset($_POST['Date']['lockAt'])) {
-           $model->lockAt = $_POST['Date']['lockAt'];
+        if (isset($_POST['Date']['lockAt'])) {
+            $model->lockAt = $_POST['Date']['lockAt'];
         }
     }
 
@@ -238,6 +236,17 @@ class DateController extends Controller {
             $p = '/' . $p . '/';
         }
         return preg_replace($pattern, $replace, $dateString);
+    }
+
+    public function actionDateHasGroupAdmin() {
+        $model = new DateHasGroup('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_GET['DateHasGroup'])) {
+            $model->attributes = $_GET['DateHasGroup'];
+        }
+        $this->renderPartial('dateHasGroupAdmin', array(
+            'model' => $model,
+        ));
     }
 
 }

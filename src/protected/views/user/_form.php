@@ -70,8 +70,8 @@ $form = $this->beginWidget('CActiveForm', array(
             </span>
             <div class="infotext">
                 <span aria-hidden="true" data-icon="&#xe012;"></span>
-                Bitte beachten Sie, dass das Passwort nur geändert wird, wenn Sie ein neues Passwort eintragen. 
-                Sollten Sie kein neues Passwort vergeben wollen, können Sie die Passwortfelder leer lassen.
+                <?php echo Yii::t('app', 'Bitte beachten Sie, dass das Passwort nur ge&auml;ndert wird, wenn Sie ein neues Passwort eintragen.');
+                echo Yii::t('app', 'Sollten Sie kein neues Passwort vergeben wollen, so k&ouml;nnen Sie die Passwortfelder leer lassen.'); ?>
             </div>
         <?php } else { ?>
             <span class="prefix">
@@ -129,8 +129,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <?php
     if (Yii::app()->params['allowGroups'] && ($model->role == 3 || $model->isNewRecord) && !Yii::app()->user->isGuest()) {
         $groups = Group::model()->getAllGroups('DESC');
-        if (!empty($groups)) {
-            ?>
+        if (!empty($groups)) { ?>
             <div class="row collapse">
                 <div class="three columns">
                     <span class="prefix"><?php echo $form->label($model, 'groups'); ?> </span>
@@ -144,7 +143,7 @@ $form = $this->beginWidget('CActiveForm', array(
                         $model->groupIds = $model->groups;
                     }
                     echo Select2::activeMultiSelect($model, 'groupIds', $groups, array(
-                        'placeholder' => 'Hier können Sie mehrere Gruppen auswählen...',
+                        'placeholder' => Yii::t('app', 'Hier können Sie mehrere Gruppen auswählen...'),
                         'id' => 'groups-select',
                         'select2Options' => array(
                             'allowClear' => true,
@@ -190,6 +189,6 @@ if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) {
         </div>
     </div>
     <?php
-} echo CHtml::submitButton($model->isNewRecord && Yii::app()->user->isGuest() ? 'Registrieren' : 'Speichern', array('class' => 'button'));
+} echo CHtml::submitButton($model->isNewRecord && Yii::app()->user->isGuest() ? Yii::t('app', 'Registrieren') : Yii::t('app', 'Speichern'), array('class' => 'button'));
 $this->endWidget();
 ?>

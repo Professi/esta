@@ -64,8 +64,8 @@ class Tan extends CActiveRecord {
     public function rules() {
         return array(
             array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen'], 'allowEmpty' => !self::allowParents()),
-            array('childFirstname,childLastname', 'length', 'min' => 1, 'allowEmpty' => self::allowParents()),
-            array('tan, used,group_id', 'safe', 'on' => 'search'),
+            array('childFirstname, childLastname', 'length', 'min' => 1, 'allowEmpty' => self::allowParents()),
+            array('tan,used,group_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -125,7 +125,7 @@ class Tan extends CActiveRecord {
         $rc = parent::beforeSave();
         if ($rc) {
             if (Yii::app()->params['allowGroups']) {
-                $this->isIntElseNull($this->group_id);
+                $this->isInt($this->group_id);
             }
         }
         return $rc;
@@ -147,7 +147,7 @@ class Tan extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
      * @param null $var
      */
-    private function isIntElseNull(&$var) {
+    private function isInt(&$var) {
         if ($var != null && !is_int($var)) {
             $var = null;
         }
@@ -170,8 +170,7 @@ class Tan extends CActiveRecord {
     }
 
     /**
-     * Generiert n-TANs
-     * @param integer $count Anzahl der zu generierenden TAN's
+     * Generiert eine Tan
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function generateTan($save = true) {

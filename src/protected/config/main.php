@@ -66,11 +66,11 @@ return array(
             'connectionString' => 'mysql:host=' . $params['databaseHost'] . ';port=' . $params['databasePort'] . ';dbname=' . $params['databaseName'],
             'emulatePrepare' => true,
             'enableProfiling' => YII_DEBUG,
-            'username' => $params['databaseUsername'], //DB User bitte anpassen
+            'username' => $params['databaseUsername'],
             'password' => $params['databasePassword'],
             'charset' => 'utf8',
             'tablePrefix' => '',
-            'schemaCachingDuration' => YII_DEBUG ? 0 : 86400, //3600 oder 86400
+            'schemaCachingDuration' => YII_DEBUG ? 0 : 86400, //3600 or 86400
         ),
         'errorHandler' => array(
             'errorAction' => 'site/error',
@@ -80,7 +80,7 @@ return array(
             'routes' => array(
                 array(
                     'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute',
-                    'ipFilters' => array('*'),
+//                    'ipFilters' => array('127.0.0.1'),
                     'categories' => '*',
                     'enabled' => YII_DEBUG,
                 ),

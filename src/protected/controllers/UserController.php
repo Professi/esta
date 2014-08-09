@@ -70,7 +70,7 @@ class UserController extends Controller {
                 'actions' => array('deleteAll'),
                 'roles' => array('1')),
             array('allow',
-                'roles' => array('1'),
+                'roles' => array('0'),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
@@ -416,4 +416,17 @@ class UserController extends Controller {
         }
     }
 
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
+    public function actionUserHasGroupAdmin() {
+        $model = new \UserHasGroup('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_GET['UserHasGroup'])) {
+            $model->attributes = $_GET['UserHasGroup'];
+        }
+        $this->renderPartial('userHasGroupAdmin', array(
+            'model' => $model,
+        ));
+    }
 }

@@ -86,7 +86,7 @@ $this->menu = array(
             </fieldset>
             <?php
         }
-        if ($model->role == 3) {
+        if ($model->role > 1) {
             if (Yii::app()->user->getId() == $model->id && Yii::app()->params['allowGroups']) {
                 ?>
                 <h4 class="subheader">Weitere TAN hinzufügen</h4>

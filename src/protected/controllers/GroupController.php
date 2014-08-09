@@ -31,9 +31,7 @@ class GroupController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('create', 'delete', 'admin', 'view', 'update', 'deleteUserGroup', 'deleteDateGroup'),
-                'roles' => array('1'),
-            ),
+                'roles' => array('1')),
             array('deny',
                 'users' => array('*'),
             ),
@@ -158,8 +156,9 @@ class GroupController extends Controller {
         $model = $this->loadModel($id);
         if (isset($_POST['Group'])) {
             $model->attributes = $_POST['Group'];
-            if ($model->save())
+            if ($model->save()) {
                 $this->redirect(array('view', 'id' => $model->id));
+            }
         }
         $this->render('update', array(
             'model' => $model,
@@ -170,25 +169,17 @@ class GroupController extends Controller {
      * Manages all models.
      */
     public function actionAdmin() {
+        $this->render('admin');
+    }
+
+    public function actionOverview() {
         $model = new Group('search');
-        $dateHasGroup = new DateHasGroup('search');
-        $userHasGroup = new \UserHasGroup('search');
-        $dateHasGroup->unsetAttributes();
-        $userHasGroup->unsetAttributes();
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Group'])) {
             $model->attributes = $_GET['Group'];
         }
-        if (isset($_GET['DateHasGroup'])) {
-            $dateHasGroup->attributes = $_GET['DateHasGroup'];
-        }
-        if (isset($_GET['UserHasGroup'])) {
-            $userHasGroup->attributes = $_GET['UserHasGroup'];
-        }
-        $this->render('admin', array(
+        $this->renderPartial('overview', array(
             'model' => $model,
-            'dateHasGroup' => $dateHasGroup,
-            'userHasGroup' => $userHasGroup,
         ));
     }
 

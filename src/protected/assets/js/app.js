@@ -1,9 +1,7 @@
 ;(function($, window, undefined) {
         'use strict';
-
         var $doc = $(document),
                 Modernizr = window.Modernizr;
-
         $(document).ready(function() {
             $.fn.foundationAlerts ? $doc.foundationAlerts() : null;
             $.fn.foundationButtons ? $doc.foundationButtons() : null;
@@ -16,7 +14,6 @@
             $.fn.foundationTooltips ? $doc.foundationTooltips() : null;
             $.fn.foundationMagellan ? $doc.foundationMagellan() : null;
             $.fn.foundationClearing ? $doc.foundationClearing() : null;
-
             $.fn.placeholder ? $('input, textarea').placeholder() : null;
         });
 

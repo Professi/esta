@@ -149,7 +149,7 @@
         // ** Gruppenauswahl deaktivieren wenn ein zu erstellender Benutzer nicht die Rolle Eltern hat. **
         
         $('#User_role').on('change', function(event) {
-           if (event.val == 3) {
+           if (event.val > 1) {
                $('#groups-select').select2("enable", true);
            } else {
                $('#groups-select').select2("enable", false);

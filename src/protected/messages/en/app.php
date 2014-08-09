@@ -1,5 +1,4 @@
 <?php
-
 /* Copyright (C) 2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -138,4 +137,25 @@ return array(
     'Freie Termine' => '',
     'Generierte TANs' => '',
     'Zur&uuml;ck zur Startseite' => '',
+    'Benutzer anlegen' => 'Create user',
+    'Registrierung' => 'registration',
+'Geben Sie bitte Ihre E-Mail-Adresse und ein Passwort ein um sich im System zu registrieren.' => '',
+'Sie sollten innerhalb weniger Minuten eine E-Mail empfangen, die einen Link enthält mit dem Sie ihre Registrierung abschlie&szlig;en k&ouml;nnen.' => '',
+'Benutzer anlegen' => '',
+'Benutzer verwalten' => '',
+'Zur&uuml;ck zur Startseite' => '',
+'Hier können Sie mehrere Gruppen auswählen...' => '',
+'Bitte beachten Sie, dass das Passwort nur ge&auml;ndert wird, wenn Sie ein neues Passwort eintragen.' => '',
+'Sollten Sie kein neues Passwort vergeben wollen, so k&ouml;nnen Sie die Passwortfelder leer lassen.' => '',
+'Registrieren' => '',
+'Registrierung' => '',
+'Speichern' => '',
+'Passwort vergessen?' => '',
+'Klicken Sie hier.' => '',
+'Ben&ouml;tigen Sie einen neuen Zugang?' => '',
+'Login' => 'Login',
+'Liebe Eltern' => '',
+'Willkommen auf der elektronischen Elternsprechtagsplattform der ' => '',
+'Melden Sie sich an oder registrieren Sie sich um Ihre Termine einzusehen oder neue Termine zu vereinbaren.' => '',
+'Aktuell ist es leider nicht m&ouml;glich sich zu registrieren. Sofern Sie sich registrieren m&ouml;chten, so f&uuml;llen Sie bitte das Kontaktformular aus.' => '',
 );

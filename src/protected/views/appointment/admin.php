@@ -27,24 +27,10 @@ $this->breadcrumbs = array(
     'Appointments' => array('index'),
     'Manage',
 );
-
 $this->menu = array(
     array('label' => 'Termin anlegen', 'url' => array('create')),
     array('label' => 'Termin blockieren', 'url' => array('createBlockApp'), 'visible' => (Yii::app()->params['allowBlockingAppointments'])),
 );
-
-//Yii::app()->clientScript->registerScript('search', "
-//$('.search-button').click(function(){
-//	$('.search-form').toggle();
-//	return false;
-//});
-//$('.search-form form').submit(function(){
-//	$('#appointment-grid').yiiGridView('update', {
-//		data: $(this).serialize()
-//	});
-//	return false;
-//});
-//");
 ?>
 
 <div class="row">
@@ -52,9 +38,6 @@ $this->menu = array(
         <h2 class="text-center">Terminverwaltung</h2>
     </div>
 </div>
-
-
-
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'appointment-grid',
