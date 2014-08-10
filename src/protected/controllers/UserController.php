@@ -79,32 +79,6 @@ class UserController extends Controller {
     }
 
     /**
-     * Autocomplete suche anhand des Nachnamen , echo JSON
-     * @param integer $role Rollen ID
-     * @param string $term Suchstring
-     * @author Christian Ehringfeld <c.ehringfeld@t-onlined.e>
-     */
-    public function actionSearch($role, $term) {
-        $dataProvider = new User();
-        $dataProvider->unsetAttributes();
-        $dataProvider->lastname = $term;
-        if (Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()) {
-            $dataProvider->role = 2;
-        } else if (Yii::app()->user->checkAccess('1') || Yii::app()->params['teacherAllowBlockTeacherApps']) {
-            $dataProvider->role = $role;
-        }
-        $criteria = $dataProvider->searchCriteriaTeacherAutoComplete();
-        $a_rc = array();
-        $a_data = User::model()->findAll($criteria);
-        foreach ($a_data as $record) {
-            $a_rc[] = array('label' => $record->title . " "
-                . $record->firstname . " " . $record->lastname
-                , 'value' => $record->id);
-        }
-        echo CJSON::encode($a_rc);
-    }
-
-    /**
      * Löscht alles außer den Admin Account
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
@@ -426,7 +400,39 @@ class UserController extends Controller {
             $model->attributes = $_GET['UserHasGroup'];
         }
         $this->renderPartial('userHasGroupAdmin', array(
-            'model' => $model,
-        ));
+            'model' => $model),
+                false,true);
     }
+
+    /**
+     * Autocomplete suche anhand des Nachnamen
+     * Wenn Eltern suchen wird nur nach Lehrern gesucht und 
+     * falls Gruppen aktiviert sind wird auch nur nach Lehrern entsprechend der Gruppen gesucht
+     * echos JSON
+     * @param integer $role Rollen ID
+     * @param string $term Suchstring
+     * @author Christian Ehringfeld <c.ehringfeld@t-onlined.e>
+     */
+    public function actionSearch($role, $term) {
+        $dataProvider = new User();
+        $groups = array();
+        $dataProvider->unsetAttributes();
+        $dataProvider->lastname = $term;
+        $dataProvider->groups = Yii::app()->user->getGroups();
+        if (Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()) {
+            $dataProvider->role = 2;
+        } else if (Yii::app()->user->checkAccess('1') || Yii::app()->params['teacherAllowBlockTeacherApps']) {
+            $dataProvider->role = $role;
+        }
+        $criteria = $dataProvider->searchCriteriaTeacherAutoComplete($groups);
+        $a_rc = array();
+        $a_data = User::model()->findAll($criteria);
+        foreach ($a_data as $record) {
+            $a_rc[] = array('label' => $record->title . " "
+                . $record->firstname . " " . $record->lastname
+                , 'value' => $record->id);
+        }
+        echo CJSON::encode($a_rc);
+    }
+
 }

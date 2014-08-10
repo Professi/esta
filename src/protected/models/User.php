@@ -234,7 +234,7 @@ class User extends CActiveRecord {
     public function searchTeacher() {
         $this->role = 2;
         return new CActiveDataProvider($this, array(
-            'criteria' => self::searchCriteriaTeacherAutoComplete(),
+            'criteria' => $this->searchCriteriaTeacherAutoComplete(),
             'pagination' => array('pageSize' => 20),
         ));
     }
@@ -248,12 +248,23 @@ class User extends CActiveRecord {
     public function searchCriteriaTeacherAutoComplete() {
         $criteria = new CDbCriteria;
         $criteria->with = array('userrole');
+        if (Yii::app()->params['allowGroups'] && is_array($this->groups)) {
+            $criteria->together = true;
+            $criteria->with[] = 'groups';
+            $i = 0;
+            foreach ($this->groups as $group) {
+                $criteria->addCondition('groups.id =:group' . $i, 'OR');
+                $criteria->params[':group' . $i] = $group->id;
+                $i++;
+            }
+        }
         $match = addcslashes(ucfirst($this->lastname), '%_');
         $criteria->addCondition('lastname LIKE :match');
-        $criteria->params = array(':match' => "$match%");
+        $criteria->params[':match'] = "$match%";
+        $criteria->params[':role'] = $this->role;
         $criteria->compare('state', $this->state, true);
         $criteria->select = 'title,firstname,lastname,id';
-        $criteria->addCondition('userrole.role_id=' . $this->role . '');
+        $criteria->addCondition('userrole.role_id=:role');
         $criteria->limit = 10;
         return $criteria;
     }

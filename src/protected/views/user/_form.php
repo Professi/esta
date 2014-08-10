@@ -127,7 +127,7 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
 
     <?php
-    if (Yii::app()->params['allowGroups'] && ($model->role == 3 || $model->isNewRecord) && !Yii::app()->user->isGuest()) {
+    if (Yii::app()->params['allowGroups'] && ($model->role > 1 || $model->isNewRecord) && !Yii::app()->user->isGuest()) {
         $groups = Group::model()->getAllGroups('DESC');
         if (!empty($groups)) { ?>
             <div class="row collapse">

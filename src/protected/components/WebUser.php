@@ -111,7 +111,7 @@ class WebUser extends CWebUser {
             $this->setState('groups', $groups);
         }
     }
-
+    
 }
 
 ?>

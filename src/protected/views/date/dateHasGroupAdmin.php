@@ -21,19 +21,19 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'dateHasGroup-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
-        array('name' => 'date', 'value' => 'date(Yii::app()->params["dateFormat"], strtotime($data->date->date))','headerHtmlOptions' => array('style' => 'width: 45%;')),
-        array('name' => 'group', 'value' => '$data->group->groupname','headerHtmlOptions' => array('style' => 'width: 45%;')),
+        array('name' => 'date', 'value' => 'date(Yii::app()->params["dateFormat"], strtotime($data->date->date))', 'headerHtmlOptions' => array('style' => 'width: 45%;')),
+        array('name' => 'group', 'value' => '$data->group->groupname', 'headerHtmlOptions' => array('style' => 'width: 45%;')),
         array('class' => 'CustomButtonColumn', 'template' => '{update} {delete}',
-              'buttons' => array(
-                    'delete' => array(
-                        'url' => '$this->grid->controller->createUrl("/group/deleteDateGroup", array("id"=>$data->id))'
-                    ),
-                    'update' => array(
-                        'url' => '$this->grid->controller->createUrl("/date/update", array("id"=>$data->date->id))'
-                    )
+            'buttons' => array(
+                'delete' => array(
+                    'url' => '$this->grid->controller->createUrl("/group/deleteDateGroup", array("id"=>$data->id))'
                 ),
-            'headerHtmlOptions' => array('style' => 'text-align:center;width: 10%;')
+                'update' => array(
+                    'url' => '$this->grid->controller->createUrl("/date/update", array("id"=>$data->date->id))'
+                )
             ),
+            'headerHtmlOptions' => array('style' => 'text-align:center;width: 10%;')
+        ),
     )
 ));
 ?>

@@ -129,14 +129,11 @@ $this->setPageTitle('Lehrerauswahl');
                                 <?php
                                 $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
                                     'name' => 'teacher-ac',
-                                    //'source'=>$dataProvider,
-                                    // additional javascript options for the autocomplete plugin
                                     'sourceUrl' => 'index.php?r=user/search&role=2',
                                     'options' => array(
                                         'minLength' => '2',
                                     ),
                                     'htmlOptions' => array(
-                                    //'style'=>'height:20px;',
                                     ),
                                 ));
                                 ?>
@@ -159,6 +156,7 @@ $this->setPageTitle('Lehrerauswahl');
                     'buttons' => array(
                         'date' => array(
                             'label' => 'Termin vereinbaren',
+                            /** @todo must be changed, user can manipulate it */
                             'url' => '"index.php?r=Appointment/makeAppointment&teacher=".$data->id',
                             'imageUrl' => Yii::app()->request->baseUrl . '/img/alarm.png',
                             'options' => array('class' => 'column-button alarm_png',),

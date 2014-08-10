@@ -245,8 +245,8 @@ class DateController extends Controller {
             $model->attributes = $_GET['DateHasGroup'];
         }
         $this->renderPartial('dateHasGroupAdmin', array(
-            'model' => $model,
-        ));
+            'model' => $model),
+                false,true);
     }
 
 }

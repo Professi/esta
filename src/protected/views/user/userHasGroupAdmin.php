@@ -21,19 +21,22 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'userHasGroup-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
-        array('name' => 'user', 'value' => '$data->user->firstname . " " . $data->user->lastname','headerHtmlOptions' => array('style' => 'width: 45%;')),
-        array('name' => 'group', 'value' => '$data->group->groupname','headerHtmlOptions' => array('style' => 'width: 45%;')),
-        array('class' => 'CustomButtonColumn', 'template' => '{update} {delete}', 
-                'buttons' => array(
-                    'delete' => array(
-                        'url' => '$this->grid->controller->createUrl("/group/deleteUserGroup", array("id"=>$data->id))'
-                    ),
-                    'update' => array(
-                        'url' => '$this->grid->controller->createUrl("/user/update", array("id"=>$data->user->id))'
-                    )
+        array('name' => 'user', 'value' => '$data->user->firstname . " " . $data->user->lastname', 'headerHtmlOptions' => array('style' => 'width: 30%;')),
+        array('name' => 'user.role', 'value' => 'User::getFormattedRole($data->user->userrole->role_id)', 'headerHtmlOptions' => array('style' => 'width: 30%;')),
+        array('name' => 'group',
+            'value' => '$data->group->groupname',
+            'headerHtmlOptions' => array('style' => 'width: 30%;')),
+        array('class' => 'CustomButtonColumn', 'template' => '{update} {delete}',
+            'buttons' => array(
+                'delete' => array(
+                    'url' => '$this->grid->controller->createUrl("/group/deleteUserGroup", array("id"=>$data->id))'
                 ),
-            'headerHtmlOptions' => array('style' => 'text-align:center;width: 10%;')
+                'update' => array(
+                    'url' => '$this->grid->controller->createUrl("/user/update", array("id"=>$data->user->id))'
+                )
             ),
+            'headerHtmlOptions' => array('style' => 'text-align:center;width: 10%;')
+        ),
     )
 ));
 ?>

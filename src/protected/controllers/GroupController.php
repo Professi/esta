@@ -179,8 +179,7 @@ class GroupController extends Controller {
             $model->attributes = $_GET['Group'];
         }
         $this->renderPartial('overview', array(
-            'model' => $model,
-        ));
+            'model' => $model),false,true);
     }
 
     /**
