@@ -58,14 +58,15 @@ class TanController extends Controller {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     private function tansForParentsManagement(&$model) {
-        $model->tan_count = $_POST['Tan']['tan_count'];
-        if (Yii::app()->params['allowGroups'] && isset($_POST['Tan']['group_id'])) {
-            $model->group_id = $_POST['Tan']['group_id'];
+        $model = new Tan();
+        if (isset($_POST['Tan'])) {
+            $model->setAttributes($_POST['Tan']);
         }
         if ($model->validate()) {
             $tans = array();
-            for ($i = 0; $i < $model->tan_count && $i < Yii::app()->params['maxTanGen']; $i++) {
+            for ($i = 0; $i < $model->tan_count; $i++) {
                 $tan = new Tan();
+                $tan->group_id = $model->group_id;
                 $tan->generateTan();
                 $tans[] = $tan;
             }
@@ -137,6 +138,7 @@ class TanController extends Controller {
         foreach ($tans as $i => $oneTan) {
             if (isset($_POST['Tan'][$i])) {
                 $tan = new Tan();
+                $tan->group_id = $_POST['Tan'][$i]['group_id'];
                 $tan->childFirstname = $_POST['Tan'][$i]['childFirstname'];
                 $tan->childLastname = $_POST['Tan'][$i]['childLastname'];
                 $tan->tan_count = 1;
@@ -163,15 +165,13 @@ class TanController extends Controller {
     private function tansNotForParentsManagement(&$model) {
         $validate = true;
         $model = $this->iterateOverTans($_POST['Tan'], $validate);
-        if ($validate) {
+        if (!empty($model) && $validate) {
             foreach ($model as $newTan) {
                 if ($newTan->child instanceof Child && $newTan->child->save()) {
                     $newTan->child_id = $newTan->child->getPrimaryKey();
                     $newTan->insert();
                 }
             }
-        }
-        if (!empty($model) && $validate) {
             $dataProvider = new CArrayDataProvider($model, array('pagination' => array('pageSize' => Yii::app()->params['maxTanGen'])));
             $this->render('showGenTans', array('dataProvider' => $dataProvider));
         } else {
@@ -188,8 +188,9 @@ class TanController extends Controller {
      */
     public function loadModel($id) {
         $model = Tan::model()->findByPk($id);
-        if ($model === null)
+        if ($model === null) {
             $this->throwFourNullFour();
+        }
         return $model;
     }
 

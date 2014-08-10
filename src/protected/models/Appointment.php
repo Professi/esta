@@ -1,20 +1,4 @@
 <?php
-
-/**
- * Die Klasse Appointment ist für die Persistierung von Terminen zuständig.
- */
-
-/** The followings are the available columns in table 'appointment':
- * @property integer $id
- * @property integer $parent_child_id
- * @property string $user_id
- * @property integer $dateAndTime_id
- *
- * The followings are the available model relations:
- * @property DateAndTime $dateAndTime
- * @property ParentChild $parentChild
- * @property User $user
- */
 /* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,6 +13,19 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
+ * Die Klasse Appointment ist für die Persistierung von Terminen zuständig.
+ * The followings are the available columns in table 'appointment':
+ * @property integer $id
+ * @property integer $parent_child_id
+ * @property string $user_id
+ * @property integer $dateAndTime_id
+ *
+ * The followings are the available model relations:
+ * @property DateAndTime $dateAndTime
+ * @property ParentChild $parentChild
+ * @property User $user
  */
 class Appointment extends CActiveRecord {
 
@@ -223,7 +220,7 @@ class Appointment extends CActiveRecord {
         if ($rc && Appointment::model()->countByAttributes(array('dateAndTime_id' => $this->dateAndTime_id, 'user_id' => $this->user_id)) > 0) {
             $rc = false;
             if (Yii::app()->user->checkAccess('1')) {
-                $this->addError('dateAndTime_id', Yii::t('app', 'Dieser Lehrer/in hat bereits zu dieser Uhrzeit einen Termin.'));
+                $this->addError('dateAndTime_id', Yii::t('app', 'Diese/r Lehrer/in hat bereits zu dieser Uhrzeit einen Termin.'));
             }
         }
         if (!Yii::app()->user->checkAccess('1') && $rc) {

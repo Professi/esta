@@ -46,7 +46,10 @@ if (Yii::app()->params['allowGroups']) {
                     </div>
                     <div class="nine columns">
                         <?php
-                        echo $form->textField($model, 'tan_count', array('size' => 60));
+                        echo $form->numberField($model, 'tan_count', array(
+                            'min' => 0,
+                            'max' => Yii::app()->params['maxTanGen'],
+                        ));
                         echo $form->error($model, 'tan_count');
                         ?>
                     </div>
@@ -63,7 +66,7 @@ if (Yii::app()->params['allowGroups']) {
                             echo Select2::activeDropDownList($model, 'group_id', $groups, array(
                                 'prompt' => 'Hier können Sie eine Gruppe auswählen...')
                             );
-                            echo $form->error($model, 'group');
+                            echo $form->error($model, 'group_id');
                             ?>
                         </div>
                     </div>
@@ -72,61 +75,62 @@ if (Yii::app()->params['allowGroups']) {
             </fieldset>
             <?php $this->endWidget(); ?><?php
         } else if (!Yii::app()->params['allowParentsToManageChilds']) {
-            echo CHtml::beginForm(); ?>
-        <fieldset>
-            <?php
-            foreach ($model as $i => $tanObj) {
-                ?>
-                <div class="customChild">
-                    <div class="row collapse">
-                        <div class="three columns">
-                            <span class="prefix"><?php echo CHtml::activeLabel($tanObj, "childFirstname"); ?></span>
-                        </div>
-                        <div class="nine columns">
-                            <?php
-                            echo CHtml::activeTextField($tanObj, "[$i]childFirstname");
-                            echo CHtml::error($tanObj, "[$i]childFirstname");
-                            ?>
-                        </div>
-                    </div>
-                    <div class="row collapse">
-                        <div class="three columns">
-                            <span class="prefix"><?php echo CHtml::activeLabel($tanObj, "childLastname"); ?></span>
-                        </div>
-                        <div class="nine columns">
-                            <?php
-                            echo CHtml::activeTextField($tanObj, "[$i]childLastname", array('size' => 60));
-                            echo CHtml::error($tanObj, "[$i]childLastname");
-                            ?>
-                        </div>
-                    </div>
-                    <?php
-                    if (Yii::app()->params['allowGroups'] && !empty($groups)) {
-                        ?>
+            echo CHtml::beginForm();
+            ?>
+            <fieldset>
+                <?php
+                foreach ($model as $i => $tanObj) {
+                    ?>
+                    <div class="customChild">
                         <div class="row collapse">
                             <div class="three columns">
-                                <span class="prefix"><?php echo CHtml::activeLabel($tanObj, "group"); ?></span>
+                                <span class="prefix"><?php echo CHtml::activeLabel($tanObj, "childFirstname"); ?></span>
                             </div>
                             <div class="nine columns">
                                 <?php
-                                echo Select2::activeDropDownList($tanObj, "[$i]group_id", $groups, array(
-                                    'prompt' => 'Hier können Sie eine Gruppe auswählen...')
-                                );
+                                echo CHtml::activeTextField($tanObj, "[$i]childFirstname");
+                                echo CHtml::error($tanObj, "[$i]childFirstname");
                                 ?>
                             </div>
                         </div>
-                    <?php } ?>
+                        <div class="row collapse">
+                            <div class="three columns">
+                                <span class="prefix"><?php echo CHtml::activeLabel($tanObj, "childLastname"); ?></span>
+                            </div>
+                            <div class="nine columns">
+                                <?php
+                                echo CHtml::activeTextField($tanObj, "[$i]childLastname", array('size' => 60));
+                                echo CHtml::error($tanObj, "[$i]childLastname");
+                                ?>
+                            </div>
+                        </div>
+                        <?php
+                        if (Yii::app()->params['allowGroups'] && !empty($groups)) {
+                            ?>
+                            <div class="row collapse">
+                                <div class="three columns">
+                                    <span class="prefix"><?php echo CHtml::activeLabel($tanObj, "group"); ?></span>
+                                </div>
+                                <div class="nine columns">
+                                    <?php
+                                    echo Select2::activeDropDownList($tanObj, "[$i]group_id", $groups, array(
+                                        'prompt' => 'Hier können Sie eine Gruppe auswählen...')
+                                    );
+                                    ?>
+                                </div>
+                            </div>
+                        <?php } ?>
 
-                </div>
+                    </div>
                 <?php }
-            ?>
-            <div class="tiny button add-child-tan">+</div>
-            <div>
-            <?php echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
-                </fieldset>
-        <?php
-        echo CHtml::endForm();
+                ?>
+                <div class="tiny button add-child-tan">+</div>
+                <div>
+                    <?php echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
+            </fieldset>
+            <?php
+            echo CHtml::endForm();
         }
         ?></div>
-    </div>
+</div>
 </div>

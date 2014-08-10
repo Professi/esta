@@ -1,15 +1,5 @@
 <?php
 
-/**
- * This is the model class for table "tan".
- */
-
-/** The followings are the available columns in table 'tan':
- * @property integer $tan
- * @property boolean $used
- * The followings are the available model relations:
- * @property Group $group
- */
 /* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,6 +14,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/**
+ * This is the model class for table "tan".
+ * The followings are the available columns in table 'tan':
+ * @property integer $tan
+ * @property boolean $used
+ * The followings are the available model relations:
+ * @property Group $group
  */
 class Tan extends CActiveRecord {
 
@@ -63,9 +62,10 @@ class Tan extends CActiveRecord {
      */
     public function rules() {
         return array(
-            array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen'], 'allowEmpty' => !self::allowParents()),
+              array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen'], 'allowEmpty' => !self::allowParents()),
+        //    array('group_id', 'numerical', 'integerOnly' => true),
             array('childFirstname, childLastname', 'length', 'min' => 1, 'allowEmpty' => self::allowParents()),
-            array('tan,used,group_id', 'safe', 'on' => 'search'),
+            array('tan_count,tan,used,group_id,group', 'safe'),
         );
     }
 
@@ -119,38 +119,17 @@ class Tan extends CActiveRecord {
 
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
-     * @return type
-     */
-    public function beforeSave() {
-        $rc = parent::beforeSave();
-        if ($rc) {
-            if (Yii::app()->params['allowGroups']) {
-                $this->isInt($this->group_id);
-            }
-        }
-        return $rc;
-    }
-
-    /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
      */
     public function beforeValidate() {
         $rc = parent::beforeValidate();
+        if (Yii::app()->params['allowGroups'] && $this->group_id != null) {
+            $this->group = Group::model()->findByPk((int) $this->group_id);
+        }
         if ($rc && !Yii::app()->params['allowParentsToManageChilds'] &&
                 $this->child_id == null) {
             $this->createChild();
         }
         return $rc;
-    }
-
-    /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
-     * @param null $var
-     */
-    private function isInt(&$var) {
-        if ($var != null && !is_int($var)) {
-            $var = null;
-        }
     }
 
     /**
@@ -177,7 +156,7 @@ class Tan extends CActiveRecord {
         if (!self::allowParents()) {
             $this->createChild($save);
         }
-        $this->tan = $this->randNumber();
+        $this->randNumber();
         $this->used = false;
         if ($save) {
             $this->insert();
@@ -186,21 +165,18 @@ class Tan extends CActiveRecord {
 
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
-     * @return string
      */
     private function randNumber() {
-        $break = true;
         do {
             $sTan = '';
             for ($x = 0; $x < Yii::app()->params['tanSize']; ++$x) {
                 $sTan .= rand(0, 9);
             }
-            if (strlen($sTan) == Yii::app()->params['tanSize'] && Tan::model()->countByAttributes(array('tan' => $sTan)) == '0') {
+            if (strlen($sTan) == Yii::app()->params['tanSize'] && Tan::model()->countByAttributes(array('tan' => $sTan)) == 0) {
                 $this->tan = $sTan;
-                $break = false;
+                return;
             }
-        } while ($break);
-        return $sTan;
+        } while (true);
     }
-
 }
+?>

@@ -1,4 +1,5 @@
 <?php
+
 /* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,7 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/** 
+
+/**
  * Dies ist die Modelklasse für Tabelle "user".
  * The followings are the available columns in table 'user':
  * @property string $id
@@ -106,9 +108,8 @@ class User extends CActiveRecord {
                 'allowEmpty' => !$this->isNewRecord || !Yii::app()->user->isGuest
             ),
             array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat'),
-            array('password_repeat', 'safe'), //allow bulk assignment
             array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
-            array('id, username, firstname, state, lastname, email, role, roleName, stateName, title', 'safe'),
+            array('id, username, firstname, state, lastname, email, role, roleName, stateName, title, groupIds, password_repeat', 'safe'),
             array('groups', 'safe', 'on' => 'update'),
         );
     }

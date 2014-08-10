@@ -1,8 +1,4 @@
 <?php
-
-/**
- * SiteController für Forms/Static Pages ohne echtes Datenmodell
- */
 /* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,6 +13,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+/**
+ * SiteController für Forms/Static Pages ohne echtes Datenmodell
  */
 class SiteController extends Controller {
 
@@ -66,17 +65,6 @@ class SiteController extends Controller {
         }
     }
 
-    public function config(&$model, &$reflectionClass) {
-        if ($model->validate()) {
-            $properties = $reflectionClass->getProperties();
-            foreach ($properties as $prop) {
-                $entry = ConfigEntry::model()->findByPk($prop->getName());
-                $entry->value = $prop->getValue($model);
-                $entry->update();
-            }
-        }
-    }
-
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * action für das Konfigurationsskript
@@ -94,7 +82,7 @@ class SiteController extends Controller {
             $optionsBlocks = self::getDisabledOptions($model->allowBlockingAppointments);
             if (isset($_POST['ConfigForm'])) {
                 $model->attributes = $_POST['ConfigForm'];
-                $this->config($model, $class);
+                $model->config($class);
             }
             $this->render('config', array(
                 'model' => $model,

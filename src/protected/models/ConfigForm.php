@@ -21,7 +21,7 @@
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
 class ConfigForm extends CFormModel {
-    
+
     public $adminEmail;
     public $dateTimeFormat;
     public $smtpAuth;
@@ -150,5 +150,19 @@ class ConfigForm extends CFormModel {
             'schoolWebsiteLink' => Yii::t('app', 'Schullink')
         );
     }
+
+    public function config(&$reflectionClass) {
+        if ($this->validate()) {
+            $properties = $reflectionClass->getProperties();
+            foreach ($properties as $prop) {
+                $entry = ConfigEntry::model()->findByPk($prop->getName());
+                $entry->value = $prop->getValue($this);
+                $entry->update();
+            }
+            Yii::app()->user->setFlash('success', Yii::t('app', 'Konfiguration aktualisiert.'));
+        }
+    }
+
 }
+
 ?>
