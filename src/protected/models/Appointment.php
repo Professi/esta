@@ -1,4 +1,5 @@
 <?php
+
 /* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * Die Klasse Appointment ist für die Persistierung von Terminen zuständig.
  * The followings are the available columns in table 'appointment':
@@ -145,7 +147,7 @@ class Appointment extends CActiveRecord {
     public function customSearch() {
         $criteria = new CDbCriteria();
         $criteria->order = '`dateAndTime_id` ASC';
-        $criteria->addCondition(array('"user_id"=:user_id'));
+        $criteria->addCondition(array('user_id=:user_id'));
         $criteria->params = array(':user_id' => $this->user_id);
         return new CActiveDataProvider($this, array('criteria' => $criteria));
     }
@@ -253,8 +255,8 @@ class Appointment extends CActiveRecord {
     private function getCriteriaForAppCount() {
         $crit = new CDbCriteria();
         $crit->with = array('parentchild');
-        $crit->compare('"parentchild.user_id"', $this->parentchild->user->id);
-        $crit->compare('"dateAndTime_id"', $this->dateAndTime_id);
+        $crit->compare('parentchild.user_id', $this->parentchild->user->id);
+        $crit->compare('dateAndTime_id', $this->dateAndTime_id);
         return $crit;
     }
 
