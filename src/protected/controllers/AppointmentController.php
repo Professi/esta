@@ -49,7 +49,7 @@ class AppointmentController extends Controller {
             ),
             array('allow', //for teachers
                 'actions' => array('index', 'delete', 'create', 'createBlockApp', 'DeleteBlockApp',
-                                    'getteacherappointmentsajax', 'getselectchildrenajax',),
+                    'getteacherappointmentsajax', 'getselectchildrenajax',),
                 'roles' => array('2')
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -71,7 +71,7 @@ class AppointmentController extends Controller {
      * @return string 
      */
     private function teacherLabel(&$user) {
-        return $user->title  . " " . $user->firstname . " " . $user->lastname;
+        return $user->title . " " . $user->firstname . " " . $user->lastname;
     }
 
     /**
@@ -141,9 +141,9 @@ class AppointmentController extends Controller {
                 $this->throwFourNullThree();
             }
             if ($model != null && $model->delete()) {
-                Yii::app()->user->setFlash('success', Yii::t('app','Blockierung erfolgreich gelöscht.'));
+                Yii::app()->user->setFlash('success', Yii::t('app', 'Blockierung erfolgreich gelöscht.'));
             } else {
-                Yii::app()->user->setFlash('failMsg', Yii::t('app','Fehler bei dem Löschen.'));
+                Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Fehler bei dem Löschen.'));
             }
         } else {
             $this->throwFourNullNull();
@@ -259,30 +259,52 @@ class AppointmentController extends Controller {
     public function actionMakeAppointment($teacher) {
         $model = new Appointment;
         $model->unsetAttributes();
-        $model->user_id = $teacher;
-        $postDate = '';
-        $postTime = '';
-        $a_dates = $this->getDatesWithTimes(3); //Magic Number: nur die nächsten 3 Elternsprechtage werden geladen.
-        $a_tabs = $this->createMakeAppointmentContent($a_dates, $model->user->id);
-        if (isset($_POST['Appointment'])) {
-            $model->attributes = $_POST['Appointment'];
-            if (!empty($model->attributes['dateAndTime_id'])) {
-                $postDate = date(Yii::app()->params['dateFormat'], strtotime($model->dateandtime->date->date));
-                $postTime = date(Yii::app()->params['timeFormat'], strtotime($model->dateandtime->time));
+        if (is_numeric($teacher)) {
+            if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccess('3')) {
+                $userGroups = Yii::app()->user->getGroups();
+                if (!empty($userGroups)) {
+                    $teacherGroups = UserHasGroup::model()->findAllByAttributes(array('user_id' => $teacher));
+                    $badRequest = true;
+                    foreach ($teacherGroups as $group) {
+                        foreach ($userGroups as $userGroup) {
+                            if ($group->group->id == $userGroup->id) {
+                                $badRequest = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if ($badRequest) {
+                    $this->throwFourNullThree();
+                }
             }
-            if ($model->save()) {
-                Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Termin wurde erfolgreich gebucht.'));
-                $this->redirect(array('index'));
+            $model->user_id = $teacher;
+            $postDate = '';
+            $postTime = '';
+            $a_dates = $this->getDatesWithTimes(3); //Magic Number: nur die nächsten 3 Elternsprechtage werden geladen.
+            $a_tabs = $this->createMakeAppointmentContent($a_dates, $model->user->id);
+            if (isset($_POST['Appointment'])) {
+                $model->attributes = $_POST['Appointment'];
+                if (!empty($model->attributes['dateAndTime_id'])) {
+                    $postDate = date(Yii::app()->params['dateFormat'], strtotime($model->dateandtime->date->date));
+                    $postTime = date(Yii::app()->params['timeFormat'], strtotime($model->dateandtime->time));
+                }
+                if ($model->save()) {
+                    Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Termin wurde erfolgreich gebucht.'));
+                    $this->redirect(array('index'));
+                }
             }
+            $this->render('makeAppointment', array(
+                'model' => $model,
+                'a_dates' => $a_dates,
+                'a_tabs' => $a_tabs,
+                'columnCount' => $this->getColumnCount($a_tabs),
+                'postDate' => $postDate,
+                'postTime' => $postTime,
+            ));
+        } else {
+            $this->throwFourNullThree();
         }
-        $this->render('makeAppointment', array(
-            'model' => $model,
-            'a_dates' => $a_dates,
-            'a_tabs' => $a_tabs,
-            'columnCount' => $this->getColumnCount($a_tabs),
-            'postDate' => $postDate,
-            'postTime' => $postTime,
-        ));
     }
 
     /**
@@ -352,7 +374,7 @@ class AppointmentController extends Controller {
             }
         } else if (Yii::app()->user->checkAccessNotAdmin('3')) {
             $no_children = count(ParentChild::model()->findAllByAttributes(
-                    array('user_id' => Yii::app()->user->getId())
+                                    array('user_id' => Yii::app()->user->getId())
                     )) == 0 ? true : false;
             $this->render('index', array(
                 'dataProvider' => Appointment::getAllAppointments(),
@@ -503,7 +525,7 @@ class AppointmentController extends Controller {
                     $tabsName .= " (" . $a_day[0]->date->title . ")";
                 }
                 $tabsContent = '<div style="display:none;" id="date-ui-id-' . $tabsUiId . '">' . $tabsName . '</div>'; //verstecktes Element für Javascriptfunktionen aus custom.js
-                $tabsContent .= '<table><thead><th class="table-text" width="40%">' . Yii::t('app', 'Uhrzeit') . '</th><th class="table-text" width="60%">' . Yii::t('app','Termin') . '</th></thead><tbody>';
+                $tabsContent .= '<table><thead><th class="table-text" width="40%">' . Yii::t('app', 'Uhrzeit') . '</th><th class="table-text" width="60%">' . Yii::t('app', 'Termin') . '</th></thead><tbody>';
                 $datesUiId = 0; //id der einzelnen Zeiten, wichtig für Javascriptfunktionen aus custom.js
                 foreach ($a_day as $key => $a_times) {
                     $datesUiId++;
@@ -516,7 +538,7 @@ class AppointmentController extends Controller {
                 $tabsContent .= '</tbody></table>';
                 $tabsContent .= '<div class="panel appointment-lockAt text-center">' . Yii::t('app', 'Bedenken Sie, dass Termine nur bis zum ');
                 $tabsContent .= date(Yii::app()->params['dateTimeFormat'], $a_day[0]->date->lockAt);
-                $tabsContent .= Yii::t('app',' gebucht werden können.') . '</div>';
+                $tabsContent .= Yii::t('app', ' gebucht werden können.') . '</div>';
                 $a_tabs[$tabsName] = $tabsContent;
                 if ($tabsUiId == 3) { //Magic Number aus makeAppointment.php nach 3 Elternsprechtagen wird die Schleife verlassen. 
                     break;
@@ -587,9 +609,9 @@ class AppointmentController extends Controller {
             $dataProvider = new ParentChild();
             $dataProvider->unsetAttributes();
             $a_parentChild = ParentChild::model()->findAllByAttributes(array('user_id' => $userId), array('with' => array('user', 'child'), 'select' => '*'));
-            $selectContent = (empty($a_parentChild)) ? array('prompt' => Yii::t('app','Bitte legen Sie mindestens ein Kind an bevor Sie fortfahren')) : CHtml::listData($a_parentChild, 'id', function($post) {
-                                return $post->child->firstname . ' ' . $post->child->lastname;
-                            });
+            $selectContent = (empty($a_parentChild)) ? array('prompt' => Yii::t('app', 'Bitte legen Sie mindestens ein Kind an bevor Sie fortfahren')) : CHtml::listData($a_parentChild, 'id', function($post) {
+                        return $post->child->firstname . ' ' . $post->child->lastname;
+                    });
             $a_optionsInner[$selectedChild] = array('selected' => true);
             $a_options = array('options' => $a_optionsInner);
         }
@@ -638,7 +660,5 @@ class AppointmentController extends Controller {
     public function getTeacherLinkE($letter) {
         echo $this->getTeacherLink($letter);
     }
-    
-    
 
 }

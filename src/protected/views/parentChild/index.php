@@ -19,12 +19,12 @@
  */
 /* @var $this ParentChildController */
 /* @var $dataProvider CActiveDataProvider */
-$this->setPageTitle('Ihre Kinder');
+$this->setPageTitle(Yii::t('app', "Ihre Kinder"));
 $this->breadcrumbs = array(
     'Parent Children',
 );
 $this->menu = array(
-    array('label' => 'Kind hinzufügen', 'url' => array('create')),
+    array('label' => 'Kind hinzufügen', 'url' => array('create'), 'visible' => Yii::app()->params['allowParentsToManageChilds'] || Yii::app()->user->checkAccess(1)),
     array('label' => 'Termin vereinbaren', 'url' => array('appointment/getTeacher')),
     array('label' => 'Verwalte Elternkindverknüpfungen', 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess(1)),
 );
@@ -34,9 +34,13 @@ $this->menu = array(
         <h2 class="subheader">Ihre Kinder</h2>
         <hr/>
         <div class="panel hide-for-print">
-            Falls Sie bei der Eingabe ihrer Kinder einen Fehler gemacht haben sollten, 
-            drücken Sie einfach auf das "x" neben dem Namen. 
-            Der Eintrag wird daraufhin entfernt und Sie können eine neue Eingabe über "Kind hinzufügen" tätigen.
+            <?php
+            if (Yii::app()->params['allowParentsToManageChilds']) {
+                echo Yii::t('app', 'Falls Sie bei der Eingabe Ihrer Kinder einen Fehler gemacht haben sollten, drücken Sie einfach auf das "x" neben dem Namen. Der Eintrag wird daraufhin entfernt und Sie können eine neue Eingabe über "Kind hinzufügen" tätigen.');
+            } else {
+                echo Yii::t('app', 'Falls die Daten Ihrer Kinder fehlerhaft oder Kinder nicht eingetragen sind, können Sie sich über das Kontaktformular an die Verwaltung wenden. Bitte beachen Sie, dass Sie weitere TANs unter "Ihr Benutzerkonto" hinzufügen können. Jede TAN ist mit einem Kind verknüpft.');
+            }
+            ?>
         </div>
         <?php
         $this->widget('zii.widgets.CListView', array(

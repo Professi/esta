@@ -34,9 +34,15 @@ $this->menu = array(
         <hr>
         <?php if ($no_children) { ?>
             <div class="panel">
-                <p>Sie haben noch keine Kinder angelegt. Ohne Kinder können keine Termine vereinbart werden.
+                <p><?php echo Yii::t('app', 'Es wurden noch keine Kinder angelegt. Ohne Kinder können keine Termine vereinbart werden.'); ?>
                     <br>
-                    Klicken Sie <?php echo CHtml::link('hier', array('parentChild/create')); ?> um Kinder anzulegen.                
+                    <?php
+                    if (Yii::app()->params['allowParentsToManageChilds']) {
+                        echo Yii::t('app', 'Klicken Sie ') . CHtml::link(Yii::t('app', 'hier'), array('parentChild/create')) . Yii::t('app', 'um Kinder anzulegen.');
+                    } else {
+                        echo Yii::t('app', 'Klicken Sie ') . CHtml::link(Yii::t('app', 'hier'), array('user/account')) . ' ' . Yii::t('app', 'um Kinder anzulegen.') . Yii::t('app', 'Sie müssen dafür nur TANs eingeben. Falls Sie über keine TAN verfügen, so wenden Sie sich bitte an die Verwaltung.');
+                    }
+                    ?>
                 </p>
             </div>
             <?php

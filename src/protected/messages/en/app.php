@@ -196,4 +196,10 @@ return array(
     'Geben Sie einen Elternnamen ein' => '',
     'Bitte legen Sie mindestens ein Kind an bevor Sie fortfahren' => '',
     'Sie haben keine Kinder eingetragen. Bitte tragen Sie dies nach. Anschließend können Sie einen Termin vereinbaren.' => '',
+    'Falls Sie bei der Eingabe Ihrer Kinder einen Fehler gemacht haben sollten, drücken Sie einfach auf das "x" neben dem Namen. Der Eintrag wird daraufhin entfernt und Sie können eine neue Eingabe über "Kind hinzufügen" tätigen.' => '',
+    'Falls die Daten Ihrer Kinder fehlerhaft oder Kinder nicht eingetragen sind, können Sie sich über das Kontaktformular an die Verwaltung wenden. Bitte beachen Sie, dass Sie weitere TANs unter "Ihr Benutzerkonto" hinzufügen können. Jede TAN ist mit einem Kind verknüpft.' => '',
+    'Es wurden noch keine Kinder angelegt. Ohne Kinder können keine Termine vereinbart werden.' => '',
+    'Klicken Sie ' => '',
+    'um Kinder anzulegen.' => '',
+    'Sie müssen dafür nur TANs eingeben. Falls Sie über keine TAN verfügen, so wenden Sie sich bitte an die Verwaltung.' => '',
 );
