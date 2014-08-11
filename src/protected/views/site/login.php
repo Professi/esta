@@ -78,7 +78,8 @@ $this->breadcrumbs = array('Login');
             <?php
             echo $form->textField($model, 'text', array('style' => 'display:none'));
             echo $form->checkBox($model, 'rememberMe');
-            echo Yii::t('app', 'Anmeldedaten merken'); ?><br><br>
+            echo Yii::t('app', 'Anmeldedaten merken');
+            ?><br><br>
             <?php
             echo $form->error($model, 'rememberMe');
             echo CHtml::submitButton(Yii::t('app', 'Login'), array('class' => 'button'));

@@ -21,5 +21,6 @@ return array(
     'databaseUsername' => 'estdb',
     'databasePassword' => 'estdb', //should be a better password
     'databasePort' => '3306',
+    'languages'=>array('de'=>'Deutsch'),
     );
 ?>

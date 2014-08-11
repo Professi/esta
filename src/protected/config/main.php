@@ -26,6 +26,11 @@ return array(
         'application.components.*',
         'ext.select2.Select2',
     ),
+       'behaviors'=>array(
+        'onBeginRequest' => array(
+            'class' => 'application.components.behaviors.BeginRequest'
+        ),
+    ),
     'components' => array(
         'request' => array(
             'enableCsrfValidation' => true,
