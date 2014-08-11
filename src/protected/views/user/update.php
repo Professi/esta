@@ -19,22 +19,22 @@
  */
 /* @var $this UserController */
 /* @var $model User */
-$this->setPageTitle('Benutzerkonto bearbeiten');
+$this->setPageTitle(Yii::t('app', 'Benutzerkonto bearbeiten'));
 $this->breadcrumbs = array(
     'Users' => array('index'),
     $model->id => array('view', 'id' => $model->id),
     'Update',
 );
 $this->menu = array(
-    array('label' => 'Benutzer erstellen', 'url' => array('create'), 'visible' => Yii::app()->user->checkAccess('1')),
-    array('label' => 'Benutzer anzeigen', 'url' => array('view', 'id' => $model->id), 'visible' => Yii::app()->user->checkAccess('1')),
-    array('label' => 'Benutzer verwalten', 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess('1')),
+    array('label' => Yii::t('app', 'Benutzer erstellen'), 'url' => array('create'), 'visible' => Yii::app()->user->checkAccess('1')),
+    array('label' => Yii::t('app', 'Benutzer anzeigen'), 'url' => array('view', 'id' => $model->id), 'visible' => Yii::app()->user->checkAccess('1')),
+    array('label' => Yii::t('app', 'Benutzer verwalten'), 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess('1')),
 );
 ?>
 <div class="row">
     <div class="nine columns centered">
         <fieldset>
-            <legend>Benutzer <?php echo $model->email; ?> aktualisieren</legend>
+            <legend><?php echo Yii::t('app', 'Benutzer {email} aktualisieren',array('{email}'=>$model->email)); ?></legend>
             <?php echo $this->renderPartial('_form', array('model' => $model)); ?>
         </fieldset>
     </div>

@@ -92,12 +92,12 @@ class Controller extends CController {
         $cs = Yii::app()->getClientScript();
         $cs->registerCssFile($this->assetsDir . '/css/print.min.css', 'print');
         $userAgent = preg_match('/MSIE [1-7]/', $_SERVER['HTTP_USER_AGENT']);
-        $cs->addPackage('css', array(//nicht ändern
-            'baseUrl' => $this->assetsDir . '/css/', //nicht ändern
+        $cs->addPackage('css', array(
+            'baseUrl' => $this->assetsDir . '/css/',
             'css' => array('foundation.min.css', !YII_DEBUG ? 'icons.min.css' : 'icons.css', !YII_DEBUG ? 'app.min.css' : 'app.css') //nicht ändern
         ));
-        $cs->addPackage('jquery.js', array(//nicht ändern
-            'baseUrl' => $this->assetsDir . '/js/', //nicht ändern
+        $cs->addPackage('jquery.js', array(
+            'baseUrl' => $this->assetsDir . '/js/',
             'js' => array(!YII_DEBUG ? 'app.min.js' : 'app.js'),
             'depends' => array('css'),
         ));

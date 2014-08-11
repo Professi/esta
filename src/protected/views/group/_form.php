@@ -34,6 +34,6 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 
 <?php
-echo CHtml::submitButton($model->isNewRecord ? 'Anlegen' : 'Speichern', array('class' => 'small button'));
+echo CHtml::submitButton($model->isNewRecord ? Yii::t('app','Anlegen') : Yii::t('app','Speichern'), array('class' => 'small button'));
 $this->endWidget();
 ?>

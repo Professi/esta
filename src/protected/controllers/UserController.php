@@ -96,7 +96,7 @@ class UserController extends Controller {
         foreach ($a_delete as $record) {
             $record->delete();
         }
-        Yii::app()->user->setFlash('success', 'Alle Daten gelöscht, einzig die Verwaltungs- und Administrationskonten wurden nicht gelöscht') .
+        Yii::app()->user->setFlash('success', Yii::t('app', 'Alle Daten gelöscht, einzig die Verwaltungs- und Administrationskonten wurden nicht gelöscht')) .
                 $this->redirect('index.php?r=user/account');
     }
 
@@ -136,14 +136,14 @@ class UserController extends Controller {
             if ($user->state == 0) {
                 $user->setAttribute('state', 1);
                 $user->update();
-                Yii::app()->user->setFlash('success', 'Ihr Benutzerkonto wurde erfolgreich aktiviert. Sie können Sich nun einloggen.');
+                Yii::app()->user->setFlash('success', Yii::t('app','Ihr Benutzerkonto wurde erfolgreich aktiviert. Sie können Sich nun einloggen.'));
             } else if ($user->state == 1) {
-                Yii::app()->user->setFlash('failMsg', 'Ihr Benutzerkonto wurde bereits aktiviert.');
+                Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Ihr Benutzerkonto wurde bereits aktiviert.'));
             } else if ($user->state == 2) {
-                Yii::app()->user->setFlash('failMsg', 'Ihr Benutzerkonto konnte nicht aktiviert werden, weil er bereits gesperrt wurde. Sollten Sie Fragen haben füllen Sie bitte das Kontaktformular aus.');
+                Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Ihr Benutzerkonto konnte nicht aktiviert werden, weil er bereits gesperrt wurde. Sollten Sie Fragen haben füllen Sie bitte das Kontaktformular aus.'));
             }
         } else {
-            Yii::app()->user->setFlash('failMsg', 'Leider konnte Ihr Aktivierungsschlüssel nicht identifiziert werden. Sollten Sie uns kontaktieren wollen, füllen Sie bitte das Kontaktformular aus.');
+            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Leider konnte Ihr Aktivierungsschlüssel nicht identifiziert werden. Sollten Sie uns kontaktieren wollen, füllen Sie bitte das Kontaktformular aus.'));
         }
         $this->render('activate');
     }
@@ -167,8 +167,7 @@ class UserController extends Controller {
                     }
                     fclose($fp);
                 }
-                Yii::app()->user->setFlash('success', 'Lehrerliste erfolgreich importiert.');
-                //  $this->redirect('index.php?r=/user/admin');
+                Yii::app()->user->setFlash('success', Yii::t('app', 'Lehrerliste erfolgreich importiert.'));
             }
         }
         $this->render('importTeacher', array('model' => $model,));
@@ -204,9 +203,9 @@ class UserController extends Controller {
                     $user->password = $model->password;
                     $user->generateActivationKey();
                     $user->save();
-                    Yii::app()->user->setFlash('success', 'Ihr Passwort konnte erfolgreich geändert werden. Sie können sich nun mit diesem einloggen.');
+                    Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Passwort konnte erfolgreich geändert werden. Sie können sich nun mit diesem einloggen.'));
                 } else {
-                    Yii::app()->user->setFlash('success', 'Leider konnte Ihr Passwort aus unerklärlichen Gründen nicht geändert werden.');
+                    Yii::app()->user->setFlash('success', Yii::t('app', 'Leider konnte Ihr Passwort aus unerklärlichen Gründen nicht geändert werden.'));
                 }
             }
             $this->redirect('index.php?r=/site/index');
@@ -216,7 +215,7 @@ class UserController extends Controller {
                 $model->activationKey = $_GET['activationKey'];
                 $this->render('pwChangeForm', array('model' => $model));
             } else {
-                Yii::app()->user->setFlash('success', 'Leider konnte Ihr Aktivierungsschlüssel nicht wiedererkannt werden.');
+                Yii::app()->user->setFlash('success', Yii::t('app','Leider konnte Ihr Aktivierungsschlüssel nicht wiedererkannt werden.'));
                 $this->redirect('index.php?r=/site/index');
             }
         }
@@ -239,13 +238,13 @@ class UserController extends Controller {
                         $user->save();
                         $mail = new Mail();
                         $mail->sendChangePasswordMail($user->email, $user->activationKey);
-                        Yii::app()->user->setFlash('success', 'Sie erhalten nun eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.');
+                        Yii::app()->user->setFlash('success', Yii::t('app', 'Sie erhalten nun eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.'));
                         $this->redirect('index.php?r=/site/index');
                     } else {
-                        Yii::app()->user->setFlash('failMsg', 'Bevor Sie ein neues Passwort anfordern können, muss Ihr Benutzerkonto aktiviert sein.');
+                        Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Bevor Sie ein neues Passwort anfordern können, muss Ihr Benutzerkonto aktiviert sein.'));
                     }
                 } else {
-                    Yii::app()->user->setFlash('failMsg', 'Leider konnte Ihre E-Mail Adresse nicht im System gefunden werden.'); //success  - failMsg
+                    Yii::app()->user->setFlash('failMsg', Yii::t('app','Leider konnte Ihre E-Mail Adresse nicht im System gefunden werden.'));
                     $this->refresh();
                 }
             }
@@ -267,16 +266,16 @@ class UserController extends Controller {
                 }
                 if ($model->save()) {
                     if (Yii::app()->user->checkAccess('1')) {
-                        Yii::app()->user->setFlash("success", "Benutzer wurde erstellt.");
+                        Yii::app()->user->setFlash("success", Yii::t('app',"Benutzer wurde erstellt."));
                         $this->redirect(array('user/admin'));
                     } else {
-                        Yii::app()->user->setFlash('success', "Sie konnten sich erfolgreich registrieren. Sie erhalten nun eine E-Mail mit der Sie Ihren Account aktivieren können.");
+                        Yii::app()->user->setFlash('success', Yii::t('app', "Sie konnten sich erfolgreich registrieren. Sie erhalten nun eine E-Mail mit der Sie Ihren Account aktivieren können."));
                         $mail = new Mail();
                         $mail->sendActivationLinkMail($model->email, $model->activationKey);
                         $this->redirect(array('site/login'));
                     }
                 } else {
-                    Yii::app()->user->setFlash("error", "Benutzer konnte nicht erstellt werden.");
+                    Yii::app()->user->setFlash("error", Yii::t('app', "Benutzer konnte nicht erstellt werden."));
                 }
             }
             $this->render('create', array(
@@ -302,18 +301,18 @@ class UserController extends Controller {
                 $model->updateGroups = true;
                 if ($model->save()) {
                     if (Yii::app()->user->checkAccess('1')) {
-                        Yii::app()->user->setFlash("success", "Benutzer wurde aktualisiert.");
+                        Yii::app()->user->setFlash("success", Yii::t('app', "Benutzer wurde aktualisiert."));
                         $this->redirect(array('view&id=' . $id), false);
                     } else {
-                        Yii::app()->user->setFlash('success', 'Ihr Benutzerkonto wurde aktualisiert.');
+                        Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Benutzerkonto wurde aktualisiert.'));
                         $this->redirect(array('account'));
                     }
                 } else {
-                    Yii::app()->user->setFlash("failMsg", "Benutzer konnte nicht aktualisiert werden");
+                    Yii::app()->user->setFlash("failMsg", Yii::t('app',"Benutzer konnte nicht aktualisiert werden"));
                 }
             }
         } else {
-            Yii::app()->user->setFlash('failMsg', 'Sie können keine Administratorkonten bearbeiten.');
+            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie können keine Administratorkonten bearbeiten.'));
         }
         if ((Yii::app()->user->checkAccessRole('2', '3') && Yii::app()->user->id == $id) || Yii::app()->user->checkAccess('1')) {
             $this->render('update', array(
@@ -366,13 +365,13 @@ class UserController extends Controller {
             $model->role = $model->userrole->role_id;
             switch ($model->state) {
                 case 0:
-                    $model->stateName = "Nicht aktiv";
+                    $model->stateName = Yii::t('app', "Nicht aktiv");
                     break;
                 case 1:
-                    $model->stateName = "Aktiv";
+                    $model->stateName = Yii::t('app',"Aktiv");
                     break;
                 case 2:
-                    $model->stateName = "Gesperrt";
+                    $model->stateName = Yii::t('app', "Gesperrt");
                     break;
             }
         }

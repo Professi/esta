@@ -20,8 +20,6 @@
 /* @var $this DateController */
 /* @var $model Date */
 /* @var $form CActiveForm */
-
-
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'date-form',
     'enableAjaxValidation' => false,
@@ -39,11 +37,11 @@ $form = $this->beginWidget('CActiveForm', array(
             'options' => array(
                 'showAnim' => 'fold',
                 'minDate' => '0',
-                'dateFormat' => $this->dateStringToDatepickerFormat(Yii::app()->params['dateFormat']),
+                'dateFormat' => strtolower(Yii::app()->locale->getDateFormat('short')),
                 'nextText' => '',
                 'prevText' => '',
             ),
-            'language' => 'de',
+//            'language' => Yii::app()->params['language'],
             'skin' => false,
             'cssFile' => false,
             'htmlOptions' => array(
@@ -61,7 +59,7 @@ $form = $this->beginWidget('CActiveForm', array(
         </span>
         <div class="infotext">
             <span aria-hidden="true" data-icon="&#xe012;"></span>
-            In diesem Feld können Sie festlegen, bis wann Termine von Eltern reserviert werden können. Nach diesem Zeitpunkt können Eltern keine weiteren Termine mehr vereinbaren.
+            <?php echo Yii::t('app', 'In diesem Feld können Sie festlegen, bis wann Termine von Eltern reserviert werden können. Nach diesem Zeitpunkt können Eltern keine weiteren Termine mehr vereinbaren.'); ?>
         </div>
     </div>
     <div class="eight columns">
@@ -76,7 +74,7 @@ $form = $this->beginWidget('CActiveForm', array(
                     'options' => array(
                         'showAnim' => 'fold',
                         'minDate' => '0',
-                        'dateFormat' => $this->dateStringToDatepickerFormat(Yii::app()->params['dateFormat']),
+                        'dateFormat' => strtolower(Yii::app()->locale->getDateFormat('short')),
                         'nextText' => '',
                         'prevText' => '',
                     ),
@@ -92,14 +90,13 @@ $form = $this->beginWidget('CActiveForm', array(
             <div class="six columns" id="date-form-fix-right">
                 <?php
                 $this->widget(
-                        'ext.jui.EJuiDateTimePicker', array(
-                    'id' => "time_lockAt",
-                    'name' => "time_lockAt",
-                    'value' => $timeLabel,
-                    'mode' => 'time',
-                   // 'options' => $a_disabled
-                        )
-                );
+                'ext.jui.EJuiDateTimePicker', array(
+                'id' => "time_lockAt",
+                'name' => "time_lockAt",
+                'value' => $timeLabel,
+                'mode' => 'time',
+                // 'options' => $a_disabled
+                ));
                 ?>
             </div>
         </div>
@@ -175,8 +172,8 @@ $form = $this->beginWidget('CActiveForm', array(
         <span class="prefix infofeld"><?php echo $form->label($model, 'title', array('class' => 'infolabel')); ?></span>
         <div class="infotext">
             <span aria-hidden="true" data-icon="&#xe012;"></span>
-            Vergeben Sie einen beliebigen Titel an diesen Elternsprechtag, um ihre interne Organisation zu erleichtern.
-            Dieses Feld kann, wenn es nicht benötigt wird, leer gelassen werden.
+            <?php echo Yii::t('app', 'Vergeben Sie einen beliebigen Titel an diesen Elternsprechtag, um ihre interne Organisation zu erleichtern.'); ?>
+            <?php echo Yii::t('app', 'Dieses Feld kann, wenn es nicht benötigt wird, leer gelassen werden.'); ?>
         </div>
     </div>
     <div class="ten columns">
@@ -201,7 +198,7 @@ if (Yii::app()->params['allowGroups']) {
                     $model->groups = $_POST['Date']['groups'];
                 }
                 echo Select2::activeMultiSelect($model, 'groups', $groups, array(
-                    'placeholder' => 'Hier können Sie mehrere Gruppen auswählen...',
+                    'placeholder' => Yii::t('app', 'Hier können Sie mehrere Gruppen auswählen...'),
                     'id' => 'groups-select',
                     'select2Options' => array(
                         'allowClear' => true,
@@ -209,7 +206,6 @@ if (Yii::app()->params['allowGroups']) {
                 ));
                 echo $form->error($model, 'groups');
                 ?>
-
             </div>
         </div>
         <?php
@@ -218,7 +214,7 @@ if (Yii::app()->params['allowGroups']) {
 ?>
 <br>
 <?php
-echo CHtml::submitButton($model->isNewRecord ? 'Anlegen' : 'Speichern', array('class' => 'small button'));
+echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'Anlegen') : Yii::t('app', 'Speichern'), array('class' => 'small button'));
 $this->endWidget();
 ?>
 

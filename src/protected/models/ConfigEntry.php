@@ -69,7 +69,7 @@ class ConfigEntry extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'key' => Yii::t('app', 'Schl&uuml;ssel'),
+            'key' => Yii::t('app', 'Schlüssel'),
             'value' => Yii::t('app', 'Wert'),
         );
     }

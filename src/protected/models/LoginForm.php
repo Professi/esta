@@ -74,10 +74,10 @@ class LoginForm extends CFormModel {
                     $rc = true;
                     break;
                 case UserIdentity::ERROR_USERNAME_INVALID:
-                    $this->addError('email', UserIdentity::ERROR_MSG_USERNAME_INVALID);
+                    $this->addError('email', Yii::t('app', "Ungültige E-Mail Adresse"));
                     break;
                 case UserIdentity::ERROR_PASSWORD_INVALID:
-                    $this->addError('password', UserIdentity::ERROR_MSG_PASSWORD_INVALID);
+                    $this->addError('password', Yii::t('app', "Falsches Passwort"));
                      $this->addError('error', $identity->errorMessage);
                     break;
                 default:

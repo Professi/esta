@@ -76,9 +76,9 @@ class UserRole extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id' => 'ID',
-            'role_id' => 'RollenID',
-            'user_id' => 'UserID',
+            'id' => Yii::t('app', 'ID'),
+            'role_id' => Yii::t('app', 'RollenID'),
+            'user_id' => Yii::t('app', 'UserID'),
         );
     }
 

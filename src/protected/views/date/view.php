@@ -19,33 +19,34 @@
  */
 /* @var $this DateController */
 /* @var $model Date */
-$this->setPageTitle('Detailansicht Elternsprechtag');
+$this->setPageTitle(Yii::t('app', 'Detailansicht Elternsprechtag'));
 $this->breadcrumbs = array(
     'Dates' => array('index'),
     $model->id,
 );
 $this->menu = array(
-    array('label' => 'Elternsprechtag bearbeiten', 'url' => array('update', 'id' => $model->id)),
-    array('label' => 'Elternsprechtag löschen', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => 'Möchten Sie diesen Elternsprechtag wirklich löschen?'), 'visible' => true),
-    array('label' => 'Elternsprechtage verwalten', 'url' => array('admin')),
+    array('label' => Yii::t('app', 'Elternsprechtag bearbeiten'), 'url' => array('update', 'id' => $model->id)),
+    array('label' => Yii::t('app', 'Elternsprechtag löschen'), 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => Yii::t('app', 'Möchten Sie diesen Elternsprechtag wirklich löschen?')), 'visible' => true),
+    array('label' => Yii::t('app', 'Elternsprechtage verwalten'), 'url' => array('admin')),
 );
 ?>
 <div class="row">
     <div class="twelve columns centered">
-        <h2 class="text-center">Elternsprechtag Nummer <?php echo $model->getPrimaryKey(); ?></h2>
+        <h2 class="text-center"><?php echo Yii::t('app', 'Elternsprechtag Nummer {id}', array('{id}' => $model->getPrimaryKey())); ?></h2>
     </div>
 </div>
 <div class="row">
     <div class="twelve columns centered">
         <?php
+        Yii::app()->dateFormatter->formatDateTime(strtotime($model->end), null, "short");
         $this->widget('zii.widgets.CDetailView', array(
             'data' => $model,
             'attributes' => array(
                 'id',
-                array('name' => 'date', 'value' => date(Yii::app()->params['dateFormat'], strtotime($model->date))),
-                array('name' => 'begin', 'value' => date(Yii::app()->params['timeFormat'], strtotime($model->begin))),
-                array('name' => 'end', 'value' => date(Yii::app()->params['timeFormat'], strtotime($model->end))),
-                array('name' => 'lockAt', 'value' => date(Yii::app()->params['dateTimeFormat'], $model->lockAt)),
+                array('name' => 'date', 'value' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->date), "short", null)),
+                array('name' => 'begin', 'value' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->begin), null, "short")),
+                array('name' => 'end', 'value' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->end), null, "short")),
+                array('name' => 'lockAt', 'value' => Yii::app()->dateFormatter->formatDateTime($model->lockAt, "short", "short")),
                 array('name' => 'durationPerAppointment', 'value' => $model->durationPerAppointment . " Minuten"),
                 array('name' => 'title', 'visible' => !empty($model->title)),
                 array('name' => 'groups', 'value' => $model->getGroupnames(), 'visible' => (Yii::app()->params['allowGroups']) && !empty($model->groups)),

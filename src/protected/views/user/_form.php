@@ -70,8 +70,10 @@ $form = $this->beginWidget('CActiveForm', array(
             </span>
             <div class="infotext">
                 <span aria-hidden="true" data-icon="&#xe012;"></span>
-                <?php echo Yii::t('app', 'Bitte beachten Sie, dass das Passwort nur ge&auml;ndert wird, wenn Sie ein neues Passwort eintragen.');
-                echo Yii::t('app', 'Sollten Sie kein neues Passwort vergeben wollen, so k&ouml;nnen Sie die Passwortfelder leer lassen.'); ?>
+                <?php
+                echo Yii::t('app', 'Bitte beachten Sie, dass das Passwort nur geändert wird, wenn Sie ein neues Passwort eintragen.');
+                echo Yii::t('app', 'Sollten Sie kein neues Passwort vergeben wollen, so können Sie die Passwortfelder leer lassen.');
+                ?>
             </div>
         <?php } else { ?>
             <span class="prefix">
@@ -87,7 +89,7 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
     <div class="three columns mobile-input">
-        <span class="postfix" style="font-size:.8em;">Mindestlänge 8 Zeichen</span>
+        <span class="postfix" style="font-size:.8em;"><?php echo Yii::t('app', 'Mindestlänge 8 Zeichen'); ?></span>
     </div>
 </div>
 <div class="show-for-small"><br></div>
@@ -125,11 +127,11 @@ $form = $this->beginWidget('CActiveForm', array(
             ?>
         </div>
     </div>
-
     <?php
     if (Yii::app()->params['allowGroups'] && ($model->role > 1 || $model->isNewRecord) && !Yii::app()->user->isGuest()) {
         $groups = Group::model()->getAllGroups('DESC');
-        if (!empty($groups)) { ?>
+        if (!empty($groups)) {
+            ?>
             <div class="row collapse">
                 <div class="three columns">
                     <span class="prefix"><?php echo $form->label($model, 'groups'); ?> </span>
@@ -185,7 +187,7 @@ if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) {
             echo $form->textField($model, 'verifyCode');
             echo $form->error($model, 'verifyCode');
             ?>
-            <div class="hint">&nbsp;Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>
+            <div class="hint">&nbsp;<?php echo Yii::t('app', 'Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.'); ?></div>
         </div>
     </div>
     <?php

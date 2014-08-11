@@ -19,13 +19,13 @@
  */
 /* @var $this AppointmentController */
 /* @var $dataProvider CActiveDataProvider */
-$this->setPageTitle('Ihre Termine');
+$this->setPageTitle(Yii::t('app', 'Ihre Termine'));
 $this->breadcrumbs = array(
     'Appointments',
 );
 $this->menu = array(
-    array('label' => 'Termine vereinbaren', 'url' => array('create'), 'visible' => Yii::app()->user->checkAccess('1')),
-    array('label' => 'Termine verwalten', 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess('1')),
+    array('label' => Yii::t('app', 'Termine vereinbaren'), 'url' => array('create'), 'visible' => Yii::app()->user->checkAccess('1')),
+    array('label' => Yii::t('app', 'Termine verwalten'), 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess('1')),
 );
 ?>
 <div class="row">

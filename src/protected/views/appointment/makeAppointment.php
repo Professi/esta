@@ -18,22 +18,22 @@
 /* @var $model Appointment */
 /** @var $a_child Array Of Childs */
 /** @todo MVC anpassen */
-$this->setPageTitle('Termin vereinbaren');
+$this->setPageTitle(Yii::t('app', 'Termin vereinbaren'));
 Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 ?>
 <div class="row">
     <div class="twelve columns">
-        <h2 class="subheader">Termine f&uuml;r&nbsp;
+        <h2 class="subheader"><?php echo Yii::t('app', 'Termine für') ?> &nbsp;
             <?php echo $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname; ?></h2>
         <hr>
         <?php if (empty($a_dates)) { ?>
             <div class="panel">
-                In n&auml;chster Zeit ist kein Elternsprechtag geplant, f&uuml;r den Sie Termine vereinbaren k&ouml;nnten.
+                <?php echo Yii::t('app', 'In nächster Zeit ist kein Elternsprechtag geplant, für den Sie Termine vereinbaren könnten.');?>
             </div>
         <?php } else { ?>
             <div class="panel js_show">
-                Hier k&ouml;nnen Sie Termine mit dem Lehrer vereinbaren. 
-                Klicken Sie einfach auf ein Feld mit "Verf&uuml;gbar" und best&auml;tigen Sie am Ende der Seite den Termin.
+                <?php echo Yii::t('app', 'Hier können Sie Termine mit dem Lehrer vereinbaren.'); ?>
+                <?php echo Yii::t('app', 'Klicken Sie einfach auf ein Feld mit "Verfügbar" und bestätigen Sie am Ende der Seite den Termin.'); ?>
             </div>
             <div class="js_show">
                 <?php
@@ -58,17 +58,17 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                 <?php } ?>
             </div>
         <div class="panel text-center" style="margin-top:-3em;">
-            Keinen passenden Termin gefunden? Kontaktieren Sie 
+            <?php echo Yii::t('app', 'Keinen passenden Termin gefunden? Kontaktieren Sie '); ?>
                 <?php echo $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname; ?>
-            per <a href="mailto:<?php echo $model->user->email; ?>"><span aria-hidden="true" data-icon="&#xe017;"></span>&nbsp;E-Mail</a>
+            <?php echo Yii::t('app', 'per'); ?> <a href="mailto:<?php echo $model->user->email; ?>"><span aria-hidden="true" data-icon="&#xe017;"></span>&nbsp;<?php echo Yii::t('app','E-Mail'); ?></a>
         </div>
             <?php $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'appointment-form',)); ?>
             <fieldset>
-                <legend>Termin</legend>
+                <legend><?php echo Yii::t('app', 'Termin'); ?></legend>
                 <div class="row collapse">
                     <div class="two columns">
-                        <span class="prefix">Mit</span>
+                        <span class="prefix"><?php echo Yii::t('app', 'Mit'); ?></span>
                     </div>
                     <div class="ten columns mobile-input">
                         <?php
@@ -80,7 +80,7 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                 </div>
                 <div class="row collapse js_show">
                     <div class="two columns">
-                        <span class="prefix">Am</span>
+                        <span class="prefix"><?php echo Yii::t('app','Am') ?></span>
                     </div>
                     <div class="ten columns mobile-input">
                         <input id="form_date" type="text" disabled value="<?php echo $postDate; ?>" />
@@ -89,7 +89,7 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                 </div>
                 <div class="row collapse js_show">
                     <div class="two columns">
-                        <span class="prefix">Um</span>
+                        <span class="prefix"><?php echo Yii::t('app', 'Um'); ?></span>
                     </div>
                     <div class="ten columns mobile-input">
                         <input id="form_time" type="text" disabled  value="<?php echo $postTime; ?>" />
@@ -98,7 +98,7 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                 </div>
                 <div class="row collapse js_hide">
                     <div class="two columns">
-                        <span class="prefix">Termin</span>
+                        <span class="prefix"><?php echo Yii::t('app', 'Termin'); ?></span>
                     </div>
                     <div class="ten columns mobile-input">
                         <div class="styled-select">
@@ -109,14 +109,14 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                 </div>
                 <div class="row collapse">
                     <div class="two columns">
-                        <span class="prefix">Für</span>
+                        <span class="prefix"><?php echo Yii::t('app', 'Für'); ?></span>
                     </div>
                     <div class="ten columns mobile-input">
                             <?php echo $this->createSelectChildren(Yii::app()->user->getId(), get_class($model), 'parent_child_id'); ?>
                             <?php echo $form->error($model, 'parent_child_id'); ?>
                     </div>
                 </div>
-                <?php echo CHtml::submitButton('Bestätigen', array('class' => 'button right')); ?>
+                <?php echo CHtml::submitButton(Yii::t('app', 'Bestätigen'), array('class' => 'button right')); ?>
             </fieldset>
             <?php $this->endWidget(); ?>
         <?php } //End else: atleast one Elternsprechtag  ?>

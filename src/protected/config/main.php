@@ -99,6 +99,9 @@ return array(
             'cacheTableName' => 'YiiCache',
             'enabled' => !YII_DEBUG,
         ),
+        'messages' => array(
+            'class' => 'CPhpMessageSource',
+        ),
         'session' => array('sessionName' => 'SiteSession',
             'class' => 'CDbHttpSession',
             'autoCreateSessionTable' => false,

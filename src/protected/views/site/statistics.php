@@ -32,7 +32,7 @@ $this->breadcrumbs = array(
                     <ul class="faq-ul">
                         <li><?php echo Yii::t('app', 'Eingetragene Lehrer') . ':' . $teachers; ?> </li>
                         <li><?php echo Yii::t('app', 'Registrierte Eltern') . ':' . UserRole::model()->countByAttributes(array('role_id' => 3)); ?> </li>
-                        <li><?php echo Yii::t('app', 'Eingetragene Sch&uuml;ler') . ':' . Child::model()->count(); ?> </li>
+                        <li><?php echo Yii::t('app', 'Eingetragene Schüler') . ':' . Child::model()->count(); ?> </li>
                         <li><?php echo Yii::t('app', 'Eingetragene Elternsprechtage') . ':' . Date::model()->count(); ?> </li>
                         <li><?php echo Yii::t('app', 'Vergebene Termine') . ':' . $apps; ?> </li>
                         <li><?php echo Yii::t('app', 'Freie Termine') . ':' . $freeApps ?> </li>
@@ -44,7 +44,7 @@ $this->breadcrumbs = array(
             </div>
         </div>
         <p class="text-center"><?php
-            echo CHtml::link('<b>' . Yii::t('app', 'Zur&uuml;ck zur Startseite') . '</b>', 'index.php');
+            echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', 'index.php');
             ?> </p>
     </div>
 </div>

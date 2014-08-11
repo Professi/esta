@@ -37,10 +37,10 @@ if (Yii::app()->user->checkAccess('1')) {
     <div class="nine columns centered">
         <fieldset>
             <?php if (Yii::app()->user->isGuest) { ?>
-                <legend>Registrierung</legend>
+                <legend><?php echo Yii::t('app', 'Registrierung'); ?></legend>
                 <div class="panel">
                     <p> <?php echo Yii::t('app', 'Geben Sie bitte Ihre E-Mail-Adresse und ein Passwort ein um sich im System zu registrieren.'); ?><br>
-                        <?php echo Yii::t('app', 'Sie sollten innerhalb weniger Minuten eine E-Mail empfangen, die einen Link enthält mit dem Sie ihre Registrierung abschlie&szlig;en k&ouml;nnen.'); ?>
+                        <?php echo Yii::t('app', 'Sie sollten innerhalb weniger Minuten eine E-Mail empfangen, die einen Link enthält mit dem Sie ihre Registrierung abschlie&szlig;en können.'); ?>
                     </p>
                 </div>
             <?php } else { ?>
@@ -51,7 +51,7 @@ if (Yii::app()->user->checkAccess('1')) {
             ?>
         </fieldset>
         <?php if (Yii::app()->user->isGuest) { ?>
-            <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app', 'Zur&uuml;ck zur Startseite') . '</b>', 'index.php'); ?> </p>
+            <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', 'index.php'); ?> </p>
         <?php } ?>
     </div>
 </div>

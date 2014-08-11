@@ -20,7 +20,7 @@
 /* @var $this AppointmentController */
 /* @var $model BlockedAppointment */
 /* @var $form CActiveForm */
-$this->setPageTitle('Termin blockieren');
+$this->setPageTitle(Yii::t('app', 'Termin blockieren'));
 Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 ?>
 <?php
@@ -29,13 +29,13 @@ $this->breadcrumbs = array(
     'BlockApp',
 );
 $this->menu = array(
-    array('label' => 'Termine verwalten', 'url' => array('admin')),
+    array('label' => Yii::t('app', 'Termine verwalten'), 'url' => array('admin')),
 );
 ?>
 <div class="row">
     <div class="twelve columns centered">
         <fieldset>
-            <legend>Termin blockieren</legend>
+            <legend><?php echo Yii::t('app','Termin blockieren'); ?></legend>
             <?php
             $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'blockAppointment-form',
@@ -58,7 +58,7 @@ $this->menu = array(
                                 'minLength' => '1',
                             ),
                             'htmlOptions' => array(
-                                'placeholder' => 'Geben Sie einen Nachnamen ein und wählen Sie einen Eintrag aus',
+                                'placeholder' => Yii::t('app','Geben Sie einen Nachnamen ein und wählen Sie einen Eintrag aus'),
                             ),
                         ));
                         ?>

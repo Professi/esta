@@ -28,7 +28,7 @@ $form = $this->beginWidget('CActiveForm', array(
 <div class="row">
     <div class="twelve columns">
         <fieldset>
-            <legend>Pseudobenutzer anlegen</legend>
+            <legend><?php echo Yii::t('app', 'Pseudobenutzer anlegen'); ?></legend>
             <div class="row collapse">
                 <div class="three columns">
                     <span class="prefix"><?php echo $form->label($model, 'firstname'); ?></span>

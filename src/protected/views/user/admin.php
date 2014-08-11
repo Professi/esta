@@ -19,15 +19,15 @@
  */
 /* @var $this UserController */
 /* @var $model User */
-$this->setPageTitle('Benutzerverwaltung');
+$this->setPageTitle(Yii::t('app','Benutzerverwaltung'));
 $this->breadcrumbs = array(
     'Users' => array('index'),
     'Manage',
 );
 $this->menu = array(
-    array('label' => 'Benutzer erstellen', 'url' => array('create')),
-    array('label' => 'Pseudobenutzer erstellen', 'url' => array('createDummy')),
-    array('label' => 'Lehrer importieren', 'url' => array('importTeachers')),
+    array('label' => Yii::t('app', 'Benutzer erstellen'), 'url' => array('create')),
+    array('label' => Yii::t('app', 'Pseudobenutzer erstellen'), 'url' => array('createDummy')),
+    array('label' => Yii::t('app', 'Lehrer importieren'), 'url' => array('importTeachers')),
 );
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -44,7 +44,7 @@ $('.search-form form').submit(function(){
 ?>
 <div class="row">
     <div class="twelve columns centered">
-        <h2 class="text-center">Benutzerverwaltung</h2>
+        <h2 class="text-center"><?php echo Yii::t('app', 'Benutzerverwaltung'); ?></h2>
     </div>
 </div>
 <?php

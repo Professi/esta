@@ -19,20 +19,20 @@
  */
 /* @var $this ParentChildController */
 /* @var $model ParentChild */
-$this->setPageTitle('Konfiguration');
+$this->setPageTitle(Yii::t('app', 'Eltern-Kind Ansicht'));
 $this->breadcrumbs = array(
     'Parent Children' => array('index'),
     $model->id,
 );
 $this->menu = array(
-    array('label' => 'Eltern-Kind-Verknüpfung anlegen', 'url' => array('create')),
-    array('label' => 'Eltern-Kind-Verknüpfung löschen', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => 'Sind Sie sich sicher, dass Sie diese Verknüpfung löschen möchten?')),
-    array('label' => 'Eltern-Kind-Verknüpfungen verwalten', 'url' => array('admin')),
+    array('label' => Yii::t('app', 'Eltern-Kind-Verknüpfung anlegen'), 'url' => array('create')),
+    array('label' => Yii::t('app', 'Eltern-Kind-Verknüpfung löschen'), 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => 'Sind Sie sich sicher, dass Sie diese Verknüpfung löschen möchten?')),
+    array('label' => Yii::t('app', 'Eltern-Kind-Verknüpfungen verwalten'), 'url' => array('admin')),
 );
 ?>
 <div class="row">
     <div class="twelve columns centered">
-        <h2 class="text-center">Eltern-Kind-Verknüpfung Nummer <?php echo $model->getPrimaryKey(); ?></h2>
+        <h2 class="text-center"><?php echo Yii::t('app', 'Eltern-Kind-Verknüpfung Nummer {id}', array('{id}' => $model->getPrimaryKey())); ?></h2>
     </div>
 </div>
 <div class="row">

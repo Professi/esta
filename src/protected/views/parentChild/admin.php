@@ -19,19 +19,19 @@
  */
 /* @var $this ParentChildController */
 /* @var $model ParentChild */
-$this->setPageTitle('Eltern-Kind Verwaltung');
+$this->setPageTitle(Yii::t('app', 'Eltern-Kind Verwaltung'));
 
 $this->breadcrumbs = array(
     'Parent Children' => array('index'),
     'Manage',
 );
 $this->menu = array(
-    array('label' => 'Eltern-Kind-Verknüpfung anlegen', 'url' => array('create')),
+    array('label' => Yii::t('app', 'Eltern-Kind-Verknüpfung anlegen'), 'url' => array('create')),
 );
 ?>
 <div class="row">
     <div class="twelve columns centered">
-        <h2 class="text-center">Eltern-Kind-Verknüpfung</h2>
+        <h2 class="text-center"><?php echo Yii::t('app', 'Eltern-Kind-Verknüpfung'); ?></h2>
     </div>
 </div>
 <?php

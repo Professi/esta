@@ -19,7 +19,7 @@
  */
 /* @var $this TanController */
 /* @var $model tan */
-$this->setPageTitle('TAN Generierung');
+$this->setPageTitle(Yii::t('app', 'TAN Generierung'));
 Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.css");
 $groups = array();
 if (Yii::app()->params['allowGroups']) {
@@ -28,7 +28,7 @@ if (Yii::app()->params['allowGroups']) {
 ?>
 <div class="row">
     <div class="twelve columns centered">
-        <h2 class="text-center">TAN Generierung</h2>
+        <h2 class="text-center"><?php echo Yii::t('app', 'TAN Generierung'); ?></h2>
     </div>
 </div>
 <div class="row">
@@ -42,7 +42,7 @@ if (Yii::app()->params['allowGroups']) {
             ?>        <fieldset>
                 <div class="row collapse">
                     <div class="three columns">
-                        <span class="prefix">Anzahl TANs</span>
+                        <span class="prefix"><?php echo Yii::t('app', 'Anzahl TANs');?></span>
                     </div>
                     <div class="nine columns">
                         <?php
@@ -64,13 +64,13 @@ if (Yii::app()->params['allowGroups']) {
                         <div class="nine columns">
                             <?php
                             echo Select2::activeDropDownList($model, 'group_id', $groups, array(
-                                'prompt' => 'Hier können Sie eine Gruppe auswählen...')
+                                'prompt' => Yii::t('app','Hier können Sie eine Gruppe auswählen...'))
                             );
                             echo $form->error($model, 'group_id');
                             ?>
                         </div>
                     </div>
-                <?php } echo CHtml::submitButton('Absenden', array('class' => 'small button'));
+                <?php } echo CHtml::submitButton(Yii::t('app','Absenden'), array('class' => 'small button'));
                 ?>
             </fieldset>
             <?php $this->endWidget(); ?><?php
@@ -114,7 +114,7 @@ if (Yii::app()->params['allowGroups']) {
                                 <div class="nine columns">
                                     <?php
                                     echo Select2::activeDropDownList($tanObj, "[$i]group_id", $groups, array(
-                                        'prompt' => 'Hier können Sie eine Gruppe auswählen...')
+                                        'prompt' => Yii::t('app', 'Hier können Sie eine Gruppe auswählen...'))
                                     );
                                     ?>
                                 </div>
@@ -126,7 +126,7 @@ if (Yii::app()->params['allowGroups']) {
                 ?>
                 <div class="tiny button add-child-tan">+</div>
                 <div>
-                    <?php echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
+                    <?php echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('class' => 'small button')); ?>
             </fieldset>
             <?php
             echo CHtml::endForm();

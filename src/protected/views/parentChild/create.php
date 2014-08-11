@@ -19,22 +19,22 @@
  */
 /* @var $this ParentChildController */
 /* @var $model ParentChild */
-$this->setPageTitle('Eltern-Kind-Verknüpfung anlegen');
+$this->setPageTitle(Yii::t('app', 'Eltern-Kind-Verknüpfung anlegen'));
 $this->breadcrumbs = array(
     'Parent Children' => array('index'),
     'Create',
 );
 $this->menu = array(
-    array('label' => 'Eltern-Kind-Verknüpfungen verwalten', 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess(1)),
+    array('label' => Yii::t('app', 'Eltern-Kind-Verknüpfungen verwalten'), 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess(1)),
 );
 ?>
 <div class="row">
     <div class="twelve columns centered">
         <fieldset>
             <?php if (Yii::app()->user->checkAccess('3')) { ?>
-                <legend>Kind anlegen</legend>
+                <legend><?php echo Yii::t('app', 'Kind anlegen'); ?></legend>
             <?php } else { ?>
-                <legend>Eltern-Kind-Verknüpfung anlegen</legend>
+                <legend><?php echo Yii::t('app', 'Eltern-Kind-Verknüpfung anlegen'); ?></legend>
             <?php } ?>
             <?php
             echo $this->renderPartial('_form', array(

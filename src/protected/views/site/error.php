@@ -19,7 +19,7 @@
  */
 /* @var $this SiteController */
 /* @var $error array */
-$this->setPageTitle('Fehler');
+$this->setPageTitle(Yii::t('app', 'Fehler'));
 $this->breadcrumbs = array(
     'Error',
 );
@@ -41,7 +41,7 @@ $this->breadcrumbs = array(
             
         </div>
         <p class="text-center"><?php
-            echo CHtml::link('<b>Zurück zur Startseite</b>', Yii::app()->user->checkAccess('1') == TRUE ? 'index.php' :
+            echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', Yii::app()->user->checkAccess('1') == TRUE ? 'index.php' :
                             'index.php?r=Appointment/index');
             ?> </p>
     </div>

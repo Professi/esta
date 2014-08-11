@@ -369,7 +369,7 @@ class User extends CActiveRecord {
         }
         if (!$userrole->save()) {
             $rc = false;
-            $this->addError('role', Yii::t('app', 'Rolle konnte nicht erstellt werden. Benutzer wird pr&auml;ventiv gelöscht'));
+            $this->addError('role', Yii::t('app', 'Rolle konnte nicht erstellt werden. Benutzer wird präventiv gelöscht'));
         }
         return $rc;
     }
@@ -604,7 +604,7 @@ class User extends CActiveRecord {
         $rc = parent::validate($attributes, $clearErrors);
         $params['{attribute}'] = $this->getAttributeLabel('password');
         if ($this->getError('password') == Yii::t('yii', '{attribute} must be repeated exactly.', $params)) {
-            $this->addError('password_repeat', Yii::t('app', 'Passw&ouml;rter stimmen nicht überein.'));
+            $this->addError('password_repeat', Yii::t('app', 'Passwörter stimmen nicht überein.'));
         }
         if ($rc && Yii::app()->user->isGuest && $this->isNewRecord) {
             $rc = $this->addWithTanNewGroup($this->tan);
@@ -659,7 +659,7 @@ class User extends CActiveRecord {
                 if (Yii::app()->user->hasFlash('success')) {
                     $flash = Yii::app()->user->getFlash('success') . "<br>";
                 }
-                Yii::app()->user->setFlash('success', Yii::t('app', 'Sch&uuml;ler hinzugefügt.') . $flash);
+                Yii::app()->user->setFlash('success', Yii::t('app', 'Schüler hinzugefügt.') . $flash);
             }
         }
     }
@@ -674,7 +674,7 @@ class User extends CActiveRecord {
         $errorMsg = '';
         if (!UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $tan->group_id)) > '0') {
             $this->createUserHasGroup($tan->group_id);
-            Yii::app()->user->setFlash('success', Yii::t('app', 'Sie wurden erfolgreich der Gruppe hinzugef&uuml;gt.'));
+            Yii::app()->user->setFlash('success', Yii::t('app', 'Sie wurden erfolgreich der Gruppe hinzugefügt.'));
             Yii::app()->user->setGroups($this->groups);
         } else {
             $errorMsg = Yii::t('app', 'Sie wurden bereits der Gruppe die bei dieser TAN hinterlegt ist, zugewiesen.');

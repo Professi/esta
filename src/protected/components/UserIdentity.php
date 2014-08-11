@@ -26,10 +26,6 @@
 
 class UserIdentity extends CUserIdentity {
 
-    const ERROR_MSG_USERNAME_INVALID = "Ungültige E-Mail Adresse";
-    const ERROR_MSG_PASSWORD_INVALID = "Falsches Passwort";
-    const ERROR_MSG_ACCOUNT_NOT_ACTIVATED = "Ihr Benutzerkonto wurde noch nicht aktiviert. Bitte nutzen Sie den Aktivierungslink, der Ihnen per E-Mail zugesandt wurde. Sollten Sie Probleme haben, füllen Sie bitte das Kontaktformular aus. ";
-    const ERROR_MSG_ACCOUNT_BANNED = "Ihr Benutzerkonto wurde gesperrt. Bitte wenden Sie sich an die Schulverwaltung.";
     const ERROR_ACCOUNT_NOT_ACTIVATED = 3;
     const ERROR_ACCOUNT_BANNED = 4;
 
@@ -45,21 +41,21 @@ class UserIdentity extends CUserIdentity {
         $user = User::model()->findByAttributes(array('email' => $this->username));
         if ($user === null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
-            $this->errorMessage = self::ERROR_MSG_USERNAME_INVALID;
+            $this->errorMessage = Yii::t('app', "Ungültige E-Mail Adresse");
         } else if ($user->state == 0) {
             $this->errorCode = self::ERROR_ACCOUNT_NOT_ACTIVATED;
-            $this->errorMessage = self::ERROR_MSG_ACCOUNT_NOT_ACTIVATED;
+            $this->errorMessage = Yii::t('app', "Ihr Benutzerkonto wurde noch nicht aktiviert. Bitte nutzen Sie den Aktivierungslink, der Ihnen per E-Mail zugesandt wurde. Sollten Sie Probleme haben, füllen Sie bitte das Kontaktformular aus.");
         } else if ($user->state == 1 && !$user->verifyPassword($this->password)) {
             $this->invalidPassword($user);
         } else if ($user->state == 2) {
             if (is_null($user->bannedUntil) || $user->bannedUntil == 0) {
                 $this->errorCode = self::ERROR_ACCOUNT_BANNED;
-                $this->errorMessage = self::ERROR_MSG_ACCOUNT_BANNED;
+                $this->errorMessage = Yii::t('app', "Ihr Benutzerkonto wurde gesperrt. Bitte wenden Sie sich an die Schulverwaltung.");
             } else {
                 $time = time();
                 if ($user->bannedUntil > $time) {
                     $this->errorCode = self::ERROR_ACCOUNT_BANNED;
-                    $this->errorMessage = "Ihr Benutzerkonto ist noch für " . ($user->bannedUntil - $time) . " Sekunden gesperrt";
+                    $this->errorMessage = Yii::t('app', "Ihr Benutzerkonto ist noch für {sekunden} Sekunden gesperrt.", array('{sekunden}' => ($user->bannedUntil - $time)));
                 } else {
                     $this->unbanUser($user);
                 }
@@ -108,17 +104,15 @@ class UserIdentity extends CUserIdentity {
      */
     public function invalidPassword(&$user) {
         $this->errorCode = self::ERROR_PASSWORD_INVALID;
-        $this->errorMessage = self::ERROR_MSG_PASSWORD_INVALID;
+        $this->errorMessage = Yii::t('app', "Falsches Passwort");
         if (Yii::app()->params['banUsers']) {
             $user->badLogins++;
             if ($user->badLogins == Yii::app()->params['maxAttemptsForLogin']) {
                 $user->state = 2;
                 $user->bannedUntil = time() + Yii::app()->params['durationTempBans'] * 60;
-                $this->errorMessage = "Falsches Passwort! Ihr Benutzerkonto wurde für " . Yii::app()->params['durationTempBans'] . " Minuten gesperrt.";
+                $this->errorMessage = Yii::t('app', "Falsches Passwort! Ihr Benutzerkonto wurde für {dauer} Minute|Minuten gesperrt.", array('{dauer}' => Yii::app()->params['durationTempBans']));
             } else {
-                $this->errorMessage = "Falsches Passwort! Ihnen verbleiben noch " .
-                        (Yii::app()->params['maxAttemptsForLogin'] - $user->badLogins) .
-                        " Versuche. Sobald alle Versuche aufgebraucht sind, wird ihr Konto temporär gesperrt.";
+                $this->errorMessage = Yii::t('app', "Falsches Passwort! Ihnen verbleiben noch {anzahl} Versuch|Versuche. Sobald alle Versuche aufgebraucht sind, wird ihr Konto temporär gesperrt.", array('{anzahl}' => (Yii::app()->params['maxAttemptsForLogin'] - $user->badLogins)));
             }
             $user->update();
         }

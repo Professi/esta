@@ -52,7 +52,7 @@ $this->breadcrumbs = array('Login');
         ));
         ?>
         <fieldset>
-            <legend>Login</legend>
+            <legend><?php echo Yii::t('app', 'Login'); ?></legend>
             <div class="row collapse">
                 <div class="two columns">
                     <span class="prefix"><?php echo $form->label($model, 'email'); ?></span>
@@ -78,8 +78,7 @@ $this->breadcrumbs = array('Login');
             <?php
             echo $form->textField($model, 'text', array('style' => 'display:none'));
             echo $form->checkBox($model, 'rememberMe');
-            ?>
-            Anmeldedaten merken<br><br>
+            echo Yii::t('app', 'Anmeldedaten merken'); ?><br><br>
             <?php
             echo $form->error($model, 'rememberMe');
             echo CHtml::submitButton(Yii::t('app', 'Login'), array('class' => 'button'));
@@ -88,10 +87,10 @@ $this->breadcrumbs = array('Login');
             <?php echo CHtml::link(Yii::t('app', 'Passwort vergessen?'), array('user/ChangePwd'), array('class' => 'medium right')); ?>
         </fieldset>
         <?php if (!Yii::app()->params['lockRegistration']) { ?>
-            <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app', 'Ben&ouml;tigen Sie einen neuen Zugang?') . '<br>' . Yii::t('app', 'Klicken Sie hier.') . '</b>', array('user/create')); ?> </p>
+            <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app', 'Benötigen Sie einen neuen Zugang?') . '<br>' . Yii::t('app', 'Klicken Sie hier.') . '</b>', array('user/create')); ?> </p>
         <?php } else { ?>
             <div class="panel">
-                <p class="text-center"><?php echo Yii::t('app', 'Aktuell ist es leider nicht m&ouml;glich sich zu registrieren. Sofern Sie sich registrieren m&ouml;chten, so f&uuml;llen Sie bitte das Kontaktformular aus.'); ?></p>
+                <p class="text-center"><?php echo Yii::t('app', 'Aktuell ist es leider nicht möglich sich zu registrieren. Sofern Sie sich registrieren möchten, so füllen Sie bitte das Kontaktformular aus.'); ?></p>
             </div>
             <?php
         }

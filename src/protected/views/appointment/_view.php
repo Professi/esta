@@ -26,14 +26,15 @@
             <b>#<?php echo CHtml::encode($index + 1); ?></b>
         </div>
         <div class="eleven columns">
-            <b>Am <?php echo CHtml::encode(date('d.m.Y', strtotime($data->dateandtime->date->date))); ?> um <?php echo CHtml::encode(date('H:i', strtotime($data->dateandtime->time))); ?></b>
+            <b><?php echo Yii::t('app', 'Am {date} um {time}', array('{date}' => CHtml::encode(Yii::app()->dateFormatter->formatDateTime(strtotime($data->dateandtime->date->date), "medium", null)), '{time}' => CHtml::encode(Yii::app()->dateFormatter->formatDateTime(strtotime($data->dateandtime->time), null, "short")))); ?>
+            </b>
         </div>
     </div>
     <br>
     <div class="row collapse">
         <div class="one columns"></div>
         <div class="one columns">
-            <i>Ihr Kind</i>
+            <i><?php echo Yii::t('app', 'Ihr Kind') ?></i>
         </div>
         <div class="ten columns">
             <?php echo CHtml::encode($data->parentchild->child->firstname . ' ' . $data->parentchild->child->lastname); ?>
@@ -43,11 +44,11 @@
     <div class="row collapse">
         <div class="one columns"></div>
         <div class="one columns">   
-            <i>bei</i>
+            <i><?php echo Yii::t('app', 'bei'); ?></i>
         </div>
         <div class="ten columns">
             <?php echo CHtml::encode($data->user->title . " " . $data->user->firstname . " " . $data->user->lastname); ?>
         </div>
-        <a class="small button right hide-for-print delete-appointment" href="index.php?r=appointment/delete&amp;id=<?php echo CHtml::encode($data->id); ?>">Termin l&ouml;schen</a>
+        <a class="small button right hide-for-print delete-appointment" href="index.php?r=appointment/delete&amp;id=<?php echo CHtml::encode($data->id); ?>"><?php echo Yii::t('app', 'Termin löschen?'); ?></a>
     </div>
 </div>

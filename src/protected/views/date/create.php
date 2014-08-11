@@ -19,19 +19,19 @@
  */
 /* @var $this DateController */
 /* @var $model Date */
-$this->setPageTitle('Elternsprechtag anlegen');
+$this->setPageTitle(Yii::t('app', 'Elternsprechtag anlegen'));
 $this->breadcrumbs = array(
     'Dates' => array('index'),
     'Create',
 );
 $this->menu = array(
-    array('label' => 'Elternsprechtage verwalten', 'url' => array('admin')),
+    array('label' => Yii::t('app', 'Elternsprechtage verwalten'), 'url' => array('admin')),
 );
 ?>
 <div class="row">
     <div class="twelve columns">
         <fieldset>
-            <legend>Elternsprechtag anlegen</legend>
+            <legend><?php echo Yii::t('app', 'Elternsprechtag anlegen');?></legend>
             <?php
             echo $this->renderPartial('_form', array(
                 'model' => $model,

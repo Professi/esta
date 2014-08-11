@@ -36,7 +36,7 @@ $form = $this->beginWidget('CActiveForm', array(
                 'minLength' => '1',
             ),
             'htmlOptions' => array(
-                'placeholder' => 'Geben Sie einen Nachnamen ein',
+                'placeholder' => Yii::t('app','Geben Sie einen Nachnamen ein'),
             ),
         ));
         echo $form->error($model, 'parent_child_id');
@@ -68,7 +68,7 @@ $form = $this->beginWidget('CActiveForm', array(
                 'minLength' => '1',
             ),
             'htmlOptions' => array(
-                'placeholder' => 'Geben Sie einen Nachnamen ein und wählen Sie einen Eintrag aus',
+                'placeholder' => Yii::t('app','Geben Sie einen Nachnamen ein und wählen Sie einen Eintrag aus'),
             ),
         ));
         ?>
@@ -91,5 +91,5 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
 </div>
 <br>
-<?php echo CHtml::submitButton($model->isNewRecord ? 'Anlegen' : 'Speichern', array('class' => 'small button')); ?>
+<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('app','Anlegen') : Yii::t('app','Speichern'), array('class' => 'small button')); ?>
 <?php $this->endWidget(); ?>

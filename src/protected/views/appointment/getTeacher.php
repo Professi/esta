@@ -19,19 +19,18 @@
  */
 /* @var $this AppointmentController */
 /* @var $model User */
-$this->setPageTitle('Lehrerauswahl');
+$this->setPageTitle(Yii::t('app', 'Lehrerauswahl'));
 ?>
 <div class="row">
     <div class="twelve columns centered">
-        <h2 class="subheader">Lehrerauswahl</h2>
+        <h2 class="subheader"><?php echo Yii::t('app', 'Lehrerauswahl');?></h2>
         <hr>
         <div class="panel">
-            <p>	Klicken Sie auf einen Buchstaben um sich alle Lehrer, deren Name mit diesem Buchstaben beginnt, anzeigen zu lassen.<br> 
-                Drücken Sie auf den Stern um eine Liste mit allen Lehrer zu erhalten.
+            <p><?php echo Yii::t('app', 'Klicken Sie auf einen Buchstaben um sich alle Lehrer, deren Name mit diesem Buchstaben beginnt, anzeigen zu lassen.'); ?><br> 
+                <?php echo Yii::t('app', 'Drücken Sie auf den Stern um eine Liste mit allen Lehrer zu erhalten.');?>
             </p>
-            <p class="js_show" style="display: none;">Sie können alternativ auch den Namen in das Suchfeld eingeben um alle zutreffenden Möglichkeiten zu sehen.</p>
-            <p>     Wenn Sie den richtigen Lehrer gefunden haben, 
-                klicken Sie einfach auf das Uhrsymbol neben seinem Namen um zu der Terminvereinbarung des Lehres zu gelangen.
+            <p class="js_show" style="display: none;"><?php echo Yii::t('app', 'Sie können alternativ auch den Namen in das Suchfeld eingeben um alle zutreffenden Möglichkeiten zu sehen.'); ?></p>
+            <p><?php echo Yii::t('app', 'Wenn Sie den richtigen Lehrer gefunden haben, klicken Sie einfach auf das Uhrsymbol neben seinem Namen um zu der Terminvereinbarung des Lehres zu gelangen.'); ?> 
             </p>
         </div>
         <div class="row">
@@ -68,9 +67,11 @@ $this->setPageTitle('Lehrerauswahl');
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=x" class="small teacher button">X</a>
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=y" class="small teacher button">Y</a>
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=z" class="small teacher button">Z</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=ü" class="small teacher button">&Auml;</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=ö" class="small teacher button">&Ouml;</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=ä" class="small teacher button">&Uuml;</a>
+                                <?php if(strpos(Yii::app()->params['language'], 'de') == 0) {?>
+                                <a href="index.php?r=appointment/getTeacher&amp;letter=ü" class="small teacher button">ä</a>
+                                <a href="index.php?r=appointment/getTeacher&amp;letter=ö" class="small teacher button">ö</a>
+                                <a href="index.php?r=appointment/getTeacher&amp;letter=ä" class="small teacher button">ü</a>
+                                <?php } ?>
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=" class="small teacher button">*</a>
                             </div>
                         </div>
@@ -113,9 +114,11 @@ $this->setPageTitle('Lehrerauswahl');
                             </div>
                             <div class="left">
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=z" class="small teacher button">Z</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=ae" class="small teacher button">&Auml;</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=oe" class="small teacher button">&Ouml;</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=ue" class="small teacher button">&Uuml;</a>
+                                                                <?php if(strpos(Yii::app()->params['language'], 'de') == 0) {?>
+                                <a href="index.php?r=appointment/getTeacher&amp;letter=ae" class="small teacher button">ä</a>
+                                <a href="index.php?r=appointment/getTeacher&amp;letter=oe" class="small teacher button">ö</a>
+                                <a href="index.php?r=appointment/getTeacher&amp;letter=ue" class="small teacher button">ü</a>
+                                                                <?php } ?>
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=" class="small teacher button">*</a>
                             </div>
                             <div style="clear:both;"></div> 
@@ -123,7 +126,7 @@ $this->setPageTitle('Lehrerauswahl');
                         <br>
                         <div class="row collapse js_show" style="display:none;">
                             <div class="three columns">
-                                <span class="prefix">Lehrername</span>
+                                <span class="prefix"><?php echo Yii::t('app', 'Lehrername'); ?></span>
                             </div>
                             <div class="nine columns mobile-input">
                                 <?php
@@ -155,7 +158,7 @@ $this->setPageTitle('Lehrerauswahl');
                     'template' => '{date}',
                     'buttons' => array(
                         'date' => array(
-                            'label' => 'Termin vereinbaren',
+                            'label' => Yii::t('app','Termin vereinbaren'),
                             /** @todo must be changed, user can manipulate it */
                             'url' => '"index.php?r=Appointment/makeAppointment&teacher=".$data->id',
                             'imageUrl' => Yii::app()->request->baseUrl . '/img/alarm.png',

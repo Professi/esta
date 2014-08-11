@@ -18,7 +18,7 @@
 /* @var $this GroupController */
 /* @var $model Group */
 $this->menu = array(
-    array('label' => 'Gruppe erstellen', 'url' => array('create')),
+    array('label' => Yii::t('app','Gruppe erstellen'), 'url' => array('create')),
 );
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'group-grid',

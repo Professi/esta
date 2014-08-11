@@ -21,7 +21,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'dateHasGroup-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
-        array('name' => 'date', 'value' => 'date(Yii::app()->params["dateFormat"], strtotime($data->date->date))', 'headerHtmlOptions' => array('style' => 'width: 45%;')),
+        array('name' => 'date', 'value' => 'Yii::app()->dateFormatter->formatDateTime(strtotime($data->date->date), "short", null)', 'headerHtmlOptions' => array('style' => 'width: 45%;')),
         array('name' => 'group', 'value' => '$data->group->groupname', 'headerHtmlOptions' => array('style' => 'width: 45%;')),
         array('class' => 'CustomButtonColumn', 'template' => '{update} {delete}',
             'buttons' => array(

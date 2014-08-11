@@ -286,8 +286,9 @@ class AppointmentController extends Controller {
             if (isset($_POST['Appointment'])) {
                 $model->attributes = $_POST['Appointment'];
                 if (!empty($model->attributes['dateAndTime_id'])) {
-                    $postDate = date(Yii::app()->params['dateFormat'], strtotime($model->dateandtime->date->date));
-                    $postTime = date(Yii::app()->params['timeFormat'], strtotime($model->dateandtime->time));
+                    
+                    $postDate = Yii::app()->dateFormatter->formatDateTime(strtotime($model->dateandtime->date->date), "short", null);
+                    $postTime = Yii::app()->dateFormatter->formatDateTime(strtotime($model->dateandtime->time), null, "short");
                 }
                 if ($model->save()) {
                     Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Termin wurde erfolgreich gebucht.'));
@@ -467,8 +468,8 @@ class AppointmentController extends Controller {
                 foreach ($a_dates as $key => $record) {
                     $a_tempDateAndTimes = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
                     foreach ($a_tempDateAndTimes as $innerKey => $value) {
-                        $a_tempDateAndTimes[$innerKey]['date'] = date(Yii::app()->params['dateFormat'], strtotime($a_dates[$key]->date));
-                        $a_tempDateAndTimes[$innerKey]['time'] = date(Yii::app()->params['timeFormat'], strtotime($a_tempDateAndTimes[$innerKey]['time']));
+                        $a_tempDateAndTimes[$innerKey]['date'] = Yii::app()->dateFormatter->formatDateTime(strtotime($a_dates[$key]->date), "short", null);
+                        $a_tempDateAndTimes[$innerKey]['time'] = Yii::app()->dateFormatter->formatDateTime(strtotime($a_tempDateAndTimes[$innerKey]['time']), null, "short");
                     }
                     $a_groupOfDateAndTimes = array_merge($a_groupOfDateAndTimes, $a_tempDateAndTimes);
                 }
@@ -501,7 +502,7 @@ class AppointmentController extends Controller {
                 $check = false;
             }
             if ($check) {
-                $rc = array("VERF&Uuml;GBAR", 1);
+                $rc = array("VERFüGBAR", 1);
             }
         }
         return $rc;
@@ -520,7 +521,7 @@ class AppointmentController extends Controller {
         if (!empty($teacherId)) {
             foreach ($a_dates as $a_day) {
                 $tabsUiId++;
-                $tabsName = date(Yii::app()->params['dateFormat'], strtotime($a_day[0]->date->date));
+                $tabsName = Yii::app()->dateFormatter->formatDateTime(strtotime($a_day[0]->date->date), "short", null);
                 if (!empty($a_day[0]->date->title)) {
                     $tabsName .= " (" . $a_day[0]->date->title . ")";
                 }
@@ -531,14 +532,14 @@ class AppointmentController extends Controller {
                     $datesUiId++;
                     $a_times = $this->isAppointmentAvailable($teacherId, $a_day[$key]->id); //Array in dem gespeichert wird ob ein Termin Belegt oder Frei ist.
                     $tabsContent .= '<tr><td id="time-ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="table-text">';
-                    $tabsContent .= date(Yii::app()->params['timeFormat'], strtotime($a_day[$key]->time)) . '</td>';
+                    $tabsContent .= Yii::app()->dateFormatter->formatDateTime(strtotime($a_day[$key]->time), null, 'short') . '</td>';
                     $tabsContent .= ($a_times[1]) ? '<td id="ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="avaiable table-text">' . $a_times[0] . '</td>' : '<td class="occupied table-text">' . $a_times[0] . '</td>';
                     $tabsContent .= '</tr>';
                 }
                 $tabsContent .= '</tbody></table>';
-                $tabsContent .= '<div class="panel appointment-lockAt text-center">' . Yii::t('app', 'Bedenken Sie, dass Termine nur bis zum ');
-                $tabsContent .= date(Yii::app()->params['dateTimeFormat'], $a_day[0]->date->lockAt);
-                $tabsContent .= Yii::t('app', ' gebucht werden können.') . '</div>';
+                $tabsContent .= '<div class="panel appointment-lockAt text-center">';
+                $tabsContent .= Yii::t('app', 'Bedenken Sie, dass Termine nur bis zum {date} gebucht werden können.', array('{date}' => Yii::app()->dateFormatter->formatDateTime($a_day[0]->date->lockAt, 'full', 'short')));
+                $tabsContent .= '</div>';
                 $a_tabs[$tabsName] = $tabsContent;
                 if ($tabsUiId == 3) { //Magic Number aus makeAppointment.php nach 3 Elternsprechtagen wird die Schleife verlassen. 
                     break;

@@ -25,7 +25,7 @@ if (Yii::app()->user->checkAccess('1')) {
     ?>
     <div class="row collapse">
         <div class="two columns">
-            <span class="prefix">Elternteil</span>
+            <span class="prefix"><?php echo Yii::t('app', 'Erziehungsberechtigte/r');?></span>
         </div>
         <div class="ten columns">
             <?php
@@ -48,7 +48,7 @@ if (Yii::app()->user->checkAccess('1')) {
 <?php } ?>
 <div class="row collapse">
     <div class="two columns">
-        <span class="prefix">Vorname</span>
+        <span class="prefix"><?php echo Yii::t('app','Vorname')?></span>
     </div>
     <div class="ten columns mobile-input">
         <?php
@@ -71,6 +71,6 @@ if (Yii::app()->user->checkAccess('1')) {
 </div>            
 <br>
 <?php
-echo CHtml::submitButton($model->isNewRecord ? 'Anlegen' : 'Speichern', array('class' => 'small button'));
+echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'Anlegen') : Yii::t('app', 'Speichern'), array('class' => 'small button'));
 $this->endWidget();
 ?>

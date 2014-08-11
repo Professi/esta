@@ -20,7 +20,7 @@
 /* @var $this SiteController */
 /* @var $model ContactForm */
 /* @var $form CActiveForm */
-$this->setPageTitle('Kontakt');
+$this->setPageTitle(Yii::t('app', 'Kontakt'));
 $this->breadcrumbs = array(
     'contact',
 );
@@ -33,8 +33,8 @@ $this->breadcrumbs = array(
             </div>
         <?php else: ?>
             <div class="panel">
-                Sollten Sie Fragen oder Anregungen haben, setzen Sie sich mit uns in Kontakt indem Sie das nachfolgende Formular ausfüllen.<br>
-                Vielen Dank.
+                <?php echo Yii::t('app', 'Sollten Sie Fragen oder Anregungen haben, setzen Sie sich mit uns in Kontakt indem Sie das nachfolgende Formular ausfüllen.');?><br>
+                <?php echo Yii::t('app', 'Vielen Dank.');?>
             </div>
             <?php
             $form = $this->beginWidget('CActiveForm', array(
@@ -46,7 +46,7 @@ $this->breadcrumbs = array(
             ));
             ?>
             <fieldset>
-                <legend>Kontakt</legend>
+                <legend><?php echo Yii::t('app', 'Kontakt');?></legend>
                 <div class="row collapse">
                     <div class="two columns">
                         <span class="prefix"><?php echo $form->label($model, 'name'); ?></span>
@@ -84,7 +84,7 @@ $this->breadcrumbs = array(
                 <div class="row collapse">
                     <div class="twelve columns" style="padding-left:.2em;">
                         <?php
-                        echo $form->textArea($model, 'body', array('rows' => 6, 'cols' => 50, 'placeholder' => 'Ihre Nachricht'));
+                        echo $form->textArea($model, 'body', array('rows' => 6, 'cols' => 50, 'placeholder' => Yii::t('app', 'Ihre Nachricht')));
                         echo $form->error($model, 'body');
                         ?>
                     </div>
@@ -105,7 +105,7 @@ $this->breadcrumbs = array(
                             echo $form->textField($model, 'verifyCode');
                             echo $form->error($model, 'verifyCode');
                             ?>
-                            <div class="hint">&nbsp;Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>
+                            <div class="hint">&nbsp;<?php echo Yii::t('app', 'Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.');?></div>
                         </div>
                     </div>
                     <?php
@@ -114,7 +114,7 @@ $this->breadcrumbs = array(
                 ?>
             </fieldset>
             <?php $this->endWidget(); ?>
-            <p class="text-center"><?php echo CHtml::link('<b>Zurück zur Startseite</b>', 'index.php'); ?> </p>
+        <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', 'index.php'); ?> </p>
         </div>
     </div>
 <?php endif; ?>

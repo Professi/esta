@@ -19,7 +19,7 @@
  */
 /* @var $this AppointmentController */
 /* @var $data Appointment */
-$this->setPageTitle('Ihre Termine');
+$this->setPageTitle(Yii::t('app', 'Ihre Termine'));
 ?>
 <div class="row">
     <div class="twelve columns">
@@ -31,11 +31,11 @@ $this->setPageTitle('Ihre Termine');
             'dataProvider' => $dataProvider,
             'columns' => array(
                 array('name' => 'dateAndTime_id',
-                    'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateandtime->date->date . $data->dateandtime->time))'),
+                    'value' => 'Yii::app()->dateFormatter->formatDateTime(strtotime($data->dateandtime->date->date . $data->dateandtime->time), "short", "short")'),
                 array('name' => 'Titel',
                     'value' => '$data->dateandtime->date->title',
 //                    'visible' => !empty($data->dateandtime->date->title)
-                    ),
+                ),
                 array('name' => 'parent_child_id',
                     'value' => '$data->parentchild->user->firstname." ".$data->parentchild->user->lastname'),
                 array('name' => 'Kind',
@@ -52,12 +52,12 @@ $this->setPageTitle('Ihre Termine');
 <?php if (Yii::app()->params['allowBlockingAppointments']) { ?>
     <div class="row">
         <div class="twelve columns">
-            <h2 class="subheader">Ihre blockierten Termine</h2>
+            <h2 class="subheader"><?php echo Yii::t('app', 'Ihre blockierten Termine'); ?></h2>
             <hr>
             <?php if (Yii::app()->params['allowBlockingOnlyForManagement']) { ?>
                 <div class="row">
                     <div class="panel centeredl">
-                        <p>Termine können zurzeit nur von der Verwaltung und der Administration blockiert werden.</p>
+                        <p><?php echo Yii::t('app', 'Termine können zurzeit nur von der Verwaltung und der Administration blockiert werden.'); ?></p>
                     </div>
                 </div>
                 <?php
@@ -66,7 +66,7 @@ $this->setPageTitle('Ihre Termine');
                 'id' => 'blockedAppointment-grid',
                 'dataProvider' => $blockedApp,
                 'columns' => array(
-                    array('name' => 'dateAndTime_id', 'value' => 'date(Yii::app()->params["dateTimeFormat"], strtotime($data->dateandtime->date->date . $data->dateandtime->time))'),
+                    array('name' => 'dateAndTime_id', 'value' => 'Yii::app()->dateFormatter->formatDateTime(strtotime($data->dateandtime->date->date . $data->dateandtime->time), "short", "short")'),
                     array('name' => 'reason'),
                     array('class' => 'CustomButtonColumn', 'template' => '{delete}', 'buttons' => array(
                             'delete' => array('url' => '$this->grid->controller->createUrl("/appointment/deleteblockapp", array("id"=>$data->id))'),

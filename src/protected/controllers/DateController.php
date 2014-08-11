@@ -120,11 +120,11 @@ class DateController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-        $model->date = date(Yii::app()->params['dateFormat'], strtotime($model->date));
-        $model->begin = date(Yii::app()->params['timeFormat'], strtotime($model->begin));
-        $model->end = date(Yii::app()->params['timeFormat'], strtotime($model->end));
+        $model->date = Yii::app()->dateFormatter->formatDateTime(strtotime($model->date), "short", null);
+        $model->begin = Yii::app()->dateFormatter->formatDateTime(strtotime($model->begin), null, "short");
+        $model->end = Yii::app()->dateFormatter->formatDateTime(strtotime($model->end), null, "short");
         $a_disabled = array('disabled' => 'disabled');
-        $a_lockAtLabel = explode(' ', date(Yii::app()->params['dateTimeFormat'], $model->lockAt));
+        $a_lockAtLabel = explode(' ', Yii::app()->dateFormatter->formatDateTime($model->lockAt, 'long', 'short'));
         $dateLabel = $a_lockAtLabel[0];
         $timeLabel = $a_lockAtLabel[1];
         $model->lockAt = $dateLabel . ' ' . $timeLabel;
@@ -134,7 +134,6 @@ class DateController extends Controller {
                 $this->redirect(array('view', 'id' => $model->id));
             }
         }
-
         $this->render('update', array(
             'model' => $model,
             'a_disabled' => $a_disabled,
@@ -151,7 +150,6 @@ class DateController extends Controller {
      */
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
-
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
@@ -204,38 +202,6 @@ class DateController extends Controller {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
-    }
-
-    /**
-     * Convert PHP date() style dateFormat to the equivalent jQuery UI datepicker string
-     * <http://snipplr.com/view/41329/>
-     * @param string $dateString string der konvertiert werden soll.
-     */
-    function dateStringToDatepickerFormat($dateString) {
-        $pattern = array(
-            //day
-            'd', //day of the month
-            'j', //3 letter name of the day
-            'l', //full name of the day
-            'z', //day of the year
-            //month
-            'F', //Month name full
-            'M', //Month name short
-            'n', //numeric month no leading zeros
-            'm', //numeric month leading zeros
-            //year
-            'Y', //full numeric year
-            'y'  //numeric year: 2 digit
-        );
-        $replace = array(
-            'dd', 'd', 'DD', 'o',
-            'MM', 'M', 'm', 'mm',
-            'yy', 'y'
-        );
-        foreach ($pattern as &$p) {
-            $p = '/' . $p . '/';
-        }
-        return preg_replace($pattern, $replace, $dateString);
     }
 
     public function actionDateHasGroupAdmin() {

@@ -19,7 +19,7 @@
  */
 /* @var $this AppointmentController */
 /* @var $model Appointment */
-$this->setPageTitle('Termin anlegen');
+$this->setPageTitle(Yii::t('app', 'Termin anlegen'));
 Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 $this->breadcrumbs = array(
     'Appointments' => array('index'),
@@ -27,13 +27,13 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Termine verwalten', 'url' => array('admin')),
+    array('label' => Yii::t('app','Termine verwalten'), 'url' => array('admin')),
 );
 ?>
 <div class="row">
     <div class="twelve columns centered">
         <fieldset>
-            <legend>Termin anlegen</legend>
+            <legend><?php echo Yii::t('app', 'Termin anlegen'); ?></legend>
             <?php
             echo $this->renderPartial('_form', array(
                 'model' => $model,

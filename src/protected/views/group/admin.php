@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /* @var $this GroupController */
-$this->setPageTitle( 'Gruppenverwaltung');
+$this->setPageTitle(Yii::t('app', 'Gruppenverwaltung'));
 ?>
 <div class="row">
     <div class="twelve columns centered">

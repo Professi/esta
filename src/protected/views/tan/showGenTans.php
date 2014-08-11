@@ -19,7 +19,7 @@
  */
 /* @var $this TanController */
 /* @var $model tan */
-$this->setPageTitle('Generierte TAN\'s');
+$this->setPageTitle(Yii::t('app', 'Generierte TANs'));
 ?>
 <div class="row">
     <div class="twelve columns centered">
@@ -32,12 +32,12 @@ $this->setPageTitle('Generierte TAN\'s');
         $this->widget('zii.widgets.grid.CGridView', array(
             'dataProvider' => $dataProvider,
             'columns' => array(
-                array('name' => 'TAN', 'value' => '$data->tan',),
-                array('name' => 'Vorname', 'value' => '$data->child->firstname', 'visible' => !Yii::app()->params['allowParentsToManageChilds']),
-                array('name' => 'Nachname', 'value' => '$data->child->lastname', 'visible' => !Yii::app()->params['allowParentsToManageChilds']),
+                array('name' => Yii::t('app', 'TAN'), 'value' => '$data->tan',),
+                array('name' => Yii::t('app', 'Vorname'), 'value' => '$data->child->firstname', 'visible' => !Yii::app()->params['allowParentsToManageChilds']),
+                array('name' => Yii::t('app', 'Nachname'), 'value' => '$data->child->lastname', 'visible' => !Yii::app()->params['allowParentsToManageChilds']),
             )
         ));
         ?>
-        <p class="text-center"><?php echo CHtml::link('<b>Zurück zur vorherigen Seite</b>', 'index.php?r=Tan/genTans'); ?> </p>
+        <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur vorherigen Seite') . '</b>', 'index.php?r=Tan/genTans'); ?> </p>
     </div>
 </div>

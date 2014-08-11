@@ -24,9 +24,9 @@ $this->breadcrumbs = array(
     'Parent Children',
 );
 $this->menu = array(
-    array('label' => 'Kind hinzufügen', 'url' => array('create'), 'visible' => Yii::app()->params['allowParentsToManageChilds'] || Yii::app()->user->checkAccess(1)),
-    array('label' => 'Termin vereinbaren', 'url' => array('appointment/getTeacher')),
-    array('label' => 'Verwalte Elternkindverknüpfungen', 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess(1)),
+    array('label' => Yii::t('app', 'Kind hinzufügen'), 'url' => array('create'), 'visible' => Yii::app()->params['allowParentsToManageChilds'] || Yii::app()->user->checkAccess(1)),
+    array('label' => Yii::t('app', 'Termin vereinbaren'), 'url' => array('appointment/getTeacher')),
+    array('label' => Yii::t('app', 'Verwalte Elternkindverknüpfungen'), 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess(1)),
 );
 ?>
 <div class="row">

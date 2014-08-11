@@ -20,7 +20,7 @@
 /* @var $this SiteController */
 /* @var $model ConfigForm */
 /* @var $form CActiveForm */
-$this->setPageTitle('Konfiguration');
+$this->setPageTitle(Yii::t('app', 'Konfiguration'));
 $this->registerAdminScripts(true);
 ?>
 <div class="form">
@@ -32,7 +32,7 @@ $this->registerAdminScripts(true);
     ?>
     <div class="row">
         <div class="twelve columns centered">
-            <h2 class="text-center">Konfiguration</h2>
+            <h2 class="text-center"><?php echo Yii::t('app', 'Konfiguration'); ?></h2>
         </div>
     </div>
     <div class="row">
@@ -61,7 +61,7 @@ $this->registerAdminScripts(true);
             </div>
         <?php } ?>
         <fieldset>
-            <legend>Allgemein</legend>
+            <legend><?php echo Yii::t('app', 'Allgemein'); ?></legend>
             <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix infofeld">
@@ -69,7 +69,7 @@ $this->registerAdminScripts(true);
                     </span>
                     <div class="infotext">
                         <span aria-hidden="true" data-icon="&#xe012;"></span>
-                        Hier können Sie den Anwendungsnamen festlegen. Dieser ist unter anderem für die Seitentitel in der Browserstatusleiste relevant.
+                        <?php echo Yii::t('app', 'Hier können Sie den Anwendungsnamen festlegen. Dieser ist unter anderem für die Seitentitel in der Browserstatusleiste relevant.'); ?>
                     </div>
                 </div>
                 <div class="four columns">
@@ -86,7 +86,7 @@ $this->registerAdminScripts(true);
                     </span>
                     <div class="infotext">
                         <span aria-hidden="true" data-icon="&#xe012;"></span>
-                        Länderkürzel (bisher wurden noch keine Übersetzungen eingebaut)
+                        <?php echo Yii::t('app', 'Länderkürzel z.B. de oder en'); ?>
                     </div>
                 </div>
                 <div class="four columns">
@@ -104,39 +104,6 @@ $this->registerAdminScripts(true);
                     <?php
                     echo $form->textField($model, 'adminEmail');
                     echo $form->error($model, 'adminEmail');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'dateFormat'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'dateFormat');
-                    echo $form->error($model, 'dateFormat');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'timeFormat'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'timeFormat');
-                    echo $form->error($model, 'timeFormat');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'dateTimeFormat'); ?></span>
-                </div>
-                <div class="four columns">
-                    <?php
-                    echo $form->textField($model, 'dateTimeFormat', array('readonly' => 'readonly'));
-                    echo $form->error($model, 'dateTimeFormat');
                     ?>
                 </div>
             </div>
@@ -183,7 +150,7 @@ $this->registerAdminScripts(true);
                         <?php
                         echo Yii::t('app', 'Mit dieser Option können Sie Gruppen aktivieren.');
                         echo Yii::t('app', 'Für jeden Elternsprechtag und Benutzer können bestimmte Gruppen festgelegt werden.');
-                        echo Yii::t('app', 'Damit kann der Zugriff von Benutzern auf Elternsprechtage beschr&auml;nkt werden. Jeder TAN kann eine bestimmte Gruppe zugewiesen werden. Elternsprechtage ohne Gruppen sind frei zugänglich für registrierte Benutzer. Benutzer ohne Gruppe können an jedem Elternsprechtag Termine buchen.');
+                        echo Yii::t('app', 'Damit kann der Zugriff von Benutzern auf Elternsprechtage beschränkt werden. Jeder TAN kann eine bestimmte Gruppe zugewiesen werden. Elternsprechtage ohne Gruppen sind frei zugänglich für registrierte Benutzer. Benutzer ohne Gruppe können an jedem Elternsprechtag Termine buchen.');
                         ?>
                     </div>
                 </div>
@@ -227,15 +194,9 @@ $this->registerAdminScripts(true);
                     ?>
                 </div>
             </div>
-            <div class="row">
-                <div class="eight columns centered panel text-center">
-                    <?php echo Yii::t('app', 'Für Datums- und Zeitformate siehe <a href="http://php.net/manual/de/function.date.php">http://php.net/manual/de/function.date.php</a>'); ?> 
-                </div>
-            </div>
-
         </fieldset>
         <fieldset>
-            <legend>Kontaktinformationen</legend>
+            <legend><?php echo Yii::t('app', 'Kontaktinformationen'); ?></legend>
             <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'schoolName'); ?></span>
@@ -326,7 +287,7 @@ $this->registerAdminScripts(true);
             </div>
         </fieldset>
         <fieldset>
-            <legend>Elternsprechtage</legend>
+            <legend><?php echo Yii::t('app', 'Elternsprechtage'); ?></legend>
             <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix infofeld"><?php echo $form->label($model, 'allowParentsToManageChilds', array('class' => 'infolabel')); ?></span>
@@ -347,7 +308,7 @@ $this->registerAdminScripts(true);
                     <span class="prefix infofeld"><?php echo $form->label($model, 'maxChild', array('class' => 'infolabel')); ?></span>
                     <div class="infotext">
                         <span aria-hidden="true" data-icon="&#xe012;"></span>
-                        Wenn Eltern ihre Kinder selber verwalten dürfen, dürfen diese nur n Kinder hinzufügen.
+                        <?php echo Yii::t('app', 'Wenn Eltern ihre Kinder selber verwalten dürfen, dürfen diese nur n Kinder hinzufügen.'); ?>
                     </div>
                 </div>
                 <div class="four columns">
@@ -381,7 +342,7 @@ $this->registerAdminScripts(true);
             </div>
         </fieldset>
         <fieldset>
-            <legend>E-Mail</legend>
+            <legend><?php echo Yii::t('app', 'E-Mail'); ?></legend>
             <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'mailsActivated'); ?></span>
@@ -472,7 +433,7 @@ $this->registerAdminScripts(true);
             </div>
         </fieldset>
         <fieldset>
-            <legend>Anti-Spam</legend>
+            <legend><?php echo Yii::t('app', 'Anti-Spam'); ?></legend>
             <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'banUsers'); ?></span>
@@ -530,7 +491,7 @@ $this->registerAdminScripts(true);
             </div>
         </fieldset>
         <fieldset>
-            <legend>Terminblockierung</legend>
+            <legend><?php echo Yii::t('app', 'Terminblockierung'); ?></legend>
             <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'allowBlockingAppointments'); ?></span>
@@ -590,7 +551,7 @@ $this->registerAdminScripts(true);
     </div><!-- row -->
     <div class="row">
         <div class="twelve columns">
-            <?php echo CHtml::submitButton(Yii::t('App', 'Speichern'), array('class' => 'button')); ?>
+            <?php echo CHtml::submitButton(Yii::t('app', 'Speichern'), array('class' => 'button')); ?>
         </div>
     </div>
     <?php $this->endWidget(); ?>

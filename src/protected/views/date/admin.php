@@ -19,18 +19,18 @@
  */
 /* @var $this DateController */
 /* @var $model Date */
-$this->setPageTitle('Elternsprechtagverwaltung');
+$this->setPageTitle(Yii::t('app', 'Elternsprechtagverwaltung'));
 $this->breadcrumbs = array(
     'Dates' => array('index'),
     'Manage',
 );
 $this->menu = array(
-    array('label' => 'Elternsprechtag erstellen', 'url' => array('create')),
+    array('label' => Yii::t('app', 'Elternsprechtag erstellen'), 'url' => array('create')),
 );
 ?>
 <div class="row">
     <div class="twelve columns centered">
-        <h2 class="text-center">Elternsprechtagsverwaltung</h2>
+        <h2 class="text-center"><?php echo Yii::t('app', 'Elternsprechtagsverwaltung'); ?></h2>
     </div>
 </div>
 <?php
@@ -38,13 +38,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'date-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
-        array('name' => 'date', 'value' => 'date(Yii::app()->params["dateFormat"], strtotime($data->date))'),
-        array('name' => 'begin', 'value' => 'date(Yii::app()->params["timeFormat"], strtotime($data->begin))'),
-        array('name' => 'end', 'value' => 'date(Yii::app()->params["timeFormat"], strtotime($data->end))'),
-        array('name' => 'lockAt', 'value' => 'date(Yii::app()->params["dateTimeFormat"], $data->lockAt)'),
+        array('name' => 'date', 'value' => 'Yii::app()->dateFormatter->formatDateTime(strtotime($data->date), "short", null)'),
+        array('name' => 'begin', 'value' => 'Yii::app()->dateFormatter->formatDateTime(strtotime($data->begin), null, "short")'),
+        array('name' => 'end', 'value' => 'Yii::app()->dateFormatter->formatDateTime(strtotime($data->end), null, "short")'),
+        array('name' => 'lockAt', 'value' => 'Yii::app()->dateFormatter->formatDateTime($data->lockAt, "short", "short")'),
         'durationPerAppointment',
         array('name' => 'title', 'value' => '$data->title'),
-        array('name'=>'groups', 'value'=>'$data->getGroupnames()','visible'=>Yii::app()->params['allowGroups']),
+        array('name' => 'groups', 'value' => '$data->getGroupnames()', 'visible' => Yii::app()->params['allowGroups']),
         array(
             'class' => 'CustomButtonColumn',
         ),

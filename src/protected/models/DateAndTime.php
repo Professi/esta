@@ -81,8 +81,8 @@ class DateAndTime extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'time' => Yii::t('app','Zeit'),
-            'date_id' => Yii::t('app','Datum'),
+            'time' => Yii::t('app', 'Zeit'),
+            'date_id' => Yii::t('app', 'Datum'),
         );
     }
 
@@ -126,8 +126,8 @@ class DateAndTime extends CActiveRecord {
         $a_rc = array();
         $a_data = DateAndTime::model()->findAll($this->searchDateAndTime());
         foreach ($a_data as $record) {
-            $a_rc[] = array('label' => date('d.m.Y', strtotime($record->date->date)) . " "
-                . date('H:i', strtotime($record->time))
+            $a_rc[] = array('label' => Yii::app()->dateFormatter->formatDateTime(strtotime($record->date->date), "short", null) . " "
+                . Yii::app()->dateFormatter->formatDateTime(strtotime($record->time), null, "short")
                 , 'value' => $record->id);
         }
         return $a_rc;

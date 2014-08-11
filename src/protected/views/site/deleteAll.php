@@ -20,7 +20,7 @@
 /* @var $this SiteController */
 /* @var $model DeleteAllForm */
 /* @var $form CActiveForm */
-$this->setPageTitle('Anwendung zurücksetzen');
+$this->setPageTitle(Yii::t('app', 'Anwendung zurücksetzen'));
 ?>
 <div class="form delete-all">
     <?php
@@ -31,7 +31,7 @@ $this->setPageTitle('Anwendung zurücksetzen');
     ?>
     <div class="row">
         <div class="twelve columns centered">
-            <h2 class="text-center">Anwendung zur&uuml;cksetzen</h2>
+            <h2 class="text-center"><?php echo Yii::t('app', 'Anwendung zurücksetzen'); ?></h2>
         </div>
     </div>
     <div class="row">

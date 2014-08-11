@@ -16,7 +16,7 @@
  */
 /* @var $this GroupController */
 /* @var $model Group */
-$this->setPageTitle('Gruppe bearbeiten');
+$this->setPageTitle(Yii::t('app','Gruppe bearbeiten'));
 $this->breadcrumbs = array(
     'Group' => array('index'),
     $model->id => array('view', 'id' => $model->id),
@@ -30,7 +30,7 @@ $this->menu = array(
 <div class="row">
     <div class="twelve columns">
         <fieldset>
-            <legend>Gruppe Nummer <?php echo $model->getPrimaryKey(); ?> bearbeiten</legend>
+            <legend><?php echo Yii::t('app', 'Gruppe Nummer {id} bearbeiten', array('{id}' => $model->getPrimaryKey())); ?></legend>
             <?php
             echo $this->renderPartial('_form', array(
                 'model' => $model,

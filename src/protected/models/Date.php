@@ -60,11 +60,11 @@ class Date extends CActiveRecord {
         return array(
             array('date, begin, end,lockAt,durationPerAppointment', 'required'),
             array('durationPerAppointment', 'numerical', 'integerOnly' => true, 'min' => Yii::app()->params['minLengthPerAppointment']),
-            array('lockAt', 'date', 'format' => 'dd.MM.yyyy H:m'),
-            array('date', 'date', 'format' => 'dd.MM.yyyy'),
+            array('lockAt', 'date', 'format' => Yii::app()->locale->getDateFormat('short'). ' ' . Yii::app()->locale->getTimeFormat('short')),
+            array('date', 'date', 'format' => Yii::app()->locale->getDateFormat('short')),
             array('begin,end', 'date', 'format' => 'H:m'),
             array('durationPerAppointment', 'date', 'format' => 'm'),
-            array('id, date, begin, end, durationPerAppointment,groups,title,lockAt', 'safe', 'on' => 'search'),
+            array('id, date, begin, end, durationPerAppointment,groups,title,lockAt', 'safe'),
         );
     }
 
@@ -127,10 +127,10 @@ class Date extends CActiveRecord {
             } else if (time() >= strtotime($this->date)) {
                 $rc = false;
                 $this->addError('date', Yii::t('app', 'Datum liegt in der Vergangenheit'));
-            } else if (!is_int((strtotime($this->end) - strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
+            } else if (!is_numeric((strtotime($this->end) - strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
                 $rc = false;
                 $this->addError('durationPerAppointment', Yii::t('app', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.'));
-            } else if (strtotime($this->date . $this->begin) < strtotime($this->lockAt)) {
+            } else if (CDateTimeParser::parse($this->date,Yii::app()->locale->getDateFormat('short')) < CDateTimeParser::parse($this->lockAt,Yii::app()->locale->getDateFormat('short'). ' ' . Yii::app()->locale->getTimeFormat('short'))) {
                 $rc = false;
                 $this->addError('lockAt', Yii::t('app', 'Die Sperrfrist muss vor oder auf dem Anfang liegen.'));
             }
@@ -279,5 +279,19 @@ class Date extends CActiveRecord {
         return $criteria;
     }
 
-}
+    protected function beforeValidate() {
+        $rc = parent::beforeValidate();
+        if (!empty($this->date)) {
+            $this->date = Yii::app()->dateFormatter->formatDateTime($this->date, "short", null);
+        }
+        if (!empty($this->lockAt)) {
+            $this->lockAt = Yii::app()->dateFormatter->formatDateTime($this->lockAt, "short", "short");
+        }
+        return $rc;
+    }
 
+    private function convertTime($time) {
+        return Yii::app()->dateFormatter->formatDateTime($time, null, "short");
+    }
+
+}

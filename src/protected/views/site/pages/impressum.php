@@ -18,13 +18,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /* @var $this SiteController */
-$this->setPageTitle('Impressum');
+$this->setPageTitle(Yii::t('app', 'Impressum'));
 $this->breadcrumbs = array(
     'Impressum',
 );
 ?>
 <div class="row">
-    <h2 class='subheader'>Impressum</h2>
+    <h2 class='subheader'><?php echo Yii::t('app', 'Impressum'); ?></h2>
     <hr>
     <div class="twelve columns">
         <p> <?php echo Yii::app()->params['schoolName']; ?><br>
@@ -33,20 +33,20 @@ $this->breadcrumbs = array(
             <?php echo Yii::app()->params['schoolTele']; ?><br>
             <?php echo Yii::app()->params['schoolFax']; ?><br>
             <?php if (Yii::app()->params['useSchoolEmailForContactForm']) { ?>
-                E-Mail: <a href="mailto:<?php echo Yii::app()->params['schoolEmail']; ?>"><?php echo Yii::app()->params['schoolEmail']; ?></a>
+                <?php echo Yii::t('app', 'E-Mail') . ':'; ?> <a href="mailto:<?php echo Yii::app()->params['schoolEmail']; ?>"><?php echo Yii::app()->params['schoolEmail']; ?></a>
             <?php } ?>
         </p>
-        <p>Elternsprechtagsanwendung(ESTA) wurde im Rahmen eines Berufsschulprojektes für die Brühlwiesenschule Hofheim entwickelt und unter der GNU General Public License Version 3 (&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a> ) lizensiert.
-            <br>Die Urheber sind: Christian Ehringfeld, David Mock, Matthias Unterbusch. </p>
-        <p>Projektverzeichnis&nbsp;&nbsp;<a href="http://synlos.net/redmine/projects/est"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
+        <p><?php echo Yii::t('app', 'Elternsprechtagsanwendung(ESTA) wurde im Rahmen eines Berufsschulprojektes für die Brühlwiesenschule Hofheim entwickelt und unter der GNU General Public License Version 3 (&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a> ) lizensiert.'); ?>
+            <br><?php echo Yii::t('app', 'Die Urheber sind:'); ?> Christian Ehringfeld, David Mock, Matthias Unterbusch. </p>
+        <p><?php Yii::t('app', 'Projektverzeichnis'); ?>&nbsp;&nbsp;<a href="http://synlos.net/redmine/projects/est"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
         </p>
-        <p> Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:<br>
+        <p><?php echo Yii::t('app', 'Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:'); ?><br>
             PHP&nbsp;&nbsp;<a href="http://www.php.net"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             Yii Framework&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            EMailer eine Yii Extension die PHPMailer verwendet&nbsp;&nbsp;<a href="http://www.yiiframework.com/extension/mailer/" > <span aria-hiden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
+            EMailer&nbsp;&nbsp;<a href="http://www.yiiframework.com/extension/mailer/" > <span aria-hiden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             PHPMailer&nbsp;&nbsp;<a href="https://github.com/Synchro/PHPMailer" > <span aria-hiden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             ZURB Foundation Framework&nbsp;&nbsp;<a href="http://foundation.zurb.com"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            IcoMoon  Icon Fonts&nbsp;&nbsp;<a href="http://icomoon.io" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
+            IcoMoon Icon Fonts&nbsp;&nbsp;<a href="http://icomoon.io" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             Google Web Fonts&nbsp;&nbsp;<a href="http://www.google.com/webfonts" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             Free Stock Textures&nbsp;&nbsp;<a href="http://freestocktextures.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
         </p>
@@ -78,6 +78,6 @@ $this->breadcrumbs = array(
             <b>5. Rechtswirksamkeit dieses Haftungsausschlusses</b> <br>
             Dieser Haftungsausschluss ist als Teil des Internetangebotes zu betrachten, von dem aus auf diese Seite verwiesen wurde. Sofern Teile oder einzelne Formulierungen dieses Textes der geltenden Rechtslage nicht, nicht mehr oder nicht vollständig entsprechen sollten, bleiben die übrigen Teile des Dokumentes in ihrem Inhalt und ihrer Gültigkeit davon unberührt. 
         </p>
-        <p class="text-center"><?php echo CHtml::link('<b>Zurück zur Startseite</b>', 'index.php'); ?> </p>
+        <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', 'index.php'); ?> </p>
     </div>
 </div>

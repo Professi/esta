@@ -16,19 +16,19 @@
  */
 /* @var $this GroupController */
 /* @var $model Group */
-$this->setPageTitle('Gruppe anlegen');
+$this->setPageTitle(Yii::t('app', 'Gruppe anlegen'));
 $this->breadcrumbs = array(
     'Groups' => array('admin'),
     'Create',
 );
 $this->menu = array(
-    array('label' => 'Gruppen verwalten', 'url' => array('admin')),
+    array('label' => Yii::t('app', 'Gruppen verwalten'), 'url' => array('admin')),
 );
 ?>
 <div class="row">
     <div class="twelve columns">
         <fieldset>
-            <legend>Gruppen anlegen</legend>
+            <legend><?php echo Yii::t('app', 'Gruppen anlegen'); ?></legend>
             <?php
             echo $this->renderPartial('_form', array(
                 'model' => $model,

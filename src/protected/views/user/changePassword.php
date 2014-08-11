@@ -19,13 +19,13 @@
  */
 /* @var $this UserController */
 /* @var $model ChangePwd */
-$this->setPageTitle('Passwort zurücksetzen');
+$this->setPageTitle(Yii::t('app', 'Passwort zurücksetzen'));
 ?>
 <div class="row">
     <div class="nine columns centered">
-        <h3>M&ouml;chten Sie ihr Passwort zur&uuml;cksetzen ?</h3>
+        <h3><?php echo Yii::t('app', 'Möchten Sie Ihr Passwort zurücksetzen ?'); ?></h3>
         <div class="panel">
-            <p>Geben Sie Ihre E-Mail-Adresse ein. Ihnen wird ein Aktivierungslink zugesendet mit dem Sie ein neues Passwort setzen können.</p>
+            <p><?php echo Yii::t('app', 'Geben Sie Ihre E-Mail-Adresse ein. Ihnen wird ein Aktivierungslink zugesendet mit dem Sie ein neues Passwort setzen können.'); ?></p>
         </div>
         <?php
         $form = $this->beginWidget('CActiveForm', array(
@@ -60,7 +60,7 @@ $this->setPageTitle('Passwort zurücksetzen');
                         echo $form->textField($model, 'verifyCode');
                         echo $form->error($model, 'verifyCode');
                         ?>
-                        <div class="hint">&nbsp;Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.</div>
+                        <div class="hint">&nbsp;<?php echo Yii::t('app', 'Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.'); ?></div>
                     </div>
                 </div>
                 <?php
@@ -70,8 +70,8 @@ $this->setPageTitle('Passwort zurücksetzen');
         </fieldset>
         <?php $this->endWidget(); ?>
         <div class="panel">
-            <p class="medium">Das Zur&uuml;cksetzen eines Passwortes funktioniert nur, wenn Sie bereits im System registriert sind. Sollten Sie noch keinen Zugang besitzen registrieren Sie sich bitte zuerst im System.</p>
+            <p class="medium"><?php echo Yii::t('app', 'Das Zurücksetzen eines Passwortes funktioniert nur, wenn Sie bereits im System registriert sind. Sollten Sie noch keinen Zugang besitzen registrieren Sie sich bitte zuerst im System.'); ?></p>
         </div>
-        <p class="text-center"><?php echo CHtml::link('<b>Zurück zur Startseite</b>', 'index.php'); ?> </p>
+        <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', 'index.php'); ?> </p>
     </div>
 </div>

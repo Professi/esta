@@ -23,7 +23,6 @@
 class ConfigForm extends CFormModel {
 
     public $adminEmail;
-    public $dateTimeFormat;
     public $smtpAuth;
     public $smtpPassword;
     public $fromMailHost;
@@ -40,8 +39,6 @@ class ConfigForm extends CFormModel {
     public $banUsers;
     public $durationTempBans;
     public $maxAttemptsForLogin;
-    public $timeFormat;
-    public $dateFormat;
     public $allowBlockingAppointments;
     public $appointmentBlocksPerDate;
     public $lengthReasonAppointmentBlocked;
@@ -68,21 +65,20 @@ class ConfigForm extends CFormModel {
 
     public function rules() {
         return array(
-            array('adminEmail,dateTimeFormat,emailHost,fromMail' .
+            array('adminEmail,emailHost,fromMail' .
                 ',schoolName,mailsActivated,maxChild,'
                 . 'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,' .
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
-                'durationTempBans,maxAttemptsForLogin,timeFormat,dateFormat,' .
+                'durationTempBans,maxAttemptsForLogin,' .
                 'allowBlockingAppointments,appointmentBlocksPerDate,' .
                 'lengthReasonAppointmentBlocked,schoolStreet,schoolCity,' .
                 'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,' .
                 'lockRegistration,allowGroups,allowParentsToManageChilds,' .
-                'logoPath,textHeader,language,appName,hashCost,' .
+                'logoPath,language,appName,hashCost,' .
                 'teacherAllowBlockTeacherApps,smtpPort,tanSize,schoolWebsiteLink', 'required'),
             array('adminEmail,schoolEmail', 'email'),
             array('language', 'length', 'min' => 2),
-            array('emailHost,fromMail,dateFormat,appName', 'length', 'min' => 3),
-            array('dateTimeFormat', 'length', 'min' => 5),
+            array('emailHost,fromMail,appName', 'length', 'min' => 3),
             array('defaultTeacherPassword', 'length', 'min' => 5),
             array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments,' .
                 'useSchoolEmailForContactForm,allowBlockingOnlyForManagement,lockRegistration,' .
@@ -93,11 +89,11 @@ class ConfigForm extends CFormModel {
                 . 'lengthReasonAppointmentBlocked,smtpPort,maxTanGen,tanSize',
                 'numerical', 'integerOnly' => true, 'min' => 1),
             array('hashCost', 'numerical', 'integerOnly' => true, 'min' => 13),
-            array('adminEmail,dateTimeFormat,emailHost,fromMailHost,fromMail' .
+            array('adminEmail,emailHost,fromMailHost,fromMail' .
                 ',schoolName,mailsActivated,maxChild,'
                 . 'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,' .
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
-                'durationTempBans,maxAttemptsForLogin,salt,installed,dateFormat,timeFormat,' .
+                'durationTempBans,maxAttemptsForLogin,salt,' .
                 'allowBlockingAppointments,appointmentBlocksPerDate,hashCost,' .
                 'lengthReasonAppointmentBlocked,smtpAuth,smtpSecure,smtpPort,smtpPassword,tanSize,schoolWebsiteLink', 'safe'),
         );
@@ -106,7 +102,6 @@ class ConfigForm extends CFormModel {
     public function attributeLabels() {
         return array(
             'adminEmail' => Yii::t('app', 'Administrator E-Mail Adresse'),
-            'dateTimeFormat' => Yii::t('app', 'Datums und Zeitformat (z.B. d.m.Y H:i)'),
             'fromMailHost' => Yii::t('app', 'SMTP Benutzername'),
             'fromMail' => Yii::t('app', 'Absendername (z.B. ESTA-School)'),
             'emailHost' => Yii::t('app', 'Domainname des SMTP Servers (z.B. schoolxyz.de)'),
@@ -121,8 +116,6 @@ class ConfigForm extends CFormModel {
             'durationTempBans' => Yii::t('app', 'Dauer der Sperre in Minuten'),
             'maxAttemptsForLogin' => Yii::t('app', 'Maximalanzahl an fehlgeschlagenen Loginversuchen bis zur Sperrung eines Kontos'),
             'hashCost' => Yii::t('app', 'Rechenaufwand für das Hashen der Passwörter'),
-            'dateFormat' => Yii::t('app', 'Datumsformat (z.B. d.m.Y)'),
-            'timeFormat' => Yii::t('app', 'Zeitformat (z.B. H:i)'),
             'allowBlockingAppointments' => Yii::t('app', 'Blockieren von Terminen erlauben?'),
             'appointmentBlocksPerDate' => Yii::t('app', 'Anzahl der Termine die blockiert werden dürfen'),
             'lengthReasonAppointmentBlocked' => Yii::t('app', 'Minimallänge eines Grundes um einen Termin zu blocken'),

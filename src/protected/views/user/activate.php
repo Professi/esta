@@ -18,11 +18,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /* @var $this UserController */
-$this->setPageTitle('Konto aktiviert');
+$this->setPageTitle(Yii::t('app', 'Konto aktiviert'));
 ?>
 <div class="row">
     <div class="twelve columns ">    
-        <p class="text-center"><?php echo CHtml::link('<b>Zur&uuml;ck zur Startseite</b>', 'index.php'); ?></p>
+        <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app','Zurück zur Startseite') . '</b>', 'index.php'); ?></p>
     </div>
 </div>
 

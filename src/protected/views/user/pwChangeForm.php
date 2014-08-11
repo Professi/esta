@@ -20,12 +20,12 @@
 /* @var $this UserController */
 /* @var $model NewPw */
 /* @var $form CActiveForm */
-$this->setPageTitle('Passwort ändern');
+$this->setPageTitle(Yii::t('app', 'Passwort ändern'));
 ?>
 <div class="row">
     <div class="eight columns centered">
         <div class="alert-box secondary">
-            Sie können nun Ihr Passwort ändern.
+            <?php echo Yii::t('app', 'Sie können nun Ihr Passwort ändern.'); ?>
         </div>
         <?php
         $form = $this->beginWidget('CActiveForm', array(
@@ -44,7 +44,7 @@ $this->setPageTitle('Passwort ändern');
                     ?>
                 </div>
                 <div class="three columns">
-                    <span class="postfix" style="font-size:.8em;">Mindeslänge 8 Zeichen</span>
+                    <span class="postfix" style="font-size:.8em;"><?php echo Yii::t('app', 'Mindeslänge 8 Zeichen'); ?></span>
                 </div>
             </div>
             <div class="row collapse">
@@ -58,7 +58,7 @@ $this->setPageTitle('Passwort ändern');
                     ?>
                 </div>
             </div>
-            <?php echo CHtml::submitButton('Absenden', array('class' => 'small button')); ?>
+            <?php echo CHtml::submitButton(Yii::t('app','Absenden'), array('class' => 'small button')); ?>
         </fieldset>
         <?php $this->endWidget(); ?>
     </div>
