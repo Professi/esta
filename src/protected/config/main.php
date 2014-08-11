@@ -20,7 +20,6 @@ return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name' => 'ESTA',
     'sourceLanguage' => 'de',
-    'language' => 'de',
     'preload' => array('log'),
     'import' => array(
         'application.models.*',
