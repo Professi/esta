@@ -259,13 +259,13 @@ class AppointmentController extends Controller {
     public function actionMakeAppointment($teacher) {
         $model = new Appointment;
         $model->unsetAttributes();
-        $badRequest = true;
+        $badRequest = false;
         if (is_numeric($teacher)) {
             if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccess('3')) {
                 $userGroups = Yii::app()->user->getGroups();
                 if (!empty($userGroups)) {
+                    $badRequest = true;
                     $teacherGroups = UserHasGroup::model()->findAllByAttributes(array('user_id' => $teacher));
-
                     foreach ($teacherGroups as $group) {
                         foreach ($userGroups as $userGroup) {
                             if ($group->group->id == $userGroup->id) {
@@ -487,7 +487,7 @@ class AppointmentController extends Controller {
      * @return array Gibt BELEGT,0 oder Verfügbar,1 zurück,
      */
     public function isAppointmentAvailable($teacher, $dateAndTimeId) {
-        $rc = array("BELEGT", 0);
+        $rc = array(Yii::t('app', "BELEGT"), 0);
         $check = false;
         if ((Yii::app()->params['allowGroups'] && !Yii::app()->user->getState('group')) || (!Yii::app()->params['allowGroups'] || Yii::app()->user->checkAccessRole('1', '3') || Yii::app()->user->checkAccessRole('0', '2'))) {
             if (Appointment::model()->countByAttributes(array('user_id' => $teacher,
@@ -498,12 +498,12 @@ class AppointmentController extends Controller {
                     BlockedAppointment::model()->countByAttributes(array('user_id' => $teacher,
                         'dateAndTime_id' => $dateAndTimeId)) != '0') {
                 if (Yii::app()->user->checkAccess('1')) {
-                    $rc = array("BLOCKIERT", 0);
+                    $rc = array(Yii::t('app', "BLOCKIERT"), 0);
                 }
                 $check = false;
             }
             if ($check) {
-                $rc = array("VERFüGBAR", 1);
+                $rc = array(Yii::t('app', "VERFÜGBAR"), 1);
             }
         }
         return $rc;
