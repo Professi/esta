@@ -38,7 +38,7 @@ $this->menu = array(
                     <br>
                     <?php
                     if (Yii::app()->params['allowParentsToManageChilds']) {
-                        echo Yii::t('app', 'Klicken Sie ') . CHtml::link(Yii::t('app', 'hier'), array('parentChild/create')) . Yii::t('app', 'um Kinder anzulegen.');
+                        echo Yii::t('app', 'Klicken Sie ') . CHtml::link(Yii::t('app', 'hier'), array('parentChild/create')) . ' ' . Yii::t('app', 'um Kinder anzulegen.');
                     } else {
                         echo Yii::t('app', 'Klicken Sie ') . CHtml::link(Yii::t('app', 'hier'), array('user/account')) . ' ' . Yii::t('app', 'um Kinder anzulegen.') . Yii::t('app', 'Sie müssen dafür nur TANs eingeben. Falls Sie über keine TAN verfügen, so wenden Sie sich bitte an die Verwaltung.');
                     }
