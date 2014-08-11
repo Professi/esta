@@ -259,12 +259,13 @@ class AppointmentController extends Controller {
     public function actionMakeAppointment($teacher) {
         $model = new Appointment;
         $model->unsetAttributes();
+        $badRequest = true;
         if (is_numeric($teacher)) {
             if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccess('3')) {
                 $userGroups = Yii::app()->user->getGroups();
                 if (!empty($userGroups)) {
                     $teacherGroups = UserHasGroup::model()->findAllByAttributes(array('user_id' => $teacher));
-                    $badRequest = true;
+
                     foreach ($teacherGroups as $group) {
                         foreach ($userGroups as $userGroup) {
                             if ($group->group->id == $userGroup->id) {
@@ -286,7 +287,7 @@ class AppointmentController extends Controller {
             if (isset($_POST['Appointment'])) {
                 $model->attributes = $_POST['Appointment'];
                 if (!empty($model->attributes['dateAndTime_id'])) {
-                    
+
                     $postDate = Yii::app()->dateFormatter->formatDateTime(strtotime($model->dateandtime->date->date), "short", null);
                     $postTime = Yii::app()->dateFormatter->formatDateTime(strtotime($model->dateandtime->time), null, "short");
                 }
