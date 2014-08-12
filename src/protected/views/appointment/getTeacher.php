@@ -67,7 +67,7 @@ $this->setPageTitle(Yii::t('app', 'Lehrerauswahl'));
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=x" class="small teacher button">X</a>
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=y" class="small teacher button">Y</a>
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=z" class="small teacher button">Z</a>
-                                <?php if(strpos(Yii::app()->params['language'], 'de') == 0) {?>
+                                <?php if(strpos(Yii::app()->language, 'de') == 0) {?>
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=ü" class="small teacher button">ä</a>
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=ö" class="small teacher button">ö</a>
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=ä" class="small teacher button">ü</a>
@@ -114,11 +114,11 @@ $this->setPageTitle(Yii::t('app', 'Lehrerauswahl'));
                             </div>
                             <div class="left">
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=z" class="small teacher button">Z</a>
-                                                                <?php if(strpos(Yii::app()->params['language'], 'de') == 0) {?>
+                                <?php if(strpos(Yii::app()->language, 'de') == 0) {?>
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=ae" class="small teacher button">ä</a>
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=oe" class="small teacher button">ö</a>
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=ue" class="small teacher button">ü</a>
-                                                                <?php } ?>
+                                <?php } ?>
                                 <a href="index.php?r=appointment/getTeacher&amp;letter=" class="small teacher button">*</a>
                             </div>
                             <div style="clear:both;"></div> 

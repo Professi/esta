@@ -136,7 +136,7 @@ class ConfigForm extends CFormModel {
             'appName' => Yii::t('app', 'Anwendungsname'),
             'smtpSecure' => Yii::t('app', 'SMTP Sicherheit(z.B. ssl oder tls), kann leer gelassen werden'),
             'smtpPort' => Yii::t('app', 'SMTP Port'),
-            'maxTanGen' => Yii::t('app', 'Maximal Anzahl generierte TAN\'s'),
+            'maxTanGen' => Yii::t('app', 'Maximal Anzahl generierte TANs'),
             'tanSize' => Yii::t('app', 'Länge einer TAN'),
             'allowParentsToManageChilds' => Yii::t('app', 'Sollen Eltern die Daten über Ihre Kinder verwalten können?'),
             'teacherAllowBlockTeacherApps' => Yii::t('app', 'Dürfen Lehrer Termine anderer Lehrer blockieren?'),

@@ -20,8 +20,8 @@
 /** @var $this Controller */
 ?>
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="<?php echo Yii::app()->params['language']; ?>"><![endif]-->
-<!--[if gt IE 8]><!--><html class="no-js" lang="<?php echo Yii::app()->params['language']; ?>"><!--<![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="<?php echo Yii::app()->language; ?>"><![endif]-->
+<!--[if gt IE 8]><!--><html class="no-js" lang="<?php echo Yii::app()->language; ?>"><!--<![endif]-->
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
@@ -115,7 +115,7 @@
                     <hr />
                     <div class="row">
                         <div class="six columns">
-                            <p><?php echo Yii::t('app', 'Copyright');?> &copy; <?php
+                            <p><?php echo Yii::t('app', 'Copyright'); ?> &copy; <?php
                                 echo date('Y') . ' ';
                                 echo (!empty(Yii::app()->params['schoolName'])) ? Yii::app()->params['schoolName'] : Yii::t('app', 'ESTA - Team');
                                 ?> <br>

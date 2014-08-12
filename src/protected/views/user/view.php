@@ -82,7 +82,7 @@ $this->menu = array(
                 <p><?php echo Yii::t('app', 'Mit dem Drücken dieses Knopfes werden alle Daten aus der Datenbank gelöscht. Betätigen Sie ihn nur wenn Sie sich absolut sicher sind!'); ?></p>
                 <p><?php echo Yii::t('app', 'Nur die Admin- und Verwaltungsbenutzer bleiben bestehen'); ?></p>
                 <img id="red-button" src="<?php echo $this->assetsDir; ?>/img/redbutton.png" alt="<?php echo Yii::t('app', 'Der Rote Knopf'); ?>" style="cursor:pointer;" >
-                <p><?php echo Yii::t('app', 'Wenn Sie nur bestimmte Daten löschen möchten klicken Sie') . CHtml::link(Yii::t('app', 'hier'), array('site/deleteAll')); ?></p>
+                <p><?php echo Yii::t('app', 'Wenn Sie nur bestimmte Daten löschen möchten klicken Sie') . ' ' . CHtml::link(Yii::t('app', 'hier'), array('site/deleteAll')) . '.'; ?></p>
             </fieldset>
             <?php
         }

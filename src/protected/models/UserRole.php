@@ -78,7 +78,7 @@ class UserRole extends CActiveRecord {
         return array(
             'id' => Yii::t('app', 'ID'),
             'role_id' => Yii::t('app', 'RollenID'),
-            'user_id' => Yii::t('app', 'UserID'),
+            'user_id' => Yii::t('app', 'BenutzerID'),
         );
     }
 

@@ -42,7 +42,7 @@ class DeleteAllForm extends CFormModel {
      * @return array
      */
     public function attributeLabels() {
-        return array('tans' => Yii::t('app', 'Tans'),
+        return array('tans' => Yii::t('app', 'TANs'),
             'appointments' => Yii::t('app', 'Termine'),
             'teachers' => Yii::t('app', 'Lehrer'),
             'dates' => Yii::t('app', 'Elternsprechtage'),

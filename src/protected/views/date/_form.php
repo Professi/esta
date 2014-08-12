@@ -41,7 +41,7 @@ $form = $this->beginWidget('CActiveForm', array(
                 'nextText' => '',
                 'prevText' => '',
             ),
-            'language' => Yii::app()->params['language'],
+            'language' => Yii::app()->language,
             'skin' => false,
             'cssFile' => false,
             'htmlOptions' => array(
@@ -78,7 +78,7 @@ $form = $this->beginWidget('CActiveForm', array(
                         'nextText' => '',
                         'prevText' => '',
                     ),
-                    'language' => Yii::app()->params['language'],
+                    'language' => Yii::app()->language,
                     'skin' => false,
                     'cssFile' => false,
                     'htmlOptions' => array(
@@ -93,7 +93,7 @@ $form = $this->beginWidget('CActiveForm', array(
                         'ext.jui.EJuiDateTimePicker', array(
                     'id' => "time_lockAt",
                     'name' => "time_lockAt",
-                    'language' => Yii::app()->params['language'],
+                    'language' => Yii::app()->language,
                     'value' => $timeLabel,
                     'mode' => 'time',
                         // 'options' => $a_disabled
@@ -121,7 +121,7 @@ $form = $this->beginWidget('CActiveForm', array(
             'model' => $model,
             'attribute' => 'begin',
             'mode' => 'time',
-            'language' => Yii::app()->params['language'],
+            'language' => Yii::app()->language,
             'options' => $a_disabled
                 )
         );
@@ -144,7 +144,7 @@ $form = $this->beginWidget('CActiveForm', array(
                 'ext.jui.EJuiDateTimePicker', array(
             'model' => $model,
             'attribute' => 'end',
-            'language' => Yii::app()->params['language'],
+            'language' => Yii::app()->language,
             'mode' => 'time',
             'options' => $a_disabled
                 )

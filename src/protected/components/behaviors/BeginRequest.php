@@ -13,7 +13,6 @@ class BeginRequest extends CBehavior {
     public function handleBeginRequest($event) {
         $app = Yii::app();
         $user = $app->user;
-
         if (isset($_POST['_lang'])) {
             $app->language = $_POST['_lang'];
             $app->user->setState('_lang', $_POST['_lang']);

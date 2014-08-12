@@ -80,8 +80,8 @@ class Role extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'title' => Yii::t('app', 'Title'),
-            'description' => Yii::t('app', 'Description'),
+            'title' => Yii::t('app', 'Titel'),
+            'description' => Yii::t('app', 'Beschreibung'),
         );
     }
 
