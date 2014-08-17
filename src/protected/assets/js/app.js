@@ -75,25 +75,13 @@
         });
         
         $('.avaiable').css('cursor', 'pointer');
-        $('.avaiable').on('click', function() {
-            $id = $(this).attr('id');
-            $date = 'date-' + $id.substr(0, ($id.indexOf('_')));
-            $time = 'time-' + $id;
-            $date_text = $('#' + $date).text().match(/[^\s\(\)]+/);
-            $time_text = $('#' + $time).text();
-            $('#form_date').val($date_text);
-            $('#form_time').val($time_text);
-            $('#Appointment_dateAndTime_id').children('*:gt(0)').each(function(i, $this) {
-                if ($($this).attr('label').match($date_text)) {
-                    $($this).children().each(function(i, $this) {
-                       if ($($this).text().match($time_text)) {
-                           $this['selected'] = true;
-                       }
-                    });
-                }
+        $('.appointment-create-table .avaiable').click(function() {
+                var that = $(this);
+                $('#form_date').val(that.parents('table').data('date'));
+                $('#form_time').val(that.siblings().text().trim());
+                $('select[name*="dateAndTime_id"]').select2('val',that.data('id'));
             });
-        });
-        
+            
         $('.delete-children').on('click', function() {
            if (!confirm('Wenn Sie dieses Kind löschen werden auch alle Termine des Kindes gelöscht.')) {
                return false;

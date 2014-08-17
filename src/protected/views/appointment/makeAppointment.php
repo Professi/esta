@@ -14,111 +14,140 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this AppointmentController */
-/* @var $model Appointment */
-/** @var $a_child Array Of Childs */
+/** 
+ * @var $this AppointmentController 
+ * @var $model Appointment 
+ * @var $a_child Array Of Childs 
+ * @var $dates 
+ * @var $columnCount
+ * @var $postDate
+ * @var $postTime
+ */
 /** @todo MVC anpassen */
 $this->setPageTitle(Yii::t('app', 'Termin vereinbaren'));
 Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 ?>
 <div class="row">
     <div class="twelve columns">
-        <h2 class="subheader"><?php echo Yii::t('app', 'Termine für') ?> &nbsp;
-            <?php echo $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname; ?></h2>
+        <h2 class="subheader">
+            <?php echo Yii::t('app', 'Termine für') ?> &nbsp;
+            <?php echo "{$model->user->title} {$model->user->firstname} {$model->user->lastname}"; ?>
+        </h2>
         <hr>
-        <?php if (empty($a_dates)) { ?>
-            <div class="panel">
-                <?php echo Yii::t('app', 'In nächster Zeit ist kein Elternsprechtag geplant, für den Sie Termine vereinbaren könnten.');?>
-            </div>
+        <?php if (empty($dates)) { ?>
+        <div class="panel">
+            <?php echo Yii::t('app', 'In nächster Zeit ist kein Elternsprechtag geplant, für den Sie Termine vereinbaren könnten.');?>
+        </div>
         <?php } else { ?>
-            <div class="panel js_show">
-                <?php echo Yii::t('app', 'Hier können Sie Termine mit dem Lehrer vereinbaren.'); ?>
-                <?php echo Yii::t('app', 'Klicken Sie einfach auf ein Feld mit "Verfügbar" und bestätigen Sie am Ende der Seite den Termin.'); ?>
-            </div>
-            <div class="js_show">
-                <?php
-                $this->widget('zii.widgets.jui.CJuiTabs', array(
-                    'tabs' => $a_tabs,
-                    'options' => array(
-                        'collapsible' => false,
-                    ),
-                    'htmlOptions' => array(
-                        'style' => 'border:none;'
-                    ),
-                    'cssFile' => false,
-                ));
-                ?>
-            </div>
-            <div class="row js_hide">
-                <?php foreach ($a_tabs as $date => $table) { ?>
-                    <div class="<?php echo $columnCount ?> columns">
-                        <h4 class="subheader text-center"><?php echo $date ?></h4>
-                        <?php echo $table; ?>
-                    </div>
-                <?php } ?>
-            </div>
+        <div class="panel js_show">
+            <?php echo Yii::t('app', 'Hier können Sie Termine mit dem Lehrer vereinbaren.'); ?>
+            <?php echo Yii::t('app', 'Klicken Sie einfach auf ein Feld mit "Verfügbar" und bestätigen Sie am Ende der Seite den Termin.'); ?>
+        </div>
+        <div class="js_show">
+            <?php echo '';
+            $tabs = array();
+            foreach($dates as $date) {
+                $tabs[$this->formatAppointmentTitle($date[0]->date)] = $this->renderPartial(
+                            'dateTable', 
+                            array(  'date' => $date,
+                                    'model' => $model,
+                                    'columnCount' => $columnCount,
+                                    'isTab' => true), 
+                            true
+                        );
+            }
+            $this->widget('zii.widgets.jui.CJuiTabs', array(
+                'tabs' => $tabs,
+                'options' => array(
+                    'collapsible' => false,
+                ),
+                'htmlOptions' => array(
+                    'style' => 'border:none;'
+                ),
+                'cssFile' => false,
+            ));
+            ?>
+        </div>
+        <div class="row js_hide">
+        <?php
+            foreach($dates as $date) {
+                $this->renderPartial('dateTable', array(
+                        'date' => $date,
+                        'model' => $model,
+                        'columnCount' => $columnCount,
+                        'isTab' => false)
+                    );
+            } 
+        ?>
+        </div>
+        <div class="push"></div>
         <div class="panel text-center" style="margin-top:-3em;">
+            <p>
             <?php echo Yii::t('app', 'Keinen passenden Termin gefunden? Kontaktieren Sie '); ?>
-                <?php echo $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname; ?>
-            <?php echo Yii::t('app', 'per'); ?> <a href="mailto:<?php echo $model->user->email; ?>"><span aria-hidden="true" data-icon="&#xe017;"></span>&nbsp;<?php echo Yii::t('app','E-Mail'); ?></a>
+            <?php echo "{$model->user->title} {$model->user->firstname} {$model->user->lastname}"; ?>
+            <?php echo Yii::t('app', 'per'); ?> 
+                <a href="mailto:<?php echo $model->user->email; ?>">
+                    <span aria-hidden="true" data-icon="&#xe017;"></span>&nbsp;<?php echo Yii::t('app','E-Mail'); ?>
+                </a>
+            </p>
         </div>
-            <?php $form = $this->beginWidget('CActiveForm', array(
-                'id' => 'appointment-form',)); ?>
-            <fieldset>
-                <legend><?php echo Yii::t('app', 'Termin'); ?></legend>
-                <div class="row collapse">
-                    <div class="two columns">
-                        <span class="prefix"><?php echo Yii::t('app', 'Mit'); ?></span>
-                    </div>
-                    <div class="ten columns mobile-input">
-                        <?php
-                        echo $form->textField($model, 'user_id', array(
-                            'value' => $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname,
-                            'disabled' => true));
-                        ?>
-                    </div>
+        <?php $form = $this->beginWidget('CActiveForm', array(
+            'id' => 'appointment-form',)); ?>
+        <fieldset>
+            <legend><?php echo Yii::t('app', 'Termin'); ?></legend>
+            <div class="row collapse">
+                <div class="two columns">
+                    <span class="prefix"><?php echo Yii::t('app', 'Mit'); ?></span>
                 </div>
-                <div class="row collapse js_show">
-                    <div class="two columns">
-                        <span class="prefix"><?php echo Yii::t('app','Am') ?></span>
-                    </div>
-                    <div class="ten columns mobile-input">
-                        <input id="form_date" type="text" disabled value="<?php echo $postDate; ?>" />
+                <div class="ten columns mobile-input">
+                    <?php
+                    echo $form->textField($model, 'user_id', array(
+                        'value' => $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname,
+                        'disabled' => true));
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse js_show">
+                <div class="two columns">
+                    <span class="prefix"><?php echo Yii::t('app','Am') ?></span>
+                </div>
+                <div class="ten columns mobile-input">
+                    <input id="form_date" type="text" disabled value="<?php echo $postDate; ?>" />
+                    <?php echo $form->error($model, 'dateAndTime_id'); ?>
+                </div>
+            </div>
+            <div class="row collapse js_show">
+                <div class="two columns">
+                    <span class="prefix"><?php echo Yii::t('app', 'Um'); ?></span>
+                </div>
+                <div class="ten columns mobile-input">
+                    <input id="form_time" type="text" disabled  value="<?php echo $postTime; ?>" />
+                    <?php echo $form->error($model, 'dateAndTime_id'); ?>
+                </div>
+            </div>
+            <div class="row collapse js_hide">
+                <div class="two columns">
+                    <span class="prefix"><?php echo Yii::t('app', 'Termin'); ?></span>
+                </div>
+                <div class="ten columns mobile-input">
+                    <div class="styled-select">
+                        <?php echo $this->createSelectTeacherDates($model->user->id, get_class($model), 'dateAndTime_id', $model->attributes['dateAndTime_id']) ?>
                         <?php echo $form->error($model, 'dateAndTime_id'); ?>
                     </div>
                 </div>
-                <div class="row collapse js_show">
-                    <div class="two columns">
-                        <span class="prefix"><?php echo Yii::t('app', 'Um'); ?></span>
-                    </div>
-                    <div class="ten columns mobile-input">
-                        <input id="form_time" type="text" disabled  value="<?php echo $postTime; ?>" />
-                        <?php echo $form->error($model, 'dateAndTime_id'); ?>
-                    </div>
+            </div>
+            <div class="row collapse">
+                <div class="two columns">
+                    <span class="prefix"><?php echo Yii::t('app', 'Für'); ?></span>
                 </div>
-                <div class="row collapse js_hide">
-                    <div class="two columns">
-                        <span class="prefix"><?php echo Yii::t('app', 'Termin'); ?></span>
-                    </div>
-                    <div class="ten columns mobile-input">
-                        <div class="styled-select">
-                            <?php echo $this->createSelectTeacherDates($model->user->id, get_class($model), 'dateAndTime_id', $model->attributes['dateAndTime_id']) ?>
-                            <?php echo $form->error($model, 'dateAndTime_id'); ?>
-                        </div>
-                    </div>
+                <div class="ten columns mobile-input">
+                        <?php echo $this->createSelectChildren(Yii::app()->user->getId(), get_class($model), 'parent_child_id'); ?>
+                        <?php echo $form->error($model, 'parent_child_id'); ?>
                 </div>
-                <div class="row collapse">
-                    <div class="two columns">
-                        <span class="prefix"><?php echo Yii::t('app', 'Für'); ?></span>
-                    </div>
-                    <div class="ten columns mobile-input">
-                            <?php echo $this->createSelectChildren(Yii::app()->user->getId(), get_class($model), 'parent_child_id'); ?>
-                            <?php echo $form->error($model, 'parent_child_id'); ?>
-                    </div>
-                </div>
-                <?php echo CHtml::submitButton(Yii::t('app', 'Bestätigen'), array('class' => 'button right')); ?>
-            </fieldset>
-            <?php $this->endWidget(); ?>
+            </div>
+            <?php echo CHtml::submitButton(Yii::t('app', 'Bestätigen'), array('class' => 'button right')); ?>
+        </fieldset>
+        <?php $this->endWidget(); ?>
         <?php } //End else: atleast one Elternsprechtag  ?>
-        </div>
     </div>
+</div>

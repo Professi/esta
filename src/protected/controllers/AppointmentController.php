@@ -229,12 +229,12 @@ class AppointmentController extends Controller {
 
     /**
      * choosing css class for parentsdays
-     * @param array $a_tabs
+     * @param array $array
      * @return string
      */
-    private function getColumnCount(&$a_tabs) {
+    private function getColumnCount(&$array) {
         $columnCount = '';
-        switch (count($a_tabs)) {
+        switch (count($array)) {
             case 1:
                 $columnCount = 'twelve';
                 break;
@@ -261,6 +261,7 @@ class AppointmentController extends Controller {
         $model->unsetAttributes();
         $badRequest = false;
         if (is_numeric($teacher)) {
+            /** @todo in eigene function auslagern? */
             if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccess('3')) {
                 $userGroups = Yii::app()->user->getGroups();
                 if (!empty($userGroups)) {
@@ -282,8 +283,7 @@ class AppointmentController extends Controller {
             $model->user_id = $teacher;
             $postDate = '';
             $postTime = '';
-            $a_dates = $this->getDatesWithTimes(3); //Magic Number: nur die nächsten 3 Elternsprechtage werden geladen.
-            $a_tabs = $this->createMakeAppointmentContent($a_dates, $model->user->id);
+            $dates = $this->getDatesWithTimes(3); //Magic Number: nur die nächsten 3 Elternsprechtage werden geladen.
             if (isset($_POST['Appointment'])) {
                 $model->attributes = $_POST['Appointment'];
                 if (!empty($model->attributes['dateAndTime_id'])) {
@@ -298,9 +298,8 @@ class AppointmentController extends Controller {
             }
             $this->render('makeAppointment', array(
                 'model' => $model,
-                'a_dates' => $a_dates,
-                'a_tabs' => $a_tabs,
-                'columnCount' => $this->getColumnCount($a_tabs),
+                'dates' => $dates,
+                'columnCount' => $this->getColumnCount($dates),
                 'postDate' => $postDate,
                 'postTime' => $postTime,
             ));
@@ -487,7 +486,7 @@ class AppointmentController extends Controller {
      * @return array Gibt BELEGT,0 oder Verfügbar,1 zurück,
      */
     public function isAppointmentAvailable($teacher, $dateAndTimeId) {
-        $rc = array(Yii::t('app', "BELEGT"), 0);
+        $rc = array(Yii::t('app', "BELEGT"), false);
         $check = false;
         if ((Yii::app()->params['allowGroups'] && !Yii::app()->user->getState('group')) || (!Yii::app()->params['allowGroups'] || Yii::app()->user->checkAccessRole('1', '3') || Yii::app()->user->checkAccessRole('0', '2'))) {
             if (Appointment::model()->countByAttributes(array('user_id' => $teacher,
@@ -498,58 +497,17 @@ class AppointmentController extends Controller {
                     BlockedAppointment::model()->countByAttributes(array('user_id' => $teacher,
                         'dateAndTime_id' => $dateAndTimeId)) != '0') {
                 if (Yii::app()->user->checkAccess('1')) {
-                    $rc = array(Yii::t('app', "BLOCKIERT"), 0);
+                    $rc = array(Yii::t('app', "BLOCKIERT"), false);
                 }
                 $check = false;
             }
             if ($check) {
-                $rc = array(Yii::t('app', "VERFÜGBAR"), 1);
+                $rc = array(Yii::t('app', "VERFÜGBAR"), true);
             }
         }
         return $rc;
     }
-
-    /**
-     * Generiert den Inhalt der Terminvereinbarung für die Rolle Eltern 
-     * @author David Mock <dumock@gmail.com>
-     * @param array $a_dates Array welches die nächsten Elternsprechtagstermine enthält
-     * @param integer $teacherId Id des Lehrers
-     * @return array Tabelle(n) mit Status der Termine eines Lehrers
-     */
-    public function createMakeAppointmentContent($a_dates, $teacherId) {
-        $a_tabs = array();
-        $tabsUiId = 0; //id der tabellen, wichtig für Javascriptfunktionen aus custom.js
-        if (!empty($teacherId)) {
-            foreach ($a_dates as $a_day) {
-                $tabsUiId++;
-                $tabsName = Yii::app()->dateFormatter->formatDateTime(strtotime($a_day[0]->date->date), "short", null);
-                if (!empty($a_day[0]->date->title)) {
-                    $tabsName .= " (" . $a_day[0]->date->title . ")";
-                }
-                $tabsContent = '<div style="display:none;" id="date-ui-id-' . $tabsUiId . '">' . $tabsName . '</div>'; //verstecktes Element für Javascriptfunktionen aus custom.js
-                $tabsContent .= '<table><thead><th class="table-text" width="40%">' . Yii::t('app', 'Uhrzeit') . '</th><th class="table-text" width="60%">' . Yii::t('app', 'Termin') . '</th></thead><tbody>';
-                $datesUiId = 0; //id der einzelnen Zeiten, wichtig für Javascriptfunktionen aus custom.js
-                foreach ($a_day as $key => $a_times) {
-                    $datesUiId++;
-                    $a_times = $this->isAppointmentAvailable($teacherId, $a_day[$key]->id); //Array in dem gespeichert wird ob ein Termin Belegt oder Frei ist.
-                    $tabsContent .= '<tr><td id="time-ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="table-text">';
-                    $tabsContent .= Yii::app()->dateFormatter->formatDateTime(strtotime($a_day[$key]->time), null, 'short') . '</td>';
-                    $tabsContent .= ($a_times[1]) ? '<td id="ui-id-' . $tabsUiId . '_' . $datesUiId . '" class="avaiable table-text">' . $a_times[0] . '</td>' : '<td class="occupied table-text">' . $a_times[0] . '</td>';
-                    $tabsContent .= '</tr>';
-                }
-                $tabsContent .= '</tbody></table>';
-                $tabsContent .= '<div class="panel appointment-lockAt text-center">';
-                $tabsContent .= Yii::t('app', 'Bedenken Sie, dass Termine nur bis zum {date} gebucht werden können.', array('{date}' => Yii::app()->dateFormatter->formatDateTime($a_day[0]->date->lockAt, 'full', 'short')));
-                $tabsContent .= '</div>';
-                $a_tabs[$tabsName] = $tabsContent;
-                if ($tabsUiId == 3) { //Magic Number aus makeAppointment.php nach 3 Elternsprechtagen wird die Schleife verlassen. 
-                    break;
-                }
-            }
-        }
-        return $a_tabs;
-    }
-
+    
     /**
      * AJAX Methode um die Termine eines bestimmten Lehrers in einem Select Element zu generieren.
      * @author David Mock <dumock@gmail.com>
@@ -661,6 +619,20 @@ class AppointmentController extends Controller {
      */
     public function getTeacherLinkE($letter) {
         echo $this->getTeacherLink($letter);
+    }
+    
+    /**
+     * Formatiert den Titel eines Elternsprechtages in makeAppointment.php
+     * @author David Mock <dumock@gmail.com>
+     * @param string $app der Elternsprechtag 
+     * return string
+     */
+    public function formatAppointmentTitle($app) {
+        $string = Yii::app()->dateFormatter->formatDateTime(strtotime($app->date), "short", null);
+            if( ! empty($app->title)) {
+                $string .= " ({$app->title})";
+            }
+        return $string;
     }
 
 }
