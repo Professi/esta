@@ -27,12 +27,12 @@ if (Yii::app()->params['allowGroups']) {
 }
 ?>
 <div class="row">
-    <div class="twelve columns centered">
+    <div class="small-12 columns small-centered">
         <h2 class="text-center"><?php echo Yii::t('app', 'TAN Generierung'); ?></h2>
     </div>
 </div>
 <div class="row">
-    <div class="eight columns centered">
+    <div class="small-8 columns small-centered">
 
         <?php
         if (Yii::app()->params['allowParentsToManageChilds']) {
@@ -41,10 +41,10 @@ if (Yii::app()->params['allowGroups']) {
             ));
             ?>        <fieldset>
                 <div class="row collapse">
-                    <div class="three columns">
+                    <div class="small-3 columns">
                         <span class="prefix"><?php echo Yii::t('app', 'Anzahl TANs');?></span>
                     </div>
-                    <div class="nine columns">
+                    <div class="small-9 columns">
                         <?php
                         echo $form->numberField($model, 'tan_count', array(
                             'min' => 0,
@@ -58,10 +58,10 @@ if (Yii::app()->params['allowGroups']) {
                 if (Yii::app()->params['allowGroups'] && !empty($groups)) {
                     ?>
                     <div class="row collapse">
-                        <div class="three columns">
+                        <div class="small-3 columns">
                             <span class="prefix"><?php echo $form->label($model, 'group'); ?></span>
                         </div>
-                        <div class="nine columns">
+                        <div class="small-9 columns">
                             <?php
                             echo Select2::activeDropDownList($model, 'group_id', $groups, array(
                                 'prompt' => Yii::t('app','Hier können Sie eine Gruppe auswählen...'))
@@ -83,10 +83,10 @@ if (Yii::app()->params['allowGroups']) {
                     ?>
                     <div class="customChild">
                         <div class="row collapse">
-                            <div class="three columns">
+                            <div class="small-3 columns">
                                 <span class="prefix"><?php echo CHtml::activeLabel($tanObj, "childFirstname"); ?></span>
                             </div>
-                            <div class="nine columns">
+                            <div class="small-9 columns">
                                 <?php
                                 echo CHtml::activeTextField($tanObj, "[$i]childFirstname");
                                 echo CHtml::error($tanObj, "[$i]childFirstname");
@@ -94,10 +94,10 @@ if (Yii::app()->params['allowGroups']) {
                             </div>
                         </div>
                         <div class="row collapse">
-                            <div class="three columns">
+                            <div class="small-3 columns">
                                 <span class="prefix"><?php echo CHtml::activeLabel($tanObj, "childLastname"); ?></span>
                             </div>
-                            <div class="nine columns">
+                            <div class="small-9 columns">
                                 <?php
                                 echo CHtml::activeTextField($tanObj, "[$i]childLastname", array('size' => 60));
                                 echo CHtml::error($tanObj, "[$i]childLastname");
@@ -108,10 +108,10 @@ if (Yii::app()->params['allowGroups']) {
                         if (Yii::app()->params['allowGroups'] && !empty($groups)) {
                             ?>
                             <div class="row collapse">
-                                <div class="three columns">
+                                <div class="small-3 columns">
                                     <span class="prefix"><?php echo CHtml::activeLabel($tanObj, "group"); ?></span>
                                 </div>
-                                <div class="nine columns">
+                                <div class="small-9 columns">
                                     <?php
                                     echo Select2::activeDropDownList($tanObj, "[$i]group_id", $groups, array(
                                         'prompt' => Yii::t('app', 'Hier können Sie eine Gruppe auswählen...'))

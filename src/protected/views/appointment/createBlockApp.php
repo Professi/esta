@@ -29,11 +29,13 @@ $this->breadcrumbs = array(
     'BlockApp',
 );
 $this->menu = array(
-    array('label' => Yii::t('app', 'Termine verwalten'), 'url' => array('admin')),
+    array(  'label' => Yii::t('app', 'Termine verwalten'), 
+            'url' => array('admin'),
+            'linkOptions' => array('class' => 'small button')),
 );
 ?>
 <div class="row">
-    <div class="twelve columns centered">
+    <div class="small-12 columns small-centered">
         <fieldset>
             <legend><?php echo Yii::t('app','Termin blockieren'); ?></legend>
             <?php
@@ -43,10 +45,10 @@ $this->menu = array(
             if (!Yii::app()->user->checkAccessRole('2', '-1') || Yii::app()->params['teacherAllowBlockTeacherApps']) {
                 ?>
                 <div class="row collapse">
-                    <div class="two columns">
+                    <div class="small-2 columns">
                         <span class="prefix"><?php echo $form->label($model, 'user_id'); ?> </span>
                     </div>
-                    <div class="ten columns">
+                    <div class="small-10 columns">
 
                         <?php
                         $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
@@ -68,19 +70,19 @@ $this->menu = array(
                 </div>
             <?php } // if: User kein Lehrer ?>
             <div class="row collapse">
-                <div class="two columns">
+                <div class="small-2 columns">
                     <span class="prefix"><?php echo $form->label($model, 'dateAndTime_id'); ?> </span>
                 </div>
-                <div class="ten columns styled-select" id="appointment_dateAndTime_select"> 
+                <div class="small-10 columns styled-select" id="appointment_dateAndTime_select"> 
                     <?php echo $this->createSelectTeacherDates($model->attributes['user_id'], get_class($model), 'dateAndTime_id', $model->attributes['dateAndTime_id']); ?>
                     <?php echo $form->error($model, 'dateAndTime_id'); ?>
                 </div>
             </div>
             <div class="row collapse">
-                <div class="two columns">
+                <div class="small-2 columns">
                     <span class="prefix"><?php echo $form->label($model, 'reason'); ?> </span>
                 </div>
-                <div class="ten columns">
+                <div class="small-10 columns">
                     <?php echo $form->textField($model, 'reason'); ?>                
                     <?php echo $form->error($model, 'reason'); ?>
                 </div>

@@ -22,12 +22,12 @@
 $this->setPageTitle(Yii::t('app', 'Generierte TANs'));
 ?>
 <div class="row">
-    <div class="twelve columns centered">
+    <div class="small-12 columns small-centered">
         <h2 class="text-center">Generierte TAN's</h2>
     </div>
 </div>
 <div class="row">
-    <div class="five columns centered">
+    <div class="small-5 columns small-centered">
         <?php
         $this->widget('zii.widgets.grid.CGridView', array(
             'dataProvider' => $dataProvider,

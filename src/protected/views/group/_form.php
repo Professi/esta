@@ -22,10 +22,10 @@ $form = $this->beginWidget('CActiveForm', array(
         ));
 ?>
 <div class="row collapse">
-    <div class="three columns">
+    <div class="small-3 columns">
         <span class="prefix"><?php echo $form->label($model, 'groupname'); ?></span>
     </div>
-    <div class="nine columns mobile-input">
+    <div class="small-9 columns mobile-input">
         <?php
         echo $form->textField($model, 'groupname', array('size' => 10, 'maxlength' => 255));
         echo $form->error($model, 'groupname');

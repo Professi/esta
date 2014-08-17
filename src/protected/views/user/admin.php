@@ -25,9 +25,15 @@ $this->breadcrumbs = array(
     'Manage',
 );
 $this->menu = array(
-    array('label' => Yii::t('app', 'Benutzer erstellen'), 'url' => array('create')),
-    array('label' => Yii::t('app', 'Pseudobenutzer erstellen'), 'url' => array('createDummy')),
-    array('label' => Yii::t('app', 'Lehrer importieren'), 'url' => array('importTeachers')),
+    array(  'label' => Yii::t('app', 'Benutzer erstellen'), 
+            'url' => array('create'),
+            'linkOptions' => array('class' => 'small button')),
+    array(  'label' => Yii::t('app', 'Pseudobenutzer erstellen'), 
+            'url' => array('createDummy'),
+            'linkOptions' => array('class' => 'small button')),
+    array(  'label' => Yii::t('app', 'Lehrer importieren'), 
+            'url' => array('importTeachers'),
+            'linkOptions' => array('class' => 'small button')),
 );
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -43,7 +49,7 @@ $('.search-form form').submit(function(){
 ", CClientScript::POS_READY);
 ?>
 <div class="row">
-    <div class="twelve columns centered">
+    <div class="small-12 columns small-centered">
         <h2 class="text-center"><?php echo Yii::t('app', 'Benutzerverwaltung'); ?></h2>
     </div>
 </div>

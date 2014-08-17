@@ -24,17 +24,17 @@ $this->breadcrumbs = array(
     'Error',
 );
 ?>
+<div class="push"></div>
+<div class="push"></div>
 <div class="row">
-    <div class="twelve columns">
-        <div class="push hide-for-small"></div>
-        <div class="push hide-for-small"></div>
+    <div class="small-8 columns small-centered">
         <div class="panel">
             <div class="row">
-                <div class="two columns text-center">
-                    <span aria-hidden="true" data-icon="&#xe005;" style="font-size:6em;"></span>
+                <div class="small-2 columns text-center">
+                    <i class="fi-x callout-icon"></i>
                 </div>
-                <div class="ten columns">
-                    <h2>Fehler <?php echo $code; ?></h2>   
+                <div class="small-10 columns">
+                    <h2><?php echo Yii::t('app','Fehler') . ' ' . $code; ?></h2>   
                     <?php echo CHtml::encode($message); ?>
                 </div>
             </div>

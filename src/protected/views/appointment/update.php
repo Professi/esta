@@ -20,19 +20,26 @@
 /* @var $this AppointmentController */
 /* @var $model Appointment */
 $this->setPageTitle(Yii::t('app', 'Termin bearbeiten'));
+Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 $this->breadcrumbs = array(
     'Appointments' => array('index'),
     $model->id => array('view', 'id' => $model->id),
     'Update',
 );
 $this->menu = array(
-    array('label' => Yii::t('app', 'Termin anlegen'), 'url' => array('create')),
-    array('label' => Yii::t('app', 'Termin anzeigen'), 'url' => array('view', 'id' => $model->id)),
-    array('label' => Yii::t('app', 'Termine verwalten'), 'url' => array('admin')),
+    array(  'label' => Yii::t('app', 'Termin anlegen'), 
+            'url' => array('create'),
+            'linkOptions' => array('class' => 'small button')),
+    array(  'label' => Yii::t('app', 'Termin anzeigen'), 
+            'url' => array('view', 'id' => $model->id),
+            'linkOptions' => array('class' => 'small button')),
+    array(  'label' => Yii::t('app', 'Termine verwalten'), 
+            'url' => array('admin'),
+            'linkOptions' => array('class' => 'small button')),
 );
 ?>
 <div class="row">
-    <div class="twelve columns centered">
+    <div class="small-12 columns small-centered">
         <fieldset>
             <legend><?php echo Yii::t('app', 'Termin Nummer {id} bearbeiten', array('{id}' => $model->getPrimaryKey())); ?></legend>
             <?php

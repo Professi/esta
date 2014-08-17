@@ -28,7 +28,7 @@ $this->setPageTitle(Yii::t('app', 'Termin vereinbaren'));
 Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 ?>
 <div class="row">
-    <div class="twelve columns">
+    <div class="small-12 columns">
         <h2 class="subheader">
             <?php echo Yii::t('app', 'Termine für') ?> &nbsp;
             <?php echo "{$model->user->title} {$model->user->firstname} {$model->user->lastname}"; ?>
@@ -81,13 +81,13 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
         ?>
         </div>
         <div class="push"></div>
-        <div class="panel text-center" style="margin-top:-3em;">
+        <div class="paper panel text-center"">
             <p>
             <?php echo Yii::t('app', 'Keinen passenden Termin gefunden? Kontaktieren Sie '); ?>
             <?php echo "{$model->user->title} {$model->user->firstname} {$model->user->lastname}"; ?>
             <?php echo Yii::t('app', 'per'); ?> 
                 <a href="mailto:<?php echo $model->user->email; ?>">
-                    <span aria-hidden="true" data-icon="&#xe017;"></span>&nbsp;<?php echo Yii::t('app','E-Mail'); ?>
+                    <i class="fi-mail"></i>&nbsp;<?php echo Yii::t('app','E-Mail'); ?>
                 </a>
             </p>
         </div>
@@ -96,10 +96,10 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
         <fieldset>
             <legend><?php echo Yii::t('app', 'Termin'); ?></legend>
             <div class="row collapse">
-                <div class="two columns">
+                <div class="small-4 columns">
                     <span class="prefix"><?php echo Yii::t('app', 'Mit'); ?></span>
                 </div>
-                <div class="ten columns mobile-input">
+                <div class="small-8 columns mobile-input">
                     <?php
                     echo $form->textField($model, 'user_id', array(
                         'value' => $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname,
@@ -108,28 +108,28 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                 </div>
             </div>
             <div class="row collapse js_show">
-                <div class="two columns">
+                <div class="small-4 columns">
                     <span class="prefix"><?php echo Yii::t('app','Am') ?></span>
                 </div>
-                <div class="ten columns mobile-input">
+                <div class="small-8 columns mobile-input">
                     <input id="form_date" type="text" disabled value="<?php echo $postDate; ?>" />
                     <?php echo $form->error($model, 'dateAndTime_id'); ?>
                 </div>
             </div>
             <div class="row collapse js_show">
-                <div class="two columns">
+                <div class="small-4 columns">
                     <span class="prefix"><?php echo Yii::t('app', 'Um'); ?></span>
                 </div>
-                <div class="ten columns mobile-input">
+                <div class="small-8 columns mobile-input">
                     <input id="form_time" type="text" disabled  value="<?php echo $postTime; ?>" />
                     <?php echo $form->error($model, 'dateAndTime_id'); ?>
                 </div>
             </div>
             <div class="row collapse js_hide">
-                <div class="two columns">
+                <div class="small-4 columns">
                     <span class="prefix"><?php echo Yii::t('app', 'Termin'); ?></span>
                 </div>
-                <div class="ten columns mobile-input">
+                <div class="small-8 columns mobile-input">
                     <div class="styled-select">
                         <?php echo $this->createSelectTeacherDates($model->user->id, get_class($model), 'dateAndTime_id', $model->attributes['dateAndTime_id']) ?>
                         <?php echo $form->error($model, 'dateAndTime_id'); ?>
@@ -137,10 +137,10 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                 </div>
             </div>
             <div class="row collapse">
-                <div class="two columns">
+                <div class="small-4 columns">
                     <span class="prefix"><?php echo Yii::t('app', 'Für'); ?></span>
                 </div>
-                <div class="ten columns mobile-input">
+                <div class="small-8 columns mobile-input">
                         <?php echo $this->createSelectChildren(Yii::app()->user->getId(), get_class($model), 'parent_child_id'); ?>
                         <?php echo $form->error($model, 'parent_child_id'); ?>
                 </div>

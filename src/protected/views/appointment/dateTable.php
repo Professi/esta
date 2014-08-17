@@ -58,7 +58,7 @@ if ( ! $isTab) {
             <?php } ?>
         </tbody>
     </table>
-    <div class="panel text-center">
+    <div class="paper panel text-center">
         <p>
             <?php echo Yii::t('app','Bedenken Sie, dass Termine nur bis zum {date} gebucht werden können.',
                     array('{date}' => Yii::app()->dateFormatter->formatDateTime($date[0]->date->lockAt, 'full', 'short'))

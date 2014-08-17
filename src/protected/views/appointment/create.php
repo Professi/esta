@@ -27,11 +27,13 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Yii::t('app','Termine verwalten'), 'url' => array('admin')),
+    array(  'label' => Yii::t('app','Termine verwalten'), 
+            'url' => array('admin'),
+            'linkOptions' => array('class' => 'small button')),
 );
 ?>
 <div class="row">
-    <div class="twelve columns centered">
+    <div class="small-12 columns small-centered">
         <fieldset>
             <legend><?php echo Yii::t('app', 'Termin anlegen'); ?></legend>
             <?php

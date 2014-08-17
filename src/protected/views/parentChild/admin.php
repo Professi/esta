@@ -26,11 +26,13 @@ $this->breadcrumbs = array(
     'Manage',
 );
 $this->menu = array(
-    array('label' => Yii::t('app', 'Eltern-Kind-Verknüpfung anlegen'), 'url' => array('create')),
+    array(  'label' => Yii::t('app', 'Eltern-Kind-Verknüpfung anlegen'), 
+            'url' => array('create'),
+            'linkOptions' => array('class' => 'small button')),
 );
 ?>
 <div class="row">
-    <div class="twelve columns centered">
+    <div class="small-12 columns small-centered">
         <h2 class="text-center"><?php echo Yii::t('app', 'Eltern-Kind-Verknüpfung'); ?></h2>
     </div>
 </div>

@@ -25,18 +25,27 @@ $this->breadcrumbs = array(
     $model->id,
 );
 $this->menu = array(
-    array('label' => Yii::t('app', 'Elternsprechtag bearbeiten'), 'url' => array('update', 'id' => $model->id)),
-    array('label' => Yii::t('app', 'Elternsprechtag löschen'), 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => Yii::t('app', 'Möchten Sie diesen Elternsprechtag wirklich löschen?')), 'visible' => true),
-    array('label' => Yii::t('app', 'Elternsprechtage verwalten'), 'url' => array('admin')),
+    array(  'label' => Yii::t('app', 'Elternsprechtag bearbeiten'), 
+            'url' => array('update', 'id' => $model->id),
+            'linkOptions' => array('class' => 'small button')),
+    array(  'label' => Yii::t('app', 'Elternsprechtag löschen'), 
+            'url' => '#', 
+            'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 
+                'confirm' => Yii::t('app', 'Möchten Sie diesen Elternsprechtag wirklich löschen?'),
+                'class' => 'small button'), 
+            'visible' => true),
+    array(  'label' => Yii::t('app', 'Elternsprechtage verwalten'), 
+            'url' => array('admin'),
+            'linkOptions' => array('class' => 'small button')),
 );
 ?>
 <div class="row">
-    <div class="twelve columns centered">
+    <div class="small-12 columns small-centered">
         <h2 class="text-center"><?php echo Yii::t('app', 'Elternsprechtag Nummer {id}', array('{id}' => $model->getPrimaryKey())); ?></h2>
     </div>
 </div>
 <div class="row">
-    <div class="twelve columns centered">
+    <div class="small-12 columns small-centered">
         <?php
         Yii::app()->dateFormatter->formatDateTime(strtotime($model->end), null, "short");
         $this->widget('zii.widgets.CDetailView', array(

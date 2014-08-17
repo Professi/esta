@@ -20,33 +20,31 @@
 /* @var $this AppointmentController */
 /* @var $data Appointment */
 ?>
-<div class="panel">
+<div class="paper panel">
     <div class="row">
-        <div class="one columns">
+        <div class="small-1 columns">
             <b>#<?php echo CHtml::encode($index + 1); ?></b>
         </div>
-        <div class="eleven columns">
+        <div class="small-11 columns">
             <b><?php echo Yii::t('app', 'Am {date} um {time}', array('{date}' => CHtml::encode(Yii::app()->dateFormatter->formatDateTime(strtotime($data->dateandtime->date->date), "medium", null)), '{time}' => CHtml::encode(Yii::app()->dateFormatter->formatDateTime(strtotime($data->dateandtime->time), null, "short")))); ?>
             </b>
         </div>
     </div>
     <br>
     <div class="row collapse">
-        <div class="one columns"></div>
-        <div class="one columns">
+        <div class="small-1 small-offset-1 columns">
             <i><?php echo Yii::t('app', 'Ihr Kind') ?></i>
         </div>
-        <div class="ten columns">
+        <div class="small-10 columns">
             <?php echo CHtml::encode($data->parentchild->child->firstname . ' ' . $data->parentchild->child->lastname); ?>
         </div>
     </div>
     <br>
     <div class="row collapse">
-        <div class="one columns"></div>
-        <div class="one columns">   
+        <div class="small-1 small-offset-1 columns">   
             <i><?php echo Yii::t('app', 'bei'); ?></i>
         </div>
-        <div class="ten columns">
+        <div class="small-10 columns">
             <?php echo CHtml::encode($data->user->title . " " . $data->user->firstname . " " . $data->user->lastname); ?>
         </div>
         <a class="small button right hide-for-print delete-appointment" href="index.php?r=appointment/delete&amp;id=<?php echo CHtml::encode($data->id); ?>"><?php echo Yii::t('app', 'Termin löschen?'); ?></a>

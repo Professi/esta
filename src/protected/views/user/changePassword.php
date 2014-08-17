@@ -22,7 +22,7 @@
 $this->setPageTitle(Yii::t('app', 'Passwort zurücksetzen'));
 ?>
 <div class="row">
-    <div class="nine columns centered">
+    <div class="small-9 columns small-centered">
         <h3><?php echo Yii::t('app', 'Möchten Sie Ihr Passwort zurücksetzen ?'); ?></h3>
         <div class="panel">
             <p><?php echo Yii::t('app', 'Geben Sie Ihre E-Mail-Adresse ein. Ihnen wird ein Aktivierungslink zugesendet mit dem Sie ein neues Passwort setzen können.'); ?></p>
@@ -34,10 +34,10 @@ $this->setPageTitle(Yii::t('app', 'Passwort zurücksetzen'));
         ?>                
         <fieldset>
             <div class="row collapse">
-                <div class="three columns">
+                <div class="small-3 columns">
                     <span class="prefix"><?php echo $form->label($model, 'email'); ?></span>
                 </div>
-                <div class="nine columns mobile-input">
+                <div class="small-9 columns mobile-input">
                     <?php
                     echo $form->textField($model, 'email');
                     echo $form->error($model, 'email');
@@ -46,16 +46,16 @@ $this->setPageTitle(Yii::t('app', 'Passwort zurücksetzen'));
             </div>
             <?php if (CCaptcha::checkRequirements()): ?>
                 <div class="row">
-                    <div class="three columns"></div>
-                    <div class="nine columns">
+                    <div class="small-3 columns"></div>
+                    <div class="small-9 columns">
                         <?php $this->widget('CCaptcha'); ?>
                     </div>
                 </div>
                 <div class="row collapse">
-                    <div class="three columns">
+                    <div class="small-3 columns">
                         <span class="prefix"><?php echo $form->label($model, 'verifyCode'); ?></span>
                     </div>
-                    <div class="nine columns mobile-input">
+                    <div class="small-9 columns mobile-input">
                         <?php
                         echo $form->textField($model, 'verifyCode');
                         echo $form->error($model, 'verifyCode');

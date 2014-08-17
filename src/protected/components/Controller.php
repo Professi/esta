@@ -83,6 +83,27 @@ class Controller extends CController {
     public function generateMenuItem($dataIcon, $name, $url, $visible, $cssClasses = '"nav-icons"', $ariaHidden = "true") {
         return array('label' => '<span class=' . $cssClasses . ' aria-hidden="' . $ariaHidden . '" data-icon="' . $dataIcon . '">&nbsp;' . $name . '</span>', 'url' => array($url,), 'visible' => $visible);
     }
+    
+    public function generateFoundation5MenuItem($icon, $label, $url, $visible,$mobile) {
+        $link = '';
+        $labelTag = ($mobile) ? $label : "<br><span>{$label}</span>";
+        if($visible) {
+            $link = '<li>' . CHtml::link("<i class={$icon}></i>{$labelTag}", $url) . '</li>';
+        }
+        return $link;
+    }
+    
+    public function generateFoundation5Menu($menuArray,$mobile) {
+        $menu = '';
+        for($i = 0; $i < count($menuArray);$i++) {
+            $menu .= $this->generateFoundation5MenuItem($menuArray[$i][0], 
+                                                        $menuArray[$i][1], 
+                                                        $menuArray[$i][2], 
+                                                        $menuArray[$i][3],
+                                                        $mobile);
+        }
+        return $menu;
+    }
 
     /**
      * adds css and js packages

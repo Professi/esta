@@ -25,12 +25,20 @@ class CustomButtonColumn extends CButtonColumn {
      * @return void parent::init();
      */
     public function init() {
-        $this->viewButtonImageUrl = Yii::app()->request->baseUrl . '/img/search.png';
-        $this->viewButtonOptions = array('class' => 'column-button view');
-        $this->updateButtonImageUrl = Yii::app()->request->baseUrl . '/img/pencil.png';
-        $this->updateButtonOptions = array('class' => 'column-button update');
-        $this->deleteButtonImageUrl = Yii::app()->request->baseUrl . '/img/remove.png';
-        $this->deleteButtonOptions = array('class' => 'column-button delete');
+        $this->viewButtonImageUrl = false;
+        $this->viewButtonLabel = '<i class="fi-magnifying-glass"></i>';
+        $this->viewButtonOptions = array('class' => 'table-button view','title' => Yii::t('zii', 'View'));
+        $this->updateButtonImageUrl = false;
+        $this->updateButtonLabel = '<i class="fi-pencil"></i>';
+        $this->updateButtonOptions = array('class' => 'table-button update','title' => Yii::t('zii', 'Update'));
+        $this->deleteButtonImageUrl = false;
+        $this->deleteButtonLabel = '<i class="fi-trash"></i>';
+        $this->deleteButtonOptions = array('class' => 'table-button delete','title' => Yii::t('zii', 'Delete'));
+        
+        $this->htmlOptions = array('class' => 'text-center');
+        $this->headerHtmlOptions = array();
+        $this->footerHtmlOptions = array();
+        
         return parent::init();
     }
 

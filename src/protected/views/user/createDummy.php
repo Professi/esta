@@ -20,20 +20,29 @@
 /* @var $this UserController */
 /* @var $model User */
 $this->setPageTitle('Pseudobenutzer anlegen');
+
+if (Yii::app()->user->checkAccess('1')) {
+    $this->menu = array(
+        array(  'label' => Yii::t('app', 'Benutzer verwalten'), 
+                'url' => array('admin'),
+                'linkOptions' => array('class' => 'small button')),
+    );
+}
+
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'user-form',
         ));
 ?>
 <div class="push"></div>
 <div class="row">
-    <div class="twelve columns">
+    <div class="small-12 columns">
         <fieldset>
             <legend><?php echo Yii::t('app', 'Pseudobenutzer anlegen'); ?></legend>
             <div class="row collapse">
-                <div class="three columns">
+                <div class="small-3 columns">
                     <span class="prefix"><?php echo $form->label($model, 'firstname'); ?></span>
                 </div>
-                <div class="nine columns mobile-input">
+                <div class="small-9 columns mobile-input">
                     <?php
                     echo $form->textField($model, 'firstname', array('size' => 45, 'maxlength' => 45));
                     echo $form->error($model, 'firstname');
@@ -41,10 +50,10 @@ $form = $this->beginWidget('CActiveForm', array(
                 </div>
             </div>
             <div class="row collapse">
-                <div class="three columns">
+                <div class="small-3 columns">
                     <span class="prefix"><?php echo $form->label($model, 'lastname'); ?></span>
                 </div>
-                <div class="nine columns mobile-input">
+                <div class="small-9 columns mobile-input">
                     <?php
                     echo $form->textField($model, 'lastname', array('size' => 45, 'maxlength' => 45));
                     echo $form->error($model, 'lastname');

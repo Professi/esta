@@ -23,18 +23,18 @@ $this->setPageTitle(Yii::t('app', 'Login'));
 $this->breadcrumbs = array('Login');
 ?>
 <div class="row">
-    <div class="twelve columns ">
-        <div class="panel">
+    <div class="small-12 columns small-centered">
+        <div class="panel paper">
             <h4> <?php echo Yii::t('app', 'Liebe Eltern,'); ?></h4>
-            <p> <?php echo Yii::t('app', 'Willkommen auf der elektronischen Elternsprechtagsplattform der ') . Yii::app()->params['schoolName']; ?>.<br>
-                <?php echo Yii::t('app', 'Melden Sie sich an oder registrieren Sie sich um Ihre Termine einzusehen oder um neue Termine zu vereinbaren.'); ?>
+            <p>  <?php echo Yii::t('app', 'Willkommen auf der elektronischen Elternsprechtagsplattform der ') . Yii::app()->params['schoolName']; ?>.<br>
+                 <?php echo Yii::t('app', 'Melden Sie sich an oder registrieren Sie sich um Ihre Termine einzusehen oder um neue Termine zu vereinbaren.'); ?>
             </p>
         </div>
     </div>
 </div>
 <?php if ($model->getError('error') !== NULL) { ?>
     <div class="row">
-        <div class="twelve columns centered">
+        <div class="small-12 columns small-centered">
             <div class="alert-box alert">
                 <? echo $model->getError('error'); ?> 
             </div> 
@@ -42,7 +42,7 @@ $this->breadcrumbs = array('Login');
     </div> 
 <?php } ?>
 <div class="row">
-    <div class="seven columns centered">
+    <div class="small-12 columns small-centered">
         <?php
         $form = $this->beginWidget('CActiveForm', array(
             'id' => 'login-form',
@@ -54,44 +54,46 @@ $this->breadcrumbs = array('Login');
         <fieldset>
             <legend><?php echo Yii::t('app', 'Login'); ?></legend>
             <div class="row collapse">
-                <div class="two columns">
+                <div class="small-4 columns">
                     <span class="prefix"><?php echo $form->label($model, 'email'); ?></span>
                 </div>
-                <div class="ten columns mobile-input">
+                <div class="small-8 columns mobile-input">
                     <?php
                     echo $form->textField($model, 'email');
-                    echo $form->error($model, 'email');
+                    echo $form->error($model, 'email', array('inputContainer' => 'small','class' => 'error'));
                     ?>
                 </div>
             </div>
             <div class="row collapse">
-                <div class="two columns">
+                <div class="small-4 columns">
                     <span class="prefix"><?php echo $form->label($model, 'password'); ?></span>
                 </div>
-                <div class="ten columns mobile-input">
+                <div class="small-8 columns mobile-input">
                     <?php
                     echo $form->passwordField($model, 'password');
-                    echo $form->error($model, 'password');
+                    echo $form->error($model, 'password', array('inputContainer' => 'small','errorCssClass' => 'error'));
                     ?>
                 </div>
             </div>
             <?php
             echo $form->textField($model, 'text', array('style' => 'display:none'));
             echo $form->checkBox($model, 'rememberMe');
-            echo Yii::t('app', 'Anmeldedaten merken');
-            ?><br><br>
+            echo $form->label($model, 'rememberMe');
+            ?>
+            <br><br>
             <?php
             echo $form->error($model, 'rememberMe');
-            echo CHtml::submitButton(Yii::t('app', 'Login'), array('class' => 'button'));
+            echo CHtml::submitButton(Yii::t('app', 'Login'), array('class' => 'small button'));
             ?>
-            <div class="show-for-small"><br><br></div>
+            <!--<div class="show-for-small-only"><br><br></div>-->
             <?php echo CHtml::link(Yii::t('app', 'Passwort vergessen?'), array('user/ChangePwd'), array('class' => 'medium right')); ?>
         </fieldset>
         <?php if (!Yii::app()->params['lockRegistration']) { ?>
             <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app', 'Benötigen Sie einen neuen Zugang?') . '<br>' . Yii::t('app', 'Klicken Sie hier.') . '</b>', array('user/create')); ?> </p>
         <?php } else { ?>
-            <div class="panel">
-                <p class="text-center"><?php echo Yii::t('app', 'Aktuell ist es leider nicht möglich sich zu registrieren. Sofern Sie sich registrieren möchten, so füllen Sie bitte das Kontaktformular aus.'); ?></p>
+            <div class="panel callout">
+                <i class="fi-info"></i>
+                <p><?php echo Yii::t('app', 'Aktuell ist es leider nicht möglich sich zu registrieren. Sofern Sie sich registrieren möchten, füllen Sie bitte das Kontaktformular aus.'); ?></p>
             </div>
             <?php
         }

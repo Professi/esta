@@ -25,7 +25,7 @@ $this->breadcrumbs = array(
 );
 ?>
 <div class="row">
-    <div class="twelve columns">
+    <div class="small-12 columns">
         <h2 class="subheader"><?php echo Yii::t('app', 'Fragen'); ?></h2>
         <hr>
         <ul class="faq-ul">

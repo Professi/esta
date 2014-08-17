@@ -21,6 +21,7 @@
 /* @var $model DeleteAllForm */
 /* @var $form CActiveForm */
 $this->setPageTitle(Yii::t('app', 'Anwendung zurücksetzen'));
+Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 ?>
 <div class="form delete-all">
     <?php
@@ -30,17 +31,17 @@ $this->setPageTitle(Yii::t('app', 'Anwendung zurücksetzen'));
     ));
     ?>
     <div class="row">
-        <div class="twelve columns centered">
+        <div class="small-12 columns small-centered">
             <h2 class="text-center"><?php echo Yii::t('app', 'Anwendung zurücksetzen'); ?></h2>
         </div>
     </div>
     <div class="row">
         <fieldset>
             <div class="row collapse">
-                <div class="three columns">
+                <div class="small-3 columns">
                     <span class="prefix"><?php echo $form->label($model, 'tans'); ?></span>
                 </div>
-                <div class="nine columns ">
+                <div class="small-9 columns ">
                     <?php
                     echo Select2::activeDropDownList($model, 'tans', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'tans');
@@ -48,10 +49,10 @@ $this->setPageTitle(Yii::t('app', 'Anwendung zurücksetzen'));
                 </div>
             </div>
             <div class="row collapse">
-                <div class="three columns">
+                <div class="small-3 columns">
                     <span class="prefix"><?php echo $form->label($model, 'appointments'); ?></span>
                 </div>
-                <div class="nine columns ">
+                <div class="small-9 columns ">
                     <?php
                     echo Select2::activeDropDownList($model, 'appointments', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'appointments');
@@ -59,10 +60,10 @@ $this->setPageTitle(Yii::t('app', 'Anwendung zurücksetzen'));
                 </div>
             </div>
             <div class="row collapse">
-                <div class="three columns">
+                <div class="small-3 columns">
                     <span class="prefix"><?php echo $form->label($model, 'teachers'); ?></span>
                 </div>
-                <div class="nine columns ">
+                <div class="small-9 columns ">
                     <?php
                     echo Select2::activeDropDownList($model, 'teachers', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'teachers');
@@ -70,10 +71,10 @@ $this->setPageTitle(Yii::t('app', 'Anwendung zurücksetzen'));
                 </div>
             </div>
             <div class="row collapse">
-                <div class="three columns">
+                <div class="small-3 columns">
                     <span class="prefix"><?php echo $form->label($model, 'dates'); ?></span>
                 </div>
-                <div class="nine columns ">
+                <div class="small-9 columns ">
                     <?php
                     echo Select2::activeDropDownList($model, 'dates', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'dates');
@@ -81,10 +82,10 @@ $this->setPageTitle(Yii::t('app', 'Anwendung zurücksetzen'));
                 </div>
             </div>
             <div class="row collapse">
-                <div class="three columns">
+                <div class="small-3 columns">
                     <span class="prefix"><?php echo $form->label($model, 'management'); ?></span>
                 </div>
-                <div class="nine columns ">
+                <div class="small-9 columns ">
                     <?php
                     echo Select2::activeDropDownList($model, 'management', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'management');
@@ -92,10 +93,10 @@ $this->setPageTitle(Yii::t('app', 'Anwendung zurücksetzen'));
                 </div>
             </div>
             <div class="row collapse">
-                <div class="three columns">
+                <div class="small-3 columns">
                     <span class="prefix"><?php echo $form->label($model, 'childs'); ?></span>
                 </div>
-                <div class="nine columns ">
+                <div class="small-9 columns ">
                     <?php
                     echo Select2::activeDropDownList($model, 'childs', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'childs');
@@ -103,10 +104,10 @@ $this->setPageTitle(Yii::t('app', 'Anwendung zurücksetzen'));
                 </div>
             </div>
             <div class="row collapse">
-                <div class="three columns">
+                <div class="small-3 columns">
                     <span class="prefix"><?php echo $form->label($model, 'parents'); ?></span>
                 </div>
-                <div class="nine columns ">
+                <div class="small-9 columns ">
                     <?php
                     echo Select2::activeDropDownList($model, 'parents', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'parents');
@@ -114,10 +115,10 @@ $this->setPageTitle(Yii::t('app', 'Anwendung zurücksetzen'));
                 </div>
             </div>
             <div class="row collapse">
-                <div class="three columns">
+                <div class="small-3 columns">
                     <span class="prefix"><?php echo $form->label($model, 'groups'); ?></span>
                 </div>
-                <div class="nine columns ">
+                <div class="small-9 columns ">
                     <?php
                     echo Select2::activeDropDownList($model, 'groups', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'groups');
@@ -127,8 +128,8 @@ $this->setPageTitle(Yii::t('app', 'Anwendung zurücksetzen'));
         </fieldset>
     </div><!-- row -->
     <div class="row">
-        <div class="twelve columns">
-            <?php echo CHtml::submitButton(Yii::t('app', 'Entfernen'), array('class' => 'button')); ?>
+        <div class="small-12 columns">
+            <?php echo CHtml::submitButton(Yii::t('app', 'Entfernen'), array('class' => 'small button')); ?>
         </div>
     </div>
     <?php $this->endWidget(); ?>

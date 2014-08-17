@@ -28,13 +28,18 @@ $this->breadcrumbs = array(
     'Manage',
 );
 $this->menu = array(
-    array('label' => Yii::t('app', 'Termin anlegen'), 'url' => array('create')),
-    array('label' => Yii::t('app', 'Termin blockieren'), 'url' => array('createBlockApp'), 'visible' => (Yii::app()->params['allowBlockingAppointments'])),
+    array(  'label' => Yii::t('app', 'Termin anlegen'), 
+            'url' => array('create'),
+            'linkOptions' => array('class' => 'small button')),
+    array(  'label' => Yii::t('app', 'Termin blockieren'), 
+            'url' => array('createBlockApp'), 
+            'visible' => (Yii::app()->params['allowBlockingAppointments']),
+            'linkOptions' => array('class' => 'small button')),
 );
 ?>
 
 <div class="row">
-    <div class="twelve columns centered">
+    <div class="small-12 columns small-centered">
         <h2 class="text-center"><?php echo Yii::t('app', 'Terminverwaltung'); ?></h2>
     </div>
 </div>
@@ -56,7 +61,7 @@ if (Yii::app()->params['allowBlockingAppointments']) {
     ?>
     <div class="push"></div>
     <div class="row">
-        <div class="twelve columns centered">
+        <div class="small-12 columns small-centered">
             <h2 class="text-center"><?php echo Yii::t('app', 'Blockierte Termine'); ?></h2>
         </div>
     </div>

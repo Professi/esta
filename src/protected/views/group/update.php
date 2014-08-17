@@ -23,12 +23,16 @@ $this->breadcrumbs = array(
     'Update',
 );
 $this->menu = array(
-    array('label' => 'Gruppe anlegen', 'url' => array('create')),
-    array('label' => 'Gruppen verwalten', 'url' => array('admin')),
+    array(  'label' => 'Gruppe anlegen', 
+            'url' => array('create'),
+            'linkOptions' => array('class' => 'small button')),
+    array(  'label' => 'Gruppen verwalten', 
+            'url' => array('admin'),
+            'linkOptions' => array('class' => 'small button')),
 );
 ?>
 <div class="row">
-    <div class="twelve columns">
+    <div class="small-12 columns">
         <fieldset>
             <legend><?php echo Yii::t('app', 'Gruppe Nummer {id} bearbeiten', array('{id}' => $model->getPrimaryKey())); ?></legend>
             <?php

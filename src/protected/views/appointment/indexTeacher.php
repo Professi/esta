@@ -22,7 +22,7 @@
 $this->setPageTitle(Yii::t('app', 'Ihre Termine'));
 ?>
 <div class="row">
-    <div class="twelve columns">
+    <div class="small-12 columns">
         <h2 class="subheader">Ihre Termine</h2>
         <hr>
         <?php
@@ -51,15 +51,15 @@ $this->setPageTitle(Yii::t('app', 'Ihre Termine'));
 </div>
 <?php if (Yii::app()->params['allowBlockingAppointments']) { ?>
     <div class="row">
-        <div class="twelve columns">
+        <div class="small-12 columns">
             <h2 class="subheader"><?php echo Yii::t('app', 'Ihre blockierten Termine'); ?></h2>
             <hr>
             <?php if (Yii::app()->params['allowBlockingOnlyForManagement']) { ?>
-                <div class="row">
-                    <div class="panel centeredl">
+                
+                    <div class="paper panel">
                         <p><?php echo Yii::t('app', 'Termine können zurzeit nur von der Verwaltung und der Administration blockiert werden.'); ?></p>
                     </div>
-                </div>
+                
                 <?php
             }
             $this->widget('zii.widgets.grid.CGridView', array(

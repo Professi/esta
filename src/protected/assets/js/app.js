@@ -1,77 +1,44 @@
-;(function($, window, undefined) {
-        'use strict';
-        var $doc = $(document),
-                Modernizr = window.Modernizr;
-        $(document).ready(function() {
-            $.fn.foundationAlerts ? $doc.foundationAlerts() : null;
-            $.fn.foundationButtons ? $doc.foundationButtons() : null;
-            $.fn.foundationAccordion ? $doc.foundationAccordion() : null;
-            $.fn.foundationNavigation ? $doc.foundationNavigation() : null;
-            $.fn.foundationTopBar ? $doc.foundationTopBar() : null;
-            $.fn.foundationCustomForms ? $doc.foundationCustomForms() : null;
-            $.fn.foundationMediaQueryViewer ? $doc.foundationMediaQueryViewer() : null;
-            $.fn.foundationTabs ? $doc.foundationTabs({callback: $.foundation.customForms.appendCustomMarkup}) : null;
-            $.fn.foundationTooltips ? $doc.foundationTooltips() : null;
-            $.fn.foundationMagellan ? $doc.foundationMagellan() : null;
-            $.fn.foundationClearing ? $doc.foundationClearing() : null;
-            $.fn.placeholder ? $('input, textarea').placeholder() : null;
-        });
-
-        // UNCOMMENT THE LINE YOU WANT BELOW IF YOU WANT IE8 SUPPORT AND ARE USING .block-grids
-        // $('.block-grid.two-up>li:nth-child(2n+1)').css({clear: 'both'});
-        // $('.block-grid.three-up>li:nth-child(3n+1)').css({clear: 'both'});
-        // $('.block-grid.four-up>li:nth-child(4n+1)').css({clear: 'both'});
-        // $('.block-grid.five-up>li:nth-child(5n+1)').css({clear: 'both'});
-
-        // Hide address bar on mobile devices (except if #hash present, so we don't mess up deep linking).
-        if (Modernizr.touch && !window.location.hash) {
-            $(window).load(function() {
-                setTimeout(function() {
-                    window.scrollTo(0, 1);
-                }, 0);
-            });
-        }
-
-    })(jQuery, this);
-    
-    (function(window, document, $) {
+(function($) {
+    $(document).ready(function(){
         
-        // http://stackoverflow.com/questions/654112/how-do-you-detect-support-for-vml-or-svg-in-a-browser
-        // http://forum.jquery.com/topic/add-svg-support-verification-do-jquery-support
-        function supportsSvg() {
-            var bool = false;
-            if (document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1") 
-                    || document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Shape", "1.0") ) {
-                        bool = true;
-                    }
-            return bool;
-        }
+        $(document).foundation();
+        
+        $('#LoginForm_email').focus();
+        
+        $('.js_show').toggle();
+        $('.js_hide').toggle();
+        
+        $('#language-selector').parent().clone().appendTo($('.top-bar .left'));
+        
+        $(document).keyup(function(e) {
+            if(e.keyCode === 27) {
+                $('.ul-nav-toggle').click();
+            }
+        });
+        
+        // ** Icon to minimize the nav **
+        
+        $('.sticky').append($('<i/>',{'class':'fi-zoom-out ul-nav-toggle'}));
+        
+        $('.ul-nav li').click(function() {
+            if($(this).find('#language-selector').length === 0) {
+                window.location = $(this).find('a').attr('href');
+            }
+        });
+        
+        $('.ul-nav-toggle').click(function() {
+            var that = $(this);
+            that.toggleClass('fi-zoom-out fi-zoom-in');
+            that.siblings('ul').toggleClass('ul-nav ul-nav-hide');
+        });
         
         $('#teacher-ac').on('autocompleteselect', function(e, ui) {
             e.preventDefault();
             window.location.href = "index.php?r=Appointment/makeAppointment&teacher=" + ui.item.value;
         });
         
-        $('#teacher-ac').on('autocompletefocus', function(e){e.preventDefault();});
-        
-        $('#LoginForm_email').focus();
-        
-        $('#js_menu').css('visibility', 'visible');
-        $('#nojs_menu').css('display', 'none');
-        $('.js_show').toggle();
-        $('.js_hide').toggle();
-
-        $(document).ready(function() {
-            $('.button-group > li > a').addClass('small button');
-            $('.button-group > li.disabled > a').addClass('disabled');
-            $('#MenuModal').append($('.nojs_menu').clone()).html();
-            $('#MenuModal ul').attr('class', 'nav-bar vertical');
-            $('#MenuModal ul').attr('style', 'display:inherit;');
-            $('#MenuModal').append('<a class="close-reveal-modal close-reveal-modal-fix" data-icon="&#xe014;" style="color:#fff;"></a>');
-            
-            if (supportsSvg()) {
-                $('.alarm_png').children().attr('src',path+'/img/alarm.svg');
-            }
+        $('#teacher-ac').on('autocompletefocus', function(e){
+            e.preventDefault();
         });
         
         $('.avaiable').css('cursor', 'pointer');
@@ -80,18 +47,180 @@
                 $('#form_date').val(that.parents('table').data('date'));
                 $('#form_time').val(that.siblings().text().trim());
                 $('select[name*="dateAndTime_id"]').select2('val',that.data('id'));
-            });
-            
-        $('.delete-children').on('click', function() {
+        });
+        
+        $('.delete-children').click(function() {
            if (!confirm('Wenn Sie dieses Kind löschen werden auch alle Termine des Kindes gelöscht.')) {
                return false;
            }
         });
         
-        $('.delete-appointment').on('click', function() {
+        $('.delete-appointment').click(function() {
            if (!confirm('Termin wirklich löschen?')) {
                return false;
            } 
         });
         
-    }(this, document, jQuery));
+        // ** Infofelder generieren **
+        
+        $('.infolabel').each(function() {
+            $(this).append($('<i/>',{'class':'fi-info'}));
+        });
+        
+        $('.infofeld').on({
+            mouseenter: function(){
+                $('.infobox').show();
+                $('.infobox').children('p').html($(this).siblings('.infotext').html());
+                $('.infobox').css('left', $(document).width()/2-200);
+                $('.infobox').css('top', $(window).height()/4);
+            },
+            mouseleave: function(){
+                var that = $(event.toElement),
+                    infobox = $('.infobox').get(0);
+                if(infobox === that.get(0) || $.contains(infobox,that)) {
+                    $(infobox).one('mouseleave',function() {
+                        $(infobox).fadeOut('fast');
+                    });
+                } else {
+                    $(infobox).fadeOut('fast');
+                }
+            }
+        });
+        
+        //$('#CsvUpload_file').on('change',function(e, ui) {
+            //this.files[0].size;
+        //});
+        
+        // ** Elterntagfeld lockAt mit Daten aus dem hidden input füllen. **
+            if ($('#lockAt_value').val() !== "" && typeof $('#lockAt_value').val() === 'string') {
+               var value = $('#lockAt_value').val(),
+                   arr = value.split(' ');
+               $('#date_lockAt').val(arr[0]);
+               $('#time_lockAt').val(arr[1]);
+            }
+            
+            
+        
+        // ** Gruppenauswahl deaktivieren wenn ein zu erstellender Benutzer nicht die Rolle Eltern hat. **
+        
+        $('#User_role').on('change', function(event) {
+           if (event.val > 1) {
+               $('#groups-select').select2("enable", true);
+           } else {
+               $('#groups-select').select2("enable", false);
+               $('#groups-select').select2("val","");
+           }
+        });
+        
+        // ** Felder in Config ein-, ausschalten **
+        
+        $('select[id$="_allowBlockingAppointments"], select[id$="_banUsers"], select[id$="_mailsActivated"]').on('change', function(event) {
+            var flip = (event.target['value'] === "0") ? true : false;
+            $(event.target).parents('fieldset').children('.row:gt(0)').children('.small-4').children('input, select').attr('disabled',flip);
+        });
+        
+        $('select[id$="_randomTeacherPassword"]').on('change', function(event) {
+            var flip = (event.target['value'] === "0") ? false : true;
+            $('input[id$="_defaultTeacherPassword"]').attr('disabled', flip);
+        });
+        
+        // ** Daten von Time, DateFormat in das kombinierte Feld eintragen **
+        
+        $('input[id$="_dateFormat"], input[id$="_timeFormat"]').on('change', function() {
+           $('#ConfigForm_dateTimeFormat').val($('input[id$="_dateFormat"]').val()+' '+$('input[id$="_timeFormat"]').val());
+        });
+        
+        // ** Daten von lockAt in das entsprechende Feld eintragen **
+
+        function changeLockAtContent() {
+            $('#lockAt_value').val($('input[id$="_lockAt"]')[0]['value']+' '+$('input[id$="_lockAt"]')[1]['value']);
+        }
+        
+        $('input[id$="_lockAt"]').on({
+        change: function() {
+            changeLockAtContent();
+        },
+        keyup: function() {
+            changeLockAtContent();
+        }
+        });
+        
+        // ** JQuery UI Autocomplete Einstellungen **    
+                
+        $('input[id$="_display"]').on('autocompletefocus', function(e) {
+            e.preventDefault();
+        });
+        $('input[id$="_teacher"]').on('autocompletefocus', function(e) {
+            e.preventDefault();
+        });
+        $('#appointment_parent').on('autocompletefocus', function(e) {
+            e.preventDefault();
+        });
+        
+        $('input[id$="_display"]').on('autocompleteselect', function(e, ui) {
+            e.preventDefault();
+            $(this).val(ui.item.label);
+            $(this).nextAll('input').val(ui.item.value);
+        });
+        
+        $('#appointment_teacher').on('autocompleteselect', function (e, ui) {
+           e.preventDefault();
+           $(this).val(ui.item.label);
+           $(this).nextAll('input').val(ui.item.value);
+           $.get('index.php/?r=appointment/getteacherappointmentsajax', {teacherId: ui.item.value, classname: 'Appointment'}, function(data) {
+               $('#appointment_dateAndTime_select').html(data);
+               $('#appointment_dateAndTime_select').children('select').select2();
+           }, 'json'); 
+        });
+        
+        $('#appointmentBlock_teacher').on('autocompleteselect', function (e, ui) {
+           e.preventDefault();
+           $(this).val(ui.item.label);
+           $(this).nextAll('input').val(ui.item.value);
+           $.get('index.php/?r=appointment/getteacherappointmentsajax', {teacherId: ui.item.value, classname: 'BlockedAppointment'}, function(data) {
+               $('#appointment_dateAndTime_select').html(data);
+               $('#appointment_dateAndTime_select').children('select').select2();
+           }, 'json'); 
+        });        
+        
+        $('#appointment_parent').on('autocompleteselect', function(e, ui) {
+           e.preventDefault();
+           $(this).val(ui.item.label);
+           $.get('index.php/?r=appointment/getselectchildrenajax', {id: ui.item.value}, function(data) {
+              $('#appointment_parent_select').html(data);
+              $('#appointment_parent_select').children('select').select2();
+           }, 'json');
+        });
+
+    });
+    
+    
+    //** Mehr Felder für die Eingabe von Schülern zu TANs generieren. **
+        
+        var tanGensId = 0;
+        
+        $('.add-child-tan').click(function() {
+            tanGensId++;
+            var div = $('.customChild:first').clone();
+            $(div).children().each(function() {
+               var input = $(this).find('input'),
+                   select = false;
+               if (input.hasClass('select2-focusser')) {
+                   input = $(this).find('select');
+                   select = true;
+               } 
+               if (input.length !== 0) {
+                    $(input).attr('name', $(input).attr('name').replace(/\d/, tanGensId));
+                    $(input).attr('id', $(input).attr('id').replace(/\d/, tanGensId));
+                    $(input).val('');
+               }
+               if (select) {
+                   $(input).attr('tabindex','');
+                   $(input).attr('class','');
+                   $(this).children('.small-9').html(input);
+               }
+            });
+            $('.customChild:last').after($(div));
+            $(div).find('select').select2();
+        });
+})(jQuery);

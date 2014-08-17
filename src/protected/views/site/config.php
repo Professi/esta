@@ -31,17 +31,17 @@ $this->registerAdminScripts(true);
     ));
     ?>
     <div class="row">
-        <div class="twelve columns centered">
+        <div class="small-12 columns small-centered">
             <h2 class="text-center"><?php echo Yii::t('app', 'Konfiguration'); ?></h2>
         </div>
     </div>
     <div class="row">
         <div class="panel">
             <div class="row">
-                <div class="two columns text-center">
-                    <span aria-hidden="true" data-icon="&#xe011;" style="font-size:2.5em;"></span>
+                <div class="small-2 columns text-center">
+                    <i class="fi-alert"></i>
                 </div>
-                <div class="ten columns">
+                <div class="small-10 columns">
                     <?php
                     echo Yii::t('app', 'Bitte führen Sie auf dieser Seite nur Änderungen durch, wenn Sie sich absolut sicher sind.') . '<br>';
                     echo Yii::t('app', 'Die Änderungen haben Auswirkungen auf alle Benutzer im System und können sich negativ auf die Funktionalität der Software auswirken.');
@@ -52,7 +52,7 @@ $this->registerAdminScripts(true);
         <?php if ($model->hasErrors()) { ?>
             <div class="panel alert-box alert">
                 <div class="row">
-                    <div class="ten columns">
+                    <div class="small-10 columns">
                         <?php
                         echo CHtml::errorSummary($model);
                         ?>
@@ -63,7 +63,7 @@ $this->registerAdminScripts(true);
         <fieldset>
             <legend><?php echo Yii::t('app', 'Allgemein'); ?></legend>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix infofeld">
                         <?php echo $form->label($model, 'appName', array('class' => 'infolabel')); ?>
                     </span>
@@ -72,7 +72,7 @@ $this->registerAdminScripts(true);
                         <?php echo Yii::t('app', 'Hier können Sie den Anwendungsnamen festlegen. Dieser ist unter anderem für die Seitentitel in der Browserstatusleiste relevant.'); ?>
                     </div>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'appName');
                     echo $form->error($model, 'appName');
@@ -80,7 +80,7 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix infofeld">
                         <?php echo $form->label($model, 'language', array('class' => 'infolabel')); ?>
                     </span>
@@ -89,7 +89,7 @@ $this->registerAdminScripts(true);
                         <?php echo Yii::t('app', 'Länderkürzel z.B. de oder en'); ?>
                     </div>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'language');
                     echo $form->error($model, 'language');
@@ -97,10 +97,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'adminEmail'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'adminEmail');
                     echo $form->error($model, 'adminEmail');
@@ -108,10 +108,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'randomTeacherPassword'); ?></span>
                 </div>
-                <div class="four columns ">
+                <div class="small-4 columns ">
                     <?php
                     echo Select2::activeDropDownList($model, 'randomTeacherPassword', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'randomTeacherPassword');
@@ -119,10 +119,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'defaultTeacherPassword'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'defaultTeacherPassword');
                     echo $form->error($model, 'defaultTeacherPassword');
@@ -130,10 +130,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'lockRegistration'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo Select2::activeDropDownList($model, 'lockRegistration', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'lockRegistration');
@@ -141,7 +141,7 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix infofeld">
                         <?php echo $form->label($model, 'allowGroups', array('class' => 'infolabel')); ?>
                     </span>
@@ -154,7 +154,7 @@ $this->registerAdminScripts(true);
                         ?>
                     </div>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo Select2::activeDropDownList($model, 'allowGroups', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowGroups');
@@ -162,10 +162,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'logoPath'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'logoPath');
                     echo $form->error($model, 'logoPath');
@@ -173,10 +173,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'textHeader'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'textHeader');
                     echo $form->error($model, 'textHeader');
@@ -184,10 +184,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'hashCost'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'hashCost');
                     echo $form->error($model, 'hashCost');
@@ -198,10 +198,10 @@ $this->registerAdminScripts(true);
         <fieldset>
             <legend><?php echo Yii::t('app', 'Kontaktinformationen'); ?></legend>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'schoolName'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'schoolName');
                     echo $form->error($model, 'schoolName');
@@ -209,10 +209,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'schoolStreet'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'schoolStreet');
                     echo $form->error($model, 'schoolStreet');
@@ -220,10 +220,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'schoolCity'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'schoolCity');
                     echo $form->error($model, 'schoolCity');
@@ -231,10 +231,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'schoolTele'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'schoolTele');
                     echo $form->error($model, 'schoolTele');
@@ -242,10 +242,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'schoolFax'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'schoolFax');
                     echo $form->error($model, 'schoolFax');
@@ -253,10 +253,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'schoolEmail'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'schoolEmail');
                     echo $form->error($model, 'schoolEmail');
@@ -264,10 +264,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'useSchoolEmailForContactForm'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo Select2::activeDropDownList($model, 'useSchoolEmailForContactForm', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'useSchoolEmailForContactForm');
@@ -275,10 +275,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'schoolWebsiteLink'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'schoolWebsiteLink');
                     echo $form->error($model, 'schoolWebsiteLink');
@@ -289,14 +289,14 @@ $this->registerAdminScripts(true);
         <fieldset>
             <legend><?php echo Yii::t('app', 'Elternsprechtage'); ?></legend>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix infofeld"><?php echo $form->label($model, 'allowParentsToManageChilds', array('class' => 'infolabel')); ?></span>
                     <div class="infotext">
                         <span aria-hidden="true" data-icon="&#xe012;"></span>
                         <?php echo Yii::t('app', 'Wenn diese Option aktiviert ist, können Eltern ihre Kinder beliebig verwalten. Falls diese Option deaktiviert wurde, müssen bei der TAN Erstellung die Namen der Kinder angegeben werden. Eltern können weitere Kinder nur durch TAN\'s hinzufügen.'); ?>
                     </div>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo Select2::activeDropDownList($model, 'allowParentsToManageChilds', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowParentsToManageChilds');
@@ -304,14 +304,14 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix infofeld"><?php echo $form->label($model, 'maxChild', array('class' => 'infolabel')); ?></span>
                     <div class="infotext">
                         <span aria-hidden="true" data-icon="&#xe012;"></span>
                         <?php echo Yii::t('app', 'Wenn Eltern ihre Kinder selber verwalten dürfen, dürfen diese nur n Kinder hinzufügen.'); ?>
                     </div>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'maxChild');
                     echo $form->error($model, 'maxChild');
@@ -319,10 +319,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'maxAppointmentsPerChild'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'maxAppointmentsPerChild');
                     echo $form->error($model, 'maxAppointmentsPerChild');
@@ -330,10 +330,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'minLengthPerAppointment'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'minLengthPerAppointment');
                     echo $form->error($model, 'minLengthPerAppointment');
@@ -344,10 +344,10 @@ $this->registerAdminScripts(true);
         <fieldset>
             <legend><?php echo Yii::t('app', 'E-Mail'); ?></legend>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'mailsActivated'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo Select2::activeDropDownList($model, 'mailsActivated', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'mailsActivated');
@@ -355,10 +355,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'smtpAuth'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo Select2::activeDropDownList($model, 'smtpAuth', array(1 => 'Ja', 0 => 'Nein'));
                     echo $form->error($model, 'smtpAuth');
@@ -366,10 +366,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'emailHost'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'emailHost', $optionsMails);
                     echo $form->error($model, 'emailHost');
@@ -377,10 +377,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'fromMail'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'fromMail', $optionsMails);
                     echo $form->error($model, 'fromMail');
@@ -388,10 +388,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'fromMailHost'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'fromMailHost', $optionsMails);
                     echo $form->error($model, 'fromMailHost');
@@ -399,10 +399,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'smtpPassword'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->passwordField($model, 'smtpPassword', $optionsMails);
                     echo $form->error($model, 'smtpPassword');
@@ -410,10 +410,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'smtpSecure'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'smtpSecure', $optionsMails);
                     echo $form->error($model, 'smtpSecure');
@@ -421,10 +421,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'smtpPort'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'smtpPort', $optionsMails);
                     echo $form->error($model, 'smtpPort');
@@ -435,10 +435,10 @@ $this->registerAdminScripts(true);
         <fieldset>
             <legend><?php echo Yii::t('app', 'Anti-Spam'); ?></legend>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'banUsers'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo Select2::activeDropDownList($model, 'banUsers', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'banUsers');
@@ -446,10 +446,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'durationTempBans'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'durationTempBans', $optionsBans);
                     echo $form->error($model, 'durationTempBans');
@@ -457,10 +457,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'maxAttemptsForLogin'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'maxAttemptsForLogin', $optionsBans);
                     echo $form->error($model, 'maxAttemptsForLogin');
@@ -468,10 +468,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'maxTanGen'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'maxTanGen', $optionsBans);
                     echo $form->error($model, 'maxTanGen');
@@ -479,10 +479,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'tanSize'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'tanSize', $optionsBans);
                     echo $form->error($model, 'tanSize');
@@ -493,10 +493,10 @@ $this->registerAdminScripts(true);
         <fieldset>
             <legend><?php echo Yii::t('app', 'Terminblockierung'); ?></legend>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'allowBlockingAppointments'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo Select2::activeDropDownList($model, 'allowBlockingAppointments', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowBlockingAppointments');
@@ -504,10 +504,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'allowBlockingOnlyForManagement'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo Select2::activeDropDownList($model, 'allowBlockingOnlyForManagement', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array($optionsBlocks, 'select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowBlockingOnlyForManagement');
@@ -515,10 +515,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'teacherAllowBlockTeacherApps'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo Select2::activeDropDownList($model, 'teacherAllowBlockTeacherApps', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array($optionsBlocks, 'select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'teacherAllowBlockTeacherApps');
@@ -526,10 +526,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'appointmentBlocksPerDate'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'appointmentBlocksPerDate', $optionsBlocks);
                     echo $form->error($model, 'appointmentBlocksPerDate');
@@ -537,10 +537,10 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'lengthReasonAppointmentBlocked'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'lengthReasonAppointmentBlocked', $optionsBlocks);
                     echo $form->error($model, 'lengthReasonAppointmentBlocked');
@@ -550,7 +550,7 @@ $this->registerAdminScripts(true);
         </fieldset>
     </div><!-- row -->
     <div class="row">
-        <div class="twelve columns">
+        <div class="small-12 columns">
             <?php echo CHtml::submitButton(Yii::t('app', 'Speichern'), array('class' => 'button')); ?>
         </div>
     </div>

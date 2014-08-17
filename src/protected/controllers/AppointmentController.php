@@ -236,16 +236,16 @@ class AppointmentController extends Controller {
         $columnCount = '';
         switch (count($array)) {
             case 1:
-                $columnCount = 'twelve';
+                $columnCount = 'small-12';
                 break;
             case 2:
-                $columnCount = 'six';
+                $columnCount = 'small-6';
                 break;
             case 3:
-                $columnCount = 'four';
+                $columnCount = 'small-4';
                 break;
             default :
-                $columnCount = 'twelve';
+                $columnCount = 'small-12';
                 break;
         }
         return $columnCount;

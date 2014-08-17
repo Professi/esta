@@ -20,15 +20,17 @@
 /* @var $this UserController */
 /* @var $model User */
 /* @var $form CActiveForm */
+
+Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'user-form',
         ));
 ?>
 <div class="row collapse">
-    <div class="three columns">
+    <div class="small-3 columns">
         <span class="prefix"><?php echo $form->label($model, 'firstname'); ?></span>
     </div>
-    <div class="nine columns mobile-input">
+    <div class="small-9 columns mobile-input">
         <?php
         echo $form->textField($model, 'firstname', array('size' => 45, 'maxlength' => 45));
         echo $form->error($model, 'firstname');
@@ -36,10 +38,10 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
 </div>
 <div class="row collapse">
-    <div class="three columns">
+    <div class="small-3 columns">
         <span class="prefix"><?php echo $form->label($model, 'lastname'); ?></span>
     </div>
-    <div class="nine columns mobile-input">
+    <div class="small-9 columns mobile-input">
         <?php
         echo $form->textField($model, 'lastname', array('size' => 45, 'maxlength' => 45));
         echo $form->error($model, 'lastname');
@@ -47,10 +49,10 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
 </div>
 <div class="row collapse">
-    <div class="three columns">
+    <div class="small-3 columns">
         <span class="prefix"><?php echo $form->label($model, 'email'); ?></span>
     </div>
-    <div class="nine columns mobile-input">
+    <div class="small-9 columns mobile-input">
         <?php
         if (Yii::app()->user->CheckAccess('1') || Yii::app()->user->isGuest) {
             echo $form->textField($model, 'email', array('size' => 45, 'maxlength' => 45));
@@ -63,13 +65,13 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
 </div>
 <div class="row collapse">
-    <div class="three columns">
+    <div class="small-3 columns">
         <?php if (!$model->isNewRecord) { ?>  
             <span class="prefix infofeld">
                 <?php echo $form->label($model, 'password', array('class' => 'infolabel')); ?>
             </span>
             <div class="infotext">
-                <span aria-hidden="true" data-icon="&#xe012;"></span>
+                <i class="fi-info"></i>
                 <?php
                 echo Yii::t('app', 'Bitte beachten Sie, dass das Passwort nur geändert wird, wenn Sie ein neues Passwort eintragen.');
                 echo Yii::t('app', 'Sollten Sie kein neues Passwort vergeben wollen, so können Sie die Passwortfelder leer lassen.');
@@ -82,22 +84,22 @@ $form = $this->beginWidget('CActiveForm', array(
         <?php }
         ?>
     </div>
-    <div class="six columns mobile-input">
+    <div class="small-6 columns mobile-input">
         <?php
         echo $form->passwordField($model, 'password', array('size' => 45, 'maxlength' => 45));
         echo $form->error($model, 'password');
         ?>
     </div>
-    <div class="three columns mobile-input">
+    <div class="small-3 columns mobile-input">
         <span class="postfix" style="font-size:.8em;"><?php echo Yii::t('app', 'Mindestlänge 8 Zeichen'); ?></span>
     </div>
 </div>
 <div class="show-for-small"><br></div>
 <div class="row collapse">
-    <div class="three columns">
+    <div class="small-3 columns">
         <span class="prefix"><?php echo $form->label($model, 'password_repeat'); ?></span>
     </div>
-    <div class="nine columns mobile-input">
+    <div class="small-9 columns mobile-input">
         <?php
         echo $form->passwordField($model, 'password_repeat', array('size' => 45, 'maxlength' => 45));
         echo $form->error($model, 'password_repeat');
@@ -106,10 +108,10 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 <?php if (Yii::app()->user->checkAccess('1')) { ?>
     <div class="row collapse">
-        <div class="three columns">
+        <div class="small-3 columns">
             <span class="prefix"><?php echo $form->label($model, 'state'); ?></span>
         </div>
-        <div class="nine columns">
+        <div class="small-9 columns">
             <?php
             echo Select2::activeDropDownList($model, 'state', array('1' => 'Aktiv', '0' => 'Nicht aktiv', '2' => 'Gesperrt'), array('select2Options' => array('minimumResultsForSearch' => 10)));
             echo $form->error($model, 'state');
@@ -117,10 +119,10 @@ $form = $this->beginWidget('CActiveForm', array(
         </div>
     </div>
     <div class="row collapse">
-        <div class="three columns">
+        <div class="small-3 columns">
             <span class="prefix"><?php echo $form->label($model, 'role'); ?></span>
         </div>
-        <div class="nine columns">
+        <div class="small-9 columns">
             <?php
             echo Select2::activeDropDownList($model, 'role', $model->getRolePermission(), array('select2Options' => array('minimumResultsForSearch' => 10)));
             echo $form->error($model, 'role');
@@ -133,10 +135,10 @@ $form = $this->beginWidget('CActiveForm', array(
         if (!empty($groups)) {
             ?>
             <div class="row collapse">
-                <div class="three columns">
+                <div class="small-3 columns">
                     <span class="prefix"><?php echo $form->label($model, 'groups'); ?> </span>
                 </div>
-                <div class="nine columns">
+                <div class="small-9 columns">
                     <?php
                     if (isset($_POST['User']['groupIds'])) {
                         $model->groupIds = $_POST['User']['groupIds'];
@@ -162,10 +164,10 @@ $form = $this->beginWidget('CActiveForm', array(
 if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) {
     ?>
     <div class="row collapse">
-        <div class="three columns">
+        <div class="small-3 columns">
             <span class="prefix"><?php echo $form->label($model, 'tan'); ?></span>
         </div>
-        <div class="nine columns mobile-input">
+        <div class="small-9 columns mobile-input">
             <?php
             echo $form->textField($model, 'tan', array('size' => 45, 'maxlength' => Yii::app()->params['tanSize']));
             echo $form->error($model, 'tan');
@@ -173,16 +175,16 @@ if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) {
         </div>
     </div>
     <div class="row ">
-        <div class="three columns"></div>
-        <div class="nine columns">
+        <div class="small-3 columns"></div>
+        <div class="small-9 columns">
             <?php $this->widget('CCaptcha'); ?>
         </div>
     </div>
     <div class="row collapse">
-        <div class="three columns">
+        <div class="small-3 columns">
             <span class="prefix"><?php echo $form->label($model, 'verifyCode'); ?></span>
         </div>
-        <div class="nine columns mobile-input">
+        <div class="small-9 columns mobile-input">
             <?php
             echo $form->textField($model, 'verifyCode');
             echo $form->error($model, 'verifyCode');

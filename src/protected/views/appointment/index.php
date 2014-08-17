@@ -24,16 +24,22 @@ $this->breadcrumbs = array(
     'Appointments',
 );
 $this->menu = array(
-    array('label' => Yii::t('app', 'Termine vereinbaren'), 'url' => array('create'), 'visible' => Yii::app()->user->checkAccess('1')),
-    array('label' => Yii::t('app', 'Termine verwalten'), 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess('1')),
+    array(  'label' => Yii::t('app', 'Termine vereinbaren'), 
+            'url' => array('create'), 
+            'visible' => Yii::app()->user->checkAccess('1'),
+            'linkOptions' => array('class' => 'small button')),
+    array(  'label' => Yii::t('app', 'Termine verwalten'), 
+            'url' => array('admin'), 
+            'visible' => Yii::app()->user->checkAccess('1'),
+            'linkOptions' => array('class' => 'small button')),
 );
 ?>
 <div class="row">
-    <div class="twelve columns">
+    <div class="small-12 columns">
         <h2 class="subheader">Ihre Termine</h2>
         <hr>
         <?php if ($no_children) { ?>
-            <div class="panel">
+            <div class="paper panel">
                 <p><?php echo Yii::t('app', 'Es wurden noch keine Kinder angelegt. Ohne Kinder können keine Termine vereinbart werden.'); ?>
                     <br>
                     <?php

@@ -21,7 +21,7 @@
 $this->setPageTitle(Yii::t('app', 'Konto aktiviert'));
 ?>
 <div class="row">
-    <div class="twelve columns ">    
+    <div class="small-12 columns ">    
         <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app','Zurück zur Startseite') . '</b>', 'index.php'); ?></p>
     </div>
 </div>

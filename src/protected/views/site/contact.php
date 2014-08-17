@@ -26,13 +26,13 @@ $this->breadcrumbs = array(
 );
 ?>
 <div class="row">
-    <div class="twelve columns">
+    <div class="small-12 columns">
         <?php if (Yii::app()->user->hasFlash('contact')): ?>
             <div class="flash-success">
                 <?php echo Yii::app()->user->getFlash('contact'); ?>
             </div>
         <?php else: ?>
-            <div class="panel">
+            <div class="paper panel">
                 <?php echo Yii::t('app', 'Sollten Sie Fragen oder Anregungen haben, setzen Sie sich mit uns in Kontakt indem Sie das nachfolgende Formular ausfüllen.');?><br>
                 <?php echo Yii::t('app', 'Vielen Dank.');?>
             </div>
@@ -48,10 +48,10 @@ $this->breadcrumbs = array(
             <fieldset>
                 <legend><?php echo Yii::t('app', 'Kontakt');?></legend>
                 <div class="row collapse">
-                    <div class="two columns">
+                    <div class="small-2 columns">
                         <span class="prefix"><?php echo $form->label($model, 'name'); ?></span>
                     </div>
-                    <div class="ten columns mobile-input">
+                    <div class="small-10 columns mobile-input">
                         <?php
                         echo $form->textField($model, 'name');
                         echo $form->error($model, 'name');
@@ -59,10 +59,10 @@ $this->breadcrumbs = array(
                     </div>
                 </div>
                 <div class="row collapse">
-                    <div class="two columns">
+                    <div class="small-2 columns">
                         <span class="prefix"><?php echo $form->label($model, 'email'); ?></span>
                     </div>
-                    <div class="ten columns mobile-input">
+                    <div class="small-10 columns mobile-input">
                         <?php
                         echo $form->textField($model, 'email');
                         echo $form->error($model, 'email');
@@ -70,10 +70,10 @@ $this->breadcrumbs = array(
                     </div>
                 </div>
                 <div class="row collapse">
-                    <div class="two columns">
+                    <div class="small-2 columns">
                         <span class="prefix"><?php echo $form->label($model, 'subject'); ?></span>
                     </div>
-                    <div class="ten columns mobile-input">
+                    <div class="small-10 columns mobile-input">
                         <?php
                         echo $form->textField($model, 'subject', array('size' => 60, 'maxlength' => 128));
                         echo $form->error($model, 'subject');
@@ -82,7 +82,7 @@ $this->breadcrumbs = array(
                 </div>
 
                 <div class="row collapse">
-                    <div class="twelve columns" style="padding-left:.2em;">
+                    <div class="small-12 columns" style="padding-left:.2em;">
                         <?php
                         echo $form->textArea($model, 'body', array('rows' => 6, 'cols' => 50, 'placeholder' => Yii::t('app', 'Ihre Nachricht')));
                         echo $form->error($model, 'body');
@@ -91,16 +91,16 @@ $this->breadcrumbs = array(
                 </div>
                 <?php if (CCaptcha::checkRequirements()): ?>
                     <div class="row">
-                        <div class="two columns"></div>
-                        <div class="ten columns">
+                        <div class="small-2 columns"></div>
+                        <div class="small-10 columns">
                             <?php $this->widget('CCaptcha'); ?>
                         </div>
                     </div>
                     <div class="row collapse">
-                        <div class="two columns">
+                        <div class="small-2 columns">
                             <span class="prefix"><?php echo $form->label($model, 'verifyCode'); ?></span>
                         </div>
-                        <div class="ten columns mobile-input">
+                        <div class="small-10 columns mobile-input">
                             <?php
                             echo $form->textField($model, 'verifyCode');
                             echo $form->error($model, 'verifyCode');

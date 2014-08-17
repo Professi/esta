@@ -22,10 +22,10 @@
 $this->setPageTitle(Yii::t('app', 'Lehrerauswahl'));
 ?>
 <div class="row">
-    <div class="twelve columns centered">
+    <div class="small-12 columns small-centered">
         <h2 class="subheader"><?php echo Yii::t('app', 'Lehrerauswahl');?></h2>
         <hr>
-        <div class="panel">
+        <div class="paper panel">
             <p><?php echo Yii::t('app', 'Klicken Sie auf einen Buchstaben um sich alle Lehrer, deren Name mit diesem Buchstaben beginnt, anzeigen zu lassen.'); ?><br> 
                 <?php echo Yii::t('app', 'Drücken Sie auf den Stern um eine Liste mit allen Lehrer zu erhalten.');?>
             </p>
@@ -33,118 +33,135 @@ $this->setPageTitle(Yii::t('app', 'Lehrerauswahl'));
             <p><?php echo Yii::t('app', 'Wenn Sie den richtigen Lehrer gefunden haben, klicken Sie einfach auf das Uhrsymbol neben seinem Namen um zu der Terminvereinbarung des Lehres zu gelangen.'); ?> 
             </p>
         </div>
-        <div class="row">
-            <div class="ten columns centered text-center">
-                <fieldset>
-                    <div class="hide-for-small" style="line-height:2em;" >
-                        <div style="margin-bottom: .6em;">
-                            <div style="margin-bottom: .6em;">
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=a" class="small teacher button">A</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=b" class="small teacher button">B</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=c" class="small teacher button">C</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=d" class="small teacher button">D</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=e" class="small teacher button">E</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=f" class="small teacher button">F</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=g" class="small teacher button">G</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=h" class="small teacher button">H</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=i" class="small teacher button">I</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=j" class="small teacher button">J</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=k" class="small teacher button">K</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=l" class="small teacher button">L</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=m" class="small teacher button">M</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=n" class="small teacher button">N</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=o" class="small teacher button">O</a>
-                            </div>
-                            <div>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=p" class="small teacher button">P</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=q" class="small teacher button">Q</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=r" class="small teacher button">R</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=s" class="small teacher button">S</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=t" class="small teacher button">T</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=u" class="small teacher button">U</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=v" class="small teacher button">V</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=w" class="small teacher button">W</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=x" class="small teacher button">X</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=y" class="small teacher button">Y</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=z" class="small teacher button">Z</a>
-                                <?php if(strpos(Yii::app()->language, 'de') == 0) {?>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=ü" class="small teacher button">ä</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=ö" class="small teacher button">ö</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=ä" class="small teacher button">ü</a>
-                                <?php } ?>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=" class="small teacher button">*</a>
-                            </div>
-                        </div>
-                    </div>
-                        <div class="show-for-small" style="line-height:2.5em;">
-                            <div class="left">
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=a" class="small teacher button">A</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=b" class="small teacher button">B</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=c" class="small teacher button">C</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=d" class="small teacher button">D</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=e" class="small teacher button">E</a>
-                            </div>
-                            <div class="left">
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=f" class="small teacher button">F</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=g" class="small teacher button">G</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=h" class="small teacher button">H</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=i" class="small teacher button">I</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=j" class="small teacher button">J</a>
-                            </div>
-                            <div class="left">
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=k" class="small teacher button">K</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=l" class="small teacher button">L</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=m" class="small teacher button">M</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=n" class="small teacher button">N</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=o" class="small teacher button">O</a>
-                            </div>
-                            <div class="left">
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=p" class="small teacher button">P</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=q" class="small teacher button">Q</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=r" class="small teacher button">R</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=s" class="small teacher button">S</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=t" class="small teacher button">T</a>
-                            </div>
-                            <div class="left">
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=u" class="small teacher button">U</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=v" class="small teacher button">V</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=w" class="small teacher button">W</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=x" class="small teacher button">X</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=y" class="small teacher button">Y</a>
-                            </div>
-                            <div class="left">
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=z" class="small teacher button">Z</a>
-                                <?php if(strpos(Yii::app()->language, 'de') == 0) {?>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=ae" class="small teacher button">ä</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=oe" class="small teacher button">ö</a>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=ue" class="small teacher button">ü</a>
-                                <?php } ?>
-                                <a href="index.php?r=appointment/getTeacher&amp;letter=" class="small teacher button">*</a>
-                            </div>
-                            <div style="clear:both;"></div> 
-                        </div>
-                        <br>
-                        <div class="row collapse js_show" style="display:none;">
-                            <div class="three columns">
-                                <span class="prefix"><?php echo Yii::t('app', 'Lehrername'); ?></span>
-                            </div>
-                            <div class="nine columns mobile-input">
-                                <?php
-                                $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                                    'name' => 'teacher-ac',
-                                    'sourceUrl' => 'index.php?r=user/search&role=2',
-                                    'options' => array(
-                                        'minLength' => '2',
-                                    ),
-                                    'htmlOptions' => array(
-                                    ),
-                                ));
-                                ?>
-                            </div>
-                        </div>
-                </fieldset>
+    </div>
+</div>
+<div class="row">
+    <fieldset class="small-12 columns small-centered text-center">
+        <div class="row collapse">
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=a" class="tiny teacher button">A</a>        
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=b" class="tiny teacher button">B</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=c" class="tiny teacher button">C</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=d" class="tiny teacher button">D</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=e" class="tiny teacher button">E</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=f" class="tiny teacher button">F</a>
             </div>
         </div>
+        <div class="row collapse">
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=g" class="tiny teacher button">G</a>                        
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=h" class="tiny teacher button">H</a>                        
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=i" class="tiny teacher button">I</a>                        
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=j" class="tiny teacher button">J</a>                        
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=k" class="tiny teacher button">K</a>                        
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=l" class="tiny teacher button">L</a>                        
+            </div>
+        </div>
+        <div class="row collapse">
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=m" class="tiny teacher button">M</a>                        
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=n" class="tiny teacher button">N</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=o" class="tiny teacher button">O</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=p" class="tiny teacher button">P</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=q" class="tiny teacher button">Q</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=r" class="tiny teacher button">R</a>
+            </div>
+        </div>
+        <div class="row collapse">
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=s" class="tiny teacher button">S</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=t" class="tiny teacher button">T</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=u" class="tiny teacher button">U</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=v" class="tiny teacher button">V</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=w" class="tiny teacher button">W</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=x" class="tiny teacher button">X</a>                        
+            </div>
+        </div>
+        <div class="row collapse">
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=y" class="tiny teacher button">Y</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=z" class="tiny teacher button">Z</a>
+            </div>
+            <?php if(strpos(Yii::app()->language, 'de') == 0) {?>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=ü" class="tiny teacher button">&Auml;</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=ö" class="tiny teacher button">&Ouml;</a>
+            </div>
+            <div class="small-2 columns">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=ä" class="tiny teacher button">&Uuml;</a>                            
+            </div>
+            <?php } ?>
+            <div class="small-2 columns end">
+                <a href="index.php?r=appointment/getTeacher&amp;letter=" class="tiny teacher button">*</a>
+            </div>
+        </div>
+        <div class="row collapse js_show" style="display:none;">
+            <br>
+            <div class="small-4 columns">
+                <span class="prefix"><?php echo Yii::t('app', 'Lehrername'); ?></span>
+            </div>
+            <div class="small-8 columns mobile-input">
+                <?php
+                $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                    'name' => 'teacher-ac',
+                    'sourceUrl' => 'index.php?r=user/search&role=2',
+                    'options' => array(
+                        'minLength' => '2',
+                    ),
+                    'htmlOptions' => array(
+                    ),
+                ));
+                ?>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<div class="row">
+    <div class="small-12 columns small-centered">
         <?php
         $this->widget('zii.widgets.grid.CGridView', array(
             'id' => 'teacher-grid',
@@ -158,11 +175,12 @@ $this->setPageTitle(Yii::t('app', 'Lehrerauswahl'));
                     'template' => '{date}',
                     'buttons' => array(
                         'date' => array(
-                            'label' => Yii::t('app','Termin vereinbaren'),
+                            'label' => '<i class="fi-clock"></i>',
                             /** @todo must be changed, user can manipulate it */
                             'url' => '"index.php?r=Appointment/makeAppointment&teacher=".$data->id',
-                            'imageUrl' => Yii::app()->request->baseUrl . '/img/alarm.png',
-                            'options' => array('class' => 'column-button alarm_png',),
+                            'imageUrl' => false,
+                            'options' => array('class' => 'table-button clock',
+                                'title' => Yii::t('app','Termin vereinbaren')),
                         ),
                     ),
                 ),
@@ -171,3 +189,4 @@ $this->setPageTitle(Yii::t('app', 'Lehrerauswahl'));
         ?>
     </div>
 </div>
+        

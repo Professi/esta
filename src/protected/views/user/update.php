@@ -26,13 +26,22 @@ $this->breadcrumbs = array(
     'Update',
 );
 $this->menu = array(
-    array('label' => Yii::t('app', 'Benutzer erstellen'), 'url' => array('create'), 'visible' => Yii::app()->user->checkAccess('1')),
-    array('label' => Yii::t('app', 'Benutzer anzeigen'), 'url' => array('view', 'id' => $model->id), 'visible' => Yii::app()->user->checkAccess('1')),
-    array('label' => Yii::t('app', 'Benutzer verwalten'), 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess('1')),
+    array(  'label' => Yii::t('app', 'Benutzer erstellen'), 
+            'url' => array('create'), 
+            'visible' => Yii::app()->user->checkAccess('1'),
+            'linkOptions' => array('class' => 'small button')),
+    array(  'label' => Yii::t('app', 'Benutzer anzeigen'), 
+            'url' => array('view', 'id' => $model->id), 
+            'visible' => Yii::app()->user->checkAccess('1'),
+            'linkOptions' => array('class' => 'small button')),
+    array(  'label' => Yii::t('app', 'Benutzer verwalten'),
+            'url' => array('admin'), 
+            'visible' => Yii::app()->user->checkAccess('1'),
+            'linkOptions' => array('class' => 'small button')),
 );
 ?>
 <div class="row">
-    <div class="nine columns centered">
+    <div class="small-9 columns small-centered">
         <fieldset>
             <legend><?php echo Yii::t('app', 'Benutzer {email} aktualisieren',array('{email}'=>$model->email)); ?></legend>
             <?php echo $this->renderPartial('_form', array('model' => $model)); ?>

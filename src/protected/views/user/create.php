@@ -29,12 +29,14 @@ $this->breadcrumbs = array(
 );
 if (Yii::app()->user->checkAccess('1')) {
     $this->menu = array(
-        array('label' => Yii::t('app', 'Benutzer verwalten'), 'url' => array('admin')),
+        array(  'label' => Yii::t('app', 'Benutzer verwalten'), 
+                'url' => array('admin'),
+                'linkOptions' => array('class' => 'small button')),
     );
 }
 ?>
 <div class="row">
-    <div class="nine columns centered">
+    <div class="small-9 columns small-centered">
         <fieldset>
             <?php if (Yii::app()->user->isGuest) { ?>
                 <legend><?php echo Yii::t('app', 'Registrierung'); ?></legend>

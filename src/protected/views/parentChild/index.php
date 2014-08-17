@@ -24,16 +24,23 @@ $this->breadcrumbs = array(
     'Parent Children',
 );
 $this->menu = array(
-    array('label' => Yii::t('app', 'Kind hinzufügen'), 'url' => array('create'), 'visible' => Yii::app()->params['allowParentsToManageChilds'] || Yii::app()->user->checkAccess(1)),
-    array('label' => Yii::t('app', 'Termin vereinbaren'), 'url' => array('appointment/getTeacher')),
-    array('label' => Yii::t('app', 'Verwalte Elternkindverknüpfungen'), 'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess(1)),
+    array(  'label' => Yii::t('app', 'Kind hinzufügen'), 
+            'url' => array('create'), 
+            'visible' => Yii::app()->params['allowParentsToManageChilds'] || Yii::app()->user->checkAccess(1),
+            'linkOptions' => array('class' => 'small button')),
+    array(  'label' => Yii::t('app', 'Termin vereinbaren'), 
+            'url' => array('appointment/getTeacher'),
+            'linkOptions' => array('class' => 'small button')),
+    array(  'label' => Yii::t('app', 'Verwalte Elternkindverknüpfungen'), 
+            'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess(1),
+            'linkOptions' => array('class' => 'small button')),
 );
 ?>
 <div class="row">
-    <div class="twelve columns">
+    <div class="small-12 columns">
         <h2 class="subheader">Ihre Kinder</h2>
         <hr/>
-        <div class="panel hide-for-print">
+        <div class="paper panel hide-for-print">
             <?php
             if (Yii::app()->params['allowParentsToManageChilds']) {
                 echo Yii::t('app', 'Falls Sie bei der Eingabe Ihrer Kinder einen Fehler gemacht haben sollten, drücken Sie einfach auf das "x" neben dem Namen. Der Eintrag wird daraufhin entfernt und Sie können eine neue Eingabe über "Kind hinzufügen" tätigen.');

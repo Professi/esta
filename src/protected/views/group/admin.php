@@ -18,10 +18,9 @@
 $this->setPageTitle(Yii::t('app', 'Gruppenverwaltung'));
 ?>
 <div class="row">
-    <div class="twelve columns centered">
+    <div class="small-12 columns small-centered">
         <h2 class="text-center">Gruppenverwaltung</h2>
-    </div>
-</div>
+    
     <?php
     $this->widget('zii.widgets.jui.CJuiTabs',array(
     'tabs'=>array(
@@ -33,3 +32,5 @@ $this->setPageTitle(Yii::t('app', 'Gruppenverwaltung'));
     ),
 ));
 ?>
+    </div>
+</div>

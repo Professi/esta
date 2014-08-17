@@ -22,11 +22,13 @@ $this->breadcrumbs = array(
     'Create',
 );
 $this->menu = array(
-    array('label' => Yii::t('app', 'Gruppen verwalten'), 'url' => array('admin')),
+    array(  'label' => Yii::t('app', 'Gruppen verwalten'), 
+            'url' => array('admin'),
+            'linkOptions' => array('class' => 'small button'))
 );
 ?>
 <div class="row">
-    <div class="twelve columns">
+    <div class="small-12 columns">
         <fieldset>
             <legend><?php echo Yii::t('app', 'Gruppen anlegen'); ?></legend>
             <?php

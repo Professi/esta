@@ -24,10 +24,10 @@ $form = $this->beginWidget('CActiveForm', array(
 if (Yii::app()->user->checkAccess('1')) {
     ?>
     <div class="row collapse">
-        <div class="two columns">
+        <div class="small-4 columns">
             <span class="prefix"><?php echo Yii::t('app', 'Erziehungsberechtigte/r');?></span>
         </div>
-        <div class="ten columns">
+        <div class="small-8 columns">
             <?php
             $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
                 'id' => 'parentChild_user_display',
@@ -47,10 +47,10 @@ if (Yii::app()->user->checkAccess('1')) {
     </div>
 <?php } ?>
 <div class="row collapse">
-    <div class="two columns">
+    <div class="small-4 columns">
         <span class="prefix"><?php echo Yii::t('app','Vorname')?></span>
     </div>
-    <div class="ten columns mobile-input">
+    <div class="small-8 columns mobile-input">
         <?php
         echo $form->textField($model, 'childFirstName');
         echo $form->error($model, 'childFirstName');
@@ -59,10 +59,10 @@ if (Yii::app()->user->checkAccess('1')) {
 </div>
 
 <div class="row collapse">
-    <div class="two columns">
+    <div class="small-4 columns">
         <span class="prefix">Nachname</span>
     </div>
-    <div class="ten columns mobile-input">
+    <div class="small-8 columns mobile-input">
         <?php
         echo $form->textField($model, 'childLastName');
         echo $form->error($model, 'childLastName');

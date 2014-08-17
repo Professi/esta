@@ -27,7 +27,7 @@
             &nbsp;
             <?php if (Yii::app()->params['allowParentsToManageChilds'] || Yii::app()->user->checkAccess('1')) { ?> 
                 <a href="index.php?r=parentChild/delete&id=<?php echo $data->id ?>" class="delete-children">
-                    <span class="hide-for-print" aria-hidden="true" data-icon="&#xe014;">&nbsp;</span>
+                    <i class="fi-x-circle"></i>
                 </a>
             <?php } ?>
         </li>

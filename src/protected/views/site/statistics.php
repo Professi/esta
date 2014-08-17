@@ -22,29 +22,45 @@ $this->breadcrumbs = array(
 );
 ?>
 <div class="row">
-    <div class="twelve columns">
-        <div class="push hide-for-small"></div>
-        <div class="push hide-for-small"></div>
-        <div class="panel">
-            <div class="row">
-                <div class="eleven columns offset-by-one">
-                    <h2><?php echo Yii::t('app', 'Statistik') ?></h2>
-                    <ul class="faq-ul">
-                        <li><?php echo Yii::t('app', 'Eingetragene Lehrer') . ':' . $teachers; ?> </li>
-                        <li><?php echo Yii::t('app', 'Registrierte Eltern') . ':' . UserRole::model()->countByAttributes(array('role_id' => 3)); ?> </li>
-                        <li><?php echo Yii::t('app', 'Eingetragene Schüler') . ':' . Child::model()->count(); ?> </li>
-                        <li><?php echo Yii::t('app', 'Eingetragene Elternsprechtage') . ':' . Date::model()->count(); ?> </li>
-                        <li><?php echo Yii::t('app', 'Vergebene Termine') . ':' . $apps; ?> </li>
-                        <li><?php echo Yii::t('app', 'Freie Termine') . ':' . $freeApps ?> </li>
-                        <?php if (!Yii::app()->user->isGuest()) { ?>
-                            <li><?php echo Yii::t('app', 'Generierte TANs') . ':' . Tan::model()->count(); ?> </li>
-                        <?php } ?>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <p class="text-center"><?php
-            echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', 'index.php');
-            ?> </p>
+    <div class="small-12 columns small-centered text-center">
+        <h2><?php echo Yii::t('app', 'Statistik') ?></h2>
+        <table class="center">
+            <tbody>
+                <tr>
+                    <td><?php echo Yii::t('app', 'Eingetragene Lehrer');?></td>
+                    <td><?php echo $teachers;?></td>
+                </tr>
+                <tr>
+                    <td><?php echo Yii::t('app', 'Registrierte Eltern');?></td>
+                    <td><?php echo UserRole::model()->countByAttributes(array('role_id' => 3));?></td>
+                </tr>
+                <tr>
+                    <td><?php echo Yii::t('app', 'Eingetragene Schüler');?></td>
+                    <td><?php echo Child::model()->count();?></td>
+                </tr>
+                <tr>
+                    <td><?php echo Yii::t('app', 'Eingetragene Elternsprechtage');?></td>
+                    <td><?php echo Date::model()->count();?></td>
+                </tr>
+                <tr>
+                    <td><?php echo Yii::t('app', 'Vergebene Termine');?></td>
+                    <td><?php echo $apps;?></td>
+                </tr>
+                <tr>
+                    <td><?php echo Yii::t('app', 'Freie Termine');?></td>
+                    <td><?php echo $freeApps;?></td>
+                </tr>
+                <?php if (!Yii::app()->user->isGuest()) { ?>
+                <tr>
+                    <td><?php echo Yii::t('app', 'Generierte TANs');?></td>
+                    <td><?php echo Tan::model()->count();?></td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+        
     </div>
+        <p class="text-center">
+        <?php echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', 'index.php');?> 
+        </p>
 </div>

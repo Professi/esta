@@ -23,7 +23,7 @@ echo $content;
 ?>
 <div class="push"></div>
 <div class="row">
-    <div id="sidebar" class="twelve columns">
+    <div id="sidebar" class="small-12 columns">
         <?php
         $this->beginWidget('zii.widgets.CPortlet');
         $this->widget('zii.widgets.CMenu', array(

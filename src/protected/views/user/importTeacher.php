@@ -22,33 +22,35 @@
 /* @var $form CActiveForm */
 $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
 ?>
+
 <div class="row">
-    <div class="panel">
-        <div class="row">
-            <div class="ten columns">
-                <?php echo Yii::t('app', 'Man kann derzeit nur eine CSV Datei zum Import nutzen. Die CSV Datei muss folgende Informationen liefern:'); ?>
-                <br/>
-                <?php echo Yii::t('app', 'Nachname, Vorname, Email und Titel. Die Spaltennamen müssen in einer Kopfzeile angegeben sein.'); ?>
-                <br/>
-                <?php
-                echo Yii::t('app', 'Falls ein Lehrer keine eingetragene E-Mail Adresse hat, so wird diesem eine E-Mail Adresse im Stil von m.mustermann@{domainname} generiert.', array('{domainname}' => $model->getDomainLink()));
-                ?>
-                <br/>
-                <?php
-                echo Yii::t('app', 'Die Maximalgröße einer Datei beträgt {size}.', array('{size}' => CsvUpload::getMaxSize()));
-                ?>
-            </div>
+    <div class="small-10 columns small-centered">
+        <div class="panel">
+            <?php echo Yii::t('app', 'Man kann derzeit nur eine CSV Datei zum Import nutzen. Die CSV Datei muss folgende Informationen liefern:'); ?>
+            <br/>
+            <?php echo Yii::t('app', 'Nachname, Vorname, Email und Titel. Die Spaltennamen müssen in einer Kopfzeile angegeben sein.'); ?>
+            <br/>
+            <?php
+            echo Yii::t('app', 'Falls ein Lehrer keine eingetragene E-Mail Adresse hat, so wird diesem eine E-Mail Adresse im Stil von m.mustermann@{domainname} generiert.', array('{domainname}' => $model->getDomainLink()));
+            ?>
+            <br/>
+            <?php
+            echo Yii::t('app', 'Die Maximalgröße einer Datei beträgt {size}.', array('{size}' => CsvUpload::getMaxSize()));
+            ?>
         </div>
     </div>
 </div>
+
 <div class="row">
-    <?php if (Yii::app()->params['randomTeacherPassword']) { ?>
+    <?php if(true){// if (Yii::app()->params['randomTeacherPassword']) { ?>
+    <div class="small-10 columns small-centered">
         <div class="panel">
             <div class="row">
-                <div class="two columns text-center">
-                    <span aria-hidden="true" data-icon="&#xe011;" style="font-size:2.5em;"></span>
+                
+                <div class="small-2 columns text-center">
+                    <i class="fi-alert callout-icon"></i>
                 </div>
-                <div class="ten columns">
+                <div class="small-10 columns">
                     <?php
                     echo Yii::t('app', 'Da Sie in der Konfiguration die Option "Lehrerpasswörter bei deren Erstellung zufällig generieren?" aktiviert haben, kann der Lehrerimport sehr lange dauern.');
                     echo Yii::t('app', 'Sollten Sie bei dem Import der Lehrer eine Fehlermeldung von PHP oder Ihrem Webserver erhalten, müssen Sie entweder zum Beispiel die "maximum_execution_time" hochsetzen oder Ihre CSV Datei aufteilen.');
@@ -56,8 +58,11 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="row">
     <?php } ?>
-    <div class="ten columns centered">
+    <div class="small-10 columns small-centered">
         <fieldset>
             <legend><?php echo Yii::t('app', 'Lehrer importieren'); ?></legend>
             <?php
@@ -66,21 +71,24 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
             ));
             ?>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'file'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
+                    <div class="postfix button file-input">
+                        <i class="fi-upload"></i><span>&nbsp;<?php echo Yii::t('app','Datei auswählen'); ?></span>
                     <?php
                     echo $form->fileField($model, 'file');
                     echo $form->error($model, 'file');
                     ?>
+                    </div>
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'delimiter'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'delimiter');
                     echo $form->error($model, 'delimiter');
@@ -91,10 +99,10 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
         <fieldset>
             <legend><?php echo Yii::t('app', 'Spaltennamen in der Datei'); ?></legend>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'title'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'title');
                     echo $form->error($model, 'title');
@@ -102,10 +110,10 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'firstname'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'firstname');
                     echo $form->error($model, 'firstname');
@@ -113,10 +121,10 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'lastname'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'lastname');
                     echo $form->error($model, 'lastname');
@@ -124,10 +132,10 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'email'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'email');
                     echo $form->error($model, 'email');
@@ -135,7 +143,7 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                 </div>
             </div>
             <?php
-            echo CHtml::submitButton(Yii::t('app', 'Importieren'), array('class' => 'button'));
+            echo CHtml::submitButton(Yii::t('app', 'Importieren'), array('class' => 'small button'));
             $this->endWidget();
             ?>
         </fieldset>

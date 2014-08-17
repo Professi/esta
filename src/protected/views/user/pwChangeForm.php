@@ -23,7 +23,7 @@
 $this->setPageTitle(Yii::t('app', 'Passwort ändern'));
 ?>
 <div class="row">
-    <div class="eight columns centered">
+    <div class="small-8 columns small-centered">
         <div class="alert-box secondary">
             <?php echo Yii::t('app', 'Sie können nun Ihr Passwort ändern.'); ?>
         </div>
@@ -34,24 +34,24 @@ $this->setPageTitle(Yii::t('app', 'Passwort ändern'));
         ?>
         <fieldset>
             <div class="row collapse">
-                <div class="three columns">
+                <div class="small-3 columns">
                     <span class="prefix"><?php echo $form->label($model, 'password'); ?></span>
                 </div>
-                <div class="six columns">
+                <div class="small-6 columns">
                     <?php
                     echo $form->passwordField($model, 'password', array('size' => 60, 'maxlength' => 128));
                     echo $form->error($model, 'password');
                     ?>
                 </div>
-                <div class="three columns">
+                <div class="small-3 columns">
                     <span class="postfix" style="font-size:.8em;"><?php echo Yii::t('app', 'Mindeslänge 8 Zeichen'); ?></span>
                 </div>
             </div>
             <div class="row collapse">
-                <div class="three columns">
+                <div class="small-3 columns">
                     <span class="prefix"><?php echo $form->label($model, 'password_repeat'); ?></span>
                 </div>
-                <div class="nine columns">
+                <div class="small-9 columns">
                     <?php
                     echo $form->passwordField($model, 'password_repeat', array('size' => 60, 'maxlength' => 128));
                     echo $form->error($model, 'password_repeat');

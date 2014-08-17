@@ -24,9 +24,9 @@ $this->breadcrumbs = array(
 );
 ?>
 <div class="row">
-    <h2 class='subheader'><?php echo Yii::t('app', 'Impressum'); ?></h2>
-    <hr>
-    <div class="twelve columns">
+    <div class="small-12 columns">
+        <h2 class='subheader'><?php echo Yii::t('app', 'Impressum'); ?></h2>
+        <hr>
         <p> <?php echo Yii::app()->params['schoolName']; ?><br>
             <?php echo Yii::app()->params['schoolStreet']; ?><br>
             <?php echo Yii::app()->params['schoolCity']; ?><br>
@@ -36,19 +36,19 @@ $this->breadcrumbs = array(
                 <?php echo Yii::t('app', 'E-Mail') . ':'; ?> <a href="mailto:<?php echo Yii::app()->params['schoolEmail']; ?>"><?php echo Yii::app()->params['schoolEmail']; ?></a>
             <?php } ?>
         </p>
-        <p><?php echo Yii::t('app', 'Elternsprechtagsanwendung(ESTA) wurde im Rahmen eines Berufsschulprojektes für die Brühlwiesenschule Hofheim entwickelt und unter der GNU General Public License Version 3 (&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a> ) lizensiert.'); ?>
+        <p><?php echo Yii::t('app', 'Elternsprechtagsanwendung(ESTA) wurde im Rahmen eines Berufsschulprojektes für die Brühlwiesenschule Hofheim entwickelt und unter der GNU General Public License Version 3 (&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><i class="fi-page-export"></i>&nbsp;Link</a> ) lizensiert.'); ?>
             <br><?php echo Yii::t('app', 'Die Urheber sind:'); ?> Christian Ehringfeld, David Mock, Matthias Unterbusch. </p>
-        <p><?php Yii::t('app', 'Projektverzeichnis'); ?>&nbsp;&nbsp;<a href="http://synlos.net/redmine/projects/est"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a></p>
+        <p><?php echo Yii::t('app', 'Projektverzeichnis'); ?>&nbsp;&nbsp;<a href="http://synlos.net/redmine/projects/est"><i class="fi-page-export"></i>&nbsp;Link</a></p>
         </p>
         <p><?php echo Yii::t('app', 'Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:'); ?><br>
-            PHP&nbsp;&nbsp;<a href="http://www.php.net"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            Yii Framework&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            EMailer&nbsp;&nbsp;<a href="http://www.yiiframework.com/extension/mailer/" > <span aria-hiden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            PHPMailer&nbsp;&nbsp;<a href="https://github.com/Synchro/PHPMailer" > <span aria-hiden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            ZURB Foundation Framework&nbsp;&nbsp;<a href="http://foundation.zurb.com"><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            IcoMoon Icon Fonts&nbsp;&nbsp;<a href="http://icomoon.io" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            Google Web Fonts&nbsp;&nbsp;<a href="http://www.google.com/webfonts" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
-            Free Stock Textures&nbsp;&nbsp;<a href="http://freestocktextures.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
+            PHP&nbsp;&nbsp;<a href="http://www.php.net"><i class="fi-page-export"></i>&nbsp;Link</a><br>
+            Yii Framework&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><i class="fi-page-export"></i>&nbsp;Link</a><br>
+            EMailer&nbsp;&nbsp;<a href="http://www.yiiframework.com/extension/mailer/"><i class="fi-page-export"></i>&nbsp;Link</a><br>
+            PHPMailer&nbsp;&nbsp;<a href="https://github.com/Synchro/PHPMailer"><i class="fi-page-export"></i>&nbsp;Link</a><br>
+            ZURB Foundation Framework&nbsp;&nbsp;<a href="http://foundation.zurb.com"><i class="fi-page-export"></i>&nbsp;Link</a><br>
+            IcoMoon Icon Fonts&nbsp;&nbsp;<a href="http://icomoon.io"><i class="fi-page-export"></i>&nbsp;Link</a><br>
+            Google Web Fonts&nbsp;&nbsp;<a href="http://www.google.com/webfonts"><i class="fi-page-export"></i>&nbsp;Link</a><br>
+            Subtle Patterns&nbsp;&nbsp;<a href="http://www.subtlepatterns.com"><i class="fi-page-export"></i>&nbsp;Link</a>
         </p>
         <p>
         <h3>Haftungsausschluss:</h3>

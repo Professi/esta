@@ -25,11 +25,13 @@ $this->breadcrumbs = array(
     'Manage',
 );
 $this->menu = array(
-    array('label' => Yii::t('app', 'Elternsprechtag erstellen'), 'url' => array('create')),
+    array(  'label' => Yii::t('app', 'Elternsprechtag erstellen'), 
+            'url' => array('create'),
+            'linkOptions' => array('class' => 'small button')),
 );
 ?>
 <div class="row">
-    <div class="twelve columns centered">
+    <div class="small-12 columns small-centered">
         <h2 class="text-center"><?php echo Yii::t('app', 'Elternsprechtagsverwaltung'); ?></h2>
     </div>
 </div>

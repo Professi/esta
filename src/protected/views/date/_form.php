@@ -26,10 +26,10 @@ $form = $this->beginWidget('CActiveForm', array(
         ));
 ?>
 <div class="row collapse">
-    <div class="two columns">
+    <div class="small-2 columns">
         <span class="prefix"><?php echo $form->label($model, 'date'); ?></span>
     </div>
-    <div class="ten columns">
+    <div class="small-10 columns">
         <?php
         $this->widget('zii.widgets.jui.CJuiDatePicker', array(
             'model' => $model,
@@ -53,18 +53,18 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
 </div>
 <div class="row collapse">
-    <div class="two columns">
+    <div class="small-2 columns">
         <span class="prefix infofeld">
             <?php echo $form->label($model, 'lockAt', array('class' => 'infolabel')); ?>
         </span>
         <div class="infotext">
-            <span aria-hidden="true" data-icon="&#xe012;"></span>
+            <i class="fi-info"></i>
             <?php echo Yii::t('app', 'In diesem Feld können Sie festlegen, bis wann Termine von Eltern reserviert werden können. Nach diesem Zeitpunkt können Eltern keine weiteren Termine mehr vereinbaren.'); ?>
         </div>
     </div>
-    <div class="eight columns">
+    <div class="small-8 columns">
         <div class="row">
-            <div class="six columns" id="date-form-fix-left">
+            <div class="small-6 columns" id="date-form-fix-left">
                 <?php
                 $this->widget('zii.widgets.jui.CJuiDatePicker', array(
                     'model' => $model,
@@ -87,7 +87,7 @@ $form = $this->beginWidget('CActiveForm', array(
                 ));
                 ?>
             </div>
-            <div class="six columns" id="date-form-fix-right">
+            <div class="small-6 columns" id="date-form-fix-right">
                 <?php
                 $this->widget(
                         'ext.jui.EJuiDateTimePicker', array(
@@ -106,15 +106,15 @@ $form = $this->beginWidget('CActiveForm', array(
         echo $form->error($model, 'lockAt');
         ?>
     </div>
-    <div class="two columns">
+    <div class="small-2 columns">
         <span class="postfix">Datum + Uhrzeit</span>
     </div>
 </div>
 <div class="row collapse">
-    <div class="two columns">
+    <div class="small-2 columns">
         <span class="prefix"><?php echo $form->label($model, 'begin'); ?></span>
     </div>
-    <div class="eight columns">
+    <div class="small-8 columns">
         <?php
         $this->widget(
                 'ext.jui.EJuiDateTimePicker', array(
@@ -130,15 +130,15 @@ $form = $this->beginWidget('CActiveForm', array(
         echo $form->error($model, 'begin');
         ?>
     </div>
-    <div class="two columns">
+    <div class="small-2 columns">
         <span class="postfix">Uhrzeit</span>
     </div>
 </div>
 <div class="row collapse">
-    <div class="two columns">
+    <div class="small-2 columns">
         <span class="prefix"><?php echo $form->label($model, 'end'); ?></span>
     </div>
-    <div class="eight columns">
+    <div class="small-8 columns">
         <?php
         $this->widget(
                 'ext.jui.EJuiDateTimePicker', array(
@@ -152,34 +152,34 @@ $form = $this->beginWidget('CActiveForm', array(
         echo $form->error($model, 'end');
         ?>
     </div>
-    <div class="two columns">
+    <div class="small-2 columns">
         <span class="postfix">Uhrzeit</span>
     </div>
 </div>
 <div class="row collapse">
-    <div class="two columns">
+    <div class="small-2 columns">
         <span class="prefix"><?php echo $form->label($model, 'durationPerAppointment'); ?></span>
     </div>
-    <div class="eight columns">
+    <div class="small-8 columns">
         <?php
         echo $form->textField($model, 'durationPerAppointment', $a_disabled);
         echo $form->error($model, 'durationPerAppointment');
         ?>
     </div>
-    <div class="two columns">
+    <div class="small-2 columns">
         <span class="postfix">in Minuten</span>
     </div>
 </div>
 <div class="row collapse">
-    <div class="two columns">
+    <div class="small-2 columns">
         <span class="prefix infofeld"><?php echo $form->label($model, 'title', array('class' => 'infolabel')); ?></span>
         <div class="infotext">
-            <span aria-hidden="true" data-icon="&#xe012;"></span>
+            <i class="fi-info"></i>
             <?php echo Yii::t('app', 'Vergeben Sie einen beliebigen Titel an diesen Elternsprechtag, um ihre interne Organisation zu erleichtern.'); ?>
             <?php echo Yii::t('app', 'Dieses Feld kann, wenn es nicht benötigt wird, leer gelassen werden.'); ?>
         </div>
     </div>
-    <div class="ten columns">
+    <div class="small-10 columns">
         <?php
         echo $form->textField($model, 'title');
         echo $form->error($model, 'title');
@@ -192,10 +192,10 @@ if (Yii::app()->params['allowGroups']) {
     if (!empty($groups)) {
         ?>
         <div class="row collapse">
-            <div class="two columns">
+            <div class="small-2 columns">
                 <span class="prefix"><?php echo $form->label($model, 'groups'); ?></span>
             </div>
-            <div class="ten columns">
+            <div class="small-10 columns">
                 <?php
                 if (isset($_POST['Date']['groups'])) {
                     $model->groups = $_POST['Date']['groups'];
