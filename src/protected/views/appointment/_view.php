@@ -37,7 +37,7 @@
             <i><?php echo Yii::t('app', 'Ihr Kind') ?></i>
         </div>
         <div class="ten columns">
-            <?php echo CHtml::encode($data->parentchild->child->firstname . ' ' . $data->parentchild->child->lastname); ?>
+            <?php echo CHtml::encode("{$data->parentchild->child->firstname} {$data->parentchild->child->lastname}"); ?>
         </div>
     </div>
     <br>
@@ -47,7 +47,7 @@
             <i><?php echo Yii::t('app', 'bei'); ?></i>
         </div>
         <div class="ten columns">
-            <?php echo CHtml::encode($data->user->title . " " . $data->user->firstname . " " . $data->user->lastname); ?>
+            <?php echo CHtml::encode("{$data->user->title} {$data->user->firstname} {$data->user->lastname}"); ?>
         </div>
         <a class="small button right hide-for-print delete-appointment" href="index.php?r=appointment/delete&amp;id=<?php echo CHtml::encode($data->id); ?>"><?php echo Yii::t('app', 'Termin löschen?'); ?></a>
     </div>
