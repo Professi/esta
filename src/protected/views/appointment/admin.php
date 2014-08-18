@@ -79,7 +79,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     <div class="five columns">
         <div class="row collapse">
             <div class="four columns">
-                <span class="prefix"><?php echo Yii::t('app','Termin'); ?></span>
+                <span class="prefix"><?php echo Yii::t('app','Elternsprechtag'); ?></span>
             </div>
             <div class="eight columns">
                 <?php echo Select2::dropDownList('','',$dates,array('id' => 'print-view-date')); ?>
