@@ -23,7 +23,7 @@ $form = $this->beginWidget('CActiveForm', array(
 ?>
 <div class="row collapse">
     <div class="three columns">
-        <span class="prefix">Erziehungsberechtigte/r</span>
+        <span class="prefix"><?php echo Yii::t('app','Erziehungsberechtigte/r'); ?></span>
     </div>
     <div class="nine columns">
         <?php
@@ -55,7 +55,7 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 <div class="row collapse">
     <div class="three columns">
-        <span class="prefix">Lehrer</span>
+        <span class="prefix"><?php echo Yii::t('app','Lehrer'); ?></span>
     </div>
     <div class="nine columns">
         <?php
@@ -81,7 +81,7 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 <div class="row collapse">
     <div class="three columns">
-        <span class="prefix">Termin</span>
+        <span class="prefix"><?php Yii::t('app','Termin'); ?></span>
     </div>
     <div class="nine columns" id="appointment_dateAndTime_select">
         <?php

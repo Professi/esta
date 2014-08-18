@@ -20,6 +20,10 @@
 /* @var $this AppointmentController */
 /* @var $data Appointment */
 $this->setPageTitle(Yii::t('app', 'Ihre Termine'));
+//$this->menu = array(
+//    array(  'label' => Yii::t('app', 'Druckansicht'), 
+//            'url' => array('overview','id' => Yii::app()->user->id,'date' => )),
+//);
 ?>
 <div class="row">
     <div class="twelve columns">
@@ -46,9 +50,19 @@ $this->setPageTitle(Yii::t('app', 'Ihre Termine'));
                 ),
             )
         ));
-        ?>
+        foreach($dates as $date) {
+            $desc = Yii::app()->dateFormatter->formatDateTime(strtotime($date->date), 'short', null);
+            $desc .= (empty($date->title)) ? '' : " ({$date->title})";
+            echo CHtml::link(Yii::t('app','Druckansicht für den {date}',array('{date}' => $desc)), 
+                array('appointment/overview','id' => Yii::app()->user->id, 'date' => $date->id),
+                array('class' => 'small button'));
+        }
+    ?>
     </div>
 </div>
+
+    
+
 <?php if (Yii::app()->params['allowBlockingAppointments']) { ?>
     <div class="row">
         <div class="twelve columns">

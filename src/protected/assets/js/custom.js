@@ -192,5 +192,21 @@
             $('.customChild:last').after($($div));
             $($div).find('select').select2();
         });
+        
+        // ** Druckansicht Link und Autocompletes **
+        
+        $('#print-view-teacher').on('autocompleteselect', function( e, ui ) {
+            e.preventDefault();
+            $(this).val(ui.item.label);
+            $(this).data('id',ui.item.value);
+        });
+        
+        $('#print-view-button').click(function() {
+            var date = $('#print-view-date').val();
+            var id = $('#print-view-teacher').data('id');
+            if(date !== '' && typeof date === 'string' && id !== '' && typeof id === 'string') {
+                window.location.href = "index.php?r=appointment/overview&id=" + id + "&date=" + date;
+            }
+        });
 
     }(this, document, jQuery));
