@@ -25,7 +25,7 @@ $this->setPageTitle(Yii::t('app', 'Terminübersicht'));
 $this->menu = array(
     array(  'label' => Yii::t('app', 'Termine verwalten'), 
             'url' => array('admin'), 
-            'visible' => (Yii::app()->user->checkAccess('2')))
+            'visible' => (Yii::app()->user->checkAccess('1')))
 );
 ?>
 <div class="row">

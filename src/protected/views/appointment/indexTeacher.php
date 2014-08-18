@@ -50,6 +50,9 @@ $this->setPageTitle(Yii::t('app', 'Ihre Termine'));
                 ),
             )
         ));
+        ?>
+        <div class="push"></div>
+        <?php
         foreach($dates as $date) {
             $desc = Yii::app()->dateFormatter->formatDateTime(strtotime($date->date), 'short', null);
             $desc .= (empty($date->title)) ? '' : " ({$date->title})";
@@ -58,6 +61,7 @@ $this->setPageTitle(Yii::t('app', 'Ihre Termine'));
                 array('class' => 'small button'));
         }
     ?>
+        <div class="push"></div>
     </div>
 </div>
 
