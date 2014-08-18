@@ -88,9 +88,7 @@ class Select2 extends CInputWidget {
         $lang = strtoupper(str_replace('_', '-', Yii::app()->language));
         $lang[0] = strtolower($lang[0]);
         $lang[1] = strtolower($lang[1]);
-        
         $cs->registerScriptFile($this->assetsDir . '/select2_locale_'.$lang.'.js', CClientScript::POS_END);
-
         $settings = CJavaScript::encode($this->settings);
         $cs->registerScript("{$id}_select2", "$('#{$id}').select2({$settings});");
     }
