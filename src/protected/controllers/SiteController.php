@@ -1,4 +1,5 @@
 <?php
+
 /* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * SiteController für Forms/Static Pages ohne echtes Datenmodell
  */
@@ -171,7 +173,7 @@ class SiteController extends Controller {
      */
     public function actionLogout() {
         if (!Yii::app()->user->isGuest()) {
-            Yii::app()->user->logout();            
+            Yii::app()->user->logout();
         }
         $this->redirect(Yii::app()->homeUrl);
     }
@@ -189,6 +191,10 @@ class SiteController extends Controller {
         } else {
             $this->throwFourNullThree();
         }
+    }
+
+    public static function getYesOrNo() {
+        return array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app', 'Nein'));
     }
 
 }
