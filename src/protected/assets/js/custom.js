@@ -208,5 +208,34 @@
                 window.location.href = "index.php?r=appointment/overview&id=" + id + "&date=" + date;
             }
         });
+        
+        // ** Gruppenzuweisung unter group/assign **
+        
+        $('#group-users').on('change', function(e) {
+            e.preventDefault();
+            var tr = $('<tr/>'),
+                tdUser = $('<td/>'),
+                tdGroup = $('<td/>'),
+                template = $('#input-template'),
+                inputUser = template.find('.group-user').clone(),
+                inputGroup = template.find('.group-id').clone(),
+                tbody = $('#input-target'),
+                elements = tbody.children().size,
+                groupSrc = $('#groups');
+                
+                inputUser.attr('name','user[' + elements + ']');
+                inputGroup.attr('name','group[' + elements + ']');
+                
+                inputUser.val(e.val);
+                inputGroup.val(groupSrc.val());
+                
+                tdUser.text(e.added.text);
+                tdGroup.text(groupSrc.select2('data').text);
+                
+                tdUser.append(inputUser);
+                tdGroup.append(inputGroup);
+                
+                tr.append(tdUser).append(tdGroup).appendTo(tbody);
+        });
 
     }(this, document, jQuery));

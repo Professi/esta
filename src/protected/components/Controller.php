@@ -106,6 +106,7 @@ class Controller extends CController {
             $cs->registerCoreScript('jquery.js');
         }
         $this->registerAdminScripts();
+        $cs->scriptMap['jquery-ui.min.js'] = $this->assetsDir . '/js/jquery-ui.min.js' ;
     }
 
     /**

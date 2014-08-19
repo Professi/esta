@@ -197,6 +197,20 @@ class GroupController extends Controller {
         echo CJSON::encode($results);
         Yii::app()->end();
     }
+    
+    public function actionAssign() {
+        $users = array();
+        $groups = array();
+        foreach(User::model()->findAll() as $user) {
+            $desc = (empty($user->title)) ? '' : "{$user->title} ";
+            $desc .= "{$user->firstname} {$user->lastname}";
+            $users[$user->id] = $desc;
+        }
+        foreach(Group::model()->findAll() as $group) {
+            $groups[$group->id] = $group->groupname;
+        }
+        $this->render('assign', array('groups' => $groups, 'users' => $users));
+    }
 
 }
 
