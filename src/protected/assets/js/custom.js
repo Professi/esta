@@ -211,31 +211,57 @@
         
         // ** Gruppenzuweisung unter group/assign **
         
-        $('#group-users').on('change', function(e) {
-            e.preventDefault();
-            var tr = $('<tr/>'),
-                tdUser = $('<td/>'),
-                tdGroup = $('<td/>'),
-                template = $('#input-template'),
-                inputUser = template.find('.group-user').clone(),
-                inputGroup = template.find('.group-id').clone(),
-                tbody = $('#input-target'),
-                elements = tbody.children().size,
-                groupSrc = $('#groups');
+        var assignedGroups = [];
+        function AssignedGroup(group,user) {
+            this.group = group;
+            this.user = user;
+        };
+        
+        $('#group-users').on('select2-selecting', function(e) {
+            var groupSrc = $('#groups'),
+                groupId = groupSrc.val(),
+                newGroupAssignment = new AssignedGroup(e.val,groupId),
+                alreadySelected = false;
+            
+            $.each(assignedGroups,function() {
+                if(this.group === newGroupAssignment.group && this.user === newGroupAssignment.user) {
+                    alreadySelected = true;
+                }
+            });
                 
+            if( ! alreadySelected) {
+                var tr = $('<tr/>'),
+                    tdUser = $('<td/>'),
+                    tdGroup = $('<td/>'),
+                    template = $('#input-template'),
+                    inputUser = template.find('.group-user').clone(),
+                    inputGroup = template.find('.group-id').clone(),
+                    tbody = $('#input-target'),
+                    elements = tbody.children().size;
+
                 inputUser.attr('name','user[' + elements + ']');
                 inputGroup.attr('name','group[' + elements + ']');
-                
-                inputUser.val(e.val);
-                inputGroup.val(groupSrc.val());
-                
-                tdUser.text(e.added.text);
+
+                inputUser.val(newGroupAssignment.user);
+                inputGroup.val(newGroupAssignment.group);
+
+                tdUser.text($(this).find('option[value=' + e.val + ']').text());
                 tdGroup.text(groupSrc.select2('data').text);
-                
+
                 tdUser.append(inputUser);
                 tdGroup.append(inputGroup);
-                
+
                 tr.append(tdUser).append(tdGroup).appendTo(tbody);
+                
+                assignedGroups.push(newGroupAssignment);
+            }
+
+            event.preventDefault();
+            e.preventDefault();
+            
+            $(this).select2('close');
+            $(this).select2('open');
+                
         });
 
     }(this, document, jQuery));

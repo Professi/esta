@@ -52,16 +52,18 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                 <span class="prefix"><?php echo Yii::t('app','Benutzer'); ?></span>
             </div>
             <div class="eight columns">
-                <?php echo Select2::dropDownList('group-users', '', 
+                <?php 
+                    echo Select2::multiSelect('group-users', '', 
                                 $users, 
                                 array('id' => 'group-users',
-                                    'select2Options' => array(
-                                        'closeOnSelect' => false,
-                                        'allowClear'=>true,
-                                        'placeholder'=>Yii::t('app','Wählen Sie einen Benutzer aus')
+                                        'placeholder'=>Yii::t('app','Wählen Sie einen Benutzer aus'),
+                                        'select2Options' => array(
+                                            'closeOnSelect' => false,
+                                            'allowClear'=>true,
+                                            )
                                         )
-                                    )
-                            ); ?>
+                            );                    
+                    ?>
             </div>
         </div>
     </div>
