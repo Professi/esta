@@ -57,6 +57,44 @@ $this->widget('zii.widgets.grid.CGridView', array(
     ),
 ));
 
+?>
+<div class="row">
+    <h4 class="subheader"><?php echo Yii::t('app','Druckansicht'); ?></h4>
+    <div class="five columns">
+        <div class="row collapse">
+            <div class="four columns">
+                <span class="prefix"><?php echo Yii::t('app','Lehrer'); ?></span>
+            </div>
+            <div class="eight columns">
+                <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                    'id' => 'print-view-teacher',
+                    'name' => '',
+                    'sourceUrl' => 'index.php?r=user/search&role=2',
+                    'options' => array(
+                        'minLength' => '1',
+                    ),
+                    'htmlOptions' => array(
+                        'placeholder' => Yii::t('app','Geben Sie einen Nachnamen ein'),
+                    ),
+                )); ?>
+            </div>
+        </div>        
+    </div>
+    <div class="five columns">
+        <div class="row collapse">
+            <div class="four columns">
+                <span class="prefix"><?php echo Yii::t('app','Elternsprechtag'); ?></span>
+            </div>
+            <div class="eight columns">
+                <?php echo Select2::dropDownList('','',$dates,array('id' => 'print-view-date')); ?>
+            </div>
+        </div>
+    </div>
+    <div class="two columns">
+        <div class="small button" id="print-view-button"><?php echo Yii::t('app','Anzeigen'); ?></div>
+    </div>
+</div>
+<?php
 if (Yii::app()->params['allowBlockingAppointments']) {
     ?>
     <div class="push"></div>
