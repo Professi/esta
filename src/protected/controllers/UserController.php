@@ -362,7 +362,7 @@ class UserController extends Controller {
             $this->throwFourNullFour();
         } else {
             $model->password_repeat = $model->password;
-            $model->role = $model->userrole->role_id;
+            $model->role = $model->role;
             switch ($model->state) {
                 case 0:
                     $model->stateName = Yii::t('app', "Nicht aktiv");

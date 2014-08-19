@@ -183,7 +183,7 @@ class SiteController extends Controller {
     public function actionStatistics() {
         if (!Yii::app()->user->isGuest()) {
             $appointments = Appointment::model()->count() + BlockedAppointment::model()->count();
-            $teachers = UserRole::model()->countByAttributes(array('role_id' => 2));
+            $teachers = User::model()->countByAttributes(array('role' => 2));
             $freeAppointments = (DateAndTime::model()->count() * $teachers) - $appointments;
             $this->render('statistics', array('freeApps' => $freeAppointments, 'apps' => $appointments, 'teachers' => $teachers));
         } else {

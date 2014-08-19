@@ -31,7 +31,7 @@ $this->breadcrumbs = array(
                     <h2><?php echo Yii::t('app', 'Statistik') ?></h2>
                     <ul class="faq-ul">
                         <li><?php echo Yii::t('app', 'Eingetragene Lehrer') . ':' . $teachers; ?> </li>
-                        <li><?php echo Yii::t('app', 'Registrierte Eltern') . ':' . UserRole::model()->countByAttributes(array('role_id' => 3)); ?> </li>
+                        <li><?php echo Yii::t('app', 'Registrierte Eltern') . ':' . User::model()->countByAttributes(array('role' => 3)); ?> </li>
                         <li><?php echo Yii::t('app', 'Eingetragene Schüler') . ':' . Child::model()->count(); ?> </li>
                         <li><?php echo Yii::t('app', 'Eingetragene Elternsprechtage') . ':' . Date::model()->count(); ?> </li>
                         <li><?php echo Yii::t('app', 'Vergebene Termine') . ':' . $apps; ?> </li>

@@ -212,16 +212,6 @@ CREATE TABLE IF NOT EXISTS `role` (
   `description` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Daten für Tabelle `role`
---
-
-INSERT INTO `role` (`id`, `title`, `description`) VALUES
-(0, 'Administration', NULL),
-(1, 'Verwaltung', NULL),
-(2, 'Lehrer', NULL),
-(3, 'Eltern', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -257,6 +247,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `title` varchar(255) DEFAULT NULL,
   `state` smallint(6) DEFAULT NULL,
   `lastLogin` bigint(20) DEFAULT '0',
+  `role` smallint(6) NOT NULL,
   `badLogins` smallint(6) DEFAULT '0',
   `bannedUntil` bigint(20) DEFAULT '0',
   `password` varchar(255) DEFAULT NULL
@@ -266,8 +257,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Daten für Tabelle `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `email`, `activationKey`, `createtime`, `firstname`, `lastname`, `title`, `state`, `lastLogin`, `badLogins`, `bannedUntil`, `password`) VALUES
-(1, 'admin', 'admin', '9848a467b94293fcbdb5f08f36d68f5fd5544113', 0, 'Admin', 'Admin', NULL, 1, 0, 0, 0, '$2a$13$hwK.QA5hXUg94isY0kP6AuERtW7A5yJkjvh3IEXClunnLB.8GM.ju');
+INSERT INTO `user` (`id`, `username`, `role`,`email`, `activationKey`, `createtime`, `firstname`, `lastname`, `title`, `state`, `lastLogin`, `badLogins`, `bannedUntil`, `password`) VALUES
+(1, 'admin', 0,'admin', '9848a467b94293fcbdb5f08f36d68f5fd5544113', 0, 'Admin', 'Admin', NULL, 1, 0, 0, 0, '$2a$13$hwK.QA5hXUg94isY0kP6AuERtW7A5yJkjvh3IEXClunnLB.8GM.ju');
 
 -- --------------------------------------------------------
 
@@ -283,26 +274,6 @@ CREATE TABLE IF NOT EXISTS `user_has_group` (
   `group_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `user_role`
---
--- Erstellt am: 31. Jul 2014 um 15:56
---
-
-CREATE TABLE IF NOT EXISTS `user_role` (
-`id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
---
--- Daten für Tabelle `user_role`
---
-
-INSERT INTO `user_role` (`id`, `role_id`, `user_id`) VALUES
-(1, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -391,12 +362,6 @@ ALTER TABLE `parent_child`
  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_parentChild_unq1` (`user_id`,`child_id`), ADD KEY `parent_child_fk1` (`child_id`);
 
 --
--- Indexes for table `role`
---
-ALTER TABLE `role`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_role_title` (`title`);
-
---
 -- Indexes for table `tan`
 --
 ALTER TABLE `tan`
@@ -413,13 +378,6 @@ ALTER TABLE `user`
 --
 ALTER TABLE `user_has_group`
  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_user_has_group1` (`user_id`,`group_id`), ADD KEY `user_has_group_fk2` (`group_id`);
-
---
--- Indexes for table `user_role`
---
-ALTER TABLE `user_role`
- ADD PRIMARY KEY (`id`), ADD KEY `user_role_fk1` (`role_id`), ADD KEY `user_role_fk2` (`user_id`);
-
 --
 -- AUTO_INCREMENT for dumped tables
 --
@@ -475,11 +433,6 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 ALTER TABLE `user_has_group`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `user_role`
---
-ALTER TABLE `user_role`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
 -- Constraints der exportierten Tabellen
 --
 
@@ -533,12 +486,6 @@ ALTER TABLE `user_has_group`
 ADD CONSTRAINT `user_has_group_fk2` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
 ADD CONSTRAINT `user_has_group_fk1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
---
--- Constraints der Tabelle `user_role`
---
-ALTER TABLE `user_role`
-ADD CONSTRAINT `user_role_fk2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-ADD CONSTRAINT `user_role_fk1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
