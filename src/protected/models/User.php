@@ -26,6 +26,7 @@
  * @property integer $createtime
  * @property string $firstname
  * @property integer $state
+ * @property integer $role
  * @property string $lastname
  * @property string $email
  * @property string $title
@@ -36,7 +37,6 @@
  * The followings are the available model relations:
  * @property Appointment[] $appointments
  * @property ParentChild[] $parentChildren
- * @property Role $role
  * @property Group[] $groups
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
@@ -252,7 +252,7 @@ class User extends CActiveRecord {
         $match = addcslashes(ucfirst($this->lastname), '%_');
         $criteria->addCondition('lastname LIKE :match');
         $criteria->params[':match'] = "$match%";
-        $criteria->params[':role'] = $this->role->id;
+        $criteria->params[':role'] = $this->role;
         $criteria->compare('state', $this->state, false);
         $criteria->select = 'title,firstname,lastname,id';
         $criteria->addCondition('role=:role');
@@ -328,7 +328,7 @@ class User extends CActiveRecord {
     }
 
     /**
-     * basics for working user account, creates userrole, updates tan and creates userHasGroup
+     * basics for working user account, updates tan and creates userHasGroup
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean 
      */
@@ -373,7 +373,7 @@ class User extends CActiveRecord {
     }
 
     /**
-     * löscht den UserRole Eintrag + ElternKind Verknüpfung + Kinder
+     * löscht ElternKind Verknüpfung + Kinder
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Rückgabewert der Elternklassemethoden
      */
@@ -447,23 +447,14 @@ class User extends CActiveRecord {
      * @return string 0=NichtAktiv 1=Aktiv 2=Gesperrt
      */
     public function getStateName($state = null) {
-        switch ($state) {
-            case 0:
-                $stateName = Yii::t('app', 'Nicht aktiv');
-                break;
-            case 1:
-                $stateName = Yii::t('app', 'Aktiv');
-                break;
-            case 2:
-                $stateName = Yii::t('app', 'Gesperrt');
-                break;
-            default:
-                $stateName = $this->state;
+        if(is_numeric($state) && array_key_exists($state, self::getStateNameAndValue())) {
+            $stateName = self::getStateNameAndValue()[$state]['name'];
+        } else {
+            $stateName = $this->state;
         }
         if ($state == null) {
             $this->stateName = $stateName;
         }
-
         return $stateName;
     }
 
@@ -492,8 +483,11 @@ class User extends CActiveRecord {
      * @param integer $role Rollen ID des Users
      */
     static public function getFormattedRole($role) {
-        $a = array(0 => Yii::t('app', 'Administrator'), 1 => Yii::t('app', 'Verwalter'), 2 => Yii::t('app', 'Lehrer'), 3 => Yii::t('app', 'Eltern'));
-        return $a[$role];
+        return self::getRoles()[$role]['name'];
+    }
+
+    static public function getRoles() {
+        return array(array('value' => 0, 'name' => Yii::t('app', 'Administrator')), array('value' => 1, 'name' => Yii::t('app', 'Verwalter')), array('value' => 2, 'name' => Yii::t('app', 'Lehrer')), array('value' => 3, 'name' => Yii::t('app', 'Eltern')));
     }
 
     /**
