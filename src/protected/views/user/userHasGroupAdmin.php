@@ -39,4 +39,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
         ),
     )
 ));
+
+echo CHtml::link(Yii::t('app','Gruppen zuweisen'), array('group/assign'), array('class' => 'small button'));
 ?>
