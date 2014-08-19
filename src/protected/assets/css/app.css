@@ -592,3 +592,4 @@ right:0;
 .ui-autocomplete{position:absolute;top:0;left:0;cursor:default;border: 1px solid #ccc;border-top: none;border-radius: 0px;margin-top: -1px;}
 .ui-autocomplete .ui-menu-item {cursor: pointer;}
 * html .ui-autocomplete{width:1px}
+.select2-hidden-accessible {display:none;}

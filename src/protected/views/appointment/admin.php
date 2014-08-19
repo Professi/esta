@@ -53,9 +53,39 @@ $this->widget('zii.widgets.grid.CGridView', array(
     ),
 ));
 
+if (Yii::app()->params['allowBlockingAppointments']) {
+    ?>
+    <div class="push"></div>
+    <div class="row">
+        <div class="twelve columns centered">
+            <h2 class="text-center"><?php echo Yii::t('app', 'Blockierte Termine'); ?></h2>
+        </div>
+    </div>
+    <?php
+    $this->widget('zii.widgets.grid.CGridView', array(
+        'id' => 'appointmentBlock-grid',
+        'dataProvider' => $blockedApp->search(),
+        'filter' => $blockedApp,
+        'columns' => array(
+            array('name' => 'dateAndTime_id', 'value' => 'Yii::app()->dateFormatter->formatDateTime(strtotime($data->dateandtime->date->date . $data->dateandtime->time), "short", "short")'),
+            array('name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
+            array('name' => 'reason'),
+            array('class' => 'CustomButtonColumn', 'template' => '{delete}', 'buttons' => array(
+                    'delete' => array(
+                        'url' => '$this->grid->controller->createUrl("/appointment/deleteblockapp", array("id"=>$data->id))'
+                    ),
+                )),
+        ),
+    ));
+}
 ?>
+<div class="push"></div>
 <div class="row">
-    <h4 class="subheader"><?php echo Yii::t('app','Druckansicht'); ?></h4>
+    <div class="twelve columns centered">
+        <h2 class="text-center"><?php echo Yii::t('app','Druckansicht'); ?></h2>
+    </div>
+</div>
+<div class="row">
     <div class="five columns">
         <div class="row collapse">
             <div class="four columns">
@@ -90,30 +120,3 @@ $this->widget('zii.widgets.grid.CGridView', array(
         <div class="small button" id="print-view-button"><?php echo Yii::t('app','Anzeigen'); ?></div>
     </div>
 </div>
-<?php
-if (Yii::app()->params['allowBlockingAppointments']) {
-    ?>
-    <div class="push"></div>
-    <div class="row">
-        <div class="twelve columns centered">
-            <h2 class="text-center"><?php echo Yii::t('app', 'Blockierte Termine'); ?></h2>
-        </div>
-    </div>
-    <?php
-    $this->widget('zii.widgets.grid.CGridView', array(
-        'id' => 'appointmentBlock-grid',
-        'dataProvider' => $blockedApp->search(),
-        'filter' => $blockedApp,
-        'columns' => array(
-            array('name' => 'dateAndTime_id', 'value' => 'Yii::app()->dateFormatter->formatDateTime(strtotime($data->dateandtime->date->date . $data->dateandtime->time), "short", "short")'),
-            array('name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
-            array('name' => 'reason'),
-            array('class' => 'CustomButtonColumn', 'template' => '{delete}', 'buttons' => array(
-                    'delete' => array(
-                        'url' => '$this->grid->controller->createUrl("/appointment/deleteblockapp", array("id"=>$data->id))'
-                    ),
-                )),
-        ),
-    ));
-}
-?>
