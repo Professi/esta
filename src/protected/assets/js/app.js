@@ -191,36 +191,137 @@
               $('#appointment_parent_select').children('select').select2();
            }, 'json');
         });
+        
+        // ** Druckansicht Link und Autocompletes **
+        
+        $('#print-view-teacher').on('autocompleteselect', function( e, ui ) {
+            e.preventDefault();
+            $(this).val(ui.item.label);
+            $(this).data('id',ui.item.value);
+        });
+        
+        $('#print-view-button').click(function() {
+            var date = $('#print-view-date').val();
+            var id = $('#print-view-teacher').data('id');
+            if(date !== '' && typeof date === 'string' && id !== '' && typeof id === 'string') {
+                window.location.href = "index.php?r=appointment/overview&id=" + id + "&date=" + date;
+            }
+        });
+        
+        // ** Gruppenzuweisung unter group/assign **
+        
+        var assignedGroups = [],
+            groupsCount;
+        function AssignedGroup(group,user) {
+            this.group = group;
+            this.user = user;
+        };
+        
+        function deleteGroupAssignment(select2Menu) {
+            var tr = $(this).parents('tr'),
+                user = tr.find('.group-user').val(),
+                group = tr.find('.group-id').val(),
+                id = 0;
+            $.each(assignedGroups,function(index) {
+               if(this.group === group && this.user === user) {
+                   id = index;
+               }
+            });    
+            assignedGroups.splice(id,1);
+            tr.remove();
+            if(select2Menu.select2('open')) {
+                select2Menu.select2('close');
+            } else {
+                select2Menu.select2('close');
+                select2Menu.select2('open');
+            }
+        }
+        
+        $('#group-users').on('select2-selecting', function(e) {
+            var groupSrc = $('#groups'),
+                groupId = groupSrc.val(),
+                newGroupAssignment = new AssignedGroup(e.val,groupId),
+                alreadySelected = false;
+            
+            $.each(assignedGroups,function() {
+                if(this.group === newGroupAssignment.group && this.user === newGroupAssignment.user) {
+                    alreadySelected = true;
+                }
+            });
+                
+            if( ! alreadySelected) {
+                var that = $(this),
+                    tdUser = $('<td/>').text($(this).find('option[value=' + e.val + ']').text()),
+                    tdGroup = $('<td/>').text(groupSrc.select2('data').text),
+                    template = $('#input-template'),
+                    inputUser = template
+                        .find('.group-user')
+                        .clone()
+                        .attr('name','user[' + groupsCount + ']')
+                        .val(newGroupAssignment.user),
+                    inputGroup = template
+                        .find('.group-id')
+                        .clone()
+                        .attr('name','group[' + groupsCount + ']')
+                        .val(newGroupAssignment.group),
+                    span = $('<span/>',{text:'X',class:'text-center'})
+                        .click(deleteGroupAssignment(that));
+
+                tdUser.append(inputUser);
+                tdGroup.append(inputGroup);
+
+                $('<tr/>')
+                        .append(tdUser)
+                        .append(tdGroup)
+                        .append(span)
+                        .appendTo($('#input-target'));
+                
+                assignedGroups.push(newGroupAssignment);
+                groupsCount++;
+            }
+
+            event.preventDefault();
+            e.preventDefault();
+            
+            that.select2('close');
+            that.select2('open');
+                
+        });
+        
+        $('#close-user-select').on('click',function() {
+                $('#group-users').select2('close');
+        });
 
     });
     
     
     //** Mehr Felder für die Eingabe von Schülern zu TANs generieren. **
         
-        var tanGensId = 0;
-        
-        $('.add-child-tan').click(function() {
-            tanGensId++;
-            var div = $('.customChild:first').clone();
-            $(div).children().each(function() {
-               var input = $(this).find('input'),
-                   select = false;
-               if (input.hasClass('select2-focusser')) {
-                   input = $(this).find('select');
-                   select = true;
-               } 
-               if (input.length !== 0) {
-                    $(input).attr('name', $(input).attr('name').replace(/\d/, tanGensId));
-                    $(input).attr('id', $(input).attr('id').replace(/\d/, tanGensId));
-                    $(input).val('');
-               }
-               if (select) {
-                   $(input).attr('tabindex','');
-                   $(input).attr('class','');
-                   $(this).children('.small-9').html(input);
-               }
-            });
-            $('.customChild:last').after($(div));
-            $(div).find('select').select2();
+    var tanGensId = 0;
+
+    $('.add-child-tan').click(function() {
+        tanGensId++;
+        var div = $('.customChild:first').clone();
+        $(div).children().each(function() {
+           var input = $(this).find('input'),
+               select = false;
+           if (input.hasClass('select2-focusser')) {
+               input = $(this).find('select');
+               select = true;
+           } 
+           if (input.length !== 0) {
+                $(input).attr('name', $(input).attr('name').replace(/\d/, tanGensId));
+                $(input).attr('id', $(input).attr('id').replace(/\d/, tanGensId));
+                $(input).val('');
+           }
+           if (select) {
+               $(input).attr('tabindex','');
+               $(input).attr('class','');
+               $(this).children('.small-9').html(input);
+           }
         });
+        $('.customChild:last').after($(div));
+        $(div).find('select').select2();
+    });
+        
 })(jQuery);
