@@ -22,14 +22,16 @@
  */
 $this->setPageTitle(Yii::t('app','Gruppen zuweisen'));
 $this->menu = array(
-    array('label' => Yii::t('app', 'Gruppen verwalten'), 'url' => array('admin')),
+    array(  'label' => Yii::t('app', 'Gruppen verwalten'), 
+            'url' => array('admin'),
+            'linkOptions' => array('class' => 'small button')),
 );
 Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 Yii::app()->clientScript->registerCoreScript('jquery.ui');
 ?>
 
 <div class="row">
-    <div class="twelve columns">
+    <div class="small-12 columns">
         <h2 class="text-center"><?php echo Yii::t('app','Gruppen zuweisen'); ?></h2>
         <?php $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'date-form',
@@ -54,12 +56,12 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
 </div>
 <div class="push"></div>
 <div class="row">
-    <div class="six columns">
+    <div class="small-6 columns">
         <div class="row collapse">
-            <div class="three columns">
+            <div class="small-3 columns">
                 <span class="prefix"><?php echo Yii::t('app','Benutzer'); ?></span>
             </div>
-            <div class="eight columns">
+            <div class="small-8 columns">
                 <?php 
                     echo Select2::multiSelect('group-users', '', 
                                 $users, 
@@ -73,17 +75,17 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                             );                    
                     ?>
             </div>
-            <div class="one columns">
-                <span class="postfix" id="close-user-select">X</span>
+            <div class="small-1 columns">
+                <span class="postfix" id="close-user-select"><i class="fi-x"></i></span>
             </div>
         </div>
     </div>
-    <div class="six columns">
+    <div class="small-6 columns">
         <div class="row collapse">
-            <div class="four columns">
+            <div class="small-4 columns">
                 <span class="prefix"><?php echo Yii::t('app','Gruppe'); ?></span>
             </div>
-            <div class="eight columns"><?php echo Select2::dropDownList('groups', '', $groups, array('id' => 'groups')); ?></div>
+            <div class="small-8 columns"><?php echo Select2::dropDownList('groups', '', $groups, array('id' => 'groups')); ?></div>
         </div>
     </div>
 </div>

@@ -363,10 +363,12 @@ class AppointmentController extends Controller {
             $dataProvider->user_id = Yii::app()->user->getId();
             $blockedApp = new BlockedAppointment();
             $blockedApp->unsetAttributes();
+            $dates = Date::model()->findAll();
             if (Yii::app()->params['allowBlockingAppointments']) {
                 $this->render('indexTeacher', array(
                     'dataProvider' => $dataProvider->customSearch(),
                     'blockedApp' => $blockedApp->search(),
+                    'dates' => $dates
                 ));
             } else {
                 $this->render('indexTeacher', array(
@@ -400,8 +402,16 @@ class AppointmentController extends Controller {
         if (isset($_GET['BlockedAppointment'])) {
             $blockedApp->attributes = $_GET['BlockedAppointment'];
         }
+        $dates = Date::model()->findAll();
+        $dateData = array();
+        foreach($dates as $date) {
+            $desc = Yii::app()->dateFormatter->formatDateTime(strtotime($date->date), 'short', null);
+            $desc .= (empty($date->title)) ? '' : " ({$date->title})";
+            $dateData[$date->id] = $desc;
+        }
+        
         $this->render('admin', array(
-            'model' => $model, 'blockedApp' => $blockedApp,
+            'model' => $model, 'blockedApp' => $blockedApp,'dates' => $dateData
         ));
     }
 

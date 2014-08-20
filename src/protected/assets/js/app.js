@@ -264,7 +264,7 @@
                         .clone()
                         .attr('name','group[' + groupsCount + ']')
                         .val(newGroupAssignment.group),
-                    span = $('<span/>',{text:'X',class:'text-center'})
+                    span = $('<i/>',{class:'text-center fi-x'})
                         .click(deleteGroupAssignment(that));
 
                 tdUser.append(inputUser);

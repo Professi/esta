@@ -26,6 +26,7 @@
 $this->setPageTitle(Yii::t('app', 'Terminverwaltung'));
 Yii::app()->clientScript->registerCoreScript('jquery.ui');
 Yii::app()->getClientScript()->registerCssFile(Yii::app()->clientScript->getCoreScriptUrl() . '/jui/css/base/jquery-ui.css');
+Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 $this->breadcrumbs = array(
     'Appointments' => array('index'),
     'Manage',

@@ -25,11 +25,12 @@ $this->setPageTitle(Yii::t('app', 'Terminübersicht'));
 $this->menu = array(
     array(  'label' => Yii::t('app', 'Termine verwalten'), 
             'url' => array('admin'), 
-            'visible' => (Yii::app()->user->checkAccess('1')))
+            'visible' => (Yii::app()->user->checkAccess('1')),
+            'linkOptions' => array('class' => 'small button'))
 );
 ?>
 <div class="row">
-    <div class="twelve columns">
+    <div class="small-12 columns">
         <h4 class="subheader">
             <?php echo Yii::t('app','Termine für') . " {$teacher} " . Yii::t('app','am') . " {$date}"; ?>
         </h4>
