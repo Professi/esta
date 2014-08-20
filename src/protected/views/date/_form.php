@@ -2,7 +2,7 @@
 /**
  * Date _form
  */
-/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this DateController */
-/* @var $model Date */
-/* @var $form CActiveForm */
+/**
+ * @var $this DateController 
+ * @var $model Date 
+ * @var $form CActiveForm 
+ */
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'date-form',
     'enableAjaxValidation' => false,
+    'errorMessageCssClass' => 'error',
+    'skin' => false,
         ));
 ?>
 <div class="row collapse">
@@ -107,7 +111,7 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
     <div class="small-2 columns">
-        <span class="postfix">Datum + Uhrzeit</span>
+        <span class="postfix"><?php echo Yii::t('app','Datum + Uhrzeit'); ?></span>
     </div>
 </div>
 <div class="row collapse">
@@ -131,7 +135,7 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
     <div class="small-2 columns">
-        <span class="postfix">Uhrzeit</span>
+        <span class="postfix"><?php echo Yii::t('app','Uhrzeit'); ?></span>
     </div>
 </div>
 <div class="row collapse">
@@ -153,7 +157,7 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
     <div class="small-2 columns">
-        <span class="postfix">Uhrzeit</span>
+        <span class="postfix"><?php echo Yii::t('app','Uhrzeit'); ?></span>
     </div>
 </div>
 <div class="row collapse">
@@ -167,7 +171,7 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
     <div class="small-2 columns">
-        <span class="postfix">in Minuten</span>
+        <span class="postfix"><?php echo Yii::t('app','in Minuten'); ?></span>
     </div>
 </div>
 <div class="row collapse">

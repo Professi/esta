@@ -2,7 +2,7 @@
 /**
  * View um ein neues Passwort einzutragen.
  */
-/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this UserController */
-/* @var $model NewPw */
-/* @var $form CActiveForm */
+/**
+ * @var $this UserController 
+ * @var $model NewPw 
+ * @var $form CActiveForm 
+ */
 $this->setPageTitle(Yii::t('app', 'Passwort ändern'));
 ?>
 <div class="row">
@@ -30,6 +32,8 @@ $this->setPageTitle(Yii::t('app', 'Passwort ändern'));
         <?php
         $form = $this->beginWidget('CActiveForm', array(
             'id' => 'user-form',
+            'errorMessageCssClass' => 'error',
+            'skin' => false,
         ));
         ?>
         <fieldset>

@@ -2,7 +2,7 @@
 /**
  * Konfigurationsseite
  */
-/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this SiteController */
-/* @var $model ConfigForm */
-/* @var $form CActiveForm */
+/**
+ * @var $this SiteController 
+ * @var $model ConfigForm 
+ * @var $form CActiveForm 
+ */
 $this->setPageTitle(Yii::t('app', 'Konfiguration'));
 ?>
 <div class="form">
@@ -27,6 +29,8 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'config-form',
         'enableAjaxValidation' => false,
+        'errorMessageCssClass' => 'error',
+        'skin' => false,
     ));
     ?>
     <div class="row">

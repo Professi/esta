@@ -2,7 +2,7 @@
 /**
  * View für einen einzelnen Benutzer
  */
-/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this UserController */
-/* @var $model User */
+/**
+ * @var $this UserController 
+ * @var $model User 
+ */
 $this->setPageTitle(Yii::t('app', 'Benutzerkonto'));
 $this->breadcrumbs = array(
     'Users' => array('index'),
@@ -27,43 +29,43 @@ $this->breadcrumbs = array(
 $this->menu = array(
     array(  'label' => Yii::t('app', 'Benutzer anlegen'), 
             'url' => array('create'),
-            'visible' => Yii::app()->user->checkAccess('1'),
+            'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
     array(  'label' => Yii::t('app', 'Benutzer bearbeiten'), 
             'url' => array('update',
             'id' => $model->id), 
-            'visible' => Yii::app()->user->checkAccess('1'),
+            'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
     array(  'label' => Yii::t('app', 'Meine Daten aktualisieren'), 
             'url' => array('update',
             'id' => $model->id), 
-            'visible' => Yii::app()->user->checkAccessNotAdmin('2') || Yii::app()->user->checkAccessNotAdmin('3'),
+            'visible' => Yii::app()->user->checkAccessNotAdmin(TEACHER) || Yii::app()->user->checkAccessNotAdmin(PARENTS),
             'linkOptions' => array('class' => 'small button')),
     array(  'label' => Yii::t('app', 'Benutzer löschen'), 
             'url' => '#',
             'linkOptions' => array('submit' => array('delete', 'id' => $model->id),
                     'confirm' => Yii::t('app', 'Sind Sie sich sicher, dass Sie diesen Benutzer löschen möchten?'),
                 'class' => 'small button'),
-            'visible' => Yii::app()->user->checkAccess('1')),
+            'visible' => Yii::app()->user->checkAccess(MANAGEMENT)),
     array(  'label' => Yii::t('app', 'Eltern-Kind-Verknüpfung anlegen'), 
             'url' => array('parentChild/create', 'id' => $model->id),
-            'visible' => (Yii::app()->user->checkAccess('1') && $model->role == 3),
+            'visible' => (Yii::app()->user->checkAccess(MANAGEMENT) && $model->role == 3),
             'linkOptions' => array('class' => 'small button')),
     array(  'label' => Yii::t('app', 'Termin anlegen'), 
             'url' => array('appointment/create', 'parentId' => $model->id),
-            'visible' => (Yii::app()->user->checkAccess('1') && $model->role == 3),
+            'visible' => (Yii::app()->user->checkAccess(MANAGEMENT) && $model->role == 3),
             'linkOptions' => array('class' => 'small button')),
     array(  'label' => Yii::t('app', 'Termin anlegen'), 
             'url' => array('appointment/create', 'teacherId' => $model->id),
-            'visible' => (Yii::app()->user->checkAccess('1') && $model->role == 2),
+            'visible' => (Yii::app()->user->checkAccess(MANAGEMENT) && $model->role == 2),
             'linkOptions' => array('class' => 'small button')),
     array(  'label' => Yii::t('app', 'Termin blockieren'), 
             'url' => array('appointment/createBlockApp', 'teacherId' => $model->id),
-            'visible' => (Yii::app()->user->checkAccess('1') && $model->role == 2),
+            'visible' => (Yii::app()->user->checkAccess(MANAGEMENT) && $model->role == 2),
             'linkOptions' => array('class' => 'small button')),
     array(  'label' => Yii::t('app', 'Benutzer verwalten'), 
             'url' => array('admin'),
-            'visible' => Yii::app()->user->checkAccess(1),
+            'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
 );
 ?>
@@ -77,10 +79,10 @@ $this->menu = array(
             'data' => $model,
             'attributes' => array(
                 array('name' => 'id', 'value' => $model->id,
-                    'visible' => Yii::app()->user->checkAccess('0')),
+                    'visible' => Yii::app()->user->checkAccess(ADMIN)),
                 'email',
                 array('name' => 'username',
-                    'value' => $model->username, 'visible' => Yii::app()->user->checkAccess('0')),
+                    'value' => $model->username, 'visible' => Yii::app()->user->checkAccess(ADMIN)),
                 'firstname',
                 'lastname',
                 array('name' => 'stateName',
@@ -101,7 +103,7 @@ $this->menu = array(
             </div>
         </div>
         <?php 
-        if (Yii::app()->user->checkAccess('0') && empty($_GET['id'])) {
+        if (Yii::app()->user->checkAccess(ADMIN) && empty($_GET['id'])) {
             ?> 
             <fieldset class="text-center">
                 <p><?php echo Yii::t('app', 'Mit dem Drücken dieses Knopfes werden alle Daten aus der Datenbank gelöscht. Betätigen Sie ihn nur wenn Sie sich absolut sicher sind!'); ?></p>
@@ -119,6 +121,8 @@ $this->menu = array(
                     <?php
                     $form = $this->beginWidget('CActiveForm', array(
                         'id' => 'user-form',
+                        'errorMessageCssClass' => 'error',
+                        'skin' => false,
                     ));
                     ?>
                     <div class="row collapse">
@@ -138,7 +142,7 @@ $this->menu = array(
                     ?>
                 </fieldset>
 
-            <?php } if ($model->childcount > 0 && Yii::app()->user->checkAccess('1')) {
+            <?php } if ($model->childcount > 0 && Yii::app()->user->checkAccess(MANAGEMENT)) {
                 ?>
                 <h4 class="subheader"><?php echo Yii::t('app', 'Kinder'); ?></h4>
                 <?php

@@ -1,5 +1,5 @@
 <?php
-/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,8 @@ $this->breadcrumbs = array('Login');
         $form = $this->beginWidget('CActiveForm', array(
             'id' => 'login-form',
             'enableClientValidation' => false,
+            'errorMessageCssClass' => 'error',
+            'skin' => false,
             'clientOptions' => array(
                 'validateOnSubmit' => true),
         ));
@@ -60,7 +62,7 @@ $this->breadcrumbs = array('Login');
                 <div class="small-8 columns mobile-input">
                     <?php
                     echo $form->textField($model, 'email');
-                    echo $form->error($model, 'email', array('inputContainer' => 'small','class' => 'error'));
+                    echo $form->error($model, 'email');
                     ?>
                 </div>
             </div>
@@ -71,7 +73,7 @@ $this->breadcrumbs = array('Login');
                 <div class="small-8 columns mobile-input">
                     <?php
                     echo $form->passwordField($model, 'password');
-                    echo $form->error($model, 'password', array('inputContainer' => 'small','errorCssClass' => 'error'));
+                    echo $form->error($model, 'password');
                     ?>
                 </div>
             </div>

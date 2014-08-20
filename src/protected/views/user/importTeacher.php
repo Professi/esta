@@ -2,7 +2,7 @@
 /**
  * CSV Upload Form um Lehrer zu importieren
  */
-/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this UserController */
-/* @var $model CsvUpload */
-/* @var $form CActiveForm */
+/**
+ * @var $this UserController 
+ * @var $model CsvUpload 
+ * @var $form CActiveForm 
+ */
 $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
 ?>
 
@@ -68,6 +70,8 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
             <?php
             $form = $this->beginWidget('CActiveForm', array('id' => 'csv-form', 'enableAjaxValidation' => true,
                 'htmlOptions' => array('enctype' => 'multipart/form-data'),
+                'errorMessageCssClass' => 'error',
+                'skin' => false,
             ));
             ?>
             <div class="row collapse">
@@ -156,7 +160,3 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
         </fieldset>
     </div>
 </div>
-
-
-
-

@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,16 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this AppointmentController */
-/* @var $model Appointment */
-/* @var $form CActiveForm */
+/**
+ * @var $this AppointmentController 
+ * @var $model Appointment 
+ * @var $form CActiveForm 
+ */
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'appointment-form',
+            'errorMessageCssClass' => 'error',
+            'skin' => false,
         ));
 ?>
 <div class="row collapse">
     <div class="small-3 columns">
-        <span class="prefix">Erziehungsberechtigte/r</span>
+        <span class="prefix"><?php echo Yii::t('app','Erziehungsberechtigte/r'); ?></span>
     </div>
     <div class="small-9 columns">
         <?php
@@ -45,7 +49,7 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 <div class="row collapse">
     <div class="small-3 columns">
-        <span class="prefix">Kind</span>
+        <span class="prefix"><?php echo Yii::t('app','Kind'); ?></span>
     </div>
     <div class="small-9 columns" id="appointment_parent_select">
         <?php
@@ -55,7 +59,7 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 <div class="row collapse">
     <div class="small-3 columns">
-        <span class="prefix">Lehrer</span>
+        <span class="prefix"><?php echo Yii::t('app','Lehrer'); ?></span>
     </div>
     <div class="small-9 columns">
         <?php
@@ -81,7 +85,7 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 <div class="row collapse">
     <div class="small-3 columns">
-        <span class="prefix">Termin</span>
+        <span class="prefix"><?php echo Yi::t('app','Termin'); ?></span>
     </div>
     <div class="small-9 columns" id="appointment_dateAndTime_select">
         <?php

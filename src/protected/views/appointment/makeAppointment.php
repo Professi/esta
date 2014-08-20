@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,7 +92,9 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
             </p>
         </div>
         <?php $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'appointment-form',)); ?>
+            'id' => 'appointment-form',
+            'errorMessageCssClass' => 'error',
+            'skin' => false,)); ?>
         <fieldset>
             <legend><?php echo Yii::t('app', 'Termin'); ?></legend>
             <div class="row collapse">

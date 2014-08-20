@@ -2,7 +2,7 @@
 /**
  * Appointment blockieren
  */
-/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this AppointmentController */
-/* @var $model BlockedAppointment */
-/* @var $form CActiveForm */
+/**
+ * @var $this AppointmentController 
+ * @var $model BlockedAppointment 
+ * @var $form CActiveForm 
+ */
 $this->setPageTitle(Yii::t('app', 'Termin blockieren'));
 Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 ?>
@@ -41,8 +43,10 @@ $this->menu = array(
             <?php
             $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'blockAppointment-form',
+                'errorMessageCssClass' => 'error',
+                'skin' => false,
             ));
-            if (!Yii::app()->user->checkAccessRole('2', '-1') || Yii::app()->params['teacherAllowBlockTeacherApps']) {
+            if (!Yii::app()->user->checkAccessRole(TEACHER, '-1') || Yii::app()->params['teacherAllowBlockTeacherApps']) {
                 ?>
                 <div class="row collapse">
                     <div class="small-2 columns">
@@ -89,7 +93,7 @@ $this->menu = array(
             </div>
             <br>
 
-            <?php echo CHtml::submitButton('Anlegen', array('class' => 'small button')); ?>
+            <?php echo CHtml::submitButton(Yii::t('app','Anlegen'), array('class' => 'small button')); ?>
             <?php $this->endWidget(); ?>
         </fieldset>
     </div>

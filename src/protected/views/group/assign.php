@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,8 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
         <?php $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'date-form',
                 'enableAjaxValidation' => false,
+                'errorMessageCssClass' => 'error',
+                'skin' => false,
                     ));
 ?>
             <table>
@@ -46,9 +48,7 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                         <th></th>
                     </tr>
                 </thead>
-                <tbody id="input-target">
-
-                </tbody>
+                <tbody id="input-target"></tbody>
             </table>
             <input type="submit" class="small button right" value="<?php echo Yii::t('app','Absenden'); ?>">
        <?php $this->endWidget(); ?>

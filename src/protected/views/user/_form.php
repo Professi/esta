@@ -2,7 +2,7 @@
 /**
  * User Form
  */
-/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this UserController */
-/* @var $model User */
-/* @var $form CActiveForm */
+/**
+ * @var $this UserController 
+ * @var $model User 
+ * @var $form CActiveForm 
+ */
 
 Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'user-form',
+    'errorMessageCssClass' => 'error',
+    'skin' => false,
         ));
 ?>
 <div class="row collapse">
@@ -106,7 +110,7 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
 </div>
-<?php if (Yii::app()->user->checkAccess('1')) { ?>
+<?php if (Yii::app()->user->checkAccess(MANAGEMENT)) { ?>
     <div class="row collapse">
         <div class="small-3 columns">
             <span class="prefix"><?php echo $form->label($model, 'state'); ?></span>

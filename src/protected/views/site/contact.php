@@ -2,7 +2,7 @@
 /**
  * Kontaktseite
  */
-/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this SiteController */
-/* @var $model ContactForm */
-/* @var $form CActiveForm */
+/**
+ * @var $this SiteController 
+ * @var $model ContactForm 
+ * @var $form CActiveForm 
+ */
 $this->setPageTitle(Yii::t('app', 'Kontakt'));
 $this->breadcrumbs = array(
     'contact',
@@ -43,6 +45,8 @@ $this->breadcrumbs = array(
                 'clientOptions' => array(
                     'validateOnSubmit' => true,
                 ),
+                'errorMessageCssClass' => 'error',
+                'skin' => false,
             ));
             ?>
             <fieldset>
@@ -110,7 +114,7 @@ $this->breadcrumbs = array(
                     </div>
                     <?php
                 endif;
-                echo CHtml::submitButton('Absenden', array('class' => 'small button'));
+                echo CHtml::submitButton(Yii::t('app','Absenden'), array('class' => 'small button'));
                 ?>
             </fieldset>
             <?php $this->endWidget(); ?>

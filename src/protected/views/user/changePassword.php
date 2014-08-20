@@ -2,7 +2,7 @@
 /**
  * View Benutzer Passwort ändern
  */
-/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +17,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this UserController */
-/* @var $model ChangePwd */
+/**
+ * @var $this UserController 
+ * @var $model ChangePwd 
+ */
 $this->setPageTitle(Yii::t('app', 'Passwort zurücksetzen'));
 ?>
 <div class="row">
@@ -30,6 +32,8 @@ $this->setPageTitle(Yii::t('app', 'Passwort zurücksetzen'));
         <?php
         $form = $this->beginWidget('CActiveForm', array(
             'id' => 'ChangePwd-form',
+            'errorMessageCssClass' => 'error',
+            'skin' => false,
         ));
         ?>                
         <fieldset>
@@ -65,7 +69,7 @@ $this->setPageTitle(Yii::t('app', 'Passwort zurücksetzen'));
                 </div>
                 <?php
             endif;
-            echo CHtml::submitButton('Absenden', array('class' => 'small button'));
+            echo CHtml::submitButton(Yii::t('app','Absenden'), array('class' => 'small button'));
             ?>
         </fieldset>
         <?php $this->endWidget(); ?>

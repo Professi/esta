@@ -2,7 +2,7 @@
 /**
  * Pseudobenutzer erstellen
  */
-/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +17,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this UserController */
-/* @var $model User */
+/**
+ * @var $this UserController 
+ * @var $model User 
+ */
 $this->setPageTitle('Pseudobenutzer anlegen');
 
-if (Yii::app()->user->checkAccess('1')) {
+if (Yii::app()->user->checkAccess(MANAGEMENT)) {
     $this->menu = array(
         array(  'label' => Yii::t('app', 'Benutzer verwalten'), 
                 'url' => array('admin'),
@@ -31,6 +33,8 @@ if (Yii::app()->user->checkAccess('1')) {
 
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'user-form',
+    'errorMessageCssClass' => 'error',
+    'skin' => false,
         ));
 ?>
 <div class="push"></div>
@@ -60,7 +64,7 @@ $form = $this->beginWidget('CActiveForm', array(
                     ?>
                 </div>
             </div>
-            <?php echo CHtml::submitButton('Erstellen', array('class' => 'small button')); ?>
+            <?php echo CHtml::submitButton(Yii::t('app','Erstellen'), array('class' => 'small button')); ?>
         </fieldset>
     </div>
 </div>

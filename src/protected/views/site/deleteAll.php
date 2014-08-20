@@ -2,7 +2,7 @@
 /**
  * Konfigurationsseite
  */
-/* * Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* * Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this SiteController */
-/* @var $model DeleteAllForm */
-/* @var $form CActiveForm */
+/**
+ * @var $this SiteController 
+ * @var $model DeleteAllForm 
+ * @var $form CActiveForm 
+ */
 $this->setPageTitle(Yii::t('app', 'Anwendung zurücksetzen'));
 Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 ?>
@@ -28,6 +30,8 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'deleteAll-form',
         'enableAjaxValidation' => false,
+        'errorMessageCssClass' => 'error',
+        'skin' => false,
     ));
     ?>
     <div class="row">
