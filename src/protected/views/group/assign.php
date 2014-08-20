@@ -16,6 +16,7 @@
  */
 /**
  * @var $this   GroupController
+ * @var $model  Group
  * @var $groups
  * @var $users
  */
@@ -30,25 +31,32 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
 <div class="row">
     <div class="twelve columns">
         <h2 class="text-center"><?php echo Yii::t('app','Gruppen zuweisen'); ?></h2>
-        <table>
-            <thead>
-                <tr>
-                    <th><?php echo Yii::t('app','Benutzer'); ?></th>
-                    <th><?php echo Yii::t('app','Gruppe'); ?></th>
-                </tr>
-            </thead>
-            <tbody id="input-target">
+        <?php $form = $this->beginWidget('CActiveForm', array(
+                'id' => 'date-form',
+                'enableAjaxValidation' => false,
+                    ));
+?>
+            <table>
+                <thead>
+                    <tr>
+                        <th><?php echo Yii::t('app','Benutzer'); ?></th>
+                        <th><?php echo Yii::t('app','Gruppe'); ?></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="input-target">
 
-            </tbody>
-        </table>
-        <div class="small button right"><?php echo Yii::t('app','Absenden'); ?></div>
+                </tbody>
+            </table>
+            <input type="submit" class="small button right" value="<?php echo Yii::t('app','Absenden'); ?>">
+       <?php $this->endWidget(); ?>
     </div>
 </div>
 <div class="push"></div>
 <div class="row">
     <div class="six columns">
         <div class="row collapse">
-            <div class="four columns">
+            <div class="three columns">
                 <span class="prefix"><?php echo Yii::t('app','Benutzer'); ?></span>
             </div>
             <div class="eight columns">
@@ -65,6 +73,9 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                             );                    
                     ?>
             </div>
+            <div class="one columns">
+                <span class="postfix" id="close-user-select">X</span>
+            </div>
         </div>
     </div>
     <div class="six columns">
@@ -79,4 +90,5 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
 <div class="hide" id="input-template">
     <input type="hidden" name="user[]" class="group-user">
     <input type="hidden" name="group[]" class="group-id">
+    <span>X</span>
 </div>

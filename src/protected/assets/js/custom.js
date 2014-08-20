@@ -211,7 +211,8 @@
         
         // ** Gruppenzuweisung unter group/assign **
         
-        var assignedGroups = [];
+        var assignedGroups = [],
+            groupsCount;
         function AssignedGroup(group,user) {
             this.group = group;
             this.user = user;
@@ -230,38 +231,64 @@
             });
                 
             if( ! alreadySelected) {
-                var tr = $('<tr/>'),
-                    tdUser = $('<td/>'),
-                    tdGroup = $('<td/>'),
+                var that = $(this),
+                    tdUser = $('<td/>').text($(this).find('option[value=' + e.val + ']').text()),
+                    tdGroup = $('<td/>').text(groupSrc.select2('data').text),
                     template = $('#input-template'),
-                    inputUser = template.find('.group-user').clone(),
-                    inputGroup = template.find('.group-id').clone(),
-                    tbody = $('#input-target'),
-                    elements = tbody.children().size;
-
-                inputUser.attr('name','user[' + elements + ']');
-                inputGroup.attr('name','group[' + elements + ']');
-
-                inputUser.val(newGroupAssignment.user);
-                inputGroup.val(newGroupAssignment.group);
-
-                tdUser.text($(this).find('option[value=' + e.val + ']').text());
-                tdGroup.text(groupSrc.select2('data').text);
+                    inputUser = template
+                        .find('.group-user')
+                        .clone()
+                        .attr('name','user[' + groupsCount + ']')
+                        .val(newGroupAssignment.user),
+                    inputGroup = template
+                        .find('.group-id')
+                        .clone()
+                        .attr('name','group[' + groupsCount + ']')
+                        .val(newGroupAssignment.group),
+                    span = $('<span/>',{text:'X',class:'text-center'})
+                        .click(function() {
+                            var tr = $(this).parents('tr'),
+                                user = tr.find('.group-user').val(),
+                                group = tr.find('.group-id').val(),
+                                id = 0;
+                            $.each(assignedGroups,function(index) {
+                               if(this.group === group && this.user === user) {
+                                   id = index;
+                               }
+                            });    
+                            assignedGroups.splice(id,1);
+                            tr.remove();
+                            if(that.select2('open')) {
+                                that.select2('close');
+                            } else {
+                                that.select2('close');
+                                that.select2('open');
+                            }
+                        });
 
                 tdUser.append(inputUser);
                 tdGroup.append(inputGroup);
 
-                tr.append(tdUser).append(tdGroup).appendTo(tbody);
+                $('<tr/>')
+                        .append(tdUser)
+                        .append(tdGroup)
+                        .append(span)
+                        .appendTo($('#input-target'));
                 
                 assignedGroups.push(newGroupAssignment);
+                groupsCount++;
             }
 
             event.preventDefault();
             e.preventDefault();
             
-            $(this).select2('close');
-            $(this).select2('open');
+            that.select2('close');
+            that.select2('open');
                 
+        });
+        
+        $('#close-user-select').on('click',function() {
+                $('#group-users').select2('close');
         });
 
     }(this, document, jQuery));

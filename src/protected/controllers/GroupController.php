@@ -209,6 +209,7 @@ class GroupController extends Controller {
     }
     
     public function actionAssign() {
+        $model = new Group();
         $users = array();
         $groups = array();
         foreach(User::model()->findAll() as $user) {
@@ -219,7 +220,33 @@ class GroupController extends Controller {
         foreach(Group::model()->findAll() as $group) {
             $groups[$group->id] = $group->groupname;
         }
-        $this->render('assign', array('groups' => $groups, 'users' => $users));
+        $this->render('assign', array('model' => $model,'groups' => $groups, 'users' => $users));
+    }
+    
+    private function iterateOverGroups($groups) {
+        /*
+        $model = array();
+        foreach ($groups as $i => $group) {
+            if (isset($_POST['user'][$i]) && isset($_POST['group'][$i])) {
+                $user = UserController::loadModel($_POST['user'][$i]);
+                $group->group_id = $_POST['Tan'][$i]['group_id'];
+                $tan->childFirstname = $_POST['Tan'][$i]['childFirstname'];
+                $tan->childLastname = $_POST['Tan'][$i]['childLastname'];
+                $tan->tan_count = 1;
+                if ($tan->validate()) {
+                    $tan->generateTan(false);
+                    $model[] = $tan;
+                } else {
+                    $model[] = $tan;
+                    $validate = false;
+                }
+            }
+        }
+        if (empty($model)) {
+            $model = $this->getEmptyTanModel();
+        }
+        return $model;
+        */
     }
 
 }
