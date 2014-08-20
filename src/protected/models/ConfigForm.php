@@ -62,6 +62,9 @@ class ConfigForm extends CFormModel {
     public $tanSize;
     public $teacherAllowBlockTeacherApps;
     public $schoolWebsiteLink;
+    public $dateFormat;
+    public $dateTimeFormat;
+    public $timeFormat;
 
     public function rules() {
         return array(
@@ -75,7 +78,8 @@ class ConfigForm extends CFormModel {
                 'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,' .
                 'lockRegistration,allowGroups,allowParentsToManageChilds,' .
                 'logoPath,language,appName,hashCost,' .
-                'teacherAllowBlockTeacherApps,smtpPort,tanSize,schoolWebsiteLink', 'required'),
+                'teacherAllowBlockTeacherApps,smtpPort,tanSize,schoolWebsiteLink,' . 
+                'dateFormat,dateTimeFormat,timeFormat', 'required'),
             array('adminEmail,schoolEmail', 'email'),
             array('language', 'length', 'min' => 2),
             array('emailHost,fromMail,appName', 'length', 'min' => 3),
@@ -140,7 +144,10 @@ class ConfigForm extends CFormModel {
             'tanSize' => Yii::t('app', 'Länge einer TAN'),
             'allowParentsToManageChilds' => Yii::t('app', 'Sollen Eltern die Daten über Ihre Kinder verwalten können?'),
             'teacherAllowBlockTeacherApps' => Yii::t('app', 'Dürfen Lehrer Termine anderer Lehrer blockieren?'),
-            'schoolWebsiteLink' => Yii::t('app', 'Schullink')
+            'schoolWebsiteLink' => Yii::t('app', 'Schullink'),
+            'dateFormat' => Yii::t('app','Datumsformat'),
+            'dateTimeFormat' => Yii::t('app','Datums- mit Zeitformat'),
+            'timeFormat' => Yii::t('app','Zeitformat')
         );
     }
 

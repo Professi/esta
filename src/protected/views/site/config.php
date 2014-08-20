@@ -39,7 +39,7 @@ $this->registerAdminScripts(true);
         <div class="panel">
             <div class="row">
                 <div class="small-2 columns text-center">
-                    <i class="fi-alert"></i>
+                    <i class="fi-alert callout-icon"></i>
                 </div>
                 <div class="small-10 columns">
                     <?php
@@ -68,7 +68,7 @@ $this->registerAdminScripts(true);
                         <?php echo $form->label($model, 'appName', array('class' => 'infolabel')); ?>
                     </span>
                     <div class="infotext">
-                        <span aria-hidden="true" data-icon="&#xe012;"></span>
+                        <i class="fi-info"></i>
                         <?php echo Yii::t('app', 'Hier können Sie den Anwendungsnamen festlegen. Dieser ist unter anderem für die Seitentitel in der Browserstatusleiste relevant.'); ?>
                     </div>
                 </div>
@@ -85,7 +85,7 @@ $this->registerAdminScripts(true);
                         <?php echo $form->label($model, 'language', array('class' => 'infolabel')); ?>
                     </span>
                     <div class="infotext">
-                        <span aria-hidden="true" data-icon="&#xe012;"></span>
+                        <i class="fi-info"></i>
                         <?php echo Yii::t('app', 'Länderkürzel z.B. de oder en'); ?>
                     </div>
                 </div>
@@ -146,7 +146,7 @@ $this->registerAdminScripts(true);
                         <?php echo $form->label($model, 'allowGroups', array('class' => 'infolabel')); ?>
                     </span>
                     <div class="infotext">
-                        <span aria-hidden="true" data-icon="&#xe012;"></span>
+                        <i class="fi-info"></i>
                         <?php
                         echo Yii::t('app', 'Mit dieser Option können Sie Gruppen aktivieren.');
                         echo Yii::t('app', 'Für jeden Elternsprechtag und Benutzer können bestimmte Gruppen festgelegt werden.');
@@ -292,7 +292,7 @@ $this->registerAdminScripts(true);
                 <div class="small-8 columns">
                     <span class="prefix infofeld"><?php echo $form->label($model, 'allowParentsToManageChilds', array('class' => 'infolabel')); ?></span>
                     <div class="infotext">
-                        <span aria-hidden="true" data-icon="&#xe012;"></span>
+                        <i class="fi-info"></i>
                         <?php echo Yii::t('app', 'Wenn diese Option aktiviert ist, können Eltern ihre Kinder beliebig verwalten. Falls diese Option deaktiviert wurde, müssen bei der TAN Erstellung die Namen der Kinder angegeben werden. Eltern können weitere Kinder nur durch TAN\'s hinzufügen.'); ?>
                     </div>
                 </div>
@@ -307,7 +307,7 @@ $this->registerAdminScripts(true);
                 <div class="small-8 columns">
                     <span class="prefix infofeld"><?php echo $form->label($model, 'maxChild', array('class' => 'infolabel')); ?></span>
                     <div class="infotext">
-                        <span aria-hidden="true" data-icon="&#xe012;"></span>
+                        <i class="fi-info"></i>
                         <?php echo Yii::t('app', 'Wenn Eltern ihre Kinder selber verwalten dürfen, dürfen diese nur n Kinder hinzufügen.'); ?>
                     </div>
                 </div>
