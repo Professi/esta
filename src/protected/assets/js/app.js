@@ -87,12 +87,16 @@
             }
         });
         
-        //$('#CsvUpload_file').on('change',function(e, ui) {
-            //this.files[0].size;
-        //});
+        $('#CsvUpload_file').on('change',function() {
+            if(this.files[0].size > (maxFileSize.match(/\d/) * (1024 * 1024))) {
+                alert(errorMessage);
+                $(this).val('');
+            } else {
+                $('#file-input-name').val(this.files[0].name);
+            }
+        });
         
         // ** Elterntagfeld lockAt mit Daten aus dem hidden input füllen. **
-        
             if ($('#lockAt_value').val() !== "" && typeof $('#lockAt_value').val() === 'string') {
                var value = $('#lockAt_value').val(),
                    arr = value.split(' ');

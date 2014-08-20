@@ -42,7 +42,7 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
 </div>
 
 <div class="row">
-    <?php if(true){// if (Yii::app()->params['randomTeacherPassword']) { ?>
+    <?php if (Yii::app()->params['randomTeacherPassword']) { ?>
     <div class="small-10 columns small-centered">
         <div class="panel">
             <div class="row">
@@ -71,17 +71,24 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
             ));
             ?>
             <div class="row collapse">
-                <div class="small-8 columns">
+                <div class="small-4 columns">
                     <span class="prefix"><?php echo $form->label($model, 'file'); ?></span>
                 </div>
                 <div class="small-4 columns">
-                    <div class="postfix button file-input">
+                    <div class="prefix button file-input">
                         <i class="fi-upload"></i><span>&nbsp;<?php echo Yii::t('app','Datei auswählen'); ?></span>
                     <?php
                     echo $form->fileField($model, 'file');
                     echo $form->error($model, 'file');
                     ?>
+                    <script>
+                        var maxFileSize = '<?php echo CsvUpload::getMaxSize(); ?>';
+                        var errorMessage = '<?php echo Yii::t('app','Die ausgewählte Datei übersteigt die maximale Dateigröße.'); ?>';
+                    </script>
                     </div>
+                </div>
+                <div class="small-4 columns">
+                    <input type="text" value="" name="" id="file-input-name">
                 </div>
             </div>
             <div class="row collapse">

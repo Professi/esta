@@ -134,6 +134,10 @@ class Controller extends CController {
         $cs->registerCssFile($this->assetsDir . '/css/app.css');
         $cs->registerCssFile($this->assetsDir . '/css/print.min.css', 'print');
         
+        if(Yii::app()->user->checkAccess(ADMIN)) {
+            $cs->registerCssFile( $this->assetsDir."/css/select2.min.css");
+        }
+        
         $cs->scriptMap['jquery.js'] = $this->assetsDir . '/js/jquery.js';
         $cs->scriptMap['jquery.min.js'] = $this->assetsDir . '/js/jquery.min.js';
         $cs->scriptMap['jquery-ui.js'] = $this->assetsDir . '/js/jquery-ui.js';

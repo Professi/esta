@@ -21,7 +21,6 @@
 /* @var $model ConfigForm */
 /* @var $form CActiveForm */
 $this->setPageTitle(Yii::t('app', 'Konfiguration'));
-$this->registerAdminScripts(true);
 ?>
 <div class="form">
     <?php

@@ -71,6 +71,7 @@ return array (
   'Der ausgewählte Benutzer ist kein Lehrer.' => 'The selected user is not a teacher.',
   'Detailansicht Elternsprechtag' => 'Detail view of parent teacher day',
   'Detailansicht Termin' => 'Detail view of appointment',
+  'Die ausgewählte Datei übersteigt die maximale Dateigröße.' => 'The selected file exceeds the file size limit.',
   'Die Maximalgröße einer Datei beträgt {size}.' => 'The file size limit is {size}',
   'Die Sperrfrist muss vor oder auf dem Anfang liegen.' => '',
   'Die angeforderte Seite konnte nicht gefunden werden.' => '',
