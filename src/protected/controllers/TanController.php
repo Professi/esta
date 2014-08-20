@@ -138,7 +138,9 @@ class TanController extends Controller {
         foreach ($tans as $i => $oneTan) {
             if (isset($_POST['Tan'][$i])) {
                 $tan = new Tan();
+                if(array_key_exists('group_id', $_POST['Tan'][$i])) {
                 $tan->group_id = $_POST['Tan'][$i]['group_id'];
+                }
                 $tan->childFirstname = $_POST['Tan'][$i]['childFirstname'];
                 $tan->childLastname = $_POST['Tan'][$i]['childLastname'];
                 $tan->tan_count = 1;

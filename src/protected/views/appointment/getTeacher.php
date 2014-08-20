@@ -159,7 +159,6 @@ $this->setPageTitle(Yii::t('app', 'Lehrerauswahl'));
                     'buttons' => array(
                         'date' => array(
                             'label' => Yii::t('app','Termin vereinbaren'),
-                            /** @todo must be changed, user can manipulate it */
                             'url' => '"index.php?r=Appointment/makeAppointment&teacher=".$data->id',
                             'imageUrl' => Yii::app()->request->baseUrl . '/img/alarm.png',
                             'options' => array('class' => 'column-button alarm_png',),

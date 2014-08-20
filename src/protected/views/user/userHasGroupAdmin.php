@@ -22,7 +22,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $model->search(),
     'columns' => array(
         array('name' => 'user', 'value' => '$data->user->firstname . " " . $data->user->lastname', 'headerHtmlOptions' => array('style' => 'width: 30%;')),
-        array('name' => 'user.role', 'value' => 'User::getFormattedRole($data->user->userrole->role_id)', 'headerHtmlOptions' => array('style' => 'width: 30%;')),
+        array('name' => 'user.role', 'value' => 'User::getFormattedRole($data->user->role)', 'headerHtmlOptions' => array('style' => 'width: 30%;')),
         array('name' => 'group',
             'value' => '$data->group->groupname',
             'headerHtmlOptions' => array('style' => 'width: 30%;')),

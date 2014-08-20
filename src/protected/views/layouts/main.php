@@ -117,7 +117,7 @@
                         <div class="six columns">
                             <p><?php echo Yii::t('app', 'Copyright'); ?> &copy; <?php
                                 echo date('Y') . ' ';
-                                echo (!empty(Yii::app()->params['schoolName'])) ? Yii::app()->params['schoolName'] : Yii::t('app', 'ESTA - Team');
+                                echo (!empty(Yii::app()->params['schoolName'])) ? Yii::app()->params['schoolName'] : Yii::t('app', 'ESTA- Team');
                                 ?> <br>
                             </p>
                         </div>

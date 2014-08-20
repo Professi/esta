@@ -212,7 +212,11 @@ class GroupController extends Controller {
         $model = new Group();
         $users = array();
         $groups = array();
-        foreach(User::model()->findAll() as $user) {
+        $crit = new CDbCriteria();
+        $crit->addCondition('role = :role1', 'OR');
+        $crit->addCondition('role = :role2', 'OR');
+        $crit->params = array(':role1'=>2,':role2'=>3);
+        foreach(User::model()->findAll($crit) as $user) {
             $desc = (empty($user->title)) ? '' : "{$user->title} ";
             $desc .= "{$user->firstname} {$user->lastname}";
             $users[$user->id] = $desc;

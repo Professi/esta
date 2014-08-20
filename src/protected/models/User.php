@@ -26,6 +26,7 @@
  * @property integer $createtime
  * @property string $firstname
  * @property integer $state
+ * @property integer $role
  * @property string $lastname
  * @property string $email
  * @property string $title
@@ -36,7 +37,6 @@
  * The followings are the available model relations:
  * @property Appointment[] $appointments
  * @property ParentChild[] $parentChildren
- * @property UserRole[] $userrole
  * @property Group[] $groups
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
@@ -44,9 +44,6 @@ class User extends CActiveRecord {
 
     /** @var string  Passwortwiederholung */
     public $password_repeat = null;
-
-    /** @var integer Rolle als ID */
-    public $role = null;
 
     /** @var string Rollenname */
     public $roleName = null;
@@ -61,7 +58,6 @@ class User extends CActiveRecord {
     public $tan = null;
 
     /** @var array Array mit den Rollennamen */
-    static private $a_roleName = null;
     public $groupIds = null;
     public $updateGroups = false;
 
@@ -109,13 +105,13 @@ class User extends CActiveRecord {
             ),
             array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat'),
             array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
-            array('id, username, firstname, state, lastname, email, role, roleName, stateName, title, groupIds, password_repeat', 'safe'),
+            array('id, username, firstname, state, lastname, email, role, stateName, title, groupIds, password_repeat', 'safe'),
             array('groups', 'safe', 'on' => 'update'),
         );
     }
 
     /**
-     * Relationen ( Appointments HAS_MANY , parentChildren HAS_MANY, userrole HAS_ONE )
+     * Relationen ( Appointments HAS_MANY , parentChildren HAS_MANY, role HAS_ONE )
      * @return array relational rules.
      */
     public function relations() {
@@ -124,7 +120,6 @@ class User extends CActiveRecord {
             'parentchildren' => array(self::HAS_MANY, 'ParentChild', 'user_id'),
             'childcount' => array(self::STAT, 'ParentChild', 'user_id'),
             'groupcount' => array(self::STAT, 'UserHasGroup', 'user_id'),
-            'userrole' => array(self::HAS_ONE, 'UserRole', 'user_id'),
             'groups' => array(self::MANY_MANY, 'Group', "user_has_group(user_id,group_id)"),
         );
     }
@@ -169,13 +164,11 @@ class User extends CActiveRecord {
             'lastname' => Yii::t('app', 'Nachname'),
             'email' => Yii::t('app', 'E-Mail'),
             'createtime' => Yii::t('app', 'Registrierungsdatum'),
-            'role' => Yii::t('app', 'Rolle'),
-            'roleName' => Yii::t('app', 'Rolle'),
             'verifyCode' => Yii::t('app', 'Sicherheitscode'),
             'title' => Yii::t('app', 'Titel'),
             'groups' => Yii::t('app', 'Gruppen'),
             'badLogins' => Yii::t('app', 'Ungültige Anmeldeversuche'),
-            'userrole' => Yii::t('app', 'Benutzerrolle'),
+            'role' => Yii::t('app', 'Benutzerrolle'),
         );
     }
 
@@ -185,7 +178,6 @@ class User extends CActiveRecord {
      */
     public function search() {
         $criteria = new CDbCriteria();
-        $criteria->with = array('userrole' => array('together' => true));
         $criteria->compare('firstname', $this->firstname, true);
         $criteria->compare('lastname', $this->lastname, true);
         $criteria->compare('id', $this->id, true);
@@ -193,7 +185,7 @@ class User extends CActiveRecord {
         $criteria->compare('state', $this->state);
         $criteria->compare('email', $this->email, true);
         $criteria->compare('title', $this->title, true);
-        $criteria->compare('userrole.role_id', $this->role);
+        $criteria->compare('role', $this->role);
         $sort = new CSort;
         $sort->attributes = array(
             'defaultOrder' => 'id ASC',
@@ -216,8 +208,8 @@ class User extends CActiveRecord {
                 'asc' => 'state',
                 'desc' => 'state desc'),
             'role' => array(
-                'asc' => 'userrole.role_id',
-                'desc' => 'userrole.role_id desc'),
+                'asc' => 'role',
+                'desc' => 'role desc'),
         );
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -247,7 +239,6 @@ class User extends CActiveRecord {
      */
     public function searchCriteriaTeacherAutoComplete() {
         $criteria = new CDbCriteria;
-        $criteria->with = array('userrole');
         if (Yii::app()->params['allowGroups'] && is_array($this->groups)) {
             $criteria->together = true;
             $criteria->with[] = 'groups';
@@ -262,9 +253,9 @@ class User extends CActiveRecord {
         $criteria->addCondition('lastname LIKE :match');
         $criteria->params[':match'] = "$match%";
         $criteria->params[':role'] = $this->role;
-        $criteria->compare('state', $this->state, true);
+        $criteria->compare('state', $this->state, false);
         $criteria->select = 'title,firstname,lastname,id';
-        $criteria->addCondition('userrole.role_id=:role');
+        $criteria->addCondition('role=:role');
         $criteria->limit = 10;
         return $criteria;
     }
@@ -277,10 +268,9 @@ class User extends CActiveRecord {
      */
     public static function deleteAllCriteria() {
         $criteria = new CDbCriteria();
-        $criteria->with = array('userrole');
-        $criteria->addCondition('userrole.role_id=:role_id1', "OR");
-        $criteria->addCondition('userrole.role_id=:role_id2', "OR");
-        $criteria->params = array(':role_id1' => 2, ':role_id2' => 3);
+        $criteria->addCondition('role=:role1', "OR");
+        $criteria->addCondition('role=:role2', "OR");
+        $criteria->params = array(':role1' => 2, ':role2' => 3);
         $criteria->select = 'id';
         return $criteria;
     }
@@ -293,9 +283,8 @@ class User extends CActiveRecord {
     public function deleteUsersWithRole($role) {
         if (is_int($role)) {
             $criteria = new CDbCriteria();
-            $criteria->with = array('userrole');
-            $criteria->addCondition('userrole.role_id=:role_id');
-            $criteria->params = array(':role_id' => $role);
+            $criteria->addCondition('role=:role');
+            $criteria->params = array(':role' => $role);
             $criteria->select = 'id';
             $a_delete = User::model()->findAll($criteria);
             foreach ($a_delete as $record) {
@@ -339,59 +328,17 @@ class User extends CActiveRecord {
     }
 
     /**
-     * returns roleId
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @param integer $no
-     * @return 
-     * @throws CException NullPointerException 
-     */
-    private function getRoleId($no) {
-        try {
-            return Role::model()->findByAttributes(array('id' => $no))->getPrimaryKey();
-        } catch (CException $ex) {
-            throw $ex;
-        }
-    }
-
-    /**
-     * weist einem neuen Nutzer eine Rolle zu
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return boolean Rückgabewert der Methode afterSave() CActiveRecord
-     */
-    private function createUserRole() {
-        $rc = true;
-        $userrole = New UserRole();
-        $userrole->user_id = $this->getPrimaryKey();
-        if (Yii::app()->user->isGuest) {
-            $userrole->role_id = $this->getRoleId(3);
-        } else {
-            $userrole->role_id = $this->getRoleId($this->role);
-        }
-        if (!$userrole->save()) {
-            $rc = false;
-            $this->addError('role', Yii::t('app', 'Rolle konnte nicht erstellt werden. Benutzer wird präventiv gelöscht'));
-        }
-        return $rc;
-    }
-
-    /**
-     * basics for working user account, creates userrole, updates tan and creates userHasGroup
+     * basics for working user account, updates tan and creates userHasGroup
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean 
      */
     private function saveNewRecord() {
-        if ($this->createUserRole()) {
-            $rc = true;
-            $this->updateTan();
-            if (Yii::app()->params['allowGroups'] && !empty($this->groupIds)) {
-                foreach ($this->groupIds as $group) {
-                    $this->createUserHasGroup($group);
-                }
+        $this->updateTan();
+        if (Yii::app()->params['allowGroups'] && !empty($this->groupIds)) {
+            foreach ($this->groupIds as $group) {
+                $this->createUserHasGroup($group);
             }
-        } else {
-            $rc = false;
         }
-        return $rc;
     }
 
     /**
@@ -399,9 +346,6 @@ class User extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     private function saveExistingRecord() {
-        $userrole = UserRole::model()->findByAttributes(array('user_id' => $this->id));
-        $userrole->role_id = $this->role;
-        $userrole->save();
         if (Yii::app()->params['allowGroups'] && $this->updateGroups) {
             UserHasGroup::model()->deleteAllByAttributes(array('user_id' => $this->id));
             if (!empty($this->groupIds)) {
@@ -420,25 +364,20 @@ class User extends CActiveRecord {
      * @return boolean
      */
     public function afterSave() {
-        $rc = true;
         if ($this->isNewRecord) {
             $rc = $this->saveNewRecord();
         } else {
             $this->saveExistingRecord();
         }
-        if ($rc) {
-            $rc = parent::afterSave();
-        }
-        return $rc;
+        return parent::afterSave();
     }
 
     /**
-     * löscht den UserRole Eintrag + ElternKind Verknüpfung + Kinder
+     * löscht ElternKind Verknüpfung + Kinder
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Rückgabewert der Elternklassemethoden
      */
     public function beforeDelete() {
-        UserRole::model()->deleteAllByAttributes(array('user_id' => $this->id));
         BlockedAppointment::model()->deleteAllByAttributes(array('user_id' => $this->id));
         $a_appointment = Appointment::model()->findAllByAttributes(array('user_id' => $this->id));
         for ($x = 0; $x < count($a_appointment); $x++) {
@@ -477,6 +416,7 @@ class User extends CActiveRecord {
         if ($this->isNewRecord) {
             if (Yii::app()->user->isGuest) {
                 $this->state = 0;
+                $this->role = 3;
             }
             $this->activationKey = self::generateActivationKey();
             if (empty($this->username) && !empty($this->email)) {
@@ -507,23 +447,14 @@ class User extends CActiveRecord {
      * @return string 0=NichtAktiv 1=Aktiv 2=Gesperrt
      */
     public function getStateName($state = null) {
-        switch ($state) {
-            case 0:
-                $stateName = Yii::t('app', 'Nicht aktiv');
-                break;
-            case 1:
-                $stateName = Yii::t('app', 'Aktiv');
-                break;
-            case 2:
-                $stateName = Yii::t('app', 'Gesperrt');
-                break;
-            default:
-                $stateName = $this->state;
+        if(is_numeric($state) && array_key_exists($state, self::getStateNameAndValue())) {
+            $stateName = self::getStateNameAndValue()[$state]['name'];
+        } else {
+            $stateName = $this->state;
         }
         if ($state == null) {
             $this->stateName = $stateName;
         }
-
         return $stateName;
     }
 
@@ -552,10 +483,11 @@ class User extends CActiveRecord {
      * @param integer $role Rollen ID des Users
      */
     static public function getFormattedRole($role) {
-        if (is_null(self::$a_roleName)) {
-            self::$a_roleName = Role::model()->findAll();
-        }
-        echo self::$a_roleName[$role]->title;
+        return self::getRoles()[$role]['name'];
+    }
+
+    static public function getRoles() {
+        return array(array('value' => 0, 'name' => Yii::t('app', 'Administrator')), array('value' => 1, 'name' => Yii::t('app', 'Verwalter')), array('value' => 2, 'name' => Yii::t('app', 'Lehrer')), array('value' => 3, 'name' => Yii::t('app', 'Eltern')));
     }
 
     /**
@@ -703,8 +635,8 @@ class User extends CActiveRecord {
      */
     public static function hasRole($userId, $roleId) {
         $rc = false;
-        if (is_int($userId) && is_int($roleId) && UserRole::model()->countByAttributes(
-                        array('user_id' => $userId, 'role_id' => $roleId)) == 1) {
+        if (is_int($userId) && is_int($roleId) && User::model()->countByAttributes(
+                        array('id' => $userId, 'role' => $roleId)) == 1) {
             $rc = true;
         }
         return $rc;

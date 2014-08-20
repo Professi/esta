@@ -30,7 +30,7 @@ $this->menu = array(
 ?>
 <div class="row">
     <div class="twelve columns">
-        <h2 class="subheader"><?php Yii::t('app','Ihre Termine'); ?></h2>
+        <h2 class="subheader"><?php Yii::t('app', 'Ihre Termine'); ?></h2>
         <hr>
         <?php if ($no_children) { ?>
             <div class="panel">
@@ -38,9 +38,9 @@ $this->menu = array(
                     <br>
                     <?php
                     if (Yii::app()->params['allowParentsToManageChilds']) {
-                        echo Yii::t('app', 'Klicken Sie ') . CHtml::link(Yii::t('app', 'hier'), array('parentChild/create')) . ' ' . Yii::t('app', 'um Kinder anzulegen.');
+                        echo Yii::t('app', 'Klicken Sie {here} um Kinder anzulegen.', array('{here}' => CHtml::link(Yii::t('app', 'hier'), array('parentChild/create'))));
                     } else {
-                        echo Yii::t('app', 'Klicken Sie ') . CHtml::link(Yii::t('app', 'hier'), array('user/account')) . ' ' . Yii::t('app', 'um Kinder anzulegen.') . Yii::t('app', 'Sie müssen dafür nur TANs eingeben. Falls Sie über keine TAN verfügen, so wenden Sie sich bitte an die Verwaltung.');
+                        echo Yii::t('app', 'Klicken Sie {here} um Kinder anzulegen.', array('{here}' => CHtml::link(Yii::t('app', 'hier'), array('user/account')))) .' '. Yii::t('app', 'Sie müssen dafür nur TANs eingeben. Falls Sie über keine TAN verfügen, so wenden Sie sich bitte an die Verwaltung.');
                     }
                     ?>
                 </p>

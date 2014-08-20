@@ -119,23 +119,8 @@ class Appointment extends CActiveRecord {
             $criteria->params = array('time' => $this->dateAndTime_id);
         }
         $criteria->compare('user.lastname', $this->user_id, true);
-        $sort = new CSort;
-        $sort->attributes = array(
-            'defaultOrder' => 'dateandtime.id',
-            'dateAndTime_id' => array(
-                'asc' => 'dateandtime.id',
-                'desc' => 'dateandtime.id desc'),
-            'user_id' => array(
-                'asc' => 'user.lastname',
-                'desc' => 'user.lastname desc'),
-            'parent_child_id' => array(
-                'asc' => 'pc_user.lastname',
-                'desc' => 'pc_user.lastname desc'),
-        );
-
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
-            'sort' => $sort,
         ));
     }
 
@@ -149,7 +134,21 @@ class Appointment extends CActiveRecord {
         $criteria->order = '`dateAndTime_id` ASC';
         $criteria->addCondition(array('user_id=:user_id'));
         $criteria->params = array(':user_id' => $this->user_id);
-        return new CActiveDataProvider($this, array('criteria' => $criteria));
+        $sort = new CSort;
+        $sort->attributes = array(
+            'defaultOrder' => 'dateandtime.id DESC',
+            'dateAndTime_id' => array(
+                'asc' => 'dateandtime.id',
+                'desc' => 'dateandtime.id desc'),
+            'user_id' => array(
+                'asc' => 'user.lastname',
+                'desc' => 'user.lastname desc'),
+            'reason' => array(
+                'asc' => 'reason',
+                'desc' => 'reason desc'),
+        );
+        return new CActiveDataProvider($this, array('criteria' => $criteria,
+            'sort'=>$sort));
     }
 
     /**
@@ -186,11 +185,7 @@ class Appointment extends CActiveRecord {
      */
     public function afterValidate() {
         $rc = parent::afterValidate();
-        $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->user_id));
-        if ($rc && User::model()->countByAttributes(array('id' => $this->user_id)) != 1) {
-            $rc = false;
-            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie haben keine gültige Lehrkraft ausgewählt.'));
-        } else if ($rc && $userRole != NULL && $userRole->role_id != 2) {
+ if ($rc && User::model()->countByAttributes(array('role' => 2, 'id' => $this->user_id)) > 0) {
             $rc = false;
             Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Der ausgewählte Benutzer ist kein Lehrer.'));
         } else if ($rc && Appointment::model()->countByAttributes(array('user_id' => $this->user_id, 'parent_child_id' => $this->parent_child_id)) >= 1) {
@@ -200,7 +195,6 @@ class Appointment extends CActiveRecord {
             $rc = false;
             Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie müssen ein Kind angeben.'));
         }
-
         if ($rc && DateAndTime::model()->countByAttributes(array('dateAndTime_id' => $this->dateAndTime_id)) != '1') {
             $rc = false;
             Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Der angegebene Termin existiert nicht.'));
