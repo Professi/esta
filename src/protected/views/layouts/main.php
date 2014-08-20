@@ -44,9 +44,7 @@ $menu = array( //icon,label,url,visible(bool)
     <meta name="viewport" content="width=device-width">
     <link rel="icon" href="<?php echo $this->assetsDir; ?>/favicon.ico">
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->assetsDir; ?>/favicon.ico">
-    <link rel="stylesheet" href="<?php echo $this->assetsDir; ?>/css/app.css">
-    <script type="text/javascript">/*<![CDATA[*/ var path = '<?php echo $this->assetsDir; ?>'; /*]]>*/</script>
-    <?php //$this->registerScripts(); ?>
+    <?php $this->registerScripts(); ?>
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
@@ -154,11 +152,5 @@ $menu = array( //icon,label,url,visible(bool)
 <div class="infobox" style="display: none;">
     <p></p>
 </div>
-<script src="<?php echo $this->assetsDir; ?>/js/jquery.js"></script>
-<script src="<?php echo $this->assetsDir; ?>/js/modernizr.js"></script>
-<script src="<?php echo $this->assetsDir; ?>/js/fastclick.js"></script>
-<script src="<?php echo $this->assetsDir; ?>/js/placeholder.js"></script>
-<script src="<?php echo $this->assetsDir; ?>/js/foundation.min.js"></script>
-<script src="<?php echo $this->assetsDir; ?>/js/app.min.js"></script>
 </body>
 </html>

@@ -84,6 +84,17 @@ class Controller extends CController {
         return array('label' => '<span class=' . $cssClasses . ' aria-hidden="' . $ariaHidden . '" data-icon="' . $dataIcon . '">&nbsp;' . $name . '</span>', 'url' => array($url,), 'visible' => $visible);
     }
     
+    /**
+     * 
+     * @param string $icon
+     * @param string $label
+     * @param string $url
+     * @param bool $visible
+     * @param bool $mobile
+     * @author David Mock
+     * @access public
+     * @return string 
+     */
     public function generateFoundation5MenuItem($icon, $label, $url, $visible,$mobile) {
         $link = '';
         $labelTag = ($mobile) ? $label : "<br><span>{$label}</span>";
@@ -93,6 +104,14 @@ class Controller extends CController {
         return $link;
     }
     
+    /**
+     * 
+     * @param mixed $menuArray
+     * @param bool $mobile
+     * @author David Mock
+     * @access public
+     * @return string[]
+     */
     public function generateFoundation5Menu($menuArray,$mobile) {
         $menu = '';
         for($i = 0; $i < count($menuArray);$i++) {
@@ -111,22 +130,32 @@ class Controller extends CController {
      */
     public function registerScripts() {
         $cs = Yii::app()->getClientScript();
+        
+        $cs->registerCssFile($this->assetsDir . '/css/app.css');
         $cs->registerCssFile($this->assetsDir . '/css/print.min.css', 'print');
-        $userAgent = preg_match('/MSIE [1-7]/', $_SERVER['HTTP_USER_AGENT']);
-        $cs->addPackage('css', array(
-            'baseUrl' => $this->assetsDir . '/css/',
-            'css' => array('foundation.min.css', !YII_DEBUG ? 'icons.min.css' : 'icons.css', !YII_DEBUG ? 'app.min.css' : 'app.css') //nicht ändern
-        ));
-        $cs->addPackage('jquery.js', array(
-            'baseUrl' => $this->assetsDir . '/js/',
-            'js' => array(!YII_DEBUG ? 'app.min.js' : 'app.js'),
-            'depends' => array('css'),
-        ));
-        $cs->registerPackage('css');
-        if (empty($userAgent)) {
-            $cs->registerCoreScript('jquery.js');
+        
+        $cs->scriptMap['jquery.js'] = $this->assetsDir . '/js/jquery.js';
+        $cs->scriptMap['jquery.min.js'] = $this->assetsDir . '/js/jquery.min.js';
+        $cs->scriptMap['jquery-ui.js'] = $this->assetsDir . '/js/jquery-ui.js';
+        $cs->scriptMap['jquery-ui.min.js'] = $this->assetsDir . '/js/jquery-ui.min.js';
+        
+        $cs->registerCoreScript('jquery.js');
+        
+        $cs->registerScriptFile($this->assetsDir . '/js/fastclick.js', CClientScript::POS_END);
+        $cs->registerScriptFile($this->assetsDir . '/js/modernizr.js', CClientScript::POS_END);
+        $cs->registerScriptFile($this->assetsDir . '/js/placeholder.js', CClientScript::POS_END);
+        $cs->registerScriptFile($this->assetsDir . '/js/foundation.min.js', CClientScript::POS_END);
+
+        if(YII_DEBUG) {
+            $cs->registerScriptFile($this->assetsDir . '/js/app.js', CClientScript::POS_END);
+        } else {
+            $cs->registerScriptFile($this->assetsDir . '/js/app.min.js', CClientScript::POS_END);
         }
-        $this->registerAdminScripts();
+        
+        if ( preg_match('/MSIE [1-7]/', $_SERVER['HTTP_USER_AGENT']) === 1) {
+            $cs->enableJavaScript = false;
+        }
+        
     }
 
     /**
@@ -134,6 +163,7 @@ class Controller extends CController {
      * checks for adminUser, when $admin true, checkAccess ignored
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param boolean $admin
+     * @deprecated since version 1.3
      */
     public function registerAdminScripts($admin = false) {
         if (Yii::app()->user->checkAccess('1') || $admin || 

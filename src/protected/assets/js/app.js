@@ -217,11 +217,12 @@
             this.user = user;
         };
         
-        function deleteGroupAssignment(select2Menu) {
+        function deleteGroupAssignment(e) {
             var tr = $(this).parents('tr'),
                 user = tr.find('.group-user').val(),
                 group = tr.find('.group-id').val(),
-                id = 0;
+                select2Menu = e.data.param1,
+                id = -1;
             $.each(assignedGroups,function(index) {
                if(this.group === group && this.user === user) {
                    id = index;
@@ -264,8 +265,10 @@
                         .clone()
                         .attr('name','group[' + groupsCount + ']')
                         .val(newGroupAssignment.group),
-                    span = $('<i/>',{class:'text-center fi-x'})
-                        .click(deleteGroupAssignment(that));
+                    span = template
+                        .find('i')
+                        .clone()
+                        .click({param1:that},deleteGroupAssignment);
 
                 tdUser.append(inputUser);
                 tdGroup.append(inputGroup);
@@ -273,7 +276,7 @@
                 $('<tr/>')
                         .append(tdUser)
                         .append(tdGroup)
-                        .append(span)
+                        .append($('<td/>',{class:'text-center'}).append(span))
                         .appendTo($('#input-target'));
                 
                 assignedGroups.push(newGroupAssignment);

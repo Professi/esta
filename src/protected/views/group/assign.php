@@ -76,7 +76,9 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                     ?>
             </div>
             <div class="small-1 columns">
-                <span class="postfix" id="close-user-select"><i class="fi-x"></i></span>
+                <span class="postfix" id="close-user-select">
+                    <i class="fi-x" title="<?php echo Yii::t('app','Liste schließen') ?>"></i>
+                </span>
             </div>
         </div>
     </div>
@@ -92,5 +94,5 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
 <div class="hide" id="input-template">
     <input type="hidden" name="user[]" class="group-user">
     <input type="hidden" name="group[]" class="group-id">
-    <span>X</span>
+    <i class="fi-x" title="<?php echo Yii::t('app','Eintrag entfernen') ?>"></i>
 </div>
