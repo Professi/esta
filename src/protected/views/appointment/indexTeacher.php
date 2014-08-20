@@ -47,6 +47,17 @@ $this->setPageTitle(Yii::t('app', 'Ihre Termine'));
             )
         ));
         ?>
+        <div class="push"></div>
+        <?php
+        foreach($dates as $date) {
+            $desc = Yii::app()->dateFormatter->formatDateTime(strtotime($date->date), 'short', null);
+            $desc .= (empty($date->title)) ? '' : " ({$date->title})";
+            echo CHtml::link(Yii::t('app','Druckansicht für den {date}',array('{date}' => $desc)), 
+                array('appointment/overview','id' => Yii::app()->user->id, 'date' => $date->id),
+                array('class' => 'small button'));
+        }
+    ?>
+        <div class="push"></div>
     </div>
 </div>
 <?php if (Yii::app()->params['allowBlockingAppointments']) { ?>

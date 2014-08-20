@@ -31,7 +31,7 @@ $this->breadcrumbs = array(
         <div class="panel">
             <div class="row">
                 <div class="small-2 columns text-center">
-                    <i class="fi-x callout-icon"></i>
+                    <i class="fi-alert callout-icon"></i>
                 </div>
                 <div class="small-10 columns">
                     <h2><?php echo Yii::t('app','Fehler') . ' ' . $code; ?></h2>   

@@ -17,9 +17,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/* @var $this AppointmentController */
-/* @var $model Appointment */
-/* @var $blockedApp BlockedAppointment */
+/**
+ *  @var $this AppointmentController 
+ *  @var $model Appointment 
+ *  @var $blockedApp BlockedAppointment 
+ *  @var $dates 
+ */
 $this->setPageTitle(Yii::t('app', 'Terminverwaltung'));
 Yii::app()->clientScript->registerCoreScript('jquery.ui');
 Yii::app()->getClientScript()->registerCssFile(Yii::app()->clientScript->getCoreScriptUrl() . '/jui/css/base/jquery-ui.css');
@@ -57,44 +60,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
     ),
 ));
 
-?>
-<div class="row">
-    <h4 class="subheader"><?php echo Yii::t('app','Druckansicht'); ?></h4>
-    <div class="five columns">
-        <div class="row collapse">
-            <div class="four columns">
-                <span class="prefix"><?php echo Yii::t('app','Lehrer'); ?></span>
-            </div>
-            <div class="eight columns">
-                <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                    'id' => 'print-view-teacher',
-                    'name' => '',
-                    'sourceUrl' => 'index.php?r=user/search&role=2',
-                    'options' => array(
-                        'minLength' => '1',
-                    ),
-                    'htmlOptions' => array(
-                        'placeholder' => Yii::t('app','Geben Sie einen Nachnamen ein'),
-                    ),
-                )); ?>
-            </div>
-        </div>        
-    </div>
-    <div class="five columns">
-        <div class="row collapse">
-            <div class="four columns">
-                <span class="prefix"><?php echo Yii::t('app','Elternsprechtag'); ?></span>
-            </div>
-            <div class="eight columns">
-                <?php echo Select2::dropDownList('','',$dates,array('id' => 'print-view-date')); ?>
-            </div>
-        </div>
-    </div>
-    <div class="two columns">
-        <div class="small button" id="print-view-button"><?php echo Yii::t('app','Anzeigen'); ?></div>
-    </div>
-</div>
-<?php
 if (Yii::app()->params['allowBlockingAppointments']) {
     ?>
     <div class="push"></div>
@@ -121,3 +86,44 @@ if (Yii::app()->params['allowBlockingAppointments']) {
     ));
 }
 ?>
+<div class="push"></div>
+<div class="row">
+    <div class="small-12 columns small-centered">
+        <h2 class="text-center"><?php echo Yii::t('app','Druckansicht'); ?></h2>
+    </div>
+</div>
+<div class="row">
+    <div class="small-5 columns">
+        <div class="row collapse">
+            <div class="small-4 columns">
+                <span class="prefix"><?php echo Yii::t('app','Lehrer'); ?></span>
+            </div>
+            <div class="small-8 columns">
+                <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                    'id' => 'print-view-teacher',
+                    'name' => '',
+                    'sourceUrl' => 'index.php?r=user/search&role=2',
+                    'options' => array(
+                        'minLength' => '1',
+                    ),
+                    'htmlOptions' => array(
+                        'placeholder' => Yii::t('app','Geben Sie einen Nachnamen ein'),
+                    ),
+                )); ?>
+            </div>
+        </div>        
+    </div>
+    <div class="small-5 columns">
+        <div class="row collapse">
+            <div class="small-4 columns">
+                <span class="prefix"><?php echo Yii::t('app','Elternsprechtag'); ?></span>
+            </div>
+            <div class="small-8 columns">
+                <?php echo Select2::dropDownList('','',$dates,array('id' => 'print-view-date')); ?>
+            </div>
+        </div>
+    </div>
+    <div class="small-2 columns">
+        <div class="small button" id="print-view-button"><?php echo Yii::t('app','Anzeigen'); ?></div>
+    </div>
+</div>
