@@ -13,9 +13,9 @@ Sollten Sie das Projekt unterstützen wollen (z.B. bei der Übersetzung von Deut
 Information for english speaking People
 ---------------------------------------
 
-This project is intended to be used for managing parents consultation-days. The application is at the moment only available in german. The GPLv3 is used.
+This project is intended to manage parent teacher days. At the moment this application is  only available in german. The english translation is still a work in progress. It is licensed under the GPLv3.
 
-For more Informations you can contact Christian Ehringfeld (c[dot]ehringfeld[at]t-online[dot]de), David Mock (d[dot]u[dot]mock[at]googlemail[dot]com) or Matthias Unterbusch(matthias[dot]unterbusch[at]web.de).
+For more Information contact Christian Ehringfeld (c[dot]ehringfeld[at]t-online[dot]de) or David Mock (d[dot]u[dot]mock[at]googlemail[dot]com).
 
 
 
