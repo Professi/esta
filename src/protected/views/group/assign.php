@@ -50,7 +50,7 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                 </thead>
                 <tbody id="input-target"></tbody>
             </table>
-            <input type="submit" class="small button right" value="<?php echo Yii::t('app','Absenden'); ?>">
+            <?php echo CHtml::submitButton(Yii::t('app','Absenden'), array('class' => 'small button right')); ?>
        <?php $this->endWidget(); ?>
     </div>
 </div>
