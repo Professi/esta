@@ -328,7 +328,7 @@ class User extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     private function updateTan($tan = '') {
-        if (!Yii::app()->user->checkAccess('1')) {
+        if (!Yii::app()->user->checkAccess(MANAGEMENT)) {
             if ($tan == '') {
                 $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
             }
@@ -756,9 +756,9 @@ class User extends CActiveRecord {
      */
     public function getRolePermission() {
         $rc = null;
-        if (Yii::app()->user->checkAccess('0')) {
+        if (Yii::app()->user->checkAccess(ADMIN)) {
             $rc = array('3' => Yii::t('app', 'Eltern'), '2' => Yii::t('app', 'Lehrer'), '1' => Yii::t('app', 'Verwaltung'), '0' => Yii::t('app', 'Administrator'));
-        } else if (Yii::app()->user->checkAccessNotAdmin('1') && $this->id == Yii::app()->user->getId()) {
+        } else if (Yii::app()->user->checkAccessNotAdmin(MANAGEMENT) && $this->id == Yii::app()->user->getId()) {
             $rc = array('3' => Yii::t('app', 'Eltern'), '2' => Yii::t('app', 'Lehrer'), '1' => Yii::t('app', 'Verwaltung'));
         } else {
             $rc = array('3' => Yii::t('app', 'Eltern'), '2' => Yii::t('app', 'Lehrer'));

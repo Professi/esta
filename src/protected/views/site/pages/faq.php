@@ -34,7 +34,7 @@ $this->breadcrumbs = array(
             <li><a href="#Q3"><?php echo Yii::t('app', 'Wie kann ich Schüler hinzufügen?'); ?></a></li>
             <li><a href="#Q4"><?php echo Yii::t('app', 'Wie kann ich meine Benutzerdaten ändern?'); ?></a></li>
             <li><a href="#Q5"><?php echo Yii::t('app', 'Wie kann ich einen Termin vereinbaren?'); ?></a></li>
-            <?php if (Yii::app()->user->checkAccess('3') || Yii::app()->user->isGuest()) { ?>
+            <?php if (Yii::app()->user->checkAccess(PARENTS) || Yii::app()->user->isGuest()) { ?>
                 <li><a href="#Q6"><?php echo Yii::t('app', 'Wie kann ich einen Termin löschen?'); ?></a></li>
             <?php } else { ?>
                 <li><a href="#Q7"><?php echo Yii::t('app', 'Wie kann ich einen Termin löschen?'); ?></a></li>
@@ -70,7 +70,7 @@ $this->breadcrumbs = array(
         <p>
             <?php echo Yii::t('app', 'Um einen Termin auszumachen, müssen Sie auf den Menübutton „Termin festlegen“ klicken. Um sich Lehrer mit einem bestimmten Anfangsbuchstaben anzeigen zu lassen, klicken Sie dann auf diesen Buchstaben. Danach können Sie den Lehrer in der erscheinenden Liste direkt auswählen, indem Sie auf das kleine Weckersymbol klicken. Alternativ können Sie in dem Textfeld die Anfangsbuchstaben des gewünschten Lehrers eingeben und diesen im sich öffnendem Menü anklicken. Wenn Sie einen Lehrer ausgewählt haben, erscheint dessen Zeitplan. In diesem sind die Termine entweder als „VERFÜGBAR“ oder „BELEGT“ gekennzeichnet. Durch das Klicken auf einen Termin, der als „VERFÜGBAR“ gekennzeichnet ist, werden für Sie automatisch das Datum und die Uhrzeit des angeklickten Termins in die untenstehenden Felder eingetragen. Falls mehr als ein Kind die Schule besucht, müssen Sie den Namen des jeweiligen Kindes auswählen. Zum Schluss müssen Sie auf den Button „Bestätigen“ klicken, um den Termin zu reservieren.'); ?>
         </p>
-        <?php if (Yii::app()->user->checkAccess('3') || Yii::app()->user->isGuest()) { ?>
+        <?php if (Yii::app()->user->checkAccess(PARENTS) || Yii::app()->user->isGuest()) { ?>
             <div class="push-faq" id="Q6"></div>
             <h4 class="small subheader"><?php echo Yii::t('app', 'Wie kann ich einen Termin löschen?'); ?></h4>
             <p>
@@ -95,7 +95,7 @@ $this->breadcrumbs = array(
         </p>
         <p class="text-center">
             <?php
-            echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', Yii::app()->user->checkAccess('1') == TRUE ? 'index.php' :
+            echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', Yii::app()->user->checkAccess(MANAGEMENT) == TRUE ? 'index.php' :
                             'index.php?r=Appointment/index');
             ?> 
         </p>

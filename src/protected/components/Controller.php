@@ -18,10 +18,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-define('ADMIN', 0);
-define('MANAGEMENT', 1);
-define('TEACHER', 2);
-define('PARENTS', 3);
+define('ADMIN', '0');
+define('MANAGEMENT', '1');
+define('TEACHER', '2');
+define('PARENTS', '3');
 
 /*
  * Klasse Controller überschreibt die Standard Yii Controller Klasse

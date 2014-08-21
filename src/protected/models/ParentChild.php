@@ -45,11 +45,12 @@ class ParentChild extends CActiveRecord {
      */
     public function beforeDelete() {
         $rc = parent::beforeDelete();
-        if (Yii::app()->user->checkAccess('1') || $this->user_id == Yii::app()->user->getId()) {
+        if (Yii::app()->user->checkAccess(MANAGEMENT) || $this->user_id == Yii::app()->user->getId()) {
             if ($rc) {
                 Appointment::model()->deleteAllByAttributes(array('parent_child_id' => $this->id));
             }
         } else {
+            /** @todo $this->throw... ? */
             throw new CHttpException(403, Yii::t('app', 'Keine Berechtigung.'));
         }
         return $rc;
@@ -62,7 +63,7 @@ class ParentChild extends CActiveRecord {
      * @return boolean Return der Elternmethode
      */
     public function beforeValidate() {
-        if (Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()) {
+        if (Yii::app()->user->checkAccess(PARENTS) && !Yii::app()->user->isAdmin()) {
             $this->user_id = Yii::app()->user->getId();
         }
         return parent::beforeValidate();

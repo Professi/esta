@@ -27,7 +27,7 @@ $this->breadcrumbs = array(
     'Users' => array('index'),
     'Create',
 );
-if (Yii::app()->user->checkAccess('1')) {
+if (Yii::app()->user->checkAccess(MANAGEMENT)) {
     $this->menu = array(
         array(  'label' => Yii::t('app', 'Benutzer verwalten'), 
                 'url' => array('admin'),

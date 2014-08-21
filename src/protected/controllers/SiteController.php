@@ -39,7 +39,7 @@ class SiteController extends Controller {
      * @throws CHttpException
      */
     public function actionDeleteAll() {
-        if (Yii::app()->user->checkAccess('0')) {
+        if (Yii::app()->user->checkAccess(ADMIN)) {
             $model = new DeleteAllForm();
             if (isset($_POST['DeleteAllForm'])) {
                 $model->setAttributes($_POST['DeleteAllForm']);
@@ -70,7 +70,7 @@ class SiteController extends Controller {
      * action für das Konfigurationsskript
      */
     public function actionConfig() {
-        if (Yii::app()->user->checkAccess('0')) {
+        if (Yii::app()->user->checkAccess(ADMIN)) {
             $configList = ConfigEntry::model()->findAll();
             $model = new ConfigForm();
             $class = new ReflectionClass('ConfigForm');
@@ -151,7 +151,7 @@ class SiteController extends Controller {
                 $model->attributes = $_POST['LoginForm'];
                 if ($model->validate() && $model->authenticate()) {
                     if (!Yii::app()->user->isAdmin()) {
-                        if (Yii::app()->user->checkAccess('1')) {
+                        if (Yii::app()->user->checkAccess(MANAGEMENT)) {
                             $this->redirect('index.php?r=/Appointment/admin');
                         }
                         $this->redirect('index.php?r=/Appointment/Index');

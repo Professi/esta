@@ -162,7 +162,7 @@ class Appointment extends CActiveRecord {
         $rc = true;
         if (parent::validate($attributes, $clearErrors)) {
             $date = $this->dateandtime->date;
-            if (Yii::app()->user->checkAccessNotAdmin('3')) {
+            if (Yii::app()->user->checkAccessNotAdmin(PARENTS)) {
                 if ($date->lockAt < time()) {
                     $rc = false;
                     Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie können für diesen Tag keine Termine mehr buchen.'));
@@ -221,11 +221,11 @@ class Appointment extends CActiveRecord {
         $rc = parent::beforeSave();
         if ($rc && Appointment::model()->countByAttributes(array('dateAndTime_id' => $this->dateAndTime_id, 'user_id' => $this->user_id)) > 0) {
             $rc = false;
-            if (Yii::app()->user->checkAccess('1')) {
+            if (Yii::app()->user->checkAccess(MANAGEMENT)) {
                 $this->addError('dateAndTime_id', Yii::t('app', 'Diese/r Lehrer/in hat bereits zu dieser Uhrzeit einen Termin.'));
             }
         }
-        if (!Yii::app()->user->checkAccess('1') && $rc) {
+        if (!Yii::app()->user->checkAccess(MANAGEMENT) && $rc) {
             if (Appointment::model()->countByAttributes(array('parent_child_id' => $this->parent_child_id)) > Yii::app()->params['maxAppointmentsPerChild']) {
                 $rc = false;
                 Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Leider konnte Ihr Termin nicht gebucht haben, da Sie die maximale Anzahl von {maxApp} Terminen überschritten haben.', array('{maxApp}' => Yii::app()->params['maxAppointmentsPerChild'])));
@@ -238,7 +238,7 @@ class Appointment extends CActiveRecord {
         }
         if ($rc && Appointment::model()->count($this->getCriteriaForAppCount()) > 0) {
             $rc = false;
-            if (Yii::app()->user->checkAccess('1')) {
+            if (Yii::app()->user->checkAccess(MANAGEMENT)) {
                 $this->addError('dateAndTime_id', Yii::t('app', 'Dieser Benutzer hat bereits einen Termin zu dieser Uhrzeit.'));
             } else {
                 $this->addError('dateAndTime_id', Yii::t('app', 'Sie haben bereits einen Termin zu dieser Uhrzeit.'));
@@ -267,11 +267,11 @@ class Appointment extends CActiveRecord {
      */
     public function beforeDelete() {
         $rc = parent::beforeDelete();
-        if ($rc && Yii::app()->user->checkAccessNotAdmin('2')) {
+        if ($rc && Yii::app()->user->checkAccessNotAdmin(TEACHER)) {
             if ($this->user_id != Yii::app()->user->getId()) {
                 $rc = false;
             }
-        } else if ($rc && Yii::app()->user->checkAccessNotAdmin('3')) {
+        } else if ($rc && Yii::app()->user->checkAccessNotAdmin(PARENTS)) {
             if ($this->parentchild->user_id != Yii::app()->user->id) {
                 $rc = false;
             }

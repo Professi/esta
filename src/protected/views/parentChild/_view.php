@@ -25,7 +25,7 @@
         <li>
             <?php echo CHtml::encode($data->child->firstname . " " . $data->child->lastname); ?>
             &nbsp;
-            <?php if (Yii::app()->params['allowParentsToManageChilds'] || Yii::app()->user->checkAccess('1')) { ?> 
+            <?php if (Yii::app()->params['allowParentsToManageChilds'] || Yii::app()->user->checkAccess(MANAGEMENT)) { ?> 
                 <a href="index.php?r=parentChild/delete&id=<?php echo $data->id ?>" class="delete-children">
                     <i class="fi-x-circle"></i>
                 </a>

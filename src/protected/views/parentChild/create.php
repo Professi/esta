@@ -27,14 +27,14 @@ $this->breadcrumbs = array(
 $this->menu = array(
     array(  'label' => Yii::t('app', 'Eltern-Kind-Verknüpfungen verwalten'), 
             'url' => array('admin'), 
-            'visible' => Yii::app()->user->checkAccess(1),
+            'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
 );
 ?>
 <div class="row">
     <div class="small-12 columns small-centered">
         <fieldset>
-            <?php if (Yii::app()->user->checkAccess('3')) { ?>
+            <?php if (Yii::app()->user->checkAccess(PARENTS)) { ?>
                 <legend><?php echo Yii::t('app', 'Kind anlegen'); ?></legend>
             <?php } else { ?>
                 <legend><?php echo Yii::t('app', 'Eltern-Kind-Verknüpfung anlegen'); ?></legend>

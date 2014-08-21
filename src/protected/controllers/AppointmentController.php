@@ -95,13 +95,14 @@ class AppointmentController extends Controller {
      */
     public function actionCreateBlockApp() {
         if (Yii::app()->params['allowBlockingAppointments'] &&
-                !(Yii::app()->user->checkAccessNotAdmin('2') &&
+                !(Yii::app()->user->checkAccessNotAdmin(TEACHER) &&
                 Yii::app()->params['allowBlockingOnlyForManagement'])) {
             $model = new BlockedAppointment();
             $model->unsetAttributes();
             $appId = '';
             $teacherLabel = $this->getInformationWithTeacherId($appId);
-            if (Yii::app()->user->checkAccessRole('2', '-1')) {
+            /** @todo checkAccess(-1) ?? */
+            if (Yii::app()->user->checkAccessRole(TEACHER, '-1')) {
                 $model->user_id = Yii::app()->user->getId();
             } else {
 //                $model->user_id = $appId;
@@ -113,7 +114,7 @@ class AppointmentController extends Controller {
                 }
                 if ($model->save()) {
                     Yii::app()->user->setFlash('success', Yii::t('app', 'Termin erfolgreich geblockt.'));
-                    if (Yii::app()->user->checkAccessNotAdmin('2')) {
+                    if (Yii::app()->user->checkAccessNotAdmin(TEACHER)) {
                         $this->redirect(array('index'));
                     } else {
                         $this->redirect(array('admin'));
@@ -133,9 +134,9 @@ class AppointmentController extends Controller {
      */
     public function actionDeleteBlockApp($id, $teacherId = null) {
         if (!empty($id)) {
-            if ($teacherId == null && Yii::app()->user->checkAccessNotAdmin('2')) {
+            if ($teacherId == null && Yii::app()->user->checkAccessNotAdmin(TEACHER)) {
                 $model = BlockedAppointment::model()->findByAttributes(array('id' => $id, 'user_id' => Yii::app()->user->getId()));
-            } else if (Yii::app()->user->checkAccess('1')) {
+            } else if (Yii::app()->user->checkAccess(MANAGEMENT)) {
                 $model = BlockedAppointment::model()->findByPk($id);
             } else {
                 $this->throwFourNullThree();
@@ -193,7 +194,7 @@ class AppointmentController extends Controller {
                 $parentId = $model->parentchild->user->getPrimaryKey();
             }
             if ($model->save())
-                if (Yii::app()->user->checkAccessNotAdmin('2')) {
+                if (Yii::app()->user->checkAccessNotAdmin(TEACHER)) {
                     $this->redirect('index.php?r=Appointment/index');
                 } else {
                     $this->redirect(array('view', 'id' => $model->id));
@@ -262,7 +263,7 @@ class AppointmentController extends Controller {
         $badRequest = false;
         if (is_numeric($teacher)) {
             /** @todo in eigene function auslagern? */
-            if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccess('3')) {
+            if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccess(PARENTS)) {
                 $userGroups = Yii::app()->user->getGroups();
                 if (!empty($userGroups)) {
                     $badRequest = true;
@@ -339,12 +340,12 @@ class AppointmentController extends Controller {
         if (!empty($id)) {
             $model = $this->loadModel($id);
             if ($this->loadModel($id)->delete()) {
-                if (!Yii::app()->user->checkAccessNotAdmin('3') && Yii::app()->params['mailsActivated']) {
+                if (!Yii::app()->user->checkAccessNotAdmin(PARENTS) && Yii::app()->params['mailsActivated']) {
                     $mail = new Mail();
                     $mail->sendAppointmentDeleted($model->parentchild->user->email, $model->user, $model->dateandtime->time, $model->parentchild->child, $model->dateandtime->date->date);
                 }
                 Yii::app()->user->setFlash('success', Yii::t('app', 'Termin erfolgreich entfernt.'));
-                if (Yii::app()->user->checkAccess('1')) {
+                if (Yii::app()->user->checkAccess(MANAGEMENT)) {
                     $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
                 } else {
                     $this->redirect('index.php?r=/appointment/index');
@@ -358,7 +359,7 @@ class AppointmentController extends Controller {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function actionIndex() {
-        if (Yii::app()->user->checkAccessNotAdmin('2')) {
+        if (Yii::app()->user->checkAccessNotAdmin(TEACHER)) {
             $dataProvider = new Appointment('customSearch');
             $dataProvider->user_id = Yii::app()->user->getId();
             $blockedApp = new BlockedAppointment();
@@ -375,7 +376,7 @@ class AppointmentController extends Controller {
                     'dataProvider' => $dataProvider->customSearch(),
                 ));
             }
-        } else if (Yii::app()->user->checkAccessNotAdmin('3')) {
+        } else if (Yii::app()->user->checkAccessNotAdmin(PARENTS)) {
             $no_children = count(ParentChild::model()->findAllByAttributes(
                                     array('user_id' => Yii::app()->user->getId())
                     )) == 0 ? true : false;
@@ -464,7 +465,7 @@ class AppointmentController extends Controller {
     public function getDatesWithTimes($dateMax, $mergeDates = false) {
         $a_groupOfDateAndTimes = array();
         if (!empty($dateMax)) {
-            if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccessNotAdmin('3') && Yii::app()->user->getState('groups') != null) {
+            if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccessNotAdmin(PARENTS) && Yii::app()->user->getState('groups') != null) {
                 //Verwaltung kann trotzdem noch Termine an anderen Tagen für diesen Benutzer buchen
                 $a_dates = Date::model()->findAll(Date::criteriaForDateWithGroups($dateMax));
             } else {
@@ -499,7 +500,7 @@ class AppointmentController extends Controller {
     public function isAppointmentAvailable($teacher, $dateAndTimeId, $overrideAccess = false) {
         $rc = array(Yii::t('app', "BELEGT"), false);
         $check = false;
-        if ((Yii::app()->params['allowGroups'] && !Yii::app()->user->getState('group')) || (!Yii::app()->params['allowGroups'] || Yii::app()->user->checkAccessRole('1', '3') || Yii::app()->user->checkAccessRole('0', '2'))) {
+        if ((Yii::app()->params['allowGroups'] && !Yii::app()->user->getState('group')) || (!Yii::app()->params['allowGroups'] || Yii::app()->user->checkAccessRole(MANAGEMENT, PARENTS) || Yii::app()->user->checkAccessRole(ADMIN, TEACHER))) {
             if (Appointment::model()->countByAttributes(array('user_id' => $teacher,
                         'dateAndTime_id' => $dateAndTimeId)) == '0') {
                 $check = true;
@@ -507,7 +508,7 @@ class AppointmentController extends Controller {
             if ($check && Yii::app()->params['allowBlockingAppointments'] &&
                     BlockedAppointment::model()->countByAttributes(array('user_id' => $teacher,
                         'dateAndTime_id' => $dateAndTimeId)) != '0') {
-                if (Yii::app()->user->checkAccess('1') || $overrideAccess) {
+                if (Yii::app()->user->checkAccess(MANAGEMENT) || $overrideAccess) {
                     $rc = array(Yii::t('app', "BLOCKIERT"), false);
                 }
                 $check = false;
@@ -649,8 +650,8 @@ class AppointmentController extends Controller {
     public function actionOverview($id,$date) {
         
         if( ! ( 
-                (Yii::app()->user->checkAccessNotAdmin('2') && $id === Yii::app()->user->id) 
-                || Yii::app()->user->checkAccess('1')
+                (Yii::app()->user->checkAccessNotAdmin(TEACHER) && $id === Yii::app()->user->id) 
+                || Yii::app()->user->checkAccess(MANAGEMENT)
               )
           )
         {

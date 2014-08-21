@@ -28,15 +28,15 @@ $this->breadcrumbs = array(
 $this->menu = array(
     array(  'label' => Yii::t('app', 'Benutzer erstellen'), 
             'url' => array('create'), 
-            'visible' => Yii::app()->user->checkAccess('1'),
+            'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
     array(  'label' => Yii::t('app', 'Benutzer anzeigen'), 
             'url' => array('view', 'id' => $model->id), 
-            'visible' => Yii::app()->user->checkAccess('1'),
+            'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
     array(  'label' => Yii::t('app', 'Benutzer verwalten'),
             'url' => array('admin'), 
-            'visible' => Yii::app()->user->checkAccess('1'),
+            'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
 );
 ?>

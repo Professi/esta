@@ -98,9 +98,9 @@ class BlockedAppointment extends CActiveRecord {
                 $this->addError('user_id', Yii::t('app', 'Kein Lehrer.'));
             } else if (Yii::app()->params['allowBlockingAppointments']) {
                 if (BlockedAppointment::model()->count($this->countUsedDateAndTimes()) >=
-                        Yii::app()->params['appointmentBlocksPerDate'] && Yii::app()->checkAccessNotAdmin('2')) {
+                        Yii::app()->params['appointmentBlocksPerDate'] && Yii::app()->checkAccessNotAdmin(TEACHER)) {
                     $this->addError('dateAndTime_id', Yii::t('app', 'Zuviele Termine berereits geblockt. Maximum liegt bei {appBlockPerDate} pro Elternsprechtag.', array('{appBlockPerDate}' => Yii::app()->params['appointmentBlocksPerDate'])));
-                } else if (Yii::app()->user->checkAccessNotAdmin('2') && Yii::app()->params['allowBlockingOnlyForManagement']) {
+                } else if (Yii::app()->user->checkAccessNotAdmin(TEACHER) && Yii::app()->params['allowBlockingOnlyForManagement']) {
                     Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Nur die Verwaltung kann Termine blockieren.'));
                 } else {
                     $rc = true;
@@ -112,7 +112,7 @@ class BlockedAppointment extends CActiveRecord {
 
     public function afterSave() {
         parent::afterSave();
-        if (Yii::app()->params['teacherAllowBlockTeacherApps'] && Yii::app()->user->checkAccess(2)) {
+        if (Yii::app()->params['teacherAllowBlockTeacherApps'] && Yii::app()->user->checkAccess(TEACHER)) {
             Yii::log(Yii::app()->user->id . ' blocked:' . $this->id . ' for:' . $this->user_id . ' with:' . $this->reason, 'info', 'app.models.BlockedAppointment');
         }
     }
@@ -126,7 +126,7 @@ class BlockedAppointment extends CActiveRecord {
         $criteria = new CDbCriteria;
         $criteria->with = array('user', 'dateandtime');
         $criteria->together = true;
-        if (Yii::app()->user->checkAccessNotAdmin('2')) {
+        if (Yii::app()->user->checkAccessNotAdmin(TEACHER)) {
             $criteria->compare('user_id', Yii::app()->user->id);
         }
         $criteria->compare('id', $this->id);

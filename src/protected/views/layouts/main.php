@@ -22,7 +22,7 @@
 $menu = array( //icon,label,url,visible(bool)
     array('fi-home', Yii::t('app','Ihre Termine'), array('Appointment/index'), ! Yii::app()->user->isAdmin() && Yii::app()->user->checkAccessRole(TEACHER, PARENTS)),
     array('fi-calendar', Yii::t('app','Termine vereinbaren'), array('Appointment/getTeacher'), Yii::app()->user->checkAccess(PARENTS) && !Yii::app()->user->isAdmin()),
-    array('fi-plus', Yii::t('app','Termine anlengen'), array('Appointment/create'), Yii::app()->user->checkAccessNotAdmin(TEACHER) && Yii::app()->params['teacherAllowBlockTeacherApps']),
+    array('fi-plus', Yii::t('app','Termine anlegen'), array('Appointment/create'), Yii::app()->user->checkAccessNotAdmin(TEACHER) && Yii::app()->params['teacherAllowBlockTeacherApps']),
     array('fi-lock', Yii::t('app','Termine blockieren'), array('Appointment/createBlockApp'), Yii::app()->user->checkAccessNotAdmin(TEACHER) && Yii::app()->params['allowBlockingAppointments'] && !(Yii::app()->params['allowBlockingOnlyForManagement'])),
     array('fi-widget', Yii::t('app','Elternsprechtage'), array('Date/admin'), Yii::app()->user->checkAccess(ADMIN)),
     array('fi-calendar', Yii::t('app','Termine'), array('Appointment/admin'), Yii::app()->user->checkAccess(MANAGEMENT)),
@@ -141,7 +141,7 @@ $menu = array( //icon,label,url,visible(bool)
             'htmlOptions' => array('class' => 'right inline-list'),
             'items' => array(
                 array('label' => Yii::t('app', 'Statistik'), 'url' => array('/site/statistics'), 
-                      'visible' => (!Yii::app()->user->isGuest() && Yii::app()->user->checkAccess('0'))),
+                      'visible' => (!Yii::app()->user->isGuest() && Yii::app()->user->checkAccess(ADMIN))),
                 array('label' => Yii::t('app', 'FAQ'), 'url' => array('/site/page', 'view' => 'faq')),
                 array('label' => Yii::t('app', 'Impressum'), 'url' => array('/site/page', 'view' => 'impressum')),
                 array('label' => Yii::t('app', 'Kontakt'), 'url' => array('/site/contact')),

@@ -41,7 +41,7 @@ $this->breadcrumbs = array(
             
         </div>
         <p class="text-center"><?php
-            echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', Yii::app()->user->checkAccess('1') == TRUE ? 'index.php' :
+            echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', Yii::app()->user->checkAccess(MANAGEMENT) == TRUE ? 'index.php' :
                             'index.php?r=Appointment/index');
             ?> </p>
     </div>

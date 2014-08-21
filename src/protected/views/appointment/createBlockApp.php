@@ -46,6 +46,7 @@ $this->menu = array(
                 'errorMessageCssClass' => 'error',
                 'skin' => false,
             ));
+            /** @todo checkAccess(-1) ? */
             if (!Yii::app()->user->checkAccessRole(TEACHER, '-1') || Yii::app()->params['teacherAllowBlockTeacherApps']) {
                 ?>
                 <div class="row collapse">

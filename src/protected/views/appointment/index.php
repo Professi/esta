@@ -26,11 +26,11 @@ $this->breadcrumbs = array(
 $this->menu = array(
     array(  'label' => Yii::t('app', 'Termine vereinbaren'), 
             'url' => array('create'), 
-            'visible' => Yii::app()->user->checkAccess('1'),
+            'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
     array(  'label' => Yii::t('app', 'Termine verwalten'), 
             'url' => array('admin'), 
-            'visible' => Yii::app()->user->checkAccess('1'),
+            'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
 );
 ?>

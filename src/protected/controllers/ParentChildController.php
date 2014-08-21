@@ -78,7 +78,7 @@ class ParentChildController extends Controller {
      * Lists all models.
      */
     public function actionIndex() {
-        if (Yii::app()->user->checkAccess(1)) {
+        if (Yii::app()->user->checkAccess(MANAGEMENT)) {
             $dataProvider = new CActiveDataProvider('ParentChild');
         } else {
             $dataProvider = new CActiveDataProvider('ParentChild', array(
@@ -107,7 +107,7 @@ class ParentChildController extends Controller {
             }
             if ($model->save()) {
                 Yii::app()->user->setFlash('success', Yii::t('app','Kind erfolgreich hinzugefügt.'));
-                if (Yii::app()->user->checkAccess('1')) {
+                if (Yii::app()->user->checkAccess(MANAGEMENT)) {
                     $this->redirect(array('admin'));
                 } else {
                     $this->redirect(array('index'));
@@ -127,7 +127,7 @@ class ParentChildController extends Controller {
      */
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
-        if (!isset($_GET['ajax']) && Yii::app()->user->checkAccess('1')) {
+        if (!isset($_GET['ajax']) && Yii::app()->user->checkAccess(MANAGEMENT)) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
         } else {
             $this->redirect(array('index'));
@@ -183,7 +183,7 @@ class ParentChildController extends Controller {
      */
     public function checkUser($parentChildId) {
         $rc = false;
-        if (Yii::app()->user->checkAccess('1')) {
+        if (Yii::app()->user->checkAccess(MANAGEMENT)) {
             $rc = true;
         } else if (ParentChild::model()->countByAttributes(array('user_id' => Yii::app()->user->getId(), 'child_id' => $parentChildId)) == 1) {
             $rc = true;

@@ -257,7 +257,7 @@ class UserController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate() {
-        if ((!Yii::app()->params['lockRegistration'] && Yii::app()->user->isGuest()) || Yii::app()->user->checkAccess('1')) {
+        if ((!Yii::app()->params['lockRegistration'] && Yii::app()->user->isGuest()) || Yii::app()->user->checkAccess(MANAGEMENT)) {
             $model = new User;
             if (isset($_POST['User'])) {
                 $model->setAttributes($_POST['User']);
@@ -265,7 +265,7 @@ class UserController extends Controller {
                     $model->groupIds = $_POST['User']['groupIds'];
                 }
                 if ($model->save()) {
-                    if (Yii::app()->user->checkAccess('1')) {
+                    if (Yii::app()->user->checkAccess(MANAGEMENT)) {
                         Yii::app()->user->setFlash("success", Yii::t('app',"Benutzer wurde erstellt."));
                         $this->redirect(array('user/admin'));
                     } else {
@@ -300,7 +300,7 @@ class UserController extends Controller {
                 $model->setAttributes($_POST['User']);
                 $model->updateGroups = true;
                 if ($model->save()) {
-                    if (Yii::app()->user->checkAccess('1')) {
+                    if (Yii::app()->user->checkAccess(MANAGEMENT)) {
                         Yii::app()->user->setFlash("success", Yii::t('app', "Benutzer wurde aktualisiert."));
                         $this->redirect(array('view&id=' . $id), false);
                     } else {
@@ -314,7 +314,7 @@ class UserController extends Controller {
         } else {
             Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie können keine Administratorkonten bearbeiten.'));
         }
-        if ((Yii::app()->user->checkAccessRole('2', '3') && Yii::app()->user->id == $id) || Yii::app()->user->checkAccess('1')) {
+        if ((Yii::app()->user->checkAccessRole(TEACHER, PARENTS) && Yii::app()->user->id == $id) || Yii::app()->user->checkAccess(MANAGEMENT)) {
             $this->render('update', array(
                 'model' => $model,
             ));
@@ -418,9 +418,9 @@ class UserController extends Controller {
         $dataProvider->unsetAttributes();
         $dataProvider->lastname = $term;
         $dataProvider->groups = Yii::app()->user->getGroups();
-        if (Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()) {
+        if (Yii::app()->user->checkAccess(PARENTS) && !Yii::app()->user->isAdmin()) {
             $dataProvider->role = 2;
-        } else if (Yii::app()->user->checkAccess('1') || Yii::app()->params['teacherAllowBlockTeacherApps']) {
+        } else if (Yii::app()->user->checkAccess(MANAGEMENT) || Yii::app()->params['teacherAllowBlockTeacherApps']) {
             $dataProvider->role = $role;
         }
         $criteria = $dataProvider->searchCriteriaTeacherAutoComplete($groups);
