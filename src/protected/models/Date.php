@@ -129,7 +129,7 @@ class Date extends CActiveRecord {
             } else if (!is_numeric((strtotime($this->end) - strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
                 $rc = false;
                 $this->addError('durationPerAppointment', Yii::t('app', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.'));
-            } else if (Date::parseDateTime($this->date, $this->begin) < Date::parseDateTime($this->lockAt)) {
+            } else if (Date::parseDateTime($this->date, $this->begin, true) < Date::parseDateTime($this->lockAt)) {
                 $rc = false;
                 $this->addError('lockAt', Yii::t('app', 'Die Sperrfrist muss vor oder auf dem Anfang liegen.'));
             }
@@ -142,13 +142,17 @@ class Date extends CActiveRecord {
         return $rc;
     }
 
-    public static function parseDateTime($date, $begin = false) {
-        return CDateTimeParser::parse($date . ($begin != false ? ' ' . $begin : ''), self::getDateTimeFormat());
+    public static function parseDateTime($date, $begin = false, $simple = false) {
+        return CDateTimeParser::parse($date . ($begin != false ? ' ' . $begin : ''), ($simple ? self::getSimpleDateTimeFormat() : self::getDateTimeFormat()));
     }
 
     public static function getDateTimeFormat() {
         return Yii::app()->locale->getDateFormat('short') . ' ' .
                 Yii::app()->locale->getTimeFormat('short');
+    }
+
+    public static function getSimpleDateTimeFormat() {
+        return Yii::app()->locale->getDateFormat('short') . ' ' . 'H:m';
     }
 
     /**
