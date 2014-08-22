@@ -208,49 +208,72 @@ class GroupController extends Controller {
         Yii::app()->end();
     }
     
-    public function actionAssign() {
-        $model = new Group();
-        $users = array();
-        $groups = array();
-        $crit = new CDbCriteria();
-        $crit->addCondition('role = :role1', 'OR');
-        $crit->addCondition('role = :role2', 'OR');
-        $crit->params = array(':role1'=>2,':role2'=>3);
-        foreach(User::model()->findAll($crit) as $user) {
-            $desc = (empty($user->title)) ? '' : "{$user->title} ";
-            $desc .= "{$user->firstname} {$user->lastname}";
-            $users[$user->id] = $desc;
-        }
-        foreach(Group::model()->findAll() as $group) {
-            $groups[$group->id] = $group->groupname;
-        }
-        $this->render('assign', array('model' => $model,'groups' => $groups, 'users' => $users));
-    }
-    
-    private function iterateOverGroups($groups) {
-        /*
-        $model = array();
-        foreach ($groups as $i => $group) {
-            if (isset($_POST['user'][$i]) && isset($_POST['group'][$i])) {
-                $user = UserController::loadModel($_POST['user'][$i]);
-                $group->group_id = $_POST['Tan'][$i]['group_id'];
-                $tan->childFirstname = $_POST['Tan'][$i]['childFirstname'];
-                $tan->childLastname = $_POST['Tan'][$i]['childLastname'];
-                $tan->tan_count = 1;
-                if ($tan->validate()) {
-                    $tan->generateTan(false);
-                    $model[] = $tan;
-                } else {
-                    $model[] = $tan;
-                    $validate = false;
+    public function actionAssign($id = null) {
+        if(isset($_POST['user']) && isset($_POST['group'])) {
+            if($this->iterateOverGroups($_POST['group'],$_POST['user'])) {
+                Yii::app()->user->setFlash('success', Yii::t('app','Gruppen wurden erfolgreich zugewiesen.'));
+            } else {
+                Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Nicht alle Gruppen konnten erfolgreich zugewiesen werden.'));
+            }
+            $this->actionAdmin();
+        } else {
+            $model = new Group();
+            $users = array();
+            $groups = array();
+            $assignedUsers = array();
+            $crit = new CDbCriteria();
+            $crit->addCondition('role = :role1', 'OR');
+            $crit->addCondition('role = :role2', 'OR');
+            $crit->params = array(':role1'=>2,':role2'=>3);
+            foreach(User::model()->findAll($crit) as $user) {
+                $desc = (empty($user->title)) ? '' : "{$user->title} ";
+                $desc .= "{$user->firstname} {$user->lastname}";
+                $users[$user->id] = $desc;
+            }
+            foreach(Group::model()->findAll() as $group) {
+                $groups[$group->id] = $group->groupname;
+            }
+            if($id !== null) {
+                $critGroup = new CDbCriteria();
+                $critGroup->addCondition('group_id = :group_id');
+                $critGroup->params = array(':group_id' => $id );
+                foreach(UserHasGroup::model()->findAll($critGroup) as $relation) {
+                    $assignedUsers[] = array(
+                        'user_id' => $relation->user_id,
+                        'user' => $users[$relation->user_id],
+                        'group_id' => $relation->group_id,
+                        'group' => $groups[$relation->group_id]);
                 }
             }
+            
+            
+            $this->render('assign', array(
+                'model' => $model,
+                'groups' => $groups, 
+                'users' => $users, 
+                'assignedUsers' => $assignedUsers));
         }
-        if (empty($model)) {
-            $model = $this->getEmptyTanModel();
+    }
+    
+    private function iterateOverGroups($groups,$users) {
+        $ok = true;
+        $crit = new CDbCriteria();
+        $crit->addCondition('user_id = :user_id');
+        $crit->addCondition('group_id = :group_id');
+        
+        foreach ($groups as $i => $group) {
+            $crit->params = array(':user_id' => $users[$i], ':group_id' => $groups[$i]);
+            if (isset($users[$i]) && isset($groups[$i]) && UserHasGroup::model()->find($crit) === null) {
+                $relation = new UserHasGroup();
+                $relation->user = User::model()->findByPk($users[$i]);
+                $relation->group = Group::model()->findByPk($groups[$i]);
+                //$relation->user_id = $users[$i];
+                //$relation->group_id = $groups[$i];
+
+                $ok = $relation->save() && $ok;
+            }
         }
-        return $model;
-        */
+        return $ok;
     }
 
 }

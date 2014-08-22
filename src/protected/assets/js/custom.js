@@ -212,7 +212,7 @@
         // ** Gruppenzuweisung unter group/assign **
         
         var assignedGroups = [],
-            groupsCount;
+            groupsCount = 0;
         function AssignedGroup(group,user) {
             this.group = group;
             this.user = user;
@@ -289,6 +289,18 @@
         
         $('#close-user-select').on('click',function() {
                 $('#group-users').select2('close');
+        });
+        
+        $('.flag-relation-for-delete').click(function() {
+            var tr = $(this).parents('tr'),
+                input = tr.find('.group-id');
+            if(tr.hasClass('delete-assign')) {
+               input.val(input.data('id'));
+            } else {
+               input.data('id',input.val());
+               input.val(-1);
+            }
+            tr.toggleClass('delete-assign');
         });
 
     }(this, document, jQuery));

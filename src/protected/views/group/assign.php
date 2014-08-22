@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
  * @var $model  Group
  * @var $groups
  * @var $users
+ * @var $assignedUsers
  */
 $this->setPageTitle(Yii::t('app','Gruppen zuweisen'));
 $this->menu = array(
@@ -45,6 +46,11 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                     </tr>
                 </thead>
                 <tbody id="input-target">
+                    <?php
+                    foreach($assignedUsers as $assignedUser) {
+                        $this->renderPartial('assignDetail',array('assignedUser' => $assignedUser));
+                    }
+                    ?>
 
                 </tbody>
             </table>

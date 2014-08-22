@@ -593,3 +593,4 @@ right:0;
 .ui-autocomplete .ui-menu-item {cursor: pointer;}
 * html .ui-autocomplete{width:1px}
 .select2-hidden-accessible {display:none;}
+.delete-assign {background: red;}
