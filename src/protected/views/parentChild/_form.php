@@ -25,7 +25,7 @@ if (Yii::app()->user->checkAccess('1')) {
     ?>
     <div class="row collapse">
         <div class="two columns">
-            <span class="prefix"><?php echo Yii::t('app', 'Erziehungsberechtigte/r');?></span>
+            <span class="prefix"><?php echo Yii::t('app', 'Erziehungsberechtigter');?></span>
         </div>
         <div class="ten columns">
             <?php
