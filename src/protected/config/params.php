@@ -17,10 +17,10 @@
  */
 return array(
     'databaseHost' => 'localhost',
-    'databaseName' => 'estdb',
-    'databaseUsername' => 'estdb',
-    'databasePassword' => 'estdb', //should be a better password
+    'databaseName' => 'esta',
+    'databaseUsername' => 'esta',
+    'databasePassword' => 'esta', //should be a better password
     'databasePort' => '3306',
-    'languages'=>array('de'=>'Deutsch'),
+    'languages'=>array('de'=>'Deutsch','en'=>'English'),
     );
 ?>

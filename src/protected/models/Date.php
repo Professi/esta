@@ -1,5 +1,20 @@
 <?php
 
+/* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 /**
  * Dies ist das Model für Elternsprechtage.
  */
@@ -14,23 +29,7 @@
  * @property integer $durationPerAppointment
  * The followings are the available model relations:
  * @property Group[] $groups
- * 
- */
-//  @property Appointment[] $appointments
-/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * @property Appointment[] $appointments
  */
 class Date extends CActiveRecord {
 
@@ -60,7 +59,7 @@ class Date extends CActiveRecord {
         return array(
             array('date, begin, end,lockAt,durationPerAppointment', 'required'),
             array('durationPerAppointment', 'numerical', 'integerOnly' => true, 'min' => Yii::app()->params['minLengthPerAppointment']),
-            array('lockAt', 'date', 'format' => Yii::app()->locale->getDateFormat('short'). ' ' . Yii::app()->locale->getTimeFormat('short')),
+            array('lockAt', 'date', 'format' => self::getDateTimeFormat()),
             array('date', 'date', 'format' => Yii::app()->locale->getDateFormat('short')),
             array('begin,end', 'date', 'format' => 'H:m'),
             array('durationPerAppointment', 'date', 'format' => 'm'),
@@ -130,7 +129,7 @@ class Date extends CActiveRecord {
             } else if (!is_numeric((strtotime($this->end) - strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
                 $rc = false;
                 $this->addError('durationPerAppointment', Yii::t('app', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.'));
-            } else if (CDateTimeParser::parse($this->date,Yii::app()->locale->getDateFormat('short')) < CDateTimeParser::parse($this->lockAt,Yii::app()->locale->getDateFormat('short'). ' ' . Yii::app()->locale->getTimeFormat('short'))) {
+            } else if (Date::parseDateTime($this->date, $this->begin) < Date::parseDateTime($this->lockAt)) {
                 $rc = false;
                 $this->addError('lockAt', Yii::t('app', 'Die Sperrfrist muss vor oder auf dem Anfang liegen.'));
             }
@@ -141,6 +140,15 @@ class Date extends CActiveRecord {
             $this->lockAt = strtotime($this->lockAt);
         }
         return $rc;
+    }
+
+    public static function parseDateTime($date, $begin = false) {
+        return CDateTimeParser::parse($date . ($begin != false ? ' ' . $begin : ''), self::getDateTimeFormat());
+    }
+
+    public static function getDateTimeFormat() {
+        return Yii::app()->locale->getDateFormat('short') . ' ' .
+                Yii::app()->locale->getTimeFormat('short');
     }
 
     /**

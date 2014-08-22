@@ -26,7 +26,7 @@ $this->breadcrumbs = array(
 );
 $this->menu = array(
     array('label' => Yii::t('app', 'Elternsprechtag bearbeiten'), 'url' => array('update', 'id' => $model->id)),
-    array('label' => Yii::t('app', 'Elternsprechtag löschen'), 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => Yii::t('app', 'Möchten Sie diesen Elternsprechtag wirklich löschen?')), 'visible' => true),
+    array('label' => Yii::t('app', 'Elternsprechtag löschen'), 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => Yii::t('app', 'Möchten Sie diesen Elternsprechtag wirklich löschen?'), 'csrf'=>true), 'visible' => true),
     array('label' => Yii::t('app', 'Elternsprechtage verwalten'), 'url' => array('admin')),
 );
 ?>

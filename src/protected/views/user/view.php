@@ -33,7 +33,7 @@ $this->menu = array(
             'id' => $model->id), 'visible' => Yii::app()->user->checkAccessNotAdmin('2') || Yii::app()->user->checkAccessNotAdmin('3')),
     array('label' => Yii::t('app', 'Benutzer löschen'), 'url' => '#',
         'linkOptions' => array('submit' => array('delete', 'id' => $model->id),
-            'confirm' => Yii::t('app', 'Sind Sie sich sicher, dass Sie diesen Benutzer löschen möchten?')),
+            'confirm' => Yii::t('app', 'Sind Sie sich sicher, dass Sie diesen Benutzer löschen möchten?'), 'csrf' => true),
         'visible' => Yii::app()->user->checkAccess('1')),
     array('label' => Yii::t('app', 'Eltern-Kind-Verknüpfung anlegen'), 'url' => array('parentChild/create', 'id' => $model->id),
         'visible' => (Yii::app()->user->checkAccess('1') && $model->role == 3)),
