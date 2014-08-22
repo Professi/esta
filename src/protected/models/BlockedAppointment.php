@@ -53,7 +53,7 @@ class BlockedAppointment extends CActiveRecord {
     public function rules() {
         return array(
             array('dateAndTime_id,user_id,reason', 'required'),
-            array('user_id', 'exist', 'className' => 'UserRole'),
+            array('user_id', 'exist', 'className' => 'User'),
             array('reason', 'length', 'min' => Yii::app()->params['lengthReasonAppointmentBlocked']),
             array('dateAndTime_id, user_id', 'safe', 'on' => 'search'),
         );
@@ -94,7 +94,7 @@ class BlockedAppointment extends CActiveRecord {
     public function validate($attributes = null, $clearErrors = true) {
         $rc = false;
         if (parent::validate($attributes, $clearErrors)) {
-            if (UserRole::model()->countByAttributes(array('user_id' => $this->user_id, 'role_id' => 2)) < 1) {
+            if (User::model()->countByAttributes(array('id' => $this->id, 'role' => 2)) < 1) {
                 $this->addError('user_id', Yii::t('app', 'Kein Lehrer.'));
             } else if (Yii::app()->params['allowBlockingAppointments']) {
                 if (BlockedAppointment::model()->count($this->countUsedDateAndTimes()) >=

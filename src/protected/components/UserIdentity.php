@@ -87,9 +87,8 @@ class UserIdentity extends CUserIdentity {
         $this->errorCode = self::ERROR_NONE;
         $this->errorMessage = '';
         $this->_id = $user->getPrimaryKey();
-        $userRole = UserRole::model()->findByAttributes(array('user_id' => $this->_id));
         $this->setState('state', $user->state);
-        $this->setState('role', $userRole->role_id);
+        $this->setState('role', $user->role);
         if (Yii::app()->params['allowGroups']) {
             $this->setState('groups', $user->groups);
         }

@@ -14,6 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * SiteController für Forms/Static Pages ohne echtes Datenmodell
  */
@@ -183,12 +184,16 @@ class SiteController extends Controller {
     public function actionStatistics() {
         if (!Yii::app()->user->isGuest()) {
             $appointments = Appointment::model()->count() + BlockedAppointment::model()->count();
-            $teachers = UserRole::model()->countByAttributes(array('role_id' => 2));
+            $teachers = User::model()->countByAttributes(array('role' => 2));
             $freeAppointments = (DateAndTime::model()->count() * $teachers) - $appointments;
             $this->render('statistics', array('freeApps' => $freeAppointments, 'apps' => $appointments, 'teachers' => $teachers));
         } else {
             $this->throwFourNullThree();
         }
+    }
+
+    public static function getYesOrNo() {
+        return array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app', 'Nein'));
     }
 
 }

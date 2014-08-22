@@ -1,5 +1,5 @@
 <?php
-/* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,9 +48,16 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                         <th></th>
                     </tr>
                 </thead>
-                <tbody id="input-target"></tbody>
+                <tbody id="input-target">
+                    <?php
+                    foreach($assignedUsers as $assignedUser) {
+                        $this->renderPartial('assignDetail',array('assignedUser' => $assignedUser));
+                    }
+                    ?>
+
+                </tbody>
             </table>
-            <?php echo CHtml::submitButton(Yii::t('app','Absenden'), array('class' => 'small button right')); ?>
+            <input type="submit" class="small button right" value="<?php echo Yii::t('app','Absenden'); ?>">
        <?php $this->endWidget(); ?>
     </div>
 </div>

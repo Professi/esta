@@ -26,7 +26,7 @@ $this->breadcrumbs = array(
 );
 $this->menu = array(
     array('label' => Yii::t('app', 'Eltern-Kind-Verknüpfung anlegen'), 'url' => array('create')),
-    array('label' => Yii::t('app', 'Eltern-Kind-Verknüpfung löschen'), 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => 'Sind Sie sich sicher, dass Sie diese Verknüpfung löschen möchten?')),
+    array('label' => Yii::t('app', 'Eltern-Kind-Verknüpfung löschen'), 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => Yii::t('app', 'Sind Sie sich sicher, dass Sie diese Verknüpfung löschen möchten?'),'csrf'=>true)),
     array('label' => Yii::t('app', 'Eltern-Kind-Verknüpfungen verwalten'), 'url' => array('admin')),
 );
 ?>

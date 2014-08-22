@@ -1,6 +1,5 @@
 <?php
-
-/** Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,12 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-return array(
-    'databaseHost' => 'localhost',
-    'databaseName' => 'esta',
-    'databaseUsername' => 'esta',
-    'databasePassword' => 'esta', //should be a better password
-    'databasePort' => '3306',
-    'languages'=>array('de'=>'Deutsch','en'=>'Englisch'),
-    );
+/**
+ * @var $assignedUser[user|user_id|group|group_id]
+ */
 ?>
+
+<tr>
+    <td>
+        <?= $assignedUser['user'] ?>
+        <input type="hidden" name="user[]" class="group-user" value="<?= $assignedUser['user_id'] ?>">
+    </td>
+    <td>
+        <?= $assignedUser['group'] ?>
+        <input type="hidden" name="group[]" class="group-id" value="<?= $assignedUser['group_id'] ?>">
+    </td>
+    <td><span class="flag-relation-for-delete">X</span></td>
+</tr>

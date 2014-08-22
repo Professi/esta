@@ -56,6 +56,7 @@ class AppointmentController extends Controller {
                 'actions' => array('admin', 'delete', 'view', 'create', 'update',
                     'createBlockApp', 'DeleteBlockApp',
                     'getteacherappointmentsajax', 'getselectchildrenajax',
+                    'overview'
                 ),
                 'roles' => array('0', '1'),
             ),
@@ -104,8 +105,6 @@ class AppointmentController extends Controller {
             /** @todo checkAccess(-1) ?? */
             if (Yii::app()->user->checkAccessRole(TEACHER, '-1')) {
                 $model->user_id = Yii::app()->user->getId();
-            } else {
-//                $model->user_id = $appId;
             }
             if (isset($_POST['BlockedAppointment'])) {
                 $model->setAttributes($_POST['BlockedAppointment']);
@@ -403,9 +402,10 @@ class AppointmentController extends Controller {
         if (isset($_GET['BlockedAppointment'])) {
             $blockedApp->attributes = $_GET['BlockedAppointment'];
         }
+
         $dates = Date::model()->findAll();
         $dateData = array();
-        foreach($dates as $date) {
+        foreach ($dates as $date) {
             $desc = Yii::app()->dateFormatter->formatDateTime(strtotime($date->date), 'short', null);
             $desc .= (empty($date->title)) ? '' : " ({$date->title})";
             $dateData[$date->id] = $desc;
@@ -460,6 +460,8 @@ class AppointmentController extends Controller {
      * Liefert das Datum mit DateAndTime
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param integer $dateMax Maximal Anzahl der Elternsprechtage für die DateAndTimes gefunden werden sollen
+     * @param boolean $mergeDates
+     * @param string $date 'Y-m-d' Tag an dem gesucht werden soll. Default ist time()
      * @return array Enthält Arrays welche n-DateAndTimes enthalten
      */
     public function getDatesWithTimes($dateMax, $mergeDates = false) {
@@ -519,7 +521,7 @@ class AppointmentController extends Controller {
         }
         return $rc;
     }
-    
+
     /**
      * AJAX Methode um die Termine eines bestimmten Lehrers in einem Select Element zu generieren.
      * @author David Mock <dumock@gmail.com>
@@ -632,7 +634,7 @@ class AppointmentController extends Controller {
     public function getTeacherLinkE($letter) {
         echo $this->getTeacherLink($letter);
     }
-    
+
     /**
      * Formatiert den Titel eines Elternsprechtages in makeAppointment.php
      * @author David Mock <dumock@gmail.com>
@@ -641,9 +643,9 @@ class AppointmentController extends Controller {
      */
     public function formatAppointmentTitle($app) {
         $string = Yii::app()->dateFormatter->formatDateTime(strtotime($app->date), "short", null);
-            if( ! empty($app->title)) {
-                $string .= " ({$app->title})";
-            }
+        if (!empty($app->title)) {
+            $string .= " ({$app->title})";
+        }
         return $string;
     }
     
@@ -708,6 +710,65 @@ class AppointmentController extends Controller {
         $date = Date::model()->findByPk((int)$id);
         if( ! empty($date)) {
             $dateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $date->id));   
+        }
+        return $dateAndTimes;
+    }
+
+    public function actionOverview($id, $date) {
+
+        if (!(
+                (Yii::app()->user->checkAccessNotAdmin('2') && $id === Yii::app()->user->id) || Yii::app()->user->checkAccess('1')
+                )
+        ) {
+            $this->throwFourNullThree();
+        }
+
+        $data = $this->generateOverviewData($id, current($this->getDateWithTimes($date)), Appointment::model()->findAllByAttributes(array('user_id' => $id)), BlockedAppointment::model()->findAllByAttributes(array('user_id' => $id)));
+
+        $teacher = User::model()->findByPk($id);
+
+        $this->render('overview', array('data' => $data,
+            'teacher' => "{$teacher->title} {$teacher->firstname} {$teacher->lastname}",
+            'date' => Yii::app()->dateFormatter->formatDateTime(strtotime($date), 'short', null)));
+    }
+
+    private function generateOverviewData($id, $dateData, $appointments, $blockedAppointments) {
+        $data = array();
+        if (empty($id) || empty($dateData)) {
+            $this->throwFourNullFour();
+        }
+        foreach ($dateData as $date) {
+            $temp = array();
+            $time = $this->isAppointmentAvailable($id, $date->id, true);
+            $temp['time'] = Yii::app()->dateFormatter->formatDateTime(strtotime($date->time), null, 'short');
+            $temp['status'] = $time[0];
+            if (!$time[1] && $time[0] !== Yii::t('app', "BLOCKIERT")) {
+                foreach ($appointments as $appointment) {
+                    if ($date->id === $appointment->dateAndTime_id) {
+                        $parent = User::model()->findByPk(ParentChild::model()->findByPk($appointment->parent_child_id)->user_id);
+                        $child = Child::model()->findByPk(ParentChild::model()->findByPk($appointment->parent_child_id)->child_id);
+                        $temp['text'] = "{$parent->title} {$parent->firstname} {$parent->lastname} ({$child->firstname} {$child->lastname})";
+                    }
+                }
+            } else if (!$time[1] && $time[0] === Yii::t('app', "BLOCKIERT")) {
+                foreach ($blockedAppointments as $appointment) {
+                    if ($date->id === $appointment->dateAndTime_id) {
+                        $temp['text'] = $appointment->reason;
+                    }
+                }
+            } else {
+                $temp['text'] = '';
+            }
+            $data[] = $temp;
+        }
+        return $data;
+    }
+
+    private function getDateWithTimes($id) {
+        $dateAndTimes = array();
+        $date = Date::model()->findByPk((int) $id);
+        if (!empty($date)) {
+            $dateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $date->id));
         }
         return $dateAndTimes;
     }

@@ -69,7 +69,7 @@ class ParentChildController extends Controller {
         $a_data = ParentChild::model()->findAll($criteria);
         foreach ($a_data as $record) {
             $a_rc[] = array('label' => $record->user->firstname . " " . $record->user->lastname .
-                ";Kind: " . $record->child->firstname . " " . $record->child->lastname, 'value' => $record->id);
+                ';' . Yii::t('app', 'Kind') . ': ' . $record->child->firstname . " " . $record->child->lastname, 'value' => $record->id);
         }
         echo CJSON::encode($a_rc);
     }

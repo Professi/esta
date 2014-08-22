@@ -47,7 +47,7 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                 </div>
                 <div class="small-9 columns ">
                     <?php
-                    echo Select2::activeDropDownList($model, 'tans', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'tans', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'tans');
                     ?>
                 </div>
@@ -58,7 +58,7 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                 </div>
                 <div class="small-9 columns ">
                     <?php
-                    echo Select2::activeDropDownList($model, 'appointments', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'appointments', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'appointments');
                     ?>
                 </div>
@@ -69,7 +69,7 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                 </div>
                 <div class="small-9 columns ">
                     <?php
-                    echo Select2::activeDropDownList($model, 'teachers', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'teachers', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'teachers');
                     ?>
                 </div>
@@ -80,7 +80,7 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                 </div>
                 <div class="small-9 columns ">
                     <?php
-                    echo Select2::activeDropDownList($model, 'dates', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'dates', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'dates');
                     ?>
                 </div>
@@ -91,7 +91,7 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                 </div>
                 <div class="small-9 columns ">
                     <?php
-                    echo Select2::activeDropDownList($model, 'management', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'management', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'management');
                     ?>
                 </div>
@@ -102,7 +102,7 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                 </div>
                 <div class="small-9 columns ">
                     <?php
-                    echo Select2::activeDropDownList($model, 'childs', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'childs', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'childs');
                     ?>
                 </div>
@@ -113,7 +113,7 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                 </div>
                 <div class="small-9 columns ">
                     <?php
-                    echo Select2::activeDropDownList($model, 'parents', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'parents', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'parents');
                     ?>
                 </div>
@@ -124,7 +124,7 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                 </div>
                 <div class="small-9 columns ">
                     <?php
-                    echo Select2::activeDropDownList($model, 'groups', array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app)', 'Nein')), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'groups', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'groups');
                     ?>
                 </div>
