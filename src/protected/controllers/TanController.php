@@ -123,7 +123,19 @@ class TanController extends Controller {
      * @param Tan $model
      */
     private function renderFormGenTans($model) {
-        $this->render('formGenTans', array('model' => $model));
+        $this->render('formGenTans', array('model' => $model, 'groups' => $this->getAvailableGroups()));
+    }
+
+    private function getAvailableGroups() {
+        $groups = array();
+        if (Yii::app()->params['allowGroups']) {
+            if (empty(Yii::app()->user->getGroups())) {
+                $groups = Group::model()->getAllGroups('DESC');
+            } else {
+                $groups = Group::formatGroups(Yii::app()->user->getGroups(), 'DESC');
+            }
+        }
+        return $groups;
     }
 
     /**
@@ -138,8 +150,8 @@ class TanController extends Controller {
         foreach ($tans as $i => $oneTan) {
             if (isset($_POST['Tan'][$i])) {
                 $tan = new Tan();
-                if(array_key_exists('group_id', $_POST['Tan'][$i])) {
-                $tan->group_id = $_POST['Tan'][$i]['group_id'];
+                if (array_key_exists('group_id', $_POST['Tan'][$i])) {
+                    $tan->group_id = $_POST['Tan'][$i]['group_id'];
                 }
                 $tan->childFirstname = $_POST['Tan'][$i]['childFirstname'];
                 $tan->childLastname = $_POST['Tan'][$i]['childLastname'];

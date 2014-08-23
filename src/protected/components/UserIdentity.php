@@ -39,7 +39,7 @@ class UserIdentity extends CUserIdentity {
      */
     public function authenticate() {
         $criteria = new CDbCriteria();
-        $criteria->select = array('id', 'state', 'email', 'password');
+        $criteria->select = array('id', 'state', 'email', 'password','role');
         $criteria->together = false;
         $criteria->with = false;
         $user = User::model()->findByAttributes(array('email' => $this->username), $criteria);
