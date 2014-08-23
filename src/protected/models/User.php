@@ -239,16 +239,18 @@ class User extends CActiveRecord {
      */
     public function searchCriteriaTeacherAutoComplete() {
         $criteria = new CDbCriteria;
-        if (Yii::app()->params['allowGroups'] && is_array($this->groups)) {
+        if (Yii::app()->params['allowGroups']) {
             $criteria->together = true;
             $criteria->with[] = 'groups';
             $i = 0;
+            $criteria->addCondition('groups.id IS NULL', 'OR');
             foreach ($this->groups as $group) {
                 $criteria->addCondition('groups.id =:group' . $i, 'OR');
                 $criteria->params[':group' . $i] = $group->id;
                 $i++;
             }
         }
+
         $match = addcslashes(ucfirst($this->lastname), '%_');
         $criteria->addCondition('lastname LIKE :match');
         $criteria->params[':match'] = "$match%";
@@ -447,7 +449,7 @@ class User extends CActiveRecord {
      * @return string 0=NichtAktiv 1=Aktiv 2=Gesperrt
      */
     public function getStateName($state = null) {
-        if(is_numeric($state) && array_key_exists($state, self::getStateNameAndValue())) {
+        if (is_numeric($state) && array_key_exists($state, self::getStateNameAndValue())) {
             $stateName = self::getStateNameAndValue()[$state]['name'];
         } else {
             $stateName = $this->state;

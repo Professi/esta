@@ -260,33 +260,14 @@ class AppointmentController extends Controller {
         $model->unsetAttributes();
         $badRequest = false;
         if (is_numeric($teacher)) {
-            /** @todo in eigene function auslagern? */
-            if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccess('3')) {
-                $userGroups = Yii::app()->user->getGroups();
-                if (!empty($userGroups)) {
-                    $badRequest = true;
-                    $teacherGroups = UserHasGroup::model()->findAllByAttributes(array('user_id' => $teacher));
-                    foreach ($teacherGroups as $group) {
-                        foreach ($userGroups as $userGroup) {
-                            if ($group->group->id == $userGroup->id) {
-                                $badRequest = false;
-                                break;
-                            }
-                        }
-                    }
-                }
-                if ($badRequest) {
-                    $this->throwFourNullThree();
-                }
-            }
+            $this->checkForBadRequest($teacher);
             $model->user_id = $teacher;
             $postDate = '';
             $postTime = '';
-            $dates = $this->getDatesWithTimes(3); //Magic Number: nur die nächsten 3 Elternsprechtage werden geladen.
+            $dates = $this->getDatesWithTimes($this->getMaxParentsDays()); //Magic Number: nur die nächsten 3 Elternsprechtage werden geladen.
             if (isset($_POST['Appointment'])) {
                 $model->attributes = $_POST['Appointment'];
                 if (!empty($model->attributes['dateAndTime_id'])) {
-
                     $postDate = Yii::app()->dateFormatter->formatDateTime(strtotime($model->dateandtime->date->date), "short", null);
                     $postTime = Yii::app()->dateFormatter->formatDateTime(strtotime($model->dateandtime->time), null, "short");
                 }
@@ -304,6 +285,35 @@ class AppointmentController extends Controller {
             ));
         } else {
             $this->throwFourNullThree();
+        }
+    }
+
+    private function getMaxParentsDays() {
+        return 3;
+    }
+
+    private function checkForBadRequest($teacher) {
+        if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccess('3')) {
+            $badRequest = true;
+            $userGroups = Yii::app()->user->getGroups();
+            $teacherGroups = UserHasGroup::model()->findAllByAttributes(array('user_id' => $teacher));
+            if (empty($teacherGroups)) {
+                $badRequest = false;
+            } else {
+                if (is_array($userGroups) && is_array($teacherGroups)) {
+                    foreach ($teacherGroups as $group) {
+                        foreach ($userGroups as $userGroup) {
+                            if ($group->group->id == $userGroup->id) {
+                                $badRequest = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            if ($badRequest) {
+                $this->throwFourNullThree();
+            }
         }
     }
 
@@ -466,7 +476,7 @@ class AppointmentController extends Controller {
     public function getDatesWithTimes($dateMax, $mergeDates = false) {
         $a_groupOfDateAndTimes = array();
         if (!empty($dateMax)) {
-            if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccessNotAdmin('3') && Yii::app()->user->getState('groups') != null) {
+            if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccessNotAdmin('3')) {
                 //Verwaltung kann trotzdem noch Termine an anderen Tagen für diesen Benutzer buchen
                 $a_dates = Date::model()->findAll(Date::criteriaForDateWithGroups($dateMax));
             } else {
