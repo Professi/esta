@@ -609,7 +609,6 @@ class User extends CActiveRecord {
         if (!UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $tan->group_id)) > '0') {
             $this->createUserHasGroup($tan->group_id);
             Yii::app()->user->setFlash('success', Yii::t('app', 'Sie wurden erfolgreich der Gruppe hinzugefügt.'));
-            Yii::app()->user->setGroups($this->groups);
         } else {
             $errorMsg = Yii::t('app', 'Sie wurden bereits der Gruppe die bei dieser TAN hinterlegt ist, zugewiesen.');
         }

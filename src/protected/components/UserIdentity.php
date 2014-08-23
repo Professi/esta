@@ -38,7 +38,11 @@ class UserIdentity extends CUserIdentity {
      * @return integer errorcode
      */
     public function authenticate() {
-        $user = User::model()->findByAttributes(array('email' => $this->username));
+        $criteria = new CDbCriteria();
+        $criteria->select = array('id', 'state', 'email', 'password');
+        $criteria->together = false;
+        $criteria->with = false;
+        $user = User::model()->findByAttributes(array('email' => $this->username), $criteria);
         if ($user === null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
             $this->errorMessage = Yii::t('app', "Ungültige E-Mail Adresse");
@@ -87,11 +91,7 @@ class UserIdentity extends CUserIdentity {
         $this->errorCode = self::ERROR_NONE;
         $this->errorMessage = '';
         $this->_id = $user->getPrimaryKey();
-        $this->setState('state', $user->state);
-        $this->setState('role', $user->role);
-        if (Yii::app()->params['allowGroups']) {
-            $this->setState('groups', $user->groups);
-        }
+        Yii::app()->user->updateSession($user);
         $user->lastLogin = time();
         $user->badLogins = 0;
         $user->update();

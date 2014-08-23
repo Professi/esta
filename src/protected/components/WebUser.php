@@ -37,7 +37,7 @@ class WebUser extends CWebUser {
         if (empty($this->id)) {
             return false;
         }
-        if ($this->getState("role") == 0) {
+        if ($this->getState('role') == 0) {
             return true;
         }
         return ($role === $this->getState('role'));
@@ -101,17 +101,32 @@ class WebUser extends CWebUser {
         return $this->getState('groups');
     }
 
-    /**
-     * sets all groups
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @param array $groups 
-     */
-    public function setGroups($groups) {
-        if (is_array($groups)) {
+    public function getStateVariable() {
+        return $this->getState('state');
+    }
+
+    private function setDynamicSessionVariables($state, $role, $groups = array()) {
+        $this->setState('state', $state);
+        $this->setState('role', $role);
+        if (Yii::app()->params['allowGroups']) {
             $this->setState('groups', $groups);
         }
     }
-    
+
+    public function updateSession($user = false) {
+        if (!$user) {
+            $criteria = new CDbCriteria();
+            $criteria->select = array('id', 'state', 'email', 'role');
+            $criteria->together = false;
+            if (Yii::app()->params['allowGroups']) {
+                $criteria->together = true;
+                $criteria->with = array('groups');
+            }
+            $user = User::model()->findByPk($this->getId(), $criteria);
+        }
+        $this->setDynamicSessionVariables($user->state, $user->role, (Yii::app()->params['allowGroups'] ? $user->groups : array()));
+    }
+
 }
 
 ?>

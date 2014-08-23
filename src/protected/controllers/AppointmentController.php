@@ -511,22 +511,20 @@ class AppointmentController extends Controller {
     public function isAppointmentAvailable($teacher, $dateAndTimeId, $overrideAccess = false) {
         $rc = array(Yii::t('app', "BELEGT"), false);
         $check = false;
-        if ((Yii::app()->params['allowGroups'] && !Yii::app()->user->getState('group')) || (!Yii::app()->params['allowGroups'] || Yii::app()->user->checkAccessRole('1', '3') || Yii::app()->user->checkAccessRole('0', '2'))) {
-            if (Appointment::model()->countByAttributes(array('user_id' => $teacher,
-                        'dateAndTime_id' => $dateAndTimeId)) == '0') {
-                $check = true;
+        if (Appointment::model()->countByAttributes(array('user_id' => $teacher,
+                    'dateAndTime_id' => $dateAndTimeId)) == '0') {
+            $check = true;
+        }
+        if ($check && Yii::app()->params['allowBlockingAppointments'] &&
+                BlockedAppointment::model()->countByAttributes(array('user_id' => $teacher,
+                    'dateAndTime_id' => $dateAndTimeId)) != '0') {
+            if (Yii::app()->user->checkAccess('1') || $overrideAccess) {
+                $rc = array(Yii::t('app', "BLOCKIERT"), false);
             }
-            if ($check && Yii::app()->params['allowBlockingAppointments'] &&
-                    BlockedAppointment::model()->countByAttributes(array('user_id' => $teacher,
-                        'dateAndTime_id' => $dateAndTimeId)) != '0') {
-                if (Yii::app()->user->checkAccess('1') || $overrideAccess) {
-                    $rc = array(Yii::t('app', "BLOCKIERT"), false);
-                }
-                $check = false;
-            }
-            if ($check) {
-                $rc = array(Yii::t('app', "VERFÜGBAR"), true);
-            }
+            $check = false;
+        }
+        if ($check) {
+            $rc = array(Yii::t('app', "VERFÜGBAR"), true);
         }
         return $rc;
     }
@@ -659,18 +657,11 @@ class AppointmentController extends Controller {
     }
 
     public function actionOverview($id, $date) {
-
-        if (!(
-                (Yii::app()->user->checkAccessNotAdmin('2') && $id === Yii::app()->user->id) || Yii::app()->user->checkAccess('1')
-                )
-        ) {
+        if (!((Yii::app()->user->checkAccessNotAdmin('2') && $id === Yii::app()->user->id) || Yii::app()->user->checkAccess('1'))) {
             $this->throwFourNullThree();
         }
-
         $data = $this->generateOverviewData($id, current($this->getDateWithTimes($date)), Appointment::model()->findAllByAttributes(array('user_id' => $id)), BlockedAppointment::model()->findAllByAttributes(array('user_id' => $id)));
-
         $teacher = User::model()->findByPk($id);
-
         $this->render('overview', array('data' => $data,
             'teacher' => "{$teacher->title} {$teacher->firstname} {$teacher->lastname}",
             'date' => Yii::app()->dateFormatter->formatDateTime(strtotime($date), 'short', null)));

@@ -283,9 +283,8 @@ class Date extends CActiveRecord {
         $criteria->together = true;
         $criteria->limit = $dateMax;
         $criteria->order = 'date ASC';
-        $groups = Yii::app()->user->getState('groups');
+        $groups = Yii::app()->user->getGroups();
         $params = array();
-//        print_r(Yii::app()->user->getState('groups'));
         if (!empty($groups) && is_array($groups)) {
             $i = 0;
             foreach ($groups as $group) {
