@@ -164,10 +164,11 @@ class UserController extends Controller {
                 if ($fp) {
                     if (!$model->createTeachers($fp, $msg)) {
                         Yii::app()->user->setFlash('failMsg', $msg);
+                    } else {
+                                        Yii::app()->user->setFlash('success', Yii::t('app', 'Lehrerliste erfolgreich importiert.'));
                     }
                     fclose($fp);
                 }
-                Yii::app()->user->setFlash('success', Yii::t('app', 'Lehrerliste erfolgreich importiert.'));
             }
         }
         $this->render('importTeacher', array('model' => $model,));

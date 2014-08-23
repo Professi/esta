@@ -93,13 +93,17 @@ class CsvUpload extends CFormModel {
         $first = true;
         $rc = true;
         $stdPassword = "";
-        while (($line = fgetcsv($fp, 0, $this->delimiter)) != FALSE) {
+        while ($rc && ($line = fgetcsv($fp, 0, $this->delimiter)) != FALSE) {
             if (!$first) {
                 $model = $this->setTeacherModel($this->generateMail($line), self::encodingString($line[$this->getPos($this->lastname)]), self::encodingString($line[$this->getPos($this->firstname)]), 1, 2, self::encodingString($line[$this->getPos($this->title)]), $stdPassword);
                 $this->saveModel($model);
                 $rc = $this->checkModelErrors($model, $msg);
             } else {
                 $this->firstLoopRun($line);
+                if ($this->hasErrors()) {
+                    $rc = false;
+                    $msg = Yii::t('app', 'Lehrerliste konnte nicht importiert werden. Entweder ist die importierte CSV Datei fehlerhaft oder die Spaltennamen sind nicht korrekt eingetragen.');
+                }
                 $first = false;
             }
         }
@@ -109,13 +113,34 @@ class CsvUpload extends CFormModel {
     private function firstLoopRun(&$line) {
         $i = 0;
         $this->positions = array();
-        foreach ($line as $val) {
-            if (!empty($val)) {
-                $this->positions[$val] = $i;
-                $i++;
+        if (count($line) >= 4) {
+            foreach ($line as $val) {
+                if (!empty($val)) {
+                    $this->positions[$val] = $i;
+                    $i++;
+                }
             }
+            $this->checkForColumn($this->firstname, 'firstname');
+            $this->checkForColumn($this->lastname, 'lastname');
+            $this->checkForColumn($this->email, 'email');
+            $this->checkForColumn($this->title, 'title');
+        } else {
+            $this->addError('file', Yii::t('app', 'Ungültiges CSV Format und/oder falsche Angabe des Seperators.'));
         }
-        print_r($this->positions);
+    }
+
+    private function columnNotExists($column, $attrName) {
+        $this->addError($attrName, Yii::t('app', 'Spalte {column} existiert nicht.', array('{column}' => $column)));
+    }
+
+    private function checkForColumn($column, $attrName) {
+        if (!$this->existsKeys($column)) {
+            $this->columnNotExists($column, $attrName);
+        }
+    }
+
+    private function existsKeys($key) {
+        return array_key_exists($key, $this->positions);
     }
 
     private function checkModelErrors(&$model, &$msg) {
