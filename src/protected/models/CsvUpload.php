@@ -162,8 +162,8 @@ class CsvUpload extends CFormModel {
         if ($line[$this->getPos($this->email)] != NULL) {
             return self::encodingString($line[$this->getPos($this->email)]);
         } else {
-            return (preg_replace("/\s+/", "", strtolower(substr(strtr(self::encodingString($line[$this->getPos($this->lastname)]), self::$uml), 0, 1)))
-                    . '.' . preg_replace("/\s+/", "", strtolower(strtr(self::encodingString($line[$this->getPos($this->firstname)]), self::$uml))) . '@'
+            return (preg_replace("/\s+/", "", strtolower(substr(strtr(self::encodingString($line[$this->getPos($this->firstname)]), self::$uml), 0, 1)))
+                    . '.' . preg_replace("/\s+/", "", strtolower(strtr(self::encodingString($line[$this->getPos($this->lastname)]), self::$uml))) . '@'
                     . $this->getDomainLink());
         }
     }
