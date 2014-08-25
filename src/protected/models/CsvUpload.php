@@ -37,6 +37,10 @@ class CsvUpload extends CFormModel {
     public $email = 'Email';
     public static $uml = array("Ö" => "Oe", "ö" => "oe", "Ä" => "Ae", "ä" => "ae", "Ü" => "Ue", "ü" => "ue", "ß" => "ss",);
     private $positions = array();
+    public $firstNameMailMask;
+    public $lastNameMailMask;
+    public $mailMask;
+    public $mailDomain;
 
     public function init() {
         parent::init();
@@ -44,6 +48,10 @@ class CsvUpload extends CFormModel {
         $this->lastname = Yii::t('app', 'Nachname');
         $this->title = Yii::t('app', 'Titel');
         $this->delimiter = ';';
+        $this->mailMask = $this->names()['firstname'] . '.' . $this->names()['lastname'];
+        $this->firstNameMailMask = 0;
+        $this->lastNameMailMask = 2;
+        $this->mailDomain = $this->getDomainLink();
     }
 
     /**
@@ -58,7 +66,7 @@ class CsvUpload extends CFormModel {
                 'tooLarge' => Yii::t('app', 'Datei ist zu groß. Die Begrenzung liegt bei {size}.', array('{size}' => self::getMaxSize()))),
             array('firstname, lastname,email,title,delimiter', 'required'),
             array('delimiter', 'length', 'max' => 1),
-            array('firstname,lastname,email,title,delimiter', 'safe'),
+            array('firstname,lastname,email,title,delimiter,mailMask,firstNameMailMask,mailDomain', 'safe'),
         );
     }
 
@@ -68,12 +76,24 @@ class CsvUpload extends CFormModel {
      */
     public function attributeLabels() {
         return array('file' => Yii::t('app', 'CSV Datei hochladen'),
-            'firstname' => Yii::t('app', "Vorname"),
-            'lastname' => Yii::t('app', 'Nachname'),
+            'firstname' => $this->names()['firstname'],
+            'lastname' => $this->names()['lastname'],
             'email' => Yii::t('app', 'E-Mail'),
             'title' => Yii::t('app', 'Titel'),
             'delimiter' => Yii::t('app', 'Seperator'),
+            'mailMask' => Yii::t('app', 'Maske für die E-Mail Adresse'),
+            'firstNameMailMask' => $this->getMaskLabel('firstname'),
+            'lastNameMailMask' => $this->getMaskLabel('lastname'),
+            'mailDomain' => Yii::t('app', 'Versender (nach dem @ Zeichen)'),
         );
+    }
+
+    public function names() {
+        return array('firstname' => Yii::t('app', 'Vorname'), 'lastname' => Yii::t('app', 'Nachname'));
+    }
+
+    public function getMaskLabel($attr) {
+        return Yii::t('app', 'Maske für {name}', array('{name}' => $this->names()[$attr]));
     }
 
     /**
@@ -167,6 +187,30 @@ class CsvUpload extends CFormModel {
                     . $this->getDomainLink());
         }
     }
+    
+    private function cutName($name,$selected) {
+        switch($selected) {
+            case 0:
+                return strtolower($this->substrName(strtr(self::encodingString($name), self::$uml), 1));
+            case 1:
+                return strtolower($this->substrName(strtr(self::encodingString($name), self::$uml), 2));
+            case 2:
+                return strtolower($name);
+        }
+    }
+    
+    
+    private function substrName($name,$length) {
+        return substr($name, 0,$length);
+    }
+
+        public function selectableNameMask($attr) {
+        return array(
+            0 => Yii::t('app', 'Erster Buchstabe vom {attribute}', array('{attribute}' => $this->attributeLabels()[$attr])),
+            1 => Yii::t('app', 'Ersten zwei Buchstaben vom {attribute}', array('{attribute}' => $this->attributeLabels()[$attr])),
+            2 => Yii::t('app', 'Komplett'));
+    }
+    
 
     private function getPos($attr) {
         return $this->positions[$attr];

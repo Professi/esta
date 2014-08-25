@@ -134,11 +134,61 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                     ?>
                 </div>
             </div>
+        </fieldset>
+        
+        
+        <fieldset>
+            <legend><?php echo Yii::t('app', 'E-Mail Generierung'); ?></legend>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'mailMask'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'mailMask');
+                    echo $form->error($model, 'mailMask');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'firstNameMailMask'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo Select2::activeDropDownList($model, 'firstNameMailMask', $model->selectableNameMask('firstname'), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo $form->error($model, 'firstNameMailMask');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'lastNameMailMask'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo Select2::activeDropDownList($model, 'lastNameMailMask', $model->selectableNameMask('lastname'), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo $form->error($model, 'lastNameMailMask');
+                    ?>
+                </div>
+            </div>
+            
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'mailDomain'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo $form->textField($model, 'mailDomain');
+                    echo $form->error($model, 'mailDomain');
+                    ?>
+                </div>
+            </div>
+        </fieldset>
             <?php
             echo CHtml::submitButton(Yii::t('app', 'Importieren'), array('class' => 'button'));
             $this->endWidget();
             ?>
-        </fieldset>
     </div>
 </div>
 
