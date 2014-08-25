@@ -32,7 +32,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
                     'url' => '$this->grid->controller->createUrl("/group/deleteUserGroup", array("id"=>$data->id))'
                 ),
                 'update' => array(
-                    'url' => '$this->grid->controller->createUrl("/user/update", array("id"=>$data->user->id))'
+                    'url' => '$this->grid->controller->createUrl("/group/assign", array("id"=>$data->group->id))'
                 )
             ),
             'headerHtmlOptions' => array('style' => 'text-align:center;width: 10%;')
