@@ -43,7 +43,12 @@
                         <div id="logo_school_border">
                             <a href="http://<?php echo Yii::app()->params['schoolWebsiteLink']; ?>" target="_blank"><img id="logo_school" src="<?php echo $this->assetsDir . Yii::app()->params['logoPath']; ?>" alt="<?php echo Yii::app()->params['schoolName'] ?>"></a>
                         </div>
+                    
+                    <div id="language-selector" class="right">
+                        <?php $this->widget('application.components.widgets.LanguageSelector'); ?>
+                        
                     </div>
+                        </div>
                 </div>
             </div>
             <?php if (!Yii::app()->user->isGuest) { ?>
