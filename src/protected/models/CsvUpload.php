@@ -41,6 +41,7 @@ class CsvUpload extends CFormModel {
     public $lastNameMailMask;
     public $mailMask;
     public $mailDomain;
+    public $doubleNameSeperator = true;
 
     public function init() {
         parent::init();
@@ -64,9 +65,9 @@ class CsvUpload extends CFormModel {
             array('file', 'file', 'types' => 'csv', 'maxSize' => self::getMaxSizeInBytes() - 100,
                 'allowEmpty' => true, 'wrongType' => Yii::t('app', 'Nur CSV Dateien erlaubt.'),
                 'tooLarge' => Yii::t('app', 'Datei ist zu groß. Die Begrenzung liegt bei {size}.', array('{size}' => self::getMaxSize()))),
-            array('firstname, lastname,email,title,delimiter', 'required'),
+            array('firstname, lastname,email,title,delimiter,mailMask,firstNameMailMask,lastNameMailMask,mailDomain', 'required'),
             array('delimiter', 'length', 'max' => 1),
-            array('firstname,lastname,email,title,delimiter,mailMask,firstNameMailMask,mailDomain', 'safe'),
+            array('firstname,lastname,email,title,delimiter,mailMask,firstNameMailMask,lastNameMailMask,mailDomain,doubleNameSeperator', 'safe'),
         );
     }
 
@@ -85,6 +86,7 @@ class CsvUpload extends CFormModel {
             'firstNameMailMask' => $this->getMaskLabel('firstname'),
             'lastNameMailMask' => $this->getMaskLabel('lastname'),
             'mailDomain' => Yii::t('app', 'Versender (nach dem @ Zeichen)'),
+            'doubleNameSeperator' => Yii::t('app', 'Doppel Namen mit Bindestrich trennen?'),
         );
     }
 
@@ -182,35 +184,57 @@ class CsvUpload extends CFormModel {
         if ($line[$this->getPos($this->email)] != NULL) {
             return self::encodingString($line[$this->getPos($this->email)]);
         } else {
-            return (preg_replace("/\s+/", "", strtolower(substr(strtr(self::encodingString($line[$this->getPos($this->firstname)]), self::$uml), 0, 1)))
-                    . '.' . preg_replace("/\s+/", "", strtolower(strtr(self::encodingString($line[$this->getPos($this->lastname)]), self::$uml))) . '@'
-                    . $this->getDomainLink());
+            return $this->createMail($line[$this->getPos($this->firstname)], $line[$this->getPos($this->lastname)]);
         }
     }
+
+    private function createMail($firstname, $lastname) {
+        $mail = trim($this->mailMask);
+        if($this->doubleNameSeperator) {
+            $firstname = $this->seperateNames($firstname);
+            $lastname = $this->seperateNames($lastname);
+        }
+        $mail = str_replace($this->names()['firstname'], $this->cutName($firstname, $this->firstNameMailMask), $mail);
+        $mail = str_replace($this->names()['lastname'], $this->cutName($lastname, $this->lastNameMailMask), $mail);
+        $mail .= '@' . $this->mailDomain;
+        $mail = $this->replaceWhiteChars($mail);
+        return $mail;
+    }
+
+    private function replaceWhiteChars($string, $replacement = "") {
+        return preg_replace("/\s+/", $replacement, $string);
+    }
     
-    private function cutName($name,$selected) {
-        switch($selected) {
+    private function seperateNames($name) {
+        return str_replace(' ', '-', $name);
+    }
+    
+
+    private function cutName($name, $selected) {
+        switch ($selected) {
             case 0:
                 return strtolower($this->substrName(strtr(self::encodingString($name), self::$uml), 1));
             case 1:
                 return strtolower($this->substrName(strtr(self::encodingString($name), self::$uml), 2));
             case 2:
-                return strtolower($name);
+                return strtolower(strtr(self::encodingString($name), self::$uml));
         }
     }
+
+    private function substrName($name, $length) {
+        return substr($name, 0, $length);
+    }
     
-    
-    private function substrName($name,$length) {
-        return substr($name, 0,$length);
+    public function getBooleanSelectables() {
+        return array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app', 'Nein'));
     }
 
-        public function selectableNameMask($attr) {
+    public function selectableNameMask($attr) {
         return array(
             0 => Yii::t('app', 'Erster Buchstabe vom {attribute}', array('{attribute}' => $this->attributeLabels()[$attr])),
             1 => Yii::t('app', 'Ersten zwei Buchstaben vom {attribute}', array('{attribute}' => $this->attributeLabels()[$attr])),
             2 => Yii::t('app', 'Komplett'));
     }
-    
 
     private function getPos($attr) {
         return $this->positions[$attr];

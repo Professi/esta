@@ -31,7 +31,7 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                 <?php echo Yii::t('app', 'Nachname, Vorname, Email und Titel. Die Spaltennamen müssen in einer Kopfzeile angegeben sein.'); ?>
                 <br/>
                 <?php
-                echo Yii::t('app', 'Falls ein Lehrer keine eingetragene E-Mail Adresse hat, so wird diesem eine E-Mail Adresse im Stil von m.mustermann@{domainname} generiert.', array('{domainname}' => $model->getDomainLink()));
+                echo Yii::t('app', 'Falls ein Lehrer keine eingetragene E-Mail Adresse hat, so wird diesem eine E-Mail Adresse im Stil von m.mustermann@{domainname} generiert. Alternativ können Sie auch in den Textfeldern unten, die Maske für die E-Mail Generierung verändern.', array('{domainname}' => $model->getDomainLink()));
                 ?>
                 <br/>
                 <?php
@@ -135,13 +135,16 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                 </div>
             </div>
         </fieldset>
-        
-        
         <fieldset>
             <legend><?php echo Yii::t('app', 'E-Mail Generierung'); ?></legend>
             <div class="row collapse">
                 <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'mailMask'); ?></span>
+                    <span class="prefix infofeld"><?php echo $form->label($model, 'mailMask', array('class' => 'infolabel')); ?></span>
+
+                    <div class="infotext">
+                        <span aria-hidden="true" data-icon="&#xe012;"></span>
+                        <?php echo Yii::t('app', 'Vorname und Nachname müssen exakt so geschrieben sein wie es der Standardwert in diesem Textfeld vorgibt.'); ?>
+                    </div>
                 </div>
                 <div class="four columns">
                     <?php
@@ -172,7 +175,6 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                     ?>
                 </div>
             </div>
-            
             <div class="row collapse">
                 <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'mailDomain'); ?></span>
@@ -184,14 +186,25 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                     ?>
                 </div>
             </div>
+            <div class="row collapse">
+                <div class="eight columns">
+                    <span class="prefix infofeld"><?php echo $form->label($model, 'doubleNameSeperator', array('class' => 'infolabel')); ?></span>
+                    <div class="infotext">
+                        <span aria-hidden="true" data-icon="&#xe012;"></span>
+                        <?php echo Yii::t('app', 'Beispiel: Max Heinz; Wenn ja: max-heinz; Wenn nein: maxheinz'); ?>
+                    </div>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo Select2::activeDropDownList($model, 'doubleNameSeperator', $model->getBooleanSelectables(), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo $form->error($model, 'doubleNameSeperator');
+                    ?>
+                </div>
+            </div>
         </fieldset>
-            <?php
-            echo CHtml::submitButton(Yii::t('app', 'Importieren'), array('class' => 'button'));
-            $this->endWidget();
-            ?>
+        <?php
+        echo CHtml::submitButton(Yii::t('app', 'Importieren'), array('class' => 'button'));
+        $this->endWidget();
+        ?>
     </div>
 </div>
-
-
-
-
