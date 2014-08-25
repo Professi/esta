@@ -120,17 +120,18 @@ class DateController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
+        $model->setScenario('update');
         $model->date = Yii::app()->dateFormatter->formatDateTime(strtotime($model->date), "short", null);
-        $model->begin = Yii::app()->dateFormatter->formatDateTime(strtotime($model->begin), null, "short");
-        $model->end = Yii::app()->dateFormatter->formatDateTime(strtotime($model->end), null, "short");
+        $model->begin = Yii::app()->dateFormatter->format('H:mm',$model->begin);
+        $model->end = Yii::app()->dateFormatter->format('H:mm',$model->end);
         $a_disabled = array('disabled' => 'disabled');
-        $a_lockAtLabel = explode(' ', Yii::app()->dateFormatter->formatDateTime($model->lockAt, 'long', 'short'));
+        $a_lockAtLabel = explode(' ', Yii::app()->dateFormatter->format(Yii::app()->locale->getDateFormat('short') . ' ' . 'H:mm', $model->lockAt));
         $dateLabel = $a_lockAtLabel[0];
         $timeLabel = $a_lockAtLabel[1];
         $model->lockAt = $dateLabel . ' ' . $timeLabel;
         if (isset($_POST['Date'])) {
             $this->setPostAttribute($model);
-            if ($model->save()) {
+            if ($model->save(true,array('lockAt','groups','title','date'))) {
                 $this->redirect(array('view', 'id' => $model->id));
             }
         }

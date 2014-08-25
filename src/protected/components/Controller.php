@@ -106,7 +106,7 @@ class Controller extends CController {
             $cs->registerCoreScript('jquery.js');
         }
         $this->registerAdminScripts();
-        $cs->scriptMap['jquery-ui.min.js'] = $this->assetsDir . '/js/jquery-ui.min.js' ;
+        $cs->scriptMap['jquery-ui.min.js'] = $this->assetsDir . '/js/jquery-ui.min.js';
     }
 
     /**
@@ -116,8 +116,8 @@ class Controller extends CController {
      * @param boolean $admin
      */
     public function registerAdminScripts($admin = false) {
-        if (Yii::app()->user->checkAccess('1') || $admin || 
-            Yii::app()->user->checkAccess('2') && Yii::app()->params['teacherAllowBlockTeacherApps']) {
+        if (Yii::app()->user->checkAccess('1') || $admin ||
+                Yii::app()->user->checkAccess('2') && Yii::app()->params['teacherAllowBlockTeacherApps']) {
             $cs = Yii::app()->getClientScript();
             $cs->addPackage('admin', array(
                 'baseUrl' => $this->assetsDir,
@@ -129,6 +129,16 @@ class Controller extends CController {
         }
     }
 
+    private function updateUser() {
+        if (!Yii::app()->user->isGuest) {
+            Yii::app()->user->updateSession();
+            if (Yii::app()->user->getStateVariable() != 1) {
+                Yii::app()->user->logout();
+                $this->redirect(array('site/login'));
+            }
+        }
+    }
+
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * publishes all assets
@@ -137,6 +147,7 @@ class Controller extends CController {
     public function init() {
         $dir = dirname(__FILE__) . '/../assets';
         $this->assetsDir = Yii::app()->assetManager->publish($dir, false, -1, YII_DEBUG);
+        $this->updateUser();
         return parent::init();
     }
 
