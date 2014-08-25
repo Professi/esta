@@ -106,11 +106,11 @@ $menu = array( //icon,label,url,visible(bool)
     <div class="row hide-on-print">
         <div class="small-12 columns small-centered">
             <?php if (Yii::app()->user->hasFlash('success')) { ?>
-                <div class="alert-box">
+                <div data-alert class="alert-box" tabindex="0" aria-live="assertive" role="dialogalert">
                     <?php echo Yii::app()->user->getFlash('success'); ?>
                 </div>
             <?php } if (Yii::app()->user->hasFlash('failMsg')) { ?>
-                <div class="alert-box">
+                <div data-alert class="alert-box alert" tabindex="0" aria-live="assertive" role="dialogalert">
                     <?php echo Yii::app()->user->getFlash('failMsg'); ?>            
                 </div>
             <?php } ?>
