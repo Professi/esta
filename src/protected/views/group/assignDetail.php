@@ -28,5 +28,5 @@
         <?= $assignedUser['group'] ?>
         <input type="hidden" name="group[]" class="group-id" value="<?= $assignedUser['group_id'] ?>">
     </td>
-    <td><span class="flag-relation-for-delete">X</span></td>
+    <td class='text-center'><i class="fi-x flag-relation-for-delete"></i></td>
 </tr>
