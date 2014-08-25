@@ -268,8 +268,10 @@ class GroupController extends Controller {
                     $relation->delete();
                 } else if(UserHasGroup::model()->find($crit) === null) {
                     $relation = new UserHasGroup();
-                    $relation->user = User::model()->findByPk($users[$i]);
-                    $relation->group = Group::model()->findByPk($groups[$i]);
+                    //$relation->user = User::model()->findByPk($users[$i]);
+                    //$relation->group = Group::model()->findByPk($groups[$i]);
+                    $relation->user_id = $users[$i];
+                    $relation->group_id = $groups[$i];
 
                     $ok = $relation->save() && $ok;
                 }

@@ -249,7 +249,7 @@
         $.each($('#date-form table #input-target').children(),function() {
             var user = $(this).find('.group-user').val(),
                 group = $(this).find('.group-id').val(),
-                assignment = new AssignedGroup(user,group);
+                assignment = new AssignedGroup(group,user);
                 assignedGroups.push(assignment);
                 groupsCount++;
             
@@ -259,7 +259,7 @@
         $('#group-users').on('select2-selecting', function(e) {
             var groupSrc = $('#groups'),
                 groupId = groupSrc.val(),
-                newGroupAssignment = new AssignedGroup(e.val,groupId),
+                newGroupAssignment = new AssignedGroup(groupId,e.val),
                 alreadySelected = false;
             
             $.each(assignedGroups,function() {
