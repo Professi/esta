@@ -219,7 +219,7 @@
         // ** Gruppenzuweisung unter group/assign **
         
         var assignedGroups = [],
-            groupsCount;
+            groupsCount = 0;
         function AssignedGroup(group,user) {
             this.group = group;
             this.user = user;
@@ -245,6 +245,16 @@
                 select2Menu.select2('open');
             }
         }
+        
+        $.each($('#date-form table #input-target').children(),function() {
+            var user = $(this).find('.group-user').val(),
+                group = $(this).find('.group-id').val(),
+                assignment = new AssignedGroup(user,group);
+                assignedGroups.push(assignment);
+                groupsCount++;
+            
+        });
+        
         
         $('#group-users').on('select2-selecting', function(e) {
             var groupSrc = $('#groups'),
@@ -273,13 +283,17 @@
                         .clone()
                         .attr('name','group[' + groupsCount + ']')
                         .val(newGroupAssignment.group),
+                    checkBoxGroup = template
+                        .find('.group-delete')
+                        .clone()
+                        .attr('name','group[' + groupsCount + ']'),
                     span = template
                         .find('i')
                         .clone()
                         .click({param1:that},deleteGroupAssignment);
 
                 tdUser.append(inputUser);
-                tdGroup.append(inputGroup);
+                tdGroup.append(inputGroup).append(checkBoxGroup);
 
                 $('<tr/>')
                         .append(tdUser)
@@ -304,14 +318,8 @@
         });
         
         $('.flag-relation-for-delete').click(function() {
-            var tr = $(this).parents('tr'),
-                input = tr.find('.group-id');
-            if(tr.hasClass('delete-assign')) {
-               input.val(input.data('id'));
-            } else {
-               input.data('id',input.val());
-               input.val(-1);
-            }
+            var tr = $(this).parents('tr');
+            tr.find('.group-delete').click();
             tr.toggleClass('delete-assign');
         });
 
