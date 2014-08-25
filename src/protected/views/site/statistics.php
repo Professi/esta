@@ -32,7 +32,7 @@ $this->breadcrumbs = array(
                 </tr>
                 <tr>
                     <td><?php echo Yii::t('app', 'Registrierte Eltern');?></td>
-                    <td><?php echo UserRole::model()->countByAttributes(array('role_id' => 3));?></td>
+                    <td><?php echo User::model()->countByAttributes(array('role' => 3));?></td>
                 </tr>
                 <tr>
                     <td><?php echo Yii::t('app', 'Eingetragene Schüler');?></td>
