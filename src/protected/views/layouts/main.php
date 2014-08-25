@@ -96,6 +96,7 @@ $menu = array( //icon,label,url,visible(bool)
         </li>
         <li class="no-highlight">
             <div id="language-selector">
+                <i class="fi-comment-quotes"></i>
                 <?php $this->widget('application.components.widgets.LanguageSelector'); ?>
             </div>
         </li>

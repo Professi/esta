@@ -86,7 +86,7 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                     echo $form->error($model, 'file');
                     ?>
                     <script>
-                        var maxFileSize = '<?php echo CsvUpload::getMaxSize(); ?>';
+                        var maxFileSize = '<?php echo CsvUpload::getMaxSizeInBytes(); ?>';
                         var errorMessage = '<?php echo Yii::t('app','Die ausgewählte Datei übersteigt die maximale Dateigröße.'); ?>';
                     </script>
                     </div>
