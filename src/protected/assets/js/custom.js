@@ -281,7 +281,7 @@
                         .clone()
                         .attr('name','group[' + groupsCount + ']'),
                     span = template
-                        .find('i')
+                        .find('span')
                         .clone()
                         .click({param1:that},deleteGroupAssignment);
 

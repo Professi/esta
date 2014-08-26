@@ -22,11 +22,12 @@
 <tr>
     <td>
         <?= $assignedUser['user'] ?>
-        <input type="hidden" name="user[]" class="group-user" value="<?= $assignedUser['user_id'] ?>">
+        <input type="hidden" name="user[<?= $index ?>]" class="group-user" value="<?= $assignedUser['user_id'] ?>">
     </td>
     <td>
         <?= $assignedUser['group'] ?>
-        <input type="hidden" name="group[]" class="group-id" value="<?= $assignedUser['group_id'] ?>">
+        <input type="hidden" name="group[<?= $index ?>]" class="group-id" value="<?= $assignedUser['group_id'] ?>">
+        <input type="checkbox" name="delete[<?= $index ?>]" class="group-delete">
     </td>
-    <td><span class="flag-relation-for-delete">X</span></td>
+    <td class='text-center'><span class="flag-relation-for-delete">X</span></td>
 </tr>

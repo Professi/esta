@@ -47,8 +47,8 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
                 </thead>
                 <tbody id="input-target">
                     <?php
-                    foreach($assignedUsers as $assignedUser) {
-                        $this->renderPartial('assignDetail',array('assignedUser' => $assignedUser));
+                    foreach($assignedUsers as $i => $assignedUser) {
+                        $this->renderPartial('assignDetail',array('assignedUser' => $assignedUser,'index' => $i));
                     }
                     ?>
 
@@ -96,5 +96,6 @@ Yii::app()->clientScript->registerCoreScript('jquery.ui');
 <div class="hide" id="input-template">
     <input type="hidden" name="user[]" class="group-user">
     <input type="hidden" name="group[]" class="group-id">
+    <input type="checkbox" name="delete[]" class="group-delete" >
     <span>X</span>
 </div>

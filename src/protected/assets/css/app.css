@@ -593,4 +593,12 @@ right:0;
 .ui-autocomplete .ui-menu-item {cursor: pointer;}
 * html .ui-autocomplete{width:1px}
 .select2-hidden-accessible {display:none;}
-.delete-assign {background: red;}
+tr.delete-assign,table tr.even.delete-assign,table tr:nth-of-type(even).delete-assign {
+    background: rgba(255, 0, 0,.7);
+}
+.flag-relation-for-delete {
+    cursor: pointer;
+}
+.group-delete {
+    display:none;
+}

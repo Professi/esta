@@ -210,7 +210,8 @@ class GroupController extends Controller {
     
     public function actionAssign($id = null) {
         if(isset($_POST['user']) && isset($_POST['group'])) {
-            if($this->iterateOverGroups($_POST['group'],$_POST['user'])) {
+            $deletes = isset($_POST['delete']) ? $_POST['delete'] : array();
+            if($this->iterateOverGroups($_POST['group'],$_POST['user'],$deletes)) {
                 Yii::app()->user->setFlash('success', Yii::t('app','Gruppen wurden erfolgreich zugewiesen.'));
             } else {
                 Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Nicht alle Gruppen konnten erfolgreich zugewiesen werden.'));
@@ -245,8 +246,6 @@ class GroupController extends Controller {
                         'group' => $groups[$relation->group_id]);
                 }
             }
-            
-            
             $this->render('assign', array(
                 'model' => $model,
                 'groups' => $groups, 
@@ -255,7 +254,7 @@ class GroupController extends Controller {
         }
     }
     
-    private function iterateOverGroups($groups,$users) {
+    private function iterateOverGroups($groups,$users,$delete) {
         $ok = true;
         $crit = new CDbCriteria();
         $crit->addCondition('user_id = :user_id');
@@ -263,15 +262,20 @@ class GroupController extends Controller {
         
         foreach ($groups as $i => $group) {
             $crit->params = array(':user_id' => $users[$i], ':group_id' => $groups[$i]);
-            if (isset($users[$i]) && isset($groups[$i]) && UserHasGroup::model()->find($crit) === null) {
-                $relation = new UserHasGroup();
-                $relation->user = User::model()->findByPk($users[$i]);
-                $relation->group = Group::model()->findByPk($groups[$i]);
-                //$relation->user_id = $users[$i];
-                //$relation->group_id = $groups[$i];
+            if (isset($users[$i]) && isset($groups[$i])) {
+                if(isset($delete[$i])) {
+                    $relation = UserHasGroup::model()->find($crit);
+                    $relation->delete();
+                } else if(UserHasGroup::model()->find($crit) === null) {
+                    $relation = new UserHasGroup();
+                    //$relation->user = User::model()->findByPk($users[$i]);
+                    //$relation->group = Group::model()->findByPk($groups[$i]);
+                    $relation->user_id = $users[$i];
+                    $relation->group_id = $groups[$i];
 
-                $ok = $relation->save() && $ok;
-            }
+                    $ok = $relation->save() && $ok;
+                }
+            } 
         }
         return $ok;
     }
