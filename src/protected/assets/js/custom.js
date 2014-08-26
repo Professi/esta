@@ -315,5 +315,14 @@
             tr.find('.group-delete').click();
             tr.toggleClass('delete-assign');
         });
+        
+        // ** Filesizelimit in importTeacher
+        
+        $('#CsvUpload_file').on('change',function() {
+            if(this.files[0].size > maxFileSize) {
+                alert(errorMessage);
+                $(this).val('');
+            }
+        });
 
     }(this, document, jQuery));
