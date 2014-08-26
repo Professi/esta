@@ -711,5 +711,15 @@ class User extends CActiveRecord {
         $pc->user_id = $user_id;
         return $pc;
     }
+    
+    /**
+     * Name of the User with Title
+     * @return string 
+     */
+    public function getDisplayName() {
+        return (empty($this->title)) 
+            ? "{$this->firstname} {$this->lastname}"
+            : "{$this->title} {$this->firstname} {$this->lastname}";
+    }
 
 }
