@@ -20,10 +20,11 @@
 /* @var $this AppointmentController */
 /* @var $data Appointment */
 $this->setPageTitle(Yii::t('app', 'Ihre Termine'));
-//$this->menu = array(
-//    array(  'label' => Yii::t('app', 'Druckansicht'), 
-//            'url' => array('overview','id' => Yii::app()->user->id,'date' => )),
-//);
+$this->menu = array(
+    array(  'label' => Yii::t('app','Termine im .ics Format exportieren'),
+            'url' => array('exportIcs'),
+            'linkOptions' => array('class' => 'small button'))
+);
 ?>
 <div class="row">
     <div class="small-12 columns">

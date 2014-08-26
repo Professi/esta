@@ -32,11 +32,15 @@ $this->menu = array(
             'url' => array('admin'), 
             'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
+    array(  'label' => Yii::t('app','Termine im .ics Format exportieren'),
+            'url' => array('exportIcs'),
+            'visible' => Yii::app()->user->checkAccess(PARENTS),
+            'linkOptions' => array('class' => 'small button', 'target' => '_blank'))
 );
 ?>
 <div class="row">
     <div class="small-12 columns">
-        <h2 class="subheader"><?php Yii::t('app','Ihre Termine'); ?></h2>
+        <h2 class="subheader"><?php echo Yii::t('app','Ihre Termine'); ?></h2>
         <hr>
         <?php if ($no_children) { ?>
             <div class="paper panel">
