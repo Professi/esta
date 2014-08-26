@@ -218,10 +218,41 @@
             this.user = user;
         };
         
+        function deleteGroupAssignment(e) {
+            var tr = $(this).parents('tr'),
+                user = tr.find('.group-user').val(),
+                group = tr.find('.group-id').val(),
+                select2Menu = e.data.param1,
+                id = -1;
+            $.each(assignedGroups,function(index) {
+               if(this.group === group && this.user === user) {
+                   id = index;
+               }
+            });    
+            assignedGroups.splice(id,1);
+            tr.remove();
+            if(select2Menu.select2('open')) {
+                select2Menu.select2('close');
+            } else {
+                select2Menu.select2('close');
+                select2Menu.select2('open');
+            }
+        }
+        
+        $.each($('#date-form table #input-target').children(),function() {
+            var user = $(this).find('.group-user').val(),
+                group = $(this).find('.group-id').val(),
+                assignment = new AssignedGroup(group,user);
+                assignedGroups.push(assignment);
+                groupsCount++;
+            
+        });
+        
+        
         $('#group-users').on('select2-selecting', function(e) {
             var groupSrc = $('#groups'),
                 groupId = groupSrc.val(),
-                newGroupAssignment = new AssignedGroup(e.val,groupId),
+                newGroupAssignment = new AssignedGroup(groupId,e.val),
                 alreadySelected = false;
             
             $.each(assignedGroups,function() {
@@ -245,34 +276,22 @@
                         .clone()
                         .attr('name','group[' + groupsCount + ']')
                         .val(newGroupAssignment.group),
-                    span = $('<span/>',{text:'X',class:'text-center'})
-                        .click(function() {
-                            var tr = $(this).parents('tr'),
-                                user = tr.find('.group-user').val(),
-                                group = tr.find('.group-id').val(),
-                                id = 0;
-                            $.each(assignedGroups,function(index) {
-                               if(this.group === group && this.user === user) {
-                                   id = index;
-                               }
-                            });    
-                            assignedGroups.splice(id,1);
-                            tr.remove();
-                            if(that.select2('open')) {
-                                that.select2('close');
-                            } else {
-                                that.select2('close');
-                                that.select2('open');
-                            }
-                        });
+                    checkBoxGroup = template
+                        .find('.group-delete')
+                        .clone()
+                        .attr('name','group[' + groupsCount + ']'),
+                    span = template
+                        .find('i')
+                        .clone()
+                        .click({param1:that},deleteGroupAssignment);
 
                 tdUser.append(inputUser);
-                tdGroup.append(inputGroup);
+                tdGroup.append(inputGroup).append(checkBoxGroup);
 
                 $('<tr/>')
                         .append(tdUser)
                         .append(tdGroup)
-                        .append(span)
+                        .append($('<td/>',{class:'text-center'}).append(span))
                         .appendTo($('#input-target'));
                 
                 assignedGroups.push(newGroupAssignment);
@@ -292,14 +311,8 @@
         });
         
         $('.flag-relation-for-delete').click(function() {
-            var tr = $(this).parents('tr'),
-                input = tr.find('.group-id');
-            if(tr.hasClass('delete-assign')) {
-               input.val(input.data('id'));
-            } else {
-               input.data('id',input.val());
-               input.val(-1);
-            }
+            var tr = $(this).parents('tr');
+            tr.find('.group-delete').click();
             tr.toggleClass('delete-assign');
         });
 
