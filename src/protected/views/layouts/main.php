@@ -83,7 +83,7 @@ $menu = array( //icon,label,url,visible(bool)
     </section>
 </nav>
 <div class="sticky sticky-nav hide-for-small">
-    <ul class="medium-block-grid-4 large-block-grid-6 text-center ul-nav" data-topbar>
+    <ul class="medium-block-grid-6 large-block-grid-8 text-center ul-nav" data-topbar>
         <?php 
             if( ! Yii::app()->user->isGuest) {
                 echo $this->generateFoundation5Menu($menu,false);

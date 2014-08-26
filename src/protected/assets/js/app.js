@@ -18,7 +18,7 @@
         
         // ** Icon to minimize the nav **
         
-        $('.sticky').append($('<i/>',{'class':'fi-zoom-out ul-nav-toggle'}));
+        $('.sticky').append($('<i/>',{'class':'fi-eye ul-nav-toggle',text:' Menu'}));
         
         $('.ul-nav li').click(function() {
             if($(this).find('#language-selector').length === 0) {
@@ -28,9 +28,10 @@
         
         $('.ul-nav-toggle').click(function() {
             var that = $(this);
-            that.toggleClass('fi-zoom-out fi-zoom-in');
+            //that.toggleClass('fi-zoom-out fi-zoom-in');
             that.siblings('ul').toggleClass('ul-nav ul-nav-hide');
-        });
+        }).click();
+        
         
         $('#teacher-ac').on('autocompleteselect', function(e, ui) {
             e.preventDefault();
