@@ -91,7 +91,7 @@ $menu = array( //icon,label,url,visible(bool)
         ?>
         <li>
             <a onClick="window.print();">
-                <i class="fi-print"></i><br><span><?php echo Yii::t('app','Drucken'); ?></span>
+                <i class="fi-print"></i><span><?php echo Yii::t('app','Drucken'); ?></span>
             </a>
         </li>
         <li class="no-highlight">

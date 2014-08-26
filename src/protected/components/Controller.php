@@ -97,7 +97,7 @@ class Controller extends CController {
      */
     public function generateFoundation5MenuItem($icon, $label, $url, $visible,$mobile) {
         $link = '';
-        $labelTag = ($mobile) ? $label : "<br><span>{$label}</span>";
+        $labelTag = ($mobile) ? $label : "<span>{$label}</span>";
         if($visible) {
             $link = '<li>' . CHtml::link("<i class={$icon}></i>{$labelTag}", $url) . '</li>';
         }
