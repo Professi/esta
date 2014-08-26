@@ -26,15 +26,15 @@ $this->breadcrumbs = array(
 $this->menu = array(
     array(  'label' => Yii::t('app', 'Termine vereinbaren'), 
             'url' => array('create'), 
-            'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
+            'visible' => Yii::app()->user->checkAccess('1'),
             'linkOptions' => array('class' => 'small button')),
     array(  'label' => Yii::t('app', 'Termine verwalten'), 
             'url' => array('admin'), 
-            'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
+            'visible' => Yii::app()->user->checkAccess('1'),
             'linkOptions' => array('class' => 'small button')),
     array(  'label' => Yii::t('app','Termine im .ics Format exportieren'),
             'url' => array('exportIcs'),
-            'visible' => Yii::app()->user->checkAccess(PARENTS),
+            'visible' => Yii::app()->user->checkAccess('3'),
             'linkOptions' => array('class' => 'small button', 'target' => '_blank'))
 );
 ?>

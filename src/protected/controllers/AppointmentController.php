@@ -709,7 +709,7 @@ class AppointmentController extends Controller {
     }
     
     public function actionExportIcs() {
-        if( ! (Yii::app()->user->checkAccess(TEACHER) || Yii::app()->user->checkAccess(PARENTS))) {
+        if( ! (Yii::app()->user->checkAccess('2') || Yii::app()->user->checkAccess('3'))) {
             $this->throwFourNullThree();
         } 
         $dates = $this->generateIcsData();
@@ -717,7 +717,7 @@ class AppointmentController extends Controller {
                 . "VERSION:2.0" . PHP_EOL
                 . "PRODID:http://" . Yii::app()->params['schoolWebsiteLink'] . PHP_EOL;
         foreach($dates as $date) {
-            $with = Yii::app()->user->checkAccess(TEACHER) ? $date['parent'] : $date['teacher'];
+            $with = Yii::app()->user->checkAccess('2') ? $date['parent'] : $date['teacher'];
             $t = date('Ymd',strtotime($date['date'])).'T';
             $time = explode(':',$date['start']);
             $zStart = date('His', mktime($time[0],$time[1],$time[2]));
@@ -738,10 +738,11 @@ class AppointmentController extends Controller {
     }
     
     private function generateIcsData() {
-        if(Yii::app()->user->checkAccess(TEACHER)) {
+        $appointments = array();
+        if(Yii::app()->user->checkAccess('2')) {
             $userId = array('user_id' => Yii::app()->user->id);
             $appointments = Appointment::model()->findAllByAttributes($userId);
-        } else if(Yii::app()->user->checkAccess(PARENTS)) {
+        } else if(Yii::app()->user->checkAccess('3')) {
             $crit = new CDbCriteria();
             $i = 0;
             foreach(ParentChild::model()->findAllByAttributes(array('user_id' => Yii::app()->user->id)) as $parentChild) {
