@@ -39,7 +39,7 @@ $this->menu = array(
 );
 ?>
 <div class="row">
-    <div class="small-12 columns">
+    <div class="twelve columns">
         <h2 class="subheader"><?php echo Yii::t('app','Ihre Termine'); ?></h2>
         <hr>
         <?php if ($no_children) { ?>
