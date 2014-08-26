@@ -44,12 +44,12 @@ class AppointmentController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'index', 'view', 'getTeacher', 'makeAppointment', 'delete'),
+                'actions' => array('create', 'index', 'view', 'getTeacher', 'makeAppointment', 'delete','exportIcs'),
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
                 'actions' => array('index', 'delete', 'create', 'createBlockApp', 'DeleteBlockApp',
-                    'getteacherappointmentsajax', 'getselectchildrenajax','overview'),
+                    'getteacherappointmentsajax', 'getselectchildrenajax','overview','exportIcs'),
                 'roles' => array('2')
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -706,6 +706,72 @@ class AppointmentController extends Controller {
             $dateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $date->id));
         }
         return $dateAndTimes;
+    }
+    
+    public function actionExportIcs() {
+        if( ! (Yii::app()->user->checkAccess(TEACHER) || Yii::app()->user->checkAccess(PARENTS))) {
+            $this->throwFourNullThree();
+        } 
+        $dates = $this->generateIcsData();
+        $ical = "BEGIN:VCALENDAR" . PHP_EOL
+                . "VERSION:2.0" . PHP_EOL
+                . "PRODID:http://" . Yii::app()->params['schoolWebsiteLink'] . PHP_EOL;
+        foreach($dates as $date) {
+            $with = Yii::app()->user->checkAccess(TEACHER) ? $date['parent'] : $date['teacher'];
+            $t = date('Ymd',strtotime($date['date'])).'T';
+            $time = explode(':',$date['start']);
+            $zStart = date('His', mktime($time[0],$time[1],$time[2]));
+            $zEnd = date('His', mktime($time[0],$time[1]+$date['duration'],$time[2]));
+            $ical .= "BEGIN:VEVENT" . PHP_EOL
+                    . "UID:" . md5(uniqid(mt_rand(),true)) . "@" . Yii::app()->params['schoolWebsiteLink'] . PHP_EOL
+                    . "DTSTAMP:". date('Ymd') ."T" . date('His') ."Z" . PHP_EOL
+                    . "DTSTART:" . $t . $zStart . PHP_EOL 
+                    . "DTEND:" . $t . $zEnd . PHP_EOL
+                    . "SUMMARY:" . Yii::t('app','Ihr Termin mit {with} für {child}',array('{with}' => $with, '{child}' => $date['child']))
+                    . PHP_EOL . "END:VEVENT" . PHP_EOL;
+        }
+        $ical .= "END:VCALENDAR" . PHP_EOL; 
+        //header('Content-type: text/calendar; charset=utf-8');
+        //header('Content-Disposition: inline; filename=esta.ics');
+        echo $ical;
+        //die;
+    }
+    
+    private function generateIcsData() {
+        if(Yii::app()->user->checkAccess(TEACHER)) {
+            $userId = array('user_id' => Yii::app()->user->id);
+            $appointments = Appointment::model()->findAllByAttributes($userId);
+        } else if(Yii::app()->user->checkAccess(PARENTS)) {
+            $crit = new CDbCriteria();
+            $i = 0;
+            foreach(ParentChild::model()->findAllByAttributes(array('user_id' => Yii::app()->user->id)) as $parentChild) {
+                $crit->addCondition("parent_child_id = :A{$i}",'OR');
+                $crit->params[":A{$i}"] = $parentChild->id;
+                $i++;
+            }
+
+            $appointments = Appointment::model()->findAll($crit);
+        }
+        $dates = array();
+        foreach($appointments as $appointment) {
+            $dateAndTime = DateAndTime::model()->findByPk($appointment->dateAndTime_id);
+            $parentChild = ParentChild::model()->findByPk($appointment->parent_child_id);
+            $child = Child::model()->findByPk($parentChild->child_id);
+            $parent = User::model()->findByPk($parentChild->user_id);
+            $teacher = User::model()->findByPk($appointment->user_id);
+            $date = Date::model()->findByPk($dateAndTime->date_id);
+            $temp = array(
+                'date' => $date->date,
+                'start' => $dateAndTime->time,
+                'duration' => $date->durationPerAppointment,
+                //'title' => $date->title,
+                'child' => "{$child->firstname} {$child->lastname}",
+                'parent' => $parent->getDisplayName(),
+                'teacher' => $teacher->getDisplayName()
+            );
+            $dates[] = $temp;
+        }
+        return $dates;
     }
 
 }
