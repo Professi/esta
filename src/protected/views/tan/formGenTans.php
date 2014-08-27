@@ -30,7 +30,6 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
 </div>
 <div class="row">
     <div class="eight columns centered">
-
         <?php
         if (Yii::app()->params['allowParentsToManageChilds']) {
             $form = $this->beginWidget('CActiveForm', array(
@@ -129,5 +128,4 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
             echo CHtml::endForm();
         }
         ?></div>
-</div>
 </div>
