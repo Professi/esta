@@ -731,10 +731,10 @@ class AppointmentController extends Controller {
                     . PHP_EOL . "END:VEVENT" . PHP_EOL;
         }
         $ical .= "END:VCALENDAR" . PHP_EOL; 
-        header('Content-type: text/calendar; charset=utf-8');
-        header('Content-Disposition: inline; filename=esta.ics');
-        echo $ical;
-        die;
+        // header('Content-type: text/calendar; charset=utf-8');
+        // header('Content-Disposition: inline; filename=esta.ics');
+        $user = User::model()->findByPk(Yii::app()->user->getId());
+        Yii::app()->getRequest()->sendFile($user->lastname . '_' . $user->firstname .'_esta.ics', $ical,'text/calendar; charset=utf-8');
     }
     
     private function generateIcsData() {
