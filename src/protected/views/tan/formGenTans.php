@@ -69,7 +69,8 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                 <?php } echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('class' => 'small button'));
                 ?>
             </fieldset>
-            <?php $this->endWidget(); ?><?php
+            <?php
+            $this->endWidget();
         } else if (!Yii::app()->params['allowParentsToManageChilds']) {
             echo CHtml::beginForm();
             ?>
@@ -116,16 +117,16 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                                 </div>
                             </div>
                         <?php } ?>
-
                     </div>
-                <?php }
-                ?>
+                <?php } ?>
                 <div class="tiny button add-child-tan">+</div>
                 <div>
                     <?php echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('class' => 'small button')); ?>
+                </div>
             </fieldset>
             <?php
             echo CHtml::endForm();
         }
-        ?></div>
+        ?>
+    </div>
 </div>
