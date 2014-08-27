@@ -114,7 +114,7 @@ class WebUser extends CWebUser {
      * @return array all user groups
      */
     public function getGroups() {
-        return $this->getState('groups');
+            return $this->getState('groups');
     }
 
     public function getStateVariable() {
