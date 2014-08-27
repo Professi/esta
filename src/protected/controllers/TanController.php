@@ -129,7 +129,7 @@ class TanController extends Controller {
     private function getAvailableGroups() {
         $groups = array();
         if (Yii::app()->params['allowGroups']) {
-            if (empty(Yii::app()->user->getGroups()) || Yii::app()->user->checkAccess('1')) {
+            if (is_null(Yii::app()->user->getGroups()) || empty(Yii::app()->user->getGroups()) || Yii::app()->user->checkAccess('1')) {
                 $groups = Group::model()->getAllGroups('DESC');
             } else {
                 $groups = Group::formatGroups(Yii::app()->user->getGroups(), 'DESC');
