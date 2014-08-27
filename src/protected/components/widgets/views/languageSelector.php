@@ -7,7 +7,7 @@ if (sizeof($languages) > 1) {
     ?>
     <div id="language-select">
         <?php
-        if (sizeof($languages) < 4) {
+        if (sizeof($languages) < 3) {
             $lastElement = end($languages);
             foreach ($languages as $key => $lang) {
                 if ($key != $currentLang) {

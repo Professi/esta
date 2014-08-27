@@ -35,11 +35,11 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
         </h2>
         <hr>
         <?php if (empty($dates)) { ?>
-        <div class="panel">
+        <div class="paper panel">
             <?php echo Yii::t('app', 'In nächster Zeit ist kein Elternsprechtag geplant, für den Sie Termine vereinbaren könnten.');?>
         </div>
         <?php } else { ?>
-        <div class="panel js_show">
+        <div class="paper panel js_show">
             <?php echo Yii::t('app', 'Hier können Sie Termine mit dem Lehrer vereinbaren.'); ?>
             <?php echo Yii::t('app', 'Klicken Sie einfach auf ein Feld mit "Verfügbar" und bestätigen Sie am Ende der Seite den Termin.'); ?>
         </div>

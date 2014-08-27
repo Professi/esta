@@ -85,7 +85,7 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 <div class="row collapse">
     <div class="small-3 columns">
-        <span class="prefix"><?php echo Yi::t('app','Termin'); ?></span>
+        <span class="prefix"><?php echo Yii::t('app','Termin'); ?></span>
     </div>
     <div class="small-9 columns" id="appointment_dateAndTime_select">
         <?php
