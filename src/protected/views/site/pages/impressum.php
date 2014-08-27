@@ -50,6 +50,7 @@ $this->breadcrumbs = array(
             Google Web Fonts&nbsp;&nbsp;<a href="http://www.google.com/webfonts" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
             Free Stock Textures&nbsp;&nbsp;<a href="http://freestocktextures.com" ><span aria-hidden="true" data-icon="&#xe006;">&nbsp;Link</span></a><br>
         </p>
+        <?php if(Yii::app()->params['language'] == 'de') { ?>
         <p>
         <h3>Haftungsausschluss:</h3>
         Die <?php echo Yii::app()->params['schoolName']; ?> und die Entwickler dieser Anwendung, nachfolgend als "Der Autor" bezeichnet. <br>
@@ -78,6 +79,7 @@ $this->breadcrumbs = array(
             <b>5. Rechtswirksamkeit dieses Haftungsausschlusses</b> <br>
             Dieser Haftungsausschluss ist als Teil des Internetangebotes zu betrachten, von dem aus auf diese Seite verwiesen wurde. Sofern Teile oder einzelne Formulierungen dieses Textes der geltenden Rechtslage nicht, nicht mehr oder nicht vollständig entsprechen sollten, bleiben die übrigen Teile des Dokumentes in ihrem Inhalt und ihrer Gültigkeit davon unberührt. 
         </p>
+        <?php } ?>
         <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', 'index.php'); ?> </p>
     </div>
 </div>
