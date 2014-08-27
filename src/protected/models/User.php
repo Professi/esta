@@ -1,6 +1,6 @@
 <?php
 
-/* Copyright (C) 2013  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -250,7 +250,6 @@ class User extends CActiveRecord {
                 $i++;
             }
         }
-
         $match = addcslashes(ucfirst($this->lastname), '%_');
         $criteria->addCondition('lastname LIKE :match');
         $criteria->params[':match'] = "$match%";
@@ -335,10 +334,13 @@ class User extends CActiveRecord {
      * @return boolean 
      */
     private function saveNewRecord() {
-        $this->updateTan();
-        if (Yii::app()->params['allowGroups'] && !empty($this->groupIds)) {
-            foreach ($this->groupIds as $group) {
-                $this->createUserHasGroup($group);
+        if (Yii::app()->user->isGuest) {
+            $this->addWithTanNewGroup($this->tan);
+        } else {
+            if (Yii::app()->params['allowGroups'] && !empty($this->groupIds)) {
+                foreach ($this->groupIds as $group) {
+                    $this->createUserHasGroup($group);
+                }
             }
         }
     }
@@ -540,9 +542,6 @@ class User extends CActiveRecord {
         if ($this->getError('password') == Yii::t('yii', '{attribute} must be repeated exactly.', $params)) {
             $this->addError('password_repeat', Yii::t('app', 'Passwörter stimmen nicht überein.'));
         }
-        if ($rc && Yii::app()->user->isGuest && $this->isNewRecord) {
-            $rc = $this->addWithTanNewGroup($this->tan);
-        }
         return $rc;
     }
 
@@ -560,13 +559,7 @@ class User extends CActiveRecord {
                 $errorMsg = Yii::t('app', 'Leider wurde Ihre TAN schon benutzt.');
                 $rc = false;
             } else {
-                if (Yii::app()->params['allowGroups'] && $tan->group != null && is_int($tan->group_id)) {
-                    $errorMsg = $this->addUserHasGroup($tan);
-                    if (empty($errorMsg)) {
-                        $this->updateTan($tan);
-                    }
-                }
-                $this->addParentChildWithTan($tan);
+                $this->tanManagement($tan);
             }
         } else {
             if (Yii::app()->user->isGuest()) {
@@ -580,22 +573,36 @@ class User extends CActiveRecord {
         return $rc;
     }
 
+    private function tanManagement($tan) {
+        $ok = true;
+        if (Yii::app()->params['allowGroups'] && $tan->group != null && is_numeric($tan->group_id)) {
+            $errorMsg = $this->addUserHasGroup($tan);
+        }
+        if (!Yii::app()->params['allowParentsToManageChilds'] && $tan->child_id != null) {
+            $ok = $this->addParentChildWithTan($tan);
+        }
+        if ($ok && empty($errorMsg)) {
+            $this->updateTan($tan);
+        }
+    }
+
     /**
      * creates new parentChild Link for this user with a TAN
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param Tan $tan
      */
     private function addParentChildWithTan(&$tan) {
-        if ($tan->child != null) {
-            $pc = $this->createParentChild($this->id, $tan->child->id);
-            if ($pc->save()) {
-                $flash = '';
-                if (Yii::app()->user->hasFlash('success')) {
-                    $flash = Yii::app()->user->getFlash('success') . "<br>";
-                }
-                Yii::app()->user->setFlash('success', Yii::t('app', 'Schüler hinzugefügt.') . $flash);
+        $rc = false;
+        $pc = $this->createParentChild($this->id, $tan->child->id);
+        if ($pc->save()) {
+            $rc = true;
+            $flash = '';
+            if (Yii::app()->user->hasFlash('success')) {
+                $flash = Yii::app()->user->getFlash('success') . "<br>";
             }
+            Yii::app()->user->setFlash('success', Yii::t('app', 'Kind hinzugefügt.') . $flash);
         }
+        return $rc;
     }
 
     /**
@@ -711,15 +718,13 @@ class User extends CActiveRecord {
         $pc->user_id = $user_id;
         return $pc;
     }
-    
+
     /**
      * Name of the User with Title
      * @return string 
      */
     public function getDisplayName() {
-        return (empty($this->title)) 
-            ? "{$this->firstname} {$this->lastname}"
-            : "{$this->title} {$this->firstname} {$this->lastname}";
+        return (empty($this->title)) ? "{$this->firstname} {$this->lastname}" : "{$this->title} {$this->firstname} {$this->lastname}";
     }
 
 }
