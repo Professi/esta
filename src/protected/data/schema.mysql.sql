@@ -89,7 +89,7 @@ INSERT INTO `configs` (`key`, `value`) VALUES
 ('hashCost','13'),
 ('fromMail','ESTA-School'),
 ('schoolName','Schulname'),
-('mailsActivated','true'),
+('mailsActivated','1'),
 ('maxChild','3'),
 ('tanSize','6'),
 ('maxTanGen','100'),
@@ -97,11 +97,11 @@ INSERT INTO `configs` (`key`, `value`) VALUES
 ('defaultTeacherPassword','DONNERSTAG01'),
 ('randomTeacherPassword','0'),
 ('minLengthPerAppointment','5'),
-('banUsers','true'),
+('banUsers','1'),
 ('durationTempBans','5'),
 ('maxAttemptsForLogin','5'),
-('allowBlockingAppointments','true'),
-('allowBlockingOnlyForManagement','true'),
+('allowBlockingAppointments','1'),
+('allowBlockingOnlyForManagement','1'),
 ('appointmentBlocksPerDate','2'),
 ('lengthReasonAppointmentBlocked','5'),
 ('schoolStreet','Straße'),
@@ -109,9 +109,9 @@ INSERT INTO `configs` (`key`, `value`) VALUES
 ('schoolTele','Telefonnummer'),
 ('schoolFax','Faxnummer'),
 ('schoolEmail','office@schuldomain.de'),
-('useSchoolEmailForContactForm','true'),
-('lockRegistration','false'),
-('allowGroups','false'),
+('useSchoolEmailForContactForm','1'),
+('lockRegistration','0'),
+('allowGroups','0'),
 ('logoPath','/img/logo.png'),
 ('schoolWebsiteLink','schooldomain.de'),
 ('emailHost','exampleHost.de'),
@@ -122,8 +122,9 @@ INSERT INTO `configs` (`key`, `value`) VALUES
 ('smtpPassword','your_password'),
 ('textHeader','der'),
 ('language','de'),
-('teacherAllowBlockTeacherApps', 'false'),
-('allowParentsToManageChilds','true');
+('teacherAllowBlockTeacherApps', '0'),
+('allowTeachersToCreateAppointments', '0'),
+('allowParentsToManageChilds','1');
 
 -- --------------------------------------------------------
 

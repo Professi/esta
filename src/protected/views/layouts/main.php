@@ -43,12 +43,11 @@
                         <div id="logo_school_border">
                             <a href="http://<?php echo Yii::app()->params['schoolWebsiteLink']; ?>" target="_blank"><img id="logo_school" src="<?php echo $this->assetsDir . Yii::app()->params['logoPath']; ?>" alt="<?php echo Yii::app()->params['schoolName'] ?>"></a>
                         </div>
-                    
-                    <div id="language-selector" class="right">
-                        <?php $this->widget('application.components.widgets.LanguageSelector'); ?>
-                        
+                        <!-- erstmal deaktivieren weil noch keine vollständige 2 Sprache integriert ist
+                        <div id="language-selector" class="right">
+                            <?php //$this->widget('application.components.widgets.LanguageSelector'); ?>
+                        </div> -->
                     </div>
-                        </div>
                 </div>
             </div>
             <?php if (!Yii::app()->user->isGuest) { ?>
@@ -68,16 +67,16 @@
                     'items' => array(//0=Administration 1=Verwaltung 2= Lehrer 3=Eltern
                         $this->generateMenuItem("&#xe002;", Yii::t('app', "Ihre Termine"), "/Appointment/index", !Yii::app()->user->isAdmin() && Yii::app()->user->checkAccessRole("2", "3")),
                         $this->generateMenuItem("&#xe00b;", Yii::t('app', "Termine vereinbaren"), "/Appointment/getTeacher", Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
-                        $this->generateMenuItem("&#xe00b;", Yii::t('app', "Termine anlegen"), "/Appointment/create", Yii::app()->user->checkAccessNotAdmin('2') && Yii::app()->params['teacherAllowBlockTeacherApps']),
+                        $this->generateMenuItem("&#xe00b;", Yii::t('app', "Termine anlegen"), "/Appointment/create", Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments']),
                         $this->generateMenuItem("&#xe00b;", Yii::t('app', "Termine blockieren"), "/Appointment/createBlockApp", Yii::app()->user->checkAccessNotAdmin('2') && Yii::app()->params['allowBlockingAppointments'] && !(Yii::app()->params['allowBlockingOnlyForManagement'])),
-                        $this->generateMenuItem("&#xe007;", Yii::t('app', "Elternsprechtagsverwaltung"), "/Date/admin", Yii::app()->user->checkAccess('0')),
+                        $this->generateMenuItem("&#xe007;", Yii::t('app', "Elternsprechtagsverwaltung"), "/Date/admin", Yii::app()->user->isAdmin()),
                         $this->generateMenuItem("&#xe007;", Yii::t('app', "Terminverwaltung"), "/Appointment/admin", Yii::app()->user->checkAccess('1')),
                         $this->generateMenuItem("&#xe00a;", Yii::t('app', "Eltern und Kinder"), "/ParentChild/admin", Yii::app()->user->checkAccess('1')),
-                        $this->generateMenuItem("&#xe00a;", Yii::t('app', "Ihre Kinder"), "/ParentChild/index", Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()),
+                        $this->generateMenuItem("&#xe00a;", Yii::t('app', "Ihre Kinder"), "/ParentChild/index", Yii::app()->user->checkAccessNotAdmin('3')),
                         $this->generateMenuItem("&#xe00a;", Yii::t('app', "Benutzerverwaltung"), "/User/admin", Yii::app()->user->checkAccess('1')),
                         $this->generateMenuItem("&#xe00a;", Yii::t('app', "Gruppenverwaltung"), "Group/admin", Yii::app()->user->checkAccess('1') && Yii::app()->params['allowGroups']),
                         $this->generateMenuItem("&#xe007;", Yii::t('app', "TAN- verwaltung"), "Tan/genTans", Yii::app()->user->checkAccessRole('2', '1') || Yii::app()->user->isAdmin()),
-                        $this->generateMenuItem("&#xe007;", Yii::t('app', "Konfiguration"), "site/config", Yii::app()->user->checkAccess('0')),
+                        $this->generateMenuItem("&#xe007;", Yii::t('app', "Konfiguration"), "site/config", Yii::app()->user->isAdmin()),
                         $this->generateMenuItem("&#xe007;", Yii::t('app', "Ihr Benutzerkonto"), "/User/account", true),
                         $this->generateMenuItem("&#xe006;", Yii::t('app', "Logout"), "/site/logout", true)),
                     'activeCssClass' => 'active'

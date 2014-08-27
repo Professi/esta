@@ -505,6 +505,17 @@ $this->registerAdminScripts(true);
             </div>
             <div class="row collapse">
                 <div class="eight columns">
+                    <span class="prefix"><?php echo $form->label($model, 'allowTeachersToCreateAppointments'); ?></span>
+                </div>
+                <div class="four columns">
+                    <?php
+                    echo Select2::activeDropDownList($model, 'allowTeachersToCreateAppointments', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo $form->error($model, 'allowTeachersToCreateAppointments');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="eight columns">
                     <span class="prefix"><?php echo $form->label($model, 'allowBlockingOnlyForManagement'); ?></span>
                 </div>
                 <div class="four columns">

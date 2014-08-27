@@ -44,12 +44,12 @@ class AppointmentController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'index', 'view', 'getTeacher', 'makeAppointment', 'delete','exportIcs'),
+                'actions' => array('create', 'index', 'view', 'getTeacher', 'makeAppointment', 'delete', 'exportIcs'),
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
                 'actions' => array('index', 'delete', 'create', 'createBlockApp', 'DeleteBlockApp',
-                    'getteacherappointmentsajax', 'getselectchildrenajax','overview','exportIcs'),
+                    'getteacherappointmentsajax', 'getselectchildrenajax', 'overview', 'exportIcs'),
                 'roles' => array('2')
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -179,6 +179,9 @@ class AppointmentController extends Controller {
      */
     public function actionCreate() {
         $model = new Appointment;
+        if(Yii::app()->user->isTeacher() && !Yii::app()->params['teacherAllowBlockTeacherApps'] && Yii::app()->params['allowTeachersToCreateAppointments']) {
+            $model->user_id = Yii::app()->user->getId();
+        }
         $parentId = 0;
         $teacherLabel = $this->getInformationWithTeacherId();
         $parentLabel = $this->getParentLabel();
@@ -258,7 +261,6 @@ class AppointmentController extends Controller {
     public function actionMakeAppointment($teacher) {
         $model = new Appointment;
         $model->unsetAttributes();
-        $badRequest = false;
         if (is_numeric($teacher)) {
             $this->checkForBadRequest($teacher);
             $model->user_id = $teacher;
@@ -328,8 +330,9 @@ class AppointmentController extends Controller {
         $teacherLabel = $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname;
         if (isset($_POST['Appointment'])) {
             $model->attributes = $_POST['Appointment'];
-            if ($model->save())
+            if ($model->save()) {
                 $this->redirect(array('view', 'id' => $model->id));
+            }
         }
         $this->render('update', array(
             'model' => $model,
@@ -373,17 +376,12 @@ class AppointmentController extends Controller {
             $blockedApp = new BlockedAppointment();
             $blockedApp->unsetAttributes();
             $dates = Date::model()->findAll();
+            $arr = array('dataProvider' => $dataProvider->customSearch(),
+                'dates' => $dates);
             if (Yii::app()->params['allowBlockingAppointments']) {
-                $this->render('indexTeacher', array(
-                    'dataProvider' => $dataProvider->customSearch(),
-                    'blockedApp' => $blockedApp->search(),
-                    'dates' => $dates
-                ));
-            } else {
-                $this->render('indexTeacher', array(
-                    'dataProvider' => $dataProvider->customSearch(),
-                ));
+                $arr['blockedApp'] = $blockedApp->search();
             }
+            $this->render('indexTeacher', $arr);
         } else if (Yii::app()->user->checkAccessNotAdmin('3')) {
             $no_children = count(ParentChild::model()->findAllByAttributes(
                                     array('user_id' => Yii::app()->user->getId())
@@ -411,7 +409,6 @@ class AppointmentController extends Controller {
         if (isset($_GET['BlockedAppointment'])) {
             $blockedApp->attributes = $_GET['BlockedAppointment'];
         }
-
         $dates = Date::model()->findAll();
         $dateData = array();
         foreach ($dates as $date) {
@@ -419,7 +416,6 @@ class AppointmentController extends Controller {
             $desc .= (empty($date->title)) ? '' : " ({$date->title})";
             $dateData[$date->id] = $desc;
         }
-
         $this->render('admin', array(
             'model' => $model, 'blockedApp' => $blockedApp, 'dates' => $dateData
         ));
@@ -434,8 +430,9 @@ class AppointmentController extends Controller {
      */
     public function loadModel($id) {
         $model = Appointment::model()->findByPk($id);
-        if ($model === null)
+        if ($model === null) {
             $this->throwFourNullFour();
+        }
         return $model;
     }
 
@@ -707,46 +704,44 @@ class AppointmentController extends Controller {
         }
         return $dateAndTimes;
     }
-    
+
     public function actionExportIcs() {
-        if( ! (Yii::app()->user->checkAccess('2') || Yii::app()->user->checkAccess('3'))) {
+        if (!(Yii::app()->user->checkAccess('2') || Yii::app()->user->checkAccess('3'))) {
             $this->throwFourNullThree();
-        } 
+        }
         $dates = $this->generateIcsData();
         $ical = "BEGIN:VCALENDAR" . PHP_EOL
                 . "VERSION:2.0" . PHP_EOL
                 . "PRODID:http://" . Yii::app()->params['schoolWebsiteLink'] . PHP_EOL;
-        foreach($dates as $date) {
+        foreach ($dates as $date) {
             $with = Yii::app()->user->checkAccess('2') ? $date['parent'] : $date['teacher'];
-            $t = date('Ymd',strtotime($date['date'])).'T';
-            $time = explode(':',$date['start']);
-            $zStart = date('His', mktime($time[0],$time[1],$time[2]));
-            $zEnd = date('His', mktime($time[0],$time[1]+$date['duration'],$time[2]));
+            $t = date('Ymd', strtotime($date['date'])) . 'T';
+            $time = explode(':', $date['start']);
+            $zStart = date('His', mktime($time[0], $time[1], $time[2]));
+            $zEnd = date('His', mktime($time[0], $time[1] + $date['duration'], $time[2]));
             $ical .= "BEGIN:VEVENT" . PHP_EOL
-                    . "UID:" . md5(uniqid(mt_rand(),true)) . "@" . Yii::app()->params['schoolWebsiteLink'] . PHP_EOL
-                    . "DTSTAMP:". date('Ymd') ."T" . date('His') ."Z" . PHP_EOL
-                    . "DTSTART:" . $t . $zStart . PHP_EOL 
+                    . "UID:" . md5(uniqid(mt_rand(), true)) . "@" . Yii::app()->params['schoolWebsiteLink'] . PHP_EOL
+                    . "DTSTAMP:" . date('Ymd') . "T" . date('His') . "Z" . PHP_EOL
+                    . "DTSTART:" . $t . $zStart . PHP_EOL
                     . "DTEND:" . $t . $zEnd . PHP_EOL
-                    . "SUMMARY:" . Yii::t('app','Ihr Termin mit {with} für {child}',array('{with}' => $with, '{child}' => $date['child']))
+                    . "SUMMARY:" . Yii::t('app', 'Ihr Termin mit {with} für {child}', array('{with}' => $with, '{child}' => $date['child']))
                     . PHP_EOL . "END:VEVENT" . PHP_EOL;
         }
-        $ical .= "END:VCALENDAR" . PHP_EOL; 
-        // header('Content-type: text/calendar; charset=utf-8');
-        // header('Content-Disposition: inline; filename=esta.ics');
+        $ical .= "END:VCALENDAR" . PHP_EOL;
         $user = User::model()->findByPk(Yii::app()->user->getId());
-        Yii::app()->getRequest()->sendFile($user->lastname . '_' . $user->firstname .'_esta.ics', $ical,'text/calendar; charset=utf-8');
+        Yii::app()->getRequest()->sendFile($user->lastname . '_' . $user->firstname . '_esta.ics', $ical, 'text/calendar; charset=utf-8');
     }
-    
+
     private function generateIcsData() {
         $appointments = array();
-        if(Yii::app()->user->checkAccess('2')) {
+        if (Yii::app()->user->checkAccess('2')) {
             $userId = array('user_id' => Yii::app()->user->id);
             $appointments = Appointment::model()->findAllByAttributes($userId);
-        } else if(Yii::app()->user->checkAccess('3')) {
+        } else if (Yii::app()->user->checkAccess('3')) {
             $crit = new CDbCriteria();
             $i = 0;
-            foreach(ParentChild::model()->findAllByAttributes(array('user_id' => Yii::app()->user->id)) as $parentChild) {
-                $crit->addCondition("parent_child_id = :A{$i}",'OR');
+            foreach (ParentChild::model()->findAllByAttributes(array('user_id' => Yii::app()->user->id)) as $parentChild) {
+                $crit->addCondition("parent_child_id = :A{$i}", 'OR');
                 $crit->params[":A{$i}"] = $parentChild->id;
                 $i++;
             }
@@ -754,7 +749,7 @@ class AppointmentController extends Controller {
             $appointments = Appointment::model()->findAll($crit);
         }
         $dates = array();
-        foreach($appointments as $appointment) {
+        foreach ($appointments as $appointment) {
             $dateAndTime = DateAndTime::model()->findByPk($appointment->dateAndTime_id);
             $parentChild = ParentChild::model()->findByPk($appointment->parent_child_id);
             $child = Child::model()->findByPk($parentChild->child_id);

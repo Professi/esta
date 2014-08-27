@@ -76,12 +76,7 @@ class WebUser extends CWebUser {
      * @return boolean selbsterklärend
      */
     public function isAdmin() {
-        if (empty($this->id)) {
-            return false;
-        }
-        if ($this->getState("role") == 0) {
-            return true;
-        }
+       return $this->checkRole('0');
     }
 
     /**
@@ -91,6 +86,27 @@ class WebUser extends CWebUser {
     public function isGuest() {
         return $this->isGuest;
     }
+    
+    public function isManager() {
+        return $this->checkRole('1');
+    }
+    
+    public function isParent() {
+        return $this->checkRole('3');
+    }
+    
+    public function isTeacher() {
+        return $this->checkRole('2');
+    }
+
+    
+    private function checkRole($roleId) {
+        if(!empty($this->id) && $this->getState('role') == $roleId) {
+            return true;
+        }
+        return false;
+    }
+    
 
     /**
      * returns all groups which set as state for the user
