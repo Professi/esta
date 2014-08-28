@@ -117,7 +117,7 @@ class Controller extends CController {
      */
     public function registerAdminScripts($admin = false) {
         if (Yii::app()->user->checkAccess('1') || $admin ||
-                Yii::app()->user->checkAccess('2') && Yii::app()->params['teacherAllowBlockTeacherApps']) {
+                Yii::app()->user->checkAccess('2')) {
             $cs = Yii::app()->getClientScript();
             $cs->addPackage('admin', array(
                 'baseUrl' => $this->assetsDir,
