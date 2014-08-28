@@ -366,8 +366,14 @@ $this->registerAdminScripts(true);
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
-                    <span class="prefix"><?php echo $form->label($model, 'emailHost'); ?></span>
+                                <div class="eight columns">
+                    <span class="prefix infofeld">
+                        <?php echo $form->label($model, 'emailHost', array('class' => 'infolabel')); ?>
+                    </span>
+                    <div class="infotext">
+                        <span aria-hidden="true" data-icon="&#xe012;"></span>
+                        <?php echo Yii::t('app', 'Sofern der Mailserver auf dem selben Host wie die Anwendung läuft, sollte in diesem Feld localhost eingetragen werden.'); ?>
+                    </div>
                 </div>
                 <div class="four columns">
                     <?php
