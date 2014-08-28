@@ -106,7 +106,7 @@ class User extends CActiveRecord {
             array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat'),
             array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
             array('id, username, firstname, state, lastname, email, role, stateName, title, groupIds, password_repeat', 'safe'),
-            array('groups', 'safe', 'on' => 'update'),
+            array('groups,activationKey', 'safe', 'on' => 'update'),
         );
     }
 

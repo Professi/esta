@@ -235,8 +235,7 @@ class UserController extends Controller {
                 if ($user != null) {
                     if ($user->state == 1) {
                         $user->activationKey = $user->generateActivationKey();
-                        $user->password = "dummyPassworddummyPassword";
-                        $user->save();
+                        $user->update();
                         $mail = new Mail();
                         $mail->sendChangePasswordMail($user->email, $user->activationKey);
                         Yii::app()->user->setFlash('success', Yii::t('app', 'Sie erhalten eine Aktivierungsemail, mit der Sie dann ein neues Passwort setzen können.'));
