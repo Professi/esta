@@ -112,11 +112,7 @@ class AppointmentController extends Controller {
                 }
                 if ($model->save()) {
                     Yii::app()->user->setFlash('success', Yii::t('app', 'Termin erfolgreich geblockt.'));
-                    if (Yii::app()->user->checkAccessNotAdmin('2')) {
-                        $this->redirect(array('index'));
-                    } else {
-                        $this->redirect(array('admin'));
-                    }
+                    $this->redirect(Yii::app()->user->checkAccessNotAdmin('2') ? array('index') : array('admin'));
                 }
             }
             $this->render('createBlockApp', array('model' => $model, 'teacherLabel' => $teacherLabel));
@@ -179,7 +175,7 @@ class AppointmentController extends Controller {
      */
     public function actionCreate() {
         $model = new Appointment;
-        if(Yii::app()->user->isTeacher() && !Yii::app()->params['teacherAllowBlockTeacherApps'] && Yii::app()->params['allowTeachersToCreateAppointments']) {
+        if (Yii::app()->user->isTeacher() && !Yii::app()->params['teacherAllowBlockTeacherApps'] && Yii::app()->params['allowTeachersToCreateAppointments']) {
             $model->user_id = Yii::app()->user->getId();
         }
         $parentId = 0;
@@ -194,12 +190,10 @@ class AppointmentController extends Controller {
                 $parentLabel = $model->parentchild->user->firstname . " " . $model->parentchild->user->lastname;
                 $parentId = $model->parentchild->user->getPrimaryKey();
             }
-            if ($model->save())
-                if (Yii::app()->user->checkAccessNotAdmin('2')) {
-                    $this->redirect('index.php?r=Appointment/index');
-                } else {
-                    $this->redirect(array('view', 'id' => $model->id));
-                }
+            if ($model->save()) {
+                $this->redirect(Yii::app()->user->checkAccessNotAdmin('2') ?
+                                array('appointment/index') : array('view', 'id' => $model->id));
+            }
         }
         $this->render('create', array(
             'model' => $model,
@@ -359,7 +353,7 @@ class AppointmentController extends Controller {
                 if (Yii::app()->user->checkAccess('1')) {
                     $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
                 } else {
-                    $this->redirect('index.php?r=/appointment/index');
+                    $this->redirect('appointment/index');
                 }
             }
         }
@@ -383,9 +377,8 @@ class AppointmentController extends Controller {
             }
             $this->render('indexTeacher', $arr);
         } else if (Yii::app()->user->checkAccessNotAdmin('3')) {
-            $no_children = count(ParentChild::model()->findAllByAttributes(
-                                    array('user_id' => Yii::app()->user->getId())
-                    )) == 0 ? true : false;
+            $no_children = ParentChild::model()->countByAttributes(
+                            array('user_id' => Yii::app()->user->getId())) == '0' ? true : false;
             $this->render('index', array(
                 'dataProvider' => Appointment::getAllAppointments(),
                 'no_children' => $no_children,
@@ -657,7 +650,7 @@ class AppointmentController extends Controller {
         if (!((Yii::app()->user->checkAccessNotAdmin('2') && $id === Yii::app()->user->id) || Yii::app()->user->checkAccess('1'))) {
             $this->throwFourNullThree();
         }
-        $data = $this->generateOverviewData($id, current($this->getDateWithTimes($date)), Appointment::model()->findAllByAttributes(array('user_id' => $id)), BlockedAppointment::model()->findAllByAttributes(array('user_id' => $id)));
+        $data = $this->generateOverviewData($id, current($this->getDateWithTimes($date)), Appointment::model()->with('parentchild.child', 'parentchild.user')->findAllByAttributes(array('user_id' => $id)), BlockedAppointment::model()->findAllByAttributes(array('user_id' => $id)));
         $teacher = User::model()->findByPk($id);
         $this->render('overview', array('data' => $data,
             'teacher' => "{$teacher->title} {$teacher->firstname} {$teacher->lastname}",
@@ -677,8 +670,8 @@ class AppointmentController extends Controller {
             if (!$time[1] && $time[0] !== Yii::t('app', "BLOCKIERT")) {
                 foreach ($appointments as $appointment) {
                     if ($date->id === $appointment->dateAndTime_id) {
-                        $parent = User::model()->findByPk(ParentChild::model()->findByPk($appointment->parent_child_id)->user_id);
-                        $child = Child::model()->findByPk(ParentChild::model()->findByPk($appointment->parent_child_id)->child_id);
+                        $parent = $appointment->parentchild->user;
+                        $child = $appointment->parentchild->child;
                         $temp['text'] = "{$parent->title} {$parent->firstname} {$parent->lastname} ({$child->firstname} {$child->lastname})";
                     }
                 }
@@ -732,7 +725,7 @@ class AppointmentController extends Controller {
         Yii::app()->getRequest()->sendFile($user->lastname . '_' . $user->firstname . '_esta.ics', $ical, 'text/calendar; charset=utf-8');
     }
 
-    private function generateIcsData() {
+    private function getAppointments() {
         $appointments = array();
         if (Yii::app()->user->checkAccess('2')) {
             $userId = array('user_id' => Yii::app()->user->id);
@@ -745,25 +738,27 @@ class AppointmentController extends Controller {
                 $crit->params[":A{$i}"] = $parentChild->id;
                 $i++;
             }
-
+            $crit->with('parentchild', 'dateandtime.date');
             $appointments = Appointment::model()->findAll($crit);
         }
+        return $appointments;
+    }
+
+    private function generateIcsData() {
+        $appointments = $this->getAppointments();
         $dates = array();
         foreach ($appointments as $appointment) {
-            $dateAndTime = DateAndTime::model()->findByPk($appointment->dateAndTime_id);
-            $parentChild = ParentChild::model()->findByPk($appointment->parent_child_id);
-            $child = Child::model()->findByPk($parentChild->child_id);
-            $parent = User::model()->findByPk($parentChild->user_id);
-            $teacher = User::model()->findByPk($appointment->user_id);
-            $date = Date::model()->findByPk($dateAndTime->date_id);
+            $parentChild = $appointment->parentchild;
+            $child = $parentChild->child;
+            $date = $appointment->dateandtime->date;
             $temp = array(
                 'date' => $date->date,
-                'start' => $dateAndTime->time,
+                'start' => $appointment->dateandtime->time,
                 'duration' => $date->durationPerAppointment,
                 //'title' => $date->title,
                 'child' => "{$child->firstname} {$child->lastname}",
-                'parent' => $parent->getDisplayName(),
-                'teacher' => $teacher->getDisplayName()
+                'parent' => $parentChild->user->getDisplayName(),
+                'teacher' => $appointment->user->getDisplayName()
             );
             $dates[] = $temp;
         }

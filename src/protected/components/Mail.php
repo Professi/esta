@@ -45,7 +45,7 @@ class Mail {
         $mailer->isHTML(true);
         $mailer->addAddress($to);
         $mailer->FromName = $fromName;
-        $mailer->CharSet = 'UTF-8';
+        $mailer->CharSet = 'utf-8';
         $mailer->ContentType = 'text/html';
         $mailer->Subject = $subject;
         $mailer->Body = $message;
@@ -105,7 +105,7 @@ class Mail {
      */
     public function sendAppointmentDeleted($email, $teacher, $time, $child, $date) {
         $body = "<html><head><title></title></head>";
-        $body .= "<body><p>" . Yii::t('app', "Hallo,") . "</p><p>" . Yii::t('app', "leider m&uuml;ssen wir Sie dar&uuml;ber informieren, dass Ihr Termin am") . "<b>" . date('d.m.Y', strtotime($date)) . Yii::t('app', " um  ") . date('H:i', strtotime($time)) . "</b><br>";
+        $body .= "<body><p>" . Yii::t('app', "Hallo,") . "</p><p>" . Yii::t('app', "leider m&uuml;ssen wir Sie dar&uuml;ber informieren, dass Ihr Termin am") . "<b>" . Yii::app()->dateFormatter->formatDateTime($date, 'short', null) . ' ' . Yii::t('app', 'um'). ' ' . Yii::app()->dateFormatter->formatDateTime($time, null,'medium') . "</b><br>";
         $body .= " " . Yii::t('app', "bei") . " <b>" . $teacher->title . " " . $teacher->firstname . " " . $teacher->lastname . "</b><br>";
         $body .= Yii::t('app', "mit ihrem Kind") . " <b>" . $child->firstname . " " . $child->lastname . "</b> <br>" . Yii::t('app', "abgesagt wurde.") . "</p>";
         $this->addInfo($body);
