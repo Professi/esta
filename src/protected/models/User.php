@@ -522,7 +522,7 @@ class User extends CActiveRecord {
                     $first = false;
                     $rc .= $this->getGroupname($group);
                 } else {
-                    $rc .= "," . $this->getGroupname($group);
+                    $rc .= ", " . $this->getGroupname($group);
                 }
             }
         }
@@ -696,9 +696,9 @@ class User extends CActiveRecord {
      */
     public function getRolePermission() {
         $rc = null;
-        if (Yii::app()->user->checkAccess('0')) {
+        if (Yii::app()->user->isAdmin()) {
             $rc = array('3' => Yii::t('app', 'Eltern'), '2' => Yii::t('app', 'Lehrer'), '1' => Yii::t('app', 'Verwaltung'), '0' => Yii::t('app', 'Administrator'));
-        } else if (Yii::app()->user->checkAccessNotAdmin('1') && $this->id == Yii::app()->user->getId()) {
+        } else if (Yii::app()->user->isManager() && $this->id == Yii::app()->user->getId()) {
             $rc = array('3' => Yii::t('app', 'Eltern'), '2' => Yii::t('app', 'Lehrer'), '1' => Yii::t('app', 'Verwaltung'));
         } else {
             $rc = array('3' => Yii::t('app', 'Eltern'), '2' => Yii::t('app', 'Lehrer'));
