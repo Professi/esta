@@ -239,7 +239,7 @@ class UserController extends Controller {
                         $user->save();
                         $mail = new Mail();
                         $mail->sendChangePasswordMail($user->email, $user->activationKey);
-                        Yii::app()->user->setFlash('success', Yii::t('app', 'Sie erhalten nun eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.'));
+                        Yii::app()->user->setFlash('success', Yii::t('app', 'Sie erhalten eine Aktivierungsemail, mit der Sie dann ein neues Passwort setzen können.'));
                         $this->redirect('index.php?r=/site/index');
                     } else {
                         Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Bevor Sie ein neues Passwort anfordern können, muss Ihr Benutzerkonto aktiviert sein.'));

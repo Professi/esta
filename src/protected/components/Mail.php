@@ -45,7 +45,7 @@ class Mail {
         $mailer->isHTML(true);
         $mailer->addAddress($to);
         $mailer->FromName = $fromName;
-        $mailer->CharSet = 'utf-8';
+        $mailer->CharSet = 'UTF-8';
         $mailer->ContentType = 'text/html';
         $mailer->Subject = $subject;
         $mailer->Body = $message;
