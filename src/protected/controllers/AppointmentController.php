@@ -650,7 +650,7 @@ class AppointmentController extends Controller {
         if (!((Yii::app()->user->checkAccessNotAdmin('2') && $id === Yii::app()->user->id) || Yii::app()->user->checkAccess('1'))) {
             $this->throwFourNullThree();
         }
-        $data = $this->generateOverviewData($id, current($this->getDateWithTimes($date)), Appointment::model()->with(array('parentchild.child', 'parentchild.user'))->findAllByAttributes(array('user_id' => $id)), BlockedAppointment::model()->findAllByAttributes(array('user_id' => $id)));
+        $data = $this->generateOverviewData($id, current($this->getDateWithTimes($date)), Appointment::model()->with('parentchild.child', 'parentchild.user')->findAllByAttributes(array('user_id' => $id)), BlockedAppointment::model()->findAllByAttributes(array('user_id' => $id)));
         $teacher = User::model()->findByPk($id);
         $this->render('overview', array('data' => $data,
             'teacher' => "{$teacher->title} {$teacher->firstname} {$teacher->lastname}",
@@ -738,7 +738,7 @@ class AppointmentController extends Controller {
                 $crit->params[":A{$i}"] = $parentChild->id;
                 $i++;
             }
-            $crit->with(array('parentchild', 'dateandtime.date'));
+            $crit->with = array('parentchild', 'dateandtime.date');
             $appointments = Appointment::model()->findAll($crit);
         }
         return $appointments;
