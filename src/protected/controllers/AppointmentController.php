@@ -710,8 +710,8 @@ class AppointmentController extends Controller {
             $with = Yii::app()->user->checkAccess('2') ? $date['parent'] : $date['teacher'];
             $t = date('Ymd', strtotime($date['date'])) . 'T';
             $time = explode(':', $date['start']);
-            $zStart = date('His', mktime($time[0], $time[1], $time[2]));
-            $zEnd = date('His', mktime($time[0], $time[1] + $date['duration'], $time[2]));
+            $zStart = date('His', mktime($time[0], $time[1], $time[2])) . 'Z';
+            $zEnd = date('His', mktime($time[0], $time[1] + $date['duration'], $time[2])) . 'Z';
             $ical .= "BEGIN:VEVENT" . PHP_EOL
                     . "UID:" . md5(uniqid(mt_rand(), true)) . "@" . Yii::app()->params['schoolWebsiteLink'] . PHP_EOL
                     . "DTSTAMP:" . date('Ymd') . "T" . date('His') . "Z" . PHP_EOL
