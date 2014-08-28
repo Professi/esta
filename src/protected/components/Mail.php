@@ -62,7 +62,7 @@ class Mail {
         $body = '<html><head><title></title></head><body>';
         $body .= '<p>' . Yii::t('app', 'Bitte klicken Sie auf folgenden Link um ein neues Passwort für Ihr Benutzerkonto zu setzen.') . '</p>';
         $body .= '<p><a href="' . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=$activationKey\">" . Yii::t('app', 'Link f&uuml;r die Passwortwahl') . '</a></p>';
-        $body .= '<p>' . Yii::t('app', 'Sollten Sie Probleme beim Aufrufen der Aktivierung haben kopieren Sie bitte den folgenden Link in die Adressleiste ihres Browser.') . '</p>';
+        $body .= '<p>' . Yii::t('app', 'Sollten Sie Probleme beim Aufrufen der Aktivierung haben kopieren Sie bitte den folgenden Link in die Adressleiste ihres Browser:') . '</p>';
         $body .= "<p>" . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=" . $activationKey . "</p><br/>";
         $body .= '<p>' . Yii::t('app', 'Falls Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese Nachricht.') . '</p>';
         $this->addInfo($body);
@@ -107,7 +107,7 @@ class Mail {
         $body = "<html><head><title></title></head>";
         $body .= "<body><p>" . Yii::t('app', "Hallo,") . "</p><p>" . Yii::t('app', "leider müssen wir Sie darüber informieren, dass Ihr Termin am {date} um {time} ", array('{date}' => "<b>" . Yii::app()->dateFormatter->formatDateTime($date, 'short', null), '{time}' => Yii::app()->dateFormatter->formatDateTime($time, null, 'medium'))) . "</b><br>";
         $body .= " " . Yii::t('app', "bei") . " <b>" . $teacher->title . " " . $teacher->firstname . " " . $teacher->lastname . "</b><br>";
-        $body .= Yii::t('app', "mit ihrem Kind") . " <b>" . $child->firstname . " " . $child->lastname . "</b> <br>" . Yii::t('app', "abgesagt wurde.") . "</p>";
+        $body .= Yii::t('app', "mit ihrem Kind") . " <b>" . $child->firstname . " " . $child->lastname . "</b> <br/>" . Yii::t('app', "abgesagt wurde.") . "</p>";
         $this->addInfo($body);
         $body .= "</body></html>";
         $this->send(Yii::t('app', "Einer Ihrer Termine bei") . " " . Yii::app()->name . " " . Yii::t('app', "wurde gelöscht"), $body, $email);
@@ -123,9 +123,9 @@ class Mail {
     public function sendRandomUserPassword($email, $password, $isTeacher = true) {
         $body = "<html><head><title></title></head>";
         if ($isTeacher) {
-            $body .= "<body><p>" . Yii::t('app', "Sie wurden bei der {appname} als Lehrer registriert.", array('{appname}' => Yii::app()->name)) . "</p>";
+            $body .= "<body><p>" . Yii::t('app', "Sie wurden bei {appname} als Lehrer registriert.", array('{appname}' => Yii::app()->name)) . "</p>";
         } else {
-            $body .= "<body><p>" . Yii::t('app', "Sie wurden bei der {appname} registriert.", array('{appname}' => Yii::app()->name)) . "</p>";
+            $body .= "<body><p>" . Yii::t('app', "Sie wurden bei {appname} registriert.", array('{appname}' => Yii::app()->name)) . "</p>";
         }
         $body .= "<p>" . Yii::t('app', "Ihr Benutzername lautet:") . " <b>" . $email . "</b></p>";
         $body .= "<p>" . Yii::t('app', "Ihr Passwort lautet:") . " <b>";
@@ -141,7 +141,7 @@ class Mail {
      * @param string &$body Inhalt einer E-Mail
      */
     private function addInfo(&$body) {
-        $body .= "<p>" . Yii::t('app', "Sollten Sie noch Fragen oder Anregungen haben, benutzen Sie bitte das Kontaktformular auf der Webseite.") . "</p><br/><br/>";
+        $body .= "<p>" . Yii::t('app', "Sollten Sie noch Fragen oder Anregungen haben, benutzen Sie bitte das Kontaktformular auf der Webseite.") . "</p><br/>";
         $body .= "<p>" . Yii::t('app', "Das Team der Elternsprechtagsanwendung wünscht Ihnen weiterhin ein gutes Gelingen.") . "</p>";
         $body .= "<p>" . Yii::t('app', "(Dies ist eine automatisch versendete E-Mail. Bitte antworten Sie nicht auf diese Nachricht, da die E-Mail-Adresse nur zum Versenden, nicht aber zum Empfang von E-Mails eingerichtet ist.)") . "</p>";
     }

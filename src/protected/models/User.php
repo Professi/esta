@@ -239,7 +239,7 @@ class User extends CActiveRecord {
      */
     public function searchCriteriaTeacherAutoComplete() {
         $criteria = new CDbCriteria;
-        if (Yii::app()->params['allowGroups']) {
+        if (Yii::app()->params['allowGroups'] && (Yii::app()->user->isTeacher() || Yii::app()->user->isParent())) {
             $criteria->together = true;
             $criteria->with[] = 'groups';
             $i = 0;

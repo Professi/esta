@@ -238,7 +238,7 @@ class UserController extends Controller {
                         $user->update();
                         $mail = new Mail();
                         $mail->sendChangePasswordMail($user->email, $user->activationKey);
-                        Yii::app()->user->setFlash('success', Yii::t('app', 'Sie erhalten eine Aktivierungsemail, mit der Sie dann ein neues Passwort setzen können.'));
+                        Yii::app()->user->setFlash('success', Yii::t('app', 'Sie erhalten eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.'));
                         $this->redirect('index.php?r=/site/index');
                     } else {
                         Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Bevor Sie ein neues Passwort anfordern können, muss Ihr Benutzerkonto aktiviert sein.'));
@@ -416,15 +416,17 @@ class UserController extends Controller {
         $groups = array();
         $dataProvider->unsetAttributes();
         $dataProvider->lastname = $term;
-        $dataProvider->groups = Yii::app()->user->getGroups();
+        if (Yii::app()->user->isTeacher() || Yii::app()->user->isParent()) {
+            $dataProvider->groups = Yii::app()->user->getGroups();
+        }
         if (Yii::app()->user->isParent()) {
             $dataProvider->role = 2;
         } else if (Yii::app()->user->checkAccess('1')) {
             $dataProvider->role = $role;
-        } else if(Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments']) {
+        } else if (Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments']) {
             $dataProvider->role = 3;
         }
-        $criteria = $dataProvider->searchCriteriaTeacherAutoComplete($groups);
+        $criteria = $dataProvider->searchCriteriaTeacherAutoComplete();
         $a_rc = array();
         $a_data = User::model()->findAll($criteria);
         foreach ($a_data as $record) {

@@ -39,7 +39,6 @@ class UserIdentity extends CUserIdentity {
      */
     public function authenticate() {
         $criteria = new CDbCriteria();
-        $criteria->select = array('id', 'state', 'email', 'password','role');
         $criteria->together = false;
         $criteria->with = false;
         $user = User::model()->findByAttributes(array('email' => $this->username), $criteria);
@@ -105,13 +104,15 @@ class UserIdentity extends CUserIdentity {
         $this->errorCode = self::ERROR_PASSWORD_INVALID;
         $this->errorMessage = Yii::t('app', "Falsches Passwort");
         if (Yii::app()->params['banUsers']) {
-            $user->badLogins++;
+            $user->badLogins = $user->badLogins + 1;
             if ($user->badLogins == Yii::app()->params['maxAttemptsForLogin']) {
                 $user->state = 2;
                 $user->bannedUntil = time() + Yii::app()->params['durationTempBans'] * 60;
-                $this->errorMessage = Yii::t('app', "Falsches Passwort! Ihr Benutzerkonto wurde für {dauer} Minute|Minuten gesperrt.", array('{dauer}' => Yii::app()->params['durationTempBans']));
+                $this->errorMessage = Yii::t('app', "Falsches Passwort!") . ' ' . Yii::t('app', "Ihr Benutzerkonto wurde für {n} Minuten gesperrt.", array(Yii::app()->params['durationTempBans']));
             } else {
-                $this->errorMessage = Yii::t('app', "Falsches Passwort! Ihnen verbleiben noch {anzahl} Versuch|Versuche. Sobald alle Versuche aufgebraucht sind, wird ihr Konto temporär gesperrt.", array('{anzahl}' => (Yii::app()->params['maxAttemptsForLogin'] - $user->badLogins)));
+                $this->errorMessage = Yii::t('app', "Falsches Passwort!") . ' '
+                        . Yii::t('app', "n==1#Ihnen verbleibt noch ein Versuch.|n>1#Ihnen verbleiben noch {n} Versuche.", array((Yii::app()->params['maxAttemptsForLogin'] - $user->badLogins))) . ' '
+                        . Yii::t('app', "Sobald alle Versuche aufgebraucht sind, wird Ihr Konto temporär gesperrt.");
             }
             $user->update();
         }

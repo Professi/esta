@@ -174,9 +174,10 @@ class CsvUpload extends CFormModel {
     }
 
     private function saveModel(&$model) {
+        $password = $model->password;
         if ($model->save() && Yii::app()->params['randomTeacherPassword']) {
             $mail = new Mail();
-            $mail->sendRandomUserPassword($model->email, $model->password);
+            $mail->sendRandomUserPassword($model->email, $password);
         }
     }
 
@@ -190,7 +191,7 @@ class CsvUpload extends CFormModel {
 
     private function createMail($firstname, $lastname) {
         $mail = trim($this->mailMask);
-        if($this->doubleNameSeperator) {
+        if ($this->doubleNameSeperator) {
             $firstname = $this->seperateNames($firstname);
             $lastname = $this->seperateNames($lastname);
         }
@@ -204,11 +205,10 @@ class CsvUpload extends CFormModel {
     private function replaceWhiteChars($string, $replacement = "") {
         return preg_replace("/\s+/", $replacement, $string);
     }
-    
+
     private function seperateNames($name) {
         return str_replace(' ', '-', $name);
     }
-    
 
     private function cutName($name, $selected) {
         switch ($selected) {
@@ -224,7 +224,7 @@ class CsvUpload extends CFormModel {
     private function substrName($name, $length) {
         return substr($name, 0, $length);
     }
-    
+
     public function getBooleanSelectables() {
         return array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app', 'Nein'));
     }

@@ -51,7 +51,7 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                 <div class="ten columns">
                     <?php
                     echo Yii::t('app', 'Da Sie in der Konfiguration die Option "Lehrerpasswörter bei deren Erstellung zufällig generieren?" aktiviert haben, kann der Lehrerimport sehr lange dauern.');
-                    echo Yii::t('app', 'Sollten Sie bei dem Import der Lehrer eine Fehlermeldung von PHP oder Ihrem Webserver erhalten, müssen Sie entweder zum Beispiel die "maximum_execution_time" hochsetzen oder Ihre CSV Datei aufteilen.');
+                    echo Yii::t('app', 'Sollten Sie bei dem Import der Lehrer eine Fehlermeldung von PHP oder Ihrem Webserver erhalten, müssen Sie in der php.ini die "maximum_execution_time" hochsetzen oder Ihre CSV Datei aufteilen.');
                     ?>
                 </div>
             </div>
@@ -76,8 +76,8 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                     ?>
                 </div>
                 <script>
-                    var maxFileSize = '<?= CsvUpload::getMaxSizeInBytes();?>',
-                        errorMessage = '<?= Yii::t('app','Die ausgewählte Datei übersteigt die maximale Dateigröße.');?>';
+                    var maxFileSize = '<?= CsvUpload::getMaxSizeInBytes(); ?>',
+                            errorMessage = '<?= Yii::t('app', 'Die ausgewählte Datei übersteigt die maximale Dateigröße.'); ?>';
                 </script>
             </div>
             <div class="row collapse">
