@@ -59,14 +59,14 @@ class Mail {
      * @param type $activationKey Aktivierungsschlüssel
      */
     public function sendChangePasswordMail($email, $activationKey) {
-        $body = '<html><head><title></title></head><body><br/>';
-        $body .= '<p>' . Yii::t('app', 'Bitte klicken Sie auf folgenden Link um ein neues Passwort für Ihr Benutzerkonto zu setzen.') . '</p><br/>';
-        $body .= '<p><a href="' . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=$activationKey\">" . Yii::t('app', 'Link f&uuml;r die Passwortwahl') . '</a></p><br/>';
-        $body .= '<p>' . Yii::t('app', 'Sollten Sie Probleme beim Aufrufen der Aktivierung haben kopieren Sie bitte den folgenden Link in die Adressleiste ihres Browser.') . '</p><br/>';
+        $body = '<html><head><title></title></head><body>';
+        $body .= '<p>' . Yii::t('app', 'Bitte klicken Sie auf folgenden Link um ein neues Passwort für Ihr Benutzerkonto zu setzen.') . '</p>';
+        $body .= '<p><a href="' . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=$activationKey\">" . Yii::t('app', 'Link f&uuml;r die Passwortwahl') . '</a></p>';
+        $body .= '<p>' . Yii::t('app', 'Sollten Sie Probleme beim Aufrufen der Aktivierung haben kopieren Sie bitte den folgenden Link in die Adressleiste ihres Browser.') . '</p>';
         $body .= "<p>" . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=" . $activationKey . "</p><br/>";
-        $body .= '<p>' . Yii::t('app', 'Falls Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese Nachricht.') . '</p><br/>';
+        $body .= '<p>' . Yii::t('app', 'Falls Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese Nachricht.') . '</p>';
         $this->addInfo($body);
-        $body .= "</body></html><br/>";
+        $body .= "</body></html>";
         $this->send(Yii::t('app', 'Ihre Passwortzurücksetzung bei der {appname}', array('{appname}' => Yii::app()->name)), $body, $email);
     }
 
@@ -78,15 +78,15 @@ class Mail {
      */
     public function sendActivationLinkMail($email, $activationKey) {
         $body = "<html><head><title></title></head>";
-        $body .= "<body><p>" . Yii::t('app', "Vielen Dank f&uuml;r Ihre Registrierung bei {appname}", array('{appname}' => Yii::app()->name)) . ".</p>";
+        $body .= "<body><p>" . Yii::t('app', "Vielen Dank für Ihre Registrierung bei {appname}", array('{appname}' => Yii::app()->name)) . ".</p>";
         $body .= "<p>" . Yii::t('app', "Ihr Benutzername lautet:") . " <b>" . $email . "</b></p>";
-        $body .= "<p>" . Yii::t('app', "Um Ihre Registrierung abzuschlie&szlig;en und die Anwendung in Anspruch nehmen zu k&ouml;nnen, klicken Sie bitte auf den folgenden Link.") . "</p>";
-        $body .= "<p><a href=\"" . $this->getScriptUrl() . "?r=/User/activate&activationKey=" . $activationKey . "\">" . Yii::t('app', "Link f&uuml;r die Aktivierung") . "</a></p>";
-        $body .= "<p>" . Yii::t('app', "Sollten Sie Probleme beim Aufrufen der Aktivierung haben, kopieren Sie bitte den folgenden Link in die Adressleiste Ihres Browser.") . "</p>";
+        $body .= "<p>" . Yii::t('app', "Um Ihre Registrierung abzuschließen und die Anwendung in Anspruch nehmen zu können, klicken Sie bitte auf den folgenden Link.") . "</p>";
+        $body .= "<p><a href=\"" . $this->getScriptUrl() . "?r=/User/activate&activationKey=" . $activationKey . "\">" . Yii::t('app', "Link für die Aktivierung") . "</a></p>";
+        $body .= "<p>" . Yii::t('app', "Sollten Sie Probleme beim Aufrufen der Aktivierung haben, kopieren Sie bitte den folgenden Link in die Adressleiste Ihres Browser:") . "</p>";
         $body .= "<p>" . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=" . $activationKey . "</p>";
         $this->addInfo($body);
         $body .= "</body></html>";
-        $this->send(Yii::t('app', "Ihre Registrierung bei ") . Yii::app()->name, $body, $email);
+        $this->send(Yii::t('app', "Ihre Registrierung bei {appname}", array('{appname}' => Yii::app()->name)), $body, $email);
     }
 
     private function getScriptUrl() {
@@ -105,12 +105,12 @@ class Mail {
      */
     public function sendAppointmentDeleted($email, $teacher, $time, $child, $date) {
         $body = "<html><head><title></title></head>";
-        $body .= "<body><p>" . Yii::t('app', "Hallo,") . "</p><p>" . Yii::t('app', "leider m&uuml;ssen wir Sie dar&uuml;ber informieren, dass Ihr Termin am") . "<b>" . Yii::app()->dateFormatter->formatDateTime($date, 'short', null) . ' ' . Yii::t('app', 'um') . ' ' . Yii::app()->dateFormatter->formatDateTime($time, null, 'medium') . "</b><br>";
+        $body .= "<body><p>" . Yii::t('app', "Hallo,") . "</p><p>" . Yii::t('app', "leider müssen wir Sie darüber informieren, dass Ihr Termin am {date} um {time} ", array('{date}' => "<b>" . Yii::app()->dateFormatter->formatDateTime($date, 'short', null), '{time}' => Yii::app()->dateFormatter->formatDateTime($time, null, 'medium'))) . "</b><br>";
         $body .= " " . Yii::t('app', "bei") . " <b>" . $teacher->title . " " . $teacher->firstname . " " . $teacher->lastname . "</b><br>";
         $body .= Yii::t('app', "mit ihrem Kind") . " <b>" . $child->firstname . " " . $child->lastname . "</b> <br>" . Yii::t('app', "abgesagt wurde.") . "</p>";
         $this->addInfo($body);
         $body .= "</body></html>";
-        $this->send(Yii::t('app', "Einer Ihrer Termine bei") . " " . Yii::app()->name . " " . Yii::t('app', "wurde gel&ouml;scht"), $body, $email);
+        $this->send(Yii::t('app', "Einer Ihrer Termine bei") . " " . Yii::app()->name . " " . Yii::t('app', "wurde gelöscht"), $body, $email);
     }
 
     /**
@@ -130,10 +130,10 @@ class Mail {
         $body .= "<p>" . Yii::t('app', "Ihr Benutzername lautet:") . " <b>" . $email . "</b></p>";
         $body .= "<p>" . Yii::t('app', "Ihr Passwort lautet:") . " <b>";
         $body .= $password . "</b></p>";
-        $body .= "<p>" . Yii::t('app', "Bitte &auml;ndern Sie dieses Passwort <b>direkt</b> nach der ersten Anmeldung unter \"Ihr Benutzerkonto->Meine Daten aktualisieren\"") . "</p>";
+        $body .= "<p>" . Yii::t('app', "Bitte ändern Sie dieses Passwort <b>direkt</b> nach der ersten Anmeldung unter \"Ihr Benutzerkonto->Meine Daten aktualisieren\"") . "</p>";
         $this->addInfo($body);
         $body .= "</body></html>";
-        $this->send(Yii::t('app', 'Willkommen bei ') . Yii::app()->name, $body, $email);
+        $this->send(Yii::t('app', 'Willkommen bei {appname}', array('{appname}' => Yii::app()->name)), $body, $email);
     }
 
     /**
@@ -142,7 +142,7 @@ class Mail {
      */
     private function addInfo(&$body) {
         $body .= "<p>" . Yii::t('app', "Sollten Sie noch Fragen oder Anregungen haben, benutzen Sie bitte das Kontaktformular auf der Webseite.") . "</p><br/><br/>";
-        $body .= "<p>" . Yii::t('app', "Das Team der Elternsprechtagsanwendung w&uuml;nscht Ihnen weiterhin ein gutes Gelingen.") . "</p>";
+        $body .= "<p>" . Yii::t('app', "Das Team der Elternsprechtagsanwendung wünscht Ihnen weiterhin ein gutes Gelingen.") . "</p>";
         $body .= "<p>" . Yii::t('app', "(Dies ist eine automatisch versendete E-Mail. Bitte antworten Sie nicht auf diese Nachricht, da die E-Mail-Adresse nur zum Versenden, nicht aber zum Empfang von E-Mails eingerichtet ist.)") . "</p>";
     }
 
