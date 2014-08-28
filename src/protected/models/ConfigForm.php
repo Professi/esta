@@ -62,6 +62,7 @@ class ConfigForm extends CFormModel {
     public $tanSize;
     public $teacherAllowBlockTeacherApps;
     public $schoolWebsiteLink;
+    public $allowTeachersToCreateAppointments;
 
     public function rules() {
         return array(
@@ -74,7 +75,7 @@ class ConfigForm extends CFormModel {
                 'lengthReasonAppointmentBlocked,schoolStreet,schoolCity,' .
                 'schoolTele,schoolFax,schoolEmail,allowBlockingOnlyForManagement,' .
                 'lockRegistration,allowGroups,allowParentsToManageChilds,' .
-                'logoPath,language,appName,hashCost,' .
+                'logoPath,language,appName,hashCost,allowTeachersToCreateAppointments,' .
                 'teacherAllowBlockTeacherApps,smtpPort,tanSize,schoolWebsiteLink', 'required'),
             array('adminEmail,schoolEmail', 'email'),
             array('language', 'length', 'min' => 2),
@@ -82,7 +83,7 @@ class ConfigForm extends CFormModel {
             array('defaultTeacherPassword', 'length', 'min' => 5),
             array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments,' .
                 'useSchoolEmailForContactForm,allowBlockingOnlyForManagement,lockRegistration,' .
-                'allowParentsToManageChilds,allowGroups,teacherAllowBlockTeacherApps,smtpAuth',
+                'allowParentsToManageChilds,allowGroups,teacherAllowBlockTeacherApps,smtpAuth,allowTeachersToCreateAppointments',
                 'boolean'),
             array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,'
                 . 'durationTempBans,maxAttemptsForLogin,appointmentBlocksPerDate,'
@@ -93,7 +94,7 @@ class ConfigForm extends CFormModel {
                 ',schoolName,mailsActivated,maxChild,'
                 . 'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,' .
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
-                'durationTempBans,maxAttemptsForLogin,salt,' .
+                'durationTempBans,maxAttemptsForLogin,allowTeachersToCreateAppointments' .
                 'allowBlockingAppointments,appointmentBlocksPerDate,hashCost,' .
                 'lengthReasonAppointmentBlocked,smtpAuth,smtpSecure,smtpPort,smtpPassword,tanSize,schoolWebsiteLink', 'safe'),
         );
@@ -139,7 +140,8 @@ class ConfigForm extends CFormModel {
             'maxTanGen' => Yii::t('app', 'Maximal Anzahl generierte TANs'),
             'tanSize' => Yii::t('app', 'Länge einer TAN'),
             'allowParentsToManageChilds' => Yii::t('app', 'Sollen Eltern die Daten über Ihre Kinder verwalten können?'),
-            'teacherAllowBlockTeacherApps' => Yii::t('app', 'Dürfen Lehrer Termine anderer Lehrer blockieren?'),
+            'allowTeachersToCreateAppointments' => Yii::t('app', 'Dürfen Lehrer Termine anlegen?'),
+            'teacherAllowBlockTeacherApps' => Yii::t('app', 'Dürfen Lehrer Termine von/für Lehrer blockieren oder anlegen?'),
             'schoolWebsiteLink' => Yii::t('app', 'Schullink')
         );
     }

@@ -418,10 +418,12 @@ class UserController extends Controller {
         $dataProvider->unsetAttributes();
         $dataProvider->lastname = $term;
         $dataProvider->groups = Yii::app()->user->getGroups();
-        if (Yii::app()->user->checkAccess('3') && !Yii::app()->user->isAdmin()) {
+        if (Yii::app()->user->isParent()) {
             $dataProvider->role = 2;
-        } else if (Yii::app()->user->checkAccess('1') || Yii::app()->params['teacherAllowBlockTeacherApps']) {
+        } else if (Yii::app()->user->checkAccess('1')) {
             $dataProvider->role = $role;
+        } else if(Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments']) {
+            $dataProvider->role = 3;
         }
         $criteria = $dataProvider->searchCriteriaTeacherAutoComplete($groups);
         $a_rc = array();

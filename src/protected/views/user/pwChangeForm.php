@@ -44,7 +44,7 @@ $this->setPageTitle(Yii::t('app', 'Passwort ändern'));
                     ?>
                 </div>
                 <div class="three columns">
-                    <span class="postfix" style="font-size:.8em;"><?php echo Yii::t('app', 'Mindeslänge 8 Zeichen'); ?></span>
+                    <span class="postfix" style="font-size:.8em;"><?php echo Yii::t('app', 'Mindestlänge 8 Zeichen'); ?></span>
                 </div>
             </div>
             <div class="row collapse">
