@@ -92,7 +92,7 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                     </div>
                 </div>
                 <div class="small-4 columns">
-                    <input type="text" value="" name="" id="file-input-name">
+                    <input type="text" value="" name="" id="file-input-name" readonly="readonly">
                 </div>
             </div>
             <div class="row collapse">
