@@ -51,9 +51,9 @@ $menu = array( //icon,label,url,visible(bool)
 <nav class="top-bar" data-topbar data-options="is_hover: false">
     <ul class="title-area">
         <li class="name esta-logo">
-            <h3>
+            <h2>
                 <?php echo CHtml::link(Yii::t('app','Elternsprechtag'), 'index.php'); ?>
-            </h3>
+            </h2>
         </li>
         <li class="toggle-topbar menu-icon"><a href=""><span>Menu</span></a></li>
     </ul>
