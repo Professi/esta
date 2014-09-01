@@ -72,7 +72,7 @@ class Group extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'groupname' => Yii::t('app','Gruppenname'),
+            'groupname' => Yii::t('app', 'Gruppenname'),
         );
     }
 
@@ -97,9 +97,13 @@ class Group extends CActiveRecord {
      */
     public function getAllGroups($sort = "") {
         $a_result = Group::model()->findAll(array('order' => '`groupname` ' + $sort));
+        return self::formatGroups($a_result, $sort);
+    }
+
+    public static function formatGroups($groups, $sort = "") {
         $a_temp = null;
-        if (!empty($a_result)) {
-            foreach ($a_result as $object) {
+        if (!empty($groups)) {
+            foreach ($groups as $object) {
                 $a_temp[$object->id] = $object->groupname;
             }
         }

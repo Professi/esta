@@ -106,7 +106,7 @@ class User extends CActiveRecord {
             array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat'),
             array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
             array('id, username, firstname, state, lastname, email, role, stateName, title, groupIds, password_repeat', 'safe'),
-            array('groups', 'safe', 'on' => 'update'),
+            array('groups,activationKey', 'safe', 'on' => 'update'),
         );
     }
 
@@ -239,10 +239,11 @@ class User extends CActiveRecord {
      */
     public function searchCriteriaTeacherAutoComplete() {
         $criteria = new CDbCriteria;
-        if (Yii::app()->params['allowGroups'] && is_array($this->groups)) {
+        if (Yii::app()->params['allowGroups'] && (Yii::app()->user->isTeacher() || Yii::app()->user->isParent())) {
             $criteria->together = true;
             $criteria->with[] = 'groups';
             $i = 0;
+            $criteria->addCondition('groups.id IS NULL', 'OR');
             foreach ($this->groups as $group) {
                 $criteria->addCondition('groups.id =:group' . $i, 'OR');
                 $criteria->params[':group' . $i] = $group->id;
@@ -333,10 +334,13 @@ class User extends CActiveRecord {
      * @return boolean 
      */
     private function saveNewRecord() {
-        $this->updateTan();
-        if (Yii::app()->params['allowGroups'] && !empty($this->groupIds)) {
-            foreach ($this->groupIds as $group) {
-                $this->createUserHasGroup($group);
+        if (Yii::app()->user->isGuest) {
+            $this->addWithTanNewGroup($this->tan);
+        } else {
+            if (Yii::app()->params['allowGroups'] && !empty($this->groupIds)) {
+                foreach ($this->groupIds as $group) {
+                    $this->createUserHasGroup($group);
+                }
             }
         }
     }
@@ -447,7 +451,7 @@ class User extends CActiveRecord {
      * @return string 0=NichtAktiv 1=Aktiv 2=Gesperrt
      */
     public function getStateName($state = null) {
-        if(is_numeric($state) && array_key_exists($state, self::getStateNameAndValue())) {
+        if (is_numeric($state) && array_key_exists($state, self::getStateNameAndValue())) {
             $stateName = self::getStateNameAndValue()[$state]['name'];
         } else {
             $stateName = $this->state;
@@ -518,7 +522,7 @@ class User extends CActiveRecord {
                     $first = false;
                     $rc .= $this->getGroupname($group);
                 } else {
-                    $rc .= "," . $this->getGroupname($group);
+                    $rc .= ", " . $this->getGroupname($group);
                 }
             }
         }
@@ -538,9 +542,6 @@ class User extends CActiveRecord {
         if ($this->getError('password') == Yii::t('yii', '{attribute} must be repeated exactly.', $params)) {
             $this->addError('password_repeat', Yii::t('app', 'Passwörter stimmen nicht überein.'));
         }
-        if ($rc && Yii::app()->user->isGuest && $this->isNewRecord) {
-            $rc = $this->addWithTanNewGroup($this->tan);
-        }
         return $rc;
     }
 
@@ -558,13 +559,7 @@ class User extends CActiveRecord {
                 $errorMsg = Yii::t('app', 'Leider wurde Ihre TAN schon benutzt.');
                 $rc = false;
             } else {
-                if (Yii::app()->params['allowGroups'] && $tan->group != null && is_int($tan->group_id)) {
-                    $errorMsg = $this->addUserHasGroup($tan);
-                    if (empty($errorMsg)) {
-                        $this->updateTan($tan);
-                    }
-                }
-                $this->addParentChildWithTan($tan);
+                $this->tanManagement($tan);
             }
         } else {
             if (Yii::app()->user->isGuest()) {
@@ -578,22 +573,36 @@ class User extends CActiveRecord {
         return $rc;
     }
 
+    private function tanManagement($tan) {
+        $ok = true;
+        if (Yii::app()->params['allowGroups'] && $tan->group != null && is_numeric($tan->group_id)) {
+            $errorMsg = $this->addUserHasGroup($tan);
+        }
+        if (!Yii::app()->params['allowParentsToManageChilds'] && $tan->child_id != null) {
+            $ok = $this->addParentChildWithTan($tan);
+        }
+        if ($ok && empty($errorMsg)) {
+            $this->updateTan($tan);
+        }
+    }
+
     /**
      * creates new parentChild Link for this user with a TAN
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param Tan $tan
      */
     private function addParentChildWithTan(&$tan) {
-        if ($tan->child != null) {
-            $pc = $this->createParentChild($this->id, $tan->child->id);
-            if ($pc->save()) {
-                $flash = '';
-                if (Yii::app()->user->hasFlash('success')) {
-                    $flash = Yii::app()->user->getFlash('success') . "<br>";
-                }
-                Yii::app()->user->setFlash('success', Yii::t('app', 'Schüler hinzugefügt.') . $flash);
+        $rc = false;
+        $pc = $this->createParentChild($this->id, $tan->child->id);
+        if ($pc->save()) {
+            $rc = true;
+            $flash = '';
+            if (Yii::app()->user->hasFlash('success')) {
+                $flash = Yii::app()->user->getFlash('success') . "<br>";
             }
+            Yii::app()->user->setFlash('success', Yii::t('app', 'Kind hinzugefügt.') . $flash);
         }
+        return $rc;
     }
 
     /**
@@ -607,7 +616,6 @@ class User extends CActiveRecord {
         if (!UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $tan->group_id)) > '0') {
             $this->createUserHasGroup($tan->group_id);
             Yii::app()->user->setFlash('success', Yii::t('app', 'Sie wurden erfolgreich der Gruppe hinzugefügt.'));
-            Yii::app()->user->setGroups($this->groups);
         } else {
             $errorMsg = Yii::t('app', 'Sie wurden bereits der Gruppe die bei dieser TAN hinterlegt ist, zugewiesen.');
         }
@@ -688,9 +696,9 @@ class User extends CActiveRecord {
      */
     public function getRolePermission() {
         $rc = null;
-        if (Yii::app()->user->checkAccess(ADMIN)) {
+        if (Yii::app()->user->isAdmin()) {
             $rc = array('3' => Yii::t('app', 'Eltern'), '2' => Yii::t('app', 'Lehrer'), '1' => Yii::t('app', 'Verwaltung'), '0' => Yii::t('app', 'Administrator'));
-        } else if (Yii::app()->user->checkAccessNotAdmin(MANAGEMENT) && $this->id == Yii::app()->user->getId()) {
+        } else if (Yii::app()->user->isManager() && $this->id == Yii::app()->user->getId()) {
             $rc = array('3' => Yii::t('app', 'Eltern'), '2' => Yii::t('app', 'Lehrer'), '1' => Yii::t('app', 'Verwaltung'));
         } else {
             $rc = array('3' => Yii::t('app', 'Eltern'), '2' => Yii::t('app', 'Lehrer'));
@@ -719,6 +727,14 @@ class User extends CActiveRecord {
         return (empty($this->title)) 
             ? "{$this->firstname} {$this->lastname}"
             : "{$this->title} {$this->firstname} {$this->lastname}";
+    }
+
+    /**
+     * Name of the User with Title
+     * @return string 
+     */
+    public function getDisplayName() {
+        return (empty($this->title)) ? "{$this->firstname} {$this->lastname}" : "{$this->title} {$this->firstname} {$this->lastname}";
     }
 
 }

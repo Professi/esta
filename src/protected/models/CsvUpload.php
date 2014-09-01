@@ -37,6 +37,11 @@ class CsvUpload extends CFormModel {
     public $email = 'Email';
     public static $uml = array("Ö" => "Oe", "ö" => "oe", "Ä" => "Ae", "ä" => "ae", "Ü" => "Ue", "ü" => "ue", "ß" => "ss",);
     private $positions = array();
+    public $firstNameMailMask;
+    public $lastNameMailMask;
+    public $mailMask;
+    public $mailDomain;
+    public $doubleNameSeperator = true;
 
     public function init() {
         parent::init();
@@ -44,6 +49,10 @@ class CsvUpload extends CFormModel {
         $this->lastname = Yii::t('app', 'Nachname');
         $this->title = Yii::t('app', 'Titel');
         $this->delimiter = ';';
+        $this->mailMask = $this->names()['firstname'] . '.' . $this->names()['lastname'];
+        $this->firstNameMailMask = 0;
+        $this->lastNameMailMask = 2;
+        $this->mailDomain = $this->getDomainLink();
     }
 
     /**
@@ -56,9 +65,9 @@ class CsvUpload extends CFormModel {
             array('file', 'file', 'types' => 'csv', 'maxSize' => self::getMaxSizeInBytes() - 100,
                 'allowEmpty' => true, 'wrongType' => Yii::t('app', 'Nur CSV Dateien erlaubt.'),
                 'tooLarge' => Yii::t('app', 'Datei ist zu groß. Die Begrenzung liegt bei {size}.', array('{size}' => self::getMaxSize()))),
-            array('firstname, lastname,email,title,delimiter', 'required'),
+            array('firstname, lastname,email,title,delimiter,mailMask,firstNameMailMask,lastNameMailMask,mailDomain', 'required'),
             array('delimiter', 'length', 'max' => 1),
-            array('firstname,lastname,email,title,delimiter', 'safe'),
+            array('firstname,lastname,email,title,delimiter,mailMask,firstNameMailMask,lastNameMailMask,mailDomain,doubleNameSeperator', 'safe'),
         );
     }
 
@@ -68,12 +77,25 @@ class CsvUpload extends CFormModel {
      */
     public function attributeLabels() {
         return array('file' => Yii::t('app', 'CSV Datei hochladen'),
-            'firstname' => Yii::t('app', "Vorname"),
-            'lastname' => Yii::t('app', 'Nachname'),
+            'firstname' => $this->names()['firstname'],
+            'lastname' => $this->names()['lastname'],
             'email' => Yii::t('app', 'E-Mail'),
             'title' => Yii::t('app', 'Titel'),
             'delimiter' => Yii::t('app', 'Seperator'),
+            'mailMask' => Yii::t('app', 'Maske für die E-Mail Adresse'),
+            'firstNameMailMask' => $this->getMaskLabel('firstname'),
+            'lastNameMailMask' => $this->getMaskLabel('lastname'),
+            'mailDomain' => Yii::t('app', 'Versender (nach dem @ Zeichen)'),
+            'doubleNameSeperator' => Yii::t('app', 'Doppel Namen mit Bindestrich trennen?'),
         );
+    }
+
+    public function names() {
+        return array('firstname' => Yii::t('app', 'Vorname'), 'lastname' => Yii::t('app', 'Nachname'));
+    }
+
+    public function getMaskLabel($attr) {
+        return Yii::t('app', 'Maske für {name}', array('{name}' => $this->names()[$attr]));
     }
 
     /**
@@ -93,13 +115,17 @@ class CsvUpload extends CFormModel {
         $first = true;
         $rc = true;
         $stdPassword = "";
-        while (($line = fgetcsv($fp, 0, $this->delimiter)) != FALSE) {
+        while ($rc && ($line = fgetcsv($fp, 0, $this->delimiter)) != FALSE) {
             if (!$first) {
                 $model = $this->setTeacherModel($this->generateMail($line), self::encodingString($line[$this->getPos($this->lastname)]), self::encodingString($line[$this->getPos($this->firstname)]), 1, 2, self::encodingString($line[$this->getPos($this->title)]), $stdPassword);
                 $this->saveModel($model);
                 $rc = $this->checkModelErrors($model, $msg);
             } else {
                 $this->firstLoopRun($line);
+                if ($this->hasErrors()) {
+                    $rc = false;
+                    $msg = Yii::t('app', 'Lehrerliste konnte nicht importiert werden. Entweder ist die importierte CSV Datei fehlerhaft oder die Spaltennamen sind nicht korrekt eingetragen.');
+                }
                 $first = false;
             }
         }
@@ -109,13 +135,34 @@ class CsvUpload extends CFormModel {
     private function firstLoopRun(&$line) {
         $i = 0;
         $this->positions = array();
-        foreach ($line as $val) {
-            if (!empty($val)) {
-                $this->positions[$val] = $i;
-                $i++;
+        if (count($line) >= 4) {
+            foreach ($line as $val) {
+                if (!empty($val)) {
+                    $this->positions[$val] = $i;
+                    $i++;
+                }
             }
+            $this->checkForColumn($this->firstname, 'firstname');
+            $this->checkForColumn($this->lastname, 'lastname');
+            $this->checkForColumn($this->email, 'email');
+            $this->checkForColumn($this->title, 'title');
+        } else {
+            $this->addError('file', Yii::t('app', 'Ungültiges CSV Format und/oder falsche Angabe des Seperators.'));
         }
-        print_r($this->positions);
+    }
+
+    private function columnNotExists($column, $attrName) {
+        $this->addError($attrName, Yii::t('app', 'Spalte {column} existiert nicht.', array('{column}' => $column)));
+    }
+
+    private function checkForColumn($column, $attrName) {
+        if (!$this->existsKeys($column)) {
+            $this->columnNotExists($column, $attrName);
+        }
+    }
+
+    private function existsKeys($key) {
+        return array_key_exists($key, $this->positions);
     }
 
     private function checkModelErrors(&$model, &$msg) {
@@ -127,9 +174,10 @@ class CsvUpload extends CFormModel {
     }
 
     private function saveModel(&$model) {
+        $password = $model->password;
         if ($model->save() && Yii::app()->params['randomTeacherPassword']) {
             $mail = new Mail();
-            $mail->sendRandomUserPassword($model->email, $model->password);
+            $mail->sendRandomUserPassword($model->email, $password);
         }
     }
 
@@ -137,10 +185,55 @@ class CsvUpload extends CFormModel {
         if ($line[$this->getPos($this->email)] != NULL) {
             return self::encodingString($line[$this->getPos($this->email)]);
         } else {
-            return (preg_replace("/\s+/", "", strtolower(substr(strtr(self::encodingString($line[$this->getPos($this->lastname)]), self::$uml), 0, 1)))
-                    . '.' . preg_replace("/\s+/", "", strtolower(strtr(self::encodingString($line[$this->getPos($this->firstname)]), self::$uml))) . '@'
-                    . $this->getDomainLink());
+            return $this->createMail($line[$this->getPos($this->firstname)], $line[$this->getPos($this->lastname)]);
         }
+    }
+
+    private function createMail($firstname, $lastname) {
+        $mail = trim($this->mailMask);
+        if ($this->doubleNameSeperator) {
+            $firstname = $this->seperateNames($firstname);
+            $lastname = $this->seperateNames($lastname);
+        }
+        $mail = str_replace($this->names()['firstname'], $this->cutName($firstname, $this->firstNameMailMask), $mail);
+        $mail = str_replace($this->names()['lastname'], $this->cutName($lastname, $this->lastNameMailMask), $mail);
+        $mail .= '@' . $this->mailDomain;
+        $mail = $this->replaceWhiteChars($mail);
+        return $mail;
+    }
+
+    private function replaceWhiteChars($string, $replacement = "") {
+        return preg_replace("/\s+/", $replacement, $string);
+    }
+
+    private function seperateNames($name) {
+        return str_replace(' ', '-', $name);
+    }
+
+    private function cutName($name, $selected) {
+        switch ($selected) {
+            case 0:
+                return strtolower($this->substrName(strtr(self::encodingString($name), self::$uml), 1));
+            case 1:
+                return strtolower($this->substrName(strtr(self::encodingString($name), self::$uml), 2));
+            case 2:
+                return strtolower(strtr(self::encodingString($name), self::$uml));
+        }
+    }
+
+    private function substrName($name, $length) {
+        return substr($name, 0, $length);
+    }
+
+    public function getBooleanSelectables() {
+        return array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app', 'Nein'));
+    }
+
+    public function selectableNameMask($attr) {
+        return array(
+            0 => Yii::t('app', 'Erster Buchstabe vom {attribute}', array('{attribute}' => $this->attributeLabels()[$attr])),
+            1 => Yii::t('app', 'Ersten zwei Buchstaben vom {attribute}', array('{attribute}' => $this->attributeLabels()[$attr])),
+            2 => Yii::t('app', 'Komplett'));
     }
 
     private function getPos($attr) {

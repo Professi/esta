@@ -38,7 +38,10 @@ class UserIdentity extends CUserIdentity {
      * @return integer errorcode
      */
     public function authenticate() {
-        $user = User::model()->findByAttributes(array('email' => $this->username));
+        $criteria = new CDbCriteria();
+        $criteria->together = false;
+        $criteria->with = false;
+        $user = User::model()->findByAttributes(array('email' => $this->username), $criteria);
         if ($user === null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
             $this->errorMessage = Yii::t('app', "Ungültige E-Mail Adresse");
@@ -87,11 +90,7 @@ class UserIdentity extends CUserIdentity {
         $this->errorCode = self::ERROR_NONE;
         $this->errorMessage = '';
         $this->_id = $user->getPrimaryKey();
-        $this->setState('state', $user->state);
-        $this->setState('role', $user->role);
-        if (Yii::app()->params['allowGroups']) {
-            $this->setState('groups', $user->groups);
-        }
+        Yii::app()->user->updateSession($user);
         $user->lastLogin = time();
         $user->badLogins = 0;
         $user->update();
@@ -105,13 +104,15 @@ class UserIdentity extends CUserIdentity {
         $this->errorCode = self::ERROR_PASSWORD_INVALID;
         $this->errorMessage = Yii::t('app', "Falsches Passwort");
         if (Yii::app()->params['banUsers']) {
-            $user->badLogins++;
+            $user->badLogins = $user->badLogins + 1;
             if ($user->badLogins == Yii::app()->params['maxAttemptsForLogin']) {
                 $user->state = 2;
                 $user->bannedUntil = time() + Yii::app()->params['durationTempBans'] * 60;
-                $this->errorMessage = Yii::t('app', "Falsches Passwort! Ihr Benutzerkonto wurde für {dauer} Minute|Minuten gesperrt.", array('{dauer}' => Yii::app()->params['durationTempBans']));
+                $this->errorMessage = Yii::t('app', "Falsches Passwort!") . ' ' . Yii::t('app', "Ihr Benutzerkonto wurde für {n} Minuten gesperrt.", array(Yii::app()->params['durationTempBans']));
             } else {
-                $this->errorMessage = Yii::t('app', "Falsches Passwort! Ihnen verbleiben noch {anzahl} Versuch|Versuche. Sobald alle Versuche aufgebraucht sind, wird ihr Konto temporär gesperrt.", array('{anzahl}' => (Yii::app()->params['maxAttemptsForLogin'] - $user->badLogins)));
+                $this->errorMessage = Yii::t('app', "Falsches Passwort!") . ' '
+                        . Yii::t('app', "n==1#Ihnen verbleibt noch ein Versuch.|n>1#Ihnen verbleiben noch {n} Versuche.", array((Yii::app()->params['maxAttemptsForLogin'] - $user->badLogins))) . ' '
+                        . Yii::t('app', "Sobald alle Versuche aufgebraucht sind, wird Ihr Konto temporär gesperrt.");
             }
             $user->update();
         }

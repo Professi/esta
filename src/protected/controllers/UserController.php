@@ -136,7 +136,7 @@ class UserController extends Controller {
             if ($user->state == 0) {
                 $user->setAttribute('state', 1);
                 $user->update();
-                Yii::app()->user->setFlash('success', Yii::t('app','Ihr Benutzerkonto wurde erfolgreich aktiviert. Sie können Sich nun einloggen.'));
+                Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Benutzerkonto wurde erfolgreich aktiviert. Sie können Sich nun einloggen.'));
             } else if ($user->state == 1) {
                 Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Ihr Benutzerkonto wurde bereits aktiviert.'));
             } else if ($user->state == 2) {
@@ -164,10 +164,11 @@ class UserController extends Controller {
                 if ($fp) {
                     if (!$model->createTeachers($fp, $msg)) {
                         Yii::app()->user->setFlash('failMsg', $msg);
+                    } else {
+                        Yii::app()->user->setFlash('success', Yii::t('app', 'Lehrerliste erfolgreich importiert.'));
                     }
                     fclose($fp);
                 }
-                Yii::app()->user->setFlash('success', Yii::t('app', 'Lehrerliste erfolgreich importiert.'));
             }
         }
         $this->render('importTeacher', array('model' => $model,));
@@ -215,7 +216,7 @@ class UserController extends Controller {
                 $model->activationKey = $_GET['activationKey'];
                 $this->render('pwChangeForm', array('model' => $model));
             } else {
-                Yii::app()->user->setFlash('success', Yii::t('app','Leider konnte Ihr Aktivierungsschlüssel nicht wiedererkannt werden.'));
+                Yii::app()->user->setFlash('success', Yii::t('app', 'Leider konnte Ihr Aktivierungsschlüssel nicht wiedererkannt werden.'));
                 $this->redirect('index.php?r=/site/index');
             }
         }
@@ -234,17 +235,16 @@ class UserController extends Controller {
                 if ($user != null) {
                     if ($user->state == 1) {
                         $user->activationKey = $user->generateActivationKey();
-                        $user->password = "dummyPassworddummyPassword";
-                        $user->save();
+                        $user->update();
                         $mail = new Mail();
                         $mail->sendChangePasswordMail($user->email, $user->activationKey);
-                        Yii::app()->user->setFlash('success', Yii::t('app', 'Sie erhalten nun eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.'));
+                        Yii::app()->user->setFlash('success', Yii::t('app', 'Sie erhalten eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.'));
                         $this->redirect('index.php?r=/site/index');
                     } else {
                         Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Bevor Sie ein neues Passwort anfordern können, muss Ihr Benutzerkonto aktiviert sein.'));
                     }
                 } else {
-                    Yii::app()->user->setFlash('failMsg', Yii::t('app','Leider konnte Ihre E-Mail Adresse nicht im System gefunden werden.'));
+                    Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Leider konnte Ihre E-Mail Adresse nicht im System gefunden werden.'));
                     $this->refresh();
                 }
             }
@@ -308,7 +308,7 @@ class UserController extends Controller {
                         $this->redirect(array('account'));
                     }
                 } else {
-                    Yii::app()->user->setFlash("failMsg", Yii::t('app',"Benutzer konnte nicht aktualisiert werden"));
+                    Yii::app()->user->setFlash("failMsg", Yii::t('app', "Benutzer konnte nicht aktualisiert werden"));
                 }
             }
         } else {
@@ -368,7 +368,7 @@ class UserController extends Controller {
                     $model->stateName = Yii::t('app', "Nicht aktiv");
                     break;
                 case 1:
-                    $model->stateName = Yii::t('app',"Aktiv");
+                    $model->stateName = Yii::t('app', "Aktiv");
                     break;
                 case 2:
                     $model->stateName = Yii::t('app', "Gesperrt");
@@ -399,8 +399,7 @@ class UserController extends Controller {
             $model->attributes = $_GET['UserHasGroup'];
         }
         $this->renderPartial('userHasGroupAdmin', array(
-            'model' => $model),
-                false,true);
+            'model' => $model), false, true);
     }
 
     /**
@@ -417,13 +416,17 @@ class UserController extends Controller {
         $groups = array();
         $dataProvider->unsetAttributes();
         $dataProvider->lastname = $term;
-        $dataProvider->groups = Yii::app()->user->getGroups();
-        if (Yii::app()->user->checkAccess(PARENTS) && !Yii::app()->user->isAdmin()) {
-            $dataProvider->role = 2;
-        } else if (Yii::app()->user->checkAccess(MANAGEMENT) || Yii::app()->params['teacherAllowBlockTeacherApps']) {
-            $dataProvider->role = $role;
+        if (Yii::app()->user->isTeacher() || Yii::app()->user->isParent()) {
+            $dataProvider->groups = Yii::app()->user->getGroups();
         }
-        $criteria = $dataProvider->searchCriteriaTeacherAutoComplete($groups);
+        if (Yii::app()->user->isParent()) {
+            $dataProvider->role = 2;
+        } else if (Yii::app()->user->checkAccess('1')) {
+            $dataProvider->role = $role;
+        } else if (Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments']) {
+            $dataProvider->role = 3;
+        }
+        $criteria = $dataProvider->searchCriteriaTeacherAutoComplete();
         $a_rc = array();
         $a_data = User::model()->findAll($criteria);
         foreach ($a_data as $record) {

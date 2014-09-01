@@ -24,10 +24,6 @@
  */
 $this->setPageTitle(Yii::t('app', 'TAN Generierung'));
 Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.css");
-$groups = array();
-if (Yii::app()->params['allowGroups']) {
-    $groups = Group::model()->getAllGroups('DESC');
-}
 ?>
 <div class="row">
     <div class="small-12 columns small-centered">
@@ -69,16 +65,17 @@ if (Yii::app()->params['allowGroups']) {
                         <div class="small-9 columns">
                             <?php
                             echo Select2::activeDropDownList($model, 'group_id', $groups, array(
-                                'prompt' => Yii::t('app','Hier können Sie eine Gruppe auswählen...'))
+                                'prompt' => Yii::t('app', 'Hier können Sie eine Gruppe auswählen...'))
                             );
                             echo $form->error($model, 'group_id');
                             ?>
                         </div>
                     </div>
-                <?php } echo CHtml::submitButton(Yii::t('app','Absenden'), array('class' => 'small button'));
+                <?php } echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('class' => 'small button'));
                 ?>
             </fieldset>
-            <?php $this->endWidget(); ?><?php
+            <?php
+            $this->endWidget();
         } else if (!Yii::app()->params['allowParentsToManageChilds']) {
             echo CHtml::beginForm();
             ?>
@@ -125,16 +122,16 @@ if (Yii::app()->params['allowGroups']) {
                                 </div>
                             </div>
                         <?php } ?>
-
                     </div>
-                <?php }
-                ?>
+                <?php } ?>
                 <div class="tiny button add-child-tan">+</div>
                 <div>
                     <?php echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('class' => 'small button')); ?>
+                </div>
             </fieldset>
             <?php
             echo CHtml::endForm();
         }
-        ?></div>
+        ?>
+    </div>
 </div>

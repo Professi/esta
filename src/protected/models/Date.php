@@ -61,9 +61,9 @@ class Date extends CActiveRecord {
             array('durationPerAppointment', 'numerical', 'integerOnly' => true, 'min' => Yii::app()->params['minLengthPerAppointment']),
             array('lockAt', 'date', 'format' => self::getDateTimeFormat()),
             array('date', 'date', 'format' => Yii::app()->locale->getDateFormat('short')),
-            array('begin,end', 'date', 'format' => 'H:m'),
+            array('begin, end', 'date', 'format' => 'H:m'),
             array('durationPerAppointment', 'date', 'format' => 'm'),
-            array('id, date, begin, end, durationPerAppointment,groups,title,lockAt', 'safe'),
+            array('date, begin, end, durationPerAppointment,id,groups,title,lockAt', 'safe'),
         );
     }
 
@@ -123,13 +123,16 @@ class Date extends CActiveRecord {
             if (strtotime($this->end) <= strtotime($this->begin)) {
                 $rc = false;
                 $this->addError('end', Yii::t('app', 'Das Ende darf nicht vor dem Beginn liegen.'));
-            } else if (time() >= strtotime($this->date)) {
+            }
+            if (time() >= strtotime($this->date)) {
                 $rc = false;
                 $this->addError('date', Yii::t('app', 'Datum liegt in der Vergangenheit'));
-            } else if (!is_numeric((strtotime($this->end) - strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
+            }
+            if (!is_numeric((strtotime($this->end) - strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
                 $rc = false;
                 $this->addError('durationPerAppointment', Yii::t('app', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.'));
-            } else if (Date::parseDateTime($this->date, $this->begin) < Date::parseDateTime($this->lockAt)) {
+            }
+            if (Date::parseDateTime($this->date, $this->begin, true) < Date::parseDateTime($this->lockAt)) {
                 $rc = false;
                 $this->addError('lockAt', Yii::t('app', 'Die Sperrfrist muss vor oder auf dem Anfang liegen.'));
             }
@@ -142,13 +145,17 @@ class Date extends CActiveRecord {
         return $rc;
     }
 
-    public static function parseDateTime($date, $begin = false) {
-        return CDateTimeParser::parse($date . ($begin != false ? ' ' . $begin : ''), self::getDateTimeFormat());
+    public static function parseDateTime($date, $begin = false, $simple = false) {
+        return CDateTimeParser::parse($date . ($begin != false ? ' ' . $begin : ''), ($simple ? self::getSimpleDateTimeFormat() : self::getDateTimeFormat()));
     }
 
     public static function getDateTimeFormat() {
         return Yii::app()->locale->getDateFormat('short') . ' ' .
                 Yii::app()->locale->getTimeFormat('short');
+    }
+
+    public static function getSimpleDateTimeFormat() {
+        return Yii::app()->locale->getDateFormat('short') . ' ' . 'H:m';
     }
 
     /**
@@ -276,14 +283,20 @@ class Date extends CActiveRecord {
         $criteria->together = true;
         $criteria->limit = $dateMax;
         $criteria->order = 'date ASC';
-        $groups = Yii::app()->user->getState('groups');
+        $groups = Yii::app()->user->getGroups();
+        $params = array();
         if (!empty($groups) && is_array($groups)) {
+            $i = 0;
             foreach ($groups as $group) {
-                $criteria->addCondition('groups.id =' . $group->id, 'OR');
+                $criteria->addCondition('groups.id =:group' . $i, 'OR');
+                $params[':group' . $i] = $group->id;
+                $i++;
             }
         }
-        $criteria->addCondition('date >=:date');
-        $criteria->params = array(':date' => date('Y-m-d', time()));
+        $criteria->addCondition('groups.id IS NULL', 'OR');
+        $criteria->addCondition('date >=:date', 'AND');
+        $params[':date'] = date('Y-m-d', time());
+        $criteria->params = $params;
         return $criteria;
     }
 
