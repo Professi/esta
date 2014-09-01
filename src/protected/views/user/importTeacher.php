@@ -94,10 +94,6 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                 <div class="small-4 columns">
                     <input type="text" value="" name="" id="file-input-name" readonly="readonly">
                 </div>
-                <script>
-                    var maxFileSize = '<?= CsvUpload::getMaxSizeInBytes(); ?>',
-                            errorMessage = '<?= Yii::t('app', 'Die ausgewählte Datei übersteigt die maximale Dateigröße.'); ?>';
-                </script>
             </div>
             <div class="row collapse">
                 <div class="small-8 columns">
@@ -161,7 +157,7 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
         <fieldset>
             <legend><?php echo Yii::t('app', 'E-Mail Generierung'); ?></legend>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix infofeld"><?php echo $form->label($model, 'mailMask', array('class' => 'infolabel')); ?></span>
 
                     <div class="infotext">
@@ -169,7 +165,7 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                         <?php echo Yii::t('app', 'Vorname und Nachname müssen exakt so geschrieben sein wie es der Standardwert in diesem Textfeld vorgibt.'); ?>
                     </div>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'mailMask');
                     echo $form->error($model, 'mailMask');
@@ -177,10 +173,10 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'firstNameMailMask'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo Select2::activeDropDownList($model, 'firstNameMailMask', $model->selectableNameMask('firstname'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'firstNameMailMask');
@@ -188,10 +184,10 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'lastNameMailMask'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo Select2::activeDropDownList($model, 'lastNameMailMask', $model->selectableNameMask('lastname'), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'lastNameMailMask');
@@ -199,10 +195,10 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'mailDomain'); ?></span>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo $form->textField($model, 'mailDomain');
                     echo $form->error($model, 'mailDomain');
@@ -210,14 +206,14 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix infofeld"><?php echo $form->label($model, 'doubleNameSeperator', array('class' => 'infolabel')); ?></span>
                     <div class="infotext">
                         <span aria-hidden="true" data-icon="&#xe012;"></span>
                         <?php echo Yii::t('app', 'Beispiel: Max Heinz; Wenn ja: max-heinz; Wenn nein: maxheinz'); ?>
                     </div>
                 </div>
-                <div class="four columns">
+                <div class="small-4 columns">
                     <?php
                     echo Select2::activeDropDownList($model, 'doubleNameSeperator', $model->getBooleanSelectables(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'doubleNameSeperator');
