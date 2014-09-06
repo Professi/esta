@@ -724,16 +724,6 @@ class User extends CActiveRecord {
      * @return string 
      */
     public function getDisplayName() {
-        return (empty($this->title)) 
-            ? "{$this->firstname} {$this->lastname}"
-            : "{$this->title} {$this->firstname} {$this->lastname}";
-    }
-
-    /**
-     * Name of the User with Title
-     * @return string 
-     */
-    public function getDisplayName() {
         return (empty($this->title)) ? "{$this->firstname} {$this->lastname}" : "{$this->title} {$this->firstname} {$this->lastname}";
     }
 
