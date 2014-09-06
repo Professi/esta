@@ -26,7 +26,7 @@ return array(
         'application.components.*',
         'ext.select2.Select2',
     ),
-       'behaviors'=>array(
+    'behaviors' => array(
         'onBeginRequest' => array(
             'class' => 'application.components.behaviors.BeginRequest'
         ),
@@ -84,12 +84,12 @@ return array(
             'routes' => array(
                 array(
                     'class' => 'ext.yii-debug-toolbar.YiiDebugToolbarRoute',
-//                    'ipFilters' => array('127.0.0.1'),
+                    'ipFilters' => array(YII_DEBUG ? '*' : '127.0.0.1'),
                     'categories' => '*',
                     'enabled' => YII_DEBUG,
                 ),
                 array('class' => 'CFileLogRoute',
-                    'levels' => YII_DEBUG ? '*' :'error,warning,info',),
+                    'levels' => YII_DEBUG ? '*' : 'error,warning,info',),
                 array('class' => 'CProfileLogRoute',
                     'report' => 'summary',
                     'enabled' => YII_DEBUG,
@@ -134,6 +134,31 @@ return array(
                 ),
             ),
         ),
+        'ePdf' => array(
+            'class' => 'ext.yii-pdf.EYiiPdf',
+            'params' => array(
+                'mpdf' => array(
+                    'librarySourcePath' => 'application.vendors.mpdf.*',
+                    'constants' => array(
+                        '_MPDF_TEMP_PATH' => Yii::getPathOfAlias('application.runtime'),
+                    ),
+                    'class' => 'mpdf', // the literal class filename to be loaded from the vendors folder.
+                    'defaultParams' => array(// More info: http://mpdf1.com/manual/index.php?tid=184
+                        'mode' => '', //  This parameter specifies the mode of the new document.
+                        'format' => 'A4', // format A4, A5, ...
+                        'default_font_size' => 16, // Sets the default document font size in points (pt)
+                        'default_font' => 'Helvetica', // Sets the default font-family for the new document.
+                        'mgl' => 15, // margin_left. Sets the page margins for the new document.
+                        'mgr' => 15, // margin_right
+                        'mgt' => 16, // margin_top
+                        'mgb' => 16, // margin_bottom
+                        'mgh' => 9, // margin_header
+                        'mgf' => 9, // margin_footer
+                        'orientation' => 'P', // landscape or portrait orientation
+                    )
+                )
+            ),
+        )
     ),
     'params' => $params,
 );
