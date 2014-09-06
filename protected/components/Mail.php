@@ -110,7 +110,7 @@ class Mail {
         $body .= Yii::t('app', "mit ihrem Kind") . " <b>" . $child->firstname . " " . $child->lastname . "</b> <br/>" . Yii::t('app', "abgesagt wurde.") . "</p>";
         $this->addInfo($body);
         $body .= "</body></html>";
-        $this->send(Yii::t('app', "Einer Ihrer Termine bei") . " " . Yii::app()->name . " " . Yii::t('app', "wurde gelöscht"), $body, $email);
+        $this->send(Yii::t('app', "Einer Ihrer Termine bei {appname} wurde gelöscht",array('{appname}'=>Yii::app()->name)), $body, $email);
     }
 
     /**
