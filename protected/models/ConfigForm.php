@@ -29,7 +29,6 @@ class ConfigForm extends CFormModel {
     public $fromMail;
     public $emailHost;
     public $schoolName;
-    public $mailsActivated;
     public $maxChild;
     public $maxTanGen;
     public $maxAppointmentsPerChild;
@@ -67,7 +66,7 @@ class ConfigForm extends CFormModel {
     public function rules() {
         return array(
             array('adminEmail,emailHost,fromMail' .
-                ',schoolName,mailsActivated,maxChild,'
+                ',schoolName,maxChild,'
                 . 'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,' .
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
                 'durationTempBans,maxAttemptsForLogin,' .
@@ -81,7 +80,7 @@ class ConfigForm extends CFormModel {
             array('language', 'length', 'min' => 2),
             array('emailHost,fromMail,appName', 'length', 'min' => 3),
             array('defaultTeacherPassword', 'length', 'min' => 5),
-            array('mailsActivated,randomTeacherPassword,banUsers,allowBlockingAppointments,' .
+            array('randomTeacherPassword,banUsers,allowBlockingAppointments,' .
                 'useSchoolEmailForContactForm,allowBlockingOnlyForManagement,lockRegistration,' .
                 'allowParentsToManageChilds,allowGroups,teacherAllowBlockTeacherApps,smtpAuth,allowTeachersToCreateAppointments',
                 'boolean'),
@@ -91,7 +90,7 @@ class ConfigForm extends CFormModel {
                 'numerical', 'integerOnly' => true, 'min' => 1),
             array('hashCost', 'numerical', 'integerOnly' => true, 'min' => 13),
             array('adminEmail,emailHost,fromMailHost,fromMail' .
-                ',schoolName,mailsActivated,maxChild,'
+                ',schoolName,maxChild,'
                 . 'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,' .
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
                 'durationTempBans,maxAttemptsForLogin,allowTeachersToCreateAppointments' .
@@ -107,7 +106,6 @@ class ConfigForm extends CFormModel {
             'fromMail' => Yii::t('app', 'Absendername (z.B. ESTA-School)'),
             'emailHost' => Yii::t('app', 'Domainname des SMTP Servers (z.B. schoolxyz.de)'),
             'schoolName' => Yii::t('app', 'Schulname (z.B. Schule XYZ)'),
-            'mailsActivated' => Yii::t('app', 'E-Mails versenden?'),
             'maxChild' => Yii::t('app', 'Maximale Anzahl an Kindern pro Eltern'),
             'maxAppointmentsPerChild' => Yii::t('app', 'Maximale Anzahl an Terminen pro Kind'),
             'randomTeacherPassword' => Yii::t('app', 'Lehrerpasswörter bei deren Erstellung zufällig generieren?'),

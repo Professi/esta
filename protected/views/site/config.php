@@ -348,17 +348,6 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
             <legend><?php echo Yii::t('app', 'E-Mail'); ?></legend>
             <div class="row collapse">
                 <div class="small-8 columns">
-                    <span class="prefix"><?php echo $form->label($model, 'mailsActivated'); ?></span>
-                </div>
-                <div class="small-4 columns">
-                    <?php
-                    echo Select2::activeDropDownList($model, 'mailsActivated', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
-                    echo $form->error($model, 'mailsActivated');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'smtpAuth'); ?></span>
                 </div>
                 <div class="small-4 columns">
@@ -369,7 +358,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
             </div>
             <div class="row collapse">
-                                <div class="eight columns">
+                <div class="eight columns">
                     <span class="prefix infofeld">
                         <?php echo $form->label($model, 'emailHost', array('class' => 'infolabel')); ?>
                     </span>
@@ -380,7 +369,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo $form->textField($model, 'emailHost', $optionsMails);
+                    echo $form->textField($model, 'emailHost');
                     echo $form->error($model, 'emailHost');
                     ?>
                 </div>
@@ -391,7 +380,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo $form->textField($model, 'fromMail', $optionsMails);
+                    echo $form->textField($model, 'fromMail');
                     echo $form->error($model, 'fromMail');
                     ?>
                 </div>
@@ -402,7 +391,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo $form->textField($model, 'fromMailHost', $optionsMails);
+                    echo $form->textField($model, 'fromMailHost');
                     echo $form->error($model, 'fromMailHost');
                     ?>
                 </div>
@@ -413,7 +402,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo $form->passwordField($model, 'smtpPassword', $optionsMails);
+                    echo $form->passwordField($model, 'smtpPassword');
                     echo $form->error($model, 'smtpPassword');
                     ?>
                 </div>
@@ -424,7 +413,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo $form->textField($model, 'smtpSecure', $optionsMails);
+                    echo $form->textField($model, 'smtpSecure');
                     echo $form->error($model, 'smtpSecure');
                     ?>
                 </div>
@@ -435,7 +424,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo $form->textField($model, 'smtpPort', $optionsMails);
+                    echo $form->textField($model, 'smtpPort');
                     echo $form->error($model, 'smtpPort');
                     ?>
                 </div>
