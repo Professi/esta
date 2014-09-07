@@ -46,7 +46,7 @@ $menu = array(//icon,label,url,visible(bool)
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
-    <h1 class="text-center hide show-for-print" style="font-family: 'ClickerScript-Regular';"><?= Yii::t('app','Elternsprechtag'); ?></h1>
+<h1 class="text-center hide show-for-print" style="font-family: 'ClickerScript-Regular';"><?= Yii::t('app','Elternsprechtag'); ?></h1>
 <nav class="top-bar hide-on-print" data-topbar data-options="is_hover: false">
     <ul class="title-area">
         <li class="name esta-logo">
@@ -68,50 +68,30 @@ $menu = array(//icon,label,url,visible(bool)
             </li>
             <li class="toggle-topbar menu-icon"><a href=""><span>Menu</span></a></li>
         </ul>
-        <section class="top-bar-section">
-            <ul class="right">
-                <li>
-                    <a href="http://<?php echo Yii::app()->params['schoolWebsiteLink']; ?>" target="_blank">
-                        <img id="logo_school" 
-                             src="<?php echo $this->assetsDir . Yii::app()->params['logoPath']; ?>" 
-                             alt="<?php echo Yii::app()->params['schoolName'] ?>">
-                             <?php echo Yii::app()->params['schoolName'] ?>
-                    </a>
-                </li>
-            </ul>
-            <ul class="left show-for-small-only">
-                <?php
-                if (!Yii::app()->user->isGuest) {
-                    echo $this->generateFoundation5Menu($menu, true);
-                }
-                ?>
-                <li>
-                    <a onClick="window.print();">
-                        <i class="fi-print"></i><?php echo Yii::t('app', 'Drucken'); ?>
-                    </a>
-                </li>
-            </ul>
-        </section>
-    </nav>
+        <ul class="left show-for-small-only">
+            <?php
+            if (!Yii::app()->user->isGuest) {
+                echo $this->generateFoundation5Menu($menu, true);
+            }
+            ?>
+            <li>
+                <a onClick="event.preventDefault();window.print();">
+                    <i class="fi-print"></i><?php echo Yii::t('app', 'Drucken'); ?>
+                </a>
+            </li>
+        </ul>
+    </section>
+</nav>
     <div class="sticky sticky-nav hide-for-small">
-        <ul class="medium-block-grid-6 large-block-grid-8 text-center ul-nav" data-topbar>
+        <ul class="medium-block-grid-6 large-block-grid-10 text-center ul-nav" data-topbar>
             <?php
             if (!Yii::app()->user->isGuest) {
                 echo $this->generateFoundation5Menu($menu, false);
             }
             ?>
             <li>
-                <a onClick="window.print();">
-                    <i class="fi-print"></i><span><?php echo Yii::t('app', 'Drucken'); ?></span>
-        <ul class="left show-for-small-only hide-on-print">
-            <?php 
-            if( ! Yii::app()->user->isGuest) {
-                echo $this->generateFoundation5Menu($menu,true);
-            }
-            ?>
-            <li>
                 <a onClick="event.preventDefault();window.print();">
-                    <i class="fi-print"></i><?php echo Yii::t('app','Drucken'); ?>
+                    <i class="fi-print"></i><span><?php echo Yii::t('app', 'Drucken'); ?></span>
                 </a>
             </li>
             <li class="no-highlight">
@@ -134,24 +114,6 @@ $menu = array(//icon,label,url,visible(bool)
                         <?php echo Yii::app()->user->getFlash('failMsg'); ?>            
                     </div>
                 <?php } ?>
-    </section>
-</nav>
-<div class="sticky sticky-nav hide-for-small hide-on-print">
-    <ul class="medium-block-grid-6 large-block-grid-8 text-center ul-nav" data-topbar>
-        <?php 
-            if( ! Yii::app()->user->isGuest) {
-                echo $this->generateFoundation5Menu($menu,false);
-            }
-        ?>
-        <li>
-            <a onClick="event.preventDefault();window.print();">
-                <i class="fi-print"></i><span><?php echo Yii::t('app','Drucken'); ?></span>
-            </a>
-        </li>
-        <li class="no-highlight">
-            <div id="language-selector">
-                <i class="fi-comment-quotes"></i>
-                <?php $this->widget('application.components.widgets.LanguageSelector'); ?>
             </div>
         </div>
         <?php echo $content; ?>
@@ -186,31 +148,6 @@ $menu = array(//icon,label,url,visible(bool)
             ?>
         </div>
     </div> 
-    <div class="infobox" style="display: none;">
-        <p></p>
-                echo (!empty(Yii::app()->params['schoolName'])) ? Yii::app()->params['schoolName'] : Yii::t('app', 'ESTA - Team');
-        ?>
-        </p>
-    </div>
-    <div class="large-4 columns hide-for-small js_hide"></div>
-    <div class="large-4 columns hide-for-small js_show">
-        <p>
-            <?php echo Yii::t('app','Drücken Sie <kbd>Esc</kbd> um das Navigationsmenü ein- bzw. auszublenden.'); ?> 
-        </p>
-    </div>
-    <div class="hide show-for-print"><?= Yii::app()->homeUrl; ?></div>
-    <div class="small-6 large-4 columns hide-on-print">
-        <?php
-        $this->widget('zii.widgets.CMenu', array(
-            'htmlOptions' => array('class' => 'right inline-list'),
-            'items' => array(
-                array('label' => Yii::t('app', 'Statistik'), 'url' => array('/site/statistics'), 
-                      'visible' => (!Yii::app()->user->isGuest() && Yii::app()->user->checkAccess(ADMIN))),
-                array('label' => Yii::t('app', 'FAQ'), 'url' => array('/site/page', 'view' => 'faq')),
-                array('label' => Yii::t('app', 'Impressum'), 'url' => array('/site/page', 'view' => 'impressum')),
-                array('label' => Yii::t('app', 'Kontakt'), 'url' => array('/site/contact')),
-        )));
-        ?>
-    </div>
+    <div class="infobox" style="display: none;"></div>
 </body>
 </html>
