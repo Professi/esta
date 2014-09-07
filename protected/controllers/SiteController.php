@@ -78,7 +78,6 @@ class SiteController extends Controller {
             foreach ($configList as $value) {
                 $class->getProperty($value->key)->setValue($model, $value->value);
             }
-            $optionsMails = self::getDisabledOptions($model->mailsActivated);
             $optionsBans = self::getDisabledOptions($model->banUsers);
             $optionsBlocks = self::getDisabledOptions($model->allowBlockingAppointments);
             if (isset($_POST['ConfigForm'])) {
@@ -89,7 +88,6 @@ class SiteController extends Controller {
                 'model' => $model,
                 'optionsBans' => $optionsBans,
                 'optionsBlocks' => $optionsBlocks,
-                'optionsMails' => $optionsMails,
             ));
         } else {
             $this->throwFourNullThree();

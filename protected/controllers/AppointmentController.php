@@ -346,7 +346,7 @@ class AppointmentController extends Controller {
         if (!empty($id)) {
             $model = $this->loadModel($id);
             if ($this->loadModel($id)->delete()) {
-                if (!Yii::app()->user->checkAccessNotAdmin(PARENTS) && Yii::app()->params['mailsActivated']) {
+                if (!Yii::app()->user->checkAccessNotAdmin(PARENTS)) {
                     $mail = new Mail();
                     $mail->sendAppointmentDeleted($model->parentchild->user->email, $model->user, $model->dateandtime->time, $model->parentchild->child, $model->dateandtime->date->date);
                 }
