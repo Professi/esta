@@ -48,7 +48,8 @@ $menu = array( //icon,label,url,visible(bool)
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
-<nav class="top-bar" data-topbar data-options="is_hover: false">
+    <h1 class="text-center hide show-for-print" style="font-family: 'ClickerScript-Regular';"><?= Yii::t('app','Elternsprechtag'); ?></h1>
+<nav class="top-bar hide-on-print" data-topbar data-options="is_hover: false">
     <ul class="title-area">
         <li class="name esta-logo">
             <h2>
@@ -68,21 +69,21 @@ $menu = array( //icon,label,url,visible(bool)
                 </a>
             </li>
         </ul>
-        <ul class="left show-for-small-only">
+        <ul class="left show-for-small-only hide-on-print">
             <?php 
             if( ! Yii::app()->user->isGuest) {
                 echo $this->generateFoundation5Menu($menu,true);
             }
             ?>
             <li>
-                <a onClick="window.print();">
+                <a onClick="event.preventDefault();window.print();">
                     <i class="fi-print"></i><?php echo Yii::t('app','Drucken'); ?>
                 </a>
             </li>
         </ul>
     </section>
 </nav>
-<div class="sticky sticky-nav hide-for-small">
+<div class="sticky sticky-nav hide-for-small hide-on-print">
     <ul class="medium-block-grid-6 large-block-grid-8 text-center ul-nav" data-topbar>
         <?php 
             if( ! Yii::app()->user->isGuest) {
@@ -90,7 +91,7 @@ $menu = array( //icon,label,url,visible(bool)
             }
         ?>
         <li>
-            <a onClick="window.print();">
+            <a onClick="event.preventDefault();window.print();">
                 <i class="fi-print"></i><span><?php echo Yii::t('app','Drucken'); ?></span>
             </a>
         </li>
@@ -136,7 +137,8 @@ $menu = array( //icon,label,url,visible(bool)
             <?php echo Yii::t('app','Drücken Sie <kbd>Esc</kbd> um das Navigationsmenü ein- bzw. auszublenden.'); ?> 
         </p>
     </div>
-    <div class="small-6 large-4 columns">
+    <div class="hide show-for-print"><?= Yii::app()->homeUrl; ?></div>
+    <div class="small-6 large-4 columns hide-on-print">
         <?php
         $this->widget('zii.widgets.CMenu', array(
             'htmlOptions' => array('class' => 'right inline-list'),

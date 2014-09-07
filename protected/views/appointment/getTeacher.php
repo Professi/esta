@@ -35,7 +35,7 @@ $this->setPageTitle(Yii::t('app', 'Lehrerauswahl'));
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row hide-for-print">
     <fieldset class="small-12 columns small-centered text-center">
         <div class="row collapse">
             <div class="small-2 columns">

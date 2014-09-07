@@ -132,7 +132,7 @@ class Controller extends CController {
         $cs = Yii::app()->getClientScript();
         
         $cs->registerCssFile($this->assetsDir . '/css/app.css');
-        $cs->registerCssFile($this->assetsDir . '/css/print.min.css', 'print');
+      //  $cs->registerCssFile($this->assetsDir . '/css/print.min.css', 'print');
         
         if(Yii::app()->user->checkAccess(ADMIN)) {
             $cs->registerCssFile( $this->assetsDir."/css/select2.min.css");

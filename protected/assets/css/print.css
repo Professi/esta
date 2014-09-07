@@ -36,3 +36,4 @@ a:link, a:visited {background:transparent;font-weight:700;text-decoration:underl
 .column-button{display: none;}
 td>input{display:none;}
 #print_button{display: none;}
+a[href]:after{content:none;}
