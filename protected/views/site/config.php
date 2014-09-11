@@ -358,7 +358,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
             </div>
             <div class="row collapse">
-                <div class="eight columns">
+                <div class="small-8 columns">
                     <span class="prefix infofeld">
                         <?php echo $form->label($model, 'emailHost', array('class' => 'infolabel')); ?>
                     </span>
