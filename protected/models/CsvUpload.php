@@ -150,6 +150,8 @@ class CsvUpload extends CFormModel {
             $this->addError('file', Yii::t('app', 'Ungültiges CSV Format und/oder falsche Angabe des Seperators.'));
         }
     }
+    
+    
 
     private function columnNotExists($column, $attrName) {
         $this->addError($attrName, Yii::t('app', 'Spalte {column} existiert nicht.', array('{column}' => $column)));

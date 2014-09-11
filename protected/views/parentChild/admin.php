@@ -26,9 +26,14 @@ $this->breadcrumbs = array(
     'Manage',
 );
 $this->menu = array(
-    array(  'label' => Yii::t('app', 'Eltern-Kind-Verknüpfung anlegen'), 
-            'url' => array('create'),
-            'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Eltern-Kind-Verknüpfung anlegen'),
+        'url' => array('create'),
+        'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Schüler importieren'),
+        'url' => array('tan/pupilImport'),
+        'linkOptions' => array('class' => 'small button'),
+        'visible' => !Yii::app()->params['allowParentsToManageChilds']
+        ),
 );
 ?>
 <div class="row">

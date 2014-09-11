@@ -44,7 +44,7 @@ class TanController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('genTans'),
+                'actions' => array('genTans', 'pupilImport'),
                 'roles' => array('2', '1'),
             ),
             array('deny', // deny all users
@@ -102,6 +102,15 @@ class TanController extends Controller {
             }
             $this->renderFormGenTans($model);
         }
+    }
+
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     * action um Schüler zu importieren
+     */
+    public function actionPupilImport() {
+        $model = new PupilImport();
+        $this->render('importPupils', array('model'=>$model));
     }
 
     /**

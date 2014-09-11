@@ -20,7 +20,6 @@
 /**
  * @var $this TanController 
  * @var $model tan 
- * @todo In den Controller verschieben
  */
 $this->setPageTitle(Yii::t('app', 'TAN Generierung'));
 Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.css");
