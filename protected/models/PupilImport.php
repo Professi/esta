@@ -25,95 +25,140 @@
  * @author cehringfeld
  */
 class PupilImport extends CFormModel {
-//
-//    public $firstname;
-//    public $lastname;
-//    public $group;
-//    public $delimiter;
-//    public $file;
-//
-//    public function init() {
-//        parent::init();
-//        $this->lastname = Yii::t('app', 'Nachname');
-//        $this->firstname = Yii::t('app', 'Vorname');
-//        $this->delimiter = ';';
-//    }
+
+    public $firstname;
+    public $lastname;
+    public $group;
+    public $delimiter;
+    public $file;
+    private $model = array();
+    private $positions = array();
+    
+    public function init() {
+        parent::init();
+        $this->lastname = Yii::t('app', 'Nachname');
+        $this->firstname = Yii::t('app', 'Vorname');
+        $this->group = Yii::t('app', 'Gruppe');
+        $this->delimiter = ';';
+    }
+
+    public function rules() {
+        return array(
+            array('file', 'file', 'types' => 'csv', 'maxSize' => self::getMaxSizeInBytes() - 100,
+                'allowEmpty' => true, 'wrongType' => Yii::t('app', 'Nur CSV Dateien erlaubt.'),
+                'tooLarge' => Yii::t('app', 'Datei ist zu groß. Die Begrenzung liegt bei {size}.', array('{size}' => self::getMaxSize()))),
+            array('firstname, lastname,delimiter', 'required'),
+            array('delimiter', 'length', 'max' => 1),
+            array('firstname,lastname,delimiter', 'safe'),
+        );
+    }
+
+    public function attributeLabels() {
+        return array(
+            'file' => Yii::t('app', 'CSV Datei hochladen'),
+            'group' => Yii::t('app', 'group'),
+            'firstname' => $this->names()['firstname'],
+            'lastname' => $this->names()['lastname'],
+            'delimiter' => Yii::t('app', 'Seperator'),
+        );
+    }
+
 //    
-//    public function rules() {
-// return array(
-//            array('file', 'file', 'types' => 'csv', 'maxSize' => self::getMaxSizeInBytes() - 100,
-//                'allowEmpty' => true, 'wrongType' => Yii::t('app', 'Nur CSV Dateien erlaubt.'),
-//                'tooLarge' => Yii::t('app', 'Datei ist zu groß. Die Begrenzung liegt bei {size}.', array('{size}' => self::getMaxSize()))),
-//            array('firstname, lastname,delimiter', 'required'),
-//            array('delimiter', 'length', 'max' => 1),
-//            array('firstname,lastname,delimite', 'safe'),
-//        );    }
-//
-//    public function attributeLabels() {
-//        return array(
-//            'file' => Yii::t('app', 'CSV Datei hochladen'),
-//            'firstname' => $this->names()['firstname'],
-//            'lastname' => $this->names()['lastname'],
-//            'delimiter' => Yii::t('app', 'Seperator'),
-//        );
-//    }
-//    
-//    public function names() {
-//        return array('firstname' => Yii::t('app', 'Vorname'), 'lastname' => Yii::t('app', 'Nachname'));
-//    }
+    public function names() {
+        return array('firstname' => Yii::t('app', 'Vorname'), 'lastname' => Yii::t('app', 'Nachname'));
+    }
+
+    private function generateFromCsv(&$fp, &$msg) {
+        $first = true;
+        $rc = true;
+        while ($rc && ($line = fgetcsv($fp, 0, $this->delimiter)) != FALSE) {
+            if (!$first) {
+                $firstname = $line[$this->getPos($this->firstname)];
+                $lastname = $line[$this->getPos($this->lastname)];
+                
+            } else {
+                $this->firstLoopRun($line);
+                if ($this->hasErrors()) {
+                    $rc = false;
+                    $msg = Yii::t('app', 'Lehrerliste konnte nicht importiert werden. Entweder ist die importierte CSV Datei fehlerhaft oder die Spaltennamen sind nicht korrekt eingetragen.');
+                }
+                $first = false;
+            }
+        }
+        return $rc;
+    }
+    
+        private function firstLoopRun(&$line) {
+        $i = 0;
+        $this->positions = array();
+        if (count($line) >= 2) {
+            foreach ($line as $val) {
+                if (!empty($val)) {
+                    $this->positions[$val] = $i;
+                    $i++;
+                }
+            }
+            $this->checkForColumn($this->firstname, 'firstname');
+            $this->checkForColumn($this->lastname, 'lastname');
+        } else {
+            $this->addError('file', Yii::t('app', 'Ungültiges CSV Format und/oder falsche Angabe des Seperators.'));
+        }
+    }
+    
+        private function columnNotExists($column, $attrName) {
+        $this->addError($attrName, Yii::t('app', 'Spalte {column} existiert nicht.', array('{column}' => $column)));
+    }
+
+    private function checkForColumn($column, $attrName) {
+        if (!$this->existsKeys($column)) {
+            $this->columnNotExists($column, $attrName);
+        }
+    }
     
     
-//    private function generateFromCsv(&$fp, &$msg) {
-//        $first = true;
-//        $rc = true;
-//        $stdPassword = "";
-//        while ($rc && ($line = fgetcsv($fp, 0, $this->delimiter)) != FALSE) {
-//            if (!$first) {
-//                $model = $this->setTeacherModel($this->generateMail($line), self::encodingString($line[$this->getPos($this->lastname)]), self::encodingString($line[$this->getPos($this->firstname)]), 1, 2, self::encodingString($line[$this->getPos($this->title)]), $stdPassword);
-//                $this->saveModel($model);
-//                $rc = $this->checkModelErrors($model, $msg);
-//            } else {
-//                $this->firstLoopRun($line);
-//                if ($this->hasErrors()) {
-//                    $rc = false;
-//                    $msg = Yii::t('app', 'Lehrerliste konnte nicht importiert werden. Entweder ist die importierte CSV Datei fehlerhaft oder die Spaltennamen sind nicht korrekt eingetragen.');
-//                }
-//                $first = false;
-//            }
-//        }
-//        return $rc;
-//    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        /**
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     * renders showGenTans when allowParentsToManageChilds activated
+     * @param Tan $model
+     */
+    private function tansNotForParentsManagement(&$model) {
+        $validate = true;
+        $model = $this->iterateOverTans($_POST['Tan'], $validate);
+        if (!empty($model) && $validate) {
+            foreach ($model as $newTan) {
+                if ($newTan->child instanceof Child && $newTan->child->save()) {
+                    $newTan->child_id = $newTan->child->getPrimaryKey();
+                    $newTan->insert();
+                }
+            }
+            $dataProvider = new CArrayDataProvider($model, array('pagination' => array('pageSize' => Yii::app()->params['maxTanGen'])));
+            $this->render('showGenTans', array('dataProvider' => $dataProvider));
+        } else {
+            $this->renderFormGenTans($model);
+        }
+    }
+
+    private function createTan($firstname, $lastname, $group) {
+        $tan = new Tan();
+        if (Yii::app()->params['allowGroups'] && !empty($group)) {
+            $groupModel = Group::model()->findByAttributes(array('groupname' => $group));
+            if(is_null($groupModel)) {
+                $groupModel = new Group();
+                $groupModel->groupname = $group;
+                $groupModel->insert();
+            }
+            $tan->group_id = $groupModel->id;
+        }
+        $tan->childFirstname = $firstname;
+        $tan->childLastname = $lastname;
+        $tan->tan_count = 1;
+        if ($tan->validate()) {
+            $tan->generateTan(false);
+            $model[] = $tan;
+        }
+    }
+
+    /**
      * Konvertiert eine Datei in ISO-8859-1 in UTF-8
      * @param string $toEncode
      * @return string
@@ -156,5 +201,9 @@ class PupilImport extends CFormModel {
     static public function getMaxSize() {
         return ini_get('post_max_size');
     }
-        
+
+    private function getPos($attr) {
+        return $this->positions[$attr];
+    }
+    
 }

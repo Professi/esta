@@ -21,20 +21,89 @@ $this->setPageTitle(Yii::t('app', 'Schülerimport'));
 Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.css");
 ?>
 <div class="row">
-    <div class="small-12 columns small-centered">
-        <h2 class="text-center"><?php echo Yii::t('app', 'Schülerimport'); ?></h2>
+    <div class="small-10 columns small-centered">
+        <div class="panel">
+            <?php echo Yii::t('app', 'Man kann derzeit nur eine CSV Datei zum Import nutzen. Die CSV Datei muss folgende Informationen liefern:'); ?>
+            <br/>
+            <?php echo Yii::t('app', 'Nachname und Vorname. Die Spaltennamen müssen in einer Kopfzeile angegeben sein.'); ?>
+            <br/>
+            <br/>
+            <?php
+            echo Yii::t('app', 'Die Maximalgröße einer Datei beträgt {size}.', array('{size}' => CsvUpload::getMaxSize()));
+            ?>
+        </div>
     </div>
 </div>
 <div class="row">
-    <div class="small-8 columns small-centered">
-            <fieldset>
-                <div>
-                    <?php echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('class' => 'small button')); ?>
-                </div>
-            </fieldset>
+    <div class="small-10 columns small-centered">
+        <fieldset>
+            <legend><?php echo Yii::t('app', 'Schüler importieren'); ?></legend>
             <?php
-            echo CHtml::endForm();
+            $form = $this->beginWidget('CActiveForm', array('id' => 'csv-form', 'enableAjaxValidation' => true,
+                'htmlOptions' => array('enctype' => 'multipart/form-data'),
+                'errorMessageCssClass' => 'error',
+                'skin' => false,
+            ));
+            ?>
+            <div class="row collapse">
+                <div class="small-4 columns">
+                    <span class="prefix"><?php echo $form->label($model, 'file'); ?></span>
+                </div>
+                <div class="small-4 columns">
+                    <div class="prefix button file-input">
+                        <i class="fi-upload"></i><span>&nbsp;<?php echo Yii::t('app', 'Datei auswählen'); ?></span>
+                        <?php
+                        echo $form->fileField($model, 'file');
+                        echo $form->error($model, 'file');
+                        ?>
+                        <script>
+                            var maxFileSize = '<?php echo CsvUpload::getMaxSizeInBytes(); ?>';
+                            var errorMessage = '<?php echo Yii::t('app', 'Die ausgewählte Datei übersteigt die maximale Dateigröße.'); ?>';
+                        </script>
+                    </div>
+                </div>
+                <div class="small-4 columns">
+                    <input type="text" value="" name="" id="file-input-name" readonly="readonly">
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="small-8 columns">
+                    <span class="prefix"><?php echo $form->label($model, 'delimiter'); ?></span>
+                </div>
+                <div class="small-4 columns">
+                    <?php
+                    echo $form->textField($model, 'delimiter');
+                    echo $form->error($model, 'delimiter');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="small-8 columns">
+                    <span class="prefix"><?php echo $form->label($model, 'firstname'); ?></span>
+                </div>
+                <div class="small-4 columns">
+                    <?php
+                    echo $form->textField($model, 'firstname');
+                    echo $form->error($model, 'firstname');
+                    ?>
+                </div>
+            </div>
+            <div class="row collapse">
+                <div class="small-8 columns">
+                    <span class="prefix"><?php echo $form->label($model, 'lastname'); ?></span>
+                </div>
+                <div class="small-4 columns">
+                    <?php
+                    echo $form->textField($model, 'lastname');
+                    echo $form->error($model, 'lastname');
+                    ?>
+                </div>
+            </div>
+        </fieldset>
+
+        <?php
+        echo CHtml::submitButton(Yii::t('app', 'Importieren'), array('class' => 'button'));
+        $this->endWidget();
         ?>
     </div>
-</div>
 

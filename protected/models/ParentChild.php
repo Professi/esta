@@ -1,9 +1,4 @@
 <?php
-
-/**
- * This is the model class for table "parent_child".
- */
-
 /** The followings are the available columns in table 'parent_child':
  * @property integer $id
  * @property integer $user_id
