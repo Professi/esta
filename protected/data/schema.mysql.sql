@@ -221,7 +221,6 @@ CREATE TABLE IF NOT EXISTS `role` (
 --
 
 CREATE TABLE IF NOT EXISTS `tan` (
-`id` int(11) NOT NULL,
   `tan` varchar(255) NOT NULL,
   `used` tinyint(1) DEFAULT NULL,
   `group_id` int(11) DEFAULT NULL,
@@ -366,7 +365,7 @@ ALTER TABLE `parent_child`
 -- Indexes for table `tan`
 --
 ALTER TABLE `tan`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `tan` (`tan`), ADD KEY `tan_fk1` (`group_id`), ADD KEY `tan_fk2` (`child_id`), ADD KEY `tan_fk3` (`used_by_user_id`);
+ ADD UNIQUE KEY `tan` (`tan`), ADD KEY `tan_fk1` (`group_id`), ADD KEY `tan_fk2` (`child_id`), ADD KEY `tan_fk3` (`used_by_user_id`);
 
 --
 -- Indexes for table `user`

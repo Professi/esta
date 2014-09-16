@@ -24,15 +24,16 @@ class DataColumn extends CDataColumn {
             foreach ($this->htmlOptions as $key => $value) {
                 $options[$key] = $this->evaluateExpression($value, array('row' => $row, 'data' => $data));
             }
-        }
-        else
+        } else {
             $options = $this->htmlOptions;
+        }
         if ($this->cssClassExpression !== null) {
             $class = $this->evaluateExpression($this->cssClassExpression, array('row' => $row, 'data' => $data));
-            if (isset($options['class']))
+            if (isset($options['class'])) {
                 $options['class'].=' ' . $class;
-            else
+            } else {
                 $options['class'] = $class;
+            }
         }
         echo CHtml::openTag('td', $options);
         $this->renderDataCellContent($row, $data);
@@ -40,5 +41,3 @@ class DataColumn extends CDataColumn {
     }
 
 }
-
-?>

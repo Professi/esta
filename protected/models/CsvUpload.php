@@ -147,7 +147,7 @@ class CsvUpload extends CFormModel {
             $this->checkForColumn($this->email, 'email');
             $this->checkForColumn($this->title, 'title');
         } else {
-            $this->addError('file', Yii::t('app', 'Ungültiges CSV Format und/oder falsche Angabe des Seperators.'));
+            $this->addError('file', Yii::t('app', 'Ungültiges CSV Format und/oder falsche Angabe des Feldtrenners.'));
         }
     }
 

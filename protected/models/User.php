@@ -536,11 +536,10 @@ class User extends CActiveRecord {
      * @return boolean
      */
     public function validate($attributes = null, $clearErrors = true) {
-        parent::validate($attributes, $clearErrors);
         $rc = parent::validate($attributes, $clearErrors);
-        $params['{attribute}'] = $this->getAttributeLabel('password');
-        if ($this->getError('password') == Yii::t('yii', '{attribute} must be repeated exactly.', $params)) {
+        if ($this->hasErrors('password')) {
             $this->addError('password_repeat', Yii::t('app', 'Passwörter stimmen nicht überein.'));
+            $rc = false;
         }
         return $rc;
     }
@@ -718,7 +717,7 @@ class User extends CActiveRecord {
         $pc->user_id = $user_id;
         return $pc;
     }
-    
+
     /**
      * Name of the User with Title
      * @return string 

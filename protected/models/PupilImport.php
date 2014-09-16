@@ -3,7 +3,7 @@
 /**
  * Dies ist Formmodel um eine Lehrer CSV Datei zu importieren.
  */
-/* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2014  Christian Ehringfeld, David Mock
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -126,7 +126,7 @@ class PupilImport extends CFormModel {
                 $this->checkForColumn($this->group, 'group');
             }
         } else {
-            $this->addError('file', Yii::t('app', 'Ungültiges CSV Format und/oder falsche Angabe des Seperators.'));
+            $this->addError('file', Yii::t('app', 'Ungültiges CSV Format und/oder falsche Angabe des Feldtrenners.'));
         }
     }
 

@@ -110,7 +110,7 @@ class TanController extends Controller {
      */
     public function actionPupilImport() {
         $model = new PupilImport();
-        if (isset($_POST['PupilImport']) && $model->attributes = $_POST['PupilImport'] && $model->validate() && !empty($_FILES['PupilImport']['tmp_name']['file'])) {
+        if (isset($_POST['PupilImport']) && $model->setAttributes($_POST['PupilImport']) && $model->validate() && !empty($_FILES['PupilImport']['tmp_name']['file'])) {
             $model->createTans();
             $dataProvider = new CArrayDataProvider($model->getModel());
             $this->render('showGenTans', array('dataProvider' => $dataProvider));
@@ -141,6 +141,11 @@ class TanController extends Controller {
         $this->render('formGenTans', array('model' => $model, 'groups' => $this->getAvailableGroups()));
     }
 
+    /**
+     * Returns all Groups of a user
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     * @return array of groups
+     */
     private function getAvailableGroups() {
         $groups = array();
         if (Yii::app()->params['allowGroups']) {

@@ -136,10 +136,6 @@ class Controller extends CController {
         } else {
             $cs->registerScriptFile($this->assetsDir . '/js/app.min.js', CClientScript::POS_END);
         }
-
-        if (preg_match('/MSIE [1-7]/', $_SERVER['HTTP_USER_AGENT']) === 1) {
-            $cs->enableJavaScript = false;
-        }
     }
 
     /**

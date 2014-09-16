@@ -27,13 +27,13 @@ class CustomButtonColumn extends CButtonColumn {
     public function init() {
         $this->viewButtonImageUrl = false;
         $this->viewButtonLabel = '<i class="fi-magnifying-glass"></i>';
-        $this->viewButtonOptions = array('class' => 'table-button view','title' => Yii::t('zii', 'View'));
+        $this->viewButtonOptions = array('class' => 'table-button view','title' => Yii::t('app', 'Ansicht'));
         $this->updateButtonImageUrl = false;
         $this->updateButtonLabel = '<i class="fi-pencil"></i>';
-        $this->updateButtonOptions = array('class' => 'table-button update','title' => Yii::t('zii', 'Update'));
+        $this->updateButtonOptions = array('class' => 'table-button update','title' => Yii::t('app', 'Aktualisieren'));
         $this->deleteButtonImageUrl = false;
         $this->deleteButtonLabel = '<i class="fi-trash"></i>';
-        $this->deleteButtonOptions = array('class' => 'table-button delete','title' => Yii::t('zii', 'Delete'));
+        $this->deleteButtonOptions = array('class' => 'table-button delete','title' => Yii::t('app', 'Löschen'));
         
         $this->htmlOptions = array('class' => 'text-center');
         $this->headerHtmlOptions = array();
