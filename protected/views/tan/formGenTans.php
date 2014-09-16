@@ -23,6 +23,13 @@
  */
 $this->setPageTitle(Yii::t('app', 'TAN Generierung'));
 Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.css");
+$this->menu = array(
+    array('label' => Yii::t('app', 'Schüler über eine CSV Datei importieren'),
+        'url' => array('tan/pupilImport'),
+        'linkOptions' => array('class' => 'small button'),
+        'visible' => !Yii::app()->params['allowParentsToManageChilds']
+        ),
+);
 ?>
 <div class="row">
     <div class="small-12 columns small-centered">
