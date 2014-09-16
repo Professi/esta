@@ -25,7 +25,7 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
         <div class="panel">
             <?php echo Yii::t('app', 'Man kann derzeit nur eine CSV Datei zum Import nutzen. Die CSV Datei muss folgende Informationen liefern:'); ?>
             <br/>
-            <?php echo Yii::t('app', 'Nachname und Vorname. Die Spaltennamen müssen in einer Kopfzeile angegeben sein.'); ?>
+            <?php echo Yii::t('app', 'Vorname') . ', ' . Yii::t('app', 'Nachname') . (Yii::app()->params['allowGroups'] ? ' ' . Yii::t('app', 'und') . ' ' . Yii::t('app', 'Gruppe') : '') . '. ' . Yii::t('app', 'Die Spaltennamen müssen in einer Kopfzeile angegeben sein. '); ?>
             <br/>
             <br/>
             <?php
@@ -99,8 +99,20 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                     ?>
                 </div>
             </div>
+            <?php if (Yii::app()->params['allowGroups']) { ?>
+                <div class="row collapse">
+                    <div class="small-8 columns">
+                        <span class="prefix"><?php echo $form->label($model, 'group'); ?></span>
+                    </div>
+                    <div class="small-4 columns">
+                        <?php
+                        echo $form->textField($model, 'group');
+                        echo $form->error($model, 'group');
+                        ?>
+                    </div>
+                </div>
+            <?php } ?>
         </fieldset>
-
         <?php
         echo CHtml::submitButton(Yii::t('app', 'Importieren'), array('class' => 'button'));
         $this->endWidget();
