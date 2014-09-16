@@ -62,9 +62,9 @@ class CsvUpload extends CFormModel {
      */
     public function rules() {
         return array(
-            array('file', 'file', 'types' => 'csv', 'maxSize' => self::getMaxSizeInBytes() - 100,
+            array('file', 'file', 'types' => 'csv', 'maxSize' => ByteConverter::getMaxSizeInBytes() - 100,
                 'allowEmpty' => true, 'wrongType' => Yii::t('app', 'Nur CSV Dateien erlaubt.'),
-                'tooLarge' => Yii::t('app', 'Datei ist zu groß. Die Begrenzung liegt bei {size}.', array('{size}' => self::getMaxSize()))),
+                'tooLarge' => Yii::t('app', 'Datei ist zu groß. Die Begrenzung liegt bei {size}.', array('{size}' => ByteConverter::getMaxSize()))),
             array('firstname, lastname,email,title,delimiter,mailMask,firstNameMailMask,lastNameMailMask,mailDomain', 'required'),
             array('delimiter', 'length', 'max' => 1),
             array('firstname,lastname,email,title,delimiter,mailMask,firstNameMailMask,lastNameMailMask,mailDomain,doubleNameSeperator', 'safe'),
@@ -81,7 +81,7 @@ class CsvUpload extends CFormModel {
             'lastname' => $this->names()['lastname'],
             'email' => Yii::t('app', 'E-Mail'),
             'title' => Yii::t('app', 'Titel'),
-            'delimiter' => Yii::t('app', 'Seperator'),
+            'delimiter' => Yii::t('app', 'Feldtrenner'),
             'mailMask' => Yii::t('app', 'Maske für die E-Mail Adresse'),
             'firstNameMailMask' => $this->getMaskLabel('firstname'),
             'lastNameMailMask' => $this->getMaskLabel('lastname'),
@@ -117,7 +117,7 @@ class CsvUpload extends CFormModel {
         $stdPassword = "";
         while ($rc && ($line = fgetcsv($fp, 0, $this->delimiter)) != FALSE) {
             if (!$first) {
-                $model = $this->setTeacherModel($this->generateMail($line), self::encodingString($line[$this->getPos($this->lastname)]), self::encodingString($line[$this->getPos($this->firstname)]), 1, 2, self::encodingString($line[$this->getPos($this->title)]), $stdPassword);
+                $model = $this->setTeacherModel($this->generateMail($line), ByteConverter::encodingString($line[$this->getPos($this->lastname)]), ByteConverter::encodingString($line[$this->getPos($this->firstname)]), 1, 2, ByteConverter::encodingString($line[$this->getPos($this->title)]), $stdPassword);
                 $this->saveModel($model);
                 $rc = $this->checkModelErrors($model, $msg);
             } else {
@@ -150,8 +150,6 @@ class CsvUpload extends CFormModel {
             $this->addError('file', Yii::t('app', 'Ungültiges CSV Format und/oder falsche Angabe des Seperators.'));
         }
     }
-    
-    
 
     private function columnNotExists($column, $attrName) {
         $this->addError($attrName, Yii::t('app', 'Spalte {column} existiert nicht.', array('{column}' => $column)));
@@ -169,7 +167,7 @@ class CsvUpload extends CFormModel {
 
     private function checkModelErrors(&$model, &$msg) {
         if ($model->hasErrors()) {
-            $msg .= "<-" . $model->email . " " . $model->firstname . " " . $model->lastname . "->" . self::convert_multi_array($model->errors) . "|<br>";
+            $msg .= "<-" . $model->email . " " . $model->firstname . " " . $model->lastname . "->" . ByteConverter::convert_multi_array($model->errors) . "|<br>";
             return false;
         }
         return true;
@@ -185,7 +183,7 @@ class CsvUpload extends CFormModel {
 
     private function generateMail(&$line) {
         if ($line[$this->getPos($this->email)] != NULL) {
-            return self::encodingString($line[$this->getPos($this->email)]);
+            return ByteConverter::encodingString($line[$this->getPos($this->email)]);
         } else {
             return $this->createMail($line[$this->getPos($this->firstname)], $line[$this->getPos($this->lastname)]);
         }
@@ -215,11 +213,11 @@ class CsvUpload extends CFormModel {
     private function cutName($name, $selected) {
         switch ($selected) {
             case 0:
-                return strtolower($this->substrName(strtr(self::encodingString($name), self::$uml), 1));
+                return strtolower($this->substrName(strtr(ByteConverter::encodingString($name), self::$uml), 1));
             case 1:
-                return strtolower($this->substrName(strtr(self::encodingString($name), self::$uml), 2));
+                return strtolower($this->substrName(strtr(ByteConverter::encodingString($name), self::$uml), 2));
             case 2:
-                return strtolower(strtr(self::encodingString($name), self::$uml));
+                return strtolower(strtr(ByteConverter::encodingString($name), self::$uml));
         }
     }
 
@@ -228,7 +226,7 @@ class CsvUpload extends CFormModel {
     }
 
     public function getBooleanSelectables() {
-        return array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app', 'Nein'));
+        return Controller::getYesOrNo();
     }
 
     public function selectableNameMask($attr) {
@@ -271,54 +269,8 @@ class CsvUpload extends CFormModel {
         return $model;
     }
 
-    /**
-     * Konvertiert eine Datei in ISO-8859-1 in UTF-8
-     * @param string $toEncode
-     * @return string
-     * 
-     */
-    static public function encodingString($toEncode, $to = 'UTF-8', $from = 'ISO-8859-1') {
-        return mb_convert_encoding($toEncode, $to, $from);
-    }
-
-    /**
-     * creates nicely formatted string from array
-     * @param array $array
-     * @return string
-     */
-    static public function convert_multi_array($array) {
-        return implode("&", array_map(function($a) {
-                    return implode("~", $a);
-                }, $array));
-    }
-
-    static private function return_bytes($val) {
-        $val = trim($val);
-        $last = strtolower($val[strlen($val) - 1]);
-        switch ($last) {
-            case 'g':
-                $val *= 1024;
-            case 'm':
-                $val *= 1024;
-            case 'k':
-                $val *= 1024;
-        }
-
-        return $val;
-    }
-
-    static public function getMaxSizeInBytes() {
-        return self::return_bytes(ini_get('post_max_size'));
-    }
-
-    static public function getMaxSize() {
-        return ini_get('post_max_size');
-    }
-
     public function getDomainLink() {
         return Yii::app()->params['emailHost'] != 'localhost' ? Yii::app()->params['emailHost'] : Yii::app()->params['schoolWebsiteLink'];
     }
 
 }
-
-?>

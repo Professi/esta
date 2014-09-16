@@ -29,7 +29,7 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
             <br/>
             <br/>
             <?php
-            echo Yii::t('app', 'Die Maximalgröße einer Datei beträgt {size}.', array('{size}' => CsvUpload::getMaxSize()));
+            echo Yii::t('app', 'Die Maximalgröße einer Datei beträgt {size}.', array('{size}' => ByteConverter::getMaxSize()));
             ?>
         </div>
     </div>
@@ -57,7 +57,7 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                         echo $form->error($model, 'file');
                         ?>
                         <script>
-                            var maxFileSize = '<?php echo CsvUpload::getMaxSizeInBytes(); ?>';
+                            var maxFileSize = '<?php echo ByteConverter::getMaxSizeInBytes(); ?>';
                             var errorMessage = '<?php echo Yii::t('app', 'Die ausgewählte Datei übersteigt die maximale Dateigröße.'); ?>';
                         </script>
                     </div>

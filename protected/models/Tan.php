@@ -64,6 +64,7 @@ class Tan extends CActiveRecord {
         return array(
               array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen'], 'allowEmpty' => !self::allowParents()),
         //    array('group_id', 'numerical', 'integerOnly' => true),
+            array('tan','required'),
             array('childFirstname, childLastname', 'length', 'min' => 1, 'allowEmpty' => self::allowParents()),
             array('tan_count,tan,used,group_id,group', 'safe'),
         );
@@ -140,13 +141,10 @@ class Tan extends CActiveRecord {
         $child = new Child();
         $child->firstname = $this->childFirstname;
         $child->lastname = $this->childLastname;
-        if ($save && $child->save()) {
-            $this->child = $child;
-            $this->child_id = $child->getPrimaryKey();
-        } else {
-            $this->child = $child;
-        }
-    }
+        $child->save();
+        $this->child = $child;
+        $this->child_id = $this->child->getPrimaryKey();
+     }
 
     /**
      * Generiert eine Tan
@@ -172,7 +170,7 @@ class Tan extends CActiveRecord {
             for ($x = 0; $x < Yii::app()->params['tanSize']; ++$x) {
                 $sTan .= rand(0, 9);
             }
-            if (strlen($sTan) == Yii::app()->params['tanSize'] && Tan::model()->countByAttributes(array('tan' => $sTan)) == 0) {
+            if (Tan::model()->countByAttributes(array('tan' => $sTan)) == 0) {
                 $this->tan = $sTan;
                 return;
             }

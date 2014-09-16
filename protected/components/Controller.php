@@ -70,21 +70,6 @@ class Controller extends CController {
     }
 
     /**
-     * Generates a menu item
-     * @param string $dataIcon Icon
-     * @param string $name Anzuzeigender Name
-     * @param string $url Ziel URL
-     * @param phpCode $visible Bedingungen damit der Punkt angezeigt wird
-     * @param string $cssClasses CSS Klassen
-     * @param string $ariaHidden  true/false als String
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return array
-     */
-    public function generateMenuItem($dataIcon, $name, $url, $visible, $cssClasses = '"nav-icons"', $ariaHidden = "true") {
-        return array('label' => '<span class=' . $cssClasses . ' aria-hidden="' . $ariaHidden . '" data-icon="' . $dataIcon . '">&nbsp;' . $name . '</span>', 'url' => array($url,), 'visible' => $visible);
-    }
-    
-    /**
      * 
      * @param string $icon
      * @param string $label
@@ -95,15 +80,15 @@ class Controller extends CController {
      * @access public
      * @return string 
      */
-    public function generateFoundation5MenuItem($icon, $label, $url, $visible,$mobile) {
+    public function generateFoundation5MenuItem($icon, $label, $url, $visible, $mobile) {
         $link = '';
         $labelTag = ($mobile) ? $label : "<span>{$label}</span>";
-        if($visible) {
+        if ($visible) {
             $link = '<li>' . CHtml::link("<i class={$icon}></i>{$labelTag}", $url) . '</li>';
         }
         return $link;
     }
-    
+
     /**
      * 
      * @param mixed $menuArray
@@ -112,14 +97,10 @@ class Controller extends CController {
      * @access public
      * @return string[]
      */
-    public function generateFoundation5Menu($menuArray,$mobile) {
+    public function generateFoundation5Menu($menuArray, $mobile) {
         $menu = '';
-        for($i = 0; $i < count($menuArray);$i++) {
-            $menu .= $this->generateFoundation5MenuItem($menuArray[$i][0], 
-                                                        $menuArray[$i][1], 
-                                                        $menuArray[$i][2], 
-                                                        $menuArray[$i][3],
-                                                        $mobile);
+        for ($i = 0; $i < count($menuArray); $i++) {
+            $menu .= $this->generateFoundation5MenuItem($menuArray[$i][0], $menuArray[$i][1], $menuArray[$i][2], $menuArray[$i][3], $mobile);
         }
         return $menu;
     }
@@ -130,36 +111,35 @@ class Controller extends CController {
      */
     public function registerScripts() {
         $cs = Yii::app()->getClientScript();
-        
+
         $cs->registerCssFile($this->assetsDir . '/css/app.css');
-      //  $cs->registerCssFile($this->assetsDir . '/css/print.min.css', 'print');
-        
-        if(Yii::app()->user->checkAccess(ADMIN)) {
-            $cs->registerCssFile( $this->assetsDir."/css/select2.min.css");
+        //  $cs->registerCssFile($this->assetsDir . '/css/print.min.css', 'print');
+
+        if (Yii::app()->user->checkAccess(ADMIN)) {
+            $cs->registerCssFile($this->assetsDir . "/css/select2.min.css");
         }
-        
+
         $cs->scriptMap['jquery.js'] = $this->assetsDir . '/js/jquery.js';
         $cs->scriptMap['jquery.min.js'] = $this->assetsDir . '/js/jquery.min.js';
         $cs->scriptMap['jquery-ui.js'] = $this->assetsDir . '/js/jquery-ui.js';
         $cs->scriptMap['jquery-ui.min.js'] = $this->assetsDir . '/js/jquery-ui.min.js';
-        
+
         $cs->registerCoreScript('jquery.js');
-        
+
         $cs->registerScriptFile($this->assetsDir . '/js/fastclick.js', CClientScript::POS_END);
         $cs->registerScriptFile($this->assetsDir . '/js/modernizr.js', CClientScript::POS_END);
         $cs->registerScriptFile($this->assetsDir . '/js/placeholder.js', CClientScript::POS_END);
         $cs->registerScriptFile($this->assetsDir . '/js/foundation.min.js', CClientScript::POS_END);
 
-        if(YII_DEBUG) {
+        if (YII_DEBUG) {
             $cs->registerScriptFile($this->assetsDir . '/js/app.js', CClientScript::POS_END);
         } else {
             $cs->registerScriptFile($this->assetsDir . '/js/app.min.js', CClientScript::POS_END);
         }
-        
-        if ( preg_match('/MSIE [1-7]/', $_SERVER['HTTP_USER_AGENT']) === 1) {
+
+        if (preg_match('/MSIE [1-7]/', $_SERVER['HTTP_USER_AGENT']) === 1) {
             $cs->enableJavaScript = false;
         }
-        
     }
 
     /**
@@ -212,6 +192,10 @@ class Controller extends CController {
      */
     public function setPageTitle($name) {
         parent::setPageTitle(Yii::app()->name . ' - ' . $name);
+    }
+
+    public static function getYesOrNo() {
+        return array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app', 'Nein'));
     }
 
 }

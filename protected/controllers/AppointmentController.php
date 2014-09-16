@@ -44,12 +44,12 @@ class AppointmentController extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'index', 'view', 'getTeacher', 'makeAppointment', 'delete','exportIcs'),
+                'actions' => array('create', 'index', 'view', 'getTeacher', 'makeAppointment', 'delete', 'exportIcs'),
                 'roles' => array('3'),
             ),
             array('allow', //for teachers
                 'actions' => array('index', 'delete', 'create', 'createBlockApp', 'DeleteBlockApp',
-                    'getteacherappointmentsajax', 'getselectchildrenajax','overview','exportIcs'),
+                    'getteacherappointmentsajax', 'getselectchildrenajax', 'overview', 'exportIcs'),
                 'roles' => array('2')
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -102,8 +102,7 @@ class AppointmentController extends Controller {
             $model->unsetAttributes();
             $appId = '';
             $teacherLabel = $this->getInformationWithTeacherId($appId);
-            /** @todo checkAccess(-1) ?? */
-            if (Yii::app()->user->checkAccessRole(TEACHER, '-1')) {
+            if (Yii::app()->user->isTeacher()) {
                 $model->user_id = Yii::app()->user->getId();
             }
             if (isset($_POST['BlockedAppointment'])) {
@@ -129,7 +128,7 @@ class AppointmentController extends Controller {
      */
     public function actionDeleteBlockApp($id, $teacherId = null) {
         if (!empty($id)) {
-            if ($teacherId == null && Yii::app()->user->checkAccessNotAdmin(TEACHER)) {
+            if ($teacherId == null && Yii::app()->user->isTeacher()) {
                 $model = BlockedAppointment::model()->findByAttributes(array('id' => $id, 'user_id' => Yii::app()->user->getId()));
             } else if (Yii::app()->user->checkAccess(MANAGEMENT)) {
                 $model = BlockedAppointment::model()->findByPk($id);
@@ -192,7 +191,7 @@ class AppointmentController extends Controller {
                 $parentId = $model->parentchild->user->getPrimaryKey();
             }
             if ($model->save()) {
-                $this->redirect(Yii::app()->user->checkAccessNotAdmin('2') ?
+                $this->redirect(Yii::app()->user->isTeacher() ?
                                 array('appointment/index') : array('view', 'id' => $model->id));
             }
         }
@@ -410,9 +409,9 @@ class AppointmentController extends Controller {
             $desc .= (empty($date->title)) ? '' : " ({$date->title})";
             $dateData[$date->id] = $desc;
         }
-        
+
         $this->render('admin', array(
-            'model' => $model, 'blockedApp' => $blockedApp,'dates' => $dateData
+            'model' => $model, 'blockedApp' => $blockedApp, 'dates' => $dateData
         ));
     }
 
@@ -647,7 +646,7 @@ class AppointmentController extends Controller {
         }
         return $string;
     }
-    
+
     public function actionOverview($id, $date) {
         if (!((Yii::app()->user->checkAccessNotAdmin('2') && $id === Yii::app()->user->id) || Yii::app()->user->checkAccess('1'))) {
             $this->throwFourNullThree();

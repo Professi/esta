@@ -110,7 +110,13 @@ class TanController extends Controller {
      */
     public function actionPupilImport() {
         $model = new PupilImport();
-        $this->render('importPupils', array('model'=>$model));
+        if (isset($_POST['PupilImport']) && $model->attributes = $_POST['PupilImport'] && $model->validate() && !empty($_FILES['PupilImport']['tmp_name']['file'])) {
+            $model->createTans();
+            $dataProvider = new CArrayDataProvider($model->getModel());
+            $this->render('showGenTans', array('dataProvider' => $dataProvider));
+        } else {
+            $this->render('importPupils', array('model' => $model, 'groups' => $this->getAvailableGroups()));
+        }
     }
 
     /**
@@ -165,13 +171,8 @@ class TanController extends Controller {
                 $tan->childFirstname = $_POST['Tan'][$i]['childFirstname'];
                 $tan->childLastname = $_POST['Tan'][$i]['childLastname'];
                 $tan->tan_count = 1;
-                if ($tan->validate()) {
-                    $tan->generateTan(false);
-                    $model[] = $tan;
-                } else {
-                    $model[] = $tan;
-                    $validate = false;
-                }
+                $tan->generateTan();
+                $model[] = $tan;
             }
         }
         if (empty($model)) {
@@ -189,13 +190,7 @@ class TanController extends Controller {
         $validate = true;
         $model = $this->iterateOverTans($_POST['Tan'], $validate);
         if (!empty($model) && $validate) {
-            foreach ($model as $newTan) {
-                if ($newTan->child instanceof Child && $newTan->child->save()) {
-                    $newTan->child_id = $newTan->child->getPrimaryKey();
-                    $newTan->insert();
-                }
-            }
-            $dataProvider = new CArrayDataProvider($model, array('pagination' => array('pageSize' => Yii::app()->params['maxTanGen'])));
+            $dataProvider = new CArrayDataProvider($model);
             $this->render('showGenTans', array('dataProvider' => $dataProvider));
         } else {
             $this->renderFormGenTans($model);

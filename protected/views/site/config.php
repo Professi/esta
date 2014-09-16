@@ -116,7 +116,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns ">
                     <?php
-                    echo Select2::activeDropDownList($model, 'randomTeacherPassword', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'randomTeacherPassword', Controller::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'randomTeacherPassword');
                     ?>
                 </div>
@@ -138,7 +138,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'lockRegistration', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'lockRegistration', Controller::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'lockRegistration');
                     ?>
                 </div>
@@ -159,7 +159,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'allowGroups', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'allowGroups', Controller::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowGroups');
                     ?>
                 </div>
@@ -272,7 +272,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'useSchoolEmailForContactForm', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'useSchoolEmailForContactForm', Controller::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'useSchoolEmailForContactForm');
                     ?>
                 </div>
@@ -301,7 +301,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'allowParentsToManageChilds', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'allowParentsToManageChilds', Controller::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowParentsToManageChilds');
                     ?>
                 </div>
@@ -352,7 +352,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'smtpAuth', SiteController::getYesOrNo());
+                    echo Select2::activeDropDownList($model, 'smtpAuth', Controller::getYesOrNo());
                     echo $form->error($model, 'smtpAuth');
                     ?>
                 </div>
@@ -438,7 +438,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'banUsers', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'banUsers', Controller::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'banUsers');
                     ?>
                 </div>
@@ -496,7 +496,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'allowBlockingAppointments', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'allowBlockingAppointments', Controller::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowBlockingAppointments');
                     ?>
                 </div>
@@ -507,7 +507,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'allowTeachersToCreateAppointments', SiteController::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'allowTeachersToCreateAppointments', Controller::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowTeachersToCreateAppointments');
                     ?>
                 </div>
@@ -518,7 +518,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'allowBlockingOnlyForManagement', SiteController::getYesOrNo(), array($optionsBlocks, 'select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'allowBlockingOnlyForManagement', Controller::getYesOrNo(), array($optionsBlocks, 'select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'allowBlockingOnlyForManagement');
                     ?>
                 </div>
@@ -529,7 +529,7 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
-                    echo Select2::activeDropDownList($model, 'teacherAllowBlockTeacherApps', SiteController::getYesOrNo(), array($optionsBlocks, 'select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo Select2::activeDropDownList($model, 'teacherAllowBlockTeacherApps', Controller::getYesOrNo(), array($optionsBlocks, 'select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'teacherAllowBlockTeacherApps');
                     ?>
                 </div>

@@ -190,8 +190,4 @@ class SiteController extends Controller {
         }
     }
 
-    public static function getYesOrNo() {
-        return array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app', 'Nein'));
-    }
-
 }
