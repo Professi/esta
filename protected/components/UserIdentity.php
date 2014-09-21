@@ -80,6 +80,40 @@ class UserIdentity extends CUserIdentity {
         $user->bannedUntil = 0;
         $user->badLogins = 0;
     }
+    
+    
+    /**
+     * 
+     * @param type $user
+     * @return type('ldapHost','');
+('ldapPort',''),
+('ldapOu',''),
+('ldapUser',''),
+('ldapUserPassword',''),
+     */
+    
+    private function authOverAD(&$user) {
+
+$connection = ldap_connect(Yii::app()->params['ldapHost']);
+ldap_set_option($connection, LDAP_OPT_PROTOCOL_VERSION, 3);
+ldap_set_option($connection, LDAP_OPT_REFERRALS, 0);
+ 
+if($connection) {
+    if(empty(Yii::app()->params['adDomain'])) {
+        $dc_string = "dc=" . implode(",dc=",Yii::app()->params['ldapDc']);
+    $bind = @ldap_bind($connection, "uid={$this->username},ou=" . Yii::app()->params['ldapOu'] . ",{$dc_string}", $this->password);
+    } else {
+        $bind = @ldap_bind($connection, $user->ldapUid."@".Yii::app()->params['adDomain'], $this->password);;
+    }
+    if(!$bind) {
+        $this->errorCode = self::ERROR_PASSWORD_INVALID;
+    }else  {
+        $this->errorCode = self::ERROR_NONE;
+        
+    }
+return !$this->errorCode;
+        }
+    }
 
     /**
      * Loggt einen Benutzer ein und aktualisiert lastLogin

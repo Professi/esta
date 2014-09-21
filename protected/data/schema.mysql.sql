@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.2.6
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Erstellungszeit: 31. Jul 2014 um 17:58
--- Server Version: 10.0.12-MariaDB-log
--- PHP-Version: 5.5.15
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -17,10 +8,6 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-
---
--- Datenbank: `estdb`
---
 
 -- --------------------------------------------------------
 
@@ -97,6 +84,11 @@ INSERT INTO `configs` (`key`, `value`) VALUES
 ('randomTeacherPassword','0'),
 ('minLengthPerAppointment','5'),
 ('banUsers','1'),
+('ldapHost','');
+('ldapPort',''),
+('ldapOu',''),
+('ldapDc',''),
+('adDomain',''),
 ('durationTempBans','5'),
 ('maxAttemptsForLogin','5'),
 ('allowBlockingAppointments','1'),
