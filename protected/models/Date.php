@@ -60,7 +60,7 @@ class Date extends CActiveRecord {
             array('date, begin, end,lockAt,durationPerAppointment', 'required'),
             array('durationPerAppointment', 'numerical', 'integerOnly' => true, 'min' => Yii::app()->params['minLengthPerAppointment']),
             array('lockAt', 'date', 'format' => self::getDateTimeFormat()),
-            array('date', 'date', 'format' => Yii::app()->locale->getDateFormat('short')),
+            array('date', 'date', 'format' => Yii::app()->locale->getDateFormat(Date::getDateFormat())),
             array('begin, end', 'date', 'format' => 'H:m'),
             array('durationPerAppointment', 'date', 'format' => 'm'),
             array('date, begin, end, durationPerAppointment,id,groups,title,lockAt', 'safe'),
@@ -150,12 +150,16 @@ class Date extends CActiveRecord {
     }
 
     public static function getDateTimeFormat() {
-        return Yii::app()->locale->getDateFormat('short') . ' ' .
+        return Yii::app()->locale->getDateFormat(Date::getDateFormat()) . ' ' .
                 Yii::app()->locale->getTimeFormat('short');
     }
 
     public static function getSimpleDateTimeFormat() {
-        return Yii::app()->locale->getDateFormat('short') . ' ' . 'H:m';
+        return Yii::app()->locale->getDateFormat(Date::getDateFormat()) . ' ' . 'H:m';
+    }
+
+    private static function getDateFormat() {
+        return Yii::app()->language == 'de' ? 'medium' : 'short';
     }
 
     /**
@@ -303,16 +307,12 @@ class Date extends CActiveRecord {
     protected function beforeValidate() {
         $rc = parent::beforeValidate();
         if (!empty($this->date)) {
-            $this->date = Yii::app()->dateFormatter->formatDateTime($this->date, "short", null);
+            $this->date = Yii::app()->dateFormatter->formatDateTime($this->date, Date::getDateFormat(), null);
         }
         if (!empty($this->lockAt)) {
-            $this->lockAt = Yii::app()->dateFormatter->formatDateTime($this->lockAt, "short", "short");
+            $this->lockAt = Yii::app()->dateFormatter->formatDateTime($this->lockAt, Date::getDateFormat(), "short");
         }
         return $rc;
-    }
-
-    private function convertTime($time) {
-        return Yii::app()->dateFormatter->formatDateTime($time, null, "short");
     }
 
 }
