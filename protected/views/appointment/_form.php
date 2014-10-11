@@ -58,31 +58,6 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
 </div>
 <?php if ((Yii::app()->params['teacherAllowBlockTeacherApps'] && Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments']) || Yii::app()->user->checkAccess('1')) { ?>
-    <div class="row collapse">
-        <div class="small-3 columns">
-            <span class="prefix"><?php echo Yii::t('app', 'Lehrer'); ?></span>
-        </div>
-        <div class="small-9 columns">
-            <?php
-            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                'id' => 'appointment_teacher',
-                'name' => '',
-                'value' => $teacherLabel,
-                'sourceUrl' => 'index.php?r=user/search&role=2',
-                'options' => array(
-                    'minLength' => '1',
-                ),
-                'htmlOptions' => array(
-                    'placeholder' => Yii::t('app', 'Geben Sie einen Nachnamen ein und wählen Sie einen Eintrag aus'),
-                ),
-            ));
-            ?>
-            <?php
-            echo $form->error($model, 'user_id');
-            echo $form->hiddenField($model, 'user_id', array('id' => 'appointment_teacher_id',
-                'value' => $model->attributes['user_id']));
-            ?>
-        </div>
         <div class="row collapse">
             <div class="small-3 columns">
                 <span class="prefix"><?php echo Yii::t('app', 'Lehrer'); ?></span>
