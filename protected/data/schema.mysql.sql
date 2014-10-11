@@ -119,7 +119,6 @@ INSERT INTO `configs` (`key`, `value`) VALUES
 ('smtpPort','25'),
 ('smtpSecure',''),
 ('smtpPassword','your_password'),
-('textHeader','der'),
 ('language','de'),
 ('teacherAllowBlockTeacherApps', '0'),
 ('allowTeachersToCreateAppointments', '0'),

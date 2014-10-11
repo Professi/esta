@@ -51,7 +51,6 @@ class ConfigForm extends CFormModel {
     public $lockRegistration;
     public $allowGroups;
     public $logoPath;
-    public $textHeader;
     public $appName;
     public $language;
     public $smtpSecure;
@@ -130,7 +129,6 @@ class ConfigForm extends CFormModel {
             'lockRegistration' => Yii::t('app', 'Registrierung sperren?'),
             'allowGroups' => Yii::t('app', 'Gruppen erlauben?'),
             'logoPath' => Yii::t('app', 'Pfad des Schullogos in der Anwendung'),
-            'textHeader' => Yii::t('app', 'Headertext zwischen Anwendungslogo und Schullogo'),
             'language' => Yii::t('app', 'Sprache'),
             'appName' => Yii::t('app', 'Anwendungsname'),
             'smtpSecure' => Yii::t('app', 'SMTP Sicherheit(z.B. ssl oder tls), kann leer gelassen werden'),
