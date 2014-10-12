@@ -19,7 +19,7 @@ $this->setPageTitle(Yii::t('app', 'Gruppenverwaltung'));
 ?>
 <div class="row">
     <div class="small-12 columns small-centered">
-        <h2 class="text-center">Gruppenverwaltung</h2>
+        <h2 class="text-center"><?php echo Yii::t('app', 'Gruppenverwaltung'); ?></h2>
     
     <?php
     $this->widget('zii.widgets.jui.CJuiTabs',array(

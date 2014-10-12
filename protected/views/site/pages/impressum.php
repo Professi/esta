@@ -30,8 +30,8 @@ $this->breadcrumbs = array(
         <p> <?php echo Yii::app()->params['schoolName']; ?><br>
             <?php echo Yii::app()->params['schoolStreet']; ?><br>
             <?php echo Yii::app()->params['schoolCity']; ?><br>
-            <?php echo Yii::app()->params['schoolTele']; ?><br>
-            <?php echo Yii::app()->params['schoolFax']; ?><br>
+            <?php echo (Yii::t('app', 'Telefon') . ':' . Yii::app()->params['schoolTele']); ?><br>
+            <?php echo (Yii::t('app', 'Telefax') . ':' . Yii::app()->params['schoolFax']); ?><br>
             <?php if (Yii::app()->params['useSchoolEmailForContactForm']) { ?>
                 <?php echo Yii::t('app', 'E-Mail') . ':'; ?> <a href="mailto:<?php echo Yii::app()->params['schoolEmail']; ?>"><?php echo Yii::app()->params['schoolEmail']; ?></a>
             <?php } ?>
