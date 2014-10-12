@@ -148,6 +148,6 @@ $menu = array(//icon,label,url,visible(bool)
             ?>
         </div>
     </div> 
-    <div class="infobox" style="display: none;"></div>
+<div class="infobox" style="display: none;"><p></p></div>
 </body>
 </html>
