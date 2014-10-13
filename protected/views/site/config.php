@@ -177,17 +177,6 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
             </div>
             <div class="row collapse">
                 <div class="small-8 columns">
-                    <span class="prefix"><?php echo $form->label($model, 'textHeader'); ?></span>
-                </div>
-                <div class="small-4 columns">
-                    <?php
-                    echo $form->textField($model, 'textHeader');
-                    echo $form->error($model, 'textHeader');
-                    ?>
-                </div>
-            </div>
-            <div class="row collapse">
-                <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'hashCost'); ?></span>
                 </div>
                 <div class="small-4 columns">

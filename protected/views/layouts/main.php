@@ -75,22 +75,22 @@ $menu = array(//icon,label,url,visible(bool)
             }
             ?>
             <li>
-                <a onClick="event.preventDefault();window.print();">
+                <a onClick="event.preventDefault();window.print();" href="#">
                     <i class="fi-print"></i><?php echo Yii::t('app', 'Drucken'); ?>
                 </a>
             </li>
         </ul>
     </section>
 </nav>
-    <div class="sticky sticky-nav hide-for-small">
-        <ul class="medium-block-grid-6 large-block-grid-10 text-center ul-nav" data-topbar>
+    <div class="sticky sticky-nav hide-for-small hide-on-print">
+        <ul class="medium-block-grid-6 large-block-grid-8 text-center ul-nav" data-topbar>
             <?php
             if (!Yii::app()->user->isGuest) {
                 echo $this->generateFoundation5Menu($menu, false);
             }
             ?>
             <li>
-                <a onClick="event.preventDefault();window.print();">
+                <a onClick="event.preventDefault();window.print();" href="#">
                     <i class="fi-print"></i><span><?php echo Yii::t('app', 'Drucken'); ?></span>
                 </a>
             </li>
@@ -118,7 +118,7 @@ $menu = array(//icon,label,url,visible(bool)
         </div>
         <?php echo $content; ?>
     </section>
-    <div class="footer row">
+    <div class="footer row hide-for-print">
         <hr>
         <div class="small-6 large-4 columns">
             <p>
@@ -148,6 +148,6 @@ $menu = array(//icon,label,url,visible(bool)
             ?>
         </div>
     </div> 
-    <div class="infobox" style="display: none;"></div>
+<div class="infobox" style="display: none;"><p></p></div>
 </body>
 </html>

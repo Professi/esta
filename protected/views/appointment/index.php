@@ -38,7 +38,7 @@ $this->menu = array(
             'linkOptions' => array('class' => 'small button', 'target' => '_blank'))
 );
 ?>
-<div class="row">
+<div class="row hide-for-print">
     <div class="small-12 columns">
         <h2 class="subheader"><?php echo Yii::t('app','Ihre Termine'); ?></h2>
         <hr>
@@ -64,4 +64,22 @@ $this->menu = array(
         ));
         ?>
     </div>
+</div>
+<div class="hide show-for-print">
+    <table>
+        <thead>
+            <tr>
+                <th><?php echo Yii::t('app', 'Datum') ?></th>
+                <th><?php echo Yii::t('app', 'Ihr Kind') ?></th>
+                <th><?php echo Yii::t('app', 'Bei') ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php $this->widget('zii.widgets.CListView',array(
+                'dataProvider' => $dataProvider,
+                'summaryText' => '',
+                'itemView' => '_print'
+            )); ?>
+        </tbody>
+    </table>
 </div>
