@@ -466,12 +466,8 @@ return array (
   'Wie kann ich meine Benutzerdaten ändern?' => 'How can I change my account details?',
   'Wie kann ich meine Termine drucken?' => 'How can I print my appointments?',
   'Wie registriere ich mich?' => 'How do I create an account?',
-<<<<<<< HEAD
   'Willkommen auf der elektronischen Elternsprechtagsplattform der' => 'Weclome to the digital parent teacher day platform of the',
-=======
-  'Willkommen auf der elektronischen Elternsprechtagsplattform der ' => 'Weclome to the digital parent teacher day platform of the',
   'Willkommen bei {appname}' => 'Welcome to {appname}',
->>>>>>> f565c6acfd072a95d0c1f097cb2da6239aa5fe75
   'Wählen Sie einen Benutzer aus' => 'Select a user',
   'Wählen Sie einen Termin aus' => 'Choose an appointment',
   'Zeit' => 'Time',
