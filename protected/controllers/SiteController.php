@@ -1,4 +1,5 @@
 <?php
+
 /* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -76,7 +77,9 @@ class SiteController extends Controller {
             $model = new ConfigForm();
             $class = new ReflectionClass('ConfigForm');
             foreach ($configList as $value) {
-                $class->getProperty($value->key)->setValue($model, $value->value);
+                if ($class->hasProperty($value->key)) {
+                    $class->getProperty($value->key)->setValue($model, $value->value);
+                }
             }
             $optionsBans = self::getDisabledOptions($model->banUsers);
             $optionsBlocks = self::getDisabledOptions($model->allowBlockingAppointments);
@@ -171,7 +174,7 @@ class SiteController extends Controller {
     public function actionLogout() {
         if (!Yii::app()->user->isGuest()) {
             Yii::app()->user->logout();
-        } 
+        }
         $this->redirect(Yii::app()->homeUrl);
     }
 
