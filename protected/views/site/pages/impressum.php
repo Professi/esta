@@ -30,15 +30,15 @@ $this->breadcrumbs = array(
         <p> <?php echo Yii::app()->params['schoolName']; ?><br>
             <?php echo Yii::app()->params['schoolStreet']; ?><br>
             <?php echo Yii::app()->params['schoolCity']; ?><br>
-            <?php echo (Yii::t('app', 'Telefon') . ':' . Yii::app()->params['schoolTele']); ?><br>
-            <?php echo (Yii::t('app', 'Telefax') . ':' . Yii::app()->params['schoolFax']); ?><br>
+            <?php echo (Yii::t('app', 'Telefon') . ': ' . Yii::app()->params['schoolTele']); ?><br>
+            <?php echo (Yii::t('app', 'Telefax') . ': ' . Yii::app()->params['schoolFax']); ?><br>
             <?php if (Yii::app()->params['useSchoolEmailForContactForm']) { ?>
                 <?php echo Yii::t('app', 'E-Mail') . ':'; ?> <a href="mailto:<?php echo Yii::app()->params['schoolEmail']; ?>"><?php echo Yii::app()->params['schoolEmail']; ?></a>
             <?php } ?>
         </p>
         <p><?php echo Yii::t('app', 'Elternsprechtagsanwendung(ESTA) wurde im Rahmen eines Berufsschulprojektes für die Brühlwiesenschule Hofheim entwickelt und unter der GNU General Public License Version 3 (&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><i class="fi-page-export"></i>&nbsp;Link</a> ) lizensiert.'); ?>
             <br><?php echo Yii::t('app', 'Die Urheber sind:'); ?> Christian Ehringfeld, David Mock, Matthias Unterbusch. </p>
-        <p><?php echo Yii::t('app', 'Projektverzeichnis'); ?>&nbsp;&nbsp;<a href="http://synlos.net/redmine/projects/est"><i class="fi-page-export"></i>&nbsp;Link</a></p>
+        <p><?php echo Yii::t('app', 'Website'); ?>&nbsp;&nbsp;<a href="http://www.elternsprechtagsanwendung.de/"><i class="fi-page-export"></i>&nbsp;Link</a></p>
         <p><?php echo Yii::t('app', 'Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:'); ?><br>
             PHP&nbsp;&nbsp;<a href="http://www.php.net"><i class="fi-page-export"></i>&nbsp;<?php echo Yii::t('app', 'Link'); ?></a><br>
             Yii Framework&nbsp;&nbsp;<a href="http://www.yiiframework.com" ><i class="fi-page-export"></i>&nbsp;<?php echo Yii::t('app', 'Link'); ?></a><br>
@@ -56,7 +56,7 @@ $this->breadcrumbs = array(
         <?php if (Yii::app()->params['language'] == 'de') { ?>
             <p>
             <h3>Haftungsausschluss:</h3>
-            Die <?php echo Yii::app()->params['schoolName']; ?> und die Entwickler dieser Anwendung, nachfolgend als "Der Autor" bezeichnet. <br>
+            Die <?php echo Yii::app()->params['schoolName']; ?> und die Entwickler dieser Anwendung, werden nachfolgend als "Der Autor" bezeichnet. <br>
             </p>
             <p>
                 <b>1. Inhalt des Onlineangebotes</b> <br>
