@@ -400,9 +400,9 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'smtpSecure'); ?></span>
                 </div>
-                <div class="small-4 columns">
+                <div class="small-4 columns ">
                     <?php
-                    echo $form->textField($model, 'smtpSecure');
+                    echo Select2::activeDropDownList($model, 'smtpSecure', $model->mailConfigs(), array('select2Options' => array('minimumResultsForSearch' => 10)));
                     echo $form->error($model, 'smtpSecure');
                     ?>
                 </div>

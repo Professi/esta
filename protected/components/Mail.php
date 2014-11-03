@@ -39,6 +39,9 @@ class Mail {
             $mailer->Username = Yii::app()->params['fromMailHost'];
             $mailer->Password = Yii::app()->params['smtpPassword'];
         }
+        if (YII_DEBUG) {
+            $mailer->SMTPDebug = 1;
+        }
         $mailer->SMTPSecure = Yii::app()->params['smtpSecure'];
         $mailer->Port = Yii::app()->params['smtpPort'];
         $mailer->From = $from;
@@ -49,7 +52,9 @@ class Mail {
         $mailer->ContentType = 'text/html';
         $mailer->Subject = $subject;
         $mailer->Body = $message;
-        $mailer->send();
+        if (!$mailer->send()) {
+            throw new CException($mailer->ErrorInfo);
+        }
     }
 
     /**
@@ -68,6 +73,14 @@ class Mail {
         $this->addInfo($body);
         $body .= "</body></html>";
         $this->send(Yii::t('app', 'Ihre Passwortzurücksetzung bei der {appname}', array('{appname}' => Yii::app()->name)), $body, $email);
+    }
+
+    public function sendTestMail($email) {
+        $body = '<html><head><title></title></head><body>';
+        $body = '<p>' . Yii::t('app', 'Dies ist eine Testmail.') . '</p>';
+        $this->addInfo($body);
+        $body .= "</body></html>";
+        $this->send(Yii::t('app', 'Testmail bei der {appname}', array('{appname}' => Yii::app()->name)), $body, $email);
     }
 
     /**
@@ -110,7 +123,7 @@ class Mail {
         $body .= Yii::t('app', "mit ihrem Kind") . " <b>" . $child->firstname . " " . $child->lastname . "</b> <br/>" . Yii::t('app', "abgesagt wurde.") . "</p>";
         $this->addInfo($body);
         $body .= "</body></html>";
-        $this->send(Yii::t('app', "Einer Ihrer Termine bei {appname} wurde gelöscht",array('{appname}'=>Yii::app()->name)), $body, $email);
+        $this->send(Yii::t('app', "Einer Ihrer Termine bei {appname} wurde gelöscht", array('{appname}' => Yii::app()->name)), $body, $email);
     }
 
     /**

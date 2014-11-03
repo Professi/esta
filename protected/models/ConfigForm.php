@@ -98,6 +98,10 @@ class ConfigForm extends CFormModel {
         );
     }
 
+    public function mailConfigs() {
+        return array('' => '-', 'ssl' => 'ssl', 'tls' => 'tls');
+    }
+
     public function attributeLabels() {
         return array(
             'adminEmail' => Yii::t('app', 'Administrator E-Mail Adresse'),
@@ -131,7 +135,7 @@ class ConfigForm extends CFormModel {
             'logoPath' => Yii::t('app', 'Pfad des Schullogos in der Anwendung'),
             'language' => Yii::t('app', 'Sprache'),
             'appName' => Yii::t('app', 'Anwendungsname'),
-            'smtpSecure' => Yii::t('app', 'SMTP Sicherheit(z.B. ssl oder tls), kann leer gelassen werden'),
+            'smtpSecure' => Yii::t('app', 'SMTP Sicherheit'),
             'smtpPort' => Yii::t('app', 'SMTP Port'),
             'maxTanGen' => Yii::t('app', 'Maximal Anzahl generierte TANs'),
             'tanSize' => Yii::t('app', 'Länge einer TAN'),
