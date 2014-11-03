@@ -49,7 +49,8 @@ class CsvUpload extends CFormModel {
         $this->lastname = Yii::t('app', 'Nachname');
         $this->title = Yii::t('app', 'Titel');
         $this->delimiter = ';';
-        $this->mailMask = $this->names()['firstname'] . '.' . $this->names()['lastname'];
+        $names = $this->names();
+        $this->mailMask = $names['firstname'] . '.' . $names['lastname'];
         $this->firstNameMailMask = 0;
         $this->lastNameMailMask = 2;
         $this->mailDomain = $this->getDomainLink();
