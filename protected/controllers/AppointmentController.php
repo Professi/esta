@@ -353,7 +353,7 @@ class AppointmentController extends Controller {
                 if (Yii::app()->user->checkAccess(MANAGEMENT)) {
                     $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
                 } else {
-                    $this->redirect('appointment/index');
+                    $this->redirect(array('appointment/index'));
                 }
             }
         }
