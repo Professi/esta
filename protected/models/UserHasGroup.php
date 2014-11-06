@@ -92,8 +92,8 @@ class UserHasGroup extends CActiveRecord {
         $criteria->compare('group', $this->group, true);
         $criteria->compare('user', $this->user, true);
         $sort = new CSort();
+        $sort->defaultOrder = 'id asc';
         $sort->attributes = array(
-            'defaultOrder' => 'id ASC',
             'id' => array(
                 'asc' => 'id',
                 'desc' => 'id desc'),

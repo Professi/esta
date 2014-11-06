@@ -187,8 +187,8 @@ class User extends CActiveRecord {
         $criteria->compare('title', $this->title, true);
         $criteria->compare('role', $this->role);
         $sort = new CSort;
+        $sort->defaultOrder = 'lastname ASC';
         $sort->attributes = array(
-            'defaultOrder' => 'id ASC',
             'id' => array(
                 'asc' => 'id',
                 'desc' => 'id desc'),
@@ -226,8 +226,10 @@ class User extends CActiveRecord {
     public function searchTeacher() {
         $this->role = 2;
         return new CActiveDataProvider($this, array(
-            'criteria' => $this->searchCriteriaTeacherAutoComplete(),
+            'criteria' => $this->searchCriteriaTeacherAutoComplete(false),
             'pagination' => array('pageSize' => 20),
+            'sort' => array(
+                'defaultOrder' => 'lastname'),
         ));
     }
 
@@ -237,7 +239,7 @@ class User extends CActiveRecord {
      * @return \CDbCriteria
      * 
      */
-    public function searchCriteriaTeacherAutoComplete() {
+    public function searchCriteriaTeacherAutoComplete($withOrder = true) {
         $criteria = new CDbCriteria;
         if (Yii::app()->params['allowGroups'] && (Yii::app()->user->isTeacher() || Yii::app()->user->isParent())) {
             $criteria->together = true;
@@ -257,6 +259,9 @@ class User extends CActiveRecord {
         $criteria->compare('state', $this->state, false);
         $criteria->select = 'title,firstname,lastname,id';
         $criteria->addCondition('role=:role');
+        if ($withOrder) {
+            $criteria->order = "lastname ASC";
+        }
         $criteria->limit = 10;
         return $criteria;
     }

@@ -156,7 +156,7 @@ class SiteController extends Controller {
                         if (Yii::app()->user->checkAccess(MANAGEMENT)) {
                             $this->redirect(array('Appointment/admin'));
                         }
-                        $this->redirect(array('Appointment/admin'));
+                        $this->redirect(array('Appointment/index'));
                     } else {
                         $this->redirect(array('Date/admin'));
                     }

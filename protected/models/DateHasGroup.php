@@ -88,8 +88,8 @@ class DateHasGroup extends CActiveRecord {
         $criteria->compare('group', $this->group, true);
         $criteria->compare('date', $this->date, true);
         $sort = new CSort();
+        $sort->defaultOrder = 'date.date asc';
         $sort->attributes = array(
-            'defaultOrder' => 'id ASC',
             'id' => array(
                 'asc' => 'id',
                 'desc' => 'id desc'),

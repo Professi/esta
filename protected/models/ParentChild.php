@@ -163,8 +163,8 @@ class ParentChild extends CActiveRecord {
         $criteria->compare('user.lastname', $this->user_id, true);
         $criteria->compare('child.lastname', $this->child_id, true);
         $sort = new CSort;
+        $sort->defaultOrder = 'user.lastname DESC';
         $sort->attributes = array(
-            'defaultOrder' => 'user.lastname DESC',
             'user_id' => array(
                 'asc' => 'user.lastname',
                 'desc' => 'user.lastname desc'),
