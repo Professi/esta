@@ -266,7 +266,7 @@ class UserController extends Controller {
                 }
                 if ($model->save()) {
                     if (Yii::app()->user->checkAccess(MANAGEMENT)) {
-                        Yii::app()->user->setFlash("success", Yii::t('app',"Benutzer wurde erstellt."));
+                        Yii::app()->user->setFlash("success", Yii::t('app', "Benutzer wurde erstellt."));
                         $this->redirect(array('user/admin'));
                     } else {
                         Yii::app()->user->setFlash('success', Yii::t('app', "Sie konnten sich erfolgreich registrieren. Sie erhalten nun eine E-Mail mit der Sie Ihren Account aktivieren können."));
@@ -423,8 +423,14 @@ class UserController extends Controller {
             $dataProvider->role = 2;
         } else if (Yii::app()->user->checkAccess('1')) {
             $dataProvider->role = $role;
-        } else if (Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments']) {
+        } else if (Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments'] && !Yii::app()->params['teacherAllowBlockTeacherApps']) {
             $dataProvider->role = 3;
+        } else if (Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments'] && Yii::app()->params['teacherAllowBlockTeacherApps']) {
+            if ($role > 1) {
+                $dataProvider->role = $role;
+            } else {
+                $dataProvider->role = 3;
+            }
         }
         $criteria = $dataProvider->searchCriteriaTeacherAutoComplete();
         $a_rc = array();

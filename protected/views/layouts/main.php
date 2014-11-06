@@ -21,8 +21,8 @@
 $menu = array(//icon,label,url,visible(bool)
     array('fi-home', Yii::t('app', 'Ihre Termine'), array('Appointment/index'), !Yii::app()->user->isAdmin() && Yii::app()->user->checkAccessRole(TEACHER, PARENTS)),
     array('fi-calendar', Yii::t('app', 'Termine vereinbaren'), array('Appointment/getTeacher'), Yii::app()->user->checkAccess(PARENTS) && !Yii::app()->user->isAdmin()),
-    array('fi-plus', Yii::t('app', 'Termine anlegen'), array('Appointment/create'), Yii::app()->user->checkAccessNotAdmin(TEACHER) && Yii::app()->params['teacherAllowBlockTeacherApps']),
-    array('fi-lock', Yii::t('app', 'Termine blockieren'), array('Appointment/createBlockApp'), Yii::app()->user->checkAccessNotAdmin(TEACHER) && Yii::app()->params['allowBlockingAppointments'] && !(Yii::app()->params['allowBlockingOnlyForManagement'])),
+    array('fi-plus', Yii::t('app', 'Termine anlegen'), array('Appointment/create'), Yii::app()->user->checkAccessNotAdmin(TEACHER) && Yii::app()->params['allowTeachersToCreateAppointments'] && !Yii::app()->params['allowBlockingOnlyForManagement']),
+    array('fi-lock', Yii::t('app', 'Termine blockieren'), array('Appointment/createBlockApp'), Yii::app()->user->checkAccessNotAdmin(TEACHER) && Yii::app()->params['allowBlockingAppointments'] && !Yii::app()->params['allowBlockingOnlyForManagement']),
     array('fi-widget', Yii::t('app', 'Elternsprechtage'), array('Date/admin'), Yii::app()->user->isAdmin()),
     array('fi-calendar', Yii::t('app', 'Termine'), array('Appointment/admin'), Yii::app()->user->checkAccess(MANAGEMENT)),
     array('fi-torsos', Yii::t('app', 'Eltern und Kinder'), array('ParentChild/admin'), Yii::app()->user->checkAccess(MANAGEMENT)),
@@ -46,42 +46,43 @@ $menu = array(//icon,label,url,visible(bool)
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
-<h1 class="text-center hide show-for-print" style="font-family: 'ClickerScript-Regular';"><?= Yii::t('app','Elternsprechtag'); ?></h1>
-<nav class="top-bar hide-on-print" data-topbar data-options="is_hover: false">
-    <ul class="title-area">
-        <li class="name esta-logo">
-            <h2>
-                <?php echo CHtml::link(Yii::t('app','Elternsprechtag'), 'index.php'); ?>
-            </h2>
-        </li>
-        <li class="toggle-topbar menu-icon"><a href=""><span>Menu</span></a></li>
-    </ul>
-    <section class="top-bar-section">
-        <ul class="right">
-            <li>
-                <a href="http://<?php echo Yii::app()->params['schoolWebsiteLink']; ?>" target="_blank">
-                    <img id="logo_school" 
-                         src="<?php echo $this->assetsDir . Yii::app()->params['logoPath']; ?>" 
-                         alt="<?php echo Yii::app()->params['schoolName'] ?>">
-                    <?php echo Yii::app()->params['schoolName'] ?>
-                </a>
+    <h1 class="text-center hide show-for-print" style="font-family: 'ClickerScript-Regular';"><?= Yii::t('app', 'Elternsprechtag'); ?></h1>
+    <nav class="top-bar hide-on-print" data-topbar data-options="is_hover: false">
+        <ul class="title-area">
+            <li class="name esta-logo">
+                <h2>
+                    <?php echo CHtml::link(Yii::t('app', 'Elternsprechtag'), 'index.php'); ?>
+                </h2>
             </li>
             <li class="toggle-topbar menu-icon"><a href=""><span>Menu</span></a></li>
         </ul>
-        <ul class="left show-for-small-only">
-            <?php
-            if (!Yii::app()->user->isGuest) {
-                echo $this->generateFoundation5Menu($menu, true);
-            }
-            ?>
-            <li>
-                <a onClick="event.preventDefault();window.print();" href="#">
-                    <i class="fi-print"></i><?php echo Yii::t('app', 'Drucken'); ?>
-                </a>
-            </li>
-        </ul>
-    </section>
-</nav>
+        <section class="top-bar-section">
+            <ul class="right">
+                <li>
+                    <a href="http://<?php echo Yii::app()->params['schoolWebsiteLink']; ?>" target="_blank">
+                        <img id="logo_school" 
+                             src="<?php echo $this->assetsDir . Yii::app()->params['logoPath']; ?>" 
+                             alt="<?php echo Yii::app()->params['schoolName'] ?>">
+                             <?php echo Yii::app()->params['schoolName'] ?>
+                    </a>
+                </li>
+                <li class="toggle-topbar menu-icon"><a href=""><span>Menu</span></a></li>
+            </ul>
+            <ul class="left show-for-small-only">
+                <?php
+                if (!Yii::app()->user->isGuest) {
+                    echo $this->generateFoundation5Menu($menu, true);
+                }
+                ?>
+                <li>
+                    <a onClick="event.preventDefault();
+                            window.print();" href="#">
+                        <i class="fi-print"></i><?php echo Yii::t('app', 'Drucken'); ?>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </nav>
     <div class="sticky sticky-nav hide-for-small hide-on-print">
         <ul class="medium-block-grid-6 large-block-grid-8 text-center ul-nav" data-topbar>
             <?php
@@ -90,7 +91,8 @@ $menu = array(//icon,label,url,visible(bool)
             }
             ?>
             <li>
-                <a onClick="event.preventDefault();window.print();" href="#">
+                <a onClick="event.preventDefault();
+                        window.print();" href="#">
                     <i class="fi-print"></i><span><?php echo Yii::t('app', 'Drucken'); ?></span>
                 </a>
             </li>
@@ -148,6 +150,6 @@ $menu = array(//icon,label,url,visible(bool)
             ?>
         </div>
     </div> 
-<div class="infobox" style="display: none;"><p></p></div>
+    <div class="infobox" style="display: none;"><p></p></div>
 </body>
 </html>

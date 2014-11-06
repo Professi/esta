@@ -23,7 +23,7 @@ $this->setPageTitle(Yii::t('app', 'Generierte TANs'));
 ?>
 <div class="row">
     <div class="small-12 columns small-centered">
-        <h2 class="text-center">Generierte TAN's</h2>
+        <h2 class="text-center"><?php echo Yii::t('app', 'Generierte TANs');?></h2>
     </div>
 </div>
 <div class="row">
