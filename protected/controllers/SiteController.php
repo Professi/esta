@@ -154,17 +154,17 @@ class SiteController extends Controller {
                 if ($model->validate() && $model->authenticate()) {
                     if (!Yii::app()->user->isAdmin()) {
                         if (Yii::app()->user->checkAccess(MANAGEMENT)) {
-                            $this->redirect('index.php?r=/Appointment/admin');
+                            $this->redirect(array('Appointment/admin'));
                         }
-                        $this->redirect('index.php?r=/Appointment/Index');
+                        $this->redirect(array('Appointment/admin'));
                     } else {
-                        $this->redirect('index.php?r=/Date/admin');
+                        $this->redirect(array('Date/admin'));
                     }
                 }
             }
             $this->render('login', array('model' => $model));
         } else {
-            $this->redirect('index.php?r=User/account');
+            $this->redirect(array('User/account'));
         }
     }
 

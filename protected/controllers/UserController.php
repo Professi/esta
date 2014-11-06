@@ -97,7 +97,7 @@ class UserController extends Controller {
             $record->delete();
         }
         Yii::app()->user->setFlash('success', Yii::t('app', 'Alle Daten gelöscht, einzig die Verwaltungs- und Administrationskonten wurden nicht gelöscht')) .
-                $this->redirect('index.php?r=user/account');
+                $this->redirect(array('account'));
     }
 
     /**
@@ -181,7 +181,7 @@ class UserController extends Controller {
             $model->attributes = $_POST['DummyUserForm'];
             if ($model->validate()) {
                 $model->insert();
-                $this->redirect('index.php?r=/user/admin');
+                $this->redirect(array('admin'));
             }
         }
         $this->render('createDummy', array(
@@ -209,7 +209,7 @@ class UserController extends Controller {
                     Yii::app()->user->setFlash('success', Yii::t('app', 'Leider konnte Ihr Passwort aus unerklärlichen Gründen nicht geändert werden.'));
                 }
             }
-            $this->redirect('index.php?r=/site/index');
+            $this->redirect(array('site/index'));
         } else if (isset($_GET['activationKey'])) {
             $user = User::model()->findByAttributes(array('activationKey' => $_GET['activationKey']));
             if ($user !== NULL) {
@@ -217,7 +217,7 @@ class UserController extends Controller {
                 $this->render('pwChangeForm', array('model' => $model));
             } else {
                 Yii::app()->user->setFlash('success', Yii::t('app', 'Leider konnte Ihr Aktivierungsschlüssel nicht wiedererkannt werden.'));
-                $this->redirect('index.php?r=/site/index');
+                $this->redirect(array('site/index'));
             }
         }
     }
@@ -239,7 +239,7 @@ class UserController extends Controller {
                         $mail = new Mail();
                         $mail->sendChangePasswordMail($user->email, $user->activationKey);
                         Yii::app()->user->setFlash('success', Yii::t('app', 'Sie erhalten eine Aktivierungsemail mit der Sie dann ein neues Passwort setzen können.'));
-                        $this->redirect('index.php?r=/site/index');
+                        $this->redirect(array('site/index'));
                     } else {
                         Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Bevor Sie ein neues Passwort anfordern können, muss Ihr Benutzerkonto aktiviert sein.'));
                     }
