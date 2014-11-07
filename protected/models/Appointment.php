@@ -143,9 +143,6 @@ class Appointment extends CActiveRecord {
             'user_id' => array(
                 'asc' => 'user.lastname',
                 'desc' => 'user.lastname desc'),
-            'reason' => array(
-                'asc' => 'reason',
-                'desc' => 'reason desc'),
         );
         return new CActiveDataProvider($this, array('criteria' => $criteria,
             'sort' => $sort));
