@@ -206,7 +206,7 @@ class UserController extends Controller {
                     $user->save();
                     Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Passwort konnte erfolgreich geändert werden. Sie können sich nun mit diesem einloggen.'));
                 } else {
-                    Yii::app()->user->setFlash('success', Yii::t('app', 'Leider konnte Ihr Passwort aus unerklärlichen Gründen nicht geändert werden.'));
+                    Yii::app()->user->setFlash('success', Yii::t('app', 'Leider konnte Ihr Passwort nicht geändert werden.'));
                 }
             }
             $this->redirect(array('site/index'));

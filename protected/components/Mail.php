@@ -75,12 +75,16 @@ class Mail {
         $this->send(Yii::t('app', 'Ihre Passwortzurücksetzung bei der {appname}', array('{appname}' => Yii::app()->name)), $body, $email);
     }
 
+    /**
+     * sends testmail
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param type $email E-Mail des Empfängers
+     */
     public function sendTestMail($email) {
         $body = '<html><head><title></title></head><body>';
         $body = '<p>' . Yii::t('app', 'Dies ist eine Testmail.') . '</p>';
-        $this->addInfo($body);
         $body .= "</body></html>";
-        $this->send(Yii::t('app', 'Testmail bei der {appname}', array('{appname}' => Yii::app()->name)), $body, $email);
+        $this->send(Yii::t('app', 'Testmail bei {appname}', array('{appname}' => Yii::app()->name)), $body, $email);
     }
 
     /**

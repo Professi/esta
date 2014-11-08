@@ -55,6 +55,25 @@ class SiteController extends Controller {
         }
     }
 
+    public function actionSendTestMail() {
+        if (Yii::app()->user->isAdmin()) {
+            $model = new Testmail();
+            $model->recipient = Yii::app()->params['adminEmail'];
+            if (isset($_POST['Testmail'])) {
+                $model->setAttributes($_POST['Testmail']);
+                if ($model->validate()) {
+                    $mail = new Mail();
+                    $mail->sendTestMail($model->recipient);
+                    Yii::app()->user->setFlash('success', Yii::t('app', 'Testmail wurde gesendet.'));
+                    $this->redirect(array('config'));
+                }
+            }
+            $this->render('sendTestmail', array('model' => $model));
+        } else {
+            $this->throwFourNullThree();
+        }
+    }
+
     /**
      * @param type $option
      * @return mixed

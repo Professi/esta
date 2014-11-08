@@ -23,6 +23,7 @@ return array(
     'preload' => array('log'),
     'import' => array(
         'application.models.*',
+        'application.models.forms.*',
         'application.components.*',
         'ext.select2.Select2',
     ),

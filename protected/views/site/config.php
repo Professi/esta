@@ -418,6 +418,19 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                     ?>
                 </div>
             </div>
+
+            <div class="panel">
+                <div class="row">
+                    <div class="small-12 columns">
+                        <?php
+                        echo Yii::t('app', 'Sie können über die nachfolgende Seite eine Testmail versenden.') . ' ' .
+                        Yii::t('app', 'Bitte machen Sie dies erst, nachdem Sie die aktuellen Änderungen gespeichert haben. ') . '<br/><br/>';
+                        echo CHtml::button(Yii::t('app', 'Seite aufrufen'), array('submit' => array('sendTestmail'), 'class' => 'button'));
+                        ?>
+                    </div>
+                </div>
+            </div>
+
         </fieldset>
         <fieldset>
             <legend><?php echo Yii::t('app', 'Anti-Spam'); ?></legend>
@@ -503,7 +516,13 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
             </div>
             <div class="row collapse">
                 <div class="small-8 columns">
-                    <span class="prefix"><?php echo $form->label($model, 'allowBlockingOnlyForManagement'); ?></span>
+                    <span class="prefix infofeld">
+                        <?php echo $form->label($model, 'allowBlockingOnlyForManagement', array('class' => 'infolabel')); ?>
+                    </span>
+                    <div class="infotext">
+                        <i class="fi-info"></i>
+                        <?php echo Yii::t('app', 'Sollte diese Option aktiviert sein, so können Lehrer, Termine weder blockieren noch anlegen. Dies ist unabhängig davon, was bei anderen Optionen angegeben wurde.'); ?>
+                    </div>
                 </div>
                 <div class="small-4 columns">
                     <?php
