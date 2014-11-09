@@ -327,8 +327,8 @@ class User extends CActiveRecord {
             if ($tan == '') {
                 $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
             }
-            $tan->used = true;
             $tan->used_by_user_id = $this->getPrimaryKey();
+            $tan->used = true;
             $tan->update();
         }
     }
@@ -579,6 +579,7 @@ class User extends CActiveRecord {
 
     private function tanManagement($tan) {
         $ok = true;
+        $errorMsg = '';
         if (Yii::app()->params['allowGroups'] && $tan->group != null && is_numeric($tan->group_id)) {
             $errorMsg = $this->addUserHasGroup($tan);
         }
