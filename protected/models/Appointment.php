@@ -131,15 +131,14 @@ class Appointment extends CActiveRecord {
      */
     public function customSearch() {
         $criteria = new CDbCriteria();
-        $criteria->order = '`dateAndTime_id` ASC';
         $criteria->addCondition(array('user_id=:user_id'));
         $criteria->params = array(':user_id' => $this->user_id);
         $sort = new CSort;
         $sort->defaultOrder = 'dateAndTime_id desc';
         $sort->attributes = array(
             'dateAndTime_id' => array(
-                'asc' => 'dateandtime.id',
-                'desc' => 'dateandtime.id desc'),
+                'asc' => 'dateAndTime_id',
+                'desc' => 'dateAndTime_id desc'),
             'user_id' => array(
                 'asc' => 'user.lastname',
                 'desc' => 'user.lastname desc'),

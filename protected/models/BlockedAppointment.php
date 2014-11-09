@@ -137,8 +137,8 @@ class BlockedAppointment extends CActiveRecord {
         $sort->defaultOrder = 'dateAndTime_id DESC';
         $sort->attributes = array(
             'dateAndTime_id' => array(
-                'asc' => 'dateandtime.id',
-                'desc' => 'dateandtime.id desc'),
+                'asc' => 'dateAndTime_id',
+                'desc' => 'dateAndTime_id desc'),
             'user_id' => array(
                 'asc' => 'user.lastname',
                 'desc' => 'user.lastname desc'),
