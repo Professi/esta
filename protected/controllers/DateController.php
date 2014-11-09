@@ -111,6 +111,9 @@ class DateController extends Controller {
         if (isset($_POST['Date']['lockAt'])) {
             $model->lockAt = $_POST['Date']['lockAt'];
         }
+        if (isset($_POST['Date']['date'])) {
+            $model->date = $_POST['Date']['date'];
+        }
     }
 
     /**

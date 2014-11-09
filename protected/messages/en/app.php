@@ -41,7 +41,7 @@ return array (
   'Allgemein' => 'general',
   'Am' => 'at',
   'Am {date} um {time}' => 'At {date} by {time}',
-  'Anfang' => 'begin',
+  'Anfang' => 'Begin',
   'Anlegen' => 'Create',
   'Anmeldedaten merken' => 'Remember me',
   'Ansicht' => 'View',
