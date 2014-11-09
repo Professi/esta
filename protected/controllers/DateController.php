@@ -88,7 +88,7 @@ class DateController extends Controller {
         $dateLabel = '';
         if (isset($_POST['Date'])) {
             $model->attributes = $_POST['Date'];
-            $this->setPostAttribute($model);
+            $this->setPostAttributes($model, $oldDate);
             if ($model->save()) {
                 $this->redirect(array('view', 'id' => $model->id));
             }
@@ -101,7 +101,7 @@ class DateController extends Controller {
         ));
     }
 
-    private function setPostAttribute($model) {
+    private function setPostAttributes($model, &$oldDate) {
         if (Yii::app()->params['allowGroups'] && isset($_POST['Date']['groups'])) {
             $model->groups = $_POST['Date']['groups'];
         }
@@ -112,8 +112,47 @@ class DateController extends Controller {
             $model->lockAt = $_POST['Date']['lockAt'];
         }
         if (isset($_POST['Date']['date'])) {
+            $oldDate = $model->date;
             $model->date = $_POST['Date']['date'];
         }
+    }
+
+    private function checkDiff($model, $oldDate) {
+        if ($oldDate != null) {
+            $newDate = Yii::app()->dateFormatter->formatDateTime(strtotime($model->date), "short", null);
+            if ($newDate != $oldDate) {
+                $mailAdrs = $this->collectMailAdrs($model);
+                $mailObj = new Mail();
+                foreach ($mailAdrs as $mail) {
+                    $mailObj->sendDateChangeMail($mail, $oldDate, $newDate);
+                }
+            }
+        }
+    }
+
+    private function collectMailAdrs($model) {
+        $times = DateAndTime::model()->findAllByAttributes(array('date_id' => $model->id));
+        $criteria = new CDbCriteria();
+        $i = 0;
+        foreach ($times as $val) {
+            $criteria->addCondition('dateAndTime_id=:id' . $i, 'OR');
+            $criteria->params[':id' . $i] = $val->id;
+            $i++;
+        }
+        $criteria->with = 'parentchild';
+        $criteria->select = 'id';
+        $apps = Appointment::model()->findAll($criteria);
+        $x = 0;
+        $userIds = array();
+        foreach ($apps as $app) {
+            $userIds[] = $app->parentchild->user_id;
+        }
+        $userIds = array_unique($userIds);
+        $mailAdrs = array();
+        foreach ($userIds as $id) {
+            $mailAdrs[] = User::model()->findByPk($id, array('select' => 'email'))->email;
+        }
+        return $mailAdrs;
     }
 
     /**
@@ -125,16 +164,18 @@ class DateController extends Controller {
         $model = $this->loadModel($id);
         $model->setScenario('update');
         $model->date = Yii::app()->dateFormatter->formatDateTime(strtotime($model->date), "short", null);
-        $model->begin = Yii::app()->dateFormatter->format('H:mm',$model->begin);
-        $model->end = Yii::app()->dateFormatter->format('H:mm',$model->end);
+        $model->begin = Yii::app()->dateFormatter->format('H:mm', $model->begin);
+        $model->end = Yii::app()->dateFormatter->format('H:mm', $model->end);
         $a_disabled = array('disabled' => 'disabled');
         $a_lockAtLabel = explode(' ', Yii::app()->dateFormatter->format(Yii::app()->locale->getDateFormat('short') . ' ' . 'H:mm', $model->lockAt));
         $dateLabel = $a_lockAtLabel[0];
         $timeLabel = $a_lockAtLabel[1];
         $model->lockAt = $dateLabel . ' ' . $timeLabel;
         if (isset($_POST['Date'])) {
-            $this->setPostAttribute($model);
-            if ($model->save(true,array('lockAt','groups','title','date'))) {
+            $oldDate = null;
+            $this->setPostAttributes($model, $oldDate);
+            if ($model->save(true, array('lockAt', 'groups', 'title', 'date'))) {
+                $this->checkDiff($model, $oldDate);
                 $this->redirect(array('view', 'id' => $model->id));
             }
         }
@@ -192,8 +233,9 @@ class DateController extends Controller {
      */
     public function loadModel($id) {
         $model = Date::model()->findByPk($id);
-        if ($model === null)
+        if ($model === null) {
             $this->throwFourNullFour();
+        }
         return $model;
     }
 
@@ -215,8 +257,7 @@ class DateController extends Controller {
             $model->attributes = $_GET['DateHasGroup'];
         }
         $this->renderPartial('dateHasGroupAdmin', array(
-            'model' => $model),
-                false,true);
+            'model' => $model), false, true);
     }
 
 }

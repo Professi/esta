@@ -64,14 +64,14 @@ class Mail {
      * @param type $activationKey Aktivierungsschlüssel
      */
     public function sendChangePasswordMail($email, $activationKey) {
-        $body = '<html><head><title></title></head><body>';
+        $body = $this->mailHeader();
         $body .= '<p>' . Yii::t('app', 'Bitte klicken Sie auf folgenden Link um ein neues Passwort für Ihr Benutzerkonto zu setzen.') . '</p>';
         $body .= '<p><a href="' . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=$activationKey\">" . Yii::t('app', 'Link f&uuml;r die Passwortwahl') . '</a></p>';
         $body .= '<p>' . Yii::t('app', 'Sollten Sie Probleme beim Aufrufen der Aktivierung haben kopieren Sie bitte den folgenden Link in die Adressleiste ihres Browser:') . '</p>';
         $body .= "<p>" . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=" . $activationKey . "</p><br/>";
         $body .= '<p>' . Yii::t('app', 'Falls Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese Nachricht.') . '</p>';
         $this->addInfo($body);
-        $body .= "</body></html>";
+        $body .= $this->mailFooter();
         $this->send(Yii::t('app', 'Ihre Passwortzurücksetzung bei der {appname}', array('{appname}' => Yii::app()->name)), $body, $email);
     }
 
@@ -81,10 +81,36 @@ class Mail {
      * @param type $email E-Mail des Empfängers
      */
     public function sendTestMail($email) {
-        $body = '<html><head><title></title></head><body>';
+        $body = $this->mailHeader();
         $body = '<p>' . Yii::t('app', 'Dies ist eine Testmail.') . '</p>';
-        $body .= "</body></html>";
+        $body .= $this->mailFooter();
         $this->send(Yii::t('app', 'Testmail bei {appname}', array('{appname}' => Yii::app()->name)), $body, $email);
+    }
+
+    private function mailHeader($title = '') {
+        return '<html><head><title>' . $title . '</title></head><body>';
+    }
+
+    private function mailFooter() {
+        return '</body></html>';
+    }
+
+    /**
+     * sends a mail to recipient that a parent teacher day has changed.
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param type $email E-Mail des Empfängers
+     */
+    public function sendDateChangeMail($email, $oldDate, $date) {
+        $body = $this->mailHeader();
+        $body .= '<p>' . Yii::t('app', 'Hallo,') . '</p>';
+        $body .= '<p>' . Yii::t('app', 'wir müssen Ihnen mitteilen, dass der Elternsprechtag vom {oldDate} auf den {date} verschoben wurde.', array(
+                    '{oldDate}' => '<b>' . Yii::app()->dateFormatter->formatDateTime($oldDate, 'short', null) . '</b>',
+                    '{date}' => '<b>' . Yii::app()->dateFormatter->formatDateTime($date, 'short', null) . '</b>'));
+        $body .= '<p>' . Yii::t('app', 'Für mehr Informationen, sollten Sie die Schulwebseite besuchen.') . '<br/>';
+        $body .= "<a href=\"" . "http://" . Yii::app()->params['schoolWebsiteLink'] . "\">" . Yii::t('app', "Webseite der Schule") . "</a></p>";
+        $this->addInfo($body);
+        $this->mailFooter();
+        $this->send(Yii::t('app', 'Das Datum eines Elternsprechtags bei {appname} wurde geändert!', array('{appname}' => Yii::app()->name)), $body, $email);
     }
 
     /**
@@ -94,15 +120,15 @@ class Mail {
      * @param type $activationKey  Aktivierungsschlüssel
      */
     public function sendActivationLinkMail($email, $activationKey) {
-        $body = "<html><head><title></title></head>";
-        $body .= "<body><p>" . Yii::t('app', "Vielen Dank für Ihre Registrierung bei {appname}", array('{appname}' => Yii::app()->name)) . ".</p>";
+        $body = $this->mailHeader();
+        $body .= "<p>" . Yii::t('app', "Vielen Dank für Ihre Registrierung bei {appname}", array('{appname}' => Yii::app()->name)) . ".</p>";
         $body .= "<p>" . Yii::t('app', "Ihr Benutzername lautet:") . " <b>" . $email . "</b></p>";
         $body .= "<p>" . Yii::t('app', "Um Ihre Registrierung abzuschließen und die Anwendung in Anspruch nehmen zu können, klicken Sie bitte auf den folgenden Link.") . "</p>";
         $body .= "<p><a href=\"" . $this->getScriptUrl() . "?r=/User/activate&activationKey=" . $activationKey . "\">" . Yii::t('app', "Link für die Aktivierung") . "</a></p>";
         $body .= "<p>" . Yii::t('app', "Sollten Sie Probleme beim Aufrufen der Aktivierung haben, kopieren Sie bitte den folgenden Link in die Adressleiste Ihres Browser:") . "</p>";
         $body .= "<p>" . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=" . $activationKey . "</p>";
         $this->addInfo($body);
-        $body .= "</body></html>";
+        $body .= $this->mailFooter();
         $this->send(Yii::t('app', "Ihre Registrierung bei {appname}", array('{appname}' => Yii::app()->name)), $body, $email);
     }
 
@@ -121,12 +147,12 @@ class Mail {
      * @param type $date Datum
      */
     public function sendAppointmentDeleted($email, $teacher, $time, $child, $date) {
-        $body = "<html><head><title></title></head>";
+        $body = $this->mailHeader();
         $body .= "<body><p>" . Yii::t('app', "Hallo,") . "</p><p>" . Yii::t('app', "leider müssen wir Sie darüber informieren, dass Ihr Termin am {date} um {time} ", array('{date}' => "<b>" . Yii::app()->dateFormatter->formatDateTime($date, 'short', null), '{time}' => Yii::app()->dateFormatter->formatDateTime($time, null, 'medium'))) . "</b><br>";
         $body .= " " . Yii::t('app', "bei") . " <b>" . $teacher->title . " " . $teacher->firstname . " " . $teacher->lastname . "</b><br>";
         $body .= Yii::t('app', "mit ihrem Kind") . " <b>" . $child->firstname . " " . $child->lastname . "</b> <br/>" . Yii::t('app', "abgesagt wurde.") . "</p>";
         $this->addInfo($body);
-        $body .= "</body></html>";
+        $body .= $this->mailFooter();
         $this->send(Yii::t('app', "Einer Ihrer Termine bei {appname} wurde gelöscht", array('{appname}' => Yii::app()->name)), $body, $email);
     }
 
@@ -138,7 +164,7 @@ class Mail {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function sendRandomUserPassword($email, $password, $isTeacher = true) {
-        $body = "<html><head><title></title></head>";
+        $body = $this->mailHeader();
         if ($isTeacher) {
             $body .= "<body><p>" . Yii::t('app', "Sie wurden bei {appname} als Lehrer registriert.", array('{appname}' => Yii::app()->name)) . "</p>";
         } else {
@@ -149,7 +175,7 @@ class Mail {
         $body .= $password . "</b></p>";
         $body .= "<p>" . Yii::t('app', "Bitte ändern Sie dieses Passwort <b>direkt</b> nach der ersten Anmeldung unter \"Ihr Benutzerkonto->Meine Daten aktualisieren\"") . "</p>";
         $this->addInfo($body);
-        $body .= "</body></html>";
+        $body .= $this->mailFooter();
         $this->send(Yii::t('app', 'Willkommen bei {appname}', array('{appname}' => Yii::app()->name)), $body, $email);
     }
 
