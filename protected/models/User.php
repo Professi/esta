@@ -328,6 +328,7 @@ class User extends CActiveRecord {
                 $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
             }
             $tan->used_by_user_id = $this->getPrimaryKey();
+            $tan->used_by_user = $this;
             $tan->used = true;
             $tan->update();
         }
@@ -339,13 +340,9 @@ class User extends CActiveRecord {
      * @return boolean 
      */
     private function saveNewRecord() {
-        if (Yii::app()->user->isGuest) {
-            $this->addWithTanNewGroup($this->tan);
-        } else {
-            if (Yii::app()->params['allowGroups'] && !empty($this->groupIds)) {
-                foreach ($this->groupIds as $group) {
-                    $this->createUserHasGroup($group);
-                }
+        if (Yii::app()->params['allowGroups'] && !empty($this->groupIds)) {
+            foreach ($this->groupIds as $group) {
+                $this->createUserHasGroup($group);
             }
         }
     }
@@ -375,6 +372,9 @@ class User extends CActiveRecord {
     public function afterSave() {
         if ($this->isNewRecord) {
             $rc = $this->saveNewRecord();
+            if (Yii::app()->user->isGuest()) {
+                $this->tanManagement($this->tan);
+            }
         } else {
             $this->saveExistingRecord();
         }
@@ -546,6 +546,7 @@ class User extends CActiveRecord {
             $this->addError('password_repeat', Yii::t('app', 'Passwörter stimmen nicht überein.'));
             $rc = false;
         }
+        $rc = $this->validateTan();
         return $rc;
     }
 
@@ -555,7 +556,7 @@ class User extends CActiveRecord {
      * @param type $tanNo
      * @return boolean
      */
-    public function addWithTanNewGroup(&$errorMsg = "") {
+    public function validateTan(&$errorMsg = "") {
         $rc = true;
         $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
         if ($tan !== null) {
@@ -563,7 +564,7 @@ class User extends CActiveRecord {
                 $errorMsg = Yii::t('app', 'Leider wurde Ihre TAN schon benutzt.');
                 $rc = false;
             } else {
-                $this->tanManagement($tan);
+                $this->tan = $tan;
             }
         } else {
             if (Yii::app()->user->isGuest()) {
@@ -573,6 +574,8 @@ class User extends CActiveRecord {
         }
         if (!$rc) {
             $this->addError('tan', $errorMsg);
+        } else {
+            $this->tan = $tan;
         }
         return $rc;
     }
