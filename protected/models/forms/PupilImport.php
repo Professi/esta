@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Dies ist Formmodel um eine Lehrer CSV Datei zu importieren.
+ * Dies ist das Formmodel um eine Lehrer CSV Datei zu importieren.
  */
 /* Copyright (C) 2014  Christian Ehringfeld, David Mock
  *

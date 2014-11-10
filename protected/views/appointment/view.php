@@ -25,23 +25,24 @@ $this->breadcrumbs = array(
     $model->id,
 );
 $this->menu = array(
-    array(  'label' => Yii::t('app', 'Termin anlegen'), 
-            'url' => array('create'),
-            'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Termin bearbeiten'), 
-            'url' => array('update', 'id' => $model->id),
-            'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Termin löschen'), 
-            'url' => '#', 
-            'linkOptions' => array(
-                'submit' => array(
-                    'delete', 
-                    'id' => $model->id), 
-                'confirm' => 'Sind Sie sich sicher, dass Sie diesen Termin löschen möchten?',
-                'class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Termine verwalten'), 
-            'url' => array('admin'),
-            'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Termin anlegen'),
+        'url' => array('create'),
+        'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Termin bearbeiten'),
+        'url' => array('update', 'id' => $model->id),
+        'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Termin löschen'),
+        'url' => '#',
+        'linkOptions' => array(
+            'submit' => array(
+                'delete',
+                'id' => $model->id),
+            'confirm' => 'Sind Sie sich sicher, dass Sie diesen Termin löschen möchten?',
+            'class' => 'small button',
+            'csrf' => true)),
+    array('label' => Yii::t('app', 'Termine verwalten'),
+        'url' => array('admin'),
+        'linkOptions' => array('class' => 'small button')),
 );
 ?>
 <div class="row">

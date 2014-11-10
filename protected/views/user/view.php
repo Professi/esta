@@ -27,46 +27,47 @@ $this->breadcrumbs = array(
     $model->id,
 );
 $this->menu = array(
-    array(  'label' => Yii::t('app', 'Benutzer anlegen'), 
-            'url' => array('create'),
-            'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
-            'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Benutzer bearbeiten'), 
-            'url' => array('update',
-            'id' => $model->id), 
-            'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
-            'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Meine Daten aktualisieren'), 
-            'url' => array('update',
-            'id' => $model->id), 
-            'visible' => Yii::app()->user->checkAccessNotAdmin(TEACHER) || Yii::app()->user->checkAccessNotAdmin(PARENTS),
-            'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Benutzer löschen'), 
-            'url' => '#',
-            'linkOptions' => array('submit' => array('delete', 'id' => $model->id),
-                    'confirm' => Yii::t('app', 'Sind Sie sich sicher, dass Sie diesen Benutzer löschen möchten?'),
-                'class' => 'small button'),
-            'visible' => Yii::app()->user->checkAccess(MANAGEMENT)),
-    array(  'label' => Yii::t('app', 'Eltern-Kind-Verknüpfung anlegen'), 
-            'url' => array('parentChild/create', 'id' => $model->id),
-            'visible' => (Yii::app()->user->checkAccess(MANAGEMENT) && $model->role == (int)PARENTS),
-            'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Termin anlegen'), 
-            'url' => array('appointment/create', 'parentId' => $model->id),
-            'visible' => (Yii::app()->user->checkAccess(MANAGEMENT) && $model->role == (int)PARENTS),
-            'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Termin anlegen'), 
-            'url' => array('appointment/create', 'teacherId' => $model->id),
-            'visible' => (Yii::app()->user->checkAccess(MANAGEMENT) && $model->role == (int)TEACHER),
-            'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Termin blockieren'), 
-            'url' => array('appointment/createBlockApp', 'teacherId' => $model->id),
-            'visible' => (Yii::app()->user->checkAccess(MANAGEMENT) && $model->role == (int)TEACHER),
-            'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Benutzer verwalten'), 
-            'url' => array('admin'),
-            'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
-            'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Benutzer anlegen'),
+        'url' => array('create'),
+        'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
+        'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Benutzer bearbeiten'),
+        'url' => array('update',
+            'id' => $model->id),
+        'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
+        'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Meine Daten aktualisieren'),
+        'url' => array('update',
+            'id' => $model->id),
+        'visible' => Yii::app()->user->checkAccessNotAdmin(TEACHER) || Yii::app()->user->checkAccessNotAdmin(PARENTS),
+        'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Benutzer löschen'),
+        'url' => '#',
+        'linkOptions' => array('submit' => array('delete', 'id' => $model->id),
+            'confirm' => Yii::t('app', 'Sind Sie sich sicher, dass Sie diesen Benutzer löschen möchten?'),
+            'class' => 'small button',
+            'csrf' => true),
+        'visible' => Yii::app()->user->checkAccess(MANAGEMENT)),
+    array('label' => Yii::t('app', 'Eltern-Kind-Verknüpfung anlegen'),
+        'url' => array('parentChild/create', 'id' => $model->id),
+        'visible' => (Yii::app()->user->checkAccess(MANAGEMENT) && $model->role == (int) PARENTS),
+        'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Termin anlegen'),
+        'url' => array('appointment/create', 'parentId' => $model->id),
+        'visible' => (Yii::app()->user->checkAccess(MANAGEMENT) && $model->role == (int) PARENTS),
+        'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Termin anlegen'),
+        'url' => array('appointment/create', 'teacherId' => $model->id),
+        'visible' => (Yii::app()->user->checkAccess(MANAGEMENT) && $model->role == (int) TEACHER),
+        'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Termin blockieren'),
+        'url' => array('appointment/createBlockApp', 'teacherId' => $model->id),
+        'visible' => (Yii::app()->user->checkAccess(MANAGEMENT) && $model->role == (int) TEACHER),
+        'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Benutzer verwalten'),
+        'url' => array('admin'),
+        'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
+        'linkOptions' => array('class' => 'small button')),
 );
 ?>
 <div class="row">
@@ -74,35 +75,36 @@ $this->menu = array(
         <h2 class="subheader text-center"><?php echo Yii::t('app', 'Benutzerdaten für {username}', array('{username}' => (isset($model->email) ? $model->email : $model->username))); ?> </h2>
         <div class="row">
             <div class="small-12 columns small-centered">
-        <?php
-        $this->widget('zii.widgets.CDetailView', array(
-            'data' => $model,
-            'attributes' => array(
-                array('name' => 'id', 'value' => $model->id,
-                    'visible' => Yii::app()->user->checkAccess(ADMIN)),
-                'email',
-                array('name' => 'username',
-                    'value' => $model->username, 'visible' => Yii::app()->user->checkAccess(ADMIN)),
-                'firstname',
-                'lastname',
-                array('name' => 'stateName',
-                    'value' => $model->getStateName($model->state)),
-                array('name' => 'role',
-                    'value' => User::getFormattedRole($model->role)),
-                array('name' => 'createtime',
-                    'value' => Yii::app()->dateFormatter->formatDateTime($model->createtime, "short", "short")),
-                array('name' => 'badLogins',
-                    'value' => $model->badLogins == null ? '0' : $model->badLogins,
-                ),
-                array('name' => 'groups',
-                    'value' => $model->getGroupnames(),
-                    'visible' => $model->role > 1 && Yii::app()->params['allowGroups'] && $model->groupcount > 0,
-                ),
-            ),
-        )); ?>
+                <?php
+                $this->widget('zii.widgets.CDetailView', array(
+                    'data' => $model,
+                    'attributes' => array(
+                        array('name' => 'id', 'value' => $model->id,
+                            'visible' => Yii::app()->user->checkAccess(ADMIN)),
+                        'email',
+                        array('name' => 'username',
+                            'value' => $model->username, 'visible' => Yii::app()->user->checkAccess(ADMIN)),
+                        'firstname',
+                        'lastname',
+                        array('name' => 'stateName',
+                            'value' => $model->getStateName($model->state)),
+                        array('name' => 'role',
+                            'value' => User::getFormattedRole($model->role)),
+                        array('name' => 'createtime',
+                            'value' => Yii::app()->dateFormatter->formatDateTime($model->createtime, "short", "short")),
+                        array('name' => 'badLogins',
+                            'value' => $model->badLogins == null ? '0' : $model->badLogins,
+                        ),
+                        array('name' => 'groups',
+                            'value' => $model->getGroupnames(),
+                            'visible' => $model->role > 1 && Yii::app()->params['allowGroups'] && $model->groupcount > 0,
+                        ),
+                    ),
+                ));
+                ?>
             </div>
         </div>
-        <?php 
+        <?php
         if (Yii::app()->user->checkAccess(ADMIN) && empty($_GET['id'])) {
             ?> 
             <fieldset class="text-center">
@@ -141,7 +143,6 @@ $this->menu = array(
                     $this->endWidget();
                     ?>
                 </fieldset>
-
             <?php } if ($model->childcount > 0 && Yii::app()->user->checkAccess(MANAGEMENT)) {
                 ?>
                 <h4 class="subheader"><?php echo Yii::t('app', 'Kinder'); ?></h4>

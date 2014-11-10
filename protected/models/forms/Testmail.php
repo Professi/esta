@@ -1,6 +1,6 @@
 <?php
 
-/* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock
+/* Copyright (C) 2014  Christian Ehringfeld, David Mock
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
