@@ -19,21 +19,21 @@
  */
 /* @var $this UserController */
 /* @var $model User */
-$this->setPageTitle(Yii::t('app','Benutzerverwaltung'));
+$this->setPageTitle(Yii::t('app', 'Benutzerverwaltung'));
 $this->breadcrumbs = array(
     'Users' => array('index'),
     'Manage',
 );
 $this->menu = array(
-    array(  'label' => Yii::t('app', 'Benutzer erstellen'), 
-            'url' => array('create'),
-            'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Pseudobenutzer erstellen'), 
-            'url' => array('createDummy'),
-            'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Lehrer importieren'), 
-            'url' => array('importTeachers'),
-            'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Benutzer erstellen'),
+        'url' => array('create'),
+        'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Pseudobenutzer erstellen'),
+        'url' => array('createDummy'),
+        'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Lehrer importieren'),
+        'url' => array('importTeachers'),
+        'linkOptions' => array('class' => 'small button')),
 );
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -59,9 +59,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $model->search(),
     'filter' => $model,
     'columns' => array(
-        array('name' => 'username', 'header' => 'E-Mail'),
+        array('name' => 'username', 'header' => Yii::t('app', 'E-Mail')),
         array('name' => 'firstname',),
         'lastname',
+        array('name' => 'lastLogin',
+            'value' => 'Yii::app()->dateFormatter->formatDateTime($data->lastLogin, "medium", "short")', 'filter' => false),
         array('name' => 'state',
             'value' => '$data->getFormattedState($data->state)',
             'filter' => CHtml::listData(
@@ -69,8 +71,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
         ),
         array('name' => 'role',
             'value' => 'User::getFormattedRole($data->role)',
-            'filter' => CHtml::listData(User::getRoles(), 'value','name')
-            ),
+            'filter' => CHtml::listData(User::getRoles(), 'value', 'name')
+        ),
         array(
             'class' => 'CustomButtonColumn',
             'htmlOptions' => array('style' => 'text-align:center;width: 10%;')

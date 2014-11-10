@@ -162,6 +162,7 @@ class User extends CActiveRecord {
             'state' => Yii::t('app', 'Status'),
             'stateName' => Yii::t('app', 'Status'),
             'lastname' => Yii::t('app', 'Nachname'),
+            'lastLogin' => Yii::t('app', 'Zuletzt eingeloggt'),
             'email' => Yii::t('app', 'E-Mail'),
             'createtime' => Yii::t('app', 'Registrierungsdatum'),
             'verifyCode' => Yii::t('app', 'Sicherheitscode'),
@@ -210,6 +211,9 @@ class User extends CActiveRecord {
             'role' => array(
                 'asc' => 'role',
                 'desc' => 'role desc'),
+            'lastLogin' => array(
+                'asc' => 'lastLogin',
+                'desc' => 'lastLogin desc'),
         );
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
