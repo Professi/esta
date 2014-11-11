@@ -39,7 +39,7 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
             <?php echo Yii::t('app', 'In nächster Zeit ist kein Elternsprechtag geplant, für den Sie Termine vereinbaren könnten.');?>
         </div>
         <?php } else { ?>
-        <div class="paper panel js_show">
+        <div class="paper panel js_show hide-for-print">
             <?php echo Yii::t('app', 'Hier können Sie Termine mit dem Lehrer vereinbaren.'); ?>
             <?php echo Yii::t('app', 'Klicken Sie einfach auf ein Feld mit "Verfügbar" und bestätigen Sie am Ende der Seite den Termin.'); ?>
         </div>
@@ -81,7 +81,7 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
         ?>
         </div>
         <div class="push"></div>
-        <div class="paper panel text-center"">
+        <div class="paper panel text-center hide-for-print"">
             <p>
             <?php echo Yii::t('app', 'Keinen passenden Termin gefunden? Kontaktieren Sie '); ?>
             <?php echo "{$model->user->title} {$model->user->firstname} {$model->user->lastname}"; ?>
@@ -95,7 +95,7 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
             'id' => 'appointment-form',
             'errorMessageCssClass' => 'error',
             'skin' => false,)); ?>
-        <fieldset>
+        <fieldset class="hide-for-print">
             <legend><?php echo Yii::t('app', 'Termin'); ?></legend>
             <div class="row collapse">
                 <div class="small-4 columns">
