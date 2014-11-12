@@ -63,7 +63,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'firstname',),
         'lastname',
         array('name' => 'lastLogin',
-            'value' => 'Yii::app()->dateFormatter->formatDateTime($data->lastLogin, "medium", "short")', 'filter' => false),
+            'value' => 'Yii::app()->dateFormatter->formatDateTime($data->lastLogin, "short", "short")', 'filter' => false),
         array('name' => 'state',
             'value' => '$data->getFormattedState($data->state)',
             'filter' => CHtml::listData(

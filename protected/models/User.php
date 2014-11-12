@@ -84,11 +84,10 @@ class User extends CActiveRecord {
      */
     public function rules() {
         return array(
-            array('firstname, lastname', 'required'),
+            array('firstname, lastname,email', 'required'),
             array('email', 'length', 'min' => 1, 'on' => array('update'), 'allowEmpty' =>
                 empty($this->password) && empty($this->email) &&
                 !$this->isNewRecord && $this->state == 0 && $this->role == 3),
-            array('email', 'required', 'except' => array('update')),
             array('email', "unique"),
             array('email', 'email'),
             array('state', 'numerical', 'integerOnly' => true),
@@ -550,7 +549,9 @@ class User extends CActiveRecord {
             $this->addError('password_repeat', Yii::t('app', 'Passwörter stimmen nicht überein.'));
             $rc = false;
         }
-        $rc = $this->validateTan();
+        if ($rc && !$this->validateTan()) {
+            $rc = false;
+        }
         return $rc;
     }
 
