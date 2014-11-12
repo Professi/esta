@@ -145,15 +145,18 @@ class SiteController extends Controller {
         if (isset($_POST['ContactForm'])) {
             $model->attributes = $_POST['ContactForm'];
             if ($model->validate()) {
-                $name = '=?UTF-8?B?' . base64_encode($model->name) . '?=';
-                $subject = '=?UTF-8?B?' . base64_encode($model->subject) . '?=';
+                $name = $model->name;
+                $subject = $model->subject;
                 $mail = new Mail;
                 if (Yii::app()->params['useSchoolEmailForContactForm']) {
                     $toMail = Yii::app()->params['schoolEmail'];
                 } else {
                     $toMail = Yii::app()->params['adminEmail'];
                 }
-                $mail->sendMail($subject, $model->body, $toMail, $model->email, $name);
+                $model->body = Yii::t('app', 'Hallo,') . '<br/>' . Yii::t('app', '{name} hat Ihnen folgende Nachricht über das Kontaktformular von ESTA gesendet:', array('{name}' => $model->name)) . '<br/><br/><div>' . $model->body . '</div>';
+                $model->body .= "<br/><br/>" . Yii::t('app', 'Um auf diese E-Mail zu antworten schreiben Sie bitte eine E-Mail an {email}.', array('{email}' => '<a href="mailto:' . $model->email . '">' . $model->email . '</a>'));
+
+                $mail->sendMail($subject, $model->body, $toMail, Yii::app()->params['fromMailHost'], $name);
                 Yii::app()->user->setFlash('success', Yii::t('app', 'Vielen Dank dass Sie uns kontaktieren. Wir werden Ihnen so schnell wie möglich antworten.'));
                 $this->refresh();
             }
