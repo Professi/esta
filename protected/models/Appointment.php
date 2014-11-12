@@ -223,7 +223,7 @@ class Appointment extends CActiveRecord {
             }
         }
         if (!Yii::app()->user->checkAccess(MANAGEMENT) && $rc) {
-            if (Appointment::model()->countByAttributes(array('parent_child_id' => $this->parent_child_id)) > Yii::app()->params['maxAppointmentsPerChild']) {
+            if (Appointment::model()->countByAttributes(array('parent_child_id' => $this->parent_child_id)) >= Yii::app()->params['maxAppointmentsPerChild']) {
                 $rc = false;
                 Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Leider konnte Ihr Termin nicht gebucht haben, da Sie die maximale Anzahl von {maxApp} Terminen überschritten haben.', array('{maxApp}' => Yii::app()->params['maxAppointmentsPerChild'])));
                 $this->addError('parent_child_id', Yii::t('app', 'Sie haben die maximale Anzahl an Terminen überschritten.'));
