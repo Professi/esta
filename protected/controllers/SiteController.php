@@ -156,7 +156,7 @@ class SiteController extends Controller {
                 $model->body = Yii::t('app', 'Hallo,') . '<br/>' . Yii::t('app', '{name} hat Ihnen folgende Nachricht über das Kontaktformular von ESTA gesendet:', array('{name}' => $model->name)) . '<br/><br/><div>' . $model->body . '</div>';
                 $model->body .= "<br/><br/>" . Yii::t('app', 'Um auf diese E-Mail zu antworten, schreiben Sie bitte eine E-Mail an {email}.', array('{email}' => '<a href="mailto:' . $model->email . '">' . $model->email . '</a>'));
 
-                $mail->sendMail($subject, $model->body, $toMail, Yii::app()->params['fromMailHost'], $name);
+                $mail->sendMail($subject, $model->body, $toMail, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
                 Yii::app()->user->setFlash('success', Yii::t('app', 'Vielen Dank dass Sie uns kontaktieren. Wir werden Ihnen so schnell wie möglich antworten.'));
                 $this->refresh();
             }
