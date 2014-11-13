@@ -179,7 +179,7 @@ class User extends CActiveRecord {
     public function search() {
         $criteria = new CDbCriteria();
         $criteria->compare('firstname', $this->firstname, true);
-        $criteria->compare('lastname', $this->lastname, true);
+        $criteria->compare('lastname', ucfirst($this->lastname), true);
         $criteria->compare('id', $this->id, true);
         $criteria->compare('username', $this->username, true);
         $criteria->compare('state', $this->state);

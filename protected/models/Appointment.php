@@ -118,7 +118,7 @@ class Appointment extends CActiveRecord {
             $criteria->addCondition('dateandtime.time LIKE time(:time)');
             $criteria->params = array('time' => $this->dateAndTime_id);
         }
-        $criteria->compare('user.lastname', $this->user_id, true);
+        $criteria->compare('user.lastname', ucfirst($this->user_id), true);
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));

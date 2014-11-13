@@ -70,6 +70,7 @@ return array(
         'db' => array(
             'connectionString' => 'mysql:host=' . $params['databaseHost'] . ';port=' . $params['databasePort'] . ';dbname=' . $params['databaseName'],
             'emulatePrepare' => true,
+            'enableParamLogging'=>YII_DEBUG,
             'enableProfiling' => YII_DEBUG,
             'username' => $params['databaseUsername'],
             'password' => $params['databasePassword'],
@@ -90,7 +91,7 @@ return array(
                     'enabled' => YII_DEBUG,
                 ),
                 array('class' => 'CFileLogRoute',
-                    'levels' => YII_DEBUG ? '*' : 'error,warning,info',),
+                    'levels' => YII_DEBUG ? 'trace,error,warning,info' : 'error,warning,info',),
                 array('class' => 'CProfileLogRoute',
                     'report' => 'summary',
                     'enabled' => YII_DEBUG,

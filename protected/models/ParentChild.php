@@ -1,4 +1,5 @@
 <?php
+
 /** The followings are the available columns in table 'parent_child':
  * @property integer $id
  * @property integer $user_id
@@ -49,6 +50,11 @@ class ParentChild extends CActiveRecord {
             throw new CHttpException(403, Yii::t('app', 'Keine Berechtigung.'));
         }
         return $rc;
+    }
+
+    protected function afterDelete() {
+        parent::afterDelete();
+        Child::model()->deleteByPk($this->child_id);
     }
 
     /**
@@ -160,7 +166,7 @@ class ParentChild extends CActiveRecord {
         $criteria->with = array('user', 'child');
         $criteria->together = true;
         $criteria->compare('id', $this->id);
-        $criteria->compare('user.lastname', $this->user_id, true);
+        $criteria->compare('user.lastname', ucfirst($this->user_id), true);
         $criteria->compare('child.lastname', $this->child_id, true);
         $sort = new CSort;
         $sort->defaultOrder = 'user.lastname DESC';
