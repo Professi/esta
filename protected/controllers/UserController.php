@@ -233,7 +233,10 @@ class UserController extends Controller {
             if ($model->validate()) {
                 $user = User::model()->findByAttributes(array('email' => $model->email));
                 if ($user != null) {
-                    if ($user->state == 1) {
+                    $time = time();
+                    if ($user->state == 2 && $user->bannedUntil > $time) {
+                        Yii::app()->user->setFlash('failMsg', Yii::t('app', "Ihr Benutzerkonto ist noch für {sekunden} Sekunden gesperrt.", array('{sekunden}' => ($user->bannedUntil - $time))) . ' ' . Yii::t('app', 'Sie können im Anschluss Ihr Passwort zurücksetzen.'));
+                    } else if ($user->state == 1 || ($user->state == 2 && $user->bannedUntil < $time)) {
                         $user->activationKey = $user->generateActivationKey();
                         $user->update();
                         $mail = new Mail();
