@@ -126,7 +126,7 @@ class Mail {
         $body .= "<p>" . Yii::t('app', "Um Ihre Registrierung abzuschließen und die Anwendung in Anspruch nehmen zu können, klicken Sie bitte auf den folgenden Link.") . "</p>";
         $body .= "<p><a href=\"" . $this->getScriptUrl() . "?r=/User/activate&activationKey=" . $activationKey . "\">" . Yii::t('app', "Link für die Aktivierung") . "</a></p>";
         $body .= "<p>" . Yii::t('app', "Sollten Sie Probleme beim Aufrufen der Aktivierung haben, kopieren Sie bitte den folgenden Link in die Adressleiste Ihres Browser:") . "</p>";
-        $body .= "<p>" . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=" . $activationKey . "</p>";
+        $body .= "<p>" . $this->getScriptUrl() . "?r=/User/activate&activationKey=" . $activationKey . "</p>";
         $this->addInfo($body);
         $body .= $this->mailFooter();
         $this->send(Yii::t('app', "Ihre Registrierung bei {appname}", array('{appname}' => Yii::app()->name)), $body, $email);
