@@ -54,7 +54,7 @@ class AppointmentController extends Controller {
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('admin', 'delete', 'view', 'create', 'update',
-                    'createBlockApp', 'DeleteBlockApp',
+                    'createBlockApp', 'DeleteBlockApp', 'generatePlans',
                     'getteacherappointmentsajax', 'getselectchildrenajax',
                     'overview'
                 ),
@@ -73,6 +73,35 @@ class AppointmentController extends Controller {
      */
     private function teacherLabel(&$user) {
         return $user->title . " " . $user->firstname . " " . $user->lastname;
+    }
+
+    /**
+     * 
+     * @param integer $date
+     * @todo extend it for groupmanagement
+     */
+    public function actionGeneratePlans($date) {
+        if (!is_numeric($date)) {
+            $this->throwFourNullNull(); 
+        }
+        $mpdf = Yii::app()->ePdf->mpdf(Yii::app()->params['language'], 'A4-L');
+//        $stylesheet = file_get_contents(Yii::getPathOfAlias('webroot.css') . '/main.css');
+//        $mpdf->WriteHTML($stylesheet, 1);
+        $teachers = User::model()->findAllByAttributes(array('role' => '2'));
+        $first = true;
+        $dateTimes = $this->getDateWithTimes($date);
+        foreach ($teachers as $teacher) {
+            if ($first) {
+                $first = false;
+            } else {
+                $mpdf->AddPage();
+            }
+            $data = $this->generateOverviewData($teacher->id, current($dateTimes), Appointment::model()->with('parentchild.child', 'parentchild.user')->findAllByAttributes(array('user_id' => $teacher->id)), BlockedAppointment::model()->findAllByAttributes(array('user_id' => $teacher->id)));
+            $mpdf->WriteHTML($this->renderPartial('overview', array('data' => $data,
+                        'teacher' => "{$teacher->title} {$teacher->firstname} {$teacher->lastname}",
+                        'date' => Yii::app()->dateFormatter->formatDateTime(strtotime($date), 'short', null)), true));
+        }
+        Yii::app()->getRequest()->sendFile('plans.pdf', $mpdf->Output('', 'S'), 'application/pdf; charset=utf-8');
     }
 
     /**
