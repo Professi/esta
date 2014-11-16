@@ -54,7 +54,7 @@ class AppointmentController extends Controller {
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('admin', 'delete', 'view', 'create', 'update',
-                    'createBlockApp', 'DeleteBlockApp', 'generatePlans',
+                    'createBlockApp', 'DeleteBlockApp', 'generatePlans2',
                     'getteacherappointmentsajax', 'getselectchildrenajax',
                     'overview'
                 ),
@@ -793,6 +793,23 @@ class AppointmentController extends Controller {
             $dates[] = $temp;
         }
         return $dates;
+    }
+    
+    public function actionGeneratePlans2($date) {
+        if (!is_numeric($date)) {
+            $this->throwFourNullNull(); 
+        }
+        $teachers = User::model()->findAllByAttributes(array('role' => '2'));
+        $dateTimes = $this->getDateWithTimes($date);
+        $pages = array();
+        foreach ($teachers as $teacher) {
+            $temp = array();
+            $temp['data'] = $this->generateOverviewData($teacher->id, current($dateTimes), Appointment::model()->with('parentchild.child', 'parentchild.user')->findAllByAttributes(array('user_id' => $teacher->id)), BlockedAppointment::model()->findAllByAttributes(array('user_id' => $teacher->id)));
+            $temp['teacher'] = "{$teacher->title} {$teacher->firstname} {$teacher->lastname}";
+            $temp['date'] = Yii::app()->dateFormatter->formatDateTime(strtotime($date), 'short', null);
+            $pages[] = $temp;
+        }
+        $this->render('overviewAll', array('pages' =>$pages));
     }
 
 }

@@ -46,7 +46,7 @@ $menu = array(//icon,label,url,visible(bool)
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
-    <h1 class="text-center hide show-for-print" style="font-family: 'ClickerScript-Regular';"><?= Yii::t('app', 'Elternsprechtag'); ?></h1>
+    <h1 class="text-center hide show-for-print" id="print-header" style="font-family: 'ClickerScript-Regular';"><?= Yii::t('app', 'Elternsprechtag'); ?></h1>
     <nav class="top-bar hide-on-print" data-topbar data-options="is_hover: false">
         <ul class="title-area">
             <li class="name esta-logo">
