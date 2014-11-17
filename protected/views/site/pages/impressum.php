@@ -50,8 +50,6 @@ $this->breadcrumbs = array(
             Subtle Patterns&nbsp;&nbsp;<a href="http://www.subtlepatterns.com"><i class="fi-page-export"></i>&nbsp;<?php echo Yii::t('app', 'Link'); ?></a><br>
             Yii-Select2&nbsp;&nbsp;<a href="   https://github.com/tonybolzan/yii-select2"><i class="fi-page-export"></i>&nbsp;<?php echo Yii::t('app', 'Link'); ?></a><br>
             Select2&nbsp;&nbsp;<a href="https://github.com/ivaynberg/select2"><i class="fi-page-export"></i>&nbsp;<?php echo Yii::t('app', 'Link'); ?></a><br>
-            Yii-PDF&nbsp;&nbsp;<a href="https://github.com/Borales/yii-pdf"><i class="fi-page-export"></i>&nbsp;<?php echo Yii::t('app', 'Link'); ?></a><br>
-            mPDF&nbsp;&nbsp;<a href="http://www.mpdf1.com/"><i class="fi-page-export"></i>&nbsp;<?php echo Yii::t('app', 'Link'); ?></a><br>
         </p>
         <?php if (Yii::app()->params['language'] == 'de') { ?>
             <p>
