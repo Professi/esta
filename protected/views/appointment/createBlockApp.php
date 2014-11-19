@@ -32,7 +32,7 @@ $this->breadcrumbs = array(
 );
 $this->menu = array(
     array(  'label' => Yii::t('app', 'Termine verwalten'), 
-            'url' => array('admin'),
+            'url' => array(Yii::app()->user->isTeacher() ? 'index' :'admin'),
             'linkOptions' => array('class' => 'small button')),
 );
 ?>
