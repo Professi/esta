@@ -26,19 +26,19 @@
 $this->setPageTitle(Yii::t('app', 'Terminverwaltung'));
 Yii::app()->clientScript->registerCoreScript('jquery.ui');
 Yii::app()->getClientScript()->registerCssFile(Yii::app()->clientScript->getCoreScriptUrl() . '/jui/css/base/jquery-ui.css');
-Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
+Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.css");
 $this->breadcrumbs = array(
     'Appointments' => array('index'),
     'Manage',
 );
 $this->menu = array(
-    array(  'label' => Yii::t('app', 'Termin anlegen'), 
-            'url' => array('create'),
-            'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Termin blockieren'), 
-            'url' => array('createBlockApp'), 
-            'visible' => (Yii::app()->params['allowBlockingAppointments']),
-            'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Termin anlegen'),
+        'url' => array('create'),
+        'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Termin blockieren'),
+        'url' => array('createBlockApp'),
+        'visible' => (Yii::app()->params['allowBlockingAppointments']),
+        'linkOptions' => array('class' => 'small button')),
 );
 ?>
 
@@ -48,7 +48,6 @@ $this->menu = array(
     </div>
 </div>
 <?php
-;
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'appointment-grid',
     'dataProvider' => $model->search(),
@@ -90,17 +89,33 @@ if (Yii::app()->params['allowBlockingAppointments']) {
 <div class="push"></div>
 <div class="row">
     <div class="small-12 columns small-centered">
-        <h2 class="text-center"><?php echo Yii::t('app','Druckansicht'); ?></h2>
+        <h2 class="text-center"><?php echo Yii::t('app', 'Druckansicht'); ?></h2>
     </div>
 </div>
 <div class="row">
-    <div class="small-5 columns">
+    <div class="small-8 columns">
         <div class="row collapse">
             <div class="small-4 columns">
-                <span class="prefix"><?php echo Yii::t('app','Lehrer'); ?></span>
+                <span class="prefix"><?php echo Yii::t('app', 'Elternsprechtag'); ?></span>
             </div>
             <div class="small-8 columns">
-                <?php $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                <?php echo Select2::dropDownList('', '', $dates, array('id' => 'print-view-date')); ?>
+            </div>
+        </div>
+    </div>
+    <div class="small-2 columns">
+        <div class="small button" id="print-view-all-button"><?php echo Yii::t('app', 'Lehrerpläne'); ?></div>
+    </div>
+</div>
+<div class="row">
+    <div class="small-8 columns">
+        <div class="row collapse">
+            <div class="small-4 columns">
+                <span class="prefix"><?php echo Yii::t('app', 'Lehrer'); ?></span>
+            </div>
+            <div class="small-8 columns">
+                <?php
+                $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
                     'id' => 'print-view-teacher',
                     'name' => '',
                     'sourceUrl' => 'index.php?r=user/search&role=2',
@@ -108,23 +123,14 @@ if (Yii::app()->params['allowBlockingAppointments']) {
                         'minLength' => '1',
                     ),
                     'htmlOptions' => array(
-                        'placeholder' => Yii::t('app','Geben Sie einen Nachnamen ein'),
+                        'placeholder' => Yii::t('app', 'Geben Sie einen Nachnamen ein'),
                     ),
-                )); ?>
-            </div>
-        </div>        
-    </div>
-    <div class="small-5 columns">
-        <div class="row collapse">
-            <div class="small-4 columns">
-                <span class="prefix"><?php echo Yii::t('app','Elternsprechtag'); ?></span>
-            </div>
-            <div class="small-8 columns">
-                <?php echo Select2::dropDownList('','',$dates,array('id' => 'print-view-date')); ?>
+                ));
+                ?>
             </div>
         </div>
     </div>
     <div class="small-2 columns">
-        <div class="small button" id="print-view-button"><?php echo Yii::t('app','Anzeigen'); ?></div>
+        <div class="small button" id="print-view-button"><?php echo Yii::t('app', 'Anzeigen'); ?></div>
     </div>
 </div>

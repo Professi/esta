@@ -158,6 +158,10 @@
             e.preventDefault();
         });
         
+        $('#print-view-teacher').on('autocompletefocus', function(e) {
+            e.preventDefault();
+        });
+        
         $('input[id$="_display"]').on('autocompleteselect', function(e, ui) {
             e.preventDefault();
             $(this).val(ui.item.label);
@@ -208,6 +212,14 @@
                 window.location.href = "index.php?r=appointment/overview&id=" + id + "&date=" + date;
             }
         });
+        
+        $('#print-view-all-button').click(function() {
+            var date = $('#print-view-date').val();
+            if(date !== '' && typeof date === 'string') {
+                window.location.href = "index.php?r=appointment/generatePlans&date=" + date;
+            }
+        });
+        
         
         // ** Gruppenzuweisung unter group/assign **
         
