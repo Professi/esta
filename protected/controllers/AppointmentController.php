@@ -773,6 +773,7 @@ class AppointmentController extends Controller {
         $teachers = User::model()->findAllByAttributes(array('role' => '2'));
         $dateTimes = $this->getDateWithTimes($date);
         $pages = array();
+        set_time_limit(0);
         foreach ($teachers as $teacher) {
             $temp = array();
             $temp['data'] = $this->generateOverviewData($teacher->id, current($dateTimes), Appointment::model()->with('parentchild.child', 'parentchild.user')->findAllByAttributes(array('user_id' => $teacher->id)), BlockedAppointment::model()->findAllByAttributes(array('user_id' => $teacher->id)));
