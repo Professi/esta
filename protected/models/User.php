@@ -188,6 +188,7 @@ class User extends CActiveRecord {
         $criteria->compare('role', $this->role);
         $sort = new CSort;
         $sort->defaultOrder = 'lastname ASC';
+        $sort->multiSort = true;
         $sort->attributes = array(
             'id' => array(
                 'asc' => 'id',

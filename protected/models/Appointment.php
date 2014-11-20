@@ -121,6 +121,13 @@ class Appointment extends CActiveRecord {
         $criteria->compare('user.lastname', ucfirst($this->user_id), true);
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder' => array(
+                    'user_id' => CSort::SORT_ASC,
+                    'dateAndTime_id' => CSort::SORT_ASC,
+                ),
+                'multiSort' => true,
+            )
         ));
     }
 
