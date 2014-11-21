@@ -59,7 +59,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $model->search(),
     'filter' => $model,
     'columns' => array(
-        array('name' => 'username', 'header' => Yii::t('app', 'E-Mail')),
+        array('name' => 'email', 'header' => Yii::t('app', 'E-Mail')),
         array('name' => 'firstname',),
         'lastname',
         array('name' => 'lastLogin',

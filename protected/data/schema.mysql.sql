@@ -85,10 +85,10 @@ CREATE TABLE IF NOT EXISTS `configs` (
 
 INSERT INTO `configs` (`key`, `value`) VALUES
 ('appName','Elternsprechtag'),
-('adminEmail','test@test.de'),
+('adminEmail','example@schooldomain.de'),
 ('hashCost','13'),
 ('fromMail','ESTA-School'),
-('schoolName','Schulname'),
+('schoolName','Schoolname'),
 ('maxChild','3'),
 ('tanSize','6'),
 ('maxTanGen','100'),
@@ -103,11 +103,11 @@ INSERT INTO `configs` (`key`, `value`) VALUES
 ('allowBlockingOnlyForManagement','1'),
 ('appointmentBlocksPerDate','2'),
 ('lengthReasonAppointmentBlocked','5'),
-('schoolStreet','Straße'),
-('schoolCity','PLZ Ort'),
-('schoolTele','Telefonnummer'),
-('schoolFax','Faxnummer'),
-('schoolEmail','office@schuldomain.de'),
+('schoolStreet','Street'),
+('schoolCity','PostalCode Place'),
+('schoolTele','Phone'),
+('schoolFax','Fax'),
+('schoolEmail','office@schooldomain.de'),
 ('useSchoolEmailForContactForm','1'),
 ('lockRegistration','0'),
 ('allowGroups','0'),
@@ -237,7 +237,6 @@ CREATE TABLE IF NOT EXISTS `tan` (
 
 CREATE TABLE IF NOT EXISTS `user` (
 `id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `activationKey` varchar(255) NOT NULL,
   `createtime` bigint(20) DEFAULT NULL,
@@ -256,8 +255,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Daten für Tabelle `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `role`,`email`, `activationKey`, `createtime`, `firstname`, `lastname`, `title`, `state`, `lastLogin`, `badLogins`, `bannedUntil`, `password`) VALUES
-(1, 'admin', 0,'admin', '9848a467b94293fcbdb5f08f36d68f5fd5544113', 0, 'Admin', 'Admin', NULL, 1, 0, 0, 0, '$2a$13$hwK.QA5hXUg94isY0kP6AuERtW7A5yJkjvh3IEXClunnLB.8GM.ju');
+INSERT INTO `user` (`id`,`role`,`email`, `activationKey`, `createtime`, `firstname`, `lastname`, `title`, `state`, `lastLogin`, `badLogins`, `bannedUntil`, `password`) VALUES
+(0, 0,'admin', '9848a467b94293fcbdb5f08f36d68f5fd5544113', 0, 'Admin', 'Admin', NULL, 1, 0, 0, 0, '$2a$13$hwK.QA5hXUg94isY0kP6AuERtW7A5yJkjvh3IEXClunnLB.8GM.ju');
 
 -- --------------------------------------------------------
 
@@ -370,7 +369,7 @@ ALTER TABLE `tan`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_user_username` (`username`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_user_email` (`email`);
 
 --
 -- Indexes for table `user_has_group`
@@ -425,7 +424,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
 --
 -- AUTO_INCREMENT for table `user_has_group`
 --

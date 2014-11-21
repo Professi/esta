@@ -20,7 +20,6 @@
  * Dies ist die Modelklasse für Tabelle "user".
  * The followings are the available columns in table 'user':
  * @property string $id
- * @property string $username
  * @property string $password
  * @property string $activationKey
  * @property integer $createtime
@@ -104,7 +103,7 @@ class User extends CActiveRecord {
             ),
             array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat'),
             array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
-            array('id, username, firstname, state, lastname, email, role, stateName, title, groupIds, password_repeat', 'safe'),
+            array('id, firstname, state, lastname, email, role, stateName, title, groupIds, password_repeat', 'safe'),
             array('groups,activationKey', 'safe', 'on' => 'update'),
         );
     }
@@ -154,7 +153,6 @@ class User extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'username' => Yii::t('app', 'Benutzername'),
             'password' => Yii::t('app', 'Passwort'),
             'password_repeat' => Yii::t('app', 'Passwort wiederholen'),
             'firstname' => Yii::t('app', 'Vorname'),
@@ -181,7 +179,6 @@ class User extends CActiveRecord {
         $criteria->compare('firstname', $this->firstname, true);
         $criteria->compare('lastname', ucfirst($this->lastname), true);
         $criteria->compare('id', $this->id, true);
-        $criteria->compare('username', $this->username, true);
         $criteria->compare('state', $this->state);
         $criteria->compare('email', $this->email, true);
         $criteria->compare('title', $this->title, true);
@@ -193,9 +190,9 @@ class User extends CActiveRecord {
             'id' => array(
                 'asc' => 'id',
                 'desc' => 'id desc'),
-            'username' => array(
-                'asc' => 'username',
-                'desc' => 'username desc'),
+            'email' => array(
+                'asc' => 'email',
+                'desc' => 'email desc'),
             'firstname' => array(
                 'asc' => 'firstname',
                 'desc' => 'firstname desc'),
@@ -271,32 +268,13 @@ class User extends CActiveRecord {
     }
 
     /**
-     * Suchkriterien um alle User mit UserRollen zu löschen
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @deprecated since version 1.2
-     * @return \CDbCriteria 
-     */
-    public static function deleteAllCriteria() {
-        $criteria = new CDbCriteria();
-        $criteria->addCondition('role=:role1', "OR");
-        $criteria->addCondition('role=:role2', "OR");
-        $criteria->params = array(':role1' => 2, ':role2' => 3);
-        $criteria->select = 'id';
-        return $criteria;
-    }
-
-    /**
      * Loescht Benutzer mit einer bestimmten Rolle
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param integer $role
      */
     public function deleteUsersWithRole($role) {
         if (is_int($role)) {
-            $criteria = new CDbCriteria();
-            $criteria->addCondition('role=:role');
-            $criteria->params = array(':role' => $role);
-            $criteria->select = 'id';
-            $a_delete = User::model()->findAll($criteria);
+            $a_delete = User::model()->findAllByAttributes(array('role'=>$role),array('select'=>'id'));
             foreach ($a_delete as $record) {
                 $record->delete();
             }
@@ -316,9 +294,8 @@ class User extends CActiveRecord {
                     'createAttribute' => 'createtime',
                 )
             );
-        } else {
-            return array();
         }
+            return array();
     }
 
     /**
@@ -432,9 +409,6 @@ class User extends CActiveRecord {
                 $this->role = 3;
             }
             $this->activationKey = self::generateActivationKey();
-            if (empty($this->username) && !empty($this->email)) {
-                $this->username = $this->email;
-            }
             $this->lastname = ucfirst($this->lastname);
             $this->firstname = ucfirst($this->firstname);
         }
@@ -675,7 +649,6 @@ class User extends CActiveRecord {
      */
     public function setSomeAttributes($email, $firstname, $lastname, $state, $role) {
         $this->email = $email;
-        $this->username = $this->email;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->state = $state;

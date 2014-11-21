@@ -61,16 +61,17 @@ class DummyUserForm extends CFormModel {
         $user->password = 0;
         $this->username = substr($this->lastname, 0, 3) . substr($this->firstname, 0, 3);
         $counter = 0;
-        $user->username = $this->username;
-        while (User::model()->countByAttributes(array('username' => $this->username)) > 0) {
+        $user->email = $this->username;
+        while (User::model()->countByAttributes(array('email' => $this->username)) > 0) {
             $counter++;
-            $this->username = $user->username . $counter;
+            $this->username = $user->email . $counter;
         }
-        $user->username = $this->username;
+        $user->email = $this->username;
         if ($user->insert()) {
             Yii::app()->user->setFlash('success', Yii::t('app', 'Pseudobenutzer erstellt.'));
         }
     }
+
 }
 
 ?>

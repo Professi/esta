@@ -72,7 +72,7 @@ $this->menu = array(
 ?>
 <div class="row">
     <div class="small-12 columns small-centered">
-        <h2 class="subheader text-center"><?php echo Yii::t('app', 'Benutzerdaten für {username}', array('{username}' => (isset($model->email) ? $model->email : $model->username))); ?> </h2>
+        <h2 class="subheader text-center"><?php echo Yii::t('app', 'Benutzerdaten für {username}', array('{username}' => $model->email)); ?> </h2>
         <div class="row">
             <div class="small-12 columns small-centered">
                 <?php
@@ -82,8 +82,6 @@ $this->menu = array(
                         array('name' => 'id', 'value' => $model->id,
                             'visible' => Yii::app()->user->checkAccess(ADMIN)),
                         'email',
-                        array('name' => 'username',
-                            'value' => $model->username, 'visible' => Yii::app()->user->checkAccess(ADMIN)),
                         'firstname',
                         'lastname',
                         array('name' => 'stateName',

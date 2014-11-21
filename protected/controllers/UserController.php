@@ -92,10 +92,8 @@ class UserController extends Controller {
         UserHasGroup::model()->deleteAll();
         DateHasGroup::model()->deleteAll();
         Group::model()->deleteAll();
-        $a_delete = User::model()->findAll(User::deleteAllCriteria());
-        foreach ($a_delete as $record) {
-            $record->delete();
-        }
+        User::model()->deleteUsersWithRole(3);
+        User::model()->deleteUsersWithRole(2);
         Yii::app()->user->setFlash('success', Yii::t('app', 'Alle Daten gelöscht, einzig die Verwaltungs- und Administrationskonten wurden nicht gelöscht')) .
                 $this->redirect(array('account'));
     }
