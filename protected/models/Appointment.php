@@ -188,7 +188,7 @@ class Appointment extends CActiveRecord {
      */
     public function afterValidate() {
         $rc = parent::afterValidate();
-        if ($rc && User::model()->countByAttributes(array('role' => 2, 'id' => $this->user_id)) > 0) {
+        if ($rc && User::model()->countByAttributes(array('role' => TEACHER, 'id' => $this->user_id)) > 0) {
             $rc = false;
             Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Der ausgewählte Benutzer ist kein Lehrer.'));
         } else if ($rc && Appointment::model()->countByAttributes(array('user_id' => $this->user_id, 'parent_child_id' => $this->parent_child_id)) >= 1) {

@@ -100,7 +100,7 @@ class Group extends CActiveRecord {
         return self::formatGroups($a_result, $sort);
     }
 
-    public static function formatGroups($groups, $sort = "") {
+    public static function formatGroups($groups, $sort = '') {
         $a_temp = null;
         if (!empty($groups)) {
             foreach ($groups as $object) {

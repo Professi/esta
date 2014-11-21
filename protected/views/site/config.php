@@ -409,7 +409,13 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
             </div>
             <div class="row collapse">
                 <div class="small-8 columns">
-                    <span class="prefix"><?php echo $form->label($model, 'smtpPort'); ?></span>
+                    <span class="prefix infofeld">
+                        <?php echo $form->label($model, 'smtpPort', array('class' => 'infolabel')); ?>
+                    </span>
+                    <div class="infotext">
+                        <span aria-hidden="true" data-icon="&#xe012;"></span>
+                        <?php echo Yii::t('app', 'SMTP: 25; TLS: 587; SMTPS: 465'); ?>
+                    </div>
                 </div>
                 <div class="small-4 columns">
                     <?php

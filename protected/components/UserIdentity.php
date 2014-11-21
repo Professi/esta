@@ -45,12 +45,12 @@ class UserIdentity extends CUserIdentity {
         if ($user === null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
             $this->errorMessage = Yii::t('app', "Ungültige E-Mail Adresse");
-        } else if ($user->state == 0) {
+        } else if ($user->state == NOT_ACTIVE) {
             $this->errorCode = self::ERROR_ACCOUNT_NOT_ACTIVATED;
             $this->errorMessage = Yii::t('app', "Ihr Benutzerkonto wurde noch nicht aktiviert. Bitte nutzen Sie den Aktivierungslink, der Ihnen per E-Mail zugesandt wurde. Sollten Sie Probleme haben, füllen Sie bitte das Kontaktformular aus.");
-        } else if ($user->state == 1 && !$user->verifyPassword($this->password)) {
+        } else if ($user->state == ACTIVE && !$user->verifyPassword($this->password)) {
             $this->invalidPassword($user);
-        } else if ($user->state == 2) {
+        } else if ($user->state == BLOCKED) {
             if (is_null($user->bannedUntil) || $user->bannedUntil == 0) {
                 $this->errorCode = self::ERROR_ACCOUNT_BANNED;
                 $this->errorMessage = Yii::t('app', "Ihr Benutzerkonto wurde gesperrt. Bitte wenden Sie sich an die Schulverwaltung.");
@@ -76,7 +76,7 @@ class UserIdentity extends CUserIdentity {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function unbanUser(&$user) {
-        $user->state = 1;
+        $user->state = ACTIVE;
         $user->bannedUntil = 0;
         $user->badLogins = 0;
     }
@@ -106,7 +106,7 @@ class UserIdentity extends CUserIdentity {
         if (Yii::app()->params['banUsers']) {
             $user->badLogins = $user->badLogins + 1;
             if ($user->badLogins == Yii::app()->params['maxAttemptsForLogin']) {
-                $user->state = 2;
+                $user->state = BLOCKED;
                 $user->bannedUntil = time() + Yii::app()->params['durationTempBans'] * 60;
                 $this->errorMessage = Yii::t('app', "Falsches Passwort!") . ' ' . Yii::t('app', "Ihr Benutzerkonto wurde für {n} Minuten gesperrt.", array(Yii::app()->params['durationTempBans']));
             } else {

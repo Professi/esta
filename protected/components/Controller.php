@@ -18,10 +18,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-define('ADMIN', '0');
-define('MANAGEMENT', '1');
-define('TEACHER', '2');
-define('PARENTS', '3');
 
 /*
  * Klasse Controller überschreibt die Standard Yii Controller Klasse
@@ -146,8 +142,8 @@ class Controller extends CController {
      * @deprecated since version 1.3
      */
     public function registerAdminScripts($admin = false) {
-        if (Yii::app()->user->checkAccess('1') || $admin ||
-                Yii::app()->user->checkAccess('2')) {
+        if (Yii::app()->user->checkAccess(MANAGEMENT) || $admin ||
+                Yii::app()->user->checkAccess(TEACHER)) {
             $cs = Yii::app()->getClientScript();
             $cs->addPackage('admin', array(
                 'baseUrl' => $this->assetsDir,

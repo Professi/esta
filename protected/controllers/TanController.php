@@ -45,7 +45,7 @@ class TanController extends Controller {
         return array(
             array('allow',
                 'actions' => array('genTans', 'pupilImport'),
-                'roles' => array('2', '1'),
+                'roles' => array(TEACHER, MANAGEMENT),
             ),
             array('deny', // deny all users
                 'users' => array('*'),

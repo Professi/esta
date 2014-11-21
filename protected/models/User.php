@@ -460,7 +460,7 @@ class User extends CActiveRecord {
      * @return array
      */
     public static function getStateNameAndValue() {
-        return array(array('value' => '0', 'name' => Yii::t('app', 'Nicht aktiv')), array('value' => '1', 'name' => Yii::t('app', 'Aktiv')), array('value' => '2', 'name' => Yii::t('app', 'Gesperrt')));
+        return array(array('value' => NOT_ACTIVE, 'name' => Yii::t('app', 'Nicht aktiv')), array('value' => ACTIVE, 'name' => Yii::t('app', 'Aktiv')), array('value' => BLOCKED, 'name' => Yii::t('app', 'Gesperrt')));
     }
 
     /**
@@ -474,7 +474,7 @@ class User extends CActiveRecord {
     }
 
     static public function getRoles() {
-        return array(array('value' => 0, 'name' => Yii::t('app', 'Administrator')), array('value' => 1, 'name' => Yii::t('app', 'Verwalter')), array('value' => 2, 'name' => Yii::t('app', 'Lehrer')), array('value' => 3, 'name' => Yii::t('app', 'Eltern')));
+        return array(array('value' => ADMIN, 'name' => Yii::t('app', 'Administrator')), array('value' => MANAGEMENT, 'name' => Yii::t('app', 'Verwalter')), array('value' => TEACHER, 'name' => Yii::t('app', 'Lehrer')), array('value' => PARENTS, 'name' => Yii::t('app', 'Eltern')));
     }
 
     /**
@@ -682,13 +682,12 @@ class User extends CActiveRecord {
      * @return array
      */
     public function getRolePermission() {
-        $rc = null;
+        $rc = array(PARENTS => Yii::t('app', 'Eltern'), TEACHER => Yii::t('app', 'Lehrer'));
         if (Yii::app()->user->isAdmin()) {
-            $rc = array('3' => Yii::t('app', 'Eltern'), '2' => Yii::t('app', 'Lehrer'), '1' => Yii::t('app', 'Verwaltung'), '0' => Yii::t('app', 'Administrator'));
+            $rc[MANAGEMENT] = Yii::t('app', 'Verwaltung');
+            $rc[ADMIN] = Yii::t('app', 'Administrator');
         } else if (Yii::app()->user->isManager() && $this->id == Yii::app()->user->getId()) {
-            $rc = array('3' => Yii::t('app', 'Eltern'), '2' => Yii::t('app', 'Lehrer'), '1' => Yii::t('app', 'Verwaltung'));
-        } else {
-            $rc = array('3' => Yii::t('app', 'Eltern'), '2' => Yii::t('app', 'Lehrer'));
+            $rc[MANAGEMENT] = Yii::t('app', 'Verwaltung');
         }
         return $rc;
     }

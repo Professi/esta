@@ -43,11 +43,11 @@ class ParentChildController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'roles' => array('1'),
+                'roles' => array(MANAGEMENT),
             ),
             array('allow',
                 'actions' => array('create', 'index', 'delete'),
-                'roles' => array('3'),
+                'roles' => array(PARENTS),
             ),
             array('deny',
                 'users' => array('*'), // deny all users

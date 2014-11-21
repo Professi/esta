@@ -37,7 +37,7 @@ class WebUser extends CWebUser {
         if (empty($this->id)) {
             return false;
         }
-        if ($this->getState('role') == 0) {
+        if ($this->getState('role') == ADMIN) {
             return true;
         }
         return ($role === $this->getState('role'));
@@ -76,7 +76,7 @@ class WebUser extends CWebUser {
      * @return boolean selbsterklärend
      */
     public function isAdmin() {
-        return $this->checkRole('0');
+        return $this->checkRole(ADMIN);
     }
 
     /**
@@ -88,15 +88,15 @@ class WebUser extends CWebUser {
     }
 
     public function isManager() {
-        return $this->checkRole('1');
+        return $this->checkRole(MANAGEMENT);
     }
 
     public function isParent() {
-        return $this->checkRole('3');
+        return $this->checkRole(PARENTS);
     }
 
     public function isTeacher() {
-        return $this->checkRole('2');
+        return $this->checkRole(TEACHER);
     }
 
     private function checkRole($roleId) {

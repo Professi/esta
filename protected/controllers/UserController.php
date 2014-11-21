@@ -58,19 +58,19 @@ class UserController extends Controller {
         return array(
             array('allow',
                 'actions' => array('update', 'account', 'search'),
-                'roles' => array('3', '2'),
+                'roles' => array(PARENTS, TEACHER),
             ),
             array('allow',
                 'actions' => array('create', 'activate', 'ChangePwd', 'captcha', 'NewPw'),
                 'users' => array('?'),
             ),
             array('allow',
-                'roles' => array('1')),
+                'roles' => array(MANAGEMENT)),
             array('deny',
                 'actions' => array('deleteAll'),
-                'roles' => array('1')),
+                'roles' => array(MANAGEMENT)),
             array('allow',
-                'roles' => array('0'),
+                'roles' => array(ADMIN),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
@@ -92,8 +92,8 @@ class UserController extends Controller {
         UserHasGroup::model()->deleteAll();
         DateHasGroup::model()->deleteAll();
         Group::model()->deleteAll();
-        User::model()->deleteUsersWithRole(3);
-        User::model()->deleteUsersWithRole(2);
+        User::model()->deleteUsersWithRole(PARENTS);
+        User::model()->deleteUsersWithRole(TEACHER);
         Yii::app()->user->setFlash('success', Yii::t('app', 'Alle Daten gelöscht, einzig die Verwaltungs- und Administrationskonten wurden nicht gelöscht')) .
                 $this->redirect(array('account'));
     }
@@ -131,13 +131,13 @@ class UserController extends Controller {
     public function actionActivate($activationKey) {
         $user = User::model()->findByAttributes(array('activationKey' => $activationKey));
         if ($user != NULL) {
-            if ($user->state == 0) {
-                $user->setAttribute('state', 1);
+            if ($user->state == NOT_ACTIVE) {
+                $user->setAttribute('state', ACTIVE);
                 $user->update();
                 Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Benutzerkonto wurde erfolgreich aktiviert. Sie können Sich nun einloggen.'));
-            } else if ($user->state == 1) {
+            } else if ($user->state == ACTIVE) {
                 Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Ihr Benutzerkonto wurde bereits aktiviert.'));
-            } else if ($user->state == 2) {
+            } else if ($user->state == BLOCKED) {
                 Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Ihr Benutzerkonto konnte nicht aktiviert werden, weil er bereits gesperrt wurde. Sollten Sie Fragen haben füllen Sie bitte das Kontaktformular aus.'));
             }
         } else {
@@ -294,7 +294,7 @@ class UserController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-        if ((!Yii::app()->user->isAdmin() && $model->role != '0') || Yii::app()->user->isAdmin()) {
+        if ((!Yii::app()->user->isAdmin() && $model->role != ADMIN) || Yii::app()->user->isAdmin()) {
             $model->password = '';
             $model->password_repeat = '';
             if (isset($_POST['User'])) {
@@ -365,13 +365,13 @@ class UserController extends Controller {
             $model->password_repeat = $model->password;
             $model->role = $model->role;
             switch ($model->state) {
-                case 0:
+                case NOT_ACTIVE:
                     $model->stateName = Yii::t('app', "Nicht aktiv");
                     break;
-                case 1:
+                case ACTIVE:
                     $model->stateName = Yii::t('app', "Aktiv");
                     break;
-                case 2:
+                case BLOCKED:
                     $model->stateName = Yii::t('app', "Gesperrt");
                     break;
             }
@@ -421,16 +421,16 @@ class UserController extends Controller {
             $dataProvider->groups = Yii::app()->user->getGroups();
         }
         if (Yii::app()->user->isParent()) {
-            $dataProvider->role = 2;
+            $dataProvider->role = TEACHER;
         } else if (Yii::app()->user->checkAccess('1')) {
             $dataProvider->role = $role;
         } else if (Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments'] && !Yii::app()->params['teacherAllowBlockTeacherApps']) {
-            $dataProvider->role = 3;
+            $dataProvider->role = PARENTS;
         } else if (Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments'] && Yii::app()->params['teacherAllowBlockTeacherApps']) {
             if ($role > 1) {
                 $dataProvider->role = $role;
             } else {
-                $dataProvider->role = 3;
+                $dataProvider->role = PARENTS;
             }
         }
         $criteria = $dataProvider->searchCriteriaTeacherAutoComplete();

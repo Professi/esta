@@ -45,12 +45,12 @@ class AppointmentController extends Controller {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array('create', 'index', 'view', 'getTeacher', 'makeAppointment', 'delete', 'exportIcs'),
-                'roles' => array('3'),
+                'roles' => array(PARENTS),
             ),
             array('allow', //for teachers
                 'actions' => array('index', 'delete', 'create', 'createBlockApp', 'DeleteBlockApp',
                     'getteacherappointmentsajax', 'getselectchildrenajax', 'overview', 'exportIcs'),
-                'roles' => array('2')
+                'roles' => array(TEACHER)
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
                 'actions' => array('admin', 'delete', 'view', 'create', 'update',
@@ -58,7 +58,7 @@ class AppointmentController extends Controller {
                     'getteacherappointmentsajax', 'getselectchildrenajax',
                     'overview'
                 ),
-                'roles' => array('0', '1'),
+                'roles' => array(ADMIN, MANAGEMENT),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
@@ -112,7 +112,7 @@ class AppointmentController extends Controller {
                 }
                 if ($model->save()) {
                     Yii::app()->user->setFlash('success', Yii::t('app', 'Termin erfolgreich geblockt.'));
-                    $this->redirect(Yii::app()->user->checkAccessNotAdmin('2') ? array('index') : array('admin'));
+                    $this->redirect(Yii::app()->user->isTeacher() ? array('index') : array('admin'));
                 }
             }
             $this->render('createBlockApp', array('model' => $model, 'teacherLabel' => $teacherLabel));
@@ -376,7 +376,7 @@ class AppointmentController extends Controller {
                 $arr['blockedApp'] = $blockedApp->search();
             }
             $this->render('indexTeacher', $arr);
-        } else if (Yii::app()->user->checkAccessNotAdmin('3')) {
+        } else if (Yii::app()->user->isParent()) {
             $no_children = ParentChild::model()->countByAttributes(
                             array('user_id' => Yii::app()->user->getId())) == '0' ? true : false;
             $this->render('index', array(
@@ -467,7 +467,7 @@ class AppointmentController extends Controller {
     public function getDatesWithTimes($dateMax, $mergeDates = false) {
         $a_groupOfDateAndTimes = array();
         if (!empty($dateMax)) {
-            if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccessNotAdmin('3')) {
+            if (Yii::app()->params['allowGroups'] && Yii::app()->user->isParent()) {
                 //Verwaltung kann trotzdem noch Termine an anderen Tagen für diesen Benutzer buchen
                 $a_dates = Date::model()->findAll(Date::criteriaForDateWithGroups($dateMax));
             } else {
@@ -648,7 +648,7 @@ class AppointmentController extends Controller {
     }
 
     public function actionOverview($id, $date) {
-        if (!((Yii::app()->user->checkAccessNotAdmin('2') && $id === Yii::app()->user->id) || Yii::app()->user->checkAccess('1'))) {
+        if (!((Yii::app()->user->isTeacher() && $id === Yii::app()->user->id) || Yii::app()->user->checkAccess(MANAGEMENT))) {
             $this->throwFourNullThree();
         }
         $data = $this->generateOverviewData($id, current($this->getDateWithTimes($date)), Appointment::model()->with('parentchild.child', 'parentchild.user')->findAllByAttributes(array('user_id' => $id)), BlockedAppointment::model()->findAllByAttributes(array('user_id' => $id)));
@@ -700,7 +700,7 @@ class AppointmentController extends Controller {
     }
 
     public function actionExportIcs() {
-        if (!(Yii::app()->user->checkAccess('2') || Yii::app()->user->checkAccess('3'))) {
+        if (!(Yii::app()->user->isTeacher() || Yii::app()->user->isParent())) {
             $this->throwFourNullThree();
         }
         $dates = $this->generateIcsData();
@@ -728,10 +728,10 @@ class AppointmentController extends Controller {
 
     private function getAppointments() {
         $appointments = array();
-        if (Yii::app()->user->checkAccess('2')) {
+        if (Yii::app()->user->checkAccess(TEACHER)) {
             $userId = array('user_id' => Yii::app()->user->id);
             $appointments = Appointment::model()->findAllByAttributes($userId);
-        } else if (Yii::app()->user->checkAccess('3')) {
+        } else if (Yii::app()->user->checkAccess(PARENTS)) {
             $crit = new CDbCriteria();
             $i = 0;
             foreach (ParentChild::model()->findAllByAttributes(array('user_id' => Yii::app()->user->id)) as $parentChild) {
@@ -770,7 +770,7 @@ class AppointmentController extends Controller {
         if (!is_numeric($date)) {
             $this->throwFourNullNull();
         }
-        $teachers = User::model()->findAllByAttributes(array('role' => '2'));
+        $teachers = User::model()->findAllByAttributes(array('role' => TEACHER));
         $dateTimes = $this->getDateWithTimes($date);
         $pages = array();
         set_time_limit(0);

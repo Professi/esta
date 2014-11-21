@@ -29,8 +29,7 @@
 /**
  * Include the the PHPMailer class.
  */
-require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'phpmailer' . DIRECTORY_SEPARATOR . 'class.phpmailer.php');
-include(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'phpmailer' . DIRECTORY_SEPARATOR ."class.smtp.php");
+require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'phpmailer' . DIRECTORY_SEPARATOR . 'PHPMailerAutoload.php');
 /**
  * EMailer is a simple wrapper for the PHPMailer library.
  * @see http://phpmailer.codeworxtech.com/index.php?pg=phpmailer
@@ -86,7 +85,7 @@ class EMailer {
      * Constructor. Here the instance of PHPMailer is created.
      */
     public function __construct() {
-        $this->_myMailer = new PHPMailer();
+        $this->_myMailer = new PHPMailer(true);
     }
 
     //***************************************************************************

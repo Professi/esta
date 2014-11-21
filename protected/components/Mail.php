@@ -34,26 +34,29 @@ class Mail {
         $mailer = Yii::createComponent('application.extensions.mailer.EMailer');
         $mailer->isSMTP();
         $mailer->SMTPAuth = Yii::app()->params['smtpAuth'];
+        //$mailer->SMTPKeepAlive = true; // SMTP connection will not close after each email sent, reduces SMTP overhead
         $mailer->Host = Yii::app()->params['emailHost'];
         if (Yii::app()->params['smtpAuth']) {
             $mailer->Username = Yii::app()->params['fromMailHost'];
             $mailer->Password = Yii::app()->params['smtpPassword'];
         }
         if (YII_DEBUG) {
-            $mailer->SMTPDebug = 1;
+            $mailer->SMTPDebug = 2;
+            $mailer->Debugoutput = 'html';
         }
         $mailer->SMTPSecure = Yii::app()->params['smtpSecure'];
         $mailer->Port = Yii::app()->params['smtpPort'];
-        $mailer->From = $from;
-        $mailer->isHTML(true);
+        $mailer->setFrom($from, $fromName);
         $mailer->addAddress($to);
-        $mailer->FromName = $fromName;
-        $mailer->CharSet = 'UTF-8';
-        $mailer->ContentType = 'text/html';
         $mailer->Subject = $subject;
-        $mailer->Body = $message;
-        if (!$mailer->send()) {
-            throw new CException($mailer->ErrorInfo);
+        $mailer->msgHTML($message);
+        $mailer->AltBody = Yii::t('app', 'Benutzen Sie bitte ein HTML kompatibles E-Mail Programm!');
+        try {
+            $mailer->send();
+        } catch (phpmailerException $e) {
+            throw new CException($e->errorMessage());
+        } catch (Exception $e) {
+            throw new CException($e->getMessage());
         }
     }
 
@@ -82,7 +85,7 @@ class Mail {
      */
     public function sendTestMail($email) {
         $body = $this->mailHeader();
-        $body = '<p>' . Yii::t('app', 'Dies ist eine Testmail.') . '</p>';
+        $body = '<p><b>' . Yii::t('app', 'Dies ist eine Testmail.') . '</b></p>';
         $body .= $this->mailFooter();
         $this->send(Yii::t('app', 'Testmail bei {appname}', array('{appname}' => Yii::app()->name)), $body, $email);
     }

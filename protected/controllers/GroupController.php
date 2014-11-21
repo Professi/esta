@@ -41,7 +41,7 @@ class GroupController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'roles' => array('1')),
+                'roles' => array(MANAGEMENT)),
             array('deny',
                 'users' => array('*'),
             ),
@@ -225,7 +225,7 @@ class GroupController extends Controller {
             $crit = new CDbCriteria();
             $crit->addCondition('role = :role1', 'OR');
             $crit->addCondition('role = :role2', 'OR');
-            $crit->params = array(':role1'=>2,':role2'=>3);
+            $crit->params = array(':role1'=>TEACHER,':role2'=>PARENTS);
             foreach(User::model()->findAll($crit) as $user) {
                 $desc = (empty($user->title)) ? '' : "{$user->title} ";
                 $desc .= "{$user->firstname} {$user->lastname}";
