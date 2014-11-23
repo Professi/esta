@@ -103,7 +103,12 @@ if (Yii::app()->params['allowBlockingAppointments']) {
             </div>
         </div>
     </div>
-    <div class="small-2 columns">
+</div>
+<div class="row">
+    <div class="small-4 columns">
+        <input id="show-empty-plans" type="checkbox"><label for="show-empty-plans"><?php echo Yii::t('app', 'Leere Lehrerpläne anzeigen'); ?></label>
+    </div>
+    <div class="small-8 columns">
         <div class="small button" id="print-view-all-button"><?php echo Yii::t('app', 'Lehrerpläne'); ?></div>
     </div>
 </div>
@@ -130,7 +135,9 @@ if (Yii::app()->params['allowBlockingAppointments']) {
             </div>
         </div>
     </div>
-    <div class="small-2 columns">
+</div>
+<div class="row">
+    <div class="small-8 columns">
         <div class="small button" id="print-view-button"><?php echo Yii::t('app', 'Anzeigen'); ?></div>
     </div>
 </div>

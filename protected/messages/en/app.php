@@ -19,8 +19,8 @@
 return array (
   'Falls Fragen zu der Elternsprechtags-Software bestehen sollten, können Sie auf der Startseite den Link „Kontakt“ anklicken. Danach erscheint eine Seite, bei der Sie die Ihren Namen, Ihre E-Mailadresse und einen Betreff eingeben müssen. Außerdem muss eine Nachricht geschrieben werden, in der Sie Ihr Anliegen darlegen können. Wenn Sie alle Felder ausgefüllt haben, müssen Sie abschließend den Sicherheitscode eingeben und auf „Absenden“ klicken.' => '',
   'Klicken Sie den Menübutton „Ihre Kinder“, danach auf den Button „Kind hinzufügen“. Anschließend müssen Sie den Vor- und Nachnamen Ihres Kindes eingeben und auf „Anlegen“ klicken.' => '',
+  'Leere Lehrerpläne anzeigen' => 'Show empty teacher plans',
   'Nachdem Sie alle Felder ausgefüllt haben, müssen Sie auf den Button mit der Aufschrift „Registrieren“ klicken. Danach erhalten Sie eine E-Mail, die einen Registrierungslink beinhaltet. Wenn diese E-Mail eingetroffen ist, müssen Sie den mitgeschickten Link anklicken, um den Account zu aktivieren. Anschließend können Sie sich mit Ihrer E-Mailadresse und dem von Ihnen festgelegten Passwort auf der Hauptseite einloggen.' => '',
-  'SMTP: 25; TLS: 587; SMTPS: 465' => 'SMTP: 25; TLS: 587; SMTPS: 465',
   'Sie können Termine löschen, indem Sie im Menü auf den Button „Ihre Termine“ klicken. Außerdem ist die Seite „Ihre Termine“ auch nach dem Login direkt geöffnet. Ein Termin kann gelöscht werden, indem Sie auf das kleine Mülleimersymbol klicken und die Sicherheitsfrage mit „OK“ bestätigen.' => '',
   'Sie können Termine löschen, indem Sie im Menü auf den Button „Ihre Termine“ klicken. Außerdem ist die Seite „Ihre Termine“ auch nach dem Login direkt geöffnet. Ein Termin kann gelöscht werden, indem Sie auf den Button „Termin löschen“ klicken.' => '',
   'Sie können sich registrieren, indem Sie auf der Hauptseite den Schriftzug „Benötigen Sie einen Zugang? Klicken Sie hier.“ anklicken. Auf dieser Seite müssen Sie alle Felder ausfüllen. Bei der Angabe der E-Mail-Adresse ist es wichtig, eine gültige Adresse einzutragen, da über diese ein Aktivierungslink verschickt wird. Das Passwort muss dabei mindestens acht Zeichen umfassen und einmal wiederholt werden. Vom Klassenlehrer Ihres Kindes erhalten Sie eine TAN (Kennziffer), die aus sechs Zahlen besteht.' => '',
@@ -362,6 +362,7 @@ return array (
   'SMTP Passwort' => 'SMTP Password',
   'SMTP Port' => 'SMTP Port',
   'SMTP Sicherheit' => 'SMTP Security',
+  'SMTP: 25; TLS: 587; SMTPS: 465' => 'SMTP: 25; TLS: 587; SMTPS: 465',
   'Schlüssel' => 'Key',
   'Schullink' => 'Link of the school',
   'Schulname (z.B. Schule XYZ)' => 'Name of the school (e.g. School XYZ)',

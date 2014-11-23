@@ -215,8 +215,9 @@
         
         $('#print-view-all-button').click(function() {
             var date = $('#print-view-date').val();
+            var empty = ($('#show-empty-plans').is(':checked') ? 1 : 0);
             if(date !== '' && typeof date === 'string') {
-                window.location.href = "index.php?r=appointment/generatePlans&date=" + date;
+                window.location.href = "index.php?r=appointment/generatePlans&date=" + date + "&emptyPlans=" + empty;
             }
         });
         

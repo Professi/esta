@@ -651,11 +651,19 @@ class AppointmentController extends Controller {
         if (!((Yii::app()->user->isTeacher() && $id === Yii::app()->user->id) || Yii::app()->user->checkAccess(MANAGEMENT))) {
             $this->throwFourNullThree();
         }
-        $data = $this->generateOverviewData($id, current($this->getDateWithTimes($date)), Appointment::model()->with('parentchild.child', 'parentchild.user')->findAllByAttributes(array('user_id' => $id)), BlockedAppointment::model()->findAllByAttributes(array('user_id' => $id)));
+        $dateObj = $this->getDate($date);
+        $data = $this->generateOverviewData($id, current($this->getDateWithTimes($dateObj)), Appointment::model()->with('parentchild.child', 'parentchild.user')->findAllByAttributes(array('user_id' => $id)), BlockedAppointment::model()->findAllByAttributes(array('user_id' => $id)));
         $teacher = User::model()->findByPk($id);
         $this->render('overview', array('data' => $data,
             'teacher' => "{$teacher->title} {$teacher->firstname} {$teacher->lastname}",
-            'date' => Yii::app()->dateFormatter->formatDateTime(strtotime($date), 'short', null)));
+            'date' => Yii::app()->dateFormatter->formatDateTime(strtotime($dateObj->date), 'short', null)));
+    }
+
+    private function getDate($dateId) {
+        if (is_numeric($dateId)) {
+            return Date::model()->findByPk((int) $dateId);
+        }
+        $this->throwFourNullNull();
     }
 
     private function generateOverviewData($id, $dateData, $appointments, $blockedAppointments) {
@@ -690,9 +698,8 @@ class AppointmentController extends Controller {
         return $data;
     }
 
-    private function getDateWithTimes($id) {
+    private function getDateWithTimes($date) {
         $dateAndTimes = array();
-        $date = Date::model()->findByPk((int) $id);
         if (!empty($date)) {
             $dateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $date->id));
         }
@@ -766,20 +773,33 @@ class AppointmentController extends Controller {
         return $dates;
     }
 
-    public function actionGeneratePlans($date) {
+    /**
+     * 
+     * @param int $date
+     * @param tinyint $emptyPlans
+     * @TODO implement group using
+     */
+    public function actionGeneratePlans($date, $emptyPlans = '1') {
         if (!is_numeric($date)) {
             $this->throwFourNullNull();
         }
-        $teachers = User::model()->findAllByAttributes(array('role' => TEACHER));
-        $dateTimes = $this->getDateWithTimes($date);
+        $criteria = new CDbCriteria();
+        $criteria->order = 'lastname ASC, firstname ASC';
+        $teachers = User::model()->findAllByAttributes(array('role' => TEACHER), $criteria);
+        $dateObj = $this->getDate($date);
+        $dateTimes = $this->getDateWithTimes($dateObj);
         $pages = array();
         set_time_limit(0);
         foreach ($teachers as $teacher) {
             $temp = array();
-            $temp['data'] = $this->generateOverviewData($teacher->id, current($dateTimes), Appointment::model()->with('parentchild.child', 'parentchild.user')->findAllByAttributes(array('user_id' => $teacher->id)), BlockedAppointment::model()->findAllByAttributes(array('user_id' => $teacher->id)));
-            $temp['teacher'] = "{$teacher->title} {$teacher->firstname} {$teacher->lastname}";
-            $temp['date'] = Yii::app()->dateFormatter->formatDateTime(strtotime($date), 'short', null);
-            $pages[] = $temp;
+            $appointments = Appointment::model()->with('parentchild.child', 'parentchild.user')->findAllByAttributes(array('user_id' => $teacher->id));
+            $blockedAppointments = BlockedAppointment::model()->findAllByAttributes(array('user_id' => $teacher->id));
+            if ($emptyPlans || !empty($appointments || !empty($blockedAppointments))) {
+                $temp['data'] = $this->generateOverviewData($teacher->id, current($dateTimes), $appointments, $blockedAppointments);
+                $temp['teacher'] = "{$teacher->title} {$teacher->firstname} {$teacher->lastname}";
+                $temp['date'] = Yii::app()->dateFormatter->formatDateTime(strtotime($dateObj->date), 'short', null);
+                $pages[] = $temp;
+            }
         }
         $this->render('overviewAll', array('pages' => $pages));
     }
