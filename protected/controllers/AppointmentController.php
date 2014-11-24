@@ -794,7 +794,7 @@ class AppointmentController extends Controller {
             $temp = array();
             $appointments = Appointment::model()->with('parentchild.child', 'parentchild.user')->findAllByAttributes(array('user_id' => $teacher->id));
             $blockedAppointments = BlockedAppointment::model()->findAllByAttributes(array('user_id' => $teacher->id));
-            if ($emptyPlans || !empty($appointments || !empty($blockedAppointments))) {
+            if ($emptyPlans || !empty($appointments) || !empty($blockedAppointments)) {
                 $temp['data'] = $this->generateOverviewData($teacher->id, current($dateTimes), $appointments, $blockedAppointments);
                 $temp['teacher'] = "{$teacher->title} {$teacher->firstname} {$teacher->lastname}";
                 $temp['date'] = Yii::app()->dateFormatter->formatDateTime(strtotime($dateObj->date), 'short', null);
