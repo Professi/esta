@@ -22,6 +22,11 @@
 
 $count = count($pages);
 foreach ($pages as $index => $page):
+    if ($index !== 0):
+       ?>
+<div style="height: 3em;display:block;"></div>
+<?php
+    endif;
     echo $this->renderPartial('overview',array('data' => $page['data'],
         'teacher' => $page['teacher'],
         'date' => $page['date']),true);
