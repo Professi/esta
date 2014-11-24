@@ -44,6 +44,7 @@ class Mail {
             $mailer->SMTPDebug = 2;
             $mailer->Debugoutput = 'html';
         }
+        $mailer->CharSet = "UTF-8";
         $mailer->SMTPSecure = Yii::app()->params['smtpSecure'];
         $mailer->Port = Yii::app()->params['smtpPort'];
         $mailer->setFrom($from, $fromName);
