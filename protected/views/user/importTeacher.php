@@ -42,53 +42,52 @@ $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
         </div>
     </div>
 </div>
-    <?php if (Yii::app()->params['randomTeacherPassword']) { ?>
-<div class="row">
-    <div class="small-10 columns small-centered">
-        <div class="panel">
-            <div class="row">
-                
-                <div class="small-2 columns text-center">
-                    <i class="fi-alert callout-icon"></i>
-                </div>
-                <div class="small-10 columns">
-                    <?php
-                    echo Yii::t('app', 'Da Sie in der Konfiguration die Option "Lehrerpasswörter bei deren Erstellung zufällig generieren?" aktiviert haben, kann der Lehrerimport sehr lange dauern.');
-                    echo Yii::t('app', 'Sollten Sie bei dem Import der Lehrer eine Fehlermeldung von PHP oder Ihrem Webserver erhalten, müssen Sie in der php.ini die "maximum_execution_time" hochsetzen oder Ihre CSV Datei aufteilen.');
-                    ?>
+<?php if (Yii::app()->params['randomTeacherPassword']) { ?>
+    <div class="row">
+        <div class="small-10 columns small-centered">
+            <div class="panel">
+                <div class="row">
+
+                    <div class="small-2 columns text-center">
+                        <i class="fi-alert callout-icon"></i>
+                    </div>
+                    <div class="small-10 columns">
+                        <?php
+                        echo Yii::t('app', 'Da Sie in der Konfiguration die Option "Lehrerpasswörter bei deren Erstellung zufällig generieren?" aktiviert haben, kann der Lehrerimport sehr lange dauern.'). '<br>';
+                        echo Yii::t('app', 'Sollten Sie bei dem Import der Lehrer eine Fehlermeldung von PHP oder Ihrem Webserver erhalten, müssen Sie in der php.ini die "maximum_execution_time" hochsetzen oder Ihre CSV Datei aufteilen.');
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-    <?php } ?>
+<?php } ?>
 <div class="row">
-
     <div class="small-10 columns small-centered">
+        <?php
+        $form = $this->beginWidget('CActiveForm', array('id' => 'csv-form', 'enableAjaxValidation' => true,
+            'htmlOptions' => array('enctype' => 'multipart/form-data'),
+            'errorMessageCssClass' => 'error',
+            'skin' => false,
+        ));
+        ?>
         <fieldset>
             <legend><?php echo Yii::t('app', 'Lehrer importieren'); ?></legend>
-            <?php
-            $form = $this->beginWidget('CActiveForm', array('id' => 'csv-form', 'enableAjaxValidation' => true,
-                'htmlOptions' => array('enctype' => 'multipart/form-data'),
-                'errorMessageCssClass' => 'error',
-                'skin' => false,
-            ));
-            ?>
             <div class="row collapse">
                 <div class="small-4 columns">
                     <span class="prefix"><?php echo $form->label($model, 'file'); ?></span>
                 </div>
                 <div class="small-4 columns">
                     <div class="prefix button file-input">
-                        <i class="fi-upload"></i><span>&nbsp;<?php echo Yii::t('app','Datei auswählen'); ?></span>
-                    <?php
-                    echo $form->fileField($model, 'file');
-                    echo $form->error($model, 'file');
-                    ?>
+                        <i class="fi-upload"></i><span>&nbsp;<?php echo Yii::t('app', 'Datei auswählen'); ?></span>
+                        <?php
+                        echo $form->fileField($model, 'file');
+                        echo $form->error($model, 'file');
+                        ?>
                         <script type="text/javascript">
-                        var maxFileSize = '<?php echo ByteConverter::getMaxSizeInBytes(); ?>';
-                        var errorMessage = '<?php echo Yii::t('app','Die ausgewählte Datei übersteigt die maximale Dateigröße.'); ?>';
-                    </script>
+                            var maxFileSize = '<?php echo ByteConverter::getMaxSizeInBytes(); ?>';
+                            var errorMessage = '<?php echo Yii::t('app', 'Die ausgewählte Datei übersteigt die maximale Dateigröße.'); ?>';
+                        </script>
                     </div>
                 </div>
                 <div class="small-4 columns">

@@ -16,6 +16,5 @@ return array(
         '/vendors',
         '/web/js',
         '/extensions',
-        '/vendors',
     ),
 );
