@@ -70,7 +70,7 @@ return array(
         'db' => array(
             'connectionString' => 'mysql:host=' . $params['databaseHost'] . ';port=' . $params['databasePort'] . ';dbname=' . $params['databaseName'],
             'emulatePrepare' => true,
-            'enableParamLogging'=>YII_DEBUG,
+            'enableParamLogging' => YII_DEBUG,
             'enableProfiling' => YII_DEBUG,
             'username' => $params['databaseUsername'],
             'password' => $params['databasePassword'],
