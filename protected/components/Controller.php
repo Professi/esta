@@ -120,8 +120,6 @@ class Controller extends CController {
         $cs->scriptMap['jquery-ui.js'] = $this->assetsDir . '/js/jquery-ui.js';
         $cs->scriptMap['jquery-ui.min.js'] = $this->assetsDir . '/js/jquery-ui.min.js';
 
-        $cs->registerCoreScript('jquery.js');
-
         $cs->registerScriptFile($this->assetsDir . '/js/fastclick.js', CClientScript::POS_END);
         $cs->registerScriptFile($this->assetsDir . '/js/modernizr.js', CClientScript::POS_END);
         $cs->registerScriptFile($this->assetsDir . '/js/placeholder.js', CClientScript::POS_END);
