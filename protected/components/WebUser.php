@@ -34,7 +34,7 @@ class WebUser extends CWebUser {
      * @return bool Permission granted?
      */
     public function checkAccess($role, $params = array()) {
-        if (empty($this->id)) {
+        if (!is_numeric($this->id)) {
             return false;
         }
         if ($this->getState('role') == ADMIN) {
