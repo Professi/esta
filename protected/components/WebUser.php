@@ -51,7 +51,7 @@ class WebUser extends CWebUser {
      * @return boolean Falls eine Operation mit der UserRolle übereinstimmt gibts true
      */
     public function checkAccessRole($role1, $role2) {
-        if (empty($this->id)) {
+        if (!is_numeric($role1)) {
             return false;
         }
         return ($role1 === $this->getState('role') || $role2 === $this->getState('role'));
@@ -100,7 +100,7 @@ class WebUser extends CWebUser {
     }
 
     private function checkRole($roleId) {
-        if (!empty($this->id) && $this->getState('role') == $roleId) {
+        if (is_numeric($this->id) && $this->getState('role') == $roleId) {
             return true;
         }
         return false;
