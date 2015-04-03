@@ -48,7 +48,7 @@ class UserHasRoom extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('id, user_id, room_id, date_id', 'required'),
+            array('user_id, room_id, date_id', 'required'),
             array('id, user_id, room_id, date_id', 'numerical', 'integerOnly' => true),
             array('user_id', 'exist', 'attributeName' => 'id', 'className' => 'User'),
             array('room_id', 'exist', 'attributeName' => 'id', 'className' => 'Room'),
@@ -78,9 +78,9 @@ class UserHasRoom extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id' => 'ID',
-            'user_id' => Yii::t('app', 'User'),
-            'room_id' => Yii::t('app', 'Room'),
-            'date_id' => Yii::t('app', 'Date'),
+            'user_id' => Yii::t('app', 'Lehrer'),
+            'room_id' => Yii::t('app', 'Raum'),
+            'date_id' => Yii::t('app', 'Elternsprechtag'),
         );
     }
 

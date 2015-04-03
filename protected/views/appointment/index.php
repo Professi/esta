@@ -72,6 +72,7 @@ $this->menu = array(
                 <th><?= Yii::t('app', 'Datum') ?></th>
                 <th><?= Yii::t('app', 'Ihr Kind') ?></th>
                 <th><?= Yii::t('app', 'Bei') ?></th>
+                <th><?= Yii::t('app', 'In Raum') ?></th>
             </tr>
         </thead>
         <tbody>

@@ -153,5 +153,8 @@ $menu = array(//icon,label,url,visible(bool)
         </div>
     </div> 
     <div class="infobox" style="display: none;"><p></p></div>
+    <script>
+        var ajax_param_empty = "<?= Yii::t('app', 'Eine Angabe, die benötigt wird, fehlt. Denken Sie daran Einträge aus der Auswahlliste auszuwählen.') ?>";
+    </script>
 </body>
 </html>

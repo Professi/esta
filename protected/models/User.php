@@ -378,7 +378,7 @@ class User extends CActiveRecord {
     }
     
     public function getUserHasRoom($date_id) {
-        return UserHasRoom::model()->findByAttributes(array('user_id'=>  $this->getPrimaryKey(),'date_id'=>$date_id), array('limit'=>1));
+        return UserHasRoom::model()->findByAttributes(array('user_id'=>  $this->getPrimaryKey(),'date_id'=>$date_id));
     }
     
 
@@ -652,7 +652,7 @@ class User extends CActiveRecord {
         $userHasRoom->user_id = $this->getPrimaryKey();
         $userHasRoom->room_id = $room;
         $userHasRoom->date_id = $date;
-        $userHasRoom->save();
+        return $userHasRoom->save();
     }
 
     /**

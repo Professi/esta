@@ -241,6 +241,7 @@
                 date = $('#room-assign-date').val(),
                 statusButton = $('#room-assign-status');
             if (teacher === undefined || room === undefined || date === undefined) {
+                alert(ajax_param_empty);
                 return;
             }
             statusButton.removeClass('success alert secondary').addClass('secondary').find('i').attr('class','fi-upload-cloud');
@@ -249,7 +250,12 @@
                 method: 'GET',
                 data: {'teacher':teacher,'room':room,'date':date}
             }).done(function( data ) {
-                answer = JSON.parse(data);
+                try {
+                    answer = JSON.parse(data);
+                } catch (e) {
+                    console.log(e);
+                    statusButton.removeClass('secondary').addClass('alert').find('i').attr('class','fi-alert');
+                }
                 console.log(answer);
                 if (answer.status) {
                     statusButton.removeClass('secondary').addClass('success').find('i').attr('class','fi-check');

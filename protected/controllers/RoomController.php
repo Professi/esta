@@ -66,7 +66,7 @@ class RoomController extends Controller {
         if (isset($_POST['Room'])) {
             $model->attributes = $_POST['Room'];
             if ($model->save()) {
-                $this->redirect(array('view', 'id' => $model->id));
+                $this->redirect(array('admin'));
             }
         }
 
@@ -88,8 +88,9 @@ class RoomController extends Controller {
 
         if (isset($_POST['Room'])) {
             $model->attributes = $_POST['Room'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
+            if ($model->save()) {
+                $this->redirect(array('admin'));
+            }
         }
 
         $this->render('update', array(
@@ -106,8 +107,9 @@ class RoomController extends Controller {
         $this->loadModel($id)->delete();
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if (!isset($_GET['ajax']))
+        if (!isset($_GET['ajax'])) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        }
     }
 
     /**
@@ -178,15 +180,34 @@ class RoomController extends Controller {
         echo CJSON::encode($a_rc);
     }
     
+    /**
+     * AJAX method to assign rooms to teacher
+     * @param string $teacher
+     * @param string $room
+     * @param string $date
+     * @return JSON Array with parameters and success/failure state
+     */
     public function actionAssignAJAX($teacher,$room,$date) {
         if (Yii::app()->user->checkAccessNotAdmin(TEACHER) && $teacher !== Yii::app()->user->id) {
             $this->throwFourNullThree();
         }
-        $user_rooms = new UserHasRoom();
-        $user_rooms->room_id = $room;
-        $user_rooms->user_id = $teacher;
-        $user_rooms->date_id = $date;
-        $status = $user_rooms->save();
+        $user = User::model()->findByPk($teacher);
+        $uhr = $user->getUserHasRoom($date);
+        if ( ! is_null($uhr)) {
+            $newUhr = new UserHasRoom();
+            $newUhr->user_id = $user->getPrimaryKey();
+            $newUhr->room_id = $room;
+            $newUhr->date_id = $date;
+            if ($uhr->delete()) {
+                $status = $newUhr->save();
+            } else {
+                $status = false;
+            }
+        } else {
+            $status = $user->createUserHasRoom($room, $date);
+        }
+        
+        
         echo CJSON::encode(['room' => $room, 'teacher' => $teacher, 'date' => $date, 'status' => $status]);
         Yii::app()->end();
     }

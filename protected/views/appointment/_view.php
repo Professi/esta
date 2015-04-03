@@ -47,6 +47,16 @@
         <div class="small-10 columns">
             <?php echo CHtml::encode("{$data->user->title} {$data->user->firstname} {$data->user->lastname}"); ?>
         </div>
-        <a class="small button right hide-for-print delete-appointment" href="index.php?r=appointment/delete&amp;id=<?php echo CHtml::encode($data->id); ?>"><?php echo Yii::t('app', 'Termin löschen?'); ?></a>
+        
+    </div>
+    <br>
+     <div class="row collapse">
+        <div class="small-1 small-offset-1 columns">
+            <i><?php echo Yii::t('app', 'In Raum') ?></i>
+        </div>
+        <div class="small-10 columns">
+            <?php echo CHtml::encode("{$data->user->getRoom($data->dateandtime->date->id)}"); ?>
+        </div>
+         <a class="small button right hide-for-print delete-appointment" href="index.php?r=appointment/delete&amp;id=<?php echo CHtml::encode($data->id); ?>"><?php echo Yii::t('app', 'Termin löschen?'); ?></a>
     </div>
 </div>

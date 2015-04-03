@@ -57,9 +57,9 @@ $('.search-form form').submit(function(){
         'dataProvider' => $user_rooms->search(),
         'filter' => $user_rooms,
         'columns' => array(
-            array('name' => 'room_id'),
+            array('name' => 'room_id', 'value' => '$data->room->name'),
             array('name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
-            array('name' => 'date_id'),
+            array('name' => 'date_id', 'value' => 'Yii::app()->dateFormatter->formatDateTime(strtotime($data->date->date), "short", null)." ({$data->date->title})"'),
         ),
     ));
 ?>
