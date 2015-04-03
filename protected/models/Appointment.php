@@ -115,7 +115,7 @@ class Appointment extends CActiveRecord {
             $criteria->compare('parentchild.user_id', ParentChild::model()->searchParentID($this->parent_child_id), true);
         }
         if ($this->dateAndTime_id != null) {
-            $criteria->addCondition('dateandtime.time LIKE time(:time)');
+            $criteria->addCondition('time LIKE time(:time)');
             $criteria->params = array('time' => $this->dateAndTime_id);
         }
         $criteria->compare('user.lastname', ucfirst($this->user_id), true);
