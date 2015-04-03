@@ -91,15 +91,12 @@ class UserHasRoom extends CActiveRecord {
 
     public function search() {
         $criteria = new CDbCriteria;
-        $criteria->with = array('room', 'date', 'user' => array('select' => array('id', 'firstname', 'lastname')));
+        $criteria->with = array('room', 'user' => array('select' => array('id', 'firstname', 'lastname')));
         $criteria->together = true;
         if ($this->room_id != '') {
             $criteria->compare('room.name', $this->room_id, true);
         }
-        if ($this->user_id != null) {
-            $criteria->addCondition('date.date LIKE date(:date)');
-            $criteria->params = array('date' => $this->date_id);
-        }
+        $criteria->compare('date_id', $this->date_id, false);
         $criteria->compare('user.lastname', ucfirst($this->user_id), true);
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
