@@ -51,6 +51,7 @@ $('.search-form form').submit(function(){
             <h2 class="text-center"><?php echo Yii::t('app', 'Lehrerräume'); ?></h2>
         </div>
     </div>
+<div>
     <?php
     $this->widget('zii.widgets.grid.CGridView', array(
         'id' => 'userrooms-grid',
@@ -63,6 +64,7 @@ $('.search-form form').submit(function(){
         ),
     ));
 ?>
+    </div>
 <div class="push"></div>
 <?php 
     $this->renderPartial('assign',['dates'=>$dates]);

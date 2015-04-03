@@ -45,16 +45,12 @@ class UserHasRoom extends CActiveRecord {
      * @return array validation rules for model attributes.
      */
     public function rules() {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
             array('user_id, room_id, date_id', 'required'),
             array('id, user_id, room_id, date_id', 'numerical', 'integerOnly' => true),
             array('user_id', 'exist', 'attributeName' => 'id', 'className' => 'User'),
             array('room_id', 'exist', 'attributeName' => 'id', 'className' => 'Room'),
-            array('user_id, date_id', 'unique'),
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
+            array('date_id', 'validateDateAndRoom'),
             array('id, user_id, room_id, date_id', 'safe', 'on' => 'search'),
         );
     }
@@ -84,62 +80,38 @@ class UserHasRoom extends CActiveRecord {
         );
     }
 
-    /**
-     * Retrieves a list of models based on the current search/filter conditions.
-     *
-     * Typical usecase:
-     * - Initialize the model fields with values from filter form.
-     * - Execute this method to get CActiveDataProvider instance which will filter
-     * models according to data in model fields.
-     * - Pass data provider to CGridView, CListView or any similar widget.
-     *
-     * @return CActiveDataProvider the data provider that can return the models
-     * based on the search/filter conditions.
-     */
-    public function search() {
-        // @todo Please modify the following code to remove attributes that should not be searched.
-
-        $criteria = new CDbCriteria;
-
-        $criteria->compare('id', $this->id);
-        $criteria->compare('user_id', $this->user_id);
-        $criteria->compare('room_id', $this->room_id);
-        $criteria->compare('date_id', $this->date_id);
-
-        return new CActiveDataProvider($this, array(
-            'criteria' => $criteria,
-        ));
+    public function validateDateAndRoom($attribute, $params) {
+        $u = UserHasRoom::model()->findByAttributes(array('date_id' => $this->date_id, 'room_id' => $this->room_id));
+        if (is_null($u) || ($u->user_id == $this->user_id && $u->date_id == $this->date_id)) {
+            return true;
+        }
+        $this->addError('room_id', Yii::t('app', 'Raum wurde an diesem Elternsprechtag bereits vergeben'));
+        return false;
     }
 
-//    public function search() {
-//        $criteria = new CDbCriteria;
-//        $criteria->compare('id', $this->id);
-//        $criteria->with = array('room', 'user', 'date');
-//        $criteria->together = true;
-//        $criteria->compare('room', $this->room, true);
-//        $criteria->compare('date', $this->date, true);
-//        $criteria->compare('user', $this->user, true);
-//        $sort = new CSort();
-//        $sort->defaultOrder = 'id asc';
-//        $sort->attributes = array(
-//            'id' => array(
-//                'asc' => 'id',
-//                'desc' => 'id desc'),
-//            'room' => array(
-//                'asc' => 'room.name',
-//                'desc' => 'room.name desc'),
-//            'date' => array(
-//                'asc' => 'date.title',
-//                'desc' => 'date.title desc'),
-//            'user' => array(
-//                'asc' => 'user.lastname',
-//                'desc' => 'user.lastname desc'),
-//        );
-//        return new CActiveDataProvider($this, array(
-//            'criteria' => $criteria,
-//            'sort' => $sort,
-//        ));
-//    }
+    public function search() {
+        $criteria = new CDbCriteria;
+        $criteria->with = array('room', 'date', 'user' => array('select' => array('id', 'firstname', 'lastname')));
+        $criteria->together = true;
+        if ($this->room_id != '') {
+            $criteria->compare('room.name', $this->room_id, true);
+        }
+        if ($this->user_id != null) {
+            $criteria->addCondition('date.date LIKE date(:date)');
+            $criteria->params = array('date' => $this->date_id);
+        }
+        $criteria->compare('user.lastname', ucfirst($this->user_id), true);
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder' => array(
+                    'user_id' => CSort::SORT_ASC,
+                    'dateAndTime_id' => CSort::SORT_ASC,
+                ),
+                'multiSort' => true,
+            )
+        ));
+    }
 
     /**
      * Returns the static model of the specified AR class.
