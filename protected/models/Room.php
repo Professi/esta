@@ -44,7 +44,7 @@ class Room extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('id, name', 'required'),
+            array('name', 'required'),
             array('id', 'numerical', 'integerOnly' => true),
             array('name', 'length', 'max' => 255),
             // The following rule is used by search().
@@ -105,6 +105,15 @@ class Room extends CActiveRecord {
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+    
+    public function searchAutocomplete() {
+        $criteria = new CDbCriteria;
+        $match = addcslashes(ucfirst($this->name), '%_');
+        $criteria->addCondition('name LIKE :match');
+        $criteria->params[':match'] = "$match%";
+        $criteria->limit = 10;
+        return $criteria;
     }
 
 }

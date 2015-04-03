@@ -221,6 +221,48 @@
             }
         });
         
+        // ** Lehrer Raum Verknüpfung AJAX und Autocompletes
+        
+        $('#room-assign-teacher').on('autocompleteselect', function( e, ui) {
+            e.preventDefault();
+            $(this).val(ui.item.label);
+            $(this).data('id',ui.item.value);
+        });
+        
+        $('#room-assign-room').on('autocompleteselect', function( e, ui) {
+            e.preventDefault();
+            $(this).val(ui.item.label);
+            $(this).data('id',ui.item.value);
+        });
+        
+        $('#room-assign-button').on('click', function() {
+            var teacher = $('#room-assign-teacher').data('id'),
+                room = $('#room-assign-room').data('id'),
+                date = $('#room-assign-date').val(),
+                statusButton = $('#room-assign-status');
+            if (teacher === undefined || room === undefined || date === undefined) {
+                return;
+            }
+            statusButton.removeClass('success alert secondary').addClass('secondary').find('i').attr('class','fi-upload-cloud');
+            $.ajax({
+                url: 'index.php?r=room/assignajax',
+                method: 'GET',
+                data: {'teacher':teacher,'room':room,'date':date}
+            }).done(function( data ) {
+                answer = JSON.parse(data);
+                console.log(answer);
+                if (answer.status) {
+                    statusButton.removeClass('secondary').addClass('success').find('i').attr('class','fi-check');
+                } else {
+                    statusButton.removeClass('secondary').addClass('alert').find('i').attr('class','fi-alert');
+                }                
+            }).fail(function( jqXHR, textstatus) {
+                statusButton.removeClass('secondary').addClass('alert').find('i').attr('class','fi-alert');
+                console.log(textstatus);
+            });
+            
+        });
+        
         
         // ** Gruppenzuweisung unter group/assign **
         

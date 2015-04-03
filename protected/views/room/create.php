@@ -8,11 +8,22 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Room', 'url'=>array('index')),
-	array('label'=>'Manage Room', 'url'=>array('admin')),
+	array(  'label' => Yii::t('app', 'Räume verwalten'), 
+            'url' => array('admin'),
+            'linkOptions' => array('class' => 'small button')),
 );
+$this->setPageTitle(Yii::t('app', 'Elternsprechtag anlegen'));
 ?>
 
-<h1>Create Room</h1>
-
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<div class="row">
+    <div class="small-12 columns">
+        <fieldset>
+            <legend><?php echo Yii::t('app', 'Raum anlegen');?></legend>
+            <?php
+            echo $this->renderPartial('_form', array(
+                'model' => $model,
+            ));
+            ?>
+        </fieldset>
+    </div>
+</div>

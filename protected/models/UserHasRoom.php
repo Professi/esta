@@ -110,35 +110,35 @@ class UserHasRoom extends CActiveRecord {
         ));
     }
 
-    public function search() {
-        $criteria = new CDbCriteria;
-        $criteria->compare('id', $this->id);
-        $criteria->with = array('room', 'user', 'date');
-        $criteria->together = true;
-        $criteria->compare('room', $this->room, true);
-        $criteria->compare('date', $this->date, true);
-        $criteria->compare('user', $this->user, true);
-        $sort = new CSort();
-        $sort->defaultOrder = 'id asc';
-        $sort->attributes = array(
-            'id' => array(
-                'asc' => 'id',
-                'desc' => 'id desc'),
-            'room' => array(
-                'asc' => 'room.name',
-                'desc' => 'room.name desc'),
-            'date' => array(
-                'asc' => 'date.title',
-                'desc' => 'date.title desc'),
-            'user' => array(
-                'asc' => 'user.lastname',
-                'desc' => 'user.lastname desc'),
-        );
-        return new CActiveDataProvider($this, array(
-            'criteria' => $criteria,
-            'sort' => $sort,
-        ));
-    }
+//    public function search() {
+//        $criteria = new CDbCriteria;
+//        $criteria->compare('id', $this->id);
+//        $criteria->with = array('room', 'user', 'date');
+//        $criteria->together = true;
+//        $criteria->compare('room', $this->room, true);
+//        $criteria->compare('date', $this->date, true);
+//        $criteria->compare('user', $this->user, true);
+//        $sort = new CSort();
+//        $sort->defaultOrder = 'id asc';
+//        $sort->attributes = array(
+//            'id' => array(
+//                'asc' => 'id',
+//                'desc' => 'id desc'),
+//            'room' => array(
+//                'asc' => 'room.name',
+//                'desc' => 'room.name desc'),
+//            'date' => array(
+//                'asc' => 'date.title',
+//                'desc' => 'date.title desc'),
+//            'user' => array(
+//                'asc' => 'user.lastname',
+//                'desc' => 'user.lastname desc'),
+//        );
+//        return new CActiveDataProvider($this, array(
+//            'criteria' => $criteria,
+//            'sort' => $sort,
+//        ));
+//    }
 
     /**
      * Returns the static model of the specified AR class.

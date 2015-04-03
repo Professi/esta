@@ -30,7 +30,7 @@ class RoomController extends Controller {
                 'roles' => array(PARENTS,TEACHER),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'delete'),
+                'actions' => array('create', 'update', 'delete','assignajax','search'),
                 'roles' => array(TEACHER,MANAGEMENT,ADMIN),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -65,8 +65,9 @@ class RoomController extends Controller {
 
         if (isset($_POST['Room'])) {
             $model->attributes = $_POST['Room'];
-            if ($model->save())
+            if ($model->save()) {
                 $this->redirect(array('view', 'id' => $model->id));
+            }
         }
 
         $this->render('create', array(
@@ -113,9 +114,9 @@ class RoomController extends Controller {
      * Lists all models.
      */
     public function actionIndex() {
-        $dataProvider = new CActiveDataProvider('Room');
+        #$dataProvider = new CActiveDataProvider('Room');
         $this->render('index', array(
-            'dataProvider' => $dataProvider,
+            'dates' => Date::simpleSelect2ListData(),
         ));
     }
 
@@ -125,11 +126,15 @@ class RoomController extends Controller {
     public function actionAdmin() {
         $model = new Room('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Room']))
+        $user_rooms = new UserHasRoom('search');
+        $user_rooms->unsetAttributes();
+        if (isset($_GET['Room'])) {
             $model->attributes = $_GET['Room'];
-
+        }
         $this->render('admin', array(
             'model' => $model,
+            'user_rooms' => $user_rooms,
+            'dates' => Date::simpleSelect2ListData(),
         ));
     }
 
@@ -156,6 +161,34 @@ class RoomController extends Controller {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
+    }
+    
+    public function actionSearch($term) {
+        $dataProvider = new Room();
+        $dataProvider->unsetAttributes();
+        $dataProvider->name = $term;
+        $criteria = $dataProvider->searchAutocomplete();
+        #var_dump($criteria);die;
+        $a_rc = array();
+        $a_data = Room::model()->findAll($criteria);
+        foreach ($a_data as $record) {
+            $a_rc[] = array('label' => $record->name
+                , 'value' => $record->id);
+        }
+        echo CJSON::encode($a_rc);
+    }
+    
+    public function actionAssignAJAX($teacher,$room,$date) {
+        if (Yii::app()->user->checkAccessNotAdmin(TEACHER) && $teacher !== Yii::app()->user->id) {
+            $this->throwFourNullThree();
+        }
+        $user_rooms = new UserHasRoom();
+        $user_rooms->room_id = $room;
+        $user_rooms->user_id = $teacher;
+        $user_rooms->date_id = $date;
+        $status = $user_rooms->save();
+        echo CJSON::encode(['room' => $room, 'teacher' => $teacher, 'date' => $date, 'status' => $status]);
+        Yii::app()->end();
     }
 
 }

@@ -402,16 +402,11 @@ class AppointmentController extends Controller {
         if (isset($_GET['BlockedAppointment'])) {
             $blockedApp->attributes = $_GET['BlockedAppointment'];
         }
-        $dates = Date::model()->findAll();
-        $dateData = array();
-        foreach ($dates as $date) {
-            $desc = Yii::app()->dateFormatter->formatDateTime(strtotime($date->date), 'short', null);
-            $desc .= (empty($date->title)) ? '' : " ({$date->title})";
-            $dateData[$date->id] = $desc;
-        }
 
         $this->render('admin', array(
-            'model' => $model, 'blockedApp' => $blockedApp, 'dates' => $dateData
+            'model' => $model, 
+            'blockedApp' => $blockedApp, 
+            'dates' => Date::simpleSelect2ListData(),
         ));
     }
 

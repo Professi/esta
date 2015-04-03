@@ -314,5 +314,15 @@ class Date extends CActiveRecord {
         }
         return $rc;
     }
+    
+    public static function simpleSelect2ListData() {
+        $dates = [];
+        foreach (self::model()->findAll() as $date) {
+            $desc = Yii::app()->dateFormatter->formatDateTime(strtotime($date->date), 'short', null);
+            $desc .= (empty($date->title)) ? '' : " ({$date->title})";
+            $dates[$date->id] = $desc;
+        }
+        return $dates;
+    }
 
 }

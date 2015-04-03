@@ -86,58 +86,45 @@ if (Yii::app()->params['allowBlockingAppointments']) {
     ));
 }
 ?>
-<div class="push"></div>
 <div class="row">
-    <div class="small-12 columns small-centered">
-        <h2 class="text-center"><?php echo Yii::t('app', 'Druckansicht'); ?></h2>
-    </div>
-</div>
-<div class="row">
-    <div class="small-8 columns">
-        <div class="row collapse">
-            <div class="small-4 columns">
-                <span class="prefix"><?php echo Yii::t('app', 'Elternsprechtag'); ?></span>
+    <div class="small-12 columns">
+        <fieldset>
+            <legend><?php echo Yii::t('app', 'Druckansicht'); ?></legend>
+            <div class="row collapse">
+                <div class="small-4 columns">
+                    <span class="prefix"><?php echo Yii::t('app', 'Elternsprechtag'); ?></span>
+                </div>
+                <div class="small-8 columns">
+                    <?php echo Select2::dropDownList('', '', $dates, array('id' => 'print-view-date')); ?>
+                </div>
             </div>
-            <div class="small-8 columns">
-                <?php echo Select2::dropDownList('', '', $dates, array('id' => 'print-view-date')); ?>
+            <div class="row">
+                <div class="small-12 columns">
+                    <input id="show-empty-plans" type="checkbox"><label for="show-empty-plans"><?php echo Yii::t('app', 'Leere Lehrerpläne anzeigen'); ?></label>
+                </div>
+            </div>            
+            <div class="small button" id="print-view-all-button"><?php echo Yii::t('app', 'Lehrerpläne'); ?></div>
+            <div class="row collapse">
+                <div class="small-4 columns">
+                    <span class="prefix"><?php echo Yii::t('app', 'Lehrer'); ?></span>
+                </div>
+                <div class="small-8 columns">
+                    <?php
+                    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                        'id' => 'print-view-teacher',
+                        'name' => '',
+                        'sourceUrl' => 'index.php?r=user/search&role=2',
+                        'options' => array(
+                            'minLength' => '1',
+                        ),
+                        'htmlOptions' => array(
+                            'placeholder' => Yii::t('app', 'Geben Sie einen Nachnamen ein'),
+                        ),
+                    ));
+                    ?>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="small-4 columns">
-        <input id="show-empty-plans" type="checkbox"><label for="show-empty-plans"><?php echo Yii::t('app', 'Leere Lehrerpläne anzeigen'); ?></label>
-    </div>
-    <div class="small-8 columns">
-        <div class="small button" id="print-view-all-button"><?php echo Yii::t('app', 'Lehrerpläne'); ?></div>
-    </div>
-</div>
-<div class="row">
-    <div class="small-8 columns">
-        <div class="row collapse">
-            <div class="small-4 columns">
-                <span class="prefix"><?php echo Yii::t('app', 'Lehrer'); ?></span>
-            </div>
-            <div class="small-8 columns">
-                <?php
-                $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                    'id' => 'print-view-teacher',
-                    'name' => '',
-                    'sourceUrl' => 'index.php?r=user/search&role=2',
-                    'options' => array(
-                        'minLength' => '1',
-                    ),
-                    'htmlOptions' => array(
-                        'placeholder' => Yii::t('app', 'Geben Sie einen Nachnamen ein'),
-                    ),
-                ));
-                ?>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="small-8 columns">
-        <div class="small button" id="print-view-button"><?php echo Yii::t('app', 'Anzeigen'); ?></div>
+            <div class="small button" id="print-view-button"><?php echo Yii::t('app', 'Anzeigen'); ?></div>
+        </fieldset>
     </div>
 </div>

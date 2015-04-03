@@ -69,9 +69,9 @@ $this->menu = array(
     <table>
         <thead>
             <tr>
-                <th><?php echo Yii::t('app', 'Datum') ?></th>
-                <th><?php echo Yii::t('app', 'Ihr Kind') ?></th>
-                <th><?php echo Yii::t('app', 'Bei') ?></th>
+                <th><?= Yii::t('app', 'Datum') ?></th>
+                <th><?= Yii::t('app', 'Ihr Kind') ?></th>
+                <th><?= Yii::t('app', 'Bei') ?></th>
             </tr>
         </thead>
         <tbody>

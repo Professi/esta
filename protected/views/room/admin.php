@@ -8,9 +8,11 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Room', 'url'=>array('index')),
-	array('label'=>'Create Room', 'url'=>array('create')),
+    array(  'label' => Yii::t('app', 'Raum anlegen'), 
+            'url' => array('create'),
+            'linkOptions' => array('class' => 'small button')),
 );
+$this->setPageTitle(Yii::t('app', 'Raumverwaltung'));
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -26,29 +28,41 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Rooms</h1>
-
-<p>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
-
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
+<div class="row">
+    <div class="small-12 columns small-centered">
+        <h2 class="text-center"><?php echo Yii::t('app', 'Raumverwaltung'); ?></h2>
+    </div>
+</div>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'room-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'id',
-		'name',
-		array(
-			'class'=>'CButtonColumn',
-		),
+            'name',
+            array(
+                'class' => 'CustomButtonColumn',
+            ),
 	),
 )); ?>
+<div class="push"></div>
+    <div class="row">
+        <div class="small-12 columns small-centered">
+            <h2 class="text-center"><?php echo Yii::t('app', 'Lehrerräume'); ?></h2>
+        </div>
+    </div>
+    <?php
+    $this->widget('zii.widgets.grid.CGridView', array(
+        'id' => 'userrooms-grid',
+        'dataProvider' => $user_rooms->search(),
+        'filter' => $user_rooms,
+        'columns' => array(
+            array('name' => 'room_id'),
+            array('name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
+            array('name' => 'date_id'),
+        ),
+    ));
+?>
+<div class="push"></div>
+<?php 
+    $this->renderPartial('assign',['dates'=>$dates]);
