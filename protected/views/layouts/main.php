@@ -68,7 +68,7 @@ $menu = array(//icon,label,url,visible(bool)
                              <?php echo Yii::app()->params['schoolName'] ?>
                     </a>
                 </li>
-                <li class="toggle-topbar menu-icon"><a href=""><span>Menu</span></a></li>
+                <li class="toggle-topbar menu-icon hide-for-small"><a href=""><span>Menu</span></a></li>
             </ul>
             <ul class="left show-for-small-only">
                 <?php
