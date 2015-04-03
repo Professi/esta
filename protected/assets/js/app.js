@@ -148,17 +148,7 @@
         
         // ** JQuery UI Autocomplete Einstellungen **    
                 
-        $('input[id$="_display"]').on('autocompletefocus', function(e) {
-            e.preventDefault();
-        });
-        $('input[id$="_teacher"]').on('autocompletefocus', function(e) {
-            e.preventDefault();
-        });
-        $('#appointment_parent').on('autocompletefocus', function(e) {
-            e.preventDefault();
-        });
-        
-        $('#print-view-teacher').on('autocompletefocus', function(e) {
+        $('input[id$="_display"],input[id$="_teacher"],#appointment_parent,#print-view-teacher,#room-assign-teacher,#room-assign-room').on('autocompletefocus', function(e) {
             e.preventDefault();
         });
         
@@ -228,7 +218,6 @@
             $(this).val(ui.item.label);
             $(this).data('id',ui.item.value);
         });
-        
         $('#room-assign-room').on('autocompleteselect', function( e, ui) {
             e.preventDefault();
             $(this).val(ui.item.label);
@@ -239,16 +228,28 @@
             var teacher = $('#room-assign-teacher').data('id'),
                 room = $('#room-assign-room').data('id'),
                 date = $('#room-assign-date').val(),
-                statusButton = $('#room-assign-status');
-            if (teacher === undefined || room === undefined || date === undefined) {
+                statusButton = $('#room-assign-status'),
+                data = {'r':'room/assignajax','teacher':teacher,'room':room,'date':date};
+            useAjax(data,statusButton);
+        });
+        
+        var useAjax = function (data,statusButton) {
+            var valid = true;
+            $.each(data,function(key,value) {
+                if (value === undefined) {
+                    valid = false;
+                }
+            })
+            if ( ! valid) {
                 alert(ajax_param_empty);
                 return;
             }
+            
             statusButton.removeClass('success alert secondary').addClass('secondary').find('i').attr('class','fi-upload-cloud');
             $.ajax({
-                url: 'index.php?r=room/assignajax',
+                url: 'index.php',
                 method: 'GET',
-                data: {'teacher':teacher,'room':room,'date':date}
+                data: data
             }).done(function( data ) {
                 try {
                     answer = JSON.parse(data);
@@ -266,8 +267,7 @@
                 statusButton.removeClass('secondary').addClass('alert').find('i').attr('class','fi-alert');
                 console.log(textstatus);
             });
-            
-        });
+        }
         
         
         // ** Gruppenzuweisung unter group/assign **
