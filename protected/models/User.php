@@ -118,7 +118,8 @@ class User extends CActiveRecord {
             'parentchildren' => array(self::HAS_MANY, 'ParentChild', 'user_id'),
             'childcount' => array(self::STAT, 'ParentChild', 'user_id'),
             'groupcount' => array(self::STAT, 'UserHasGroup', 'user_id'),
-            'groups' => array(self::MANY_MANY, 'Group', "user_has_group(user_id,group_id)"),
+            'groups' => array(self::MANY_MANY, 'Group', 'user_has_group(user_id,group_id)'),
+            'rooms' => array(self::MANY_MANY, 'Room','user_has_room(user_id,room_id)')
         );
     }
 
@@ -361,6 +362,25 @@ class User extends CActiveRecord {
         }
         return parent::afterSave();
     }
+    
+    /**
+     * 
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * @param int $date_id
+     * @return Room|null
+     */
+    public function getRoom($date_id) {
+        $uhr = $this->getUserHasRoom($date_id);
+        if(!is_null($uhr)) {
+            return $uhr->room;
+        }
+        return null;
+    }
+    
+    public function getUserHasRoom($date_id) {
+        return UserHasRoom::model()->findByAttributes(array('user_id'=>  $this->getPrimaryKey(),'date_id'=>$date_id), array('limit'=>1));
+    }
+    
 
     /**
      * löscht ElternKind Verknüpfung + Kinder
@@ -613,13 +633,26 @@ class User extends CActiveRecord {
     /**
      * Erstellt einen Datensatz in UserHasGroup
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @param UserHasGroup $group
+     * @param int $group
      */
     public function createUserHasGroup($group) {
         $userHasGroup = new UserHasGroup();
         $userHasGroup->user_id = $this->getPrimaryKey();
         $userHasGroup->group_id = $group;
         $userHasGroup->save();
+    }
+    
+    /**
+     * 
+     * @param int $room
+     * @param int $date
+     */
+    public function createUserHasRoom($room, $date) {
+        $userHasRoom = new UserHasRoom();
+        $userHasRoom->user_id = $this->getPrimaryKey();
+        $userHasRoom->room_id = $room;
+        $userHasRoom->date_id = $date;
+        $userHasRoom->save();
     }
 
     /**

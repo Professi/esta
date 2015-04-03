@@ -52,6 +52,7 @@ class UserHasRoom extends CActiveRecord {
             array('id, user_id, room_id, date_id', 'numerical', 'integerOnly' => true),
             array('user_id', 'exist', 'attributeName' => 'id', 'className' => 'User'),
             array('room_id', 'exist', 'attributeName' => 'id', 'className' => 'Room'),
+            array('user_id, date_id', 'unique'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, user_id, room_id, date_id', 'safe', 'on' => 'search'),
