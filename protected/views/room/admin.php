@@ -60,7 +60,9 @@ $('.search-form form').submit(function(){
         'columns' => array(
             array('name' => 'room_id', 'value' => '$data->room->name'),
             array('name' => 'user_id', 'value' => '$data->user->title." ".$data->user->firstname." ".$data->user->lastname'),
-            array('name' => 'date_id', 'value' => 'Yii::app()->dateFormatter->formatDateTime(strtotime($data->date->date), "short", null)." ({$data->date->title})"'),
+            array('name' => 'date_id', 'value' => 'Yii::app()->dateFormatter->formatDateTime(strtotime($data->date->date), "short", null)." ({$data->date->title})"',
+                'filter' => CHtml::listData(Date::filterDate(), 'value', 'name')
+                 ),
         ),
     ));
 ?>

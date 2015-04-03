@@ -145,6 +145,21 @@ class Date extends CActiveRecord {
         return $rc;
     }
 
+    public function getNiceName() {
+        return Yii::app()->dateFormatter->formatDateTime(strtotime($this->date), "short", null) . " ({$this->title})";
+    }
+
+    public static function filterDate() {
+        $dates = Date::model()->findAll();
+        $r = array();
+        foreach ($dates as $date) {
+            $value = $date->getPrimaryKey();
+            $name = $date->getNiceName();
+            $r[] = array('value' => $value, 'name' => $name);
+        }
+        return $r;
+    }
+
     public static function parseDateTime($date, $begin = false, $simple = false) {
         return CDateTimeParser::parse($date . ($begin != false ? ' ' . $begin : ''), ($simple ? self::getSimpleDateTimeFormat() : self::getDateTimeFormat()));
     }
@@ -314,7 +329,7 @@ class Date extends CActiveRecord {
         }
         return $rc;
     }
-    
+
     public static function simpleSelect2ListData() {
         $dates = [];
         foreach (self::model()->findAll() as $date) {
