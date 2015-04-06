@@ -200,15 +200,18 @@ class RoomController extends Controller {
             $newUhr->date_id = $date;
             if ($uhr->delete()) {
                 $status = $newUhr->save();
+                $msg = $status ? Yii::t('app', 'Verknüpfung erfolgreich verändert.') : Yii::t('app', 'Verändern der Verknüpfung fehlgeschlagen.');
             } else {
                 $status = false;
+                $msg = Yii::t('app', 'Verändern der Verknüpfung fehlgeschlagen.');
             }
         } else {
             $status = $user->createUserHasRoom($room, $date);
+            $msg = $status ? Yii::t('app', 'Verknüpfung erfolgreich erstellt.') : Yii::t('app', 'Erstellen der Verknüpfung fehlgeschlagen.');
         }
         
         
-        echo CJSON::encode(['room' => $room, 'teacher' => $teacher, 'date' => $date, 'status' => $status]);
+        echo CJSON::encode(['room' => $room, 'teacher' => $teacher, 'date' => $date, 'status' => $status, 'msg' => $msg]);
         Yii::app()->end();
     }
 

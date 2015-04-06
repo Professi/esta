@@ -16,6 +16,52 @@
             }
         });
         
+        // ** AJAX Handler 
+        
+        var useAjax = function (data,statusElement,elementsToClear) {
+            var valid = true,
+                statusButton = statusElement.find('div.button'),
+                statusMessage = statusElement.find('input');
+            $.each(data,function(key,value) {
+                if (value === undefined) {
+                    valid = false;
+                }
+            })
+            if ( ! valid) {
+                alert(ajax_param_empty);
+                return;
+            }
+            
+            statusButton.removeClass('success alert secondary').addClass('secondary').find('i').attr('class','fi-upload-cloud');
+            statusMessage.val('');
+            $.ajax({
+                url: 'index.php',
+                method: 'GET',
+                data: data
+            }).done(function( data ) {
+                try {
+                    answer = JSON.parse(data);
+                } catch (e) {
+                    statusButton.removeClass('secondary').addClass('alert').find('i').attr('class','fi-alert');
+                    statusMessage.val(e);
+                }
+                console.log(answer);
+                if (answer.status) {
+                    statusButton.removeClass('secondary').addClass('success').find('i').attr('class','fi-check');
+                    $.each(elementsToClear,function(key,input) {
+                        input.val('');
+                        input.data('id','');
+                    });
+                } else {
+                    statusButton.removeClass('secondary').addClass('alert').find('i').attr('class','fi-alert');
+                }
+                statusMessage.val(answer.msg);
+            }).fail(function( jqXHR, textstatus) {
+                statusButton.removeClass('secondary').addClass('alert').find('i').attr('class','fi-alert');
+                statusMessage.val(textstatus);
+            });
+        }
+        
         // ** Icon to minimize the nav **
         
         $('.sticky').append($('<i/>',{'class':'fi-eye ul-nav-toggle',text:' Menu'}));
@@ -28,18 +74,14 @@
         
         $('.ul-nav-toggle').click(function() {
             var that = $(this);
-            //that.toggleClass('fi-zoom-out fi-zoom-in');
             that.siblings('ul').toggleClass('ul-nav ul-nav-hide');
         }).click();
         
+        // ** Terminvereinbarung **
         
         $('#teacher-ac').on('autocompleteselect', function(e, ui) {
             e.preventDefault();
             window.location.href = "index.php?r=Appointment/makeAppointment&teacher=" + ui.item.value;
-        });
-        
-        $('#teacher-ac').on('autocompletefocus', function(e){
-            e.preventDefault();
         });
         
         $('.avaiable').css('cursor', 'pointer');
@@ -49,6 +91,8 @@
                 $('#form_time').val(that.siblings().text().trim());
                 $('select[name*="dateAndTime_id"]').select2('val',that.data('id'));
         });
+        
+        // ** Löschabfragen **
         
         $('.delete-children').click(function() {
            if (!confirm('Wenn Sie dieses Kind löschen werden auch alle Termine des Kindes gelöscht.')) {
@@ -93,14 +137,12 @@
         
         // ** Elterntagfeld lockAt mit Daten aus dem hidden input füllen. **
         
-            if ($('#lockAt_value').val() !== "" && typeof $('#lockAt_value').val() === 'string') {
-               var value = $('#lockAt_value').val(),
-                   arr = value.split(' ');
-               $('#date_lockAt').val(arr[0]);
-               $('#time_lockAt').val(arr[1]);
-            }
-            
-            
+        if ($('#lockAt_value').val() !== "" && typeof $('#lockAt_value').val() === 'string') {
+           var value = $('#lockAt_value').val(),
+               arr = value.split(' ');
+           $('#date_lockAt').val(arr[0]);
+           $('#time_lockAt').val(arr[1]);
+        }  
         
         // ** Gruppenauswahl deaktivieren wenn ein zu erstellender Benutzer nicht die Rolle Eltern hat. **
         
@@ -148,7 +190,7 @@
         
         // ** JQuery UI Autocomplete Einstellungen **    
                 
-        $('input[id$="_display"],input[id$="_teacher"],#appointment_parent,#print-view-teacher,#room-assign-teacher,#room-assign-room').on('autocompletefocus', function(e) {
+        $('#teacher-ac,input[id$="_display"],input[id$="_teacher"],#appointment_parent,#print-view-teacher,#room-assign-teacher,#room-assign-room').on('autocompletefocus', function(e) {
             e.preventDefault();
         });
         
@@ -213,62 +255,23 @@
         
         // ** Lehrer Raum Verknüpfung AJAX und Autocompletes
         
-        $('#room-assign-teacher').on('autocompleteselect', function( e, ui) {
-            e.preventDefault();
-            $(this).val(ui.item.label);
-            $(this).data('id',ui.item.value);
-        });
-        $('#room-assign-room').on('autocompleteselect', function( e, ui) {
+        $('#room-assign-teacher,#room-assign-room').on('autocompleteselect', function( e, ui) {
             e.preventDefault();
             $(this).val(ui.item.label);
             $(this).data('id',ui.item.value);
         });
         
         $('#room-assign-button').on('click', function() {
-            var teacher = $('#room-assign-teacher').data('id'),
-                room = $('#room-assign-room').data('id'),
+            var teacher = $('#room-assign-teacher'),
+                teacherId = teacher.data('id'),
+                room = $('#room-assign-room'),
+                roomId = room.data('id'),
                 date = $('#room-assign-date').val(),
-                statusButton = $('#room-assign-status'),
-                data = {'r':'room/assignajax','teacher':teacher,'room':room,'date':date};
-            useAjax(data,statusButton);
-        });
-        
-        var useAjax = function (data,statusButton) {
-            var valid = true;
-            $.each(data,function(key,value) {
-                if (value === undefined) {
-                    valid = false;
-                }
-            })
-            if ( ! valid) {
-                alert(ajax_param_empty);
-                return;
-            }
-            
-            statusButton.removeClass('success alert secondary').addClass('secondary').find('i').attr('class','fi-upload-cloud');
-            $.ajax({
-                url: 'index.php',
-                method: 'GET',
-                data: data
-            }).done(function( data ) {
-                try {
-                    answer = JSON.parse(data);
-                } catch (e) {
-                    console.log(e);
-                    statusButton.removeClass('secondary').addClass('alert').find('i').attr('class','fi-alert');
-                }
-                console.log(answer);
-                if (answer.status) {
-                    statusButton.removeClass('secondary').addClass('success').find('i').attr('class','fi-check');
-                } else {
-                    statusButton.removeClass('secondary').addClass('alert').find('i').attr('class','fi-alert');
-                }                
-            }).fail(function( jqXHR, textstatus) {
-                statusButton.removeClass('secondary').addClass('alert').find('i').attr('class','fi-alert');
-                console.log(textstatus);
-            });
-        }
-        
+                data = {'r':'room/assignajax','teacher':teacherId,'room':roomId,'date':date},
+                statusElement = $('#room-assign-status'),
+                inputs = [teacher,room];
+            useAjax(data,statusElement,inputs);
+        });        
         
         // ** Gruppenzuweisung unter group/assign **
         

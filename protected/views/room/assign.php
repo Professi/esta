@@ -52,7 +52,14 @@
                 </div>
             </div>
             <div class="small button" id="room-assign-button"><?= Yii::t('app', 'Verknüpfen'); ?></div>
-            <div class="small secondary button right" id="room-assign-status"><i class="fi-cloud"></i></div>
+            <div class="row collapse" id="room-assign-status">
+                <div class="small-1 columns">
+                    <div class="small secondary button right prefix"><i class="fi-cloud"></i></div>
+                </div>
+                <div class="small-11 columns">
+                    <input type="text" disabled />
+                </div>
+            </div>
         </fieldset>
     </div>
 </div>
