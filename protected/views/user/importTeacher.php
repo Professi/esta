@@ -23,6 +23,7 @@
  * @var $form CActiveForm 
  */
 $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
+Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
 ?>
 
 <div class="row">
