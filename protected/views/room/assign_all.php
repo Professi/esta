@@ -40,8 +40,10 @@
             </div>
         </fieldset>
     </div>
-    <div class="small button" id="room-assignall-button"><?= Yii::t('app', 'Alles verknüpfen') ?></div>
-    <div class="small button" id="room-assignall-errors"><?= Yii::t('app', 'Fehler suchen') ?></div>
+    <ul class="button-group even">
+        <li><div class="small button" id="room-assignall-button"><?= Yii::t('app', 'Alles verknüpfen') ?></div></li>
+        <li><div class="small button" id="room-assignall-errors"><?= Yii::t('app', 'Fehler suchen') ?></div></li>
+    </ul>
 </div>
 <script>
     var teachers = <?= CJSON::encode($teachers) ?>,

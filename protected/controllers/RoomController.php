@@ -192,11 +192,11 @@ class RoomController extends Controller {
             $this->throwFourNullThree();
         }
         $user = User::model()->findByPk($teacher);
-        $room = Room::model()->findByPk($room);
-        if (is_null($room)) {
-            $room = new Room();
-            $room->name = $room;
-            if ( ! $room->save()) {
+        $existingRoom = Room::model()->findByPk($room);
+        if (is_null($existingRoom)) {
+            $existingRoom = new Room();
+            $existingRoom->name = $room;
+            if ( ! $existingRoom->save()) {
                 $status = false;
                 $msg = Yii::t('app','Erstellen des Raumes fehlgeschlagen');
             }
@@ -205,7 +205,7 @@ class RoomController extends Controller {
         if ( ! is_null($uhr)) {
             $newUhr = new UserHasRoom();
             $newUhr->user_id = $user->getPrimaryKey();
-            $newUhr->room_id = $room->getPrimaryKey();
+            $newUhr->room_id = $existingRoom->getPrimaryKey();
             $newUhr->date_id = $date;
             if ($uhr->delete()) {
                 $status = $newUhr->save();
@@ -215,7 +215,7 @@ class RoomController extends Controller {
                 $msg = Yii::t('app', 'Verändern der Verknüpfung fehlgeschlagen.');
             }
         } else {
-            $status = $user->createUserHasRoom($room, $date);
+            $status = $user->createUserHasRoom($existingRoom->getPrimaryKey(), $date);
             $msg = $status ? Yii::t('app', 'Verknüpfung erfolgreich erstellt.') : Yii::t('app', 'Erstellen der Verknüpfung fehlgeschlagen.');
         }
         echo CJSON::encode(['room' => $room, 'teacher' => $teacher, 'date' => $date, 'status' => $status, 'msg' => $msg]);
