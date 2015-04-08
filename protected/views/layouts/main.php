@@ -154,7 +154,9 @@ $menu = array(//icon,label,url,visible(bool)
     </div> 
     <div class="infobox" style="display: none;"><p></p></div>
     <script>
-        var ajax_param_empty = "<?= Yii::t('app', 'Eine Angabe, die benötigt wird, fehlt. Denken Sie daran Einträge aus der Auswahlliste auszuwählen.') ?>";
+        var msg_ajax_param_empty = "<?= Yii::t('app', 'Eine Angabe, die benötigt wird, fehlt. Denken Sie daran Einträge aus der Auswahlliste auszuwählen.') ?>",
+            msg_delete_children = "<?= Yii::t('app','Wenn Sie dieses Kind löschen werden auch alle Termine des Kindes gelöscht.') ?>",
+            msg_delete_appointment = "<?= Yii::t('app','Termin wirklich löschen?') ?>";
     </script>
 </body>
 </html>

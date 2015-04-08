@@ -11,6 +11,9 @@ $this->menu=array(
     array(  'label' => Yii::t('app', 'Raum anlegen'), 
             'url' => array('create'),
             'linkOptions' => array('class' => 'small button')),
+    array(  'label' => Yii::t('app', 'Räume mit Lehrern verknüpfen'), 
+            'url' => array('assignall'),
+            'linkOptions' => array('class' => 'small button')),
 );
 $this->setPageTitle(Yii::t('app', 'Raumverwaltung'));
 
@@ -42,6 +45,7 @@ $('.search-form form').submit(function(){
             'name',
             array(
                 'class' => 'CustomButtonColumn',
+                'template' => '{update} {delete}',
             ),
 	),
 )); ?>
@@ -63,6 +67,10 @@ $('.search-form form').submit(function(){
             array('name' => 'date_id', 'value' => 'Yii::app()->dateFormatter->formatDateTime(strtotime($data->date->date), "short", null)." ({$data->date->title})"',
                 'filter' => CHtml::listData(Date::filterDate(), 'value', 'name')
                  ),
+            array(
+                'class' => 'CustomButtonColumn',
+                'template' => '{delete}',
+            ),
         ),
     ));
 ?>

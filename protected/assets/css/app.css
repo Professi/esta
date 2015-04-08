@@ -6930,6 +6930,9 @@ table tr:nth-of-type(even).delete-assign {
     background-color: #fcfcfc;
     border: none
 }
+#room-assignall-template {
+    display: none;
+}
 @media print {
     a[href]:after {
         content: none

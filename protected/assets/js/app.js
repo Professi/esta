@@ -28,7 +28,7 @@
                 }
             })
             if ( ! valid) {
-                alert(ajax_param_empty);
+                alert(msg_ajax_param_empty);
                 return;
             }
             
@@ -95,13 +95,13 @@
         // ** Löschabfragen **
         
         $('.delete-children').click(function() {
-           if (!confirm('Wenn Sie dieses Kind löschen werden auch alle Termine des Kindes gelöscht.')) {
+           if (!confirm(msg_delete_children)) {
                return false;
            }
         });
         
         $('.delete-appointment').click(function() {
-           if (!confirm('Termin wirklich löschen?')) {
+           if (!confirm(msg_delete_appointment)) {
                return false;
            } 
         });
@@ -255,7 +255,7 @@
         
         // ** Lehrer Raum Verknüpfung AJAX und Autocompletes
         
-        $('#room-assign-teacher,#room-assign-room').on('autocompleteselect', function( e, ui) {
+        $('#room-assign-teacher').on('autocompleteselect', function( e, ui) {
             e.preventDefault();
             $(this).val(ui.item.label);
             $(this).data('id',ui.item.value);
@@ -265,13 +265,57 @@
             var teacher = $('#room-assign-teacher'),
                 teacherId = teacher.data('id'),
                 room = $('#room-assign-room'),
-                roomId = room.data('id'),
+                roomValue = room.val(),
                 date = $('#room-assign-date').val(),
-                data = {'r':'room/assignajax','teacher':teacherId,'room':roomId,'date':date},
+                data = {'r':'room/assignajax','teacher':teacherId,'room':roomValue,'date':date},
                 statusElement = $('#room-assign-status'),
                 inputs = [teacher,room];
             useAjax(data,statusElement,inputs);
-        });        
+        });
+        
+        // ** Lehrer Raum Verknüpfung Stapelverarbeitung
+        
+        if (document.getElementById('room-assignall-workspace') !== null) {
+            // Globalen
+            var template = $('#room-assignall-template'),
+                workspace = $('#room-assignall-workspace'),
+                id = 0,
+                date = $('#room-assignall-date');
+            // Templates erstellen
+            $.each(teachers, function(key,teacher) {
+                var clone = template.clone(),
+                    title = teacher.title !== null ? teacher.title + ' ' : '',
+                    name = title + teacher.firstname + ' ' + teacher.lastname;
+                id++;
+                clone.attr('id','room-assignall-element.' + id);
+                clone.find('#room-assignall-teacher').attr('id','room-assignall-teacher.' + id).data('id',teacher.id).val(name);
+                clone.find('#room-assignall-room').attr('id','room-assignall-room.' + id);
+                clone.find('#room-assignall-status').attr('id','room-assignall-status.' + id);
+                workspace.prepend(clone);
+            });
+            // Stapelverarbeitung
+            $('#room-assignall-button').click(function() {
+                if ( ! confirm(msg_assignall_button + date.find('option:checked').text() + '?')) {
+                    return;
+                }
+                workspace.find('div[id*="element."]').each(function(key,element) {
+                    var teacher = $(element).find('input[id*="teacher."]'),
+                        teacherId = teacher.data('id'),
+                        room = $(element).find('input[id*="room."]'),
+                        roomValue = room.val(),
+                        data = {'r':'room/assignajax','teacher':teacherId,'room':roomValue,'date':date.val()},
+                        statusElement = $(element).find('div[id*="status."]'),
+                        inputs = [];
+                    useAjax(data,statusElement,inputs); 
+                });
+            });
+            // Fehler auffinden
+            $('#room-assignall-errors').click(function() {
+                $('html, body').animate({
+                    scrollTop: $('.alert').first().offset().top + 100
+                }, 1000);
+            });
+        }
         
         // ** Gruppenzuweisung unter group/assign **
         

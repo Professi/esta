@@ -34,7 +34,7 @@ class RoomController extends Controller {
                 'roles' => array(TEACHER,MANAGEMENT,ADMIN),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin'),
+                'actions' => array('admin','assignall'),
                 'roles' => array(ADMIN),
             ),
             array('deny', // deny all users
@@ -192,11 +192,20 @@ class RoomController extends Controller {
             $this->throwFourNullThree();
         }
         $user = User::model()->findByPk($teacher);
+        $room = Room::model()->findByPk($room);
+        if (is_null($room)) {
+            $room = new Room();
+            $room->name = $room;
+            if ( ! $room->save()) {
+                $status = false;
+                $msg = Yii::t('app','Erstellen des Raumes fehlgeschlagen');
+            }
+        }
         $uhr = $user->getUserHasRoom($date);
         if ( ! is_null($uhr)) {
             $newUhr = new UserHasRoom();
             $newUhr->user_id = $user->getPrimaryKey();
-            $newUhr->room_id = $room;
+            $newUhr->room_id = $room->getPrimaryKey();
             $newUhr->date_id = $date;
             if ($uhr->delete()) {
                 $status = $newUhr->save();
@@ -209,10 +218,15 @@ class RoomController extends Controller {
             $status = $user->createUserHasRoom($room, $date);
             $msg = $status ? Yii::t('app', 'Verknüpfung erfolgreich erstellt.') : Yii::t('app', 'Erstellen der Verknüpfung fehlgeschlagen.');
         }
-        
-        
         echo CJSON::encode(['room' => $room, 'teacher' => $teacher, 'date' => $date, 'status' => $status, 'msg' => $msg]);
         Yii::app()->end();
+    }
+    
+    public function actionAssignAll() {
+        $this->render('assign_all', array(
+            'teachers' => User::model()->findAllByAttributes(['role' => TEACHER],['select' => 'id,firstname,lastname,title']),
+            'dates' => Date::simpleSelect2ListData(),
+        ));
     }
 
 }
