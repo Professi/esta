@@ -79,6 +79,14 @@ class TanController extends Controller {
      * action um Tans zu generieren
      */
     public function actionGenTans() {
+        if (isset($_POST['submit'])) {
+            echo "Accept code here ";
+        }
+        if (isset($_POST['csv'])) {
+            echo "Reject code here ";
+        }
+
+
         $model = new Tan();
         if (isset($_POST['Tan']) && Yii::app()->session['isTanGen'] != 1) {
             if (Yii::app()->params['allowParentsToManageChilds']) {
@@ -98,6 +106,33 @@ class TanController extends Controller {
             }
             $this->renderFormGenTans($model);
         }
+    }
+
+    /**
+     * 
+     * @param array $tans
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     */
+    protected function generateCSVFile($tans, $parentManagement = true) {
+        $allowGroups = Yii::app()->params['allowGroups'];
+        //$filename =Yii::getPathOfAlias('webroot').'/assets/report_smcs_'.$_POST['report']['table_name'].'.csv';
+        //                   $handle = fopen($filename, 'w+');
+                     //fputcsv($handle,$getfield);
+        $fp = fopen('tans.csv', 'a');
+        $data = array(Yii::t('app', 'TAN'));
+        if ($allowGroups) {
+            $data[] = Yii::t('app', 'Gruppe');
+        }
+        if ($parentManagement) {
+            $data[] = Yii::t('app', 'Vorname');
+            $data[] = Yii::t('app', 'Nachname');
+        }
+        fputcsv($fp, $data);
+        if (is_array($tans)) {
+            
+        }
+        fclose($fp);
+        //$this->redirect(Yii::app()->getBaseUrl(true).'/assets/report_smcs_'.$_POST['report']['table_name'].'.csv', array('target'=>'_blank'));
     }
 
     /**

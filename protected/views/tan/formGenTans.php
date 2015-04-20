@@ -28,7 +28,7 @@ $this->menu = array(
         'url' => array('tan/pupilImport'),
         'linkOptions' => array('class' => 'small button'),
         'visible' => !Yii::app()->params['allowParentsToManageChilds']
-        ),
+    ),
 );
 ?>
 <div class="row">
@@ -38,7 +38,6 @@ $this->menu = array(
 </div>
 <div class="row">
     <div class="small-8 columns small-centered">
-
         <?php
         if (Yii::app()->params['allowParentsToManageChilds']) {
             $form = $this->beginWidget('CActiveForm', array(
@@ -49,7 +48,7 @@ $this->menu = array(
             ?>        <fieldset>
                 <div class="row collapse">
                     <div class="small-3 columns">
-                        <span class="prefix"><?php echo Yii::t('app', 'Anzahl TANs');?></span>
+                        <span class="prefix"><?php echo Yii::t('app', 'Anzahl TANs'); ?></span>
                     </div>
                     <div class="small-9 columns">
                         <?php
@@ -77,8 +76,9 @@ $this->menu = array(
                             ?>
                         </div>
                     </div>
-                <?php } echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('class' => 'small button'));
-                ?>
+                <?php } echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('name' => 'submit', 'class' => 'small button')); ?>
+                &nbsp;&nbsp;
+                <?php echo CHtml::submitButton(Yii::t('app', 'CSV Datei generieren'), array('name' => 'csv', 'class' => 'small button')); ?>
             </fieldset>
             <?php
             $this->endWidget();
@@ -132,7 +132,9 @@ $this->menu = array(
                 <?php } ?>
                 <div class="tiny button add-child-tan">+</div>
                 <div>
-                    <?php echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('class' => 'small button')); ?>
+                    <?php echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('name' => 'submit', 'class' => 'small button')); ?>
+                    &nbsp;&nbsp;
+                    <?php echo CHtml::submitButton(Yii::t('app', 'CSV Datei generieren'), array('name' => 'csv', 'class' => 'small button')); ?>
                 </div>
             </fieldset>
             <?php
