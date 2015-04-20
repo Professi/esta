@@ -57,7 +57,7 @@ class TanController extends Controller {
      * tans for Parents Management
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    private function tansForParentsManagement(&$model) {
+    private function tansForParentsManagement(&$model, $csv = true) {
         $model = new Tan();
         if (isset($_POST['Tan'])) {
             $model->setAttributes($_POST['Tan']);
@@ -70,8 +70,32 @@ class TanController extends Controller {
             $tans[] = $tan;
         }
         Yii::app()->session['isTanGen'] = 1;
-        $dataProvider = new CArrayDataProvider($tans, array('pagination' => array('pageSize' => Yii::app()->params['maxTanGen'])));
-        $this->render('showGenTans', array('dataProvider' => $dataProvider));
+        if ($csv) {
+            $this->generateCSVFile($tans, true);
+        } else {
+            $dataProvider = new CArrayDataProvider($tans, array('pagination' => array('pageSize' => Yii::app()->params['maxTanGen'])));
+            $this->render('showGenTans', array('dataProvider' => $dataProvider));
+        }
+    }
+
+    /**
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     * renders showGenTans when allowParentsToManageChilds activated
+     * @param Tan $model
+     */
+    private function tansNotForParentsManagement(&$model, $csv = false) {
+        $validate = true;
+        $model = $this->iterateOverTans($_POST['Tan'], $validate);
+        if (!empty($model) && $validate) {
+            if ($csv) {
+                $this->generateCSVFile($model, false);
+            } else {
+                $dataProvider = new CArrayDataProvider($model);
+                $this->render('showGenTans', array('dataProvider' => $dataProvider));
+            }
+        } else {
+            $this->renderFormGenTans($model);
+        }
     }
 
     /**
@@ -79,20 +103,16 @@ class TanController extends Controller {
      * action um Tans zu generieren
      */
     public function actionGenTans() {
-        if (isset($_POST['submit'])) {
-            echo "Accept code here ";
-        }
+        $csv = false;
         if (isset($_POST['csv'])) {
-            echo "Reject code here ";
+            $csv = true;
         }
-
-
         $model = new Tan();
         if (isset($_POST['Tan']) && Yii::app()->session['isTanGen'] != 1) {
             if (Yii::app()->params['allowParentsToManageChilds']) {
-                $this->tansForParentsManagement($model);
+                $this->tansForParentsManagement($model, $csv);
             } else {
-                $this->tansNotForParentsManagement($model);
+                $this->tansNotForParentsManagement($model, $csv);
             }
         } else {
             if (isset(Yii::app()->session['isTanGen'])) {
@@ -115,24 +135,42 @@ class TanController extends Controller {
      */
     protected function generateCSVFile($tans, $parentManagement = true) {
         $allowGroups = Yii::app()->params['allowGroups'];
-        //$filename =Yii::getPathOfAlias('webroot').'/assets/report_smcs_'.$_POST['report']['table_name'].'.csv';
-        //                   $handle = fopen($filename, 'w+');
-                     //fputcsv($handle,$getfield);
-        $fp = fopen('tans.csv', 'a');
+//        $filename = Yii::getPathOfAlias('webroot') . '/assets/tans' . date("Ymd") . '.csv';
+//        $fp = fopen($filename, 'w+');
+        //$fp = fopen('php://output', 'w+');
+        $fp = fopen('php://output', 'w');
+        $delimiter = ";";
+        $enclosure = '"';
         $data = array(Yii::t('app', 'TAN'));
         if ($allowGroups) {
             $data[] = Yii::t('app', 'Gruppe');
         }
-        if ($parentManagement) {
+        if (!$parentManagement) {
             $data[] = Yii::t('app', 'Vorname');
             $data[] = Yii::t('app', 'Nachname');
         }
-        fputcsv($fp, $data);
+        fputcsv($fp, $data, $delimiter, $enclosure);
         if (is_array($tans)) {
-            
+            foreach ($tans as $tan) {
+                $d = array($tan->tan);
+                if ($allowGroups) {
+                    if (is_object($tan->group)) {
+                        $d[] = $tan->group->groupname;
+                    } else {
+                        $d[] = '';
+                    }
+                }
+                if (!$parentManagement) {
+                    if (is_object($tan->child)) {
+                        $d[] = $tan->child->firstname;
+                        $d[] = $tan->child->lastname;
+                    }
+                }
+                fputcsv($fp, $d, $delimiter, $enclosure);
+            }
         }
+        Yii::app()->getRequest()->sendFile('tans' . date('Ymd') . '_esta.csv', stream_get_contents($fp), "text/csv");
         fclose($fp);
-        //$this->redirect(Yii::app()->getBaseUrl(true).'/assets/report_smcs_'.$_POST['report']['table_name'].'.csv', array('target'=>'_blank'));
     }
 
     /**
@@ -199,38 +237,31 @@ class TanController extends Controller {
     private function iterateOverTans($tans, &$validate) {
         $model = array();
         foreach ($tans as $i => $oneTan) {
+            $ok = true;
             if (isset($_POST['Tan'][$i])) {
                 $tan = new Tan();
                 if (array_key_exists('group_id', $_POST['Tan'][$i])) {
                     $tan->group_id = $_POST['Tan'][$i]['group_id'];
                 }
-                $tan->childFirstname = $_POST['Tan'][$i]['childFirstname'];
-                $tan->childLastname = $_POST['Tan'][$i]['childLastname'];
-                $tan->tan_count = 1;
-                $tan->generateTan();
-                $model[] = $tan;
+                $firstname = trim($_POST['Tan'][$i]['childFirstname']);
+                $lastname = trim($_POST['Tan'][$i]['childLastname']);
+                if (!Yii::app()->params['allowParentsToManageChilds'] && !empty($firstname) && !empty($lastname)) {
+                    $tan->childFirstname = $firstname;
+                    $tan->childLastname = $lastname;
+                } else {
+                    $ok = false;
+                }
+                if ($ok) {
+                    $tan->tan_count = 1;
+                    $tan->generateTan();
+                    $model[] = $tan;
+                }
             }
         }
         if (empty($model)) {
             $model = $this->getEmptyTanModel();
         }
         return $model;
-    }
-
-    /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
-     * renders showGenTans when allowParentsToManageChilds activated
-     * @param Tan $model
-     */
-    private function tansNotForParentsManagement(&$model) {
-        $validate = true;
-        $model = $this->iterateOverTans($_POST['Tan'], $validate);
-        if (!empty($model) && $validate) {
-            $dataProvider = new CArrayDataProvider($model);
-            $this->render('showGenTans', array('dataProvider' => $dataProvider));
-        } else {
-            $this->renderFormGenTans($model);
-        }
     }
 
     /**
