@@ -444,6 +444,7 @@
            if (input.length !== 0) {
                 $(input).attr('name', $(input).attr('name').replace(/\d/, tanGensId));
                 $(input).attr('id', $(input).attr('id').replace(/\d/, tanGensId));
+                $(input).attr('required','');
                 $(input).val('');
            }
            if (select) {
