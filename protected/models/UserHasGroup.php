@@ -25,6 +25,7 @@
  */
 class UserHasGroup extends CActiveRecord {
 
+    public $userrole;
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -86,17 +87,17 @@ class UserHasGroup extends CActiveRecord {
      */
     public function search() {
         $criteria = new CDbCriteria;
-        $criteria->compare('id', $this->id);
         $criteria->with = array('group', 'user');
         $criteria->together = true;
         $criteria->compare('group', $this->group, true);
         $criteria->compare('user', $this->user, true);
+        $criteria->compare('userrole', $this->userrole, false);
         $sort = new CSort();
-        $sort->defaultOrder = 'id asc';
+        $sort->defaultOrder = 'user.role desc';
         $sort->attributes = array(
-            'id' => array(
-                'asc' => 'id',
-                'desc' => 'id desc'),
+            'userrole' => array(
+                'asc' => 'user.role',
+                'desc' => 'user.role desc'),
             'group' => array(
                 'asc' => 'group.groupname',
                 'desc' => 'group.groupname desc'),
