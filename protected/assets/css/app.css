@@ -6933,6 +6933,12 @@ table tr:nth-of-type(even).delete-assign {
 #room-assignall-template {
     display: none;
 }
+body.f-topbar-fixed ul.title-area {
+    display: none;
+}
+body.f-topbar-fixed section.top-bar-section ul.right {
+    display: none;
+}
 @media print {
     a[href]:after {
         content: none
