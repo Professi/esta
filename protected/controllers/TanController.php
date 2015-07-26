@@ -255,11 +255,14 @@ class TanController extends Controller {
                     $tan->tan_count = 1;
                     $tan->generateTan();
                     $model[] = $tan;
+                } else {
+                    $validate = false;
                 }
             }
         }
-        if (empty($model)) {
+        if (empty($model) || !$validate) {
             $model = $this->getEmptyTanModel();
+            $validate = false;
         }
         return $model;
     }
