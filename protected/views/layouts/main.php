@@ -46,8 +46,16 @@ $menu = array(//icon,label,url,visible(bool)
     <link rel="shortcut icon" type="image/x-icon" href="<?php echo $this->assetsDir; ?>/favicon.ico">
     <?php $this->registerScripts(); ?>
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+    <script type="text/javascript">
+        if (top !== self) {
+            top.location.replace(self.location.href);
+        }
+        window.name = "<?php echo md5(time()) ?>";
+        document.designMode = "off";
+    </script>
 </head>
 <body>
+
     <h1 class="text-center hide show-for-print" id="print-header" style="font-family: 'ClickerScript-Regular';"><?= Yii::t('app', 'Elternsprechtag'); ?></h1>
     <nav class="top-bar hide-on-print" data-topbar data-options="is_hover: false">
         <ul class="title-area">
@@ -155,8 +163,8 @@ $menu = array(//icon,label,url,visible(bool)
     <div class="infobox" style="display: none;"><p></p></div>
     <script>
         var msg_ajax_param_empty = "<?= Yii::t('app', 'Eine Angabe, die benötigt wird, fehlt. Denken Sie daran Einträge aus der Auswahlliste auszuwählen.') ?>",
-            msg_delete_children = "<?= Yii::t('app','Wenn Sie dieses Kind löschen werden auch alle Termine des Kindes gelöscht.') ?>",
-            msg_delete_appointment = "<?= Yii::t('app','Termin wirklich löschen?') ?>";
+                msg_delete_children = "<?= Yii::t('app', 'Wenn Sie dieses Kind löschen werden auch alle Termine des Kindes gelöscht.') ?>",
+                msg_delete_appointment = "<?= Yii::t('app', 'Termin wirklich löschen?') ?>";
     </script>
 </body>
 </html>
