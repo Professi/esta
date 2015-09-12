@@ -55,7 +55,7 @@ class TimeSpan extends CFormModel {
         return array(
             'begin' => Yii::t('app', 'Anfang'),
             'end' => Yii::t('app', 'Ende'),
-            'duration' => Yii::t('app', 'Duration'),
+            'duration' => Yii::t('app', 'Dauer eines Termins'),
         );
     }
 
