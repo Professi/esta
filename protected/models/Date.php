@@ -201,19 +201,15 @@ class Date extends CActiveRecord {
     public function afterSave() {
         if ($this->isNewRecord) {
             foreach ($this->timespans as $tp) {
-                if ($tp->validate()) {
-                    $diff = (strtotime($tp->end) - strtotime($tp->begin)) / 60;
-                    $i = 0;
-                    while ($diff >= $tp->duration) {
-                        $datetime = new DateAndTime();
-                        $datetime->date_id = $this->getPrimaryKey();
-                        $datetime->time = date("H:i", (strtotime($tp->begin) + ($tp->duration * $i) * 60));
-                        ++$i;
-                        $diff -= $tp->duration;
-                        $datetime->save();
-                    }
-                } else {
-                    $this->addError('timespans', Yii::t('app', 'Angegebene Zeitspanne ist ungültig.'));
+                $diff = (strtotime($tp->end) - strtotime($tp->begin)) / 60;
+                $i = 0;
+                while ($diff >= $tp->duration) {
+                    $datetime = new DateAndTime();
+                    $datetime->date_id = $this->getPrimaryKey();
+                    $datetime->time = date("H:i", (strtotime($tp->begin) + ($tp->duration * $i) * 60));
+                    ++$i;
+                    $diff -= $tp->duration;
+                    $datetime->save();
                 }
             }
             if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
