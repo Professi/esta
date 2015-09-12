@@ -56,7 +56,7 @@ $this->menu = array(
                 array('name' => 'begin', 'value' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->begin), null, "short")),
                 array('name' => 'end', 'value' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->end), null, "short")),
                 array('name' => 'lockAt', 'value' => Yii::app()->dateFormatter->formatDateTime($model->lockAt, "short", "short")),
-                array('name' => 'durationPerAppointment', 'value' => $model->durationPerAppointment . ' ' . Yii::t('app', 'Minuten')),
+                //array('name' => 'durationPerAppointment', 'value' => $model->durationPerAppointment . ' ' . Yii::t('app', 'Minuten')),
                 array('name' => 'title', 'visible' => !empty($model->title)),
                 array('name' => 'groups', 'value' => $model->getGroupnames(), 'visible' => (Yii::app()->params['allowGroups']) && !empty($model->groups)),
             ),

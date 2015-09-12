@@ -23,6 +23,10 @@
  */
 class TimeSpan extends CFormModel {
 
+    public $begin;
+    public $end;
+    public $duration;
+
     /**
      * Regeln für Validierung
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
@@ -30,16 +34,28 @@ class TimeSpan extends CFormModel {
      */
     public function rules() {
         return array(
-            array('begin, end', 'required'),
+            array('begin, end, duration', 'required'),
             array('begin, end', 'date', 'format' => 'H:m'),
-            array('begin, end', 'safe'),
+            array('duration', 'numerical', 'integerOnly' => true, 'min' => Yii::app()->params['minLengthPerAppointment']),
+            array('duration', 'date', 'format' => 'm'),
+            array('begin, end, duration', 'safe'),
         );
+    }
+
+    public function validate($attributes = null, $clearErrors = true) {
+        $rc = parent::validate($attributes, $clearErrors);
+        if (!is_numeric((strtotime($this->end) - strtotime($this->begin)) / 60 / $this->duration)) {
+            $rc = false;
+            $this->addError('duration', Yii::t('app', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.'));
+        }
+        return $rc;
     }
 
     public function attributeLabels() {
         return array(
             'begin' => Yii::t('app', 'Anfang'),
             'end' => Yii::t('app', 'Ende'),
+            'duration' => Yii::t('app', 'Duration'),
         );
     }
 

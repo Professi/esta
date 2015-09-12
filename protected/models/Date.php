@@ -33,6 +33,9 @@
  */
 class Date extends CActiveRecord {
 
+    public $timespans = null;
+    public $durationPerAppointment;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -58,7 +61,6 @@ class Date extends CActiveRecord {
     public function rules() {
         return array(
             array('date, begin, end,lockAt,durationPerAppointment', 'required'),
-            array('durationPerAppointment', 'numerical', 'integerOnly' => true, 'min' => Yii::app()->params['minLengthPerAppointment']),
             array('lockAt', 'date', 'format' => self::getDateTimeFormat()),
             array('date', 'date', 'format' => Yii::app()->locale->getDateFormat(Date::getDateFormat())),
             array('begin, end', 'date', 'format' => 'H:m'),
@@ -105,7 +107,6 @@ class Date extends CActiveRecord {
         $criteria->compare('date', $this->date, true);
         $criteria->compare('begin', $this->begin, true);
         $criteria->compare('end', $this->end, true);
-        $criteria->compare('durationPerAppointment', $this->durationPerAppointment, true);
         $criteria->compare('title', $this->title, true);
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -128,14 +129,11 @@ class Date extends CActiveRecord {
                 $rc = false;
                 $this->addError('date', Yii::t('app', 'Datum liegt in der Vergangenheit'));
             }
-            if (!is_numeric((strtotime($this->end) - strtotime($this->begin)) / 60 / $this->durationPerAppointment)) {
-                $rc = false;
-                $this->addError('durationPerAppointment', Yii::t('app', 'Leider ist es anhand Ihrer Angaben nicht möglich immer gleichlange Termine zu erstellen.'));
-            }
             if (Date::parseDateTime($this->date, $this->begin, true) < Date::parseDateTime($this->lockAt)) {
                 $rc = false;
                 $this->addError('lockAt', Yii::t('app', 'Die Sperrfrist muss vor oder auf dem Anfang liegen.'));
             }
+            $this->validateTimespans($rc);
         } else {
             $rc = false;
         }
@@ -143,6 +141,24 @@ class Date extends CActiveRecord {
             $this->lockAt = strtotime($this->lockAt);
         }
         return $rc;
+    }
+
+    protected function validateTimespans(&$rc) {
+        if ($this->isNewRecord) {
+            if ($this->timespans == null) {
+                $this->timespans = array(new TimeSpan());
+                $this->timespans[0]->begin = $this->begin;
+                $this->timespans[0]->end = $this->end;
+                $this->timespans[0]->duration = $this->durationPerAppointment;
+            }
+            foreach ($this->timespans as $tp) {
+                if (!$tp->validate()) {
+                    $this->addError('timespans', Yii::t('app', 'Angegebene Zeitspanne ist ungültig.'));
+                    $rc = false;
+                    break;
+                }
+            }
+        }
     }
 
     public function getNiceName() {
@@ -184,15 +200,21 @@ class Date extends CActiveRecord {
      */
     public function afterSave() {
         if ($this->isNewRecord) {
-            $diff = (strtotime($this->end) - strtotime($this->begin)) / 60;
-            $i = 0;
-            while ($diff >= $this->durationPerAppointment) {
-                $datetime = new DateAndTime;
-                $datetime->date_id = $this->getPrimaryKey();
-                $datetime->time = date("H:i", (strtotime($this->begin) + ($this->durationPerAppointment * $i) * 60));
-                ++$i;
-                $diff -= $this->durationPerAppointment;
-                $datetime->save();
+            foreach ($this->timespans as $tp) {
+                if ($tp->validate()) {
+                    $diff = (strtotime($tp->end) - strtotime($tp->begin)) / 60;
+                    $i = 0;
+                    while ($diff >= $tp->duration) {
+                        $datetime = new DateAndTime();
+                        $datetime->date_id = $this->getPrimaryKey();
+                        $datetime->time = date("H:i", (strtotime($tp->begin) + ($tp->duration * $i) * 60));
+                        ++$i;
+                        $diff -= $tp->duration;
+                        $datetime->save();
+                    }
+                } else {
+                    $this->addError('timespans', Yii::t('app', 'Angegebene Zeitspanne ist ungültig.'));
+                }
             }
             if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
                 foreach ($this->groups as $group) {

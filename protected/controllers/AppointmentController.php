@@ -757,7 +757,7 @@ class AppointmentController extends Controller {
             $temp = array(
                 'date' => $date->date,
                 'start' => $appointment->dateandtime->time,
-                'duration' => $date->durationPerAppointment,
+                'duration' => $appointment->dateandtime->duration,
                 //'title' => $date->title,
                 'child' => "{$child->firstname} {$child->lastname}",
                 'parent' => $parentChild->user->getDisplayName(),
