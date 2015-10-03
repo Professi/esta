@@ -70,9 +70,9 @@ class Mail {
     public function sendChangePasswordMail($email, $activationKey) {
         $body = $this->mailHeader();
         $body .= '<p>' . Yii::t('app', 'Bitte klicken Sie auf folgenden Link um ein neues Passwort für Ihr Benutzerkonto zu setzen.') . '</p>';
-        $body .= '<p><a href="' . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=$activationKey\">" . Yii::t('app', 'Link f&uuml;r die Passwortwahl') . '</a></p>';
+        $body .= '<p><a href="' . $this->getScriptUrl() . "?r=/user/NewPw&activationKey=$activationKey&email=$email\">" . Yii::t('app', 'Link f&uuml;r die Passwortwahl') . '</a></p>';
         $body .= '<p>' . Yii::t('app', 'Sollten Sie Probleme beim Aufrufen der Aktivierung haben kopieren Sie bitte den folgenden Link in die Adressleiste ihres Browser:') . '</p>';
-        $body .= "<p>" . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=" . $activationKey . "</p><br/>";
+        $body .= "<p>" . $this->getScriptUrl() . "?r=/user/NewPw&activationKey=$activationKey&email=$email</p><br/>";
         $body .= '<p>' . Yii::t('app', 'Falls Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese Nachricht.') . '</p>';
         $this->addInfo($body);
         $body .= $this->mailFooter();

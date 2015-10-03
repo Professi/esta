@@ -91,6 +91,7 @@ class Date extends CActiveRecord {
             'begin' => Yii::t('app', 'Anfang'),
             'end' => Yii::t('app', 'Ende'),
             'durationPerAppointment' => Yii::t('app', 'Dauer eines Termins'),
+            'duration' => Yii::t('app', 'Dauer eines Termins'),
             'lockAt' => Yii::t('app', 'Letzte Buchung'),
             'groups' => Yii::t('app', 'Gruppen'),
             'title' => Yii::t('app', 'Titel'),
@@ -200,6 +201,7 @@ class Date extends CActiveRecord {
      */
     public function afterSave() {
         if ($this->isNewRecord) {
+            //print_r($this->timespans);
             foreach ($this->timespans as $tp) {
                 $diff = (strtotime($tp->end) - strtotime($tp->begin)) / 60;
                 $i = 0;
@@ -207,6 +209,7 @@ class Date extends CActiveRecord {
                     $datetime = new DateAndTime();
                     $datetime->date_id = $this->getPrimaryKey();
                     $datetime->time = date("H:i", (strtotime($tp->begin) + ($tp->duration * $i) * 60));
+                    $datetime->duration = $tp->duration;
                     ++$i;
                     $diff -= $tp->duration;
                     $datetime->save();

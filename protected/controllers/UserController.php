@@ -194,29 +194,31 @@ class UserController extends Controller {
     public function actionNewPw() {
         $model = new NewPw();
         $model->unsetAttributes();
-        if (isset($_POST['NewPw'])) {
+        $user = null;
+        if (isset($_GET['activationKey']) && isset($_GET['email'])) {
+            $user = User::model()->findByAttributes(array('activationKey' => $_GET['activationKey'], 'email' => $_GET['email']));
+        }
+        if (isset($_POST['NewPw']) && !empty($user)) {
             $model->setAttributes($_POST['NewPw']);
             if ($model->validate()) {
-                $user = User::model()->findByAttributes(array('activationKey' => $_GET['activationKey']));
-                if ($user !== NULL) {
-                    $user->password = $model->password;
-                    $user->generateActivationKey();
-                    $user->save();
+                $user->password = $model->password;
+                $user->password_repeat = $model->password_repeat;
+                $user->activationKey = $user->generateActivationKey();
+                if ($user->save(false)) {
                     Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Passwort konnte erfolgreich geändert werden. Sie können sich nun mit diesem einloggen.'));
+                    $this->redirect(array('site/index', false));
                 } else {
-                    Yii::app()->user->setFlash('success', Yii::t('app', 'Leider konnte Ihr Passwort nicht geändert werden.'));
+                    Yii::app()->user->setFlash('success', Yii::t('app', 'Leider konnte Ihr Passwort nicht geändert werden.') . ' ' . Yii::t('app', 'Bitte kontaktieren Sie den Seitenadministrator.'));
                 }
+                $this->refresh(false);
             }
-            $this->redirect(array('site/index'));
-        } else if (isset($_GET['activationKey'])) {
-            $user = User::model()->findByAttributes(array('activationKey' => $_GET['activationKey']));
-            if ($user !== NULL) {
-                $model->activationKey = $_GET['activationKey'];
-                $this->render('pwChangeForm', array('model' => $model));
-            } else {
-                Yii::app()->user->setFlash('success', Yii::t('app', 'Leider konnte Ihr Aktivierungsschlüssel nicht wiedererkannt werden.'));
-                $this->redirect(array('site/index'));
-            }
+            $this->refresh(false);
+        } else if (!empty($user)) {
+            $model->activationKey = $_GET['activationKey'];
+            $this->render('pwChangeForm', array('model' => $model));
+        } else {
+            Yii::app()->user->setFlash('success', Yii::t('app', 'Leider konnte Ihr Aktivierungsschlüssel nicht wiedererkannt werden.'));
+            $this->redirect(array('site/index'), false);
         }
     }
 

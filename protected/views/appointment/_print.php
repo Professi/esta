@@ -25,5 +25,10 @@
     <td><?php echo CHtml::encode(Yii::app()->dateFormatter->formatDateTime(strtotime($data->dateandtime->date->date), "medium", null)), ' - ', CHtml::encode(Yii::app()->dateFormatter->formatDateTime(strtotime($data->dateandtime->time), null, "short")); ?></td>
     <td><?php echo CHtml::encode("{$data->parentchild->child->firstname} {$data->parentchild->child->lastname}"); ?></td>
     <td><?php echo CHtml::encode("{$data->user->title} {$data->user->firstname} {$data->user->lastname}"); ?></td>
-    <td><?php echo CHtml::encode("{$data->user->getRoom($data->dateandtime->date->id)->name}"); ?></td>
+    <td><?php
+        $room = $data->user->getRoom($data->dateandtime->date->id);
+        if (!empty($room)) {
+            echo CHtml::encode("{$room->name}");
+        }
+        ?></td>
 </tr>
