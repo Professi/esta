@@ -116,7 +116,7 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                     </div>
                     <div class="small-8 columns mobile-input">
                         <input id="form_date" type="text" disabled value="<?php echo $postDate; ?>" />
-    <?php echo $form->error($model, 'dateAndTime_id'); ?>
+                        <?php echo $form->error($model, 'dateAndTime_id'); ?>
                     </div>
                 </div>
                 <div class="row collapse js_show">
@@ -125,7 +125,7 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                     </div>
                     <div class="small-8 columns mobile-input">
                         <input id="form_time" type="text" disabled  value="<?php echo $postTime; ?>" />
-    <?php echo $form->error($model, 'dateAndTime_id'); ?>
+                        <?php echo $form->error($model, 'dateAndTime_id'); ?>
                     </div>
                 </div>
                 <div class="row collapse js_hide">
@@ -135,7 +135,7 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                     <div class="small-8 columns mobile-input">
                         <div class="styled-select">
                             <?php echo $this->createSelectTeacherDates($model->user->id, get_class($model), 'dateAndTime_id', $model->attributes['dateAndTime_id']) ?>
-    <?php echo $form->error($model, 'dateAndTime_id'); ?>
+                            <?php echo $form->error($model, 'dateAndTime_id'); ?>
                         </div>
                     </div>
                 </div>
@@ -145,12 +145,12 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                     </div>
                     <div class="small-8 columns mobile-input">
                         <?php echo $this->createSelectChildren(Yii::app()->user->getId(), get_class($model), 'parent_child_id'); ?>
-    <?php echo $form->error($model, 'parent_child_id'); ?>
+                        <?php echo $form->error($model, 'parent_child_id'); ?>
                     </div>
                 </div>
-            <?php echo CHtml::submitButton(Yii::t('app', 'Bestätigen'), array('class' => 'button right')); ?>
+                <?php echo CHtml::submitButton(Yii::t('app', 'Bestätigen'), array('class' => 'button right')); ?>
             </fieldset>
             <?php $this->endWidget(); ?>
-<?php } //End else: atleast one Elternsprechtag   ?>
+        <?php } //End else: atleast one Elternsprechtag   ?>
     </div>
 </div>

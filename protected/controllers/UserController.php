@@ -210,9 +210,9 @@ class UserController extends Controller {
                 } else {
                     Yii::app()->user->setFlash('success', Yii::t('app', 'Leider konnte Ihr Passwort nicht geändert werden.') . ' ' . Yii::t('app', 'Bitte kontaktieren Sie den Seitenadministrator.'));
                 }
-                $this->refresh(false);
+                $this->render('pwChangeForm', array('model' => $model));
             }
-            $this->refresh(false);
+            $this->render('pwChangeForm', array('model' => $model));
         } else if (!empty($user)) {
             $model->activationKey = $_GET['activationKey'];
             $this->render('pwChangeForm', array('model' => $model));
