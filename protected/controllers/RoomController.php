@@ -26,16 +26,12 @@ class RoomController extends Controller {
     public function accessRules() {
         return array(
             array('allow',
-                'actions' => array('index', 'view'),
+                'actions' => array('index', 'view', 'assignajaxteacher', 'search'),
                 'roles' => array(TEACHER),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'delete', 'assignajax', 'search'),
-                'roles' => array(TEACHER, MANAGEMENT, ADMIN),
-            ),
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'assignall'),
-                'roles' => array(ADMIN),
+                'actions' => array('create', 'update', 'delete', 'assignajax', 'search', 'admin', 'assignall'),
+                'roles' => array(MANAGEMENT, ADMIN),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
@@ -82,10 +78,6 @@ class RoomController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['Room'])) {
             $model->attributes = $_POST['Room'];
             if ($model->save()) {
@@ -183,6 +175,10 @@ class RoomController extends Controller {
                 , 'value' => $record->id);
         }
         echo CJSON::encode($a_rc);
+    }
+
+    public function actionAssignAJAXTeacher($room, $date) {
+        return $this->actionAssignAJAX(Yii::app()->user->getId(), $room, $date);
     }
 
     /**

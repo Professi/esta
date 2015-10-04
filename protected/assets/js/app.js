@@ -269,6 +269,19 @@
             $(this).data('id', ui.item.value);
         });
 
+        $('#room-assign-button-2').on('click', function () {
+            var teacher = $('#room-assign-teacher'),
+                    teacherId = teacher.data('id'),
+                    room = $('#room-assign-room'),
+                    roomValue = room.val(),
+                    date = $('#room-assign-date').val(),
+                    data = {'r': 'room/assignajaxteacher', 'teacher': teacherId, 'room': roomValue, 'date': date},
+            statusElement = $('#room-assign-status'),
+                    inputs = [teacher, room];
+            useAjax(data, statusElement, inputs);
+        });
+
+
         $('#room-assign-button').on('click', function () {
             var teacher = $('#room-assign-teacher'),
                     teacherId = teacher.data('id'),
