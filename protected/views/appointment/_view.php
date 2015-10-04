@@ -56,7 +56,7 @@
         ?>
         <div class="row collapse">
             <div class="small-3 small-offset-1 medium-2 large-1 columns">
-                <i><?php echo Yii::t('app', 'In Raum') ?></i>
+                <i><?php echo Yii::t('app', 'in Raum') ?></i>
             </div>
             <div class="small-8 medium-9 large-10 columns">
                 <?php echo CHtml::encode("{$room->name}"); ?>
