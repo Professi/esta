@@ -1,5 +1,7 @@
-<?php ?>
-
+<?php
+$this->setPageTitle(Yii::t('app', 'Räume zuweisen'));
+?>
+<h2 class="text-center"><?php echo Yii::t('app', 'Räume zuweisen'); ?></h2>
 <div class="row" id="room-assignall-workspace">
     <div class="small-12 columns">
         <div class="row collapse">
@@ -7,7 +9,7 @@
                 <span class="prefix"><?= Yii::t('app', 'Elternsprechtag'); ?></span>
             </div>
             <div class="small-8 columns">
-<?= Select2::dropDownList('', '', $dates, array('id' => 'room-assignall-date')); ?>
+                <?= Select2::dropDownList('', '', $dates, array('id' => 'room-assignall-date')); ?>
             </div>
         </div>
     </div>

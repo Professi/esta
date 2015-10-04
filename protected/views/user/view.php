@@ -113,7 +113,7 @@ $this->menu = array(
             </fieldset>
             <?php
         }
-        if ($model->role > 1) {
+        if ($model->role == PARENTS) {
             if (Yii::app()->user->getId() == $model->id && Yii::app()->params['allowGroups']) {
                 ?>
                 <h4 class="subheader"><?php echo Yii::t('app', 'Weitere TAN hinzufügen'); ?></h4>

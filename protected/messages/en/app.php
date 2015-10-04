@@ -17,11 +17,14 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
+  'Elternsprechtag - {id} - {title}' => 'Parent teacher day - {id} - {title}',
+  'Elternsprechtag - {id} - {title} bearbeiten' => 'Edit parent teacher day - {id} - {title}',
   'Falls Fragen zu der Elternsprechtags-Software bestehen sollten, können Sie auf der Startseite den Link „Kontakt“ anklicken. Danach erscheint eine Seite, bei der Sie die Ihren Namen, Ihre E-Mailadresse und einen Betreff eingeben müssen. Außerdem muss eine Nachricht geschrieben werden, in der Sie Ihr Anliegen darlegen können. Wenn Sie alle Felder ausgefüllt haben, müssen Sie abschließend den Sicherheitscode eingeben und auf „Absenden“ klicken.' => '',
-  'Ihre Räume' => '',
-  'Kein Raum angegeben.' => '',
+  'Ihre Räume' => 'Your rooms',
+  'Kein Raum angegeben.' => 'No room specified',
   'Klicken Sie den Menübutton „Ihre Kinder“, danach auf den Button „Kind hinzufügen“. Anschließend müssen Sie den Vor- und Nachnamen Ihres Kindes eingeben und auf „Anlegen“ klicken.' => '',
   'Nachdem Sie alle Felder ausgefüllt haben, müssen Sie auf den Button mit der Aufschrift „Registrieren“ klicken. Danach erhalten Sie eine E-Mail, die einen Registrierungslink beinhaltet. Wenn diese E-Mail eingetroffen ist, müssen Sie den mitgeschickten Link anklicken, um den Account zu aktivieren. Anschließend können Sie sich mit Ihrer E-Mailadresse und dem von Ihnen festgelegten Passwort auf der Hauptseite einloggen.' => '',
+  'Räume zuweisen' => 'Assign rooms',
   'Sie können Termine löschen, indem Sie im Menü auf den Button „Ihre Termine“ klicken. Außerdem ist die Seite „Ihre Termine“ auch nach dem Login direkt geöffnet. Ein Termin kann gelöscht werden, indem Sie auf das kleine Mülleimersymbol klicken und die Sicherheitsfrage mit „OK“ bestätigen.' => '',
   'Sie können Termine löschen, indem Sie im Menü auf den Button „Ihre Termine“ klicken. Außerdem ist die Seite „Ihre Termine“ auch nach dem Login direkt geöffnet. Ein Termin kann gelöscht werden, indem Sie auf den Button „Termin löschen“ klicken.' => '',
   'Sie können sich registrieren, indem Sie auf der Hauptseite den Schriftzug „Benötigen Sie einen Zugang? Klicken Sie hier.“ anklicken. Auf dieser Seite müssen Sie alle Felder ausfüllen. Bei der Angabe der E-Mail-Adresse ist es wichtig, eine gültige Adresse einzutragen, da über diese ein Aktivierungslink verschickt wird. Das Passwort muss dabei mindestens acht Zeichen umfassen und einmal wiederholt werden. Vom Klassenlehrer Ihres Kindes erhalten Sie eine TAN (Kennziffer), die aus sechs Zahlen besteht.' => '',
@@ -169,8 +172,6 @@ return array (
   'Eltern-Kind-Verknüpfungen verwalten' => 'Manage Parent-child relationships',
   'Elternkonten' => 'Parent accounts',
   'Elternsprechtag' => 'Parent teacher day',
-  'Elternsprechtag Nummer {id}' => 'Parent teacher day number {id}',
-  'Elternsprechtag Nummer {id} bearbeiten' => 'Edit parent teacher day {id}',
   'Elternsprechtag anlegen' => 'Create parent teacher day',
   'Elternsprechtag anzeigen' => 'View parent teacher day',
   'Elternsprechtag bearbeiten' => 'Edit parent teacher day',
@@ -337,7 +338,6 @@ return array (
   'Mindestlänge 8 Zeichen' => 'At least 8 characters',
   'Mindestlänge eines Termins bei einem neuzuerstellenden Elternsprechtag' => 'Minimal length of an appointment when creating new parent teacher days.',
   'Minimallänge eines Grundes um einen Termin zu blocken' => 'Minimal length of the reason to block an appointment',
-  'Minuten' => 'minutes',
   'Mit' => 'With',
   'Mit / Grund' => 'With / Reason',
   'Mit dem Drücken dieses Knopfes werden alle Daten aus der Datenbank gelöscht. Betätigen Sie ihn nur wenn Sie sich absolut sicher sind!' => 'With the press of this button all data will be purged from the database. Only confirm if you are certain!',

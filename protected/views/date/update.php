@@ -20,28 +20,28 @@
 /* @var $this DateController */
 /* @var $model Date */
 $this->setPageTitle(Yii::t('app', 'Elternsprechtag bearbeiten'));
-Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
+Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.css");
 $this->breadcrumbs = array(
     'Dates' => array('index'),
     $model->id => array('view', 'id' => $model->id),
     'Update',
 );
 $this->menu = array(
-    array(  'label' => Yii::t('app', 'Elternsprechtag anlegen'), 
-            'url' => array('create'),
-            'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Elternsprechtag anzeigen'), 
-            'url' => array('view', 'id' => $model->id),
-            'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Elternsprechtage verwalten'), 
-            'url' => array('admin'),
-            'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Elternsprechtag anlegen'),
+        'url' => array('create'),
+        'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Elternsprechtag anzeigen'),
+        'url' => array('view', 'id' => $model->id),
+        'linkOptions' => array('class' => 'small button')),
+    array('label' => Yii::t('app', 'Elternsprechtage verwalten'),
+        'url' => array('admin'),
+        'linkOptions' => array('class' => 'small button')),
 );
 ?>
 <div class="row">
     <div class="small-12 columns">
         <fieldset>
-            <legend><?php echo Yii::t('app', 'Elternsprechtag Nummer {id} bearbeiten', array('{id}' => $model->getPrimaryKey())); ?></legend>
+            <legend><?php echo Yii::t('app', 'Elternsprechtag - {id} - {title} bearbeiten', array('{id}' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->date), "short", null), '{title}' => $model->title)); ?></legend>
             <?php
             echo $this->renderPartial('_form', array(
                 'model' => $model,

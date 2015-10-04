@@ -2,14 +2,10 @@
 /* @var $this RoomController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Rooms',
+$this->breadcrumbs = array(
+    'Rooms',
 );
 $this->setPageTitle(Yii::t('app', 'Raum festlegen'));
-$this->menu=array(
-	array('label'=>'Create Room', 'url'=>array('create')),
-	array('label'=>'Manage Room', 'url'=>array('admin')),
-);
 Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.css");
 ?>
 <div class="row">
@@ -54,7 +50,7 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                 </div>
             </div>
             <div class="small button" id="room-assign-button"><?= Yii::t('app', 'Verknüpfen'); ?></div>
-                        <div class="row collapse" id="room-assign-status">
+            <div class="row collapse" id="room-assign-status">
                 <div class="small-1 columns">
                     <div class="small secondary button right prefix"><i class="fi-cloud"></i></div>
                 </div>
