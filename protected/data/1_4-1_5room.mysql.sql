@@ -30,4 +30,8 @@ ADD CONSTRAINT `user_has_room_fk2` FOREIGN KEY (`room_id`) REFERENCES `room` (`i
 ADD CONSTRAINT `user_has_room_fk1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
 ADD CONSTRAINT `user_has_room_fk3` FOREIGN KEY (`date_id`) REFERENCES `date` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
+
+INSERT INTO `configs` (`key`, `value`) VALUES ('allowTeachersToManageOwnRooms','1');
+
+
 COMMIT;
