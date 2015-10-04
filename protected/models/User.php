@@ -164,6 +164,7 @@ class User extends CActiveRecord {
             'email' => Yii::t('app', 'E-Mail'),
             'createtime' => Yii::t('app', 'Registrierungsdatum'),
             'verifyCode' => Yii::t('app', 'Sicherheitscode'),
+            'tan' => Yii::t('app', 'TAN'),
             'title' => Yii::t('app', 'Titel'),
             'groups' => Yii::t('app', 'Gruppen'),
             'badLogins' => Yii::t('app', 'Ungültige Anmeldeversuche'),
