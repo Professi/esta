@@ -1,6 +1,4 @@
-<?php
-
-?>
+<?php ?>
 
 <div class="row" id="room-assignall-workspace">
     <div class="small-12 columns">
@@ -9,7 +7,7 @@
                 <span class="prefix"><?= Yii::t('app', 'Elternsprechtag'); ?></span>
             </div>
             <div class="small-8 columns">
-                <?= Select2::dropDownList('', '', $dates, array('id' => 'room-assignall-date')); ?>
+<?= Select2::dropDownList('', '', $dates, array('id' => 'room-assignall-date')); ?>
             </div>
         </div>
     </div>
@@ -17,14 +15,14 @@
         <fieldset>
             <div class="row collapse">
                 <div class="small-2 columns">
-                    <span class="prefix"><?= Yii::t('app','Lehrer') ?></span>
+                    <span class="prefix"><?= Yii::t('app', 'Lehrer') ?></span>
                 </div>
                 <div class="small-4 columns">
                     <input type="text" disabled id="room-assignall-teacher" data-id=""/>
                 </div>
                 <div class="small-1 columns">&nbsp;</div>
                 <div class="small-2 columns">
-                    <span class="prefix"><?= Yii::t('app','Raum') ?></span>
+                    <span class="prefix"><?= Yii::t('app', 'Raum') ?></span>
                 </div>
                 <div class="small-3 columns">
                     <input type="text" placeholder="<?= Yii::t('app', 'Geben Sie eine Raumnamen ein') ?>" id="room-assignall-room" />
@@ -47,5 +45,5 @@
 </div>
 <script>
     var teachers = <?= CJSON::encode($teachers) ?>,
-        msg_assignall_button = "<?= Yii::t('app','Wirklich allen Lehrern Räume zuweisen für den ') ?>";
+            msg_assignall_button = "<?= Yii::t('app', 'Wirklich allen Lehrern Räume zuweisen für den ') ?>";
 </script>

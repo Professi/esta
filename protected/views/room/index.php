@@ -22,7 +22,7 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                     <span class="prefix"><?php echo Yii::t('app', 'Lehrer'); ?></span>
                 </div>
                 <div class="small-8 columns">
-                    <input type="text" disabled value="<?= Yii::t('app', 'Sie Selbst'); ?>" data-id="<?= Yii::app()->user->id ?>" />
+                    <input type="text" disabled value="<?= Yii::t('app', 'Sie Selbst'); ?>" data-id="<?= Yii::app()->user->id ?>" id="room-assign-teacher"/>
                 </div>
             </div>
             <div class="row collapse">
@@ -54,7 +54,14 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                 </div>
             </div>
             <div class="small button" id="room-assign-button"><?= Yii::t('app', 'Verknüpfen'); ?></div>
-            <div class="small secondary button right" id="room-assign-status"><i class="fi-cloud"></i></div>
+                        <div class="row collapse" id="room-assign-status">
+                <div class="small-1 columns">
+                    <div class="small secondary button right prefix"><i class="fi-cloud"></i></div>
+                </div>
+                <div class="small-11 columns">
+                    <input type="text" disabled />
+                </div>
+            </div>
         </fieldset>
     </div>
 </div>
