@@ -29,7 +29,7 @@ $menu = array(//icon,label,url,visible(bool)
     array('fi-heart', Yii::t('app', 'Ihre Kinder'), array('ParentChild/index'), Yii::app()->user->checkAccess(PARENTS) && !Yii::app()->user->isAdmin()),
     array('fi-torso', Yii::t('app', 'Benutzer'), array('User/admin'), Yii::app()->user->checkAccess(MANAGEMENT)),
     array('fi-torsos-all', Yii::t('app', 'Gruppen'), array('Group/admin'), Yii::app()->user->checkAccess(MANAGEMENT) && Yii::app()->params['allowGroups']),
-    array('fi-key', Yii::t('app', 'Tan'), array('Tan/genTans'), Yii::app()->user->checkAccessRole(TEACHER, MANAGEMENT) || Yii::app()->user->isAdmin()),
+    array('fi-key', Yii::t('app', 'TAN'), array('Tan/genTans'), Yii::app()->user->checkAccessRole(TEACHER, MANAGEMENT) || Yii::app()->user->isAdmin()),
     array('fi-home', Yii::t('app', 'Ihr Raum'), array('Room/index'), Yii::app()->user->checkAccessNotAdmin(TEACHER) && Yii::app()->params['allowTeachersToManageOwnRooms']),
     array('fi-wrench', Yii::t('app', 'Konfiguration'), array('site/config'), Yii::app()->user->checkAccess(ADMIN)),
     array('fi-home', Yii::t('app', 'Räume'), array('Room/admin'), Yii::app()->user->checkAccess(MANAGEMENT)),
