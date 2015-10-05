@@ -23,6 +23,8 @@
  * @property boolean $used
  * The followings are the available model relations:
  * @property Group $group
+ * @property DateTime generatedOn
+ * @property User generatedBy
  */
 class Tan extends CActiveRecord {
 
@@ -36,6 +38,8 @@ class Tan extends CActiveRecord {
     public $id = 0;
     public $group_id = null;
     public $used_by_user_id = null;
+    public $generatedOn = null;
+    public $generatedBy_id = null;
     public $childFirstname;
     public $childLastname;
 
@@ -56,6 +60,18 @@ class Tan extends CActiveRecord {
         return 'tan';
     }
 
+    public function behaviors() {
+        $r = array();
+        if ($this->isNewRecord) {
+            $r = array(
+                'CTimestampBehavior' => array(
+                    'class' => 'zii.behaviors.CTimestampBehavior',
+                    'createAttribute' => 'generatedOn'
+            ));
+        }
+        return $r;
+    }
+
     /**
      * Validierungsregeln
      * @return array validation rules for model attributes.
@@ -63,7 +79,6 @@ class Tan extends CActiveRecord {
     public function rules() {
         return array(
             array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen'], 'allowEmpty' => !self::allowParents()),
-            //    array('group_id', 'numerical', 'integerOnly' => true),
             array('tan', 'required'),
             array('childFirstname, childLastname', 'length', 'min' => 1, 'allowEmpty' => self::allowParents()),
             array('tan_count,tan,used,group_id,group', 'safe'),
@@ -80,6 +95,7 @@ class Tan extends CActiveRecord {
             'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
             'child' => array(self::BELONGS_TO, 'Child', 'child_id'),
             'used_by_user' => array(self::BELONGS_TO, 'User', 'used_by_user_id'),
+            'generatedBy' => array(self::BELONGS_TO, 'User', 'generatedBy_id'),
         );
     }
 
@@ -102,6 +118,7 @@ class Tan extends CActiveRecord {
             'childFirstname' => Yii::t('app', 'Vorname'),
             'childLastname' => Yii::t('app', 'Nachname'),
             'used_by_user' => Yii::t('app', 'Erziehungsberechtigter'),
+            'generatedBy' => Yii::t('app', 'Erzeuger'),
         );
     }
 
@@ -156,6 +173,7 @@ class Tan extends CActiveRecord {
         }
         $this->randNumber();
         $this->used = false;
+        $this->generatedBy_id = Yii::app()->user->getId();
         if ($save) {
             $this->insert();
         }
@@ -176,5 +194,7 @@ class Tan extends CActiveRecord {
             }
         } while (true);
     }
+
 }
+
 ?>
