@@ -484,7 +484,7 @@ return array (
   'Titel' => 'Title',
   'Uhrzeit' => 'Time',
   'Um' => 'at',
-  'Um Ihre Registrierung abzuschließen und die Anwendung in Anspruch nehmen zu können, klicken Sie bitte auf den folgenden Link.' => 'To complete your registration and use the application, please click the following link.',
+  'Um Ihre Registrierung abzuschließen und die Anwendung verwenden zu können, klicken Sie bitte auf den folgenden Link.' => 'To complete your registration and use the application, please click the following link.',
   'Um auf diese E-Mail zu antworten, schreiben Sie bitte eine E-Mail an {email}.' => 'To reply to this email, please send an email to {email}.',
   'Ungültige Anmeldeversuche' => 'Invalid logins',
   'Ungültige E-Mail Adresse' => 'Invalid Email',

@@ -92,6 +92,8 @@ class UserController extends Controller {
         UserHasGroup::model()->deleteAll();
         DateHasGroup::model()->deleteAll();
         Group::model()->deleteAll();
+        UserHasRoom::model()->deleteAll();
+        Room::model()->deleteAll();
         User::model()->deleteUsersWithRole(PARENTS);
         User::model()->deleteUsersWithRole(TEACHER);
         Yii::app()->user->setFlash('success', Yii::t('app', 'Alle Daten gelöscht, einzig die Verwaltungs- und Administrationskonten wurden nicht gelöscht')) .
@@ -117,7 +119,9 @@ class UserController extends Controller {
         if (isset($_POST['User']['tan'])) {
             $model->tan = $_POST['User']['tan'];
             if ($model->validate()) {
-                $model->addWithTanNewGroup();
+                $errorMsg = $model->addWithTanNewGroup();
+                $model->tan = '';
+                Yii::app()->user->setFlash('success', Yii::t('app', 'Weitere TAN wurde erfolgreich hinzugefügt.'));
             }
         }
         $this->render('view', array('model' => $model));

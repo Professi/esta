@@ -62,9 +62,9 @@ class Tan extends CActiveRecord {
      */
     public function rules() {
         return array(
-              array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen'], 'allowEmpty' => !self::allowParents()),
-        //    array('group_id', 'numerical', 'integerOnly' => true),
-            array('tan','required'),
+            array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen'], 'allowEmpty' => !self::allowParents()),
+            //    array('group_id', 'numerical', 'integerOnly' => true),
+            array('tan', 'required'),
             array('childFirstname, childLastname', 'length', 'min' => 1, 'allowEmpty' => self::allowParents()),
             array('tan_count,tan,used,group_id,group', 'safe'),
         );
@@ -144,7 +144,7 @@ class Tan extends CActiveRecord {
         $child->save();
         $this->child = $child;
         $this->child_id = $this->child->getPrimaryKey();
-     }
+    }
 
     /**
      * Generiert eine Tan
