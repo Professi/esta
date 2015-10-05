@@ -119,7 +119,7 @@ class UserController extends Controller {
         if (isset($_POST['User']['tan'])) {
             $model->tan = $_POST['User']['tan'];
             if ($model->validate()) {
-                $errorMsg = $model->addWithTanNewGroup();
+                $model->addWithTanNewGroup();
                 $model->tan = '';
                 Yii::app()->user->setFlash('success', Yii::t('app', 'Weitere TAN wurde erfolgreich hinzugefügt.'));
             }
