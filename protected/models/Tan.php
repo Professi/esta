@@ -28,9 +28,11 @@
  */
 class Tan extends CActiveRecord {
 
+    public $childFirstname;
+    public $childLastname;
+
     /** @var integer Anzahl der TANs die generiert werden sollen */
     public $tan_count = 0;
-
     /**
      *
      * @var integer ID 
@@ -40,8 +42,6 @@ class Tan extends CActiveRecord {
     public $used_by_user_id = null;
     public $generatedOn = null;
     public $generatedBy_id = null;
-    public $childFirstname;
-    public $childLastname;
 
     /**
      * Returns the static model of the specified AR class.

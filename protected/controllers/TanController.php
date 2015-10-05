@@ -139,6 +139,7 @@ class TanController extends Controller {
 //        $fp = fopen($filename, 'w+');
         //$fp = fopen('php://output', 'w+');
         $fp = fopen('php://output', 'w');
+        fprintf($fp, chr(0xEF) . chr(0xBB) . chr(0xBF));
         $delimiter = ";";
         $enclosure = '"';
         $data = array(Yii::t('app', 'TAN'));
@@ -149,6 +150,7 @@ class TanController extends Controller {
             $data[] = Yii::t('app', 'Vorname');
             $data[] = Yii::t('app', 'Nachname');
         }
+        $data = array_map("utf8_decode", $data);
         fputcsv($fp, $data, $delimiter, $enclosure);
         if (is_array($tans)) {
             foreach ($tans as $tan) {
@@ -166,10 +168,11 @@ class TanController extends Controller {
                         $d[] = $tan->child->lastname;
                     }
                 }
+                $d = array_map("utf8_decode", $d);
                 fputcsv($fp, $d, $delimiter, $enclosure);
             }
         }
-        Yii::app()->getRequest()->sendFile('tans' . date('Ymd') . '_esta.csv', stream_get_contents($fp), "text/csv");
+        Yii::app()->getRequest()->sendFile('tans' . date('Ymd') . '_esta.csv', stream_get_contents($fp), "text/csv; charset=UTF-8", false);
         fclose($fp);
     }
 
