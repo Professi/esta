@@ -250,7 +250,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`,`role`,`email`, `activationKey`, `createtime`, `firstname`, `lastname`, `title`, `state`, `lastLogin`, `badLogins`, `bannedUntil`, `password`) VALUES
-(0, 0,'admin2', '9848a467b94293fcbdb5f08f36d68f5fd5544113', 0, 'Admin', 'Admin', NULL, 1, 0, 0, 0, '$2a$13$hwK.QA5hXUg94isY0kP6AuERtW7A5yJkjvh3IEXClunnLB.8GM.ju');
+(0, 0,'admin', '9848a467b94293fcbdb5f08f36d68f5fd5544113', 0, 'Admin', 'Admin', NULL, 1, 0, 0, 0, '$2a$13$hwK.QA5hXUg94isY0kP6AuERtW7A5yJkjvh3IEXClunnLB.8GM.ju');
 
 -- --------------------------------------------------------
 
