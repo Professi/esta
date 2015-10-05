@@ -17,6 +17,7 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
+  'Erzeuger' => 'Creator',
   'Falls Fragen zu der Elternsprechtags-Software bestehen sollten, können Sie auf der Startseite den Link „Kontakt“ anklicken. Danach erscheint eine Seite, bei der Sie die Ihren Namen, Ihre E-Mailadresse und einen Betreff eingeben müssen. Außerdem muss eine Nachricht geschrieben werden, in der Sie Ihr Anliegen darlegen können. Wenn Sie alle Felder ausgefüllt haben, müssen Sie abschließend den Sicherheitscode eingeben und auf „Absenden“ klicken.' => '',
   'Klicken Sie den Menübutton „Ihre Kinder“, danach auf den Button „Kind hinzufügen“. Anschließend müssen Sie den Vor- und Nachnamen Ihres Kindes eingeben und auf „Anlegen“ klicken.' => '',
   'Nachdem Sie alle Felder ausgefüllt haben, müssen Sie auf den Button mit der Aufschrift „Registrieren“ klicken. Danach erhalten Sie eine E-Mail, die einen Registrierungslink beinhaltet. Wenn diese E-Mail eingetroffen ist, müssen Sie den mitgeschickten Link anklicken, um den Account zu aktivieren. Anschließend können Sie sich mit Ihrer E-Mailadresse und dem von Ihnen festgelegten Passwort auf der Hauptseite einloggen.' => '',
@@ -25,6 +26,7 @@ return array (
   'Sie können sich registrieren, indem Sie auf der Hauptseite den Schriftzug „Benötigen Sie einen Zugang? Klicken Sie hier.“ anklicken. Auf dieser Seite müssen Sie alle Felder ausfüllen. Bei der Angabe der E-Mail-Adresse ist es wichtig, eine gültige Adresse einzutragen, da über diese ein Aktivierungslink verschickt wird. Das Passwort muss dabei mindestens acht Zeichen umfassen und einmal wiederholt werden. Vom Klassenlehrer Ihres Kindes erhalten Sie eine TAN (Kennziffer), die aus sechs Zahlen besteht.' => '',
   'Um Ihre Benutzerdaten zu ändern, klicken Sie zunächst im Menü auf „Ihr Account“ und danach auf den Button „Benutzer bearbeiten“. Anschließend können Sie Ihre Benutzerdaten ändern. Um die Änderungen zu speichern, müssen Sie auf den Button „Speichern“ klicken.' => '',
   'Um einen Termin auszumachen, müssen Sie auf den Menübutton „Termin festlegen“ klicken. Um sich Lehrer mit einem bestimmten Anfangsbuchstaben anzeigen zu lassen, klicken Sie dann auf diesen Buchstaben. Danach können Sie den Lehrer in der erscheinenden Liste direkt auswählen, indem Sie auf das kleine Weckersymbol klicken. Alternativ können Sie in dem Textfeld die Anfangsbuchstaben des gewünschten Lehrers eingeben und diesen im sich öffnendem Menü anklicken. Wenn Sie einen Lehrer ausgewählt haben, erscheint dessen Zeitplan. In diesem sind die Termine entweder als „VERFÜGBAR“ oder „BELEGT“ gekennzeichnet. Durch das Klicken auf einen Termin, der als „VERFÜGBAR“ gekennzeichnet ist, werden für Sie automatisch das Datum und die Uhrzeit des angeklickten Termins in die untenstehenden Felder eingetragen. Falls mehr als ein Kind die Schule besucht, müssen Sie den Namen des jeweiligen Kindes auswählen. Zum Schluss müssen Sie auf den Button „Bestätigen“ klicken, um den Termin zu reservieren.' => '',
+  'Weitere TAN wurde erfolgreich hinzugefügt.' => 'Additional TAN was succesfully added.',
   'Wenn Sie Ihr Passwort vergessen haben, müssen Sie auf der Startseite den Schriftzug „Passwort vergessen?“ anklicken. Daraufhin erscheint eine Seite, bei der Sie Ihre E-Mail-Adresse und den angezeigten Sicherheitscode eingeben müssen. Wenn beide Felder ausgefüllt wurden, müssen Sie auf „Absenden“ klicken. Danach erhalten Sie erneut eine E-Mail, die einen Link enthält, den Sie anklicken müssen. Anschließend werden Sie auf eine Seite weitergeleitet, auf der Sie ein neues Passwort festgelegen können. Danach können Sie sich wieder auf der Hauptseite mit Ihrer E-Mailadresse und dem neuen Passwort einloggen.' => '',
   'Wenn Sie den richtigen Lehrer gefunden haben, klicken Sie einfach auf das Uhrsymbol neben seinem Namen um zu der Terminvereinbarung des Lehres zu gelangen.' => '',
   'Wenn diese Option aktiviert ist, können Eltern ihre Kinder beliebig verwalten. Falls diese Option deaktiviert wurde, müssen bei der TAN Erstellung die Namen der Kinder angegeben werden. Eltern können weitere Kinder nur durch TAN\'s hinzufügen.' => '',
@@ -213,11 +215,11 @@ return array (
   'Für mehr Informationen, sollten Sie die Schulwebseite besuchen.' => 'For more informations, you can visit the school website.',
   'Geben Sie Ihre E-Mail-Adresse ein. Ihnen wird ein Aktivierungslink zugesendet mit dem Sie ein neues Passwort setzen können.' => 'Enter your email address and you will be send a link to change your password.',
   'Geben Sie bitte Ihre E-Mail-Adresse und ein Passwort ein um sich im System zu registrieren.' => 'Please enter your email and a password to register with the system.',
-  'Geben Sie eine Raumnamen ein' => 'Enter a name for the room',
   'Geben Sie einen Elternnamen ein' => 'Enter the name of a parent',
   'Geben Sie einen Lehrernamen ein' => 'Enter the name of a teacher',
   'Geben Sie einen Nachnamen ein' => 'Enter a surname',
   'Geben Sie einen Nachnamen ein und wählen Sie einen Eintrag aus' => 'Enter a surname and choose an item',
+  'Geben Sie einen Raumnamen ein' => 'Enter a name for the room',
   'Generierte TANs' => 'Generated Tans',
   'Gesperrt' => 'Blocked',
   'Grund' => 'Reason',

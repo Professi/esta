@@ -27,7 +27,7 @@ $this->setPageTitle(Yii::t('app', 'Räume zuweisen'));
                     <span class="prefix"><?= Yii::t('app', 'Raum') ?></span>
                 </div>
                 <div class="small-3 columns">
-                    <input type="text" placeholder="<?= Yii::t('app', 'Geben Sie eine Raumnamen ein') ?>" id="room-assignall-room" />
+                    <input type="text" placeholder="<?= Yii::t('app', 'Geben Sie einen Raumnamen ein') ?>" id="room-assignall-room" />
                 </div>
                 <div class="row collapse" id="room-assignall-status">
                     <div class="small-1 columns">

@@ -37,7 +37,7 @@
                             'minLength' => '1',
                         ),
                         'htmlOptions' => array(
-                            'placeholder' => Yii::t('app', 'Geben Sie eine Raumnamen ein'),
+                            'placeholder' => Yii::t('app', 'Geben Sie einen Raumnamen ein'),
                         ),
                     ));
                     ?>
