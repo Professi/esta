@@ -186,6 +186,17 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                     ?>
                 </div>
             </div>
+            <div class="row collapse">
+                <div class="small-8 columns">
+                    <span class="prefix"><?php echo $form->label($model, 'allowTeachersToManageOwnRooms'); ?></span>
+                </div>
+                <div class="small-4 columns">
+                    <?php
+                    echo Select2::activeDropDownList($model, 'allowTeachersToManageOwnRooms', Controller::getYesOrNo(), array($optionsBlocks, 'select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo $form->error($model, 'allowTeachersToManageOwnRooms');
+                    ?>
+                </div>
+            </div>
         </fieldset>
         <fieldset>
             <legend><?php echo Yii::t('app', 'Kontaktinformationen'); ?></legend>

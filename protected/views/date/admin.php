@@ -44,7 +44,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'begin', 'value' => 'Yii::app()->dateFormatter->formatDateTime(strtotime($data->begin), null, "short")'),
         array('name' => 'end', 'value' => 'Yii::app()->dateFormatter->formatDateTime(strtotime($data->end), null, "short")'),
         array('name' => 'lockAt', 'value' => 'Yii::app()->dateFormatter->formatDateTime($data->lockAt, "short", "short")'),
-        'durationPerAppointment',
+        //'duration',
         array('name' => 'title', 'value' => '$data->title'),
         array('name' => 'groups', 'value' => '$data->getGroupnames()', 'visible' => Yii::app()->params['allowGroups']),
         array(

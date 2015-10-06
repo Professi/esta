@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.2.6
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Erstellungszeit: 31. Jul 2014 um 17:58
--- Server Version: 10.0.12-MariaDB-log
--- PHP-Version: 5.5.15
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -86,6 +77,7 @@ CREATE TABLE IF NOT EXISTS `configs` (
 INSERT INTO `configs` (`key`, `value`) VALUES
 ('appName','Elternsprechtag'),
 ('adminEmail','example@schooldomain.de'),
+('allowTeachersToManageOwnRooms','1'),
 ('hashCost','13'),
 ('fromMail','ESTA-School'),
 ('schoolName','Schoolname'),
@@ -132,15 +124,14 @@ INSERT INTO `configs` (`key`, `value`) VALUES
 -- Erstellt am: 31. Jul 2014 um 15:56
 --
 
-CREATE TABLE IF NOT EXISTS `date` (
-`id` int(11) NOT NULL,
+CREATE TABLE `date` (
+  `id` int(11) NOT NULL,
   `title` varchar(255) DEFAULT NULL,
   `date` date NOT NULL,
   `begin` time NOT NULL,
   `end` time NOT NULL,
-  `lockAt` bigint(20) NOT NULL,
-  `durationPerAppointment` smallint(6) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `lockAt` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -150,11 +141,12 @@ CREATE TABLE IF NOT EXISTS `date` (
 -- Erstellt am: 31. Jul 2014 um 15:56
 --
 
-CREATE TABLE IF NOT EXISTS `dateAndTime` (
-`id` int(11) NOT NULL,
+CREATE TABLE `dateAndTime` (
+  `id` int(11) NOT NULL,
   `time` time NOT NULL,
-  `date_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `date_id` int(11) NOT NULL,
+  `duration` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -200,20 +192,6 @@ CREATE TABLE IF NOT EXISTS `parent_child` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `role`
---
--- Erstellt am: 31. Jul 2014 um 15:56
---
-
-CREATE TABLE IF NOT EXISTS `role` (
-  `id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `description` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Tabellenstruktur für Tabelle `tan`
 --
 -- Erstellt am: 31. Jul 2014 um 15:56
@@ -224,7 +202,9 @@ CREATE TABLE IF NOT EXISTS `tan` (
   `used` tinyint(1) DEFAULT NULL,
   `group_id` int(11) DEFAULT NULL,
   `child_id` int(11) DEFAULT NULL,
-  `used_by_user_id` int(11) DEFAULT NULL
+  `used_by_user_id` int(11) DEFAULT NULL,
+  `generatedOn` DATETIME NULL, 
+  `generatedBy` int(11) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -235,8 +215,8 @@ CREATE TABLE IF NOT EXISTS `tan` (
 -- Erstellt am: 31. Jul 2014 um 15:56
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
-`id` int(11) NOT NULL,
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `activationKey` varchar(255) NOT NULL,
   `createtime` bigint(20) DEFAULT NULL,
@@ -249,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `badLogins` smallint(6) DEFAULT '0',
   `bannedUntil` bigint(20) DEFAULT '0',
   `password` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `user`
@@ -300,6 +280,20 @@ CREATE TABLE IF NOT EXISTS `YiiSession` (
   `expire` int(11) DEFAULT NULL,
   `data` blob
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `room` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `user_has_room` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `date_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 --
 -- Indexes for dumped tables
@@ -359,6 +353,10 @@ ALTER TABLE `group`
 ALTER TABLE `parent_child`
  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_parentChild_unq1` (`user_id`,`child_id`), ADD KEY `parent_child_fk1` (`child_id`);
 
+ALTER TABLE `room`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
 --
 -- Indexes for table `tan`
 --
@@ -376,6 +374,13 @@ ALTER TABLE `user`
 --
 ALTER TABLE `user_has_group`
  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_user_has_group1` (`user_id`,`group_id`), ADD KEY `user_has_group_fk2` (`group_id`);
+
+ALTER TABLE `user_has_room`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `idx_user_has_room1` (`user_id`,`room_id`,`date_id`),
+  ADD KEY `user_has_room_fk2` (`room_id`),
+  ADD KEY `user_has_room_fk3` (`date_id`);
+
 --
 -- AUTO_INCREMENT for dumped tables
 --
@@ -430,6 +435,15 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1;
 --
 ALTER TABLE `user_has_group`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+
+ALTER TABLE `room`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `user_has_room`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+
 --
 -- Constraints der exportierten Tabellen
 --
@@ -475,7 +489,8 @@ ADD CONSTRAINT `parent_child_fk1` FOREIGN KEY (`child_id`) REFERENCES `child` (`
 ALTER TABLE `tan`
 ADD CONSTRAINT `tan_fk3` FOREIGN KEY (`used_by_user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
 ADD CONSTRAINT `tan_fk1` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
-ADD CONSTRAINT `tan_fk2` FOREIGN KEY (`child_id`) REFERENCES `child` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
+ADD CONSTRAINT `tan_fk2` FOREIGN KEY (`child_id`) REFERENCES `child` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
+ADD CONSTRAINT `tan_fk4` FOREIGN KEY (`generatedBy_id`) REFERENCES `user` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
 
 --
 -- Constraints der Tabelle `user_has_group`
@@ -483,6 +498,11 @@ ADD CONSTRAINT `tan_fk2` FOREIGN KEY (`child_id`) REFERENCES `child` (`id`) ON D
 ALTER TABLE `user_has_group`
 ADD CONSTRAINT `user_has_group_fk2` FOREIGN KEY (`group_id`) REFERENCES `group` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
 ADD CONSTRAINT `user_has_group_fk1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+ALTER TABLE `user_has_room`
+  ADD CONSTRAINT `user_has_room_fk1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `user_has_room_fk2` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `user_has_room_fk3` FOREIGN KEY (`date_id`) REFERENCES `date` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 COMMIT;
 

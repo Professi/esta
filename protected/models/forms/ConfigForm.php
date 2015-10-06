@@ -61,11 +61,12 @@ class ConfigForm extends CFormModel {
     public $teacherAllowBlockTeacherApps;
     public $schoolWebsiteLink;
     public $allowTeachersToCreateAppointments;
+    public $allowTeachersToManageOwnRooms;
 
     public function rules() {
         return array(
             array('adminEmail,emailHost,fromMail' .
-                ',schoolName,maxChild,'
+                ',schoolName,maxChild,allowTeachersToManageOwnRooms,'
                 . 'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,' .
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
                 'durationTempBans,maxAttemptsForLogin,' .
@@ -79,7 +80,7 @@ class ConfigForm extends CFormModel {
             array('language', 'length', 'min' => 2),
             array('emailHost,fromMail,appName', 'length', 'min' => 3),
             array('defaultTeacherPassword', 'length', 'min' => 5),
-            array('randomTeacherPassword,banUsers,allowBlockingAppointments,' .
+            array('randomTeacherPassword,banUsers,allowBlockingAppointments,allowTeachersToManageOwnRooms,' .
                 'useSchoolEmailForContactForm,allowBlockingOnlyForManagement,lockRegistration,' .
                 'allowParentsToManageChilds,allowGroups,teacherAllowBlockTeacherApps,smtpAuth,allowTeachersToCreateAppointments',
                 'boolean'),
@@ -89,7 +90,7 @@ class ConfigForm extends CFormModel {
                 'numerical', 'integerOnly' => true, 'min' => 1),
             array('hashCost', 'numerical', 'integerOnly' => true, 'min' => 13),
             array('adminEmail,emailHost,fromMailHost,fromMail' .
-                ',schoolName,maxChild,'
+                ',schoolName,maxChild,allowTeachersToManageOwnRooms,'
                 . 'maxTanGen,maxAppointmentsPerChild,randomTeacherPassword,' .
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
                 'durationTempBans,maxAttemptsForLogin,allowTeachersToCreateAppointments' .
@@ -142,6 +143,7 @@ class ConfigForm extends CFormModel {
             'allowParentsToManageChilds' => Yii::t('app', 'Sollen Eltern die Daten über Ihre Kinder verwalten können?'),
             'allowTeachersToCreateAppointments' => Yii::t('app', 'Dürfen Lehrer Termine anlegen?'),
             'teacherAllowBlockTeacherApps' => Yii::t('app', 'Dürfen Lehrer Termine von/für Lehrer blockieren oder anlegen?'),
+            'allowTeachersToManageOwnRooms' => Yii::t('app', 'Dürfen Lehrer die eigenen Räume verwalten?'),
             'schoolWebsiteLink' => Yii::t('app', 'Schullink')
         );
     }

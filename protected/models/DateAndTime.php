@@ -54,8 +54,8 @@ class DateAndTime extends CActiveRecord {
      */
     public function rules() {
         return array(
-            array('date_id', 'required'),
-            array('date_id', 'numerical', 'integerOnly' => true),
+            array('date_id,duration,time', 'required'),
+            array('date_id,duration', 'numerical', 'integerOnly' => true),
             array('time', 'length', 'max' => 45),
             array('id, time, date_id', 'safe', 'on' => 'search'),
         );
@@ -83,6 +83,7 @@ class DateAndTime extends CActiveRecord {
             'id' => 'ID',
             'time' => Yii::t('app', 'Zeit'),
             'date_id' => Yii::t('app', 'Datum'),
+            'duration' => Yii::t('app', 'Dauer eines Termins'),
         );
     }
 
@@ -94,6 +95,7 @@ class DateAndTime extends CActiveRecord {
         $criteria = new CDbCriteria;
         $criteria->compare('id', $this->id);
         $criteria->compare('time', $this->time, true);
+        $criteria->compare('duration', $this->duration, true);
         $criteria->compare('date_id', $this->date_id);
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

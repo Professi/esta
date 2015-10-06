@@ -90,9 +90,11 @@ $this->menu = array(
                             'value' => User::getFormattedRole($model->role)),
                         array('name' => 'createtime',
                             'value' => Yii::app()->dateFormatter->formatDateTime($model->createtime, "short", "short")),
+                        array('name' => 'lastLogin',
+                            'value' => Yii::app()->dateFormatter->formatDateTime($model->lastLogin, "short", "short")),
                         array('name' => 'badLogins',
                             'value' => $model->badLogins == null ? '0' : $model->badLogins,
-                        ),
+                            'visible' => $model->id != Yii::app()->user->getId()),
                         array('name' => 'groups',
                             'value' => $model->getGroupnames(),
                             'visible' => $model->role > 1 && Yii::app()->params['allowGroups'] && $model->groupcount > 0,
@@ -113,7 +115,7 @@ $this->menu = array(
             </fieldset>
             <?php
         }
-        if ($model->role > 1) {
+        if ($model->role == PARENTS) {
             if (Yii::app()->user->getId() == $model->id && Yii::app()->params['allowGroups']) {
                 ?>
                 <h4 class="subheader"><?php echo Yii::t('app', 'Weitere TAN hinzufügen'); ?></h4>

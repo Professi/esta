@@ -37,7 +37,7 @@ $this->breadcrumbs = array(
             <?php } ?>
         </p>
         <p><?php echo Yii::t('app', 'Elternsprechtagsanwendung(ESTA) wurde im Rahmen eines Berufsschulprojektes für die Brühlwiesenschule Hofheim entwickelt und unter der GNU General Public License Version 3 (&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><i class="fi-page-export"></i>&nbsp;Link</a> ) lizensiert.'); ?>
-            <br><?php echo Yii::t('app', 'Die Urheber sind:'); ?> Christian Ehringfeld, David Mock, Matthias Unterbusch. </p>
+            <br><?php echo Yii::t('app', 'Die Urheber sind:'); ?> <a href="mailto:c.ehringfeld{at}t-online.de">Christian Ehringfeld</a>, <a href="mailto:dumock{at}gmail.com">David Mock</a> <?php echo Yii::t('app', 'und')?> Matthias Unterbusch. </p>
         <p><?php echo Yii::t('app', 'Website'); ?>&nbsp;&nbsp;<a href="http://www.elternsprechtagsanwendung.de/"><i class="fi-page-export"></i>&nbsp;Link</a></p>
         <p><?php echo Yii::t('app', 'Diese Seite wurde mit Hilfe der folgenden Ressourcen entwickelt und erstellt:'); ?><br>
             PHP&nbsp;&nbsp;<a href="http://www.php.net"><i class="fi-page-export"></i>&nbsp;<?php echo Yii::t('app', 'Link'); ?></a><br>

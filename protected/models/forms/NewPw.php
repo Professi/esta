@@ -37,8 +37,8 @@ class NewPw extends CFormModel {
     public function rules() {
         return array(
             array('password', 'required'),
-            array('password', 'length', 'max' => 128, 'min' => 8),
-            array('password', 'compare', "on" => "insert"),
+            array('password', 'length', 'max' => 64, 'min' => 8),
+            array('password', 'compare', 'compareAttribute' => 'password_repeat'),
             array('password_repeat', 'safe'), //allow bulk assignment 
         );
     }

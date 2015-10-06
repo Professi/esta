@@ -370,7 +370,10 @@ class AppointmentController extends Controller {
             $blockedApp = new BlockedAppointment();
             $blockedApp->unsetAttributes();
             $dates = Date::model()->findAll();
+            $rooms = new UserHasRoom('altSearch');
+            $rooms->user_id = Yii::app()->user->getId();
             $arr = array('dataProvider' => $dataProvider->customSearch(),
+                'rooms' => $rooms->altSearch(),
                 'dates' => $dates);
             if (Yii::app()->params['allowBlockingAppointments']) {
                 $arr['blockedApp'] = $blockedApp->search();
@@ -757,7 +760,7 @@ class AppointmentController extends Controller {
             $temp = array(
                 'date' => $date->date,
                 'start' => $appointment->dateandtime->time,
-                'duration' => $date->durationPerAppointment,
+                'duration' => $appointment->dateandtime->duration,
                 //'title' => $date->title,
                 'child' => "{$child->firstname} {$child->lastname}",
                 'parent' => $parentChild->user->getDisplayName(),

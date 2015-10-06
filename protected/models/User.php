@@ -119,7 +119,7 @@ class User extends CActiveRecord {
             'childcount' => array(self::STAT, 'ParentChild', 'user_id'),
             'groupcount' => array(self::STAT, 'UserHasGroup', 'user_id'),
             'groups' => array(self::MANY_MANY, 'Group', 'user_has_group(user_id,group_id)'),
-            'rooms' => array(self::MANY_MANY, 'Room','user_has_room(user_id,room_id)')
+            'rooms' => array(self::MANY_MANY, 'Room', 'user_has_room(user_id,room_id)')
         );
     }
 
@@ -164,6 +164,7 @@ class User extends CActiveRecord {
             'email' => Yii::t('app', 'E-Mail'),
             'createtime' => Yii::t('app', 'Registrierungsdatum'),
             'verifyCode' => Yii::t('app', 'Sicherheitscode'),
+            'tan' => Yii::t('app', 'TAN'),
             'title' => Yii::t('app', 'Titel'),
             'groups' => Yii::t('app', 'Gruppen'),
             'badLogins' => Yii::t('app', 'Ungültige Anmeldeversuche'),
@@ -275,7 +276,7 @@ class User extends CActiveRecord {
      */
     public function deleteUsersWithRole($role) {
         if (is_int($role)) {
-            $a_delete = User::model()->findAllByAttributes(array('role'=>$role),array('select'=>'id'));
+            $a_delete = User::model()->findAllByAttributes(array('role' => $role), array('select' => 'id'));
             foreach ($a_delete as $record) {
                 $record->delete();
             }
@@ -296,7 +297,7 @@ class User extends CActiveRecord {
                 )
             );
         }
-            return array();
+        return array();
     }
 
     /**
@@ -362,7 +363,7 @@ class User extends CActiveRecord {
         }
         return parent::afterSave();
     }
-    
+
     /**
      * 
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
@@ -371,16 +372,19 @@ class User extends CActiveRecord {
      */
     public function getRoom($date_id) {
         $uhr = $this->getUserHasRoom($date_id);
-        if(!is_null($uhr)) {
+        if (!is_null($uhr)) {
             return $uhr->room;
         }
         return null;
     }
-    
-    public function getUserHasRoom($date_id) {
-        return UserHasRoom::model()->findByAttributes(array('user_id'=>  $this->getPrimaryKey(),'date_id'=>$date_id));
+
+    public function addWithTanNewGroup() {
+        $this->tanManagement($this->tan);
     }
-    
+
+    public function getUserHasRoom($date_id) {
+        return UserHasRoom::model()->findByAttributes(array('user_id' => $this->getPrimaryKey(), 'date_id' => $date_id));
+    }
 
     /**
      * löscht ElternKind Verknüpfung + Kinder
@@ -558,7 +562,7 @@ class User extends CActiveRecord {
      */
     public function validateTan(&$errorMsg = "") {
         $rc = true;
-        $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
+        $tan = Tan::model()->findByAttributes(array('tan' => $this->tan instanceof Tan ? $this->tan->tan : $this->tan));
         if ($tan !== null) {
             if ($tan->used) {
                 $errorMsg = Yii::t('app', 'Leider wurde Ihre TAN schon benutzt.');
@@ -641,7 +645,7 @@ class User extends CActiveRecord {
         $userHasGroup->group_id = $group;
         $userHasGroup->save();
     }
-    
+
     /**
      * 
      * @param int $room

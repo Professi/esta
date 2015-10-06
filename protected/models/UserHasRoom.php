@@ -89,6 +89,22 @@ class UserHasRoom extends CActiveRecord {
         return false;
     }
 
+    public function altSearch() {
+        $criteria = new CDbCriteria;
+        $criteria->with = array('room', 'date');
+        $criteria->together = true;
+        $criteria->compare('user_id', $this->user_id, true);
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder' => array(
+                    'dateAndTime_id' => CSort::SORT_ASC,
+                ),
+                'multiSort' => true,
+            )
+        ));
+    }
+
     public function search() {
         $criteria = new CDbCriteria;
         $criteria->with = array('room', 'user' => array('select' => array('id', 'firstname', 'lastname')));

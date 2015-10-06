@@ -33,7 +33,7 @@ $this->menu = array(
         'linkOptions' => array('submit' => array('delete', 'id' => $model->id),
             'confirm' => Yii::t('app', 'Möchten Sie diesen Elternsprechtag wirklich löschen?'),
             'class' => 'small button',
-            'csrf'=>true)),
+            'csrf' => true)),
     array('label' => Yii::t('app', 'Elternsprechtage verwalten'),
         'url' => array('admin'),
         'linkOptions' => array('class' => 'small button')),
@@ -41,7 +41,7 @@ $this->menu = array(
 ?>
 <div class="row">
     <div class="small-12 columns small-centered">
-        <h2 class="text-center"><?php echo Yii::t('app', 'Elternsprechtag Nummer {id}', array('{id}' => $model->getPrimaryKey())); ?></h2>
+        <h2 class="text-center"><?php echo Yii::t('app', 'Elternsprechtag - {id} - {title}', array('{id}' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->date), "short", null), '{title}' => $model->title)); ?></h2>
     </div>
 </div>
 <div class="row">
@@ -56,7 +56,6 @@ $this->menu = array(
                 array('name' => 'begin', 'value' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->begin), null, "short")),
                 array('name' => 'end', 'value' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->end), null, "short")),
                 array('name' => 'lockAt', 'value' => Yii::app()->dateFormatter->formatDateTime($model->lockAt, "short", "short")),
-                array('name' => 'durationPerAppointment', 'value' => $model->durationPerAppointment . ' ' . Yii::t('app', 'Minuten')),
                 array('name' => 'title', 'visible' => !empty($model->title)),
                 array('name' => 'groups', 'value' => $model->getGroupnames(), 'visible' => (Yii::app()->params['allowGroups']) && !empty($model->groups)),
             ),

@@ -47,16 +47,20 @@
         <div class="small-8 medium-9 large-10 columns">
             <?php echo CHtml::encode("{$data->user->title} {$data->user->firstname} {$data->user->lastname}"); ?>
         </div>
-        
     </div>
     <br>
-     <div class="row collapse">
-        <div class="small-3 small-offset-1 medium-2 large-1 columns">
-            <i><?php echo Yii::t('app', 'In Raum') ?></i>
+    <?php
+    $room = $data->user->getRoom($data->dateandtime->date->id);
+    if (!empty($room)) {
+        ?>
+        <div class="row collapse">
+            <div class="small-3 small-offset-1 medium-2 large-1 columns">
+                <i><?php echo lcfirst(Yii::t('app', 'In Raum')); ?></i>
+            </div>
+            <div class="small-8 medium-9 large-10 columns">
+                <?php echo CHtml::encode("{$room->name}"); ?>
+            </div>
+            <a class="small button right hide-for-print delete-appointment" href="index.php?r=appointment/delete&amp;id=<?php echo CHtml::encode($data->id); ?>"><?php echo Yii::t('app', 'Termin löschen?'); ?></a>
         </div>
-        <div class="small-8 medium-9 large-10 columns">
-            <?php echo CHtml::encode("{$data->user->getRoom($data->dateandtime->date->id)->name}"); ?>
-        </div>
-         <a class="small button right hide-for-print delete-appointment" href="index.php?r=appointment/delete&amp;id=<?php echo CHtml::encode($data->id); ?>"><?php echo Yii::t('app', 'Termin löschen?'); ?></a>
-    </div>
+    <?php } ?>
 </div>

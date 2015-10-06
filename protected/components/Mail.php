@@ -70,9 +70,9 @@ class Mail {
     public function sendChangePasswordMail($email, $activationKey) {
         $body = $this->mailHeader();
         $body .= '<p>' . Yii::t('app', 'Bitte klicken Sie auf folgenden Link um ein neues Passwort für Ihr Benutzerkonto zu setzen.') . '</p>';
-        $body .= '<p><a href="' . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=$activationKey\">" . Yii::t('app', 'Link f&uuml;r die Passwortwahl') . '</a></p>';
+        $body .= '<p><a href="' . $this->getScriptUrl() . "?r=/user/NewPw&activationKey=$activationKey&email=$email\">" . Yii::t('app', 'Link f&uuml;r die Passwortwahl') . '</a></p>';
         $body .= '<p>' . Yii::t('app', 'Sollten Sie Probleme beim Aufrufen der Aktivierung haben kopieren Sie bitte den folgenden Link in die Adressleiste ihres Browser:') . '</p>';
-        $body .= "<p>" . $this->getScriptUrl() . "?r=/User/NewPw&activationKey=" . $activationKey . "</p><br/>";
+        $body .= "<p>" . $this->getScriptUrl() . "?r=/user/NewPw&activationKey=$activationKey&email=$email</p><br/>";
         $body .= '<p>' . Yii::t('app', 'Falls Sie kein neues Passwort angefordert haben, ignorieren Sie bitte diese Nachricht.') . '</p>';
         $this->addInfo($body);
         $body .= $this->mailFooter();
@@ -127,7 +127,7 @@ class Mail {
         $body = $this->mailHeader();
         $body .= "<p>" . Yii::t('app', "Vielen Dank für Ihre Registrierung bei {appname}", array('{appname}' => Yii::app()->name)) . ".</p>";
         $body .= "<p>" . Yii::t('app', "Ihr Benutzername lautet:") . " <b>" . $email . "</b></p>";
-        $body .= "<p>" . Yii::t('app', "Um Ihre Registrierung abzuschließen und die Anwendung in Anspruch nehmen zu können, klicken Sie bitte auf den folgenden Link.") . "</p>";
+        $body .= "<p>" . Yii::t('app', "Um Ihre Registrierung abzuschließen und die Anwendung verwenden zu können, klicken Sie bitte auf den folgenden Link.") . "</p>";
         $body .= "<p><a href=\"" . $this->getScriptUrl() . "?r=/User/activate&activationKey=" . $activationKey . "\">" . Yii::t('app', "Link für die Aktivierung") . "</a></p>";
         $body .= "<p>" . Yii::t('app', "Sollten Sie Probleme beim Aufrufen der Aktivierung haben, kopieren Sie bitte den folgenden Link in die Adressleiste Ihres Browser:") . "</p>";
         $body .= "<p>" . $this->getScriptUrl() . "?r=/User/activate&activationKey=" . $activationKey . "</p>";
