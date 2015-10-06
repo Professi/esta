@@ -29,6 +29,7 @@ $('.search-form form').submit(function(){
 	return false;
 });
 ");
+Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.css");
 ?>
 
 <div class="row">

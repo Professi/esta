@@ -1,5 +1,6 @@
 <?php
-
+Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.css");
+$this->setPageTitle(Yii::t('app', 'Raumverwaltung'));
 ?>
 
 <div class="row" id="room-assignall-workspace">
