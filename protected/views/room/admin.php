@@ -69,9 +69,13 @@ $this->widget('zii.widgets.grid.CGridView', array(
             array('name' => 'date_id', 'value' => 'Yii::app()->dateFormatter->formatDateTime(strtotime($data->date->date), "short", null)." ({$data->date->title})"',
                 'filter' => CHtml::listData(Date::filterDate(), 'value', 'name')
             ),
-            array(
-                'class' => 'CustomButtonColumn',
-                'template' => '{delete}',
+            array('class' => 'CustomButtonColumn', 'template' => '{delete}',
+                'buttons' => array(
+                    'delete' => array(
+                        'url' => '$this->grid->controller->createUrl("/room/deleteUserHasRoom", array("id"=>$data->id))'
+                    ),
+                ),
+                'headerHtmlOptions' => array('style' => 'text-align:center;width: 10%;')
             ),
         ),
     ));
