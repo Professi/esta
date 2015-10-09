@@ -84,12 +84,6 @@ $menu = array(//icon,label,url,visible(bool)
                     echo $this->generateFoundation5Menu($menu, true);
                 }
                 ?>
-                <li class="hide-for-small">
-                    <a onClick="event.preventDefault();
-                            window.print();" href="#">
-                        <i class="fi-print"></i><?php echo Yii::t('app', 'Drucken'); ?>
-                    </a>
-                </li>
             </ul>
         </section>
     </nav>
