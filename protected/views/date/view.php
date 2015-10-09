@@ -41,7 +41,7 @@ $this->menu = array(
 ?>
 <div class="row">
     <div class="small-12 columns small-centered">
-        <h2 class="text-center"><?php echo Yii::t('app', 'Elternsprechtag - {id} - {title}', array('{id}' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->date), "short", null), '{title}' => $model->title)); ?></h2>
+        <h2 class="text-center"><?php echo Yii::t('app', 'Elternsprechtag - {date} - {title}', array('{date}' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->date), "short", null), '{title}' => $model->title)); ?></h2>
     </div>
 </div>
 <div class="row">
@@ -51,7 +51,6 @@ $this->menu = array(
         $this->widget('zii.widgets.CDetailView', array(
             'data' => $model,
             'attributes' => array(
-                'id',
                 array('name' => 'date', 'value' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->date), "short", null)),
                 array('name' => 'begin', 'value' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->begin), null, "short")),
                 array('name' => 'end', 'value' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->end), null, "short")),
