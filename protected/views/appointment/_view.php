@@ -19,6 +19,7 @@
  */
 /* @var $this AppointmentController */
 /* @var $data Appointment */
+$room = $data->user->getRoom($data->dateandtime->date->id);
 ?>
 <div class="paper panel">
     <div class="row">
@@ -47,10 +48,12 @@
         <div class="small-8 medium-9 large-10 columns">
             <?php echo CHtml::encode("{$data->user->title} {$data->user->firstname} {$data->user->lastname}"); ?>
         </div>
+        <?php if (empty($room)) { ?>
+            <a class="small button right hide-for-print delete-appointment" href="index.php?r=appointment/delete&amp;id=<?php echo CHtml::encode($data->id); ?>"><?php echo Yii::t('app', 'Termin löschen?'); ?></a>
+        <?php } ?>
     </div>
     <br>
     <?php
-    $room = $data->user->getRoom($data->dateandtime->date->id);
     if (!empty($room)) {
         ?>
         <div class="row collapse">
