@@ -354,6 +354,7 @@ class User extends CActiveRecord {
      */
     public function afterSave() {
         if ($this->isNewRecord) {
+            $this->saveNewRecord();
             if (Yii::app()->user->isGuest()) {
                 $this->tanManagement($this->tan);
             }
