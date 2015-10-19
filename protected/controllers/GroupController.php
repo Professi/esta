@@ -200,7 +200,7 @@ class GroupController extends Controller {
         $results = array();
         foreach ($groups as $g) {
             $results[] = array(
-                'id' => $p->id,
+                'id' => $g->id,
                 'text' => $g->groupname
             );
         }

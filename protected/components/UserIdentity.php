@@ -38,9 +38,7 @@ class UserIdentity extends CUserIdentity {
      * @return integer errorcode
      */
     public function authenticate() {
-        $criteria = new CDbCriteria();
-        $criteria->together = false;
-        $criteria->with = false;
+        $criteria = new CDbCriteria(array('together'=>false,'with'=>false));
         $user = User::model()->findByAttributes(array('email' => $this->username), $criteria);
         if ($user === null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
@@ -51,7 +49,7 @@ class UserIdentity extends CUserIdentity {
         } else if ($user->state == ACTIVE && !$user->verifyPassword($this->password)) {
             $this->invalidPassword($user);
         } else if ($user->state == BLOCKED) {
-            if (is_null($user->bannedUntil) || $user->bannedUntil == 0) {
+            if (empty($user->bannedUntil) || $user->bannedUntil == 0) {
                 $this->errorCode = self::ERROR_ACCOUNT_BANNED;
                 $this->errorMessage = Yii::t('app', "Ihr Benutzerkonto wurde gesperrt. Bitte wenden Sie sich an die Schulverwaltung.");
             } else {
