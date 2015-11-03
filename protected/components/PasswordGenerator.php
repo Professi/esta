@@ -61,11 +61,9 @@ class PasswordGenerator {
      * @return boolean/char 
      */
     private function choseChar($array) {
-        $rc = '';
+        $rc = false;
         if (count($array) > 0) {
             $rc = $array[mt_rand(0, count($array) - 1)];
-        } else {
-            $rc = false;
         }
         return $rc;
     }

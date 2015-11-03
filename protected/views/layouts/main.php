@@ -55,7 +55,6 @@ $menu = array(//icon,label,url,visible(bool)
     </script>
 </head>
 <body>
-
     <h1 class="text-center hide show-for-print" id="print-header" style="font-family: 'ClickerScript-Regular';"><?= Yii::t('app', 'Elternsprechtag'); ?></h1>
     <nav class="top-bar hide-on-print" data-topbar data-options="is_hover: false">
         <ul class="title-area">
@@ -68,6 +67,8 @@ $menu = array(//icon,label,url,visible(bool)
         </ul>
         <section class="top-bar-section">
             <ul class="right">
+                <li class="hide-for-small"><a href="<?php echo $this->createUrl('/site/page', array('view' => 'faq')) ?>">FAQ</a></li>
+                <li class="hide-for-small"><a href="<?php echo $this->createUrl('/site/contact') ?>">Kontakt</a></li>
                 <li>
                     <a href="http://<?php echo Yii::app()->params['schoolWebsiteLink']; ?>" target="_blank">
                         <img id="logo_school" 
@@ -76,7 +77,6 @@ $menu = array(//icon,label,url,visible(bool)
                              <?php echo Yii::app()->params['schoolName'] ?>
                     </a>
                 </li>
-                <!--<li class="toggle-topbar menu-icon hide-for-large"><a href=""><span>Menu</span></a></li>-->
             </ul>
             <ul class="left show-for-small-only">
                 <?php
@@ -84,12 +84,6 @@ $menu = array(//icon,label,url,visible(bool)
                     echo $this->generateFoundation5Menu($menu, true);
                 }
                 ?>
-                <li>
-                    <a onClick="event.preventDefault();
-                            window.print();" href="#">
-                        <i class="fi-print"></i><?php echo Yii::t('app', 'Drucken'); ?>
-                    </a>
-                </li>
             </ul>
         </section>
     </nav>

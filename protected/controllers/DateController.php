@@ -142,7 +142,6 @@ class DateController extends Controller {
         $criteria->with = 'parentchild';
         $criteria->select = 'id';
         $apps = Appointment::model()->findAll($criteria);
-        $x = 0;
         $userIds = array();
         foreach ($apps as $app) {
             $userIds[] = $app->parentchild->user_id;

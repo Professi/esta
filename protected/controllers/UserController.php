@@ -420,7 +420,6 @@ class UserController extends Controller {
      */
     public function actionSearch($role, $term) {
         $dataProvider = new User();
-        $groups = array();
         $dataProvider->unsetAttributes();
         $dataProvider->lastname = $term;
         if (Yii::app()->user->isTeacher() || Yii::app()->user->isParent()) {

@@ -41,7 +41,7 @@ $this->menu = array(
 <div class="row">
     <div class="small-12 columns">
         <fieldset>
-            <legend><?php echo Yii::t('app', 'Elternsprechtag - {id} - {title} bearbeiten', array('{id}' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->date), "short", null), '{title}' => $model->title)); ?></legend>
+            <legend><?php echo Yii::t('app', 'Elternsprechtag - {date} - {title} bearbeiten', array('{date}' => $model->date, '{title}' => $model->title)); ?></legend>
             <?php
             echo $this->renderPartial('_form', array(
                 'model' => $model,

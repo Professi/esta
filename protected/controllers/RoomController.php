@@ -29,8 +29,8 @@ class RoomController extends Controller {
                 'actions' => array('index', 'view', 'assignajaxteacher', 'search'),
                 'roles' => array(TEACHER),
             ),
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'delete', 'assignajax', 'search', 'admin', 'assignall'),
+            array('allow',
+                'actions' => array('create', 'update', 'delete', 'assignajax', 'search', 'admin', 'assignall', 'deleteUserHasRoom'),
                 'roles' => array(MANAGEMENT, ADMIN),
             ),
             array('deny', // deny all users
@@ -104,6 +104,15 @@ class RoomController extends Controller {
         }
     }
 
+    public function actionDeleteUserHasRoom($id) {
+        $this->loadUserHasRoomModel($id)->delete();
+
+        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        if (!isset($_GET['ajax'])) {
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        }
+    }
+
     /**
      * Lists all models.
      */
@@ -146,8 +155,17 @@ class RoomController extends Controller {
      */
     public function loadModel($id) {
         $model = Room::model()->findByPk($id);
-        if ($model === null)
+        if ($model === null) {
             throw new CHttpException(404, 'The requested page does not exist.');
+        }
+        return $model;
+    }
+
+    public function loadUserHasRoomModel($id) {
+        $model = UserHasRoom::model()->findByPk($id);
+        if ($model === null) {
+            throw new CHttpException(404, 'The requested page does not exist.');
+        }
         return $model;
     }
 

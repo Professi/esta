@@ -185,7 +185,7 @@ class User extends CActiveRecord {
         $criteria->compare('email', $this->email, true);
         $criteria->compare('title', $this->title, true);
         $criteria->compare('role', $this->role);
-        $sort = new CSort;
+        $sort = new CSort();
         $sort->defaultOrder = 'lastname ASC';
         $sort->multiSort = true;
         $sort->attributes = array(
@@ -307,7 +307,7 @@ class User extends CActiveRecord {
      */
     private function updateTan($tan = '') {
         if (!Yii::app()->user->checkAccess(MANAGEMENT)) {
-            if ($tan == '') {
+            if (empty($tan)) {
                 $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
             }
             $tan->used_by_user_id = $this->getPrimaryKey();
@@ -354,7 +354,7 @@ class User extends CActiveRecord {
      */
     public function afterSave() {
         if ($this->isNewRecord) {
-            $rc = $this->saveNewRecord();
+            $this->saveNewRecord();
             if (Yii::app()->user->isGuest()) {
                 $this->tanManagement($this->tan);
             }
