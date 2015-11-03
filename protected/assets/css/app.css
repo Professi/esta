@@ -3400,7 +3400,9 @@ blockquote p {
     color: #222;
     padding: 1rem 2rem;
     font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-    font-size: 1rem
+    font-size: 1rem;
+    background-color: #ddd;
+    border: 1px solid #aaa;
 }
 .tabs dd>a:hover,
 .ui-tabs-nav dd>a:hover,

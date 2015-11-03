@@ -34,6 +34,7 @@ return array (
   '(Dies ist eine automatisch versendete E-Mail. Bitte antworten Sie nicht auf diese Nachricht, da die E-Mail-Adresse nur zum Versenden, nicht aber zum Empfang von E-Mails eingerichtet ist.)' => '(This is an automatically generated email, please do not reply.)',
   'Absenden' => 'Send',
   'Absendername (z.B. ESTA-School)' => 'Name of the sender (e.g. ESTA-school)',
+  'Achten Sie darauf, dass der korrekte Elternsprechtag ausgewählt ist. Der aktive Elterntag ist weiß und blau hinterlegt, andere Auswahlmöglichkeiten erscheinen grau und sind klickbar.' => 'Please make sure the correct date is selected. Active dates are white with a blue blur, while other dates are grey and clickable.',
   'Administrator' => 'Administrator',
   'Administrator E-Mail Adresse' => 'Administrator e-mail adress',
   'Aktiv' => 'active',
