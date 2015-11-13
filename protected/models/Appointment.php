@@ -140,6 +140,7 @@ class Appointment extends CActiveRecord {
         $criteria = new CDbCriteria();
         $criteria->addCondition(array('user_id=:user_id'));
         $criteria->params = array(':user_id' => $this->user_id);
+        $criteria->with = array('user');
         $sort = new CSort;
         $sort->defaultOrder = 'dateAndTime_id desc';
         $sort->attributes = array(
