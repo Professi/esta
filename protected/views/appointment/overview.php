@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/** 
+/**
  * @var $this AppointmentController
  * @var $data[time|status|text]
  * @var $teacher
@@ -23,39 +23,40 @@
 $this->setPageTitle(Yii::t('app', 'Terminübersicht'));
 
 $this->menu = array(
-    array(  'label' => Yii::t('app', 'Termine verwalten'), 
-            'url' => array('admin'), 
-            'visible' => (Yii::app()->user->checkAccess(MANAGEMENT)),
-            'linkOptions' => array('class' => 'small button'))
+    array('label' => Yii::t('app', 'Termine verwalten'),
+        'url' => array('admin'),
+        'visible' => (Yii::app()->user->checkAccess(MANAGEMENT)),
+        'linkOptions' => array('class' => 'small button'))
 );
+$roomOutput = ($room !== null ? ' ' . Yii::t('app', 'in Raum') . ' ' . $room->name : '')
 ?>
 <div class="row">
     <div class="small-12 columns">
         <h4 class="subheader">
-            <?php echo Yii::t('app','Termine für') . " {$teacher} " . Yii::t('app','am') . " {$date}"; ?>
+            <?php echo Yii::t('app', 'Termine für') . " {$teacher} " . Yii::t('app', 'am') . " {$date}" . " {$roomOutput}"; ?>
         </h4>
         <hr>
         <table>
             <thead>
                 <tr>
-                <th class="text-center"><?php echo Yii::t('app','Uhrzeit'); ?></th>
-                <th class="text-center"><?php echo Yii::t('app','Termin'); ?></th>
-                <th class="text-center"><?php echo Yii::t('app','Mit / Grund'); ?></th>
-            </tr>
+                    <th class="text-center"><?php echo Yii::t('app', 'Uhrzeit'); ?></th>
+                    <th class="text-center"><?php echo Yii::t('app', 'Termin'); ?></th>
+                    <th class="text-center"><?php echo Yii::t('app', 'Mit / Grund'); ?></th>
+                </tr>
             </thead>
             <tbody>
                 <?php foreach ($data as $show) { ?>
-                <tr>
-                    <td class="text-center">
-                        <?php echo $show['time']; ?>
-                    </td>
-                    <td class="text-center">
-                        <?php echo $show['status']; ?>
-                    </td>
-                    <td class="text-center">
-                        <?php echo $show['text']; ?>
-                    </td>
-                </tr>
+                    <tr>
+                        <td class="text-center">
+                            <?php echo $show['time']; ?>
+                        </td>
+                        <td class="text-center">
+                            <?php echo $show['status']; ?>
+                        </td>
+                        <td class="text-center">
+                            <?php echo $show['text']; ?>
+                        </td>
+                    </tr>
                 <?php } ?>
             </tbody>
         </table>

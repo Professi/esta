@@ -653,6 +653,7 @@ class AppointmentController extends Controller {
         $data = $this->generateOverviewData($id, current($this->getDateWithTimes($dateObj)), Appointment::model()->with('parentchild.child', 'parentchild.user')->findAllByAttributes(array('user_id' => $id)), BlockedAppointment::model()->findAllByAttributes(array('user_id' => $id)));
         $teacher = User::model()->findByPk($id);
         $this->render('overview', array('data' => $data,
+            'room' => $teacher->getRoom($dateObj->id),
             'teacher' => "{$teacher->title} {$teacher->firstname} {$teacher->lastname}",
             'date' => Yii::app()->dateFormatter->formatDateTime(strtotime($dateObj->date), 'short', null)));
     }
@@ -794,6 +795,7 @@ class AppointmentController extends Controller {
             $blockedAppointments = BlockedAppointment::model()->findAllByAttributes(array('user_id' => $teacher->id));
             if ($emptyPlans || !empty($appointments) || !empty($blockedAppointments)) {
                 $temp['data'] = $this->generateOverviewData($teacher->id, current($dateTimes), $appointments, $blockedAppointments);
+                $temp['room'] = $teacher->getRoom($dateObj->id);
                 $temp['teacher'] = "{$teacher->title} {$teacher->firstname} {$teacher->lastname}";
                 $temp['date'] = Yii::app()->dateFormatter->formatDateTime(strtotime($dateObj->date), 'short', null);
                 $pages[] = $temp;
