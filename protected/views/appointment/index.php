@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -24,12 +24,16 @@ $this->breadcrumbs = array(
     'Appointments',
 );
 $this->menu = array(
-    array(  'label' => Yii::t('app', 'Termine vereinbaren'), 
-            'url' => array('create'), 
+    array(  'label' => Yii::t('app', 'Termine vereinbaren'),
+            'url' => array('create'),
             'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Termine verwalten'), 
-            'url' => array('admin'), 
+    array(  'label' => Yii::t('app', 'Termin vereinbaren'),
+            'url' => array('getTeacher'),
+            'visible' => Yii::app()->user->checkAccess(PARENTS) && ! $no_children,
+            'linkOptions' => array('class' => 'small button')),
+    array(  'label' => Yii::t('app', 'Termine verwalten'),
+            'url' => array('admin'),
             'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
     array(  'label' => Yii::t('app','Termine im .ics Format exportieren'),
