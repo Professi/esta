@@ -56,7 +56,7 @@ class AppointmentController extends Controller {
                 'actions' => array('admin', 'delete', 'view', 'create', 'update',
                     'createBlockApp', 'DeleteBlockApp', 'generatePlans',
                     'getteacherappointmentsajax', 'getselectchildrenajax',
-                    'overview'
+                    'overview', 'CreateBlockDay'
                 ),
                 'roles' => array(ADMIN, MANAGEMENT),
             ),
@@ -143,6 +143,51 @@ class AppointmentController extends Controller {
         } else {
             $this->throwFourNullNull();
         }
+    }
+
+    /**
+     * Block all dateAndTimes for a teacher on a specific date.
+     * There must be a better way to do this, alas I have no time to find it
+     */
+    public function actionCreateBlockDay() {
+
+        if (!(Yii::app()->params['allowBlockingAppointments'])
+            || !Yii::app()->user->isAdmin()) {
+            $this->throwFourNullNull();
+        }
+
+        if (isset($_POST['BlockedAppointment'])
+            && ! empty($_POST['BlockedAppointment']['user_id'])
+            && ! empty($_POST['BlockedAppointment']['reason'])) {
+
+            $dateAndTime = DateAndTime::model()->findByPk($_POST['BlockedAppointment']['dateAndTime_id']);
+            $date = $dateAndTime->getRealtionDate(); # needs right method
+            $userId = $_POST['BlockedAppointment']['user_id']; # if not set exit
+            $reason = $_POST['BlockedAppointment']['reason']; # if not set exit
+
+            foreach ($date->getAllDateAndTimes AS $dateAndTime) {
+
+                $model = new BlockedAppointment();
+                $model->unsetAttributes();
+
+                $model->setAttributes([
+                    'dateAndTime_id' => $dateAndTime->getId(), # needs right method
+                    'user_id' => $userId,
+                    'reason' => $reason
+                ]);
+
+                if ($model->save()) {
+                    Yii::app()->user->setFlash('success', Yii::t('app', 'Termin erfolgreich geblockt.'));
+                }
+
+            }
+
+        } else {
+            $this->actionCreateBlockApp();
+        }
+
+        $this->redirect(array('admin'));
+
     }
 
     /**
