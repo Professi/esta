@@ -47,10 +47,10 @@ class Mail {
         $mailer->CharSet = "UTF-8";
         $mailer->SMTPSecure = Yii::app()->params['smtpSecure'];
         $mailer->Port = Yii::app()->params['smtpPort'];
-        $mailer->setFrom($from, $fromName);
-        $mailer->addAddress($to);
+        $mailer->SetFrom($from, $fromName);
+        $mailer->AddAddress($to);
         $mailer->Subject = $subject;
-        $mailer->msgHTML($message);
+        $mailer->MsgHTML($message);
         $mailer->AltBody = Yii::t('app', 'Benutzen Sie bitte ein HTML kompatibles E-Mail Programm!');
         try {
             $mailer->send();
