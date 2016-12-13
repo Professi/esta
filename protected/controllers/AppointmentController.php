@@ -760,15 +760,18 @@ class AppointmentController extends Controller {
                 . "PRODID:http://" . Yii::app()->params['schoolWebsiteLink'] . PHP_EOL;
         foreach ($dates as $date) {
             $with = Yii::app()->user->checkAccess('2') ? $date['parent'] : $date['teacher'];
-            $t = date('Ymd', strtotime($date['date'])) . 'T';
-            $time = explode(':', $date['start']);
-            $zStart = date('His', mktime($time[0], $time[1], $time[2])) . 'Z';
-            $zEnd = date('His', mktime($time[0], $time[1] + $date['duration'], $time[2])) . 'Z';
+
+            $dateTime = \DateTime::createFromFormat('Y-m-dH:i:s', $date['date'] . $date['start']);
+            $dateTime->setTimezone(new \DateTimeZone('UTC'));
+            $dtStart = $dateTime->format('Ymd\THis\Z');
+            $dateTime->add(new \DateInterval("PT${date['duration']}M"));
+            $dtEnd = $dateTime->format('Ymd\THis\Z');
+
             $ical .= "BEGIN:VEVENT" . PHP_EOL
                     . "UID:" . md5(uniqid(mt_rand(), true)) . "@" . Yii::app()->params['schoolWebsiteLink'] . PHP_EOL
-                    . "DTSTAMP:" . date('Ymd') . "T" . date('His') . "Z" . PHP_EOL
-                    . "DTSTART:" . $t . $zStart . PHP_EOL
-                    . "DTEND:" . $t . $zEnd . PHP_EOL
+                    . "DTSTAMP:" . date('Ymd\THis\Z') . PHP_EOL
+                    . "DTSTART:" . $dtStart . PHP_EOL
+                    . "DTEND:" . $dtEnd . PHP_EOL
                     . "SUMMARY:" . Yii::t('app', 'Ihr Termin mit {with} für {child}', array('{with}' => $with, '{child}' => $date['child']))
                     . PHP_EOL . "END:VEVENT" . PHP_EOL;
         }
