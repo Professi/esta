@@ -7,14 +7,16 @@
 		hourText: '小时',
 		minuteText: '分钟',
 		secondText: '秒钟',
-		millisecText: '微秒',
+		millisecText: '毫秒',
+		microsecText: '微秒',
 		timezoneText: '时区',
 		currentText: '现在时间',
 		closeText: '关闭',
-		timeFormat: 'hh:mm',
+		timeFormat: 'HH:mm',
+		timeSuffix: '',
 		amNames: ['AM', 'A'],
 		pmNames: ['PM', 'P'],
-		ampm: false
+		isRTL: false
 	};
 	$.timepicker.setDefaults($.timepicker.regional['zh-CN']);
 })(jQuery);

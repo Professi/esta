@@ -8,13 +8,15 @@
 		minuteText: 'Хвилини',
 		secondText: 'Секунди',
 		millisecText: 'Мілісекунди',
+		microsecText: 'Мікросекунди',
 		timezoneText: 'Часовий пояс',
 		currentText: 'Зараз',
 		closeText: 'Закрити',
-		timeFormat: 'hh:mm tt',
+		timeFormat: 'HH:mm',
+		timeSuffix: '',
 		amNames: ['AM', 'A'],
 		pmNames: ['PM', 'P'],
-		ampm: false
+		isRTL: false
 	};
 	$.timepicker.setDefaults($.timepicker.regional['uk']);
 })(jQuery);

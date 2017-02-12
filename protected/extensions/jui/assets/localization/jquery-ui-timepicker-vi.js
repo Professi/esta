@@ -7,14 +7,16 @@
 		hourText: 'Giờ',
 		minuteText: 'Phút',
 		secondText: 'Giây',
-		millisecText: 'Phần nghìn giây',
+		millisecText: 'Mili giây',
+		microsecText: 'Micrô giây',
 		timezoneText: 'Múi giờ',
 		currentText: 'Hiện thời',
 		closeText: 'Đóng',
-		timeFormat: 'h:m',
-		amNames: ['SA', 'AM', 'A'],
-		pmNames: ['CH', 'PM', 'P'],
-		ampm: false
+		timeFormat: 'HH:mm',
+		timeSuffix: '',
+		amNames: ['SA', 'S'],
+		pmNames: ['CH', 'C'],
+		isRTL: false
 	};
 	$.timepicker.setDefaults($.timepicker.regional['vi']);
 })(jQuery);

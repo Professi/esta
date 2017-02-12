@@ -92,9 +92,7 @@ class EJuiDateTimePicker extends CJuiDatePicker
             $assets    = Yii::app()->assetManager->publish($assetsDir);
             $cs        = Yii::app()->clientScript;
             $min       = YII_DEBUG ? '' : '.min';
-        //    $cs->registerCssFile($assets . '/jquery-ui-timepicker-addon.css');
-            $cs->registerScriptFile($assets . '/jquery-ui-timepicker-addon' . $min . '.js', CClientScript::POS_END);
-
+            $cs->registerCssFile($assets . '/jquery-ui-timepicker-addon.css');
             if ($this->language != 'en') {
                 $this->registerScriptFile($this->i18nScriptFile);
                 //TimePicker localization load..

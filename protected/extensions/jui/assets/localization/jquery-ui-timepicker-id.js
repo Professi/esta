@@ -8,13 +8,15 @@
 		minuteText: 'Menit',
 		secondText: 'Detik',
 		millisecText: 'Milidetik',
+		microsecText: 'Mikrodetik',
 		timezoneText: 'Zona Waktu',
 		currentText: 'Sekarang',
 		closeText: 'OK',
-		timeFormat: 'hh:mm tt',
+		timeFormat: 'HH:mm',
+		timeSuffix: '',
 		amNames: ['AM', 'A'],
 		pmNames: ['PM', 'P'],
-		ampm: false
+		isRTL: false
 	};
 	$.timepicker.setDefaults($.timepicker.regional['id']);
 })(jQuery);

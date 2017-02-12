@@ -8,13 +8,15 @@
 		minuteText: 'Minutt',
 		secondText: 'Sekund',
 		millisecText: 'Millisekund',
+		microsecText: 'mikrosekund',
 		timezoneText: 'Tidssone',
 		currentText: 'Nå',
 		closeText: 'Lukk',
-		timeFormat: 'hh:mm',
+		timeFormat: 'HH:mm',
+		timeSuffix: '',
 		amNames: ['am', 'AM', 'A'],
 		pmNames: ['pm', 'PM', 'P'],
-		ampm: false
+		isRTL: false
 	};
 	$.timepicker.setDefaults($.timepicker.regional['no']);
 })(jQuery);

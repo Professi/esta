@@ -1,5 +1,6 @@
 /* Spanish translation for the jQuery Timepicker Addon */
 /* Written by Ianaré Sévi */
+/* Modified by Carlos Martínez */
 (function($) {
 	$.timepicker.regional['es'] = {
 		timeOnlyTitle: 'Elegir una hora',
@@ -8,13 +9,15 @@
 		minuteText: 'Minutos',
 		secondText: 'Segundos',
 		millisecText: 'Milisegundos',
-		timezoneText: 'Huso horario',
-		currentText: 'Ahora',
+		microsecText: 'Microsegundos',
+		timezoneText: 'Uso horario',
+		currentText: 'Hoy',
 		closeText: 'Cerrar',
-		timeFormat: 'hh:mm',
+		timeFormat: 'HH:mm',
+		timeSuffix: '',
 		amNames: ['a.m.', 'AM', 'A'],
 		pmNames: ['p.m.', 'PM', 'P'],
-		ampm: false
+		isRTL: false
 	};
 	$.timepicker.setDefaults($.timepicker.regional['es']);
 })(jQuery);
