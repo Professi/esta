@@ -259,7 +259,7 @@ class User extends CActiveRecord {
         $criteria->addCondition('lastname LIKE :match');
         $criteria->params[':match'] = "$match%";
         $criteria->params[':role'] = $this->role;
-        $criteria->compare('state', $this->state, false);
+        $criteria->compare('state', $this->state);
         $criteria->select = 'title,firstname,lastname,id';
         $criteria->addCondition('role=:role');
         if ($withOrder) {

@@ -424,6 +424,7 @@ class UserController extends Controller {
         $dataProvider->lastname = $term;
         if (Yii::app()->user->isTeacher() || Yii::app()->user->isParent()) {
             $dataProvider->groups = Yii::app()->user->getGroups();
+            $dataProvider->state = true;
         }
         if (Yii::app()->user->isParent()) {
             $dataProvider->role = TEACHER;
