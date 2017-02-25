@@ -134,25 +134,29 @@ class TanController extends Controller {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     protected function generateCSVFile($tans, $parentManagement = true) {
+
         $allowGroups = Yii::app()->params['allowGroups'];
-//        $filename = Yii::getPathOfAlias('webroot') . '/assets/tans' . date("Ymd") . '.csv';
-//        $fp = fopen($filename, 'w+');
-        //$fp = fopen('php://output', 'w+');
-        $fp = fopen('php://temp', 'w');
+
+        $file = tempnam(sys_get_temp_dir(), 'tans.csv');
+
+        $handle = fopen($file, 'w');
+
         //add BOM to fix UTF-8 in Excel
-        fprintf($fp, chr(0xEF) . chr(0xBB) . chr(0xBF));
+        fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
+
         $delimiter = ";";
         $enclosure = '"';
-        $data = array(Yii::t('app', 'TAN'));
+        $header = array(Yii::t('app', 'TAN'));
         if ($allowGroups) {
-            $data[] = Yii::t('app', 'Gruppe');
+            $header[] = Yii::t('app', 'Gruppe');
         }
         if (!$parentManagement) {
-            $data[] = Yii::t('app', 'Vorname');
-            $data[] = Yii::t('app', 'Nachname');
+            $header[] = Yii::t('app', 'Vorname');
+            $header[] = Yii::t('app', 'Nachname');
         }
-        $data = array_map("utf8_decode", $data);
-        fputcsv($fp, $data, $delimiter, $enclosure);
+        $header = array_map("utf8_decode", $header);
+        $data = array();
+
         if (is_array($tans)) {
             foreach ($tans as $tan) {
                 $d = array($tan->tan);
@@ -169,12 +173,21 @@ class TanController extends Controller {
                         $d[] = $tan->child->lastname;
                     }
                 }
-                $d = array_map("utf8_decode", $d);
-                fputcsv($fp, $d, $delimiter, $enclosure);
+                $data[] = array_map("utf8_decode", $d);
+
             }
         }
-        Yii::app()->getRequest()->sendFile('tans' . date('Ymd') . '_esta.csv', stream_get_contents($fp), "text/csv; charset=UTF-8", false);
-        fclose($fp);
+
+        fputcsv($handle, $header, $delimiter, $enclosure);
+
+        foreach ($data as $row) {
+            fputcsv($handle, $row, $delimiter, $enclosure);
+        }
+
+        fclose($handle);
+
+        Yii::app()->getRequest()->sendFile('tans' . date('Ymd') . '_esta.csv', file_get_contents($file), "text/csv; charset=UTF-8", false);
+
     }
 
     /**
