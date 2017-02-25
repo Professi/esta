@@ -138,7 +138,8 @@ class TanController extends Controller {
 //        $filename = Yii::getPathOfAlias('webroot') . '/assets/tans' . date("Ymd") . '.csv';
 //        $fp = fopen($filename, 'w+');
         //$fp = fopen('php://output', 'w+');
-        $fp = fopen('php://output', 'w');
+        $fp = fopen('php://temp', 'w');
+        //add BOM to fix UTF-8 in Excel
         fprintf($fp, chr(0xEF) . chr(0xBB) . chr(0xBF));
         $delimiter = ";";
         $enclosure = '"';
