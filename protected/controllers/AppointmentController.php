@@ -108,7 +108,8 @@ class AppointmentController extends Controller {
             if (isset($_POST['BlockedAppointment'])) {
                 $model->setAttributes($_POST['BlockedAppointment']);
                 if (!empty($model->attributes['user_id'])) {
-                    $teacherLabel = $this->teacherLabel(User::model()->findByPk($model->attributes['user_id']));
+                    $t = User::model()->findByPk($model->attributes['user_id']);
+                    $teacherLabel = $this->teacherLabel($t);
                 }
                 if ($model->save()) {
                     Yii::app()->user->setFlash('success', Yii::t('app', 'Termin erfolgreich geblockt.'));
