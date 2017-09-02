@@ -1,4 +1,5 @@
 <?php
+
 /* * Copyright (C) 2014  Christian Ehringfeld, David Mock
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 /**
  * Static Class to convert Bytes from php.ini
  *
@@ -49,6 +51,7 @@ class ByteConverter {
     static private function return_bytes($val) {
         $val = trim($val);
         $last = strtolower($val[strlen($val) - 1]);
+        $val = substr($val, 0, strlen($val) - 1);
         switch ($last) {
             case 'g':
                 $val *= 1024;
@@ -62,7 +65,7 @@ class ByteConverter {
     }
 
     static public function getMaxSizeInBytes() {
-        return self::return_bytes(ini_get('post_max_size'));
+        return self::return_bytes(self::getMaxSize());
     }
 
     static public function getMaxSize() {

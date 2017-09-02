@@ -91,9 +91,12 @@ return array(
                     'enabled' => YII_DEBUG,
                 ),
                 array('class' => 'CFileLogRoute',
-                    'levels' => YII_DEBUG ? 'trace,error,warning,info' : 'error,warning,info',),
+                    'levels' => YII_DEBUG ? 'trace,error,warning,info' : 'error,warning',),
                 array('class' => 'CProfileLogRoute',
                     'report' => 'summary',
+                    'enabled' => YII_DEBUG),
+                array(
+                    'class' => 'CWebLogRoute',
                     'enabled' => YII_DEBUG,
                 ),
             ),

@@ -29,6 +29,7 @@ foreach ($pages as $index => $page):
     endif;
     echo $this->renderPartial('overview',array('data' => $page['data'],
         'teacher' => $page['teacher'],
+        'room' => isset($page['room']) ? $page['room'] : null,
         'date' => $page['date']),true);
     if ($index !== $count): ?>
         <div class="page-break-after"></div>

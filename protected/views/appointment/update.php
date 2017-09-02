@@ -41,7 +41,7 @@ $this->menu = array(
 <div class="row">
     <div class="small-12 columns small-centered">
         <fieldset>
-            <legend><?php echo Yii::t('app', 'Termin Nummer {id} bearbeiten', array('{id}' => $model->getPrimaryKey())); ?></legend>
+            <legend><?php echo Yii::t('app', 'Termin bearbeiten'); ?></legend>
             <?php
             echo $this->renderPartial('_form', array(
                 'model' => $model,

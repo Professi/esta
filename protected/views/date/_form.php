@@ -166,6 +166,9 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
     <div class="small-8 columns">
         <?php
+        if(empty($a_disabled)) {
+            $a_disabled = array();
+        }
         echo $form->textField($model, 'durationPerAppointment', $a_disabled);
         echo $form->error($model, 'durationPerAppointment');
         ?>

@@ -47,7 +47,7 @@ $this->menu = array(
 ?>
 <div class="row">
     <div class="small-12 columns small-centered">
-        <h2 class="text-center"><?php echo Yii::t('app', 'Termin Nummer {id}', array('{id}' => $model->getPrimaryKey())); ?></h2>
+        <h2 class="text-center"><?php echo Yii::t('app', 'Termin'); ?></h2>
     </div>
 </div>
 <div class="row">
@@ -56,7 +56,6 @@ $this->menu = array(
         $this->widget('zii.widgets.CDetailView', array(
             'data' => $model,
             'attributes' => array(
-                'id',
                 array('name' => 'time', 'value' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->dateandtime->time), null, "short")),
                 array('name' => 'date_id', 'value' => Yii::app()->dateFormatter->formatDateTime(strtotime($model->dateandtime->date->date), "short", null)),
                 array('name' => Yii::t('app', 'Schüler'), 'value' => $model->parentchild->child->firstname . " " . $model->parentchild->child->lastname),

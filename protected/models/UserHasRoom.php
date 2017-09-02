@@ -118,7 +118,7 @@ class UserHasRoom extends CActiveRecord {
             'criteria' => $criteria,
             'sort' => array(
                 'defaultOrder' => array(
-                    'user_id' => CSort::SORT_ASC,
+                    'user.lastname' => CSort::SORT_ASC,
                     'dateAndTime_id' => CSort::SORT_ASC,
                 ),
                 'multiSort' => true,

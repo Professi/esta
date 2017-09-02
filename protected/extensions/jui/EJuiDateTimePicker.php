@@ -80,8 +80,11 @@ class EJuiDateTimePicker extends CJuiDatePicker
 
                 echo CHtml::tag('div', $this->htmlOptions, '');
             }
-
+            
             //set now time..
+            if(empty($this->options)) {
+                $this->options = array();
+            }
             $this->options['hour']   = date('H');
             $this->options['minute'] = date('i');
             $this->options['second'] = date('s');

@@ -462,6 +462,11 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                     ?>
                 </div>
             </div>
+            <?php
+            if (empty($optionsBans)) {
+                $optionsBans = array();
+            }
+            ?>
             <div class="row collapse">
                 <div class="small-8 columns">
                     <span class="prefix"><?php echo $form->label($model, 'durationTempBans'); ?></span>
@@ -534,11 +539,11 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
             <div class="row collapse">
                 <div class="small-8 columns">
                     <span class="prefix infofeld">
-                        <?php echo $form->label($model, 'allowBlockingOnlyForManagement', array('class' => 'infolabel')); ?>
+<?php echo $form->label($model, 'allowBlockingOnlyForManagement', array('class' => 'infolabel')); ?>
                     </span>
                     <div class="infotext">
                         <i class="fi-info"></i>
-                        <?php echo Yii::t('app', 'Sollte diese Option aktiviert sein, so können Lehrer, Termine weder blockieren noch anlegen. Dies ist unabhängig davon, was bei anderen Optionen angegeben wurde.'); ?>
+<?php echo Yii::t('app', 'Sollte diese Option aktiviert sein, so können Lehrer, Termine weder blockieren noch anlegen. Dies ist unabhängig davon, was bei anderen Optionen angegeben wurde.'); ?>
                     </div>
                 </div>
                 <div class="small-4 columns">
@@ -565,6 +570,9 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
                 <div class="small-4 columns">
                     <?php
+                    if (empty($optionsBlocks)) {
+                        $optionsBlocks = array();
+                    }
                     echo $form->textField($model, 'appointmentBlocksPerDate', $optionsBlocks);
                     echo $form->error($model, 'appointmentBlocksPerDate');
                     ?>
@@ -585,8 +593,8 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
     </div><!-- row -->
     <div class="row">
         <div class="small-12 columns">
-            <?php echo CHtml::submitButton(Yii::t('app', 'Speichern'), array('class' => 'button')); ?>
+<?php echo CHtml::submitButton(Yii::t('app', 'Speichern'), array('class' => 'button')); ?>
         </div>
     </div>
-    <?php $this->endWidget(); ?>
+<?php $this->endWidget(); ?>
 </div><!-- form -->

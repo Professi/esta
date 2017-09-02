@@ -28,7 +28,7 @@ $this->menu = array(
         'visible' => (Yii::app()->user->checkAccess(MANAGEMENT)),
         'linkOptions' => array('class' => 'small button'))
 );
-$roomOutput = ($room !== null ? ' ' . Yii::t('app', 'in Raum') . ' ' . $room->name : '')
+$roomOutput = (isset($room) && !empty($room) ? ' ' . Yii::t('app', 'in Raum') . ' ' . $room->name : '')
 ?>
 <div class="row">
     <div class="small-12 columns">
