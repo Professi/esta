@@ -152,43 +152,32 @@ class AppointmentController extends Controller {
      */
     public function actionCreateBlockDay() {
 
-        if (!(Yii::app()->params['allowBlockingAppointments'])
-            || !Yii::app()->user->isAdmin()) {
+        if (!(Yii::app()->params['allowBlockingAppointments']) || !Yii::app()->user->isAdmin()) {
             $this->throwFourNullNull();
         }
-
-        if (isset($_POST['BlockedAppointment'])
-            && ! empty($_POST['BlockedAppointment']['user_id'])
-            && ! empty($_POST['BlockedAppointment']['reason'])) {
-
+        if (isset($_POST['BlockedAppointment']) && isset($_POST['BlockedAppointment']['user_id']) && isset($_POST['BlockedAppointment']['reason']) && !empty($_POST['BlockedAppointment']['user_id']) && !empty($_POST['BlockedAppointment']['reason'])) {
             $dateAndTime = DateAndTime::model()->findByPk($_POST['BlockedAppointment']['dateAndTime_id']);
-            $date = $dateAndTime->getRealtionDate(); # needs right method
-            $userId = $_POST['BlockedAppointment']['user_id']; # if not set exit
-            $reason = $_POST['BlockedAppointment']['reason']; # if not set exit
+            $date = $dateAndTime->date;
+            $userId = $_POST['BlockedAppointment']['user_id'];
+            $reason = $_POST['BlockedAppointment']['reason'];
 
-            foreach ($date->getAllDateAndTimes AS $dateAndTime) {
-
+            foreach ($date->dateAndTimes AS $dateAndTime) {
                 $model = new BlockedAppointment();
                 $model->unsetAttributes();
-
                 $model->setAttributes([
-                    'dateAndTime_id' => $dateAndTime->getId(), # needs right method
+                    'dateAndTime_id' => $dateAndTime->id,
                     'user_id' => $userId,
                     'reason' => $reason
                 ]);
-
                 if ($model->save()) {
                     Yii::app()->user->setFlash('success', Yii::t('app', 'Termin erfolgreich geblockt.'));
                 }
-
             }
-
         } else {
             $this->actionCreateBlockApp();
         }
 
         $this->redirect(array('admin'));
-
     }
 
     /**
@@ -453,8 +442,8 @@ class AppointmentController extends Controller {
         }
 
         $this->render('admin', array(
-            'model' => $model, 
-            'blockedApp' => $blockedApp, 
+            'model' => $model,
+            'blockedApp' => $blockedApp,
             'dates' => Date::simpleSelect2ListData(),
         ));
     }

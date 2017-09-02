@@ -76,6 +76,7 @@ class Date extends CActiveRecord {
     public function relations() {
         return array(
             'groups' => array(self::MANY_MANY, 'Group', 'date_has_group(date_id,group_id)'),
+            'dateAndTimes' => array(self::HAS_MANY, 'DateAndTime','date_id'),
         );
     }
 
