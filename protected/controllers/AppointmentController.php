@@ -56,7 +56,7 @@ class AppointmentController extends Controller {
                 'actions' => array('admin', 'delete', 'view', 'create', 'update',
                     'createBlockApp', 'DeleteBlockApp', 'generatePlans',
                     'getteacherappointmentsajax', 'getselectchildrenajax',
-                    'overview', 'CreateBlockDay'
+                    'overview', 'createBlockDay'
                 ),
                 'roles' => array(ADMIN, MANAGEMENT),
             ),

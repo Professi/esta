@@ -95,7 +95,7 @@ $this->menu = array(
             <br>
 
             <?php echo CHtml::submitButton(Yii::t('app','Anlegen'), array('class' => 'small button')); ?>
-            <button type="button" class="small button" onclick="$('form').attr('action', 'CreateBlockDay').submit()">Alle Termine blockieren</button>
+            <button type="button" class="small button" onclick="$('form').attr('action', 'index.php?r=appointment/createBlockDay').submit()">Alle Termine blockieren</button>
             <?php $this->endWidget(); ?>
         </fieldset>
     </div>
