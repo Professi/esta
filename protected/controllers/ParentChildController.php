@@ -1,6 +1,6 @@
 <?php
 /**
- * ParentChild Controller für Model ParentChild 
+ * ParentChild Controller für Model ParentChild
  */
 /* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -17,7 +17,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class ParentChildController extends Controller {
+class ParentChildController extends Controller
+{
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -29,7 +30,8 @@ class ParentChildController extends Controller {
      * Filtermethoden
      * @return array action filters
      */
-    public function filters() {
+    public function filters()
+    {
         return array(
             'accessControl', // perform access control for CRUD operations
         );
@@ -40,7 +42,8 @@ class ParentChildController extends Controller {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() {
+    public function accessRules()
+    {
         return array(
             array('allow',
                 'roles' => array(MANAGEMENT),
@@ -56,12 +59,13 @@ class ParentChildController extends Controller {
     }
 
     /**
-     * Suche fuer Elternkindverknuepfungen anhand von  dem Namen des Erziehungsberechtigten 
+     * Suche fuer Elternkindverknuepfungen anhand von  dem Namen des Erziehungsberechtigten
      * @param string $term
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * echo JSON
      */
-    public function actionSearch($term) {
+    public function actionSearch($term)
+    {
         $dataProvider = new ParentChild();
         $dataProvider->unsetAttributes();
         $criteria = $dataProvider->searchParentChild($term);
@@ -77,7 +81,8 @@ class ParentChildController extends Controller {
     /**
      * Lists all models.
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         if (Yii::app()->user->checkAccess(MANAGEMENT)) {
             $dataProvider = new CActiveDataProvider('ParentChild');
         } else {
@@ -92,7 +97,8 @@ class ParentChildController extends Controller {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new ParentChild;
         $userNameString = '';
         if (isset($_GET['id'])) {
@@ -106,7 +112,7 @@ class ParentChildController extends Controller {
                 $userNameString = $model->user->firstname . " " . $model->user->lastname;
             }
             if ($model->save()) {
-                Yii::app()->user->setFlash('success', Yii::t('app','Kind erfolgreich hinzugefügt.'));
+                Yii::app()->user->setFlash('success', Yii::t('app', 'Kind erfolgreich hinzugefügt.'));
                 if (Yii::app()->user->checkAccess(MANAGEMENT)) {
                     $this->redirect(array('admin'));
                 } else {
@@ -125,7 +131,8 @@ class ParentChildController extends Controller {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->loadModel($id)->delete();
         if (!isset($_GET['ajax']) && Yii::app()->user->checkAccess(MANAGEMENT)) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
@@ -134,7 +141,8 @@ class ParentChildController extends Controller {
         }
     }
     
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->loadModel($id);
         $tempParent = User::model()->findByPk($model->attributes['user_id']);
         $tempChild = Child::model()->findByPk($model->attributes['child_id']);
@@ -150,11 +158,11 @@ class ParentChildController extends Controller {
             }
         }
         $this->render('update', array('model'=>$model,'userNameString'=>$userNameString));
-        
     }
     
     
-    private function setPostAttribute(&$model) {
+    private function setPostAttribute(&$model)
+    {
         if (!Yii::app()->params['allowParentsToManageChilds'] && isset($_POST['ParentChild'])) {
             $model->childFirstName = $_POST['ParentChild']['childFirstName'];
             $model->childLastName = $_POST['ParentChild']['childLastName'];
@@ -164,7 +172,8 @@ class ParentChildController extends Controller {
     /**
      * Manages all models.
      */
-    public function actionAdmin() {
+    public function actionAdmin()
+    {
         $model = new ParentChild('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['ParentChild'])) {
@@ -181,11 +190,12 @@ class ParentChildController extends Controller {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean
      */
-    public function checkUser($parentChildId) {
+    public function checkUser($parentChildId)
+    {
         $rc = false;
         if (Yii::app()->user->checkAccess(MANAGEMENT)) {
             $rc = true;
-        } else if (ParentChild::model()->countByAttributes(array('user_id' => Yii::app()->user->getId(), 'child_id' => $parentChildId)) == 1) {
+        } elseif (ParentChild::model()->countByAttributes(array('user_id' => Yii::app()->user->getId(), 'child_id' => $parentChildId)) == 1) {
             $rc = true;
         }
         return $rc;
@@ -198,10 +208,12 @@ class ParentChildController extends Controller {
      * @return ParentChild the loaded model
      * @throws CHttpException
      */
-    public function loadModel($id) {
+    public function loadModel($id)
+    {
         $model = ParentChild::model()->findByPk($id);
-        if ($model === null)
+        if ($model === null) {
             $this->throwFourNullFour();
+        }
         return $model;
     }
 
@@ -209,11 +221,11 @@ class ParentChildController extends Controller {
      * Performs the AJAX validation.
      * @param ParentChild $model the model to be validated
      */
-    protected function performAjaxValidation($model) {
+    protected function performAjaxValidation($model)
+    {
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'parent-child-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
     }
-
 }

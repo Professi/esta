@@ -19,8 +19,8 @@ Yii::import('yii-debug-toolbar.YiiDebugViewRenderer');
  */
 class YiiDebugToolbarPanelViews extends YiiDebugToolbarPanel
 {
-	public $i = 'l';
-	
+    public $i = 'l';
+    
     private $_viewsCount = 0;
 
     private $_viewRenderer;
@@ -52,11 +52,11 @@ class YiiDebugToolbarPanelViews extends YiiDebugToolbarPanel
     {
         $data = array();
 
-        while($class = $class->getParentClass())
-        {
+        while ($class = $class->getParentClass()) {
             $data[] = $class->name;
-            if('CBaseController' === $class->name)
+            if ('CBaseController' === $class->name) {
                 break;
+            }
         }
 
         return implode('&nbsp;&raquo;&nbsp;', $data);
@@ -69,20 +69,22 @@ class YiiDebugToolbarPanelViews extends YiiDebugToolbarPanel
 
     public function getFileAlias($file)
     {
-        return str_replace(DIRECTORY_SEPARATOR, '.', 
+        return str_replace(
+            DIRECTORY_SEPARATOR,
+            '.',
                 dirname(trim(str_replace(Yii::getPathOfAlias('webroot'), '', $file), '\\/')) . '/'
-                . basename(trim(str_replace(Yii::getPathOfAlias('webroot'), '', $file), '\\/'), '.php'));
+                . basename(trim(str_replace(Yii::getPathOfAlias('webroot'), '', $file), '\\/'), '.php')
+        );
     }
 
 
     public function getWidgetsData()
     {
-        
     }
 
-     /**
-     * {@inheritdoc}
-     */
+    /**
+    * {@inheritdoc}
+    */
     public function getMenuTitle()
     {
         return YiiDebug::t('Views Rendering');

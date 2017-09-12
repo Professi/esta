@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -48,9 +48,11 @@ $room = $data->user->getRoom($data->dateandtime->date->id);
         <div class="small-8 medium-9 large-10 columns">
             <?php echo CHtml::encode("{$data->user->title} {$data->user->firstname} {$data->user->lastname}"); ?>
         </div>
-        <?php if (empty($room)) { ?>
+        <?php if (empty($room)) {
+    ?>
             <a class="small button right hide-for-print delete-appointment" href="index.php?r=appointment/delete&amp;id=<?php echo CHtml::encode($data->id); ?>"><?php echo Yii::t('app', 'Termin löschen?'); ?></a>
-        <?php } ?>
+        <?php
+} ?>
     </div>
     <br>
     <?php
@@ -65,5 +67,6 @@ $room = $data->user->getRoom($data->dateandtime->date->id);
             </div>
             <a class="small button right hide-for-print delete-appointment" href="index.php?r=appointment/delete&amp;id=<?php echo CHtml::encode($data->id); ?>"><?php echo Yii::t('app', 'Termin löschen?'); ?></a>
         </div>
-    <?php } ?>
+    <?php
+    } ?>
 </div>

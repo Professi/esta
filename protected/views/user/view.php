@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * @var $this UserController 
- * @var $model User 
+ * @var $this UserController
+ * @var $model User
  */
 $this->setPageTitle(Yii::t('app', 'Benutzerkonto'));
 $this->breadcrumbs = array(
@@ -125,8 +125,7 @@ $this->menu = array(
                         'id' => 'user-form',
                         'errorMessageCssClass' => 'error',
                         'skin' => false,
-                    ));
-                    ?>
+                    )); ?>
                     <div class="row collapse">
                         <div class="small-3 columns">
                             <span class="prefix"><?php echo $form->label($model, 'tan'); ?></span>
@@ -134,16 +133,16 @@ $this->menu = array(
                         <div class="small-9 columns mobile-input">
                             <?php
                             echo $form->textField($model, 'tan', array('size' => 45, 'maxlength' => Yii::app()->params['tanSize']));
-                            echo $form->error($model, 'tan');
-                            ?>
+                echo $form->error($model, 'tan'); ?>
                         </div>
                     </div>
                     <?php
                     echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('class' => 'small button'));
-                    $this->endWidget();
-                    ?>
+                $this->endWidget(); ?>
                 </fieldset>
-            <?php } if ($model->childcount > 0 && Yii::app()->user->checkAccess(MANAGEMENT)) {
+            <?php
+            }
+            if ($model->childcount > 0 && Yii::app()->user->checkAccess(MANAGEMENT)) {
                 ?>
                 <h4 class="subheader"><?php echo Yii::t('app', 'Kinder'); ?></h4>
                 <?php

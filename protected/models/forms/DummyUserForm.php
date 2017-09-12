@@ -6,7 +6,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class DummyUserForm extends CFormModel {
-
+class DummyUserForm extends CFormModel
+{
     public $username;
     public $firstname;
     public $lastname;
@@ -28,7 +28,8 @@ class DummyUserForm extends CFormModel {
      * validation rules
      * @return array
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('firstname,lastname', 'required'),
         );
@@ -38,7 +39,8 @@ class DummyUserForm extends CFormModel {
      * validation rules
      * @return array
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'username' => Yii::t('app', 'Benutzername'),
             'firstname' => Yii::t('app', 'Vorname'),
@@ -50,9 +52,9 @@ class DummyUserForm extends CFormModel {
 
     /**
      * inserts dummy user with firstname and lastname
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function insert() {
+    public function insert()
+    {
         $user = new User();
         $user->firstname = $this->firstname;
         $user->lastname = $this->lastname;
@@ -71,7 +73,4 @@ class DummyUserForm extends CFormModel {
             Yii::app()->user->setFlash('success', Yii::t('app', 'Pseudobenutzer erstellt.'));
         }
     }
-
 }
-
-?>

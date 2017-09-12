@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -30,11 +30,13 @@ $this->breadcrumbs = array(
         <p> <?php echo Yii::app()->params['schoolName']; ?><br>
             <?php echo Yii::app()->params['schoolStreet']; ?><br>
             <?php echo Yii::app()->params['schoolCity']; ?><br>
-            <?php echo (Yii::t('app', 'Telefon') . ': ' . Yii::app()->params['schoolTele']); ?><br>
-            <?php echo (Yii::t('app', 'Telefax') . ': ' . Yii::app()->params['schoolFax']); ?><br>
-            <?php if (Yii::app()->params['useSchoolEmailForContactForm']) { ?>
+            <?php echo(Yii::t('app', 'Telefon') . ': ' . Yii::app()->params['schoolTele']); ?><br>
+            <?php echo(Yii::t('app', 'Telefax') . ': ' . Yii::app()->params['schoolFax']); ?><br>
+            <?php if (Yii::app()->params['useSchoolEmailForContactForm']) {
+    ?>
                 <?php echo Yii::t('app', 'E-Mail') . ':'; ?> <a href="mailto:<?php echo Yii::app()->params['schoolEmail']; ?>"><?php echo Yii::app()->params['schoolEmail']; ?></a>
-            <?php } ?>
+            <?php
+} ?>
         </p>
         <p><?php echo Yii::t('app', 'Elternsprechtagsanwendung(ESTA) wurde im Rahmen eines Berufsschulprojektes für die Brühlwiesenschule Hofheim entwickelt und unter der GNU General Public License Version 3 (&nbsp;&nbsp;<a href="http://www.gnu.de/documents/gpl-3.0.en.html" ><i class="fi-page-export"></i>&nbsp;Link</a> ) lizensiert.'); ?>
             <br><?php echo Yii::t('app', 'Die Urheber sind:'); ?> <a href="mailto:c.ehringfeld{at}t-online.de">Christian Ehringfeld</a>, <a href="mailto:dumock{at}gmail.com">David Mock</a> <?php echo Yii::t('app', 'und')?> Matthias Unterbusch. </p>
@@ -51,7 +53,8 @@ $this->breadcrumbs = array(
             Yii-Select2&nbsp;&nbsp;<a href="   https://github.com/tonybolzan/yii-select2"><i class="fi-page-export"></i>&nbsp;<?php echo Yii::t('app', 'Link'); ?></a><br>
             Select2&nbsp;&nbsp;<a href="https://github.com/ivaynberg/select2"><i class="fi-page-export"></i>&nbsp;<?php echo Yii::t('app', 'Link'); ?></a><br>
         </p>
-        <?php if (Yii::app()->params['language'] == 'de') { ?>
+        <?php if (Yii::app()->params['language'] == 'de') {
+        ?>
             <p>
             <h3>Haftungsausschluss:</h3>
             Die <?php echo Yii::app()->params['schoolName']; ?> und die Entwickler dieser Anwendung, werden nachfolgend als "Der Autor" bezeichnet. <br>
@@ -80,7 +83,8 @@ $this->breadcrumbs = array(
                 <b>5. Rechtswirksamkeit dieses Haftungsausschlusses</b> <br>
                 Dieser Haftungsausschluss ist als Teil des Internetangebotes zu betrachten, von dem aus auf diese Seite verwiesen wurde. Sofern Teile oder einzelne Formulierungen dieses Textes der geltenden Rechtslage nicht, nicht mehr oder nicht vollständig entsprechen sollten, bleiben die übrigen Teile des Dokumentes in ihrem Inhalt und ihrer Gültigkeit davon unberührt. 
             </p>
-        <?php } ?>
+        <?php
+    } ?>
         <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', 'index.php'); ?> </p>
     </div>
 </div>

@@ -35,10 +35,11 @@ require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'phpmailer' . DIRECTORY_S
  * @see http://phpmailer.codeworxtech.com/index.php?pg=phpmailer
  *
  * @author MetaYii
- * @package application.extensions.emailer 
+ * @package application.extensions.emailer
  * @since 1.0
  */
-class EMailer {
+class EMailer
+{
     //***************************************************************************
     // Configuration
     //***************************************************************************
@@ -77,14 +78,15 @@ class EMailer {
     /**
      * Init method for the application component mode.
      */
-    public function init() {
-        
+    public function init()
+    {
     }
 
     /**
      * Constructor. Here the instance of PHPMailer is created.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->_myMailer = new PHPMailer(true);
     }
 
@@ -97,9 +99,11 @@ class EMailer {
      *
      * @param string $value pathLayouts
      */
-    public function setPathLayouts($value) {
-        if (!is_string($value) && !preg_match("/[a-z0-9\.]/i"))
+    public function setPathLayouts($value)
+    {
+        if (!is_string($value) && !preg_match("/[a-z0-9\.]/i")) {
             throw new CException(Yii::t('EMailer', 'pathLayouts must be a Yii alias path'));
+        }
         $this->pathLayouts = $value;
     }
 
@@ -108,7 +112,8 @@ class EMailer {
      *
      * @return string pathLayouts
      */
-    public function getPathLayouts() {
+    public function getPathLayouts()
+    {
         return $this->pathLayouts;
     }
 
@@ -117,9 +122,11 @@ class EMailer {
      *
      * @param string $value pathViews
      */
-    public function setPathViews($value) {
-        if (!is_string($value) && !preg_match("/[a-z0-9\.]/i"))
+    public function setPathViews($value)
+    {
+        if (!is_string($value) && !preg_match("/[a-z0-9\.]/i")) {
             throw new CException(Yii::t('EMailer', 'pathViews must be a Yii alias path'));
+        }
         $this->pathViews = $value;
     }
 
@@ -128,7 +135,8 @@ class EMailer {
      *
      * @return string pathViews
      */
-    public function getPathViews() {
+    public function getPathViews()
+    {
         return $this->pathViews;
     }
 
@@ -143,10 +151,13 @@ class EMailer {
      * @param array $params the parameters
      * @return mixed
      */
-    public function __call($method, $params) {
-        if (is_object($this->_myMailer) && get_class($this->_myMailer)==='PHPMailer')
-         return call_user_func_array(array($this->_myMailer, $method), $params);
-        else throw new CException(Yii::t('EMailer', 'Can not call a method of a non existent object'));
+    public function __call($method, $params)
+    {
+        if (is_object($this->_myMailer) && get_class($this->_myMailer)==='PHPMailer') {
+            return call_user_func_array(array($this->_myMailer, $method), $params);
+        } else {
+            throw new CException(Yii::t('EMailer', 'Can not call a method of a non existent object'));
+        }
     }
 
     /**
@@ -155,11 +166,13 @@ class EMailer {
      * @param string $name the property name
      * @param string $value the property value
      */
-    public function __set($name, $value) {
-        if (is_object($this->_myMailer) && get_class($this->_myMailer) === 'PHPMailer')
+    public function __set($name, $value)
+    {
+        if (is_object($this->_myMailer) && get_class($this->_myMailer) === 'PHPMailer') {
             $this->_myMailer->$name = $value;
-        else
+        } else {
             throw new CException(Yii::t('EMailer', 'Can not set a property of a non existent object'));
+        }
     }
 
     /**
@@ -168,11 +181,13 @@ class EMailer {
      * @param string $name
      * @return mixed
      */
-    public function __get($name) {
-        if (is_object($this->_myMailer) && get_class($this->_myMailer) === 'PHPMailer')
+    public function __get($name)
+    {
+        if (is_object($this->_myMailer) && get_class($this->_myMailer) === 'PHPMailer') {
             return $this->_myMailer->$name;
-        else
+        } else {
             throw new CException(Yii::t('EMailer', 'Can not access a property of a non existent object'));
+        }
     }
 
     /**
@@ -180,16 +195,16 @@ class EMailer {
      * This is a PHP defined magic method.
      * @return array the names of instance-variables to serialize.
      */
-    public function __sleep() {
-        
+    public function __sleep()
+    {
     }
 
     /**
      * This method will be automatically called when unserialization happens.
      * This is a PHP defined magic method.
      */
-    public function __wakeup() {
-        
+    public function __wakeup()
+    {
     }
 
     //***************************************************************************
@@ -197,13 +212,14 @@ class EMailer {
     //***************************************************************************
 
     /**
-     * Displays an e-mail in preview mode. 
+     * Displays an e-mail in preview mode.
      *
      * @param string $view the class
      * @param array $vars
      * @param string $layout
      */
-    public function getView($view, $vars = array(), $layout = null) {
+    public function getView($view, $vars = array(), $layout = null)
+    {
         $body = Yii::app()->controller->renderPartial($this->pathViews . '.' . $view, array_merge($vars, array('content' => $this->_myMailer)), true);
         if ($layout === null) {
             $this->_myMailer->Body = $body;
@@ -211,5 +227,4 @@ class EMailer {
             $this->_myMailer->Body = Yii::app()->controller->renderPartial($this->pathLayouts . '.' . $layout, array('content' => $body), true);
         }
     }
-
 }

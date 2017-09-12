@@ -54,8 +54,7 @@ class YiiDebugToolbar extends CWidget
      */
     public function getPanels()
     {
-        if(null === $this->_panels)
-        {
+        if (null === $this->_panels) {
             $this->_panels = array();
         }
         return $this->_panels;
@@ -124,11 +123,13 @@ class YiiDebugToolbar extends CWidget
     private function registerClientScripts()
     {
         $cs = Yii::app()->getClientScript()
-	        	->registerCoreScript('jquery');
+                ->registerCoreScript('jquery');
         $cs->registerCssFile($this->assetsUrl . '/main.css');
 
-        $cs->registerScriptFile($this->assetsUrl . '/main.js',
-                CClientScript::POS_END);
+        $cs->registerScriptFile(
+            $this->assetsUrl . '/main.js',
+                CClientScript::POS_END
+        );
 
         return $this;
     }
@@ -146,25 +147,28 @@ class YiiDebugToolbar extends CWidget
                     $config = array('class' => $config);
                 }
                 
-                if(is_array($config)) {
+                if (is_array($config)) {
                     if (is_array($config) && !isset($config['class'])) {
-					    $config['class'] = $id;
-				    }
-				
+                        $config['class'] = $id;
+                    }
+                
                     if (isset($config['enabled']) && false === $config['enabled']) {
                         unset($this->_panels[$id]);
                         continue;
-                    } else if (isset($config['enabled']) && true === $config['enabled']) {
+                    } elseif (isset($config['enabled']) && true === $config['enabled']) {
                         unset($config['enabled']);
                     }
                 }
                 $panel = Yii::createComponent($config, $this);
 
                 if (false === ($panel instanceof YiiDebugToolbarPanelInterface)) {
-                    throw new CException(Yii::t('yii-debug-toolbar',
-                            'The %class% class must be compatible with YiiDebugToolbarPanelInterface', array(
+                    throw new CException(Yii::t(
+                        'yii-debug-toolbar',
+                            'The %class% class must be compatible with YiiDebugToolbarPanelInterface',
+                        array(
                                 '%class%' => get_class($panel)
-                            )));
+                            )
+                    ));
                 }
                 $panel->init();
                 $this->_panels[$id] = $panel;
@@ -190,26 +194,26 @@ interface YiiDebugToolbarPanelInterface
      *
      * @return string
      */
-    function getMenuTitle();
+    public function getMenuTitle();
 
     /**
      * Get the subtitle of menu.
      *
      * @return string
      */
-    function getMenuSubTitle();
+    public function getMenuSubTitle();
 
     /**
      * Get the title.
      *
      * @return string
      */
-    function getTitle();
+    public function getTitle();
 
     /**
      * Get the subtitle.
      *
      * @return string
      */
-    function getSubTitle();
+    public function getSubTitle();
 }

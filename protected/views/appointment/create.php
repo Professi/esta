@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -20,14 +20,14 @@
 /* @var $this AppointmentController */
 /* @var $model Appointment */
 $this->setPageTitle(Yii::t('app', 'Termin anlegen'));
-Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
+Yii::app()->clientScript->registerCssFile($this->assetsDir."/css/select2.min.css");
 $this->breadcrumbs = array(
     'Appointments' => array('index'),
     'Create',
 );
 
 $this->menu = array(
-    array(  'label' => Yii::t('app','Termine verwalten'), 
+    array(  'label' => Yii::t('app', 'Termine verwalten'),
             'url' => array(Yii::app()->user->isTeacher() ? 'index' :'admin'),
             'linkOptions' => array('class' => 'small button')),
 );

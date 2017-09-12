@@ -9,7 +9,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,7 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class TanController extends Controller {
+class TanController extends Controller
+{
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -30,7 +31,8 @@ class TanController extends Controller {
      * Filtermethode
      * @return array action filters
      */
-    public function filters() {
+    public function filters()
+    {
         return array(
             'accessControl', // perform access control for CRUD operations
         );
@@ -41,7 +43,8 @@ class TanController extends Controller {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() {
+    public function accessRules()
+    {
         return array(
             array('allow',
                 'actions' => array('genTans', 'pupilImport'),
@@ -57,7 +60,8 @@ class TanController extends Controller {
      * tans for Parents Management
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    private function tansForParentsManagement(&$model, $csv = true) {
+    private function tansForParentsManagement(&$model, $csv = true)
+    {
         $model = new Tan();
         if (isset($_POST['Tan'])) {
             $model->setAttributes($_POST['Tan']);
@@ -79,11 +83,12 @@ class TanController extends Controller {
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * renders showGenTans when allowParentsToManageChilds activated
      * @param Tan $model
      */
-    private function tansNotForParentsManagement(&$model, $csv = false) {
+    private function tansNotForParentsManagement(&$model, $csv = false)
+    {
         $validate = true;
         $model = $this->iterateOverTans($_POST['Tan'], $validate);
         if (!empty($model) && $validate) {
@@ -99,10 +104,11 @@ class TanController extends Controller {
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * action um Tans zu generieren
      */
-    public function actionGenTans() {
+    public function actionGenTans()
+    {
         $csv = false;
         if (isset($_POST['csv'])) {
             $csv = true;
@@ -128,22 +134,13 @@ class TanController extends Controller {
         }
     }
 
-    /**
-     * 
-     * @param array $tans
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     */
-    protected function generateCSVFile($tans, $parentManagement = true) {
-
+    protected function generateCSVFile($tans, $parentManagement = true)
+    {
         $allowGroups = Yii::app()->params['allowGroups'];
-
         $file = tempnam(sys_get_temp_dir(), 'tans.csv');
-
         $handle = fopen($file, 'w');
-
         //add BOM to fix UTF-8 in Excel
         fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
-
         $delimiter = ";";
         $enclosure = '"';
         $header = array(Yii::t('app', 'TAN'));
@@ -156,7 +153,6 @@ class TanController extends Controller {
         }
         $header = array_map("utf8_decode", $header);
         $data = array();
-
         if (is_array($tans)) {
             foreach ($tans as $tan) {
                 $d = array($tan->tan);
@@ -174,27 +170,21 @@ class TanController extends Controller {
                     }
                 }
                 $data[] = array_map("utf8_decode", $d);
-
             }
         }
-
         fputcsv($handle, $header, $delimiter, $enclosure);
-
         foreach ($data as $row) {
             fputcsv($handle, $row, $delimiter, $enclosure);
         }
-
         fclose($handle);
-
         Yii::app()->getRequest()->sendFile('tans' . date('Ymd') . '_esta.csv', file_get_contents($file), "text/csv; charset=UTF-8", false);
-
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
      * action um Schüler zu importieren
      */
-    public function actionPupilImport() {
+    public function actionPupilImport()
+    {
         $model = new PupilImport();
         if (isset($_POST['PupilImport']) && $model->setAttributes($_POST['PupilImport']) && $model->validate() && !empty($_FILES['PupilImport']['tmp_name']['file'])) {
             $model->createTans();
@@ -207,10 +197,10 @@ class TanController extends Controller {
 
     /**
      * returns empty Tan Model in a array with only one object
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
      * @return \Tan
      */
-    private function getEmptyTanModel() {
+    private function getEmptyTanModel()
+    {
         $model = array();
         $tan = new Tan();
         $tan->unsetAttributes();
@@ -219,20 +209,20 @@ class TanController extends Controller {
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
      * renders formGenTans
      * @param Tan $model
      */
-    private function renderFormGenTans($model) {
+    private function renderFormGenTans($model)
+    {
         $this->render('formGenTans', array('model' => $model, 'groups' => $this->getAvailableGroups()));
     }
 
     /**
      * Returns all Groups of a user
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
      * @return array of groups
      */
-    private function getAvailableGroups() {
+    private function getAvailableGroups()
+    {
         $groups = array();
         if (Yii::app()->params['allowGroups']) {
             $userGroups = Yii::app()->user->getGroups();
@@ -249,10 +239,10 @@ class TanController extends Controller {
      * iterates over Tan Array
      * @param array $tans
      * @param boolean $validate
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
      * @return Tan
      */
-    private function iterateOverTans($tans, &$validate) {
+    private function iterateOverTans($tans, &$validate)
+    {
         $model = array();
         foreach ($tans as $i => $oneTan) {
             $ok = true;
@@ -292,12 +282,12 @@ class TanController extends Controller {
      * @return Tan the loaded model
      * @throws CHttpException
      */
-    public function loadModel($id) {
+    public function loadModel($id)
+    {
         $model = Tan::model()->findByPk($id);
         if ($model === null) {
             $this->throwFourNullFour();
         }
         return $model;
     }
-
 }

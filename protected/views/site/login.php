@@ -32,7 +32,8 @@ $this->breadcrumbs = array('Login');
         </div>
     </div>
 </div>
-<?php if ($model->getError('error') !== NULL) { ?>
+<?php if ($model->getError('error') !== null) {
+    ?>
     <div class="row">
         <div class="small-12 columns small-centered">
             <div class="alert-box alert">
@@ -40,7 +41,8 @@ $this->breadcrumbs = array('Login');
             </div>
         </div>
     </div>
-<?php } ?>
+<?php
+} ?>
 <div class="row">
     <div class="small-12 columns small-centered">
         <?php
@@ -90,15 +92,18 @@ $this->breadcrumbs = array('Login');
             <!--<div class="show-for-small-only"><br><br></div>-->
             <?php echo CHtml::link(Yii::t('app', 'Passwort vergessen?'), array('user/ChangePwd'), array('class' => 'medium right')); ?>
         </fieldset>
-        <?php if (!Yii::app()->params['lockRegistration']) { ?>
+        <?php if (!Yii::app()->params['lockRegistration']) {
+                ?>
             <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app', 'Benötigen Sie einen neuen Zugang?') . '<br>' . Yii::t('app', 'Klicken Sie hier.') . '</b>', array('user/create')); ?> </p>
-        <?php } else { ?>
+        <?php
+            } else {
+                ?>
             <div class="panel callout">
                 <i class="fi-info"></i>
                 <p><?php echo Yii::t('app', 'Aktuell ist es leider nicht möglich sich zu registrieren. Sofern Sie sich registrieren möchten, füllen Sie bitte das Kontaktformular aus.'); ?></p>
             </div>
             <?php
-        }
+            }
         $this->endWidget();
         ?>
     </div>

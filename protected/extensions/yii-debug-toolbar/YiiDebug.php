@@ -34,7 +34,7 @@ class YiiDebug extends CComponent
                 echo "\n";
             }
             return;
-        } else if (empty($_SERVER['SERVER_ADDR']) || empty($_SERVER['REMOTE_ADDR']) || $_SERVER['SERVER_ADDR'] !== $_SERVER['REMOTE_ADDR']) {
+        } elseif (empty($_SERVER['SERVER_ADDR']) || empty($_SERVER['REMOTE_ADDR']) || $_SERVER['SERVER_ADDR'] !== $_SERVER['REMOTE_ADDR']) {
             return;
         }
 
@@ -67,7 +67,7 @@ class YiiDebug extends CComponent
         return new ReflectionClass($class);
     }
 
-    public static function getClassMethod($class,$name)
+    public static function getClassMethod($class, $name)
     {
         $class = self::getClass($class);
         $method = $class->getMethod($name);
@@ -75,7 +75,8 @@ class YiiDebug extends CComponent
         return $method;
     }
 
-    public static function t($str,$params=array(),$dic='yii-debug-toolbar') {
+    public static function t($str, $params=array(), $dic='yii-debug-toolbar')
+    {
         return Yii::t("YiiDebug.".$dic, $str, $params);
     }
 }

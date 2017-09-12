@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -99,7 +99,8 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                     ?>
                 </div>
             </div>
-            <?php if (Yii::app()->params['allowGroups']) { ?>
+            <?php if (Yii::app()->params['allowGroups']) {
+                        ?>
                 <div class="row collapse">
                     <div class="small-8 columns">
                         <span class="prefix"><?php echo $form->label($model, 'group'); ?></span>
@@ -107,11 +108,11 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                     <div class="small-4 columns">
                         <?php
                         echo $form->textField($model, 'group');
-                        echo $form->error($model, 'group');
-                        ?>
+                        echo $form->error($model, 'group'); ?>
                     </div>
                 </div>
-            <?php } ?>
+            <?php
+                    } ?>
         </fieldset>
         <?php
         echo CHtml::submitButton(Yii::t('app', 'Importieren'), array('class' => 'button'));

@@ -36,7 +36,7 @@ $this->menu = array(
             'url' => array('admin'),
             'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app','Termine im .ics Format exportieren'),
+    array(  'label' => Yii::t('app', 'Termine im .ics Format exportieren'),
             'url' => array('exportIcs'),
             'visible' => Yii::app()->user->checkAccess(PARENTS),
             'linkOptions' => array('class' => 'small button', 'target' => '_blank'))
@@ -44,9 +44,10 @@ $this->menu = array(
 ?>
 <div class="row hide-for-print">
     <div class="small-12 columns">
-        <h2 class="subheader"><?php echo Yii::t('app','Ihre Termine'); ?></h2>
+        <h2 class="subheader"><?php echo Yii::t('app', 'Ihre Termine'); ?></h2>
         <hr>
-        <?php if ($no_children) { ?>
+        <?php if ($no_children) {
+    ?>
             <div class="paper panel">
                 <p><?php echo Yii::t('app', 'Es wurden noch keine Kinder angelegt. Ohne Kinder können keine Termine vereinbart werden.'); ?>
                     <br>
@@ -55,12 +56,11 @@ $this->menu = array(
                         echo Yii::t('app', 'Klicken Sie {here} um Kinder anzulegen.', array('{here}' => CHtml::link(Yii::t('app', 'hier'), array('parentChild/create'))));
                     } else {
                         echo Yii::t('app', 'Klicken Sie {here} um Kinder anzulegen.', array('{here}' => CHtml::link(Yii::t('app', 'hier'), array('user/account')))) .' '. Yii::t('app', 'Sie müssen dafür nur TANs eingeben. Falls Sie über keine TAN verfügen, so wenden Sie sich bitte an die Verwaltung.');
-                    }
-                    ?>
+                    } ?>
                 </p>
             </div>
             <?php
-        }
+}
         $this->widget('zii.widgets.CListView', array(
             'dataProvider' => $dataProvider,
             'summaryText' => '',
@@ -80,7 +80,7 @@ $this->menu = array(
             </tr>
         </thead>
         <tbody>
-            <?php $this->widget('zii.widgets.CListView',array(
+            <?php $this->widget('zii.widgets.CListView', array(
                 'dataProvider' => $dataProvider,
                 'summaryText' => '',
                 'itemView' => '_print'

@@ -19,8 +19,8 @@
  */
 class YiiDebugToolbarPanelRequest extends YiiDebugToolbarPanel
 {
-	public $i = 'o';
-	
+    public $i = 'o';
+    
     /**
      * {@inheritdoc}
      */
@@ -41,7 +41,8 @@ class YiiDebugToolbarPanelRequest extends YiiDebugToolbarPanel
      * {@inheritdoc}
      */
     public function init()
-    {}
+    {
+    }
 
     /**
      * {@inheritdoc}

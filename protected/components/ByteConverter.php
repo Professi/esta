@@ -6,7 +6,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -21,19 +21,20 @@
  *
  * @author cehringfeld
  */
-class ByteConverter {
-
-    private function __construct() {
-        
+class ByteConverter
+{
+    private function __construct()
+    {
     }
 
     /**
      * Konvertiert eine Datei in ISO-8859-1 in UTF-8
      * @param string $toEncode
      * @return string
-     * 
+     *
      */
-    static public function encodingString($toEncode, $to = 'UTF-8', $from = 'ISO-8859-1') {
+    public static function encodingString($toEncode, $to = 'UTF-8', $from = 'ISO-8859-1')
+    {
         return mb_convert_encoding($toEncode, $to, $from);
     }
 
@@ -42,21 +43,25 @@ class ByteConverter {
      * @param array $array
      * @return string
      */
-    static public function convert_multi_array($array) {
-        return implode("&", array_map(function($a) {
-                    return implode("~", $a);
-                }, $array));
+    public static function convert_multi_array($array)
+    {
+        return implode("&", array_map(function ($a) {
+            return implode("~", $a);
+        }, $array));
     }
 
-    static private function return_bytes($val) {
+    private static function return_bytes($val)
+    {
         $val = trim($val);
         $last = strtolower($val[strlen($val) - 1]);
         $val = substr($val, 0, strlen($val) - 1);
         switch ($last) {
             case 'g':
                 $val *= 1024;
+                // no break
             case 'm':
                 $val *= 1024;
+                // no break
             case 'k':
                 $val *= 1024;
         }
@@ -64,12 +69,13 @@ class ByteConverter {
         return $val;
     }
 
-    static public function getMaxSizeInBytes() {
+    public static function getMaxSizeInBytes()
+    {
         return self::return_bytes(self::getMaxSize());
     }
 
-    static public function getMaxSize() {
+    public static function getMaxSize()
+    {
         return ini_get('post_max_size');
     }
-
 }

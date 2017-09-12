@@ -6,7 +6,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -26,16 +26,17 @@
  * @property DateTime generatedOn
  * @property User generatedBy
  */
-class Tan extends CActiveRecord {
-
+class Tan extends CActiveRecord
+{
     public $childFirstname;
     public $childLastname;
 
     /** @var integer Anzahl der TANs die generiert werden sollen */
     public $tan_count = 0;
+
     /**
      *
-     * @var integer ID 
+     * @var integer ID
      */
     public $id = 0;
     public $group_id = null;
@@ -48,7 +49,8 @@ class Tan extends CActiveRecord {
      * @param string $className active record class name.
      * @return Tan the static model class
      */
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
@@ -56,11 +58,13 @@ class Tan extends CActiveRecord {
      * Tabellenname in der Datenbank
      * @return string the associated database table name
      */
-    public function tableName() {
+    public function tableName()
+    {
         return 'tan';
     }
 
-    public function behaviors() {
+    public function behaviors()
+    {
         $r = array();
         if ($this->isNewRecord) {
             $r = array(
@@ -76,7 +80,8 @@ class Tan extends CActiveRecord {
      * Validierungsregeln
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('tan_count', 'numerical', 'integerOnly' => true, 'min' => 1, 'max' => Yii::app()->params['maxTanGen'], 'allowEmpty' => !self::allowParents()),
             array('tan', 'required'),
@@ -86,11 +91,11 @@ class Tan extends CActiveRecord {
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * Keine Relationen, liefert ein leeres Array
      * @return array relational rules.
      */
-    public function relations() {
+    public function relations()
+    {
         return array(
             'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
             'child' => array(self::BELONGS_TO, 'Child', 'child_id'),
@@ -99,7 +104,8 @@ class Tan extends CActiveRecord {
         );
     }
 
-    public static function allowParents() {
+    public static function allowParents()
+    {
         return Yii::app()->params['allowParentsToManageChilds'];
     }
 
@@ -107,7 +113,8 @@ class Tan extends CActiveRecord {
      * Attributlabels
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'tan' => 'TAN',
             'used' => Yii::t('app', 'Benutzt'),
@@ -124,9 +131,10 @@ class Tan extends CActiveRecord {
 
     /**
      * Individuelle Suchcriteria für View
-     * @return \CActiveDataProvider 
+     * @return \CActiveDataProvider
      */
-    public function search() {
+    public function search()
+    {
         $criteria = new CDbCriteria;
         $criteria->compare('tan', $this->tan, true);
         return new CActiveDataProvider($this, array(
@@ -136,9 +144,10 @@ class Tan extends CActiveRecord {
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
+     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function beforeValidate() {
+    public function beforeValidate()
+    {
         $rc = parent::beforeValidate();
         if (Yii::app()->params['allowGroups'] && $this->group_id != null) {
             $this->group = Group::model()->findByPk((int) $this->group_id);
@@ -150,24 +159,23 @@ class Tan extends CActiveRecord {
         return $rc;
     }
 
-    /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
-     * @return type
-     */
-    private function createChild($save = true) {
+    private function createChild($save = true)
+    {
         $child = new Child();
         $child->firstname = $this->childFirstname;
         $child->lastname = $this->childLastname;
-        $child->save();
+        if ($save) {
+            $child->save();
+        }
         $this->child = $child;
         $this->child_id = $this->child->getPrimaryKey();
     }
 
     /**
      * Generiert eine Tan
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function generateTan($save = true) {
+    public function generateTan($save = true)
+    {
         if (!self::allowParents()) {
             $this->createChild($save);
         }
@@ -179,10 +187,8 @@ class Tan extends CActiveRecord {
         }
     }
 
-    /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de> 
-     */
-    private function randNumber() {
+    private function randNumber()
+    {
         do {
             $sTan = '';
             for ($x = 0; $x < Yii::app()->params['tanSize']; ++$x) {
@@ -194,7 +200,4 @@ class Tan extends CActiveRecord {
             }
         } while (true);
     }
-
 }
-
-?>

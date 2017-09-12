@@ -9,7 +9,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -23,7 +23,8 @@
  * Klasse Controller überschreibt die Standard Yii Controller Klasse
  */
 
-class Controller extends CController {
+class Controller extends CController
+{
 
     /**
      * @var string the default layout for the controller view. Defaults to '//layouts/column1',
@@ -47,26 +48,29 @@ class Controller extends CController {
     /**
      * @throws CHttpException 403
      */
-    public function throwFourNullThree() {
+    public function throwFourNullThree()
+    {
         throw new CHttpException(403, Yii::t('app', 'Zugriff verweigert.'));
     }
 
     /**
      * @throws CHttpException 404
      */
-    public function throwFourNullFour() {
+    public function throwFourNullFour()
+    {
         throw new CHttpException(404, Yii::t('app', 'Die angeforderte Seite konnte nicht gefunden werden.'));
     }
 
     /**
      * @throws CHttpException 400
      */
-    public function throwFourNullNull() {
+    public function throwFourNullNull()
+    {
         throw new CHttpException(400, Yii::t('app', 'Ihre Anfrage ist ungültig.'));
     }
 
     /**
-     * 
+     *
      * @param string $icon
      * @param string $label
      * @param string $url
@@ -74,9 +78,10 @@ class Controller extends CController {
      * @param bool $mobile
      * @author David Mock
      * @access public
-     * @return string 
+     * @return string
      */
-    public function generateFoundation5MenuItem($icon, $label, $url, $visible, $mobile) {
+    public function generateFoundation5MenuItem($icon, $label, $url, $visible, $mobile)
+    {
         $link = '';
         $labelTag = ($mobile) ? $label : "<span>{$label}</span>";
         if ($visible) {
@@ -86,14 +91,15 @@ class Controller extends CController {
     }
 
     /**
-     * 
+     *
      * @param mixed $menuArray
      * @param bool $mobile
      * @author David Mock
      * @access public
      * @return string[]
      */
-    public function generateFoundation5Menu($menuArray, $mobile) {
+    public function generateFoundation5Menu($menuArray, $mobile)
+    {
         $menu = '';
         for ($i = 0; $i < count($menuArray); $i++) {
             $menu .= $this->generateFoundation5MenuItem($menuArray[$i][0], $menuArray[$i][1], $menuArray[$i][2], $menuArray[$i][3], $mobile);
@@ -105,7 +111,8 @@ class Controller extends CController {
      * adds css and js packages
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function registerScripts() {
+    public function registerScripts()
+    {
         $cs = Yii::app()->getClientScript();
 
         $cs->registerCssFile($this->assetsDir . '/css/app.css');
@@ -127,33 +134,13 @@ class Controller extends CController {
 
         if (YII_DEBUG) {
             $cs->registerScriptFile($this->assetsDir . '/js/app.js', CClientScript::POS_END);
-        } else {
-            $cs->registerScriptFile($this->assetsDir . '/js/app.min.js', CClientScript::POS_END);
+            return;
         }
+        $cs->registerScriptFile($this->assetsDir . '/js/app.min.js', CClientScript::POS_END);
     }
 
-    /**
-     * registers css and js files for admin Sites, 
-     * checks for adminUser, when $admin true, checkAccess ignored
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @param boolean $admin
-     * @deprecated since version 1.3
-     */
-    public function registerAdminScripts($admin = false) {
-        if (Yii::app()->user->checkAccess(MANAGEMENT) || $admin ||
-                Yii::app()->user->checkAccess(TEACHER)) {
-            $cs = Yii::app()->getClientScript();
-            $cs->addPackage('admin', array(
-                'baseUrl' => $this->assetsDir,
-                'css' => array(!YII_DEBUG ? '/css/select2.min.css' : '/css/select2.css'),
-                'js' => array(!YII_DEBUG ? '/js/custom.min.js' : '/js/custom.js'),
-                'depends' => array('jquery'),
-            ));
-            $cs->registerPackage('admin');
-        }
-    }
-
-    private function updateUser() {
+    private function updateUser()
+    {
         if (!Yii::app()->user->isGuest) {
             Yii::app()->user->updateSession();
             if (Yii::app()->user->getStateVariable() != 1) {
@@ -168,7 +155,8 @@ class Controller extends CController {
      * publishes all assets
      * @return parent::init
      */
-    public function init() {
+    public function init()
+    {
         $dir = dirname(__FILE__) . '/../assets';
         $this->assetsDir = Yii::app()->assetManager->publish($dir, false, -1, YII_DEBUG);
         $this->updateUser();
@@ -180,12 +168,13 @@ class Controller extends CController {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param string $name
      */
-    public function setPageTitle($name) {
+    public function setPageTitle($name)
+    {
         parent::setPageTitle(Yii::app()->name . ' - ' . $name);
     }
 
-    public static function getYesOrNo() {
+    public static function getYesOrNo()
+    {
         return array('1' => Yii::t('app', 'Ja'), '0' => Yii::t('app', 'Nein'));
     }
-
 }

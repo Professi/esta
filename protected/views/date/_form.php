@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,9 +18,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * @var $this DateController 
- * @var $model Date 
- * @var $form CActiveForm 
+ * @var $this DateController
+ * @var $model Date
+ * @var $form CActiveForm
  */
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'date-form',
@@ -94,14 +94,16 @@ $form = $this->beginWidget('CActiveForm', array(
             <div class="small-6 columns" id="date-form-fix-right">
                 <?php
                 $this->widget(
-                        'ext.jui.EJuiDateTimePicker', array(
+                        'ext.jui.EJuiDateTimePicker',
+                    array(
                     'id' => "time_lockAt",
                     'name' => "time_lockAt",
                     'language' => Yii::app()->language,
                     'value' => $timeLabel,
                     'mode' => 'time',
                         // 'options' => $a_disabled
-                ));
+                )
+                );
                 ?>
             </div>
         </div>
@@ -111,7 +113,7 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
     <div class="small-2 columns">
-        <span class="postfix"><?php echo Yii::t('app','Datum + Uhrzeit'); ?></span>
+        <span class="postfix"><?php echo Yii::t('app', 'Datum + Uhrzeit'); ?></span>
     </div>
 </div>
 <div class="row collapse">
@@ -121,7 +123,8 @@ $form = $this->beginWidget('CActiveForm', array(
     <div class="small-8 columns">
         <?php
         $this->widget(
-                'ext.jui.EJuiDateTimePicker', array(
+                'ext.jui.EJuiDateTimePicker',
+            array(
             'model' => $model,
             'attribute' => 'begin',
             'mode' => 'time',
@@ -135,7 +138,7 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
     <div class="small-2 columns">
-        <span class="postfix"><?php echo Yii::t('app','Uhrzeit'); ?></span>
+        <span class="postfix"><?php echo Yii::t('app', 'Uhrzeit'); ?></span>
     </div>
 </div>
 <div class="row collapse">
@@ -145,7 +148,8 @@ $form = $this->beginWidget('CActiveForm', array(
     <div class="small-8 columns">
         <?php
         $this->widget(
-                'ext.jui.EJuiDateTimePicker', array(
+                'ext.jui.EJuiDateTimePicker',
+            array(
             'model' => $model,
             'attribute' => 'end',
             'language' => Yii::app()->language,
@@ -157,7 +161,7 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
     <div class="small-2 columns">
-        <span class="postfix"><?php echo Yii::t('app','Uhrzeit'); ?></span>
+        <span class="postfix"><?php echo Yii::t('app', 'Uhrzeit'); ?></span>
     </div>
 </div>
 <div class="row collapse">
@@ -166,7 +170,7 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
     <div class="small-8 columns">
         <?php
-        if(empty($a_disabled)) {
+        if (empty($a_disabled)) {
             $a_disabled = array();
         }
         echo $form->textField($model, 'durationPerAppointment', $a_disabled);
@@ -174,7 +178,7 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
     <div class="small-2 columns">
-        <span class="postfix"><?php echo Yii::t('app','in Minuten'); ?></span>
+        <span class="postfix"><?php echo Yii::t('app', 'in Minuten'); ?></span>
     </div>
 </div>
 <div class="row collapse">
@@ -195,9 +199,9 @@ $form = $this->beginWidget('CActiveForm', array(
 </div>
 <?php
 if (Yii::app()->params['allowGroups']) {
-    $groups = Group::model()->getAllGroups('DESC');
-    if (!empty($groups)) {
-        ?>
+            $groups = Group::model()->getAllGroups('DESC');
+            if (!empty($groups)) {
+                ?>
         <div class="row collapse">
             <div class="small-2 columns">
                 <span class="prefix"><?php echo $form->label($model, 'groups'); ?></span>
@@ -214,13 +218,12 @@ if (Yii::app()->params['allowGroups']) {
                         'allowClear' => true,
                     ),
                 ));
-                echo $form->error($model, 'groups');
-                ?>
+                echo $form->error($model, 'groups'); ?>
             </div>
         </div>
         <?php
-    }
-}
+            }
+        }
 ?>
 <br>
 <?php

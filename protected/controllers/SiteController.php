@@ -6,7 +6,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -19,12 +19,14 @@
 /**
  * SiteController für Forms/Static Pages ohne echtes Datenmodell
  */
-class SiteController extends Controller {
+class SiteController extends Controller
+{
 
     /**
      * Declares class-based actions.
      */
-    public function actions() {
+    public function actions()
+    {
         return array(
             'captcha' => array(
                 'class' => 'CCaptchaAction',
@@ -40,7 +42,8 @@ class SiteController extends Controller {
      * action um (fast) alle Daten der Anwendung zu löschen
      * @throws CHttpException
      */
-    public function actionDeleteAll() {
+    public function actionDeleteAll()
+    {
         if (Yii::app()->user->checkAccess(ADMIN)) {
             $model = new DeleteAllForm();
             if (isset($_POST['DeleteAllForm'])) {
@@ -55,7 +58,8 @@ class SiteController extends Controller {
         }
     }
 
-    public function actionSendTestMail() {
+    public function actionSendTestMail()
+    {
         if (Yii::app()->user->isAdmin()) {
             $model = new Testmail();
             $model->recipient = Yii::app()->params['adminEmail'];
@@ -78,7 +82,8 @@ class SiteController extends Controller {
      * @param type $option
      * @return mixed
      */
-    public static function getDisabledOptions($option) {
+    public static function getDisabledOptions($option)
+    {
         if ($option === 0) {
             return array('options' => array('disabled' => true));
         } else {
@@ -87,10 +92,10 @@ class SiteController extends Controller {
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * action für das Konfigurationsskript
      */
-    public function actionConfig() {
+    public function actionConfig()
+    {
         if (Yii::app()->user->checkAccess(ADMIN)) {
             $configList = ConfigEntry::model()->findAll();
             $model = new ConfigForm();
@@ -120,14 +125,16 @@ class SiteController extends Controller {
      * This is the default 'index' action that is invoked
      * when an action is not explicitly requested by users.
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $this->actionLogin();
     }
 
     /**
      * This is the action to handle external exceptions.
      */
-    public function actionError() {
+    public function actionError()
+    {
         if ($error = Yii::app()->errorHandler->error) {
             if (Yii::app()->request->isAjaxRequest) {
                 echo $error['message'];
@@ -140,7 +147,8 @@ class SiteController extends Controller {
     /**
      * Displays the contact page
      */
-    public function actionContact() {
+    public function actionContact()
+    {
         $model = new ContactForm;
         if (isset($_POST['ContactForm'])) {
             $model->attributes = $_POST['ContactForm'];
@@ -166,7 +174,8 @@ class SiteController extends Controller {
      * Zeigt die Login Seite an
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function actionLogin() {
+    public function actionLogin()
+    {
         if (Yii::app()->user->isGuest) {
             $model = new LoginForm;
             if (isset($_POST['LoginForm'])) {
@@ -191,7 +200,8 @@ class SiteController extends Controller {
     /**
      * Logs out the current user and redirect to homepage.
      */
-    public function actionLogout() {
+    public function actionLogout()
+    {
         if (!Yii::app()->user->isGuest()) {
             Yii::app()->user->logout();
         }
@@ -202,7 +212,8 @@ class SiteController extends Controller {
      * Zeigt die Statistikseite an
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function actionStatistics() {
+    public function actionStatistics()
+    {
         if (!Yii::app()->user->isGuest()) {
             $appointments = Appointment::model()->count() + BlockedAppointment::model()->count();
             $teachers = User::model()->countByAttributes(array('role' => TEACHER));
@@ -212,5 +223,4 @@ class SiteController extends Controller {
             $this->throwFourNullThree();
         }
     }
-
 }

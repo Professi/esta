@@ -6,7 +6,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -39,7 +39,8 @@
  * @property Group[] $groups
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
-class User extends CActiveRecord {
+class User extends CActiveRecord
+{
 
     /** @var string  Passwortwiederholung */
     public $password_repeat = null;
@@ -65,7 +66,8 @@ class User extends CActiveRecord {
      * @param string $className active record class name.
      * @return User the static model class
      */
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
@@ -73,7 +75,8 @@ class User extends CActiveRecord {
      * Tabellenname
      * @return string the associated database table name
      */
-    public function tableName() {
+    public function tableName()
+    {
         return 'user';
     }
 
@@ -81,7 +84,8 @@ class User extends CActiveRecord {
      * Regeln für die Validierung
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('firstname, lastname,email', 'required'),
             array('email', 'length', 'min' => 1, 'on' => array('update'), 'allowEmpty' =>
@@ -98,7 +102,7 @@ class User extends CActiveRecord {
             array('tan', 'length',
                 'min' => Yii::app()->params['tanSize'],
                 'max' => Yii::app()->params['tanSize'],),
-            array('tan', 'numerical', 'integerOnly' => TRUE,
+            array('tan', 'numerical', 'integerOnly' => true,
                 'allowEmpty' => !$this->isNewRecord || !Yii::app()->user->isGuest
             ),
             array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat'),
@@ -112,7 +116,8 @@ class User extends CActiveRecord {
      * Relationen ( Appointments HAS_MANY , parentChildren HAS_MANY, role HAS_ONE )
      * @return array relational rules.
      */
-    public function relations() {
+    public function relations()
+    {
         return array(
             'appointments' => array(self::HAS_MANY, 'Appointment', 'user_id'),
             'parentchildren' => array(self::HAS_MANY, 'ParentChild', 'user_id'),
@@ -129,7 +134,8 @@ class User extends CActiveRecord {
      * @param string $password Zu salzendes Passwort
      * @return string password
      */
-    public function encryptPassword($password) {
+    public function encryptPassword($password)
+    {
         return CPasswordHelper::hashPassword($password, Yii::app()->params['hashCost']);
     }
 
@@ -139,7 +145,8 @@ class User extends CActiveRecord {
      * @param string $password
      * @return boolean
      */
-    public function verifyPassword($password) {
+    public function verifyPassword($password)
+    {
         $rc = false;
         if (CPasswordHelper::verifyPassword($password, $this->password)) {
             $rc = true;
@@ -151,7 +158,8 @@ class User extends CActiveRecord {
      * Attributlabels
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'id' => 'ID',
             'password' => Yii::t('app', 'Passwort'),
@@ -176,7 +184,8 @@ class User extends CActiveRecord {
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
-    public function search() {
+    public function search()
+    {
         $criteria = new CDbCriteria();
         $criteria->compare('firstname', $this->firstname, true);
         $criteria->compare('lastname', ucfirst($this->lastname), true);
@@ -222,11 +231,12 @@ class User extends CActiveRecord {
     }
 
     /**
-     * Erstellt CActiveDataProvider mit CDbCriteria mit Suche nach Lehrerbenutzern 
+     * Erstellt CActiveDataProvider mit CDbCriteria mit Suche nach Lehrerbenutzern
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return \CActiveDataProvider
      */
-    public function searchTeacher() {
+    public function searchTeacher()
+    {
         $this->role = 2;
         return new CActiveDataProvider($this, array(
             'criteria' => $this->searchCriteriaTeacherAutoComplete(false),
@@ -238,11 +248,11 @@ class User extends CActiveRecord {
 
     /**
      * Suche für die Autovervollständigung bei getTeacher()
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return \CDbCriteria
-     * 
+     *
      */
-    public function searchCriteriaTeacherAutoComplete($withOrder = true) {
+    public function searchCriteriaTeacherAutoComplete($withOrder = true)
+    {
         $criteria = new CDbCriteria;
         if (Yii::app()->params['allowGroups'] && (Yii::app()->user->isTeacher() || Yii::app()->user->isParent())) {
             $criteria->together = true;
@@ -274,7 +284,8 @@ class User extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param integer $role
      */
-    public function deleteUsersWithRole($role) {
+    public function deleteUsersWithRole($role)
+    {
         if (is_int($role)) {
             $a_delete = User::model()->findAllByAttributes(array('role' => $role), array('select' => 'id'));
             foreach ($a_delete as $record) {
@@ -285,10 +296,10 @@ class User extends CActiveRecord {
 
     /**
      * Erstellt automatisch für createtime einen Timestamp
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array gibt für das Attribut createtime den aktuellen Timestamp zurück
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         if ($this->isNewRecord) {
             return array(
                 'CTimestampBehavior' => array(
@@ -303,9 +314,9 @@ class User extends CActiveRecord {
     /**
      * updates a tan, sets used to true and used_by_user_id = this user_id
      * @param Tan $tan
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    private function updateTan($tan = '') {
+    private function updateTan($tan = '')
+    {
         if (!Yii::app()->user->checkAccess(MANAGEMENT)) {
             if (empty($tan)) {
                 $tan = Tan::model()->findByAttributes(array('tan' => $this->tan));
@@ -320,9 +331,10 @@ class User extends CActiveRecord {
     /**
      * basics for working user account, updates tan and creates userHasGroup
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return boolean 
+     * @return boolean
      */
-    private function saveNewRecord() {
+    private function saveNewRecord()
+    {
         if (Yii::app()->params['allowGroups'] && !empty($this->groupIds)) {
             foreach ($this->groupIds as $group) {
                 $this->createUserHasGroup($group);
@@ -332,9 +344,9 @@ class User extends CActiveRecord {
 
     /**
      * saves a already existing user entry
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    private function saveExistingRecord() {
+    private function saveExistingRecord()
+    {
         if (Yii::app()->params['allowGroups'] && $this->updateGroups) {
             UserHasGroup::model()->deleteAllByAttributes(array('user_id' => $this->id));
             if (!empty($this->groupIds)) {
@@ -349,10 +361,10 @@ class User extends CActiveRecord {
 
     /**
      * if new record it Invokes saveNewRecord() , else saveExistingRecord
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean
      */
-    public function afterSave() {
+    public function afterSave()
+    {
         if ($this->isNewRecord) {
             $this->saveNewRecord();
             if (Yii::app()->user->isGuest()) {
@@ -365,12 +377,12 @@ class User extends CActiveRecord {
     }
 
     /**
-     * 
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     *
      * @param int $date_id
      * @return Room|null
      */
-    public function getRoom($date_id) {
+    public function getRoom($date_id)
+    {
         $uhr = $this->getUserHasRoom($date_id);
         if (!is_null($uhr)) {
             return $uhr->room;
@@ -378,20 +390,22 @@ class User extends CActiveRecord {
         return null;
     }
 
-    public function addWithTanNewGroup() {
+    public function addWithTanNewGroup()
+    {
         $this->tanManagement($this->tan);
     }
 
-    public function getUserHasRoom($date_id) {
+    public function getUserHasRoom($date_id)
+    {
         return UserHasRoom::model()->findByAttributes(array('user_id' => $this->getPrimaryKey(), 'date_id' => $date_id));
     }
 
     /**
      * löscht ElternKind Verknüpfung + Kinder
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Rückgabewert der Elternklassemethoden
      */
-    public function beforeDelete() {
+    public function beforeDelete()
+    {
         BlockedAppointment::model()->deleteAllByAttributes(array('user_id' => $this->id));
         $a_appointment = Appointment::model()->findAllByAttributes(array('user_id' => $this->id));
         for ($x = 0; $x < count($a_appointment); $x++) {
@@ -406,27 +420,27 @@ class User extends CActiveRecord {
 
     /**
      * deletes all parentChilds which linked to this user
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    private function deleteParentChilds() {
-        $a_parentChild = ParentChild::model()->findAllByAttributes(array('user_id' => $this->id));
-        for ($i = 0; $i < count($a_parentChild); $i++) {
-            $a_appointment = Appointment::model()->findAllByAttributes(array('parent_child_id' => $a_parentChild[$i]->id));
-            for ($x = 0; $x < count($a_appointment); $x++) {
-                $a_appointment[$x]->delete();
+    private function deleteParentChilds()
+    {
+        $parentChilds = ParentChild::model()->findAllByAttributes(array('user_id' => $this->id));
+        for ($i = 0; $i < count($parentChilds); $i++) {
+            $appointments = Appointment::model()->findAllByAttributes(array('parent_child_id' => $parentChilds[$i]->id));
+            for ($x = 0; $x < count($appointments); $x++) {
+                $appointments[$x]->delete();
             }
-            $childId = $a_parentChild[$i]->child_id;
-            ParentChild::model()->deleteByPk($a_parentChild[$i]->id);
+            $childId = $parentChilds[$i]->child_id;
+            ParentChild::model()->deleteByPk($parentChilds[$i]->id);
             Child::model()->deleteByPk($childId);
         }
     }
 
     /**
      *  verschlüsselt das Passwort und generiert einen Aktivierungsschlüssel, setzt die E-Mail Adresse als Username fest
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Rückgabewert der parent methode
      */
-    public function beforeSave() {
+    public function beforeSave()
+    {
         if ($this->isNewRecord) {
             if (Yii::app()->user->isGuest) {
                 $this->state = 0;
@@ -438,7 +452,7 @@ class User extends CActiveRecord {
         }
         if (strlen($this->password) < 60 && strlen($this->password) > 0) {
             $this->password = $this->encryptPassword($this->password);
-        } else if (!$this->isNewRecord) {
+        } elseif (!$this->isNewRecord) {
             $this->password = User::model()->findByPk($this->id)->password;
         }
         return parent::beforeSave();
@@ -446,18 +460,18 @@ class User extends CActiveRecord {
 
     /**
      * Generiert einen Aktivierungsschlüssel und speichert diesen im aktuellen Objekt
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function generateActivationKey() {
+    public function generateActivationKey()
+    {
         return sha1(mt_rand(10000, 99999) . time() . $this->email);
     }
 
     /**
      * Setzt den StateName und gibt ihn zurück
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return string 0=NichtAktiv 1=Aktiv 2=Gesperrt
      */
-    public function getStateName($state = null) {
+    public function getStateName($state = null)
+    {
         if (is_numeric($state) && array_key_exists($state, self::getStateNameAndValue())) {
             $stateName = self::getStateNameAndValue()[$state]['name'];
         } else {
@@ -471,43 +485,44 @@ class User extends CActiveRecord {
 
     /**
      * Gibt den Status als String aus ( echo )
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param integer $state Status ID des Users
      */
-    public function getFormattedState($state) {
+    public function getFormattedState($state)
+    {
         echo $this->getStateName($state);
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * returns array with state Id and name
      * @return array
      */
-    public static function getStateNameAndValue() {
+    public static function getStateNameAndValue()
+    {
         return array(array('value' => NOT_ACTIVE, 'name' => Yii::t('app', 'Nicht aktiv')), array('value' => ACTIVE, 'name' => Yii::t('app', 'Aktiv')), array('value' => BLOCKED, 'name' => Yii::t('app', 'Gesperrt')));
     }
 
     /**
      * Gibt Rolle als String aus ( echo )
      *  0 = Admin 1=Verwaltung 2=Lehrer 3= Eltern
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param integer $role Rollen ID des Users
      */
-    static public function getFormattedRole($role) {
+    public static function getFormattedRole($role)
+    {
         return self::getRoles()[$role]['name'];
     }
 
-    static public function getRoles() {
+    public static function getRoles()
+    {
         return array(array('value' => ADMIN, 'name' => Yii::t('app', 'Administrator')), array('value' => MANAGEMENT, 'name' => Yii::t('app', 'Verwalter')), array('value' => TEACHER, 'name' => Yii::t('app', 'Lehrer')), array('value' => PARENTS, 'name' => Yii::t('app', 'Eltern')));
     }
 
     /**
      * Prüft ob eine Gruppe null ist und wenn nicht wird der Gruppenname zurückgegeben
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param Group $group
      * @return String
      */
-    private function getGroupname($group) {
+    private function getGroupname($group)
+    {
         $rc = '';
         if (!is_null($group)) {
             $rc = $group->groupname;
@@ -517,10 +532,10 @@ class User extends CActiveRecord {
 
     /**
      * Liefert alle Gruppennamen in einem String
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return string
      */
-    public function getGroupnames() {
+    public function getGroupnames()
+    {
         $rc = "";
         $first = true;
         if (!empty($this->groups)) {
@@ -537,12 +552,12 @@ class User extends CActiveRecord {
     }
 
     /**
-     * Führt zunächst die Elternmethode beforeValidate() aus und 
-     * prüft wenn diese true zurückgibt und es keiner neuer Eintrag ist ob die TAN schon benutzt wurde 
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
+     * Führt zunächst die Elternmethode beforeValidate() aus und
+     * prüft wenn diese true zurückgibt und es keiner neuer Eintrag ist ob die TAN schon benutzt wurde
      * @return boolean
      */
-    public function validate($attributes = null, $clearErrors = true) {
+    public function validate($attributes = null, $clearErrors = true)
+    {
         $rc = parent::validate($attributes, $clearErrors);
         if ($this->hasErrors('password')) {
             $this->addError('password_repeat', Yii::t('app', 'Passwörter stimmen nicht überein.'));
@@ -556,11 +571,10 @@ class User extends CActiveRecord {
 
     /**
      * Mit einer TAN wird der Benutzer zu einer Gruppe hinzugefügt
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @param type $tanNo
      * @return boolean
      */
-    public function validateTan(&$errorMsg = "") {
+    public function validateTan(&$errorMsg = "")
+    {
         $rc = true;
         $tan = Tan::model()->findByAttributes(array('tan' => $this->tan instanceof Tan ? $this->tan->tan : $this->tan));
         if ($tan !== null) {
@@ -584,7 +598,8 @@ class User extends CActiveRecord {
         return $rc;
     }
 
-    private function tanManagement($tan) {
+    private function tanManagement($tan)
+    {
         $ok = true;
         $errorMsg = '';
         if (Yii::app()->params['allowGroups'] && $tan->group != null && is_numeric($tan->group_id)) {
@@ -600,10 +615,10 @@ class User extends CActiveRecord {
 
     /**
      * creates new parentChild Link for this user with a TAN
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param Tan $tan
      */
-    private function addParentChildWithTan(&$tan) {
+    private function addParentChildWithTan(&$tan)
+    {
         $rc = false;
         $pc = $this->createParentChild($this->id, $tan->child->id);
         if ($pc->save()) {
@@ -620,10 +635,10 @@ class User extends CActiveRecord {
     /**
      * adds userHasGroup for this user
      * @param Tan $tan
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return string
      */
-    private function addUserHasGroup($tan) {
+    private function addUserHasGroup($tan)
+    {
         $errorMsg = '';
         if (!UserHasGroup::model()->countByAttributes(array('user_id' => $this->id, 'group_id' => $tan->group_id)) > '0') {
             $this->createUserHasGroup($tan->group_id);
@@ -636,10 +651,10 @@ class User extends CActiveRecord {
 
     /**
      * Erstellt einen Datensatz in UserHasGroup
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param int $group
      */
-    public function createUserHasGroup($group) {
+    public function createUserHasGroup($group)
+    {
         $userHasGroup = new UserHasGroup();
         $userHasGroup->user_id = $this->getPrimaryKey();
         $userHasGroup->group_id = $group;
@@ -647,11 +662,12 @@ class User extends CActiveRecord {
     }
 
     /**
-     * 
+     *
      * @param int $room
      * @param int $date
      */
-    public function createUserHasRoom($room, $date) {
+    public function createUserHasRoom($room, $date)
+    {
         $userHasRoom = new UserHasRoom();
         $userHasRoom->user_id = $this->getPrimaryKey();
         $userHasRoom->room_id = $room;
@@ -661,30 +677,23 @@ class User extends CActiveRecord {
 
     /**
      * gibt true zurück wenn der gegebene Benutzer die entsprechende Rolle hat
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param integer $userId Benutzer ID
      * @param integer $roleId Rollen ID
      * @return boolean
      */
-    public static function hasRole($userId, $roleId) {
+    public static function hasRole($userId, $roleId)
+    {
         $rc = false;
         if (is_int($userId) && is_int($roleId) && User::model()->countByAttributes(
-                        array('id' => $userId, 'role' => $roleId)) == 1) {
+                        array('id' => $userId, 'role' => $roleId)
+        ) == 1) {
             $rc = true;
         }
         return $rc;
     }
 
-    /**
-     * Setzt diverse Attribute
-     * @param type $email Email
-     * @param type $firstname Vorname
-     * @param type $lastname Nachname
-     * @param type $state Status
-     * @param type $role Rolle
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     */
-    public function setSomeAttributes($email, $firstname, $lastname, $state, $role) {
+    public function setSomeAttributes($email, $firstname, $lastname, $state, $role)
+    {
         $this->email = $email;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
@@ -694,10 +703,10 @@ class User extends CActiveRecord {
 
     /**
      * Verwendet entweder das Standardpasswort oder den Passwortgenerator
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return string Klartextpasswort zur Anzeige
      */
-    public function generatePassword() {
+    public function generatePassword()
+    {
         if (Yii::app()->params['randomTeacherPassword']) {
             $passGen = new PasswordGenerator();
             $this->password = $passGen->generate();
@@ -715,15 +724,15 @@ class User extends CActiveRecord {
 
     /**
      * Gibt ein Array zurück welches die Rollen beinhaltet, mit denen Administration/Verwaltung Benutzer verändern können
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array
      */
-    public function getRolePermission() {
+    public function getRolePermission()
+    {
         $rc = array(PARENTS => Yii::t('app', 'Eltern'), TEACHER => Yii::t('app', 'Lehrer'));
         if (Yii::app()->user->isAdmin()) {
             $rc[MANAGEMENT] = Yii::t('app', 'Verwaltung');
             $rc[ADMIN] = Yii::t('app', 'Administrator');
-        } else if (Yii::app()->user->isManager() && $this->id == Yii::app()->user->getId()) {
+        } elseif (Yii::app()->user->isManager() && $this->id == Yii::app()->user->getId()) {
             $rc[MANAGEMENT] = Yii::t('app', 'Verwaltung');
         }
         return $rc;
@@ -735,7 +744,8 @@ class User extends CActiveRecord {
      * @param integer $child_id
      * @return \ParentChild
      */
-    public function createParentChild($user_id, $child_id) {
+    public function createParentChild($user_id, $child_id)
+    {
         $pc = new ParentChild();
         $pc->child_id = $child_id;
         $pc->user_id = $user_id;
@@ -744,10 +754,10 @@ class User extends CActiveRecord {
 
     /**
      * Name of the User with Title
-     * @return string 
+     * @return string
      */
-    public function getDisplayName() {
+    public function getDisplayName()
+    {
         return (empty($this->title)) ? "{$this->firstname} {$this->lastname}" : "{$this->title} {$this->firstname} {$this->lastname}";
     }
-
 }

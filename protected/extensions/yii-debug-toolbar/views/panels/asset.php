@@ -33,20 +33,20 @@
     </thead>
     <tbody>
         <?php
-        
+
         $DF = new CDateFormatter(Yii::app()->sourceLanguage);
         $i=0;
-        foreach($assets as $asset){
+        foreach ($assets as $asset) {
             $i++;
 
             $path = $AM->getBasePath().'/'.$asset;
             $files = CFileHelper::findFiles($path);
             $fileList = implode('<br />', $files);
 
-			$blockAll = false;
-			if(preg_match('|yii\.debug\.toolbar\.js|is', $fileList)) $blockAll = true;
-
-            ?>
+            $blockAll = false;
+            if (preg_match('|yii\.debug\.toolbar\.js|is', $fileList)) {
+                $blockAll = true;
+            } ?>
         <tr class="<?php echo $i%2?'even':'odd'?>">
             <th><?php echo $asset?></th>
             <td>
@@ -64,7 +64,8 @@
 										<?php echo YiiDebug::t('Clean')?></a>
             </td>
         </tr>
-        <?php } ?>
+        <?php
+        } ?>
     </tbody>
 </table>
 

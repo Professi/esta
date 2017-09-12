@@ -5,7 +5,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -16,17 +16,17 @@
  */
 /* @var $this GroupController */
 /* @var $model Group */
-$this->setPageTitle(Yii::t('app','Gruppe bearbeiten'));
+$this->setPageTitle(Yii::t('app', 'Gruppe bearbeiten'));
 $this->breadcrumbs = array(
     'Group' => array('index'),
     $model->id => array('view', 'id' => $model->id),
     'Update',
 );
 $this->menu = array(
-    array(  'label' => 'Gruppe anlegen', 
+    array(  'label' => 'Gruppe anlegen',
             'url' => array('create'),
             'linkOptions' => array('class' => 'small button')),
-    array(  'label' => 'Gruppen verwalten', 
+    array(  'label' => 'Gruppen verwalten',
             'url' => array('admin'),
             'linkOptions' => array('class' => 'small button')),
 );

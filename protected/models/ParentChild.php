@@ -16,7 +16,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,7 +25,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class ParentChild extends CActiveRecord {
+class ParentChild extends CActiveRecord
+{
 
     /** @var string KinderVorname */
     public $childFirstName;
@@ -34,36 +35,36 @@ class ParentChild extends CActiveRecord {
     public $childLastName;
 
     /**
-     * 
+     *
      * Eltern könnten nur ihre eigenen Verknüpfungen löschen und Admins können diese löschen
-     * @author Christan Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Return der Elternmethode
      */
-    public function beforeDelete() {
+    public function beforeDelete()
+    {
         $rc = parent::beforeDelete();
         if (Yii::app()->user->checkAccess(MANAGEMENT) || $this->user_id == Yii::app()->user->getId()) {
             if ($rc) {
                 Appointment::model()->deleteAllByAttributes(array('parent_child_id' => $this->id));
             }
         } else {
-            /** @todo $this->throw... ? */
             throw new CHttpException(403, Yii::t('app', 'Keine Berechtigung.'));
         }
         return $rc;
     }
 
-    protected function afterDelete() {
+    protected function afterDelete()
+    {
         parent::afterDelete();
         Child::model()->deleteByPk($this->child_id);
     }
 
     /**
-     * Prueft ob ein Benutzer die Rolle 3 hat und ob er nicht Admin ist. 
+     * Prueft ob ein Benutzer die Rolle 3 hat und ob er nicht Admin ist.
      * Falls er dies erfüllt, wird seine eigene Userid eingefügt.
-     * @author Christan Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Return der Elternmethode
      */
-    public function beforeValidate() {
+    public function beforeValidate()
+    {
         if (Yii::app()->user->checkAccess(PARENTS) && !Yii::app()->user->isAdmin()) {
             $this->user_id = Yii::app()->user->getId();
         }
@@ -72,10 +73,10 @@ class ParentChild extends CActiveRecord {
 
     /**
      * Bevor die Verknüpfung angelegt wird, wird vorher ein Child erzeugt
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean parent::beforeSave()
      */
-    public function beforeSave() {
+    public function beforeSave()
+    {
         $rc = parent::beforeSave();
         if ($rc) {
             $childCheck = Child::model()->findByAttributes(array('firstname' => $this->childFirstName, 'lastname' => $this->childLastName), array('select' => 'id'));
@@ -103,7 +104,8 @@ class ParentChild extends CActiveRecord {
      * @param string $className active record class name.
      * @return ParentChild the static model class
      */
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
@@ -111,7 +113,8 @@ class ParentChild extends CActiveRecord {
      * Tabellenname
      * @return string the associated database table name
      */
-    public function tableName() {
+    public function tableName()
+    {
         return 'parent_child';
     }
 
@@ -119,7 +122,8 @@ class ParentChild extends CActiveRecord {
      * Validierungsregeln
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('user_id', 'required'),
             array('child_id', 'numerical', 'integerOnly' => true),
@@ -134,7 +138,8 @@ class ParentChild extends CActiveRecord {
      * Relationen mit Appointment, User und Child
      * @return array relational rules.
      */
-    public function relations() {
+    public function relations()
+    {
         return array(
             'appointments' => array(self::HAS_MANY, 'Appointment', 'parent_child_id'),
             'user' => array(self::BELONGS_TO, 'User', 'user_id'),
@@ -146,7 +151,8 @@ class ParentChild extends CActiveRecord {
      * Attributlabels
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'id' => 'ID',
             'user_id' => Yii::t('app', 'Erziehungsberechtigte/r'),
@@ -161,7 +167,8 @@ class ParentChild extends CActiveRecord {
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
-    public function search() {
+    public function search()
+    {
         $criteria = new CDbCriteria;
         $criteria->with = array('user', 'child');
         $criteria->together = true;
@@ -188,11 +195,11 @@ class ParentChild extends CActiveRecord {
 
     /**
      * Gibt Suchkriterien von ParentChild zurück
-     * @author Christan Ehringfeld <c.ehringfeld@t-online.de>
      * @return CDbCriteria Suchkriterien für Autocomplete
      * @param string $lastname Nachname eines Erziehungsberechtigten
      */
-    public function searchParentChild($lastname, $with = array('user', 'child')) {
+    public function searchParentChild($lastname, $with = array('user', 'child'))
+    {
         $criteria = new CDbCriteria;
         $match = addcslashes(ucfirst($lastname), '%_');
         $criteria->addCondition('user.lastname LIKE :match');
@@ -208,7 +215,8 @@ class ParentChild extends CActiveRecord {
      * @param string $lastname Nachname der zu suchenden Eltern
      * @return array passende IDs
      */
-    public function searchParentId($lastname = '') {
+    public function searchParentId($lastname = '')
+    {
         $a_data = $this->findAll($this->searchParentChild($lastname, array('user')));
         foreach ($a_data as $key => $value) {
             $a_data[$key] = $value->user->getPrimaryKey();
@@ -218,10 +226,10 @@ class ParentChild extends CActiveRecord {
 
     /**
      * Prüft ob der angegebene Benutzer überhaupt existiert
-     * @author Christan Ehringfeld <c.ehringfeld@t-online.de>
-     * @return boolean 
+     * @return boolean
      */
-    public function afterValidate() {
+    public function afterValidate()
+    {
         $rc = parent::afterValidate();
         if ($rc && User::model()->countByAttributes(array('user_id' => $this->user_id)) != '1') {
             $rc = false;
@@ -234,5 +242,4 @@ class ParentChild extends CActiveRecord {
         }
         return $rc;
     }
-
 }

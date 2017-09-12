@@ -5,7 +5,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * @var $this ParentChildController 
- * @var $model ParentChild 
- * @var $form CActiveForm 
+ * @var $this ParentChildController
+ * @var $model ParentChild
+ * @var $form CActiveForm
  */
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'parent-child-form',
@@ -29,7 +29,7 @@ if (Yii::app()->user->checkAccess(MANAGEMENT)) {
     ?>
     <div class="row collapse">
         <div class="small-4 columns">
-            <span class="prefix"><?php echo Yii::t('app', 'Erziehungsberechtigte/r');?></span>
+            <span class="prefix"><?php echo Yii::t('app', 'Erziehungsberechtigte/r'); ?></span>
         </div>
         <div class="small-8 columns">
             <?php
@@ -44,15 +44,15 @@ if (Yii::app()->user->checkAccess(MANAGEMENT)) {
                 'htmlOptions' => array( 'disabled' => $parent_disabled,
                 ),
             ));
-            echo $form->error($model, 'user_id');
-            echo $form->hiddenField($model, 'user_id', array('id' => 'parentChild_user_id', 'value' => $model->attributes['user_id']));
-            ?>
+    echo $form->error($model, 'user_id');
+    echo $form->hiddenField($model, 'user_id', array('id' => 'parentChild_user_id', 'value' => $model->attributes['user_id'])); ?>
         </div>
     </div>
-<?php } ?>
+<?php
+} ?>
 <div class="row collapse">
     <div class="small-4 columns">
-        <span class="prefix"><?php echo Yii::t('app','Vorname')?></span>
+        <span class="prefix"><?php echo Yii::t('app', 'Vorname')?></span>
     </div>
     <div class="small-8 columns mobile-input">
         <?php
@@ -64,7 +64,7 @@ if (Yii::app()->user->checkAccess(MANAGEMENT)) {
 
 <div class="row collapse">
     <div class="small-4 columns">
-        <span class="prefix"><?php echo Yii::t('app','Nachname'); ?></span>
+        <span class="prefix"><?php echo Yii::t('app', 'Nachname'); ?></span>
     </div>
     <div class="small-8 columns mobile-input">
         <?php

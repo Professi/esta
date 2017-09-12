@@ -16,7 +16,7 @@
  *
  * NOTE, this file must be saved in UTF-8 encoding.
  */
-return array (
+return array(
   'Erzeuger' => 'Creator',
   'Falls Fragen zu der Elternsprechtags-Software bestehen sollten, können Sie auf der Startseite den Link „Kontakt“ anklicken. Danach erscheint eine Seite, bei der Sie die Ihren Namen, Ihre E-Mailadresse und einen Betreff eingeben müssen. Außerdem muss eine Nachricht geschrieben werden, in der Sie Ihr Anliegen darlegen können. Wenn Sie alle Felder ausgefüllt haben, müssen Sie abschließend den Sicherheitscode eingeben und auf „Absenden“ klicken.' => '',
   'Klicken Sie den Menübutton „Ihre Kinder“, danach auf den Button „Kind hinzufügen“. Anschließend müssen Sie den Vor- und Nachnamen Ihres Kindes eingeben und auf „Anlegen“ klicken.' => '',

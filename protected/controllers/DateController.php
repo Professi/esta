@@ -9,7 +9,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,7 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class DateController extends Controller {
+class DateController extends Controller
+{
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -30,7 +31,8 @@ class DateController extends Controller {
      * Filter
      * @return array action filters
      */
-    public function filters() {
+    public function filters()
+    {
         return array(
             'accessControl', // perform access control for CRUD operations
         );
@@ -41,7 +43,8 @@ class DateController extends Controller {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() {
+    public function accessRules()
+    {
         return array(
             array('allow',
                 'actions' => array('search'),
@@ -59,9 +62,10 @@ class DateController extends Controller {
      * Suchaction für das Autocomplete für die Verwaltung um Termine einzutragen
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param string $term
-     * 
+     *
      */
-    public function actionSearch($term) {
+    public function actionSearch($term)
+    {
         $dataProvider = new DateAndTime();
         $dataProvider->unsetAttributes();
         echo CJSON::encode($dataProvider->searchFormattedArrayDateAndTime($term));
@@ -71,7 +75,8 @@ class DateController extends Controller {
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
@@ -81,7 +86,8 @@ class DateController extends Controller {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new Date();
         $a_disabled = '';
         $timeLabel = '';
@@ -101,7 +107,8 @@ class DateController extends Controller {
         ));
     }
 
-    private function setPostAttributes($model, &$oldDate) {
+    private function setPostAttributes($model, &$oldDate)
+    {
         if (Yii::app()->params['allowGroups'] && isset($_POST['Date']['groups'])) {
             $model->groups = $_POST['Date']['groups'];
         }
@@ -117,7 +124,8 @@ class DateController extends Controller {
         }
     }
 
-    private function checkDiff($model, $oldDate) {
+    private function checkDiff($model, $oldDate)
+    {
         if ($oldDate != null) {
             $newDate = Yii::app()->dateFormatter->formatDateTime(strtotime($model->date), "short", null);
             if ($newDate != $oldDate) {
@@ -130,7 +138,8 @@ class DateController extends Controller {
         }
     }
 
-    private function collectMailAdrs($model) {
+    private function collectMailAdrs($model)
+    {
         $times = DateAndTime::model()->findAllByAttributes(array('date_id' => $model->id));
         $criteria = new CDbCriteria();
         $i = 0;
@@ -159,7 +168,8 @@ class DateController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->loadModel($id);
         $model->setScenario('update');
         $model->date = Yii::app()->dateFormatter->formatDateTime(strtotime($model->date), "short", null);
@@ -192,17 +202,20 @@ class DateController extends Controller {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->loadModel($id)->delete();
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if (!isset($_GET['ajax']))
+        if (!isset($_GET['ajax'])) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        }
     }
 
     /**
      * Lists all models.
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $dataProvider = new CActiveDataProvider('Date');
         $this->render('index', array(
             'dataProvider' => $dataProvider,
@@ -212,7 +225,8 @@ class DateController extends Controller {
     /**
      * Manages all models.
      */
-    public function actionAdmin() {
+    public function actionAdmin()
+    {
         $model = new Date('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Date'])) {
@@ -230,7 +244,8 @@ class DateController extends Controller {
      * @return Date the loaded model
      * @throws CHttpException
      */
-    public function loadModel($id) {
+    public function loadModel($id)
+    {
         $model = Date::model()->findByPk($id);
         if ($model === null) {
             $this->throwFourNullFour();
@@ -242,14 +257,16 @@ class DateController extends Controller {
      * Performs the AJAX validation.
      * @param Date $model the model to be validated
      */
-    protected function performAjaxValidation($model) {
+    protected function performAjaxValidation($model)
+    {
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'date-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
     }
 
-    public function actionDateHasGroupAdmin() {
+    public function actionDateHasGroupAdmin()
+    {
         $model = new DateHasGroup('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['DateHasGroup'])) {
@@ -258,5 +275,4 @@ class DateController extends Controller {
         $this->renderPartial('dateHasGroupAdmin', array(
             'model' => $model), false, true);
     }
-
 }

@@ -6,7 +6,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -19,7 +19,8 @@
 /**
  * Mail ist eine Klasse um Mails zu versenden die die Extension EMailer verwendet
  */
-class Mail {
+class Mail
+{
 
     /**
      * sends a mail
@@ -30,7 +31,8 @@ class Mail {
      * @param string $from Absender der Nachricht
      * @param string $fromName Absendername
      */
-    public function sendMail($subject, $message, $to, $from, $fromName) {
+    public function sendMail($subject, $message, $to, $from, $fromName)
+    {
         $mailer = Yii::createComponent('application.extensions.mailer.EMailer');
         $mailer->isSMTP();
         $mailer->SMTPAuth = Yii::app()->params['smtpAuth'];
@@ -67,7 +69,8 @@ class Mail {
      * @param type $email E-Mail des Empfängers
      * @param type $activationKey Aktivierungsschlüssel
      */
-    public function sendChangePasswordMail($email, $activationKey) {
+    public function sendChangePasswordMail($email, $activationKey)
+    {
         $body = $this->mailHeader();
         $body .= '<p>' . Yii::t('app', 'Bitte klicken Sie auf folgenden Link um ein neues Passwort für Ihr Benutzerkonto zu setzen.') . '</p>';
         $body .= '<p><a href="' . $this->getScriptUrl() . "?r=/user/NewPw&activationKey=$activationKey&email=$email\">" . Yii::t('app', 'Link f&uuml;r die Passwortwahl') . '</a></p>';
@@ -84,18 +87,21 @@ class Mail {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $email E-Mail des Empfängers
      */
-    public function sendTestMail($email) {
+    public function sendTestMail($email)
+    {
         $body = $this->mailHeader();
         $body = '<p><b>' . Yii::t('app', 'Dies ist eine Testmail.') . '</b></p>';
         $body .= $this->mailFooter();
         $this->send(Yii::t('app', 'Testmail bei {appname}', array('{appname}' => Yii::app()->name)), $body, $email);
     }
 
-    private function mailHeader($title = '') {
+    private function mailHeader($title = '')
+    {
         return '<html><head><title>' . $title . '</title></head><body>';
     }
 
-    private function mailFooter() {
+    private function mailFooter()
+    {
         return '</body></html>';
     }
 
@@ -104,7 +110,8 @@ class Mail {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $email E-Mail des Empfängers
      */
-    public function sendDateChangeMail($email, $oldDate, $date) {
+    public function sendDateChangeMail($email, $oldDate, $date)
+    {
         $body = $this->mailHeader();
         $body .= '<p>' . Yii::t('app', 'Hallo,') . '</p>';
         $body .= '<p>' . Yii::t('app', 'wir müssen Ihnen mitteilen, dass der Elternsprechtag vom {oldDate} auf den {date} verschoben wurde.', array(
@@ -123,7 +130,8 @@ class Mail {
      * @param type $email E-Mail des Empfängers
      * @param type $activationKey  Aktivierungsschlüssel
      */
-    public function sendActivationLinkMail($email, $activationKey) {
+    public function sendActivationLinkMail($email, $activationKey)
+    {
         $body = $this->mailHeader();
         $body .= "<p>" . Yii::t('app', "Vielen Dank für Ihre Registrierung bei {appname}", array('{appname}' => Yii::app()->name)) . ".</p>";
         $body .= "<p>" . Yii::t('app', "Ihr Benutzername lautet:") . " <b>" . $email . "</b></p>";
@@ -136,7 +144,8 @@ class Mail {
         $this->send(Yii::t('app', "Ihre Registrierung bei {appname}", array('{appname}' => Yii::app()->name)), $body, $email);
     }
 
-    private function getScriptUrl() {
+    private function getScriptUrl()
+    {
         return Yii::app()->getBaseUrl(true) . '/index.php';
     }
 
@@ -150,7 +159,8 @@ class Mail {
      * @param type $child Kind
      * @param type $date Datum
      */
-    public function sendAppointmentDeleted($email, $teacher, $time, $child, $date) {
+    public function sendAppointmentDeleted($email, $teacher, $time, $child, $date)
+    {
         $body = $this->mailHeader();
         $body .= "<body><p>" . Yii::t('app', "Hallo,") . "</p><p>" . Yii::t('app', "leider müssen wir Sie darüber informieren, dass Ihr Termin am {date} um {time} ", array('{date}' => "<b>" . Yii::app()->dateFormatter->formatDateTime($date, 'short', null), '{time}' => Yii::app()->dateFormatter->formatDateTime($time, null, 'medium'))) . "</b><br>";
         $body .= " " . Yii::t('app', "bei") . " <b>" . $teacher->title . " " . $teacher->firstname . " " . $teacher->lastname . "</b><br>";
@@ -167,7 +177,8 @@ class Mail {
      * @param boolean $isTeacher
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function sendRandomUserPassword($email, $password, $isTeacher = true) {
+    public function sendRandomUserPassword($email, $password, $isTeacher = true)
+    {
         $body = $this->mailHeader();
         if ($isTeacher) {
             $body .= "<body><p>" . Yii::t('app', "Sie wurden bei {appname} als Lehrer registriert.", array('{appname}' => Yii::app()->name)) . "</p>";
@@ -187,7 +198,8 @@ class Mail {
      * inserts infotext to $body
      * @param string &$body Inhalt einer E-Mail
      */
-    private function addInfo(&$body) {
+    private function addInfo(&$body)
+    {
         $body .= "<p>" . Yii::t('app', "Sollten Sie noch Fragen oder Anregungen haben, benutzen Sie bitte das Kontaktformular auf der Webseite.") . "</p><br/>";
         $body .= "<p>" . Yii::t('app', "Das Team der Elternsprechtagsanwendung wünscht Ihnen weiterhin ein gutes Gelingen.") . "</p>";
         $body .= "<p>" . Yii::t('app', "(Dies ist eine automatisch versendete E-Mail. Bitte antworten Sie nicht auf diese Nachricht, da die E-Mail-Adresse nur zum Versenden, nicht aber zum Empfang von E-Mails eingerichtet ist.)") . "</p>";
@@ -200,10 +212,8 @@ class Mail {
      * @param string $email
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    private function send($subject, &$body, $email) {
+    private function send($subject, &$body, $email)
+    {
         $this->sendMail($subject, $body, $email, Yii::app()->params['fromMailHost'], Yii::app()->params['fromMail']);
     }
-
 }
-
-?>

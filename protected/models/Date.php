@@ -6,7 +6,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -31,8 +31,8 @@
  * @property Group[] $groups
  * @property Appointment[] $appointments
  */
-class Date extends CActiveRecord {
-
+class Date extends CActiveRecord
+{
     public $timespans = null;
     public $durationPerAppointment;
 
@@ -41,7 +41,8 @@ class Date extends CActiveRecord {
      * @param string $className active record class name.
      * @return Date the static model class
      */
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
@@ -49,7 +50,8 @@ class Date extends CActiveRecord {
      * Tabellenname
      * @return string the associated database table name
      */
-    public function tableName() {
+    public function tableName()
+    {
         return 'date';
     }
 
@@ -58,7 +60,8 @@ class Date extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('date, begin, end,lockAt,durationPerAppointment', 'required'),
             array('lockAt', 'date', 'format' => self::getDateTimeFormat()),
@@ -73,10 +76,11 @@ class Date extends CActiveRecord {
      * Relationen ( Appointments HAS_MANY )
      * @return array relational rules.
      */
-    public function relations() {
+    public function relations()
+    {
         return array(
             'groups' => array(self::MANY_MANY, 'Group', 'date_has_group(date_id,group_id)'),
-            'dateAndTimes' => array(self::HAS_MANY, 'DateAndTime','date_id'),
+            'dateAndTimes' => array(self::HAS_MANY, 'DateAndTime', 'date_id'),
         );
     }
 
@@ -85,7 +89,8 @@ class Date extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'id' => 'ID',
             'date' => Yii::t('app', 'Datum'),
@@ -103,7 +108,8 @@ class Date extends CActiveRecord {
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
-    public function search() {
+    public function search()
+    {
         $criteria = new CDbCriteria;
         $criteria->compare('id', $this->id);
         $criteria->compare('date', $this->date, true);
@@ -120,7 +126,8 @@ class Date extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean
      */
-    public function validate($attributes = NULL, $clearErrors = true) {
+    public function validate($attributes = null, $clearErrors = true)
+    {
         $rc = true;
         if (parent::validate($attributes, $clearErrors)) {
             if (strtotime($this->end) <= strtotime($this->begin)) {
@@ -145,7 +152,8 @@ class Date extends CActiveRecord {
         return $rc;
     }
 
-    protected function validateTimespans(&$rc) {
+    protected function validateTimespans(&$rc)
+    {
         if ($this->isNewRecord) {
             if ($this->timespans == null) {
                 $this->timespans = array(new TimeSpan());
@@ -163,11 +171,13 @@ class Date extends CActiveRecord {
         }
     }
 
-    public function getNiceName() {
+    public function getNiceName()
+    {
         return Yii::app()->dateFormatter->formatDateTime(strtotime($this->date), "short", null) . " ({$this->title})";
     }
 
-    public static function filterDate() {
+    public static function filterDate()
+    {
         $dates = Date::model()->findAll();
         $r = array();
         foreach ($dates as $date) {
@@ -178,31 +188,34 @@ class Date extends CActiveRecord {
         return $r;
     }
 
-    public static function parseDateTime($date, $begin = false, $simple = false) {
+    public static function parseDateTime($date, $begin = false, $simple = false)
+    {
         return CDateTimeParser::parse($date . ($begin != false ? ' ' . $begin : ''), ($simple ? self::getSimpleDateTimeFormat() : self::getDateTimeFormat()));
     }
 
-    public static function getDateTimeFormat() {
+    public static function getDateTimeFormat()
+    {
         return Yii::app()->locale->getDateFormat(Date::getDateFormat()) . ' ' .
                 Yii::app()->locale->getTimeFormat('short');
     }
 
-    public static function getSimpleDateTimeFormat() {
+    public static function getSimpleDateTimeFormat()
+    {
         return Yii::app()->locale->getDateFormat(Date::getDateFormat()) . ' ' . 'H:m';
     }
 
-    private static function getDateFormat() {
+    private static function getDateFormat()
+    {
         return Yii::app()->language == 'de' ? 'medium' : 'short';
     }
 
     /**
      * Erstellt neue DateTimes entsprechend der Elternsprechtagszeiten
      * @return boolean parent::afterSave();
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function afterSave() {
+    public function afterSave()
+    {
         if ($this->isNewRecord) {
-            //print_r($this->timespans);
             foreach ($this->timespans as $tp) {
                 $diff = (strtotime($tp->end) - strtotime($tp->begin)) / 60;
                 $i = 0;
@@ -239,9 +252,9 @@ class Date extends CActiveRecord {
     /**
      * Creates a group for this date with group_id
      * @param integer $group
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function createDateHasGroup($group) {
+    public function createDateHasGroup($group)
+    {
         $dateHasGroup = new DateHasGroup();
         $dateHasGroup->date_id = $this->getPrimaryKey();
         $dateHasGroup->group_id = $group;
@@ -250,10 +263,9 @@ class Date extends CActiveRecord {
 
     /**
      * bevor der Elternsprechtag gelöscht wird werden alle DateAndTimes gelöscht
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * @return type
      */
-    public function beforeDelete() {
+    public function beforeDelete()
+    {
         $a_dateTimes = DateAndTime::model()->findAllByAttributes(array('date_id' => $this->id));
         if (!empty($a_dateTimes)) {
             foreach ($a_dateTimes as $dateTime) {
@@ -273,18 +285,19 @@ class Date extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean parent::beforeSave
      */
-    public function beforeSave() {
+    public function beforeSave()
+    {
         $this->date = date('Y-m-d', strtotime($this->date));
         return parent::beforeSave();
     }
 
     /**
      * Prüft ob eine Gruppe null ist und wenn nicht wird der Gruppenname zurückgegeben
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param Group $group
      * @return String
      */
-    private function getGroupname($group) {
+    private function getGroupname($group)
+    {
         $rc = '';
         if (!is_null($group)) {
             $rc = $group->groupname;
@@ -294,10 +307,10 @@ class Date extends CActiveRecord {
 
     /**
      * Liefert alle Gruppennamen in einem String
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return string
      */
-    public function getGroupnames() {
+    public function getGroupnames()
+    {
         $rc = "";
         $first = true;
         if (!empty($this->groups)) {
@@ -318,7 +331,8 @@ class Date extends CActiveRecord {
      * @param integer $dateMax
      * @return \CDbCriteria
      */
-    public static function criteriaForDateWithGroups($dateMax) {
+    public static function criteriaForDateWithGroups($dateMax)
+    {
         $criteria = new CDbCriteria();
         $criteria->with = array('groups');
         $criteria->together = true;
@@ -341,7 +355,8 @@ class Date extends CActiveRecord {
         return $criteria;
     }
 
-    protected function beforeValidate() {
+    protected function beforeValidate()
+    {
         $rc = parent::beforeValidate();
         if (!empty($this->date)) {
             $this->date = Yii::app()->dateFormatter->formatDateTime($this->date, Date::getDateFormat(), null);
@@ -352,7 +367,8 @@ class Date extends CActiveRecord {
         return $rc;
     }
 
-    public static function simpleSelect2ListData() {
+    public static function simpleSelect2ListData()
+    {
         $dates = [];
         foreach (self::model()->findAll() as $date) {
             $desc = Yii::app()->dateFormatter->formatDateTime(strtotime($date->date), 'short', null);
@@ -361,5 +377,4 @@ class Date extends CActiveRecord {
         }
         return $dates;
     }
-
 }

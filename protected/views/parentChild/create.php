@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,8 +25,8 @@ $this->breadcrumbs = array(
     'Create',
 );
 $this->menu = array(
-    array(  'label' => Yii::t('app', 'Eltern-Kind-Verknüpfungen verwalten'), 
-            'url' => array('admin'), 
+    array(  'label' => Yii::t('app', 'Eltern-Kind-Verknüpfungen verwalten'),
+            'url' => array('admin'),
             'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
 );
@@ -34,11 +34,15 @@ $this->menu = array(
 <div class="row">
     <div class="small-12 columns small-centered">
         <fieldset>
-            <?php if (Yii::app()->user->checkAccess(PARENTS)) { ?>
+            <?php if (Yii::app()->user->checkAccess(PARENTS)) {
+    ?>
                 <legend><?php echo Yii::t('app', 'Kind anlegen'); ?></legend>
-            <?php } else { ?>
+            <?php
+} else {
+        ?>
                 <legend><?php echo Yii::t('app', 'Eltern-Kind-Verknüpfung anlegen'); ?></legend>
-            <?php } ?>
+            <?php
+    } ?>
             <?php
             echo $this->renderPartial('_form', array(
                 'model' => $model,

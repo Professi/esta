@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -34,11 +34,15 @@ $this->breadcrumbs = array(
             <li><a href="#Q3"><?php echo Yii::t('app', 'Wie kann ich Schüler hinzufügen?'); ?></a></li>
             <li><a href="#Q4"><?php echo Yii::t('app', 'Wie kann ich meine Benutzerdaten ändern?'); ?></a></li>
             <li><a href="#Q5"><?php echo Yii::t('app', 'Wie kann ich einen Termin vereinbaren?'); ?></a></li>
-            <?php if (Yii::app()->user->checkAccess(PARENTS) || Yii::app()->user->isGuest()) { ?>
+            <?php if (Yii::app()->user->checkAccess(PARENTS) || Yii::app()->user->isGuest()) {
+    ?>
                 <li><a href="#Q6"><?php echo Yii::t('app', 'Wie kann ich einen Termin löschen?'); ?></a></li>
-            <?php } else { ?>
+            <?php
+} else {
+        ?>
                 <li><a href="#Q7"><?php echo Yii::t('app', 'Wie kann ich einen Termin löschen?'); ?></a></li>
-            <?php } ?>
+            <?php
+    } ?>
             <li><a href="#Q8"><?php echo Yii::t('app', 'Wie kann ich meine Termine drucken?'); ?></a></li>
             <li><a href="#Q9"><?php echo Yii::t('app', 'Wie kann ich die Schule kontaktieren?'); ?></a></li>
         </ul>
@@ -70,19 +74,23 @@ $this->breadcrumbs = array(
         <p>
             <?php echo Yii::t('app', 'Um einen Termin auszumachen, müssen Sie auf den Menübutton „Termin festlegen“ klicken. Um sich Lehrer mit einem bestimmten Anfangsbuchstaben anzeigen zu lassen, klicken Sie dann auf diesen Buchstaben. Danach können Sie den Lehrer in der erscheinenden Liste direkt auswählen, indem Sie auf das kleine Weckersymbol klicken. Alternativ können Sie in dem Textfeld die Anfangsbuchstaben des gewünschten Lehrers eingeben und diesen im sich öffnendem Menü anklicken. Wenn Sie einen Lehrer ausgewählt haben, erscheint dessen Zeitplan. In diesem sind die Termine entweder als „VERFÜGBAR“ oder „BELEGT“ gekennzeichnet. Durch das Klicken auf einen Termin, der als „VERFÜGBAR“ gekennzeichnet ist, werden für Sie automatisch das Datum und die Uhrzeit des angeklickten Termins in die untenstehenden Felder eingetragen. Falls mehr als ein Kind die Schule besucht, müssen Sie den Namen des jeweiligen Kindes auswählen. Zum Schluss müssen Sie auf den Button „Bestätigen“ klicken, um den Termin zu reservieren.'); ?>
         </p>
-        <?php if (Yii::app()->user->checkAccess(PARENTS) || Yii::app()->user->isGuest()) { ?>
+        <?php if (Yii::app()->user->checkAccess(PARENTS) || Yii::app()->user->isGuest()) {
+        ?>
             <div class="push-faq" id="Q6"></div>
             <h4 class="small subheader"><?php echo Yii::t('app', 'Wie kann ich einen Termin löschen?'); ?></h4>
             <p>
                 <?php echo Yii::t('app', 'Sie können Termine löschen, indem Sie im Menü auf den Button „Ihre Termine“ klicken. Außerdem ist die Seite „Ihre Termine“ auch nach dem Login direkt geöffnet. Ein Termin kann gelöscht werden, indem Sie auf den Button „Termin löschen“ klicken.'); ?>
             </p>
-        <?php } else { ?>
+        <?php
+    } else {
+        ?>
             <div class="push-faq" id="Q7"></div>
             <h4 class="small subheader"><?php echo Yii::t('app', 'Wie kann ich einen Termin löschen?'); ?></h4>
             <p>
                 <?php echo Yii::t('app', 'Sie können Termine löschen, indem Sie im Menü auf den Button „Ihre Termine“ klicken. Außerdem ist die Seite „Ihre Termine“ auch nach dem Login direkt geöffnet. Ein Termin kann gelöscht werden, indem Sie auf das kleine Mülleimersymbol klicken und die Sicherheitsfrage mit „OK“ bestätigen.'); ?>
             </p>
-        <?php } ?>
+        <?php
+    } ?>
         <div class="push-faq" id="Q8"></div>
         <h4 class="small subheader"><?php echo Yii::t('app', 'Wie kann ich meine Termine drucken?'); ?></h4>
         <p>
@@ -95,7 +103,7 @@ $this->breadcrumbs = array(
         </p>
         <p class="text-center">
             <?php
-            echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', Yii::app()->user->checkAccess(MANAGEMENT) == TRUE ? 'index.php' :
+            echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', Yii::app()->user->checkAccess(MANAGEMENT) == true ? 'index.php' :
                             'index.php?r=Appointment/index');
             ?> 
         </p>
