@@ -37,3 +37,15 @@ To debug the feature tests use:
 
     vendor/bin/phpunit --group=feature --debug --stop-on-failure
 
+### Generate Code Coverage for Feature Tests
+
+Execute the following commands in order:
+
+    touch .generate-functional-coverage
+    vendor/bin/phpunit --group=feature --debug --stop-on-failure
+    rm .generate-functional-coverage
+    vendor/bin/phpcov merge --html=build/functional-coverage-report build/functional-coverage
+
+And you'll find the coverage report in
+`build/functional-coverage-report/index.html`.
+
