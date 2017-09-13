@@ -26,6 +26,7 @@ $yii = dirname(__FILE__) . '/framework/yii.php';
 $config = dirname(__FILE__) . '/protected/config/main.php';
 
 if (file_exists(__DIR__ . $_SERVER['REQUEST_URI']) &&
+    ($_SERVER['REQUEST_URI'] !== '/index.php') &&
     is_file(__DIR__ . $_SERVER['REQUEST_URI'])) {
     // Do not try to server static files – this is only important, if used
     // together with PHPs internal webserver.
