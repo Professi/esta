@@ -1,3 +1,5 @@
 /src/nbproject/private/
 /nbproject
 /.idea
+/vendor
+/build
