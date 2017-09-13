@@ -69,6 +69,7 @@ $this->menu = array(
         'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
         'linkOptions' => array('class' => 'small button')),
 );
+
 ?>
 <div class="row">
     <div class="small-12 columns small-centered">
@@ -101,6 +102,7 @@ $this->menu = array(
                         ),
                     ),
                 ));
+
                 ?>
             </div>
         </div>
@@ -117,6 +119,7 @@ $this->menu = array(
         }
         if ($model->role == PARENTS) {
             if (Yii::app()->user->getId() == $model->id && Yii::app()->params['allowGroups']) {
+
                 ?>
                 <h4 class="subheader"><?php echo Yii::t('app', 'Weitere TAN hinzufügen'); ?></h4>
                 <fieldset>
@@ -125,7 +128,9 @@ $this->menu = array(
                         'id' => 'user-form',
                         'errorMessageCssClass' => 'error',
                         'skin' => false,
-                    )); ?>
+                    ));
+
+                    ?>
                     <div class="row collapse">
                         <div class="small-3 columns">
                             <span class="prefix"><?php echo $form->label($model, 'tan'); ?></span>
@@ -133,16 +138,21 @@ $this->menu = array(
                         <div class="small-9 columns mobile-input">
                             <?php
                             echo $form->textField($model, 'tan', array('size' => 45, 'maxlength' => Yii::app()->params['tanSize']));
-                echo $form->error($model, 'tan'); ?>
+                            echo $form->error($model, 'tan');
+
+                            ?>
                         </div>
                     </div>
                     <?php
                     echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('class' => 'small button'));
-                $this->endWidget(); ?>
+                    $this->endWidget();
+
+                    ?>
                 </fieldset>
-            <?php
+                <?php
             }
             if ($model->childcount > 0 && Yii::app()->user->checkAccess(MANAGEMENT)) {
+
                 ?>
                 <h4 class="subheader"><?php echo Yii::t('app', 'Kinder'); ?></h4>
                 <?php
@@ -151,6 +161,7 @@ $this->menu = array(
                 }
             }
         }
+
         ?>
     </div>
 </div>
