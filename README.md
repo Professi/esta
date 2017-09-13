@@ -17,5 +17,23 @@ This project is intended to manage parent teacher days. At the moment this appli
 
 For more Information contact Christian Ehringfeld (c[dot]ehringfeld[at]t-online[dot]de) or David Mock (dumock[at]gmail[dot]com).
 
+# Running the tests
 
+You can run the common (unit) tests using:
+
+    vendor/bin/phpunit
+
+## Feature Tests
+
+You should start the development server using:
+
+    php -S localhost:8000 -t ./ index.php
+
+And then run the feature tests using:
+
+    vendor/bin/phpunit --group=feature
+
+To debug the feature tests use:
+
+    vendor/bin/phpunit --group=feature --debug --stop-on-failure
 
