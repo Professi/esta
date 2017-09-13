@@ -48,9 +48,6 @@ $form = $this->beginWidget('CActiveForm', array(
             'language' => Yii::app()->language,
             'skin' => false,
             'cssFile' => false,
-            'htmlOptions' => array(
-                'readonly' => 'readonly',
-            ),
         ));
         echo $form->error($model, 'date');
         ?>
@@ -85,9 +82,6 @@ $form = $this->beginWidget('CActiveForm', array(
                     'language' => Yii::app()->language,
                     'skin' => false,
                     'cssFile' => false,
-                    'htmlOptions' => array(
-                        'readonly' => 'readonly',
-                    ),
                 ));
                 ?>
             </div>
@@ -129,8 +123,6 @@ $form = $this->beginWidget('CActiveForm', array(
             'options' => $a_disabled
                 )
         );
-
-
         echo $form->error($model, 'begin');
         ?>
     </div>

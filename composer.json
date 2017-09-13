@@ -5,8 +5,14 @@
     },
     "require": {
         "phpunit/phpunit": "^5",
+        "phpunit/php-invoker": "*",
+        "phpunit/dbunit": "*",
+        "phpunit/phpunit-story": "*",
         "behat/mink": "^1.7",
         "behat/mink-sahi-driver": "^1.2",
         "behat/mink-goutte-driver": "^1.2"
+    },
+    "autoload": {
+        "classmap": ["protected"]
     }
 }
