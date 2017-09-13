@@ -19,6 +19,10 @@ For more Information contact Christian Ehringfeld (c[dot]ehringfeld[at]t-online[
 
 # Running the tests
 
+To install all dependencies run:
+
+    composer install
+
 You can run the common (unit) tests using:
 
     vendor/bin/phpunit
