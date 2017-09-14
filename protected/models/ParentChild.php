@@ -36,7 +36,6 @@ class ParentChild extends CActiveRecord {
     /**
      * 
      * Eltern könnten nur ihre eigenen Verknüpfungen löschen und Admins können diese löschen
-     * @author Christan Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Return der Elternmethode
      */
     public function beforeDelete() {
@@ -60,7 +59,6 @@ class ParentChild extends CActiveRecord {
     /**
      * Prueft ob ein Benutzer die Rolle 3 hat und ob er nicht Admin ist. 
      * Falls er dies erfüllt, wird seine eigene Userid eingefügt.
-     * @author Christan Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Return der Elternmethode
      */
     public function beforeValidate() {
@@ -188,7 +186,6 @@ class ParentChild extends CActiveRecord {
 
     /**
      * Gibt Suchkriterien von ParentChild zurück
-     * @author Christan Ehringfeld <c.ehringfeld@t-online.de>
      * @return CDbCriteria Suchkriterien für Autocomplete
      * @param string $lastname Nachname eines Erziehungsberechtigten
      */
@@ -218,7 +215,6 @@ class ParentChild extends CActiveRecord {
 
     /**
      * Prüft ob der angegebene Benutzer überhaupt existiert
-     * @author Christan Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean 
      */
     public function afterValidate() {

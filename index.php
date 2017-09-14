@@ -49,7 +49,6 @@ $calculateCoverage = file_exists(__DIR__ . '/.generate-functional-coverage');
 if ($calculateCoverage) {
     $filter = new CodeCoverage\Filter();
     $filter->addDirectoryToWhitelist(__DIR__ . "/protected/");
-
     $coverage = new CodeCoverage\CodeCoverage(null, $filter);
     $coverage->start('Behat Test');
 }
@@ -65,13 +64,10 @@ $app->run();
 
 if ($calculateCoverage) {
     $coverage->stop();
-
     $coverageDir = __DIR__ . '/build/functional-coverage';
-
     if (!is_dir($coverageDir)) {
         mkdir($coverageDir, 0755, true);
     }
-
     $writer = new CodeCoverage\Report\PHP;
     $writer->process($coverage, $coverageDir . '/' . microtime(true) . '.cov');
 }

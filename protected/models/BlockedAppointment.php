@@ -169,5 +169,3 @@ class BlockedAppointment extends CActiveRecord {
     }
 
 }
-
-?>

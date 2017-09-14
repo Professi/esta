@@ -15,10 +15,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-/**
- * Dies ist das Model für Elternsprechtage.
- */
-
 /** The followings are the available columns in table 'date':
  * @property integer $id
  * @property string $title

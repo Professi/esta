@@ -55,17 +55,12 @@ class RoomController extends Controller {
      */
     public function actionCreate() {
         $model = new Room;
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['Room'])) {
             $model->attributes = $_POST['Room'];
             if ($model->save()) {
                 $this->redirect(array('admin'));
             }
         }
-
         $this->render('create', array(
             'model' => $model,
         ));
@@ -97,8 +92,6 @@ class RoomController extends Controller {
      */
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
-
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax'])) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
         }
@@ -106,8 +99,6 @@ class RoomController extends Controller {
 
     public function actionDeleteUserHasRoom($id) {
         $this->loadUserHasRoomModel($id)->delete();
-
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax'])) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
         }
@@ -118,14 +109,12 @@ class RoomController extends Controller {
      */
     public function actionIndex() {
         #$dataProvider = new CActiveDataProvider('Room');
-        //allowTeachersToManageOwnRooms
         if ((Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToManageOwnRooms']) || Yii::app()->user->checkAccess(MANAGEMENT)) {
-            $this->render('index', array(
+            return $this->render('index', array(
                 'dates' => Date::simpleSelect2ListData(),
             ));
-        } else {
-            $this->throwFourNullThree();
         }
+        $this->throwFourNullThree();
     }
 
     /**
@@ -185,8 +174,7 @@ class RoomController extends Controller {
         $dataProvider->unsetAttributes();
         $dataProvider->name = $term;
         $criteria = $dataProvider->searchAutocomplete();
-        #var_dump($criteria);die;
-        $a_rc = array();
+        $a_rc = [];
         $a_data = Room::model()->findAll($criteria);
         foreach ($a_data as $record) {
             $a_rc[] = array('label' => $record->name
@@ -207,45 +195,56 @@ class RoomController extends Controller {
      * @return JSON Array with parameters and success/failure state
      */
     public function actionAssignAJAX($teacher, $room, $date) {
-        $status = true;
+        $obj = new AjaxMessage();
+        $obj->status = true;
         if (!empty($room)) {
             if (Yii::app()->user->checkAccessNotAdmin(TEACHER) && $teacher !== Yii::app()->user->id) {
                 $this->throwFourNullThree();
             }
             $user = User::model()->findByPk($teacher);
-            $existingRoom = Room::model()->findByAttributes(array('name' => $room));
+            $existingRoom = $this->getExistingRoom($room, $obj);
+            $uhr = $user->getUserHasRoom($date);
+            if (!empty($uhr)) {
+                $obj = $this->assignUserToRoom($user, $existingRoom, $date, $uhr);
+            } else {
+                $obj->status = $user->createUserHasRoom($existingRoom->getPrimaryKey(), $date);
+                $obj->msg = $obj->status ? Yii::t('app', 'Verknüpfung erfolgreich erstellt.') : Yii::t('app', 'Erstellen der Verknüpfung fehlgeschlagen.');
+            }
+        } else {
+            $obj->status = false;
+            $obj->msg = Yii::t('app', 'Kein Raum angegeben.');
+        }
+        echo CJSON::encode(['room' => $room, 'teacher' => $teacher, 'date' => $date, 'status' => $obj->status, 'msg' => $obj->msg]);
+        Yii::app()->end();
+    }
+    
+    protected function getExistingRoom($room, &$obj) {
+                    $existingRoom = Room::model()->findByAttributes(array('name' => $room));
             if (empty($existingRoom)) {
                 $existingRoom = new Room();
                 $existingRoom->name = $room;
                 if (!$existingRoom->save()) {
-                    $status = false;
-                    $msg = Yii::t('app', 'Erstellen des Raumes fehlgeschlagen');
+                    $obj->status = false;
+                    $obj->msg = Yii::t('app', 'Erstellen des Raumes fehlgeschlagen');
                 }
             }
-            $uhr = $user->getUserHasRoom($date);
-            if (!empty($uhr)) {
-                $newUhr = new UserHasRoom();
+            return $existingRoom;
+    }
+    
+    protected function assignUserToRoom($user,$existingRoom,$date,$uhr) {
+                        $newUhr = new UserHasRoom();
                 $newUhr->user_id = $user->getPrimaryKey();
                 $newUhr->room_id = $existingRoom->getPrimaryKey();
                 $newUhr->date_id = $date;
+                $obj = new AjaxMessage();
                 if ($uhr->delete() || UserHasRoom::model()->count(array('room_id' => $uhr->room_id, 'date_id' => $uhr->date_id)) <= 0) {
-                    $status = $newUhr->save();
-                    //print_r($newUhr->errors);
-                    $msg = $status ? Yii::t('app', 'Verknüpfung erfolgreich verändert.') : Yii::t('app', 'Verändern der Verknüpfung fehlgeschlagen.');
+                    $obj->status = $newUhr->save();
+                    $obj->msg = $obj->status ? Yii::t('app', 'Verknüpfung erfolgreich verändert.') : Yii::t('app', 'Verändern der Verknüpfung fehlgeschlagen.');
                 } else {
-                    $status = false;
-                    $msg = Yii::t('app', 'Verändern der Verknüpfung fehlgeschlagen.');
+                    $obj->status = false;
+                    $obj->msg = Yii::t('app', 'Verändern der Verknüpfung fehlgeschlagen.');
                 }
-            } else {
-                $status = $user->createUserHasRoom($existingRoom->getPrimaryKey(), $date);
-                $msg = $status ? Yii::t('app', 'Verknüpfung erfolgreich erstellt.') : Yii::t('app', 'Erstellen der Verknüpfung fehlgeschlagen.');
-            }
-        } else {
-            $status = false;
-            $msg = Yii::t('app', 'Kein Raum angegeben.');
-        }
-        echo CJSON::encode(['room' => $room, 'teacher' => $teacher, 'date' => $date, 'status' => $status, 'msg' => $msg]);
-        Yii::app()->end();
+                return $obj;
     }
 
     public function actionAssignAll() {

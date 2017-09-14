@@ -104,7 +104,6 @@ class DateAndTime extends CActiveRecord {
 
     /**
      * Gibt Suchkriterien von DateAndTime zurück
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return CDbCriteria Suchkriterien für Autocomplete
      */
     public function searchDateAndTime() {
@@ -119,7 +118,6 @@ class DateAndTime extends CActiveRecord {
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $term
      * @return string
      */
@@ -138,7 +136,6 @@ class DateAndTime extends CActiveRecord {
     /**
      * 
      * Löscht alle Termine von einem DateAndTime
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean
      */
     public function beforeDelete() {

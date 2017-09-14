@@ -208,29 +208,40 @@ class GroupController extends Controller {
         Yii::app()->end();
     }
     
+    protected function assignGroups()
+    {
+        $deletes = isset($_POST['delete']) ? $_POST['delete'] : array();
+        if ($this->iterateOverGroups($_POST['group'], $_POST['user'], $deletes)) {
+            Yii::app()->user->setFlash('success', Yii::t('app', 'Gruppen wurden erfolgreich zugewiesen.'));
+        } else {
+            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Nicht alle Gruppen konnten erfolgreich zugewiesen werden.'));
+        }
+        $this->actionAdmin();
+    }
+
+    private function getUsers()
+    {
+        $users = array();
+        $crit = new CDbCriteria();
+        $crit->addCondition('role = :role1', 'OR');
+        $crit->addCondition('role = :role2', 'OR');
+        $crit->params = array(':role1' => TEACHER, ':role2' => PARENTS);
+        foreach (User::model()->findAll($crit) as $user) {
+            $desc = (empty($user->title)) ? '' : "{$user->title} ";
+            $desc .= "{$user->firstname} {$user->lastname}";
+            $users[$user->id] = $desc;
+        }
+        return $users;
+    }
+
     public function actionAssign($id = null) {
         if(isset($_POST['user']) && isset($_POST['group'])) {
-            $deletes = isset($_POST['delete']) ? $_POST['delete'] : array();
-            if($this->iterateOverGroups($_POST['group'],$_POST['user'],$deletes)) {
-                Yii::app()->user->setFlash('success', Yii::t('app','Gruppen wurden erfolgreich zugewiesen.'));
-            } else {
-                Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Nicht alle Gruppen konnten erfolgreich zugewiesen werden.'));
-            }
-            $this->actionAdmin();
+            $this->assignGroups();
         } else {
             $model = new Group();
-            $users = array();
+            $users = $this->getUsers();
             $groups = array();
             $assignedUsers = array();
-            $crit = new CDbCriteria();
-            $crit->addCondition('role = :role1', 'OR');
-            $crit->addCondition('role = :role2', 'OR');
-            $crit->params = array(':role1'=>TEACHER,':role2'=>PARENTS);
-            foreach(User::model()->findAll($crit) as $user) {
-                $desc = (empty($user->title)) ? '' : "{$user->title} ";
-                $desc .= "{$user->firstname} {$user->lastname}";
-                $users[$user->id] = $desc;
-            }
             foreach(Group::model()->findAll() as $group) {
                 $groups[$group->id] = $group->groupname;
             }
@@ -268,11 +279,8 @@ class GroupController extends Controller {
                     $relation->delete();
                 } else if(UserHasGroup::model()->find($crit) === null) {
                     $relation = new UserHasGroup();
-                    //$relation->user = User::model()->findByPk($users[$i]);
-                    //$relation->group = Group::model()->findByPk($groups[$i]);
                     $relation->user_id = $users[$i];
                     $relation->group_id = $groups[$i];
-
                     $ok = $relation->save() && $ok;
                 }
             } 
@@ -281,5 +289,3 @@ class GroupController extends Controller {
     }
 
 }
-
-?>
