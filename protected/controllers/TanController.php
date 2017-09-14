@@ -26,6 +26,15 @@ class TanController extends Controller {
      */
     public $layout = '//layouts/column2';
 
+    private $csvFileWriter;
+
+    public function __construct($id, $module = null, CsvFileWriter $csvFileWriter = null)
+    {
+        parent::__construct($id, $module);
+
+        $this->csvFileWriter = $csvFileWriter ?: new CsvFileWriter();
+    }
+
     /**
      * Filtermethode
      * @return array action filters
@@ -147,8 +156,7 @@ class TanController extends Controller {
             }
         }
 
-        $csvFileWriter = new CsvFileWriter();
-        $file = $csvFileWriter->writeCsvToFile($data);
+        $file = $this->csvFileWriter->writeCsvToFile($data);
 
         Yii::app()->getRequest()->sendFile('tans' . date('Ymd') . '_esta.csv', file_get_contents($file), "text/csv; charset=UTF-8", false);
     }
