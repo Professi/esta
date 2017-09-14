@@ -22,7 +22,6 @@
 use SebastianBergmann\CodeCoverage;
 
 require_once dirname(__FILE__) . '/protected/components/globals.php';
-$yii = dirname(__FILE__) . '/framework/yii.php';
 $config = dirname(__FILE__) . '/protected/config/main.php';
 
 if (file_exists(__DIR__ . $_SERVER['REQUEST_URI']) &&
@@ -52,8 +51,6 @@ if ($calculateCoverage) {
     $coverage = new CodeCoverage\CodeCoverage(null, $filter);
     $coverage->start('Behat Test');
 }
-
-require_once($yii);
 $app = Yii::createWebApplication($config);
 $configs = ConfigEntry::model()->findAll();
 foreach ($configs as $value) {
