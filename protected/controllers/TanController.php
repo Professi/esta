@@ -137,17 +137,9 @@ class TanController extends Controller {
 
         $allowGroups = Yii::app()->params['allowGroups'];
 
-        $file = tempnam(sys_get_temp_dir(), 'tans.csv');
-
-        $handle = fopen($file, 'w');
-
-        //add BOM to fix UTF-8 in Excel
-        fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
-
         $data = [
             $this->generateHeader($allowGroups, $parentManagement),
         ];
-
         if (is_array($tans)) {
             foreach ($tans as $tan) {
                 $tanDataRow = $this->generateDataRow($tan, $allowGroups, $parentManagement);
@@ -155,14 +147,16 @@ class TanController extends Controller {
             }
         }
 
-        $delimiter = ";";
-        $enclosure = '"';
+        $file = tempnam(sys_get_temp_dir(), 'tans.csv');
+        $handle = fopen($file, 'w');
+        // Add BOM to fix UTF-8 in Excel
+        fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
         foreach ($data as $row) {
             fputcsv(
                 $handle,
                 array_map("utf8_decode", $row),
-                $delimiter,
-                $enclosure
+                ";",
+                '"'
             );
         }
 
