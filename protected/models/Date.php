@@ -198,38 +198,45 @@ class Date extends CActiveRecord {
      */
     public function afterSave() {
         if ($this->isNewRecord) {
-            //print_r($this->timespans);
-            foreach ($this->timespans as $tp) {
-                $diff = (strtotime($tp->end) - strtotime($tp->begin)) / 60;
-                $i = 0;
-                while ($diff >= $tp->duration) {
-                    $datetime = new DateAndTime();
-                    $datetime->date_id = $this->getPrimaryKey();
-                    $datetime->time = date("H:i", (strtotime($tp->begin) + ($tp->duration * $i) * 60));
-                    $datetime->duration = $tp->duration;
-                    ++$i;
-                    $diff -= $tp->duration;
-                    $datetime->save();
-                }
-            }
+            $this->createDatetimes();
             if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
                 foreach ($this->groups as $group) {
                     $this->createDateHasGroup($group);
                 }
             }
         } else {
-            if (Yii::app()->params['allowGroups']) {
-                DateHasGroup::model()->deleteAllByAttributes(array('date_id' => $this->id));
-                if (!empty($this->groups)) {
-                    foreach ($this->groups as $group) {
-                        if (DateHasGroup::model()->countByAttributes(array('date_id' => $this->id, 'group_id' => $group)) == '0') {
-                            $this->createDateHasGroup($group);
-                        }
-                    }
+            $this->deleteAndCreateGroups();
+        }
+        return parent::afterSave();
+    }
+    
+    private function createDatetimes()
+    {
+        foreach ($this->timespans as $tp) {
+            $diff = (strtotime($tp->end) - strtotime($tp->begin)) / 60;
+            $i = 0;
+            while ($diff >= $tp->duration) {
+                $datetime = new DateAndTime();
+                $datetime->date_id = $this->getPrimaryKey();
+                $datetime->time = date("H:i", (strtotime($tp->begin) + ($tp->duration * $i) * 60));
+                $datetime->duration = $tp->duration;
+                ++$i;
+                $diff -= $tp->duration;
+                $datetime->save();
+            }
+        }
+    }
+
+    private function deleteAndCreateGroups()
+    {
+        DateHasGroup::model()->deleteAllByAttributes(array('date_id' => $this->id));
+        if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
+            foreach ($this->groups as $group) {
+                if (DateHasGroup::model()->countByAttributes(array('date_id' => $this->id, 'group_id' => $group)) == '0') {
+                    $this->createDateHasGroup($group);
                 }
             }
         }
-        return parent::afterSave();
     }
 
     /**
