@@ -128,24 +128,8 @@ class TanController extends Controller {
         }
     }
 
-    /**
-     * 
-     * @param array $tans
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     */
-    protected function generateCSVFile($tans, $parentManagement = true) {
-
-        $allowGroups = Yii::app()->params['allowGroups'];
-
-        $file = tempnam(sys_get_temp_dir(), 'tans.csv');
-
-        $handle = fopen($file, 'w');
-
-        //add BOM to fix UTF-8 in Excel
-        fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
-
-        $delimiter = ";";
-        $enclosure = '"';
+    private function generateCSVHeader($allowGroups, $parentManagement)
+    {
         $header = array(Yii::t('app', 'TAN'));
         if ($allowGroups) {
             $header[] = Yii::t('app', 'Gruppe');
@@ -154,40 +138,55 @@ class TanController extends Controller {
             $header[] = Yii::t('app', 'Vorname');
             $header[] = Yii::t('app', 'Nachname');
         }
-        $header = array_map("utf8_decode", $header);
-        $data = array();
+        return $header;
+    }
 
+    /**
+     * @param array $tans
+     */
+    protected function generateCSVFile($tans, $parentManagement = true)
+    {
+        $allowGroups = Yii::app()->params['allowGroups'];
+        $data = array($this->generateCSVHeader($allowGroups, $parentManagement));
         if (is_array($tans)) {
             foreach ($tans as $tan) {
-                $d = array($tan->tan);
-                if ($allowGroups) {
-                    if (is_object($tan->group)) {
-                        $d[] = $tan->group->groupname;
-                    } else {
-                        $d[] = '';
-                    }
-                }
-                if (!$parentManagement) {
-                    if (is_object($tan->child)) {
-                        $d[] = $tan->child->firstname;
-                        $d[] = $tan->child->lastname;
-                    }
-                }
-                $data[] = array_map("utf8_decode", $d);
-
+                $data = $this->generateDataRow($data, $tan, $allowGroups, $parentManagement);
             }
         }
-
-        fputcsv($handle, $header, $delimiter, $enclosure);
-
-        foreach ($data as $row) {
-            fputcsv($handle, $row, $delimiter, $enclosure);
-        }
-
-        fclose($handle);
-
+        $file = $this->writeCSVFile($data);
         Yii::app()->getRequest()->sendFile('tans' . date('Ymd') . '_esta.csv', file_get_contents($file), "text/csv; charset=UTF-8", false);
+    }
 
+    private function generateDataRow($data,$tan, $allowGroups, $parentManagement)
+    {
+        $rowData = array($tan->tan);
+        if ($allowGroups) {
+            if (is_object($tan->group)) {
+                $rowData[] = $tan->group->groupname;
+            } else {
+                $rowData[] = '';
+            }
+        }
+        if (!$parentManagement) {
+            if (is_object($tan->child)) {
+                $rowData[] = $tan->child->firstname;
+                $rowData[] = $tan->child->lastname;
+            }
+        }
+        $data[] = array_map("utf8_decode", $rowData);
+        return $data;
+    }
+
+    private function writeCSVFile($data) {
+        $file = tempnam(sys_get_temp_dir(), 'tans.csv');
+        $handle = fopen($file, 'w');
+        //add BOM to fix UTF-8 in Excel
+        fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
+        foreach ($data as $row) {
+            fputcsv($handle, $row, ';', '"');
+        }
+        fclose($handle);
+        return $file;
     }
 
     /**
