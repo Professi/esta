@@ -144,50 +144,69 @@ class TanController extends Controller {
         //add BOM to fix UTF-8 in Excel
         fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
-        $delimiter = ";";
-        $enclosure = '"';
-        $header = array(Yii::t('app', 'TAN'));
-        if ($allowGroups) {
-            $header[] = Yii::t('app', 'Gruppe');
-        }
-        if (!$parentManagement) {
-            $header[] = Yii::t('app', 'Vorname');
-            $header[] = Yii::t('app', 'Nachname');
-        }
-        $header = array_map("utf8_decode", $header);
-        $data = array();
+        $data = [
+            $this->generateHeader($allowGroups, $parentManagement),
+        ];
 
         if (is_array($tans)) {
             foreach ($tans as $tan) {
-                $d = array($tan->tan);
-                if ($allowGroups) {
-                    if (is_object($tan->group)) {
-                        $d[] = $tan->group->groupname;
-                    } else {
-                        $d[] = '';
-                    }
-                }
-                if (!$parentManagement) {
-                    if (is_object($tan->child)) {
-                        $d[] = $tan->child->firstname;
-                        $d[] = $tan->child->lastname;
-                    }
-                }
-                $data[] = array_map("utf8_decode", $d);
-
+                $tanDataRow = $this->generateDataRow($tan, $allowGroups, $parentManagement);
+                $data[] = $tanDataRow;
             }
         }
 
-        fputcsv($handle, $header, $delimiter, $enclosure);
-
+        $delimiter = ";";
+        $enclosure = '"';
         foreach ($data as $row) {
-            fputcsv($handle, $row, $delimiter, $enclosure);
+            fputcsv(
+                $handle,
+                array_map("utf8_decode", $row),
+                $delimiter,
+                $enclosure
+            );
         }
 
         fclose($handle);
 
         Yii::app()->getRequest()->sendFile('tans' . date('Ymd') . '_esta.csv', file_get_contents($file), "text/csv; charset=UTF-8", false);
+    }
 
+    private function generateHeader($allowGroups, $parentManagement)
+    {
+        $header = array(Yii::t('app', 'TAN'));
+
+        if ($allowGroups) {
+            $header[] = Yii::t('app', 'Gruppe');
+        }
+
+        if (!$parentManagement) {
+            $header[] = Yii::t('app', 'Vorname');
+            $header[] = Yii::t('app', 'Nachname');
+        }
+
+        return $header;
+    }
+
+    private function generateDataRow($tan, $allowGroups, $parentManagement)
+    {
+        $tanDataRow = array($tan->tan);
+
+        if ($allowGroups) {
+            if (is_object($tan->group)) {
+                $tanDataRow[] = $tan->group->groupname;
+            } else {
+                $tanDataRow[] = '';
+            }
+        }
+
+        if (!$parentManagement) {
+            if (is_object($tan->child)) {
+                $tanDataRow[] = $tan->child->firstname;
+                $tanDataRow[] = $tan->child->lastname;
+            }
+        }
+
+        return $tanDataRow;
     }
 
     /**
