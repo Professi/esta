@@ -147,27 +147,10 @@ class TanController extends Controller {
             }
         }
 
-        $file = $this->writeCsvToFile($data);
+        $csvFileWriter = new CsvFileWriter();
+        $file = $csvFileWriter->writeCsvToFile($data);
+
         Yii::app()->getRequest()->sendFile('tans' . date('Ymd') . '_esta.csv', file_get_contents($file), "text/csv; charset=UTF-8", false);
-    }
-
-    private function writeCsvToFile(array $data)
-    {
-        $file = tempnam(sys_get_temp_dir(), 'tans.csv');
-        $handle = fopen($file, 'w');
-        // Add BOM to fix UTF-8 in Excel
-        fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
-        foreach ($data as $row) {
-            fputcsv(
-                $handle,
-                array_map("utf8_decode", $row),
-                ";",
-                '"'
-            );
-        }
-
-        fclose($handle);
-        return $file;
     }
 
     private function generateHeader($allowGroups, $parentManagement)
