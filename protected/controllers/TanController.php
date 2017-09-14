@@ -167,40 +167,42 @@ class TanController extends Controller {
 
     private function generateHeader($allowGroups, $parentManagement)
     {
-        $header = array(Yii::t('app', 'TAN'));
+        $headerData = [
+            Yii::t('app', 'TAN'),
+            Yii::t('app', 'Gruppe'),
+            Yii::t('app', 'Vorname'),
+            Yii::t('app', 'Nachname')
+        ];
 
-        if ($allowGroups) {
-            $header[] = Yii::t('app', 'Gruppe');
-        }
-
-        if (!$parentManagement) {
-            $header[] = Yii::t('app', 'Vorname');
-            $header[] = Yii::t('app', 'Nachname');
-        }
-
-        return $header;
+        return $this->generateRow($headerData, $allowGroups, $parentManagement);
     }
 
     private function generateDataRow($tan, $allowGroups, $parentManagement)
     {
-        $tanDataRow = array($tan->tan);
+        $rowData = [
+            $tan->tan,
+            is_object($tan->group) ? $tan->group->groupName : '',
+            is_object($tan->child) ? $tan->child->firstname : null,
+            is_object($tan->child) ? $tan->child->lastname : null,
+        ];
+
+        return $this->generateRow($rowData, $allowGroups, $parentManagement);
+    }
+
+    private function generateRow(array $rowData, $allowGroups, $parentManagement)
+    {
+        $dataRow = [$rowData[0]];
 
         if ($allowGroups) {
-            if (is_object($tan->group)) {
-                $tanDataRow[] = $tan->group->groupname;
-            } else {
-                $tanDataRow[] = '';
-            }
+            $dataRow[] = $rowData[1];
         }
 
         if (!$parentManagement) {
-            if (is_object($tan->child)) {
-                $tanDataRow[] = $tan->child->firstname;
-                $tanDataRow[] = $tan->child->lastname;
-            }
+            $dataRow[] = $rowData[2];
+            $dataRow[] = $rowData[3];
         }
 
-        return $tanDataRow;
+        return $dataRow;
     }
 
     /**
