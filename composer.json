@@ -1,17 +1,22 @@
 {
+    "config": {
+        "platform": {
+            "php": "5.4"
+        }
+    },
     "require-dev": {
-        "phpunit/php-code-coverage": "^4",
-        "phpunit/phpcov": "^3",
-        "pdepend/pdepend": "^2.5",
-        "phpmd/phpmd": "^2.6",
-        "sebastian/phpcpd": "^3.0",
-        "squizlabs/php_codesniffer": "^3.0"
+        "phpunit/php-code-coverage": "@stable",
+        "phpunit/phpcov": "@stable",
+        "pdepend/pdepend": "@stable",
+        "phpmd/phpmd": "@stable",
+        "sebastian/phpcpd": "@stable",
+        "squizlabs/php_codesniffer": "@stable",
+        "phpunit/phpunit": "@stable",
+        "behat/mink": "@stable",
+        "behat/mink-sahi-driver": "@stable",
+        "behat/mink-goutte-driver": "@stable"
     },
     "require": {
-        "phpunit/phpunit": "^5",
-        "behat/mink": "^1.7",
-        "behat/mink-sahi-driver": "^1.2",
-        "behat/mink-goutte-driver": "^1.2"
     },
     "autoload": {
         "classmap": ["protected/"]
