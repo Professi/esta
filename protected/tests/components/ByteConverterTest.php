@@ -16,7 +16,7 @@ class ByteConverterTest extends PHPUnit_Framework_TestCase
     /**
      * @dataProvider getDataForReturnBytes
      */
-    public function testReturnBytes(string $value, int $expectation)
+    public function testReturnBytes($value, $expectation)
     {
         $byteConverter = new ByteConverter();
 
