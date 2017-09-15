@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Initialize Database">
-    <target name="database:init" extensionOf="-prepare:after~hook">
+    <target name="database:init" extensionOf="-initialize:main~hook">
         <exec executable="mysql" failonerror="false" dir="${basedir}"
             inputstring="CREATE DATABASE ${databaseName}">
             <arg value="-u" />
