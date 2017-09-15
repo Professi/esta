@@ -26,7 +26,6 @@ class TanController extends Controller
      * using two-column layout. See 'protected/views/layouts/column2.php'.
      */
     public $layout = '//layouts/column2';
-
     private $csvFileWriter;
 
     public function __construct($id, $module = null, CsvFileWriter $csvFileWriter = null)
@@ -170,7 +169,6 @@ class TanController extends Controller
             Yii::t('app', 'Vorname'),
             Yii::t('app', 'Nachname')
         ];
-
         return $this->generateRow($headerData, $allowGroups, $parentManagement);
     }
 
@@ -182,23 +180,19 @@ class TanController extends Controller
             is_object($tan->child) ? $tan->child->firstname : null,
             is_object($tan->child) ? $tan->child->lastname : null,
         ];
-
         return $this->generateRow($rowData, $allowGroups, $parentManagement);
     }
 
     private function generateRow(array $rowData, $allowGroups, $parentManagement)
     {
         $dataRow = [$rowData[0]];
-
         if ($allowGroups) {
             $dataRow[] = $rowData[1];
         }
-
         if (!$parentManagement) {
             $dataRow[] = $rowData[2];
             $dataRow[] = $rowData[3];
         }
-
         return $dataRow;
     }
 

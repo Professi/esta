@@ -22,7 +22,6 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 require_once dirname(__FILE__) . '/protected/components/globals.php';
-$yii = dirname(__FILE__) . '/framework/yii.php';
 $config = dirname(__FILE__) . '/protected/config/main.php';
 
 if (file_exists(__DIR__ . $_SERVER['REQUEST_URI']) &&
@@ -49,12 +48,9 @@ $calculateCoverage = file_exists(__DIR__ . '/.generate-functional-coverage');
 if ($calculateCoverage) {
     $filter = new PHP_CodeCoverage_Filter();
     $filter->addDirectoryToWhitelist(__DIR__ . "/protected/");
-
     $coverage = new PHP_CodeCoverage(null, $filter);
     $coverage->start('Behat Test');
 }
-
-require_once($yii);
 $app = Yii::createWebApplication($config);
 $configs = ConfigEntry::model()->findAll();
 foreach ($configs as $value) {
@@ -65,13 +61,10 @@ $app->run();
 
 if ($calculateCoverage) {
     $coverage->stop();
-
     $coverageDir = __DIR__ . '/build/functional-coverage';
-
     if (!is_dir($coverageDir)) {
         mkdir($coverageDir, 0755, true);
     }
-
     $writer = new PHP_CodeCoverage_Report_PHP;
     $writer->process($coverage, $coverageDir . '/' . microtime(true) . '.cov');
 }

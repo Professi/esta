@@ -18,4 +18,5 @@ class UserTest extends FeatureTest
         $title = $this->find('h2.text-center');
         $this->assertContains('Elternsprechtagsverwaltung', $title->getText());
     }
+    
 }

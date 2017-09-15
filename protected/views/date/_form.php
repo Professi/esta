@@ -27,7 +27,8 @@ $form = $this->beginWidget('CActiveForm', array(
     'enableAjaxValidation' => false,
     'errorMessageCssClass' => 'error',
     'skin' => false,
-        ));
+    ));
+
 ?>
 <div class="row collapse">
     <div class="small-2 columns">
@@ -48,11 +49,9 @@ $form = $this->beginWidget('CActiveForm', array(
             'language' => Yii::app()->language,
             'skin' => false,
             'cssFile' => false,
-            'htmlOptions' => array(
-                'readonly' => 'readonly',
-            ),
         ));
         echo $form->error($model, 'date');
+
         ?>
     </div>
 </div>
@@ -85,31 +84,30 @@ $form = $this->beginWidget('CActiveForm', array(
                     'language' => Yii::app()->language,
                     'skin' => false,
                     'cssFile' => false,
-                    'htmlOptions' => array(
-                        'readonly' => 'readonly',
-                    ),
                 ));
+
                 ?>
             </div>
             <div class="small-6 columns" id="date-form-fix-right">
                 <?php
                 $this->widget(
-                        'ext.jui.EJuiDateTimePicker',
-                    array(
+                    'ext.jui.EJuiDateTimePicker', array(
                     'id' => "time_lockAt",
                     'name' => "time_lockAt",
                     'language' => Yii::app()->language,
                     'value' => $timeLabel,
                     'mode' => 'time',
-                        // 'options' => $a_disabled
-                )
+                    // 'options' => $a_disabled
+                    )
                 );
+
                 ?>
             </div>
         </div>
         <?php
         echo $form->hiddenField($model, 'lockAt', array('id' => 'lockAt_value'));
         echo $form->error($model, 'lockAt');
+
         ?>
     </div>
     <div class="small-2 columns">
@@ -123,18 +121,16 @@ $form = $this->beginWidget('CActiveForm', array(
     <div class="small-8 columns">
         <?php
         $this->widget(
-                'ext.jui.EJuiDateTimePicker',
-            array(
+            'ext.jui.EJuiDateTimePicker', array(
             'model' => $model,
             'attribute' => 'begin',
             'mode' => 'time',
             'language' => Yii::app()->language,
             'options' => $a_disabled
-                )
+            )
         );
-
-
         echo $form->error($model, 'begin');
+
         ?>
     </div>
     <div class="small-2 columns">
@@ -148,16 +144,16 @@ $form = $this->beginWidget('CActiveForm', array(
     <div class="small-8 columns">
         <?php
         $this->widget(
-                'ext.jui.EJuiDateTimePicker',
-            array(
+            'ext.jui.EJuiDateTimePicker', array(
             'model' => $model,
             'attribute' => 'end',
             'language' => Yii::app()->language,
             'mode' => 'time',
             'options' => $a_disabled
-                )
+            )
         );
         echo $form->error($model, 'end');
+
         ?>
     </div>
     <div class="small-2 columns">
@@ -175,6 +171,7 @@ $form = $this->beginWidget('CActiveForm', array(
         }
         echo $form->textField($model, 'durationPerAppointment', $a_disabled);
         echo $form->error($model, 'durationPerAppointment');
+
         ?>
     </div>
     <div class="small-2 columns">
@@ -194,14 +191,16 @@ $form = $this->beginWidget('CActiveForm', array(
         <?php
         echo $form->textField($model, 'title');
         echo $form->error($model, 'title');
+
         ?>
     </div>
 </div>
 <?php
 if (Yii::app()->params['allowGroups']) {
-            $groups = Group::model()->getAllGroups('DESC');
-            if (!empty($groups)) {
-                ?>
+    $groups = Group::model()->getAllGroups('DESC');
+    if (!empty($groups)) {
+
+        ?>
         <div class="row collapse">
             <div class="small-2 columns">
                 <span class="prefix"><?php echo $form->label($model, 'groups'); ?></span>
@@ -218,16 +217,17 @@ if (Yii::app()->params['allowGroups']) {
                         'allowClear' => true,
                     ),
                 ));
-                echo $form->error($model, 'groups'); ?>
+                echo $form->error($model, 'groups');
+
+                ?>
             </div>
         </div>
         <?php
-            }
-        }
+    }
+}
+
 ?>
 <br>
 <?php
 echo CHtml::submitButton($model->isNewRecord ? Yii::t('app', 'Anlegen') : Yii::t('app', 'Speichern'), array('class' => 'small button'));
 $this->endWidget();
-?>
-

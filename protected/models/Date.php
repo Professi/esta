@@ -1,5 +1,4 @@
 <?php
-
 /* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,9 +13,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-/**
- * Dies ist das Model für Elternsprechtage.
  */
 
 /** The followings are the available columns in table 'date':
@@ -33,6 +29,7 @@
  */
 class Date extends CActiveRecord
 {
+
     public $timespans = null;
     public $durationPerAppointment;
 
@@ -196,7 +193,7 @@ class Date extends CActiveRecord
     public static function getDateTimeFormat()
     {
         return Yii::app()->locale->getDateFormat(Date::getDateFormat()) . ' ' .
-                Yii::app()->locale->getTimeFormat('short');
+            Yii::app()->locale->getTimeFormat('short');
     }
 
     public static function getSimpleDateTimeFormat()
@@ -216,37 +213,45 @@ class Date extends CActiveRecord
     public function afterSave()
     {
         if ($this->isNewRecord) {
-            foreach ($this->timespans as $tp) {
-                $diff = (strtotime($tp->end) - strtotime($tp->begin)) / 60;
-                $i = 0;
-                while ($diff >= $tp->duration) {
-                    $datetime = new DateAndTime();
-                    $datetime->date_id = $this->getPrimaryKey();
-                    $datetime->time = date("H:i", (strtotime($tp->begin) + ($tp->duration * $i) * 60));
-                    $datetime->duration = $tp->duration;
-                    ++$i;
-                    $diff -= $tp->duration;
-                    $datetime->save();
-                }
-            }
+            $this->createDatetimes();
             if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
                 foreach ($this->groups as $group) {
                     $this->createDateHasGroup($group);
                 }
             }
         } else {
-            if (Yii::app()->params['allowGroups']) {
-                DateHasGroup::model()->deleteAllByAttributes(array('date_id' => $this->id));
-                if (!empty($this->groups)) {
-                    foreach ($this->groups as $group) {
-                        if (DateHasGroup::model()->countByAttributes(array('date_id' => $this->id, 'group_id' => $group)) == '0') {
-                            $this->createDateHasGroup($group);
-                        }
-                    }
+            $this->deleteAndCreateGroups();
+        }
+        return parent::afterSave();
+    }
+
+    private function createDatetimes()
+    {
+        foreach ($this->timespans as $tp) {
+            $diff = (strtotime($tp->end) - strtotime($tp->begin)) / 60;
+            $i = 0;
+            while ($diff >= $tp->duration) {
+                $datetime = new DateAndTime();
+                $datetime->date_id = $this->getPrimaryKey();
+                $datetime->time = date("H:i", (strtotime($tp->begin) + ($tp->duration * $i) * 60));
+                $datetime->duration = $tp->duration;
+                ++$i;
+                $diff -= $tp->duration;
+                $datetime->save();
+            }
+        }
+    }
+
+    private function deleteAndCreateGroups()
+    {
+        DateHasGroup::model()->deleteAllByAttributes(array('date_id' => $this->id));
+        if (Yii::app()->params['allowGroups'] && !empty($this->groups)) {
+            foreach ($this->groups as $group) {
+                if (DateHasGroup::model()->countByAttributes(array('date_id' => $this->id, 'group_id' => $group)) == '0') {
+                    $this->createDateHasGroup($group);
                 }
             }
         }
-        return parent::afterSave();
     }
 
     /**

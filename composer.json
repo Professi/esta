@@ -17,6 +17,9 @@
         "behat/mink-goutte-driver": "@stable"
     },
     "require": {
+        "php": ">=5.4",
+        "yiisoft/yii": "^1",
+        "phpmailer/phpmailer": "5.*"
     },
     "autoload": {
         "classmap": ["protected/"]

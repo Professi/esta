@@ -226,7 +226,11 @@ class ParentChild extends CActiveRecord
 
     /**
      * Prüft ob der angegebene Benutzer überhaupt existiert
+<<<<<<< HEAD
      * @return boolean
+=======
+     * @return boolean 
+>>>>>>> testIntegration
      */
     public function afterValidate()
     {

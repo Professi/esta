@@ -1,14 +1,4 @@
 <?php
-
-/**
- * Dies ist das Model für Gruppen.
- */
-
-/** The followings are the available columns in table 'date':
- * @property integer $id
- * @property string $groupname
- * The followings are the available model relations:
- */
 /* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,6 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/** The followings are the available columns in table 'date':
+ * @property integer $id
+ * @property string $groupname
+ * The followings are the available model relations:
+ */
 class Group extends CActiveRecord
 {
 
@@ -94,11 +89,6 @@ class Group extends CActiveRecord
         ));
     }
 
-    /**
-     * Liefert alle Gruppen zurück
-     * @param integer $max Limit an Gruppen
-     * @return array
-     */
     public function getAllGroups($sort = "")
     {
         $a_result = Group::model()->findAll(array('order' => '`groupname` ' + $sort));

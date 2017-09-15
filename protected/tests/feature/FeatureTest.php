@@ -6,7 +6,21 @@ use Behat\SahiClient;
 
 abstract class FeatureTest extends \PHPUnit_Framework_TestCase
 {
+
     protected $session;
+    protected $app;
+
+    public function getApp()
+    {
+        $yii = __DIR__ . '/../../../framework/yii.php';
+        require_once($yii);
+        if (empty(\YiiBase::app())) {
+            $config = __DIR__ . '/../../../protected/config/test.php';
+            $this->app = Yii::createConsoleApplication($config);
+        } else {
+            $this->app = \Yii::app();
+        }
+    }
 
     public function start()
     {
@@ -14,20 +28,25 @@ abstract class FeatureTest extends \PHPUnit_Framework_TestCase
             case 'sahi':
                 $browser = getenv('BROWSER') ?: 'firefox';
                 $driver = new Driver\SahiDriver(
-                    $browser,
-                    new SahiClient\Client(
-                        new SahiClient\Connection(null, 'localhost', 9999)
+                    $browser, new SahiClient\Client(
+                    new SahiClient\Connection(null, 'localhost', 9999)
                     )
                 );
                 break;
-
             case 'goutte':
-            default:
                 $driver = new Driver\GoutteDriver();
+                break;
+            default:
+                $browser = getenv('BROWSER') ?: 'firefox';
+                $driver = new Driver\SahiDriver(
+                    $browser, new SahiClient\Client(
+                    new SahiClient\Connection(null, 'localhost', 9999)
+                    )
+                );
         }
-
         $this->session = new Session($driver);
         $this->session->start();
+        $this->getApp();
     }
 
     public function stop()
@@ -57,7 +76,7 @@ abstract class FeatureTest extends \PHPUnit_Framework_TestCase
             $this->start();
         }
 
-        $domain = getenv('DOMAIN') ?: 'http://localhost:8000';
+        $domain = getenv('DOMAIN') ?: 'http://localhost/~cehringfeld/esta';
         $this->session->visit($domain . $path);
         return $this->session->getPage();
     }
@@ -74,5 +93,13 @@ abstract class FeatureTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($result, "Did not find any elements matching $cssSelector");
 
         return $result;
+    }
+
+    protected function adminLogin()
+    {
+        $this->visit('/');
+        $this->find('#LoginForm_email')->setValue('admin');
+        $this->find('#LoginForm_password')->setValue('admin');
+        $this->find('#login-form input[type="submit"]')->press();
     }
 }

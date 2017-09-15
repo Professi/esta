@@ -1,11 +1,5 @@
 <?php
-
-/** The followings are the available columns in table 'date':
- * @property integer $id
- * The followings are the available model relations:
- * @property Group $group
- * @property Date $date
-  /* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
+/* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -18,6 +12,14 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/**
+ * The followings are the available columns in table 'date':
+ * @property integer $id
+ * The followings are the available model relations:
+ * @property Group $group
+ * @property Date $date 
  */
 class DateHasGroup extends CActiveRecord
 {
