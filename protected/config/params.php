@@ -15,12 +15,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-return array(
-    'databaseHost' => 'localhost',
-    'databaseName' => 'esta',
-    'databaseUsername' => 'esta',
-    'databasePassword' => 'esta', //should be a better password
-    'databasePort' => '3306',
-    'languages'=>array('de'=>'Deutsch','en'=>'Englisch'),
-    );
-?>
+$envConfiguration = array_merge(
+    array(
+        'databaseHost' => 'localhost',
+        'databaseName' => 'esta',
+        'databaseUsername' => 'esta',
+        'databasePassword' => 'esta',
+        'databasePort' => '3306',
+        'languages'=>array('de'=>'Deutsch','en'=>'Englisch'),
+    ),
+    @parse_ini_file(__DIR__ . '/../../.env') ?: [],
+    @parse_ini_file(__DIR__ . '/../../.env.local') ?: []
+);
+
+return $envConfiguration;
