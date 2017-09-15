@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Initialize Database" xmlns:unless="ant:unless">
+    <target name="database:init" extensionOf="-initialize:main~hook">
+        <exec executable="mysql" failonerror="false" dir="${basedir}"
+            inputstring="CREATE DATABASE ${databaseName}">
+            <arg value="-u" />
+            <arg value="${databaseUsername}" />
+            <arg value="-p${databasePassword}" unless:blank="${databasePassword}" />
+        </exec>
+    </target>
+</project>

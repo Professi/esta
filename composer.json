@@ -1,0 +1,24 @@
+{
+    "config": {
+        "platform": {
+            "php": "5.4"
+        }
+    },
+    "require-dev": {
+        "phpunit/php-code-coverage": "@stable",
+        "phpunit/phpcov": "@stable",
+        "pdepend/pdepend": "@stable",
+        "phpmd/phpmd": "@stable",
+        "sebastian/phpcpd": "@stable",
+        "squizlabs/php_codesniffer": "@stable",
+        "phpunit/phpunit": "@stable",
+        "behat/mink": "@stable",
+        "behat/mink-sahi-driver": "@stable",
+        "behat/mink-goutte-driver": "@stable"
+    },
+    "require": {
+    },
+    "autoload": {
+        "classmap": ["protected/"]
+    }
+}

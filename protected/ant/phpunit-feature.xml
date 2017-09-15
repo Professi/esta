@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="PHPUnit Feature Tests Task">
+    <target name="phpunit:feature" extensionOf="-test-feature:main~hook">
+        <parallel>
+            <daemons>
+                <exec executable="php" dir="${basedir}">
+                    <arg value="-S" />
+                    <arg value="localhost:8080" />
+                    <arg value="-t" />
+                    <arg value="./" />
+                    <arg value="./index.php" />
+                </exec>
+            </daemons>
+
+            <sequential>
+                <exec executable="${bindir}/phpunit" failonerror="${test-feature.fail-on-violation}" dir="${basedir}">
+                    <env key="DOMAIN" value="http://localhost:8080" />
+
+                    <arg value="--tap" />
+                    <arg value="--group" />
+                    <arg value="feature" />
+                    <arg value="--configuration" />
+                    <arg value="${basedir}/phpunit.xml" />
+                    <arg value="--log-junit" />
+                    <arg value="${logdir}/feature.xml" />
+                </exec>
+            </sequential>
+        </parallel>
+    </target>
+
+    <target name="phpunit:feature:debug">
+        <parallel>
+            <daemons>
+                <exec executable="php" dir="${basedir}">
+                    <arg value="-S" />
+                    <arg value="localhost:8080" />
+                    <arg value="-t" />
+                    <arg value="./" />
+                    <arg value="./index.php" />
+                </exec>
+            </daemons>
+
+            <sequential>
+                <exec executable="${bindir}/phpunit" failonerror="${test-feature.fail-on-violation}" dir="${basedir}">
+                    <env key="DOMAIN" value="http://localhost:8080" />
+
+                    <arg value="--debug" />
+                    <arg value="--verbose" />
+                    <arg value="--stop-on-failure" />
+                    <arg value="--group" />
+                    <arg value="feature" />
+                    <arg value="--configuration" />
+                    <arg value="${basedir}/phpunit.xml" />
+                </exec>
+            </sequential>
+        </parallel>
+    </target>
+
+    <target name="phpunit:feature:coverage" extensionOf="-test-static:main~hook">
+        <parallel>
+            <daemons>
+                <exec executable="php" dir="${basedir}">
+                    <arg value="-S" />
+                    <arg value="localhost:8080" />
+                    <arg value="-t" />
+                    <arg value="./" />
+                    <arg value="./index.php" />
+                </exec>
+            </daemons>
+
+            <sequential>
+                <touch file="${basedir}/.generate-functional-coverage" />
+
+                <exec executable="${bindir}/phpunit" failonerror="${test-feature.fail-on-violation}" dir="${basedir}">
+                    <env key="DOMAIN" value="http://localhost:8080" />
+
+                    <arg value="--tap" />
+                    <arg value="--group" />
+                    <arg value="feature" />
+                    <arg value="--configuration" />
+                    <arg value="${basedir}/phpunit.xml" />
+                    <arg value="--log-junit" />
+                    <arg value="${logdir}/feature.xml" />
+                </exec>
+
+                <delete file="${basedir}/.generate-functional-coverage" />
+
+                <exec executable="${bindir}/phpcov" failonerror="${test-feature.fail-on-violation}" dir="${basedir}">
+                    <arg value="merge" />
+                    <arg value="--html" />
+                    <arg value="${logdir}/functional-report" />
+                    <arg value="${basedir}/build/functional-coverage" />
+                </exec>
+            </sequential>
+        </parallel>
+    </target>
+</project>
