@@ -19,8 +19,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use SebastianBergmann\CodeCoverage;
-
 require_once __DIR__ . '/vendor/autoload.php';
 
 require_once dirname(__FILE__) . '/protected/components/globals.php';
@@ -49,10 +47,10 @@ if (YII_DEBUG) {
 require_once __DIR__ . '/vendor/autoload.php';
 $calculateCoverage = file_exists(__DIR__ . '/.generate-functional-coverage');
 if ($calculateCoverage) {
-    $filter = new CodeCoverage\Filter();
+    $filter = new PHP_CodeCoverage_Filter();
     $filter->addDirectoryToWhitelist(__DIR__ . "/protected/");
 
-    $coverage = new CodeCoverage\CodeCoverage(null, $filter);
+    $coverage = new PHP_CodeCoverage(null, $filter);
     $coverage->start('Behat Test');
 }
 
@@ -74,6 +72,6 @@ if ($calculateCoverage) {
         mkdir($coverageDir, 0755, true);
     }
 
-    $writer = new CodeCoverage\Report\PHP;
+    $writer = new PHP_CodeCoverage_Report_PHP;
     $writer->process($coverage, $coverageDir . '/' . microtime(true) . '.cov');
 }

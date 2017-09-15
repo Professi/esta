@@ -28,4 +28,5 @@
     <import file="${basedir}/ant/modules/dbdeploy.xml" />
 
     <import file="${basedir}/protected/ant/database.xml" />
+    <import file="${basedir}/protected/ant/phpunit-feature.xml" />
 </project>
