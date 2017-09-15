@@ -12,7 +12,7 @@ abstract class FeatureTest extends \PHPUnit_Framework_TestCase
 
     public function getApp()
     {
-        $yii = __DIR__ . '/../../../framework/yii.php';
+        $yii = __DIR__ . '/../../../vendor/yiisoft/yii/framework/yii.php';
         require_once($yii);
         if (empty(\YiiBase::app())) {
             $config = __DIR__ . '/../../../protected/config/test.php';
@@ -37,12 +37,7 @@ abstract class FeatureTest extends \PHPUnit_Framework_TestCase
                 $driver = new Driver\GoutteDriver();
                 break;
             default:
-                $browser = getenv('BROWSER') ?: 'firefox';
-                $driver = new Driver\SahiDriver(
-                    $browser, new SahiClient\Client(
-                    new SahiClient\Connection(null, 'localhost', 9999)
-                    )
-                );
+                $driver = new Driver\GoutteDriver();
         }
         $this->session = new Session($driver);
         $this->session->start();
@@ -76,7 +71,7 @@ abstract class FeatureTest extends \PHPUnit_Framework_TestCase
             $this->start();
         }
 
-        $domain = getenv('DOMAIN') ?: 'http://localhost/~cehringfeld/esta';
+        $domain = getenv('DOMAIN') ?: 'http://localhost:8000';
         $this->session->visit($domain . $path);
         return $this->session->getPage();
     }
