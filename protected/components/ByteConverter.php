@@ -23,10 +23,6 @@
  */
 class ByteConverter
 {
-    private function __construct()
-    {
-    }
-
     /**
      * Konvertiert eine Datei in ISO-8859-1 in UTF-8
      * @param string $toEncode
@@ -50,7 +46,7 @@ class ByteConverter
         }, $array));
     }
 
-    private static function return_bytes($val)
+    public static function return_bytes($val)
     {
         $val = trim($val);
         $last = strtolower($val[strlen($val) - 1]);
