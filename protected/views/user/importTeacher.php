@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,12 +18,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * @var $this UserController 
- * @var $model CsvUpload 
- * @var $form CActiveForm 
+ * @var $this UserController
+ * @var $model CsvUpload
+ * @var $form CActiveForm
  */
 $this->setPageTitle(Yii::t('app', 'Lehrer importieren'));
-Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
+Yii::app()->clientScript->registerCssFile($this->assetsDir."/css/select2.min.css");
 ?>
 
 <div class="row">
@@ -43,7 +43,8 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
         </div>
     </div>
 </div>
-<?php if (Yii::app()->params['randomTeacherPassword']) { ?>
+<?php if (Yii::app()->params['randomTeacherPassword']) {
+                ?>
     <div class="row">
         <div class="small-10 columns small-centered">
             <div class="panel">
@@ -55,14 +56,14 @@ Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.cs
                     <div class="small-10 columns">
                         <?php
                         echo Yii::t('app', 'Da Sie in der Konfiguration die Option "Lehrerpasswörter bei deren Erstellung zufällig generieren?" aktiviert haben, kann der Lehrerimport sehr lange dauern.'). '<br>';
-                        echo Yii::t('app', 'Sollten Sie bei dem Import der Lehrer eine Fehlermeldung von PHP oder Ihrem Webserver erhalten, müssen Sie in der php.ini die "maximum_execution_time" hochsetzen oder Ihre CSV Datei aufteilen.');
-                        ?>
+                echo Yii::t('app', 'Sollten Sie bei dem Import der Lehrer eine Fehlermeldung von PHP oder Ihrem Webserver erhalten, müssen Sie in der php.ini die "maximum_execution_time" hochsetzen oder Ihre CSV Datei aufteilen.'); ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<?php } ?>
+<?php
+            } ?>
 <div class="row">
     <div class="small-10 columns small-centered">
         <?php

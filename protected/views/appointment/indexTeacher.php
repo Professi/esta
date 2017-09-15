@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -66,20 +66,22 @@ $this->menu = array(
     </div>
 </div>
 
-<?php if (Yii::app()->params['allowBlockingAppointments']) { ?>
+<?php if (Yii::app()->params['allowBlockingAppointments']) {
+                ?>
     <div class="row">
         <div class="small-12 columns">
             <h2 class="subheader"><?php echo Yii::t('app', 'Ihre blockierten Termine'); ?></h2>
             <hr>
-            <?php if (Yii::app()->params['allowBlockingOnlyForManagement']) { ?>
+            <?php if (Yii::app()->params['allowBlockingOnlyForManagement']) {
+                    ?>
 
                 <div class="paper panel">
                     <p><?php echo Yii::t('app', 'Termine können zurzeit nur von der Verwaltung und der Administration blockiert werden.'); ?></p>
                 </div>
 
                 <?php
-            }
-            $this->widget('zii.widgets.grid.CGridView', array(
+                }
+                $this->widget('zii.widgets.grid.CGridView', array(
                 'id' => 'blockedAppointment-grid',
                 'dataProvider' => $blockedApp,
                 'columns' => array(
@@ -89,13 +91,12 @@ $this->menu = array(
                             'delete' => array('url' => '$this->grid->controller->createUrl("/appointment/deleteblockapp", array("id"=>$data->id))'),
                         )),
                 )
-            ));
-            ?>
+            )); ?>
         </div>
     </div>
     <br/>
     <?php
-}
+            }
 if (UserHasRoom::model()->countByAttributes(array('user_id' => Yii::app()->user->getId())) > 0) {
     ?>
     <div class="row">
@@ -109,8 +110,7 @@ if (UserHasRoom::model()->countByAttributes(array('user_id' => Yii::app()->user-
                     array('name' => 'date_id', 'value' => '$data->date->title'),
                     array('name' => 'room_id', 'value' => '$data->room->name'),
                 )
-            ));
-            ?> 
+            )); ?> 
         </div>
     </div>
     <?php

@@ -19,8 +19,8 @@
  */
 class YiiDebugToolbarPanelSettings extends YiiDebugToolbarPanel
 {
-	public $i = 'k';
-	
+    public $i = 'k';
+    
     public function getMenuTitle()
     {
         return YiiDebug::t('Settings');
@@ -43,7 +43,6 @@ class YiiDebugToolbarPanelSettings extends YiiDebugToolbarPanel
 
     public function init()
     {
-
     }
 
     protected function getApplicationData()
@@ -68,7 +67,6 @@ class YiiDebugToolbarPanelSettings extends YiiDebugToolbarPanel
 
     public function run()
     {
-
         $this->render('settings', array(
             'application' => $this->getApplicationData(),
             'params' => $this->getApplicationParams(),
@@ -81,16 +79,16 @@ class YiiDebugToolbarPanelSettings extends YiiDebugToolbarPanel
     private function prepareData($data)
     {
         $result = array();
-        $skip = array(); 
-        foreach ($data as $key => $value){
-            if (in_array($key, $skip))
+        $skip = array();
+        foreach ($data as $key => $value) {
+            if (in_array($key, $skip)) {
                 continue;
+            }
             
-            if (is_object($value)){
+            if (is_object($value)) {
                 $value = array_merge(array(
                     'class' => get_class($value)
                 ), get_object_vars($value));
-
             }
             $result[$key] = $value;
         }

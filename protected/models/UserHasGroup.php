@@ -1,9 +1,5 @@
 <?php
 
-/**
- * Dies ist das Model für User Has Group.
- */
-
 /** The followings are the available columns in table 'date':
  * @property integer $id
  * The followings are the available model relations:
@@ -14,7 +10,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -23,15 +19,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class UserHasGroup extends CActiveRecord {
-
+class UserHasGroup extends CActiveRecord
+{
     public $userrole;
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
      * @return Date the static model class
      */
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
@@ -39,16 +37,17 @@ class UserHasGroup extends CActiveRecord {
      * Tabellenname
      * @return string the associated database table name
      */
-    public function tableName() {
+    public function tableName()
+    {
         return 'user_has_group';
     }
 
     /**
      * Regeln für Validierung
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('user_id,group_id', 'required'),
             array('user_id', 'exist', 'attributeName' => 'id', 'className' => 'User'),
@@ -61,7 +60,8 @@ class UserHasGroup extends CActiveRecord {
      * Relationen mit Appointment, User und Child
      * @return array relational rules.
      */
-    public function relations() {
+    public function relations()
+    {
         return array(
             'user' => array(self::BELONGS_TO, 'User', 'user_id'),
             'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
@@ -70,10 +70,10 @@ class UserHasGroup extends CActiveRecord {
 
     /**
      * Attributlabels
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'id' => 'ID',
             'user' => Yii::t('app', 'Benutzer'),
@@ -85,7 +85,8 @@ class UserHasGroup extends CActiveRecord {
      * Search method for UserHasGroup
      * @return \CActiveDataProvider
      */
-    public function search() {
+    public function search()
+    {
         $criteria = new CDbCriteria;
         $criteria->with = array('group', 'user');
         $criteria->together = true;
@@ -110,7 +111,4 @@ class UserHasGroup extends CActiveRecord {
             'sort' => $sort,
         ));
     }
-
 }
-
-?>

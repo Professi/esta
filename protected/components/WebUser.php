@@ -9,7 +9,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -23,7 +23,8 @@
  * Webuser überschreibt CWebuser und überschreibt u.a. die Methode checkAccess
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
-class WebUser extends CWebUser {
+class WebUser extends CWebUser
+{
 
     /**
      * Überschreibt eine Yii Methode, welche für die Zugriffsberechtigung
@@ -33,7 +34,8 @@ class WebUser extends CWebUser {
      * @param mixed $params (opt) Muss gesetzt werden durch Vererbung
      * @return bool Permission granted?
      */
-    public function checkAccess($role, $params = array()) {
+    public function checkAccess($role, $params = array())
+    {
         if (!is_numeric($this->id)) {
             return false;
         }
@@ -50,7 +52,8 @@ class WebUser extends CWebUser {
      * @param integer $role2 Benötigte Rolle
      * @return boolean Falls eine Operation mit der UserRolle übereinstimmt gibts true
      */
-    public function checkAccessRole($role1, $role2) {
+    public function checkAccessRole($role1, $role2)
+    {
         if (!is_numeric($role1)) {
             return false;
         }
@@ -62,7 +65,8 @@ class WebUser extends CWebUser {
      * @param integer $role Rolle die der Benutzer haben sollte
      * @return boolean
      */
-    public function checkAccessNotAdmin($role) {
+    public function checkAccessNotAdmin($role)
+    {
         $rc = false;
         if ($this->checkAccess($role) && !$this->isAdmin()) {
             $rc = true;
@@ -75,31 +79,37 @@ class WebUser extends CWebUser {
      * @author Christian Ehringfeld <c.ehringfeld@t-online,de>
      * @return boolean selbsterklärend
      */
-    public function isAdmin() {
+    public function isAdmin()
+    {
         return $this->checkRole(ADMIN);
     }
 
     /**
      * Methode fuer isGuest
-     * @return boolean 
+     * @return boolean
      */
-    public function isGuest() {
+    public function isGuest()
+    {
         return $this->isGuest;
     }
 
-    public function isManager() {
+    public function isManager()
+    {
         return $this->checkRole(MANAGEMENT);
     }
 
-    public function isParent() {
+    public function isParent()
+    {
         return $this->checkRole(PARENTS);
     }
 
-    public function isTeacher() {
+    public function isTeacher()
+    {
         return $this->checkRole(TEACHER);
     }
 
-    private function checkRole($roleId) {
+    private function checkRole($roleId)
+    {
         if (is_numeric($this->id) && $this->getState('role') == $roleId) {
             return true;
         }
@@ -111,15 +121,18 @@ class WebUser extends CWebUser {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array all user groups
      */
-    public function getGroups() {
+    public function getGroups()
+    {
         return $this->getState('groups');
     }
 
-    public function getStateVariable() {
+    public function getStateVariable()
+    {
         return $this->getState('state');
     }
 
-    private function setDynamicSessionVariables($state, $role, $groups = array()) {
+    private function setDynamicSessionVariables($state, $role, $groups = array())
+    {
         $this->setState('state', $state);
         $this->setState('role', $role);
         if (Yii::app()->params['allowGroups']) {
@@ -127,7 +140,8 @@ class WebUser extends CWebUser {
         }
     }
 
-    public function updateSession($user = false) {
+    public function updateSession($user = false)
+    {
         if (!$user) {
             $criteria = new CDbCriteria();
             $criteria->select = array('id', 'state', 'email', 'role');
@@ -140,5 +154,4 @@ class WebUser extends CWebUser {
         }
         $this->setDynamicSessionVariables($user->state, $user->role, (Yii::app()->params['allowGroups'] ? $user->groups : array()));
     }
-
 }

@@ -9,7 +9,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,7 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class AppointmentController extends Controller {
+class AppointmentController extends Controller
+{
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -30,7 +31,8 @@ class AppointmentController extends Controller {
      * Filter
      * @return array action filters
      */
-    public function filters() {
+    public function filters()
+    {
         return array(
             'accessControl',
         );
@@ -41,7 +43,8 @@ class AppointmentController extends Controller {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() {
+    public function accessRules()
+    {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions' => array('create', 'index', 'view', 'getTeacher', 'makeAppointment', 'delete', 'exportIcs'),
@@ -67,11 +70,11 @@ class AppointmentController extends Controller {
     }
 
     /**
-     * returns teacherLabel
      * @param User $user
-     * @return string 
+     * @return string
      */
-    private function teacherLabel(&$user) {
+    private function teacherLabel($user)
+    {
         return $user->title . " " . $user->firstname . " " . $user->lastname;
     }
 
@@ -80,7 +83,8 @@ class AppointmentController extends Controller {
      * @param BlockedAppointment $model
      * @return type
      */
-    private function getInformationWithTeacherId(&$id = '') {
+    private function getInformationWithTeacherId(&$id = '')
+    {
         $teacherLabel = '';
         if (isset($_GET['teacherId'])) { //Weiterleitung vom user/view; eventuell auch wenn der Lehrer dann im Menü auf Termin blockieren geht? haha -> möglicher intrusion point siehe #177 ;)
             $teacherValue = $_GET['teacherId'];
@@ -94,7 +98,8 @@ class AppointmentController extends Controller {
     /**
      * action for creating BlockedAppointment
      */
-    public function actionCreateBlockApp() {
+    public function actionCreateBlockApp()
+    {
         if (Yii::app()->params['allowBlockingAppointments'] &&
                 !(Yii::app()->user->checkAccessNotAdmin(TEACHER) &&
                 Yii::app()->params['allowBlockingOnlyForManagement'])) {
@@ -127,11 +132,12 @@ class AppointmentController extends Controller {
      * @param integer $id
      * @param integer $teacherId
      */
-    public function actionDeleteBlockApp($id, $teacherId = null) {
+    public function actionDeleteBlockApp($id, $teacherId = null)
+    {
         if (!empty($id)) {
             if ($teacherId == null && Yii::app()->user->isTeacher()) {
                 $model = BlockedAppointment::model()->findByAttributes(array('id' => $id, 'user_id' => Yii::app()->user->getId()));
-            } else if (Yii::app()->user->checkAccess(MANAGEMENT)) {
+            } elseif (Yii::app()->user->checkAccess(MANAGEMENT)) {
                 $model = BlockedAppointment::model()->findByPk($id);
             } else {
                 $this->throwFourNullThree();
@@ -150,8 +156,8 @@ class AppointmentController extends Controller {
      * Block all dateAndTimes for a teacher on a specific date.
      * There must be a better way to do this, alas I have no time to find it
      */
-    public function actionCreateBlockDay() {
-
+    public function actionCreateBlockDay()
+    {
         if (!(Yii::app()->params['allowBlockingAppointments']) || !Yii::app()->user->isAdmin()) {
             $this->throwFourNullNull();
         }
@@ -160,8 +166,7 @@ class AppointmentController extends Controller {
             $date = $dateAndTime->date;
             $userId = $_POST['BlockedAppointment']['user_id'];
             $reason = $_POST['BlockedAppointment']['reason'];
-
-            foreach ($date->dateAndTimes AS $dateAndTime) {
+            foreach ($date->dateAndTimes as $dateAndTime) {
                 $model = new BlockedAppointment();
                 $model->unsetAttributes();
                 $model->setAttributes([
@@ -176,7 +181,6 @@ class AppointmentController extends Controller {
         } else {
             $this->actionCreateBlockApp();
         }
-
         $this->redirect(array('admin'));
     }
 
@@ -184,7 +188,8 @@ class AppointmentController extends Controller {
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
@@ -194,7 +199,8 @@ class AppointmentController extends Controller {
      * builds with parentId a label for parents
      * @return string
      */
-    private function getParentLabel() {
+    private function getParentLabel()
+    {
         $parentLabel = '';
         if (isset($_GET['parentId'])) {
             $parentId = $_GET['parentId'];
@@ -208,7 +214,8 @@ class AppointmentController extends Controller {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new Appointment;
         if (Yii::app()->user->isTeacher() && !Yii::app()->params['teacherAllowBlockTeacherApps'] && Yii::app()->params['allowTeachersToCreateAppointments']) {
             $model->user_id = Yii::app()->user->getId();
@@ -243,7 +250,8 @@ class AppointmentController extends Controller {
      * wird die entsprechende Suchanfrage gesendet und rendert das GridView
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function actionGetTeacher() {
+    public function actionGetTeacher()
+    {
         $model = new User('searchTeacher');
         $model->unsetAttributes();
         $model->state = 1;
@@ -263,7 +271,8 @@ class AppointmentController extends Controller {
      * @param array $array
      * @return string
      */
-    private function getColumnCount(&$array) {
+    private function getColumnCount(&$array)
+    {
         $columnCount = '';
         switch (count($array)) {
             case 1:
@@ -275,7 +284,7 @@ class AppointmentController extends Controller {
             case 3:
                 $columnCount = 'small-4';
                 break;
-            default :
+            default:
                 $columnCount = 'small-12';
                 break;
         }
@@ -287,7 +296,8 @@ class AppointmentController extends Controller {
      * @param integer $teacher LehrerID
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function actionMakeAppointment($teacher) {
+    public function actionMakeAppointment($teacher)
+    {
         $model = new Appointment;
         $model->unsetAttributes();
         if (is_numeric($teacher)) {
@@ -319,11 +329,13 @@ class AppointmentController extends Controller {
         }
     }
 
-    private function getMaxParentsDays() {
+    private function getMaxParentsDays()
+    {
         return 3;
     }
 
-    private function checkForBadRequest($teacher) {
+    private function checkForBadRequest($teacher)
+    {
         if (Yii::app()->params['allowGroups'] && Yii::app()->user->checkAccess('3')) {
             $badRequest = true;
             $userGroups = Yii::app()->user->getGroups();
@@ -353,7 +365,8 @@ class AppointmentController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->loadModel($id);
         $parentLabel = $model->parentchild->user->firstname . " " . $model->parentchild->user->lastname;
         $teacherLabel = $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname;
@@ -376,7 +389,8 @@ class AppointmentController extends Controller {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         if (!empty($id)) {
             $model = $this->loadModel($id);
             if ($this->loadModel($id)->delete()) {
@@ -398,7 +412,8 @@ class AppointmentController extends Controller {
      * Terminübersicht für Lehrer/Eltern, haben jeweils ein View
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         if (Yii::app()->user->checkAccessNotAdmin(TEACHER)) {
             $dataProvider = new Appointment('customSearch');
             $dataProvider->user_id = Yii::app()->user->getId();
@@ -414,9 +429,10 @@ class AppointmentController extends Controller {
                 $arr['blockedApp'] = $blockedApp->search();
             }
             $this->render('indexTeacher', $arr);
-        } else if (Yii::app()->user->isParent()) {
+        } elseif (Yii::app()->user->isParent()) {
             $no_children = ParentChild::model()->countByAttributes(
-                            array('user_id' => Yii::app()->user->getId())) == '0' ? true : false;
+                            array('user_id' => Yii::app()->user->getId())
+            ) == '0' ? true : false;
             $this->render('index', array(
                 'dataProvider' => Appointment::getAllAppointments(),
                 'no_children' => $no_children,
@@ -429,7 +445,8 @@ class AppointmentController extends Controller {
     /**
      * Manages all models.
      */
-    public function actionAdmin() {
+    public function actionAdmin()
+    {
         $model = new Appointment('search');
         $blockedApp = new BlockedAppointment();
         $model->unsetAttributes();
@@ -455,7 +472,8 @@ class AppointmentController extends Controller {
      * @return Appointment the loaded model
      * @throws CHttpException
      */
-    public function loadModel($id) {
+    public function loadModel($id)
+    {
         $model = Appointment::model()->findByPk($id);
         if ($model === null) {
             $this->throwFourNullFour();
@@ -467,7 +485,8 @@ class AppointmentController extends Controller {
      * Performs the AJAX validation.
      * @param Appointment $model the model to be validated
      */
-    protected function performAjaxValidation($model) {
+    protected function performAjaxValidation($model)
+    {
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'appointment-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
@@ -480,7 +499,8 @@ class AppointmentController extends Controller {
      * @param integer $userId Benutzer ID des Users
      * @return array Mehrdimensionales Array, jedes Array enthält die Felder label und Value
      */
-    public function getChilds($userId) {
+    public function getChilds($userId)
+    {
         $a_rc = array();
         $a_data = ParentChild::model()->findAllByAttributes(array('user_id' => $userId));
         foreach ($a_data as $record) {
@@ -497,7 +517,8 @@ class AppointmentController extends Controller {
      * @param string $date 'Y-m-d' Tag an dem gesucht werden soll. Default ist time()
      * @return array Enthält Arrays welche n-DateAndTimes enthalten
      */
-    public function getDatesWithTimes($dateMax, $mergeDates = false) {
+    public function getDatesWithTimes($dateMax, $mergeDates = false)
+    {
         $a_groupOfDateAndTimes = array();
         if (!empty($dateMax)) {
             if (Yii::app()->params['allowGroups'] && Yii::app()->user->isParent()) {
@@ -510,7 +531,7 @@ class AppointmentController extends Controller {
                 foreach ($a_dates as $record) {
                     $a_groupOfDateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
                 }
-            } else if ($mergeDates) {
+            } elseif ($mergeDates) {
                 foreach ($a_dates as $key => $record) {
                     $a_tempDateAndTimes = DateAndTime::model()->findAllByAttributes(array('date_id' => $record->id));
                     foreach ($a_tempDateAndTimes as $innerKey => $value) {
@@ -532,7 +553,8 @@ class AppointmentController extends Controller {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array Gibt BELEGT,0 oder Verfügbar,1 zurück,
      */
-    public function isAppointmentAvailable($teacher, $dateAndTimeId, $overrideAccess = false) {
+    public function isAppointmentAvailable($teacher, $dateAndTimeId, $overrideAccess = false)
+    {
         $rc = array(Yii::t('app', "BELEGT"), false);
         $check = false;
         if (Appointment::model()->countByAttributes(array('user_id' => $teacher,
@@ -560,7 +582,8 @@ class AppointmentController extends Controller {
      * @param string $classname Name der Klasse des Views für das ein Element erzeugt werden soll
      * echo JSON
      */
-    public function actionGetTeacherAppointmentsAjax($teacherId, $classname) {
+    public function actionGetTeacherAppointmentsAjax($teacherId, $classname)
+    {
         header('Content-type: application/json');
         echo CJSON::encode($this->createSelectTeacherDates($teacherId, $classname, 'dateAndTime_id'));
         Yii::app()->end();
@@ -575,7 +598,8 @@ class AppointmentController extends Controller {
      * @param int $selectedDateAndTime Ausgewählter Termin, für /update, default = -1
      * @return CHtml::dropDownList
      */
-    public function createSelectTeacherDates($teacherId, $nameForm, $nameField, $selectedDateAndTime = -1) {
+    public function createSelectTeacherDates($teacherId, $nameForm, $nameField, $selectedDateAndTime = -1)
+    {
         $selectContent = array();
         $a_options = array('prompt' => Yii::t('app', 'Geben Sie einen Lehrernamen ein'));
         if (!empty($teacherId)) {
@@ -607,16 +631,17 @@ class AppointmentController extends Controller {
      * @param int $selectedChild Ausgewähltes Kind, für /update, default = -1
      * @return CHtml::dropDownList
      */
-    public function createSelectChildren($userId, $nameForm, $nameField, $selectedChild = -1) {
+    public function createSelectChildren($userId, $nameForm, $nameField, $selectedChild = -1)
+    {
         $selectContent = array();
         $a_options = array('prompt' => Yii::t('app', 'Geben Sie einen Elternnamen ein'));
         if (!empty($userId)) {
             $dataProvider = new ParentChild();
             $dataProvider->unsetAttributes();
             $a_parentChild = ParentChild::model()->findAllByAttributes(array('user_id' => $userId), array('with' => array('user', 'child'), 'select' => '*'));
-            $selectContent = (empty($a_parentChild)) ? array('prompt' => Yii::t('app', 'Bitte legen Sie mindestens ein Kind an bevor Sie fortfahren')) : CHtml::listData($a_parentChild, 'id', function($post) {
-                        return $post->child->firstname . ' ' . $post->child->lastname;
-                    });
+            $selectContent = (empty($a_parentChild)) ? array('prompt' => Yii::t('app', 'Bitte legen Sie mindestens ein Kind an bevor Sie fortfahren')) : CHtml::listData($a_parentChild, 'id', function ($post) {
+                return $post->child->firstname . ' ' . $post->child->lastname;
+            });
             $a_optionsInner[$selectedChild] = array('selected' => true);
             $a_options = array('options' => $a_optionsInner);
         }
@@ -629,7 +654,8 @@ class AppointmentController extends Controller {
      * @author David Mock <dumock@gmail.com>
      * echo JSON
      */
-    public function actionGetSelectChildrenAjax($id) {
+    public function actionGetSelectChildrenAjax($id)
+    {
         if (!empty($id)) {
             header('Content-type: application/json');
             echo CJSON::encode($this->createSelectChildren($id, 'Appointment', 'parent_child_id'));
@@ -641,7 +667,8 @@ class AppointmentController extends Controller {
      * fills a child select
      * @return array
      */
-    public function fillChildSelect() {
+    public function fillChildSelect()
+    {
         $a_child = $this->getChilds(Yii::app()->user->getId());
         if (empty($a_child)) {
             Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie haben keine Kinder eingetragen. Bitte tragen Sie dies nach. Anschließend können Sie einen Termin vereinbaren.'));
@@ -654,7 +681,8 @@ class AppointmentController extends Controller {
      * @param string $letter
      * @return string
      */
-    public function getTeacherLink($letter) {
+    public function getTeacherLink($letter)
+    {
         return '<a href="index.php?r=appointment/getTeacher&amp;letter=' . $letter . '" class="small teacher button">' . strtoupper($letter) . '</a>';
     }
 
@@ -662,17 +690,19 @@ class AppointmentController extends Controller {
      * echo des Strings von getTeacherLink
      * @param string $letter
      */
-    public function getTeacherLinkE($letter) {
+    public function getTeacherLinkE($letter)
+    {
         echo $this->getTeacherLink($letter);
     }
 
     /**
      * Formatiert den Titel eines Elternsprechtages in makeAppointment.php
      * @author David Mock <dumock@gmail.com>
-     * @param string $app der Elternsprechtag 
+     * @param string $app der Elternsprechtag
      * return string
      */
-    public function formatAppointmentTitle($app) {
+    public function formatAppointmentTitle($app)
+    {
         $string = Yii::app()->dateFormatter->formatDateTime(strtotime($app->date), "short", null);
         if (!empty($app->title)) {
             $string .= " ({$app->title})";
@@ -680,7 +710,8 @@ class AppointmentController extends Controller {
         return $string;
     }
 
-    public function actionOverview($id, $date) {
+    public function actionOverview($id, $date)
+    {
         if (!((Yii::app()->user->isTeacher() && $id === Yii::app()->user->id) || Yii::app()->user->checkAccess(MANAGEMENT))) {
             $this->throwFourNullThree();
         }
@@ -693,14 +724,16 @@ class AppointmentController extends Controller {
             'date' => Yii::app()->dateFormatter->formatDateTime(strtotime($dateObj->date), 'short', null)));
     }
 
-    private function getDate($dateId) {
+    private function getDate($dateId)
+    {
         if (is_numeric($dateId)) {
             return Date::model()->findByPk((int) $dateId);
         }
         $this->throwFourNullNull();
     }
 
-    private function generateOverviewData($id, $dateData, $appointments, $blockedAppointments) {
+    private function generateOverviewData($id, $dateData, $appointments, $blockedAppointments)
+    {
         $data = array();
         if (empty($id) || empty($dateData)) {
             $this->throwFourNullFour();
@@ -718,7 +751,7 @@ class AppointmentController extends Controller {
                         $temp['text'] = "{$parent->title} {$parent->firstname} {$parent->lastname} ({$child->firstname} {$child->lastname})";
                     }
                 }
-            } else if (!$time[1] && $time[0] === Yii::t('app', "BLOCKIERT")) {
+            } elseif (!$time[1] && $time[0] === Yii::t('app', "BLOCKIERT")) {
                 foreach ($blockedAppointments as $appointment) {
                     if ($date->id === $appointment->dateAndTime_id) {
                         $temp['text'] = $appointment->reason;
@@ -732,7 +765,8 @@ class AppointmentController extends Controller {
         return $data;
     }
 
-    private function getDateWithTimes($date) {
+    private function getDateWithTimes($date)
+    {
         $dateAndTimes = array();
         if (!empty($date)) {
             $dateAndTimes[] = DateAndTime::model()->findAllByAttributes(array('date_id' => $date->id));
@@ -740,7 +774,8 @@ class AppointmentController extends Controller {
         return $dateAndTimes;
     }
 
-    public function actionExportIcs() {
+    public function actionExportIcs()
+    {
         if (!(Yii::app()->user->isTeacher() || Yii::app()->user->isParent())) {
             $this->throwFourNullThree();
         }
@@ -770,12 +805,13 @@ class AppointmentController extends Controller {
         Yii::app()->getRequest()->sendFile($user->lastname . '_' . $user->firstname . '_esta.ics', $ical, 'text/calendar; charset=utf-8');
     }
 
-    private function getAppointments() {
+    private function getAppointments()
+    {
         $appointments = array();
         if (Yii::app()->user->checkAccess(TEACHER)) {
             $userId = array('user_id' => Yii::app()->user->id);
             $appointments = Appointment::model()->findAllByAttributes($userId);
-        } else if (Yii::app()->user->checkAccess(PARENTS)) {
+        } elseif (Yii::app()->user->checkAccess(PARENTS)) {
             $crit = new CDbCriteria();
             $i = 0;
             foreach (ParentChild::model()->findAllByAttributes(array('user_id' => Yii::app()->user->id)) as $parentChild) {
@@ -789,7 +825,8 @@ class AppointmentController extends Controller {
         return $appointments;
     }
 
-    private function generateIcsData() {
+    private function generateIcsData()
+    {
         $appointments = $this->getAppointments();
         $dates = array();
         foreach ($appointments as $appointment) {
@@ -811,12 +848,13 @@ class AppointmentController extends Controller {
     }
 
     /**
-     * 
+     *
      * @param int $date
      * @param tinyint $emptyPlans
      * @TODO implement group using
      */
-    public function actionGeneratePlans($date, $emptyPlans = '1') {
+    public function actionGeneratePlans($date, $emptyPlans = '1')
+    {
         if (!is_numeric($date)) {
             $this->throwFourNullNull();
         }
@@ -841,5 +879,4 @@ class AppointmentController extends Controller {
         }
         $this->render('overviewAll', array('pages' => $pages));
     }
-
 }

@@ -5,7 +5,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * @var $this AppointmentController 
- * @var $model Appointment 
- * @var $form CActiveForm 
+ * @var $this AppointmentController
+ * @var $model Appointment
+ * @var $form CActiveForm
  */
 $form = $this->beginWidget('CActiveForm', array(
     'id' => 'appointment-form',
@@ -57,7 +57,8 @@ $form = $this->beginWidget('CActiveForm', array(
         ?>
     </div>
 </div>
-<?php if ((Yii::app()->params['teacherAllowBlockTeacherApps'] && Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments']) || Yii::app()->user->checkAccess('1')) { ?>
+<?php if ((Yii::app()->params['teacherAllowBlockTeacherApps'] && Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments']) || Yii::app()->user->checkAccess('1')) {
+            ?>
         <div class="row collapse">
             <div class="small-3 columns">
                 <span class="prefix"><?php echo Yii::t('app', 'Lehrer'); ?></span>
@@ -75,15 +76,14 @@ $form = $this->beginWidget('CActiveForm', array(
                     'htmlOptions' => array(
                         'placeholder' => Yii::t('app', 'Geben Sie einen Nachnamen ein und wählen Sie einen Eintrag aus'),
                     ),
-                ));
-                ?>
+                )); ?>
                 <?php
                 echo $form->error($model, 'user_id');
-                echo $form->hiddenField($model, 'user_id', array('id' => 'appointment_teacher_id',
-                    'value' => $model->attributes['user_id']));
-                ?>
+            echo $form->hiddenField($model, 'user_id', array('id' => 'appointment_teacher_id',
+                    'value' => $model->attributes['user_id'])); ?>
             </div>
-        <?php } ?>
+        <?php
+        } ?>
         <div class="row collapse">
             <div class="small-3 columns">
                 <span class="prefix"><?php echo $form->label($model, 'dateAndTime_id'); ?></span>

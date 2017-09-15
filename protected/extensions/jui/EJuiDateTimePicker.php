@@ -42,8 +42,7 @@ class EJuiDateTimePicker extends CJuiDatePicker
     {
         if ($this->mode == 'date') {
             parent::run();
-        }
-        else {
+        } else {
             list($name, $id) = $this->resolveNameID();
 
             if (isset($this->htmlOptions['id'])) {
@@ -82,7 +81,7 @@ class EJuiDateTimePicker extends CJuiDatePicker
             }
             
             //set now time..
-            if(empty($this->options)) {
+            if (empty($this->options)) {
                 $this->options = array();
             }
             $this->options['hour']   = date('H');

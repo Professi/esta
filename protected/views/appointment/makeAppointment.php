@@ -5,7 +5,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -15,10 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * @var $this AppointmentController 
- * @var $model Appointment 
- * @var $a_child Array Of Childs 
- * @var $dates 
+ * @var $this AppointmentController
+ * @var $model Appointment
+ * @var $a_child Array Of Childs
+ * @var $dates
  * @var $columnCount
  * @var $postDate
  * @var $postTime
@@ -31,34 +31,41 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
     <div class="small-12 columns">
         <h2 class="subheader">
             <?php echo Yii::t('app', 'Termine für') ?>
-            <?php echo (empty($model->user->title) ? "" : $model->user->title . " ") . "{$model->user->firstname} {$model->user->lastname}"; ?>
+            <?php echo(empty($model->user->title) ? "" : $model->user->title . " ") . "{$model->user->firstname} {$model->user->lastname}"; ?>
         </h2>
         <hr>
-        <?php if (empty($dates) || empty($dates[0])) { ?>
+        <?php if (empty($dates) || empty($dates[0])) {
+    ?>
             <div class="paper panel">
                 <?php echo Yii::t('app', 'In nächster Zeit ist kein Elternsprechtag geplant, für den Sie Termine vereinbaren könnten.'); ?>
             </div>
-        <?php } else { ?>
+        <?php
+} else {
+        ?>
             <div class="paper panel js_show hide-for-print">
                 <?php echo Yii::t('app', 'Hier können Sie Termine mit dem Lehrer vereinbaren.'); ?>
                 <?php echo Yii::t('app', 'Klicken Sie einfach auf ein Feld mit "Verfügbar" und bestätigen Sie am Ende der Seite den Termin.'); ?>
-                <?php if (sizeof($dates) > 1) { ?>
+                <?php if (sizeof($dates) > 1) {
+            ?>
                 <?php echo Yii::t('app', 'Achten Sie darauf, dass der korrekte Elternsprechtag ausgewählt ist. Der aktive Elterntag ist weiß und blau hinterlegt, andere Auswahlmöglichkeiten erscheinen grau und sind klickbar.'); ?>
-                <?php } ?>
+                <?php
+        } ?>
             </div>
             <div class="js_show">
                 <?php
                 echo '';
-                $tabs = array();
-                foreach ($dates as $date) {
-                    $tabs[$this->formatAppointmentTitle($date[0]->date)] = $this->renderPartial(
-                            'dateTable', array('date' => $date,
+        $tabs = array();
+        foreach ($dates as $date) {
+            $tabs[$this->formatAppointmentTitle($date[0]->date)] = $this->renderPartial(
+                            'dateTable',
+                        array('date' => $date,
                         'model' => $model,
                         'columnCount' => $columnCount,
-                        'isTab' => true), true
+                        'isTab' => true),
+                        true
                     );
-                }
-                $this->widget('zii.widgets.jui.CJuiTabs', array(
+        }
+        $this->widget('zii.widgets.jui.CJuiTabs', array(
                     'tabs' => $tabs,
                     'options' => array(
                         'collapsible' => false,
@@ -67,20 +74,20 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                         'style' => 'border:none;'
                     ),
                     'cssFile' => false,
-                ));
-                ?>
+                )); ?>
             </div>
             <div class="row js_hide">
                 <?php
                 foreach ($dates as $date) {
-                    $this->renderPartial('dateTable', array(
+                    $this->renderPartial(
+                        'dateTable',
+                        array(
                         'date' => $date,
                         'model' => $model,
                         'columnCount' => $columnCount,
                         'isTab' => false)
                     );
-                }
-                ?>
+                } ?>
             </div>
             <div class="push"></div>
             <div class="paper panel text-center hide-for-print"">
@@ -97,8 +104,7 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
             $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'appointment-form',
                 'errorMessageCssClass' => 'error',
-                'skin' => false,));
-            ?>
+                'skin' => false,)); ?>
             <fieldset class="hide-for-print">
                 <legend><?php echo Yii::t('app', 'Termin'); ?></legend>
                 <div class="row collapse">
@@ -109,8 +115,7 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                         <?php
                         echo $form->textField($model, 'user_id', array(
                             'value' => $model->user->title . " " . $model->user->firstname . " " . $model->user->lastname,
-                            'disabled' => true));
-                        ?>
+                            'disabled' => true)); ?>
                     </div>
                 </div>
                 <div class="row collapse js_show">
@@ -154,6 +159,7 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                 <?php echo CHtml::submitButton(Yii::t('app', 'Bestätigen'), array('class' => 'button right')); ?>
             </fieldset>
             <?php $this->endWidget(); ?>
-        <?php } //End else: atleast one Elternsprechtag   ?>
+        <?php
+    } //End else: atleast one Elternsprechtag?>
     </div>
 </div>

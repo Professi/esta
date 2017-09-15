@@ -14,7 +14,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -24,8 +24,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class UserIdentity extends CUserIdentity {
-
+class UserIdentity extends CUserIdentity
+{
     const ERROR_ACCOUNT_NOT_ACTIVATED = 3;
     const ERROR_ACCOUNT_BANNED = 4;
 
@@ -37,18 +37,19 @@ class UserIdentity extends CUserIdentity {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return integer errorcode
      */
-    public function authenticate() {
+    public function authenticate()
+    {
         $criteria = new CDbCriteria(array('together'=>false,'with'=>false));
         $user = User::model()->findByAttributes(array('email' => $this->username), $criteria);
         if ($user === null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
             $this->errorMessage = Yii::t('app', "Ungültige E-Mail Adresse");
-        } else if ($user->state == NOT_ACTIVE) {
+        } elseif ($user->state == NOT_ACTIVE) {
             $this->errorCode = self::ERROR_ACCOUNT_NOT_ACTIVATED;
             $this->errorMessage = Yii::t('app', "Ihr Benutzerkonto wurde noch nicht aktiviert. Bitte nutzen Sie den Aktivierungslink, der Ihnen per E-Mail zugesandt wurde. Sollten Sie Probleme haben, füllen Sie bitte das Kontaktformular aus.");
-        } else if ($user->state == ACTIVE && !$user->verifyPassword($this->password)) {
+        } elseif ($user->state == ACTIVE && !$user->verifyPassword($this->password)) {
             $this->invalidPassword($user);
-        } else if ($user->state == BLOCKED) {
+        } elseif ($user->state == BLOCKED) {
             if (empty($user->bannedUntil) || $user->bannedUntil == 0) {
                 $this->errorCode = self::ERROR_ACCOUNT_BANNED;
                 $this->errorMessage = Yii::t('app', "Ihr Benutzerkonto wurde gesperrt. Bitte wenden Sie sich an die Schulverwaltung.");
@@ -73,7 +74,8 @@ class UserIdentity extends CUserIdentity {
      * entbannt einen Benutzer
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function unbanUser(&$user) {
+    public function unbanUser(&$user)
+    {
         $user->state = ACTIVE;
         $user->bannedUntil = 0;
         $user->badLogins = 0;
@@ -84,7 +86,8 @@ class UserIdentity extends CUserIdentity {
      * @param User &$user User Objekt
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function login(&$user) {
+    public function login(&$user)
+    {
         $this->errorCode = self::ERROR_NONE;
         $this->errorMessage = '';
         $this->_id = $user->getPrimaryKey();
@@ -98,7 +101,8 @@ class UserIdentity extends CUserIdentity {
      * Fehlermeldungen bei ungültigem Passwort, Zählt Fehllogins und sperrt eventuell den Benutzer
      * @param User &$user User Objekt
      */
-    public function invalidPassword(&$user) {
+    public function invalidPassword(&$user)
+    {
         $this->errorCode = self::ERROR_PASSWORD_INVALID;
         $this->errorMessage = Yii::t('app', "Falsches Passwort");
         if (Yii::app()->params['banUsers']) {
@@ -120,8 +124,8 @@ class UserIdentity extends CUserIdentity {
      * Liefert die Benutzer ID
      * @return integer ID
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->_id;
     }
-
 }

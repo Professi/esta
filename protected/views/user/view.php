@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * @var $this UserController 
- * @var $model User 
+ * @var $this UserController
+ * @var $model User
  */
 $this->setPageTitle(Yii::t('app', 'Benutzerkonto'));
 $this->breadcrumbs = array(
@@ -69,6 +69,7 @@ $this->menu = array(
         'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
         'linkOptions' => array('class' => 'small button')),
 );
+
 ?>
 <div class="row">
     <div class="small-12 columns small-centered">
@@ -101,6 +102,7 @@ $this->menu = array(
                         ),
                     ),
                 ));
+
                 ?>
             </div>
         </div>
@@ -117,6 +119,7 @@ $this->menu = array(
         }
         if ($model->role == PARENTS) {
             if (Yii::app()->user->getId() == $model->id && Yii::app()->params['allowGroups']) {
+
                 ?>
                 <h4 class="subheader"><?php echo Yii::t('app', 'Weitere TAN hinzufügen'); ?></h4>
                 <fieldset>
@@ -126,6 +129,7 @@ $this->menu = array(
                         'errorMessageCssClass' => 'error',
                         'skin' => false,
                     ));
+
                     ?>
                     <div class="row collapse">
                         <div class="small-3 columns">
@@ -135,15 +139,20 @@ $this->menu = array(
                             <?php
                             echo $form->textField($model, 'tan', array('size' => 45, 'maxlength' => Yii::app()->params['tanSize']));
                             echo $form->error($model, 'tan');
+
                             ?>
                         </div>
                     </div>
                     <?php
                     echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('class' => 'small button'));
                     $this->endWidget();
+
                     ?>
                 </fieldset>
-            <?php } if ($model->childcount > 0 && Yii::app()->user->checkAccess(MANAGEMENT)) {
+                <?php
+            }
+            if ($model->childcount > 0 && Yii::app()->user->checkAccess(MANAGEMENT)) {
+
                 ?>
                 <h4 class="subheader"><?php echo Yii::t('app', 'Kinder'); ?></h4>
                 <?php
@@ -152,6 +161,7 @@ $this->menu = array(
                 }
             }
         }
+
         ?>
     </div>
 </div>

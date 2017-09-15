@@ -19,7 +19,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -29,14 +29,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class DateAndTime extends CActiveRecord {
+class DateAndTime extends CActiveRecord
+{
 
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
      * @return DateTime the static model class
      */
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
@@ -44,7 +46,8 @@ class DateAndTime extends CActiveRecord {
      * Tabellenname
      * @return string the associated database table name
      */
-    public function tableName() {
+    public function tableName()
+    {
         return 'dateAndTime';
     }
 
@@ -52,7 +55,8 @@ class DateAndTime extends CActiveRecord {
      * Regeln für Validierung
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('date_id,duration,time', 'required'),
             array('date_id,duration', 'numerical', 'integerOnly' => true),
@@ -65,7 +69,8 @@ class DateAndTime extends CActiveRecord {
      * Relationen ( Appointments HAS_MANY , Date BELONGS_TO)
      * @return array relational rules.
      */
-    public function relations() {
+    public function relations()
+    {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
@@ -78,7 +83,8 @@ class DateAndTime extends CActiveRecord {
      * Attributlabels
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'id' => 'ID',
             'time' => Yii::t('app', 'Zeit'),
@@ -91,7 +97,8 @@ class DateAndTime extends CActiveRecord {
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
-    public function search() {
+    public function search()
+    {
         $criteria = new CDbCriteria;
         $criteria->compare('id', $this->id);
         $criteria->compare('time', $this->time, true);
@@ -104,11 +111,11 @@ class DateAndTime extends CActiveRecord {
 
     /**
      * Gibt Suchkriterien von DateAndTime zurück
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return CDbCriteria Suchkriterien für Autocomplete
      */
-    public function searchDateAndTime() {
-        $criteria = new CDbCriteria;
+    public function searchDateAndTime()
+    {
+        $criteria = new CDbCriteria();
         $match = addcslashes($this->time, '%_');
         $criteria->addCondition('time LIKE :match');
         $criteria->params = array(':match' => "$match%");
@@ -119,11 +126,11 @@ class DateAndTime extends CActiveRecord {
     }
 
     /**
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $term
      * @return string
      */
-    public function searchFormattedArrayDateAndTime($term) {
+    public function searchFormattedArrayDateAndTime($term)
+    {
         $this->time = $term;
         $a_rc = array();
         $a_data = DateAndTime::model()->findAll($this->searchDateAndTime());
@@ -136,12 +143,12 @@ class DateAndTime extends CActiveRecord {
     }
 
     /**
-     * 
+     *
      * Löscht alle Termine von einem DateAndTime
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean
      */
-    public function beforeDelete() {
+    public function beforeDelete()
+    {
         $rc = false;
         if (parent::beforeDelete()) {
             BlockedAppointment::model()->deleteAllByAttributes(array('dateAndTime_id' => $this->id));
@@ -150,5 +157,4 @@ class DateAndTime extends CActiveRecord {
         }
         return $rc;
     }
-
 }

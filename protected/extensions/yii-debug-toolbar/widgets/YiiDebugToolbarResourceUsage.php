@@ -17,7 +17,6 @@
  */
 class YiiDebugToolbarResourceUsage extends CWidget
 {
-
     public $htmlOptions = array();
     private $_loadTime;
 
@@ -39,7 +38,6 @@ class YiiDebugToolbarResourceUsage extends CWidget
      */
     public function run()
     {
-
         $data = array();
 
         $data[] = array(
@@ -71,5 +69,4 @@ class YiiDebugToolbarResourceUsage extends CWidget
             'data' => $data
         ));
     }
-
 }

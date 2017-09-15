@@ -9,7 +9,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -19,7 +19,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class NewPw extends CFormModel {
+class NewPw extends CFormModel
+{
 
     /** @var string Passwort */
     public $password;
@@ -34,12 +35,13 @@ class NewPw extends CFormModel {
      * Regeln fuer die Validierung
      * @return array Regeln
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('password', 'required'),
             array('password', 'length', 'max' => 64, 'min' => 8),
             array('password', 'compare', 'compareAttribute' => 'password_repeat'),
-            array('password_repeat', 'safe'), //allow bulk assignment 
+            array('password_repeat', 'safe'), //allow bulk assignment
         );
     }
 
@@ -48,13 +50,11 @@ class NewPw extends CFormModel {
      * If not declared here, an attribute would have a label that is
      * the same as its name with the first letter in upper case.
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'password' => Yii::t('app', 'Passwort'),
             'password_repeat' => Yii::t('app', 'Passwort wiederholen'),
         );
     }
-
 }
-
-?>

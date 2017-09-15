@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -22,7 +22,7 @@ $this->setPageTitle(Yii::t('app', 'Konto aktiviert'));
 ?>
 <div class="row">
     <div class="small-12 columns ">    
-        <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app','Zurück zur Startseite') . '</b>', 'index.php'); ?></p>
+        <p class="text-center"><?php echo CHtml::link('<b>' . Yii::t('app', 'Zurück zur Startseite') . '</b>', 'index.php'); ?></p>
     </div>
 </div>
 

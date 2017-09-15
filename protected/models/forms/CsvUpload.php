@@ -9,7 +9,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,7 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class CsvUpload extends CFormModel {
+class CsvUpload extends CFormModel
+{
 
     /** @var file CSV Datei */
     public $file;
@@ -43,7 +44,8 @@ class CsvUpload extends CFormModel {
     public $mailDomain;
     public $doubleNameSeperator = true;
 
-    public function init() {
+    public function init()
+    {
         parent::init();
         $this->firstname = Yii::t('app', 'Vorname');
         $this->lastname = Yii::t('app', 'Nachname');
@@ -61,7 +63,8 @@ class CsvUpload extends CFormModel {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('file', 'file', 'types' => 'csv', 'maxSize' => ByteConverter::getMaxSizeInBytes() - 100,
                 'allowEmpty' => true, 'wrongType' => Yii::t('app', 'Nur CSV Dateien erlaubt.'),
@@ -76,7 +79,8 @@ class CsvUpload extends CFormModel {
      * Attributlabels
      * @return array Labels
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array('file' => Yii::t('app', 'CSV Datei hochladen'),
             'firstname' => $this->names()['firstname'],
             'lastname' => $this->names()['lastname'],
@@ -91,11 +95,13 @@ class CsvUpload extends CFormModel {
         );
     }
 
-    public function names() {
+    public function names()
+    {
         return array('firstname' => Yii::t('app', 'Vorname'), 'lastname' => Yii::t('app', 'Nachname'));
     }
 
-    public function getMaskLabel($attr) {
+    public function getMaskLabel($attr)
+    {
         return Yii::t('app', 'Maske für {name}', array('{name}' => $this->names()[$attr]));
     }
 
@@ -106,17 +112,19 @@ class CsvUpload extends CFormModel {
      * @param string $msg
      * @return boolean
      */
-    public function createTeachers(&$fp, &$msg) {
+    public function createTeachers(&$fp, &$msg)
+    {
         set_time_limit(0);
         $rc = $this->generateFromCsv($fp, $msg);
         return $rc;
     }
 
-    private function generateFromCsv(&$fp, &$msg) {
+    private function generateFromCsv(&$fp, &$msg)
+    {
         $first = true;
         $rc = true;
         $stdPassword = "";
-        while ($rc && ($line = fgetcsv($fp, 0, $this->delimiter)) != FALSE) {
+        while ($rc && ($line = fgetcsv($fp, 0, $this->delimiter)) != false) {
             if (!$first) {
                 $model = $this->setTeacherModel($this->generateMail($line), ByteConverter::encodingString($line[$this->getPos($this->lastname)]), ByteConverter::encodingString($line[$this->getPos($this->firstname)]), 1, 2, ByteConverter::encodingString($line[$this->getPos($this->title)]), $stdPassword);
                 $this->saveModel($model);
@@ -133,7 +141,8 @@ class CsvUpload extends CFormModel {
         return $rc;
     }
 
-    private function firstLoopRun(&$line) {
+    private function firstLoopRun(&$line)
+    {
         $i = 0;
         $this->positions = array();
         if (count($line) >= 4) {
@@ -152,21 +161,25 @@ class CsvUpload extends CFormModel {
         }
     }
 
-    private function columnNotExists($column, $attrName) {
+    private function columnNotExists($column, $attrName)
+    {
         $this->addError($attrName, Yii::t('app', 'Spalte {column} existiert nicht.', array('{column}' => $column)));
     }
 
-    private function checkForColumn($column, $attrName) {
+    private function checkForColumn($column, $attrName)
+    {
         if (!$this->existsKeys($column)) {
             $this->columnNotExists($column, $attrName);
         }
     }
 
-    private function existsKeys($key) {
+    private function existsKeys($key)
+    {
         return array_key_exists($key, $this->positions);
     }
 
-    private function checkModelErrors(&$model, &$msg) {
+    private function checkModelErrors(&$model, &$msg)
+    {
         if ($model->hasErrors()) {
             $msg .= "<-" . $model->email . " " . $model->firstname . " " . $model->lastname . "->" . ByteConverter::convert_multi_array($model->errors) . "|<br>";
             return false;
@@ -174,7 +187,8 @@ class CsvUpload extends CFormModel {
         return true;
     }
 
-    private function saveModel(&$model) {
+    private function saveModel(&$model)
+    {
         $password = $model->password;
         if ($model->save() && Yii::app()->params['randomTeacherPassword']) {
             $mail = new Mail();
@@ -182,15 +196,17 @@ class CsvUpload extends CFormModel {
         }
     }
 
-    private function generateMail(&$line) {
-        if ($line[$this->getPos($this->email)] != NULL) {
+    private function generateMail(&$line)
+    {
+        if ($line[$this->getPos($this->email)] != null) {
             return ByteConverter::encodingString($line[$this->getPos($this->email)]);
         } else {
             return $this->createMail($line[$this->getPos($this->firstname)], $line[$this->getPos($this->lastname)]);
         }
     }
 
-    private function createMail($firstname, $lastname) {
+    private function createMail($firstname, $lastname)
+    {
         $mail = trim($this->mailMask);
         if ($this->doubleNameSeperator) {
             $firstname = $this->seperateNames($firstname);
@@ -203,15 +219,18 @@ class CsvUpload extends CFormModel {
         return $mail;
     }
 
-    private function replaceWhiteChars($string, $replacement = "") {
+    private function replaceWhiteChars($string, $replacement = "")
+    {
         return preg_replace("/\s+/", $replacement, $string);
     }
 
-    private function seperateNames($name) {
+    private function seperateNames($name)
+    {
         return str_replace(' ', '-', $name);
     }
 
-    private function cutName($name, $selected) {
+    private function cutName($name, $selected)
+    {
         switch ($selected) {
             case 0:
                 return strtolower($this->substrName(strtr(ByteConverter::encodingString($name), self::$uml), 1));
@@ -222,22 +241,26 @@ class CsvUpload extends CFormModel {
         }
     }
 
-    private function substrName($name, $length) {
+    private function substrName($name, $length)
+    {
         return substr($name, 0, $length);
     }
 
-    public function getBooleanSelectables() {
+    public function getBooleanSelectables()
+    {
         return Controller::getYesOrNo();
     }
 
-    public function selectableNameMask($attr) {
+    public function selectableNameMask($attr)
+    {
         return array(
             0 => Yii::t('app', 'Erster Buchstabe vom {attribute}', array('{attribute}' => $this->attributeLabels()[$attr])),
             1 => Yii::t('app', 'Ersten zwei Buchstaben vom {attribute}', array('{attribute}' => $this->attributeLabels()[$attr])),
             2 => Yii::t('app', 'Komplett'));
     }
 
-    private function getPos($attr) {
+    private function getPos($attr)
+    {
         return $this->positions[$attr];
     }
 
@@ -253,14 +276,15 @@ class CsvUpload extends CFormModel {
      * @param string $stdPassword
      * @return \User
      */
-    private function setTeacherModel($email, $lastname, $firstname, $state, $role, $title, &$stdPassword = "") {
+    private function setTeacherModel($email, $lastname, $firstname, $state, $role, $title, &$stdPassword = "")
+    {
         $model = new User();
         $model->setSomeAttributes($email, $firstname, $lastname, $state, $role);
         $model->title = $title;
         if (Yii::app()->params['randomTeacherPassword']) {
             $passGen = new PasswordGenerator();
             $model->password = $passGen->generate();
-        } else if ($stdPassword != "" && strlen($stdPassword) > 59) {
+        } elseif ($stdPassword != "" && strlen($stdPassword) > 59) {
             $model->password = $stdPassword;
         } else {
             $stdPassword = $model->encryptPassword(Yii::app()->params['defaultTeacherPassword']);
@@ -270,8 +294,8 @@ class CsvUpload extends CFormModel {
         return $model;
     }
 
-    public function getDomainLink() {
+    public function getDomainLink()
+    {
         return Yii::app()->params['emailHost'] != 'localhost' ? Yii::app()->params['emailHost'] : Yii::app()->params['schoolWebsiteLink'];
     }
-
 }

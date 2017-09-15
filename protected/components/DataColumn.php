@@ -6,10 +6,11 @@
 /*
  * siehe <http://www.yiiframework.com/wiki/314/cgridview-use-special-variable-data-in-the-htmloptions-of-a-column-i-e-evaluate-htmloptions-attribute/>
  */
-class DataColumn extends CDataColumn {
+class DataColumn extends CDataColumn
+{
 
     /**
-     * @var boolean whether the htmlOptions values should be evaluated. 
+     * @var boolean whether the htmlOptions values should be evaluated.
      */
     public $evaluateHtmlOptions = false;
 
@@ -18,7 +19,8 @@ class DataColumn extends CDataColumn {
      * @param integer $row the row number (zero-based)
      * Overrides the method 'renderDataCell()' of the abstract class CGridColumn
      */
-    public function renderDataCell($row) {
+    public function renderDataCell($row)
+    {
         $data = $this->grid->dataProvider->data[$row];
         if ($this->evaluateHtmlOptions) {
             foreach ($this->htmlOptions as $key => $value) {
@@ -39,5 +41,4 @@ class DataColumn extends CDataColumn {
         $this->renderDataCellContent($row, $data);
         echo '</td>';
     }
-
 }

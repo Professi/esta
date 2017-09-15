@@ -9,7 +9,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,7 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class LoginForm extends CFormModel {
+class LoginForm extends CFormModel
+{
 
     /** @var string E-Mail */
     public $email;
@@ -37,7 +38,8 @@ class LoginForm extends CFormModel {
      * The rules state that username and password are required,
      * and password needs to be authenticated.
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('email, password', 'required'),
             array('rememberMe', 'boolean'),
@@ -49,20 +51,21 @@ class LoginForm extends CFormModel {
     /**
      * Declares attribute labels.
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
-            'rememberMe' => Yii::t('app','Anmeldedaten merken'),
-            'email' => Yii::t('app','E-Mail'),
-            'password' => Yii::t('app','Passwort'),
+            'rememberMe' => Yii::t('app', 'Anmeldedaten merken'),
+            'email' => Yii::t('app', 'E-Mail'),
+            'password' => Yii::t('app', 'Passwort'),
         );
     }
 
     /**
      * Authentifiziert einen Benutzer
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean Gibt zurück ob ein Benutzer authentifiziert werden konnte
      */
-    public function authenticate() {
+    public function authenticate()
+    {
         $rc = false;
         if (!$this->hasErrors()) {
             $identity = new UserIdentity($this->email, $this->password);
@@ -86,5 +89,4 @@ class LoginForm extends CFormModel {
         }
         return $rc;
     }
-
 }

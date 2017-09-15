@@ -9,7 +9,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -19,13 +19,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Description of PupilImport
- *
- * @author cehringfeld
- */
-class PupilImport extends CFormModel {
-
+class PupilImport extends CFormModel
+{
     public $firstname;
     public $lastname;
     public $group;
@@ -35,7 +30,8 @@ class PupilImport extends CFormModel {
     private $positions = array();
     private $fp;
 
-    public function init() {
+    public function init()
+    {
         parent::init();
         $this->lastname = Yii::t('app', 'Nachname');
         $this->firstname = Yii::t('app', 'Vorname');
@@ -43,7 +39,8 @@ class PupilImport extends CFormModel {
         $this->delimiter = ';';
     }
 
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('file', 'file', 'types' => 'csv', 'maxSize' => ByteConverter::getMaxSizeInBytes() - 100,
                 'allowEmpty' => true, 'wrongType' => Yii::t('app', 'Nur CSV Dateien erlaubt.'),
@@ -54,11 +51,13 @@ class PupilImport extends CFormModel {
         );
     }
 
-    public function getModel() {
+    public function getModel()
+    {
         return $this->model;
     }
 
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'file' => Yii::t('app', 'CSV Datei hochladen'),
             'group' => $this->names()['group'],
@@ -68,11 +67,13 @@ class PupilImport extends CFormModel {
         );
     }
 
-    public function names() {
+    public function names()
+    {
         return array('firstname' => Yii::t('app', 'Vorname'), 'lastname' => Yii::t('app', 'Nachname'), 'group' => Yii::t('app', 'Gruppe'));
     }
 
-    public function createTans() {
+    public function createTans()
+    {
         $file = CUploadedFile::getInstance($this, 'file');
         $this->fp = fopen($file->tempName, 'r');
         $msg = "";
@@ -86,10 +87,11 @@ class PupilImport extends CFormModel {
         }
     }
 
-    private function generateFromCsv(&$msg) {
+    private function generateFromCsv(&$msg)
+    {
         $first = true;
         $rc = true;
-        while ($rc && ($line = fgetcsv($this->fp, 0, $this->delimiter)) != FALSE) {
+        while ($rc && ($line = fgetcsv($this->fp, 0, $this->delimiter)) != false) {
             if (!$first) {
                 $group = '';
                 $firstname = $line[$this->getPos($this->firstname)];
@@ -110,7 +112,8 @@ class PupilImport extends CFormModel {
         return $rc;
     }
 
-    private function firstLoopRun(&$line) {
+    private function firstLoopRun($line)
+    {
         $i = 0;
         $this->positions = array();
         if (count($line) >= 2) {
@@ -130,21 +133,25 @@ class PupilImport extends CFormModel {
         }
     }
 
-    private function existsKeys($key) {
+    private function existsKeys($key)
+    {
         return array_key_exists($key, $this->positions);
     }
 
-    private function columnNotExists($column, $attrName) {
+    private function columnNotExists($column, $attrName)
+    {
         $this->addError($attrName, Yii::t('app', 'Spalte {column} existiert nicht.', array('{column}' => $column)));
     }
 
-    private function checkForColumn($column, $attrName) {
+    private function checkForColumn($column, $attrName)
+    {
         if (!$this->existsKeys($column)) {
             $this->columnNotExists($column, $attrName);
         }
     }
 
-    private function createTan($firstname, $lastname, $group) {
+    private function createTan($firstname, $lastname, $group)
+    {
         $tan = new Tan();
         if (Yii::app()->params['allowGroups'] && !empty($group)) {
             $groupModel = Group::model()->findByAttributes(array('groupname' => $group));
@@ -162,8 +169,8 @@ class PupilImport extends CFormModel {
         $this->model[] = $tan;
     }
 
-    private function getPos($attr) {
+    private function getPos($attr)
+    {
         return $this->positions[$attr];
     }
-
 }

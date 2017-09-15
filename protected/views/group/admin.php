@@ -5,7 +5,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -22,7 +22,7 @@ $this->setPageTitle(Yii::t('app', 'Gruppenverwaltung'));
         <h2 class="text-center"><?php echo Yii::t('app', 'Gruppenverwaltung'); ?></h2>
     
     <?php
-    $this->widget('zii.widgets.jui.CJuiTabs',array(
+    $this->widget('zii.widgets.jui.CJuiTabs', array(
     'tabs'=>array(
         Yii::t('app', 'Existierende Gruppen')=>array('ajax'=>$this->createAbsoluteUrl('Group/overview')),
         Yii::t('app', 'Elternsprechtage und Gruppen')=>array('ajax'=>$this->createAbsoluteUrl('Date/dateHasGroupAdmin')),

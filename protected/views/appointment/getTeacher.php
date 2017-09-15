@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -124,7 +124,8 @@ $this->setPageTitle(Yii::t('app', 'Lehrerauswahl'));
             <div class="small-2 columns">
                 <a href="index.php?r=appointment/getTeacher&amp;letter=z" class="tiny teacher button">Z</a>
             </div>
-            <?php if(strpos(Yii::app()->language, 'de') == 0) {?>
+            <?php if (strpos(Yii::app()->language, 'de') == 0) {
+    ?>
             <div class="small-2 columns">
                 <a href="index.php?r=appointment/getTeacher&amp;letter=ü" class="tiny teacher button">&Auml;</a>
             </div>
@@ -134,7 +135,8 @@ $this->setPageTitle(Yii::t('app', 'Lehrerauswahl'));
             <div class="small-2 columns">
                 <a href="index.php?r=appointment/getTeacher&amp;letter=ä" class="tiny teacher button">&Uuml;</a>                            
             </div>
-            <?php } ?>
+            <?php
+} ?>
             <div class="small-2 columns end">
                 <a href="index.php?r=appointment/getTeacher&amp;letter=" class="tiny teacher button">*</a>
             </div>
@@ -180,7 +182,7 @@ $this->setPageTitle(Yii::t('app', 'Lehrerauswahl'));
                             'url' => '"index.php?r=Appointment/makeAppointment&teacher=".$data->id',
                             'imageUrl' => false,
                             'options' => array('class' => 'table-button clock',
-                                'title' => Yii::t('app','Termin vereinbaren')),
+                                'title' => Yii::t('app', 'Termin vereinbaren')),
                         ),
                     ),
                 ),

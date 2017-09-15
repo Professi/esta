@@ -19,8 +19,8 @@
  */
 class YiiDebugToolbarPanelLogging extends YiiDebugToolbarPanel
 {
-	public $i = 'j';
-	
+    public $i = 'j';
+    
     /**
      * Message count.
      *
@@ -66,8 +66,7 @@ class YiiDebugToolbarPanelLogging extends YiiDebugToolbarPanel
      */
     public function getLogs()
     {
-        if (null === $this->_logs)
-        {
+        if (null === $this->_logs) {
             $this->_logs = $this->filterLogs();
         }
         return $this->_logs;
@@ -80,8 +79,7 @@ class YiiDebugToolbarPanelLogging extends YiiDebugToolbarPanel
      */
     public function getCountMessages()
     {
-        if (null === $this->_countMessages)
-        {
+        if (null === $this->_countMessages) {
             $this->_countMessages = count($this->logs);
         }
         return $this->_countMessages;
@@ -105,10 +103,8 @@ class YiiDebugToolbarPanelLogging extends YiiDebugToolbarPanel
     protected function filterLogs()
     {
         $logs = array();
-        foreach ($this->owner->getLogs() as $entry)
-        {            
-            if (CLogger::LEVEL_PROFILE !== $entry[1] &&  false === strpos($entry[2], 'system.db.CDbCommand'))
-            {
+        foreach ($this->owner->getLogs() as $entry) {
+            if (CLogger::LEVEL_PROFILE !== $entry[1] &&  false === strpos($entry[2], 'system.db.CDbCommand')) {
                 $logs[] = $entry;
             }
         }

@@ -5,7 +5,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -45,7 +45,8 @@ $roomOutput = (isset($room) && !empty($room) ? ' ' . Yii::t('app', 'in Raum') . 
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($data as $show) { ?>
+                <?php foreach ($data as $show) {
+    ?>
                     <tr>
                         <td class="text-center">
                             <?php echo $show['time']; ?>
@@ -57,7 +58,8 @@ $roomOutput = (isset($room) && !empty($room) ? ' ' . Yii::t('app', 'in Raum') . 
                             <?php echo $show['text']; ?>
                         </td>
                     </tr>
-                <?php } ?>
+                <?php
+} ?>
             </tbody>
         </table>
     </div>

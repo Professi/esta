@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,9 +18,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * @var $this SiteController 
- * @var $model ConfigForm 
- * @var $form CActiveForm 
+ * @var $this SiteController
+ * @var $model ConfigForm
+ * @var $form CActiveForm
  */
 $this->setPageTitle(Yii::t('app', 'Konfiguration'));
 ?>
@@ -52,17 +52,18 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                 </div>
             </div>
         </div>
-        <?php if ($model->hasErrors()) { ?>
+        <?php if ($model->hasErrors()) {
+                        ?>
             <div class="panel alert-box alert">
                 <div class="row">
                     <div class="small-10 columns">
                         <?php
-                        echo CHtml::errorSummary($model);
-                        ?>
+                        echo CHtml::errorSummary($model); ?>
                     </div>
                 </div>
             </div>
-        <?php } ?>
+        <?php
+                    } ?>
         <fieldset>
             <legend><?php echo Yii::t('app', 'Allgemein'); ?></legend>
             <div class="row collapse">

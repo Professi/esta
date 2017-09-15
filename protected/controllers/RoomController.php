@@ -1,6 +1,7 @@
 <?php
 
-class RoomController extends Controller {
+class RoomController extends Controller
+{
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -11,7 +12,8 @@ class RoomController extends Controller {
     /**
      * @return array action filters
      */
-    public function filters() {
+    public function filters()
+    {
         return array(
             'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
@@ -23,7 +25,8 @@ class RoomController extends Controller {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() {
+    public function accessRules()
+    {
         return array(
             array('allow',
                 'actions' => array('index', 'view', 'assignajaxteacher', 'search'),
@@ -43,7 +46,8 @@ class RoomController extends Controller {
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
@@ -53,7 +57,8 @@ class RoomController extends Controller {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new Room;
 
         // Uncomment the following line if AJAX validation is needed
@@ -76,7 +81,8 @@ class RoomController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->loadModel($id);
         if (isset($_POST['Room'])) {
             $model->attributes = $_POST['Room'];
@@ -95,7 +101,8 @@ class RoomController extends Controller {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->loadModel($id)->delete();
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
@@ -104,7 +111,8 @@ class RoomController extends Controller {
         }
     }
 
-    public function actionDeleteUserHasRoom($id) {
+    public function actionDeleteUserHasRoom($id)
+    {
         $this->loadUserHasRoomModel($id)->delete();
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
@@ -116,7 +124,8 @@ class RoomController extends Controller {
     /**
      * Lists all models.
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         #$dataProvider = new CActiveDataProvider('Room');
         //allowTeachersToManageOwnRooms
         if ((Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToManageOwnRooms']) || Yii::app()->user->checkAccess(MANAGEMENT)) {
@@ -131,7 +140,8 @@ class RoomController extends Controller {
     /**
      * Manages all models.
      */
-    public function actionAdmin() {
+    public function actionAdmin()
+    {
         $model = new Room('search');
         $model->unsetAttributes();  // clear any default values
         $user_rooms = new UserHasRoom('search');
@@ -153,7 +163,8 @@ class RoomController extends Controller {
      * @return Room the loaded model
      * @throws CHttpException
      */
-    public function loadModel($id) {
+    public function loadModel($id)
+    {
         $model = Room::model()->findByPk($id);
         if ($model === null) {
             throw new CHttpException(404, 'The requested page does not exist.');
@@ -161,7 +172,8 @@ class RoomController extends Controller {
         return $model;
     }
 
-    public function loadUserHasRoomModel($id) {
+    public function loadUserHasRoomModel($id)
+    {
         $model = UserHasRoom::model()->findByPk($id);
         if ($model === null) {
             throw new CHttpException(404, 'The requested page does not exist.');
@@ -173,14 +185,16 @@ class RoomController extends Controller {
      * Performs the AJAX validation.
      * @param Room $model the model to be validated
      */
-    protected function performAjaxValidation($model) {
+    protected function performAjaxValidation($model)
+    {
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'room-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
     }
 
-    public function actionSearch($term) {
+    public function actionSearch($term)
+    {
         $dataProvider = new Room();
         $dataProvider->unsetAttributes();
         $dataProvider->name = $term;
@@ -195,7 +209,8 @@ class RoomController extends Controller {
         echo CJSON::encode($a_rc);
     }
 
-    public function actionAssignAJAXTeacher($room, $date) {
+    public function actionAssignAJAXTeacher($room, $date)
+    {
         return $this->actionAssignAJAX(Yii::app()->user->getId(), $room, $date);
     }
 
@@ -206,7 +221,8 @@ class RoomController extends Controller {
      * @param string $date
      * @return JSON Array with parameters and success/failure state
      */
-    public function actionAssignAJAX($teacher, $room, $date) {
+    public function actionAssignAJAX($teacher, $room, $date)
+    {
         $status = true;
         if (!empty($room)) {
             if (Yii::app()->user->checkAccessNotAdmin(TEACHER) && $teacher !== Yii::app()->user->id) {
@@ -248,11 +264,11 @@ class RoomController extends Controller {
         Yii::app()->end();
     }
 
-    public function actionAssignAll() {
+    public function actionAssignAll()
+    {
         $this->render('assign_all', array(
             'teachers' => User::model()->findAllByAttributes(['role' => TEACHER], ['select' => 'id,firstname,lastname,title']),
             'dates' => Date::simpleSelect2ListData(),
         ));
     }
-
 }

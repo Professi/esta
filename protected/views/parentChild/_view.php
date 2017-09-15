@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,11 +25,13 @@
         <li>
             <?php echo CHtml::encode($data->child->firstname . " " . $data->child->lastname); ?>
             &nbsp;
-            <?php if (Yii::app()->params['allowParentsToManageChilds'] || Yii::app()->user->checkAccess(MANAGEMENT)) { ?> 
+            <?php if (Yii::app()->params['allowParentsToManageChilds'] || Yii::app()->user->checkAccess(MANAGEMENT)) {
+    ?> 
                 <a href="index.php?r=parentChild/delete&id=<?php echo $data->id ?>" class="delete-children">
                     <i class="fi-x-circle"></i>
                 </a>
-            <?php } ?>
+            <?php
+} ?>
         </li>
     </ul>
 </div>

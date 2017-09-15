@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,12 +18,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * @var $this AppointmentController 
- * @var $model BlockedAppointment 
- * @var $form CActiveForm 
+ * @var $this AppointmentController
+ * @var $model BlockedAppointment
+ * @var $form CActiveForm
  */
 $this->setPageTitle(Yii::t('app', 'Termin blockieren'));
-Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
+Yii::app()->clientScript->registerCssFile($this->assetsDir."/css/select2.min.css");
 ?>
 <?php
 $this->breadcrumbs = array(
@@ -31,7 +31,7 @@ $this->breadcrumbs = array(
     'BlockApp',
 );
 $this->menu = array(
-    array(  'label' => Yii::t('app', 'Termine verwalten'), 
+    array(  'label' => Yii::t('app', 'Termine verwalten'),
             'url' => array(Yii::app()->user->isTeacher() ? 'index' :'admin'),
             'linkOptions' => array('class' => 'small button')),
 );
@@ -39,7 +39,7 @@ $this->menu = array(
 <div class="row">
     <div class="small-12 columns small-centered">
         <fieldset>
-            <legend><?php echo Yii::t('app','Termin blockieren'); ?></legend>
+            <legend><?php echo Yii::t('app', 'Termin blockieren'); ?></legend>
             <?php
             $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'blockAppointment-form',
@@ -65,15 +65,15 @@ $this->menu = array(
                                 'minLength' => '1',
                             ),
                             'htmlOptions' => array(
-                                'placeholder' => Yii::t('app','Geben Sie einen Nachnamen ein und wählen Sie einen Eintrag aus'),
+                                'placeholder' => Yii::t('app', 'Geben Sie einen Nachnamen ein und wählen Sie einen Eintrag aus'),
                             ),
-                        ));
-                        ?>
+                        )); ?>
                         <?php echo $form->hiddenField($model, 'user_id', array('id' => 'appointmentBlock_teacher_id', 'value' => $model->attributes['user_id'])); ?>
                         <?php echo $form->error($model, 'user_id'); ?>
                     </div>
                 </div>
-            <?php } // if: User kein Lehrer ?>
+            <?php
+            } // if: User kein Lehrer?>
             <div class="row collapse">
                 <div class="small-2 columns">
                     <span class="prefix"><?php echo $form->label($model, 'dateAndTime_id'); ?> </span>
@@ -94,7 +94,7 @@ $this->menu = array(
             </div>
             <br>
 
-            <?php echo CHtml::submitButton(Yii::t('app','Anlegen'), array('class' => 'small button')); ?>
+            <?php echo CHtml::submitButton(Yii::t('app', 'Anlegen'), array('class' => 'small button')); ?>
             <button type="button" class="small button" onclick="$('form').attr('action', 'index.php?r=appointment/createBlockDay').submit()">Alle Termine des Lehrers am Elternsprechtag des ausgewählten Termins blockieren</button>
             <?php $this->endWidget(); ?>
         </fieldset>

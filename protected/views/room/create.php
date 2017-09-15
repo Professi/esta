@@ -3,12 +3,12 @@
 /* @var $model Room */
 
 $this->breadcrumbs=array(
-	'Rooms'=>array('index'),
-	'Create',
+    'Rooms'=>array('index'),
+    'Create',
 );
 
 $this->menu=array(
-	array(  'label' => Yii::t('app', 'Räume verwalten'), 
+    array(  'label' => Yii::t('app', 'Räume verwalten'),
             'url' => array('admin'),
             'linkOptions' => array('class' => 'small button')),
 );

@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -24,14 +24,14 @@ $this->breadcrumbs = array(
     'Parent Children',
 );
 $this->menu = array(
-    array(  'label' => Yii::t('app', 'Kind hinzufügen'), 
-            'url' => array('create'), 
+    array(  'label' => Yii::t('app', 'Kind hinzufügen'),
+            'url' => array('create'),
             'visible' => Yii::app()->params['allowParentsToManageChilds'] || Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Termin vereinbaren'), 
+    array(  'label' => Yii::t('app', 'Termin vereinbaren'),
             'url' => array('appointment/getTeacher'),
             'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Verwalte Elternkindverknüpfungen'), 
+    array(  'label' => Yii::t('app', 'Verwalte Elternkindverknüpfungen'),
             'url' => array('admin'), 'visible' => Yii::app()->user->checkAccess(MANAGEMENT),
             'linkOptions' => array('class' => 'small button')),
 );

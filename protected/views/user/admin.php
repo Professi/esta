@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -67,7 +67,10 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array('name' => 'state',
             'value' => '$data->getFormattedState($data->state)',
             'filter' => CHtml::listData(
-                    User::getStateNameAndValue(), 'value', 'name'),
+                    User::getStateNameAndValue(),
+                'value',
+                'name'
+            ),
         ),
         array('name' => 'role',
             'value' => 'User::getFormattedRole($data->role)',

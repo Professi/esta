@@ -3,8 +3,8 @@
 /* @var $model Room */
 
 $this->breadcrumbs=array(
-	'Rooms'=>array('index'),
-	$model->name,
+    'Rooms'=>array('index'),
+    $model->name,
 );
 
 $this->menu = array(
@@ -31,10 +31,10 @@ $this->setPageTitle(Yii::t('app', 'Detailansicht Raum'));
 <div class="row">
     <div class="small-12 columns small-centered">
 <?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'name',
-	),
+    'data'=>$model,
+    'attributes'=>array(
+        'name',
+    ),
 )); ?>
     </div>
 </div>

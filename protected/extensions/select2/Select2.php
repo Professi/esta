@@ -12,7 +12,8 @@
  *
  * @see https://github.com/ivaynberg/select2 jQuery Select2
  */
-class Select2 extends CInputWidget {
+class Select2 extends CInputWidget
+{
 
     /** @var string Path to assets directory published in init() */
     private $assetsDir;
@@ -27,7 +28,8 @@ class Select2 extends CInputWidget {
     public $data;
 
     /** Publish assets and set default values for properties */
-    public function init() {
+    public function init()
+    {
         $dir = dirname(__FILE__) . '/assets';
         $this->assetsDir = Yii::app()->assetManager->publish($dir);
 
@@ -50,7 +52,8 @@ class Select2 extends CInputWidget {
     }
 
     /** Render widget html and register client scripts */
-    public function run() {
+    public function run()
+    {
         list($name, $id) = $this->resolveNameID();
 
         if (isset($this->htmlOptions['id'])) {
@@ -73,7 +76,8 @@ class Select2 extends CInputWidget {
     }
 
     /** Register client scripts */
-    private function registerScripts($id) {
+    private function registerScripts($id)
+    {
         $cs = Yii::app()->getClientScript();
         $cs->registerCoreScript('jquery');
 
@@ -88,15 +92,16 @@ class Select2 extends CInputWidget {
         $lang = strtoupper(str_replace('_', '-', Yii::app()->language));
         $lang[0] = strtolower($lang[0]);
         $lang[1] = strtolower($lang[1]);
-        if($lang != 'en') {
-        $cs->registerScriptFile($this->assetsDir . '/select2_locale_'.$lang.'.js', CClientScript::POS_END);
+        if ($lang != 'en') {
+            $cs->registerScriptFile($this->assetsDir . '/select2_locale_'.$lang.'.js', CClientScript::POS_END);
         }
         $settings = CJavaScript::encode($this->settings);
         $cs->registerScript("{$id}_select2", "$('#{$id}').select2({$settings});");
     }
 
     /** Single item select */
-    public static function dropDownList($name, $select, $data, $htmlOptions = array()) {
+    public static function dropDownList($name, $select, $data, $htmlOptions = array())
+    {
         return Yii::app()->getController()->widget(__CLASS__, array(
                     'name'  => $name,
                     'value' => $select,
@@ -105,12 +110,14 @@ class Select2 extends CInputWidget {
                ), true);
     }
 
-    public static function activeDropDownList($model, $attribute, $data, $htmlOptions = array()) {
+    public static function activeDropDownList($model, $attribute, $data, $htmlOptions = array())
+    {
         return self::dropDownList(CHtml::activeName($model, $attribute), CHtml::value($model, $attribute), $data, $htmlOptions);
     }
 
     /** Multiple items select */
-    public static function multiSelect($name, $select, $data, $htmlOptions = array()) {
+    public static function multiSelect($name, $select, $data, $htmlOptions = array())
+    {
         return Yii::app()->getController()->widget(__CLASS__, array(
                     'name' => $name,
                     'value' => $select,
@@ -120,8 +127,8 @@ class Select2 extends CInputWidget {
                ), true);
     }
 
-    public static function activeMultiSelect($model, $attribute, $data, $htmlOptions = array()) {
+    public static function activeMultiSelect($model, $attribute, $data, $htmlOptions = array())
+    {
         return self::multiSelect(CHtml::activeName($model, $attribute).'[]', CHtml::value($model, $attribute), $data, $htmlOptions);
     }
-
 }

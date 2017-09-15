@@ -6,7 +6,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -20,8 +20,8 @@
  * model class for configurations view
  * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
  */
-class ConfigForm extends CFormModel {
-
+class ConfigForm extends CFormModel
+{
     public $adminEmail;
     public $smtpAuth;
     public $smtpPassword;
@@ -63,7 +63,8 @@ class ConfigForm extends CFormModel {
     public $allowTeachersToCreateAppointments;
     public $allowTeachersToManageOwnRooms;
 
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('adminEmail,emailHost,fromMail' .
                 ',schoolName,maxChild,allowTeachersToManageOwnRooms,'
@@ -99,11 +100,13 @@ class ConfigForm extends CFormModel {
         );
     }
 
-    public function mailConfigs() {
+    public function mailConfigs()
+    {
         return array('' => '-', 'ssl' => 'ssl', 'tls' => 'tls');
     }
 
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'adminEmail' => Yii::t('app', 'Administrator E-Mail Adresse'),
             'fromMailHost' => Yii::t('app', 'SMTP Benutzername'),
@@ -148,7 +151,8 @@ class ConfigForm extends CFormModel {
         );
     }
 
-    public function config(&$reflectionClass) {
+    public function config(&$reflectionClass)
+    {
         if ($this->validate()) {
             $properties = $reflectionClass->getProperties();
             foreach ($properties as $prop) {
@@ -159,7 +163,4 @@ class ConfigForm extends CFormModel {
             Yii::app()->user->setFlash('success', Yii::t('app', 'Konfiguration aktualisiert.'));
         }
     }
-
 }
-
-?>

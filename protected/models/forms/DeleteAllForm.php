@@ -6,7 +6,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -15,8 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class DeleteAllForm extends CFormModel {
-
+class DeleteAllForm extends CFormModel
+{
     public $tans = false;
     public $appointments = false;
     public $teachers;
@@ -30,7 +30,8 @@ class DeleteAllForm extends CFormModel {
      * validationRules
      * @return array
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('tans,appointments,teachers,dates,management,childs,parents,groups', 'required'),
             array('tans,appointments,teachers,dates,management,childs,parents,groups', 'boolean'),
@@ -41,7 +42,8 @@ class DeleteAllForm extends CFormModel {
      * attribute Labels
      * @return array
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array('tans' => Yii::t('app', 'TANs'),
             'appointments' => Yii::t('app', 'Termine'),
             'teachers' => Yii::t('app', 'Lehrer'),
@@ -59,7 +61,8 @@ class DeleteAllForm extends CFormModel {
      * @param boolean $clearErrors
      * @return boolean
      */
-    public function validate($attributes = null, $clearErrors = true) {
+    public function validate($attributes = null, $clearErrors = true)
+    {
         $rc = true;
         if (parent::validate($attributes, $clearErrors)) {
             if (($this->teachers || $this->dates || $this->parents) && !$this->appointments) {
@@ -79,7 +82,8 @@ class DeleteAllForm extends CFormModel {
     /**
      * Loescht entsprechend die Datensätze
      */
-    public function delete() {
+    public function delete()
+    {
         if ($this->tans) {
             Tan::model()->deleteAll();
         }
@@ -111,7 +115,4 @@ class DeleteAllForm extends CFormModel {
         }
         Yii::app()->user->setFlash('success', Yii::t('app', 'Erfolgreich!'));
     }
-
 }
-
-?>

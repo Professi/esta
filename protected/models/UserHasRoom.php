@@ -6,7 +6,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -17,8 +17,6 @@
  */
 
 /**
- * This is the model class for table "user_has_room".
- *
  * The followings are the available columns in table 'user_has_room':
  * @property integer $id
  * @property integer $user_id
@@ -29,22 +27,23 @@
  * @property User $user
  * @property Room $room
  * @property Date $date
- * 
- * @author Christian Ehringfeld <c.ehringfeld[at]t-online.de>
  */
-class UserHasRoom extends CActiveRecord {
+class UserHasRoom extends CActiveRecord
+{
 
     /**
      * @return string the associated database table name
      */
-    public function tableName() {
+    public function tableName()
+    {
         return 'user_has_room';
     }
 
     /**
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('user_id, room_id, date_id', 'required'),
             array('id, user_id, room_id, date_id', 'numerical', 'integerOnly' => true),
@@ -58,7 +57,8 @@ class UserHasRoom extends CActiveRecord {
     /**
      * @return array relational rules.
      */
-    public function relations() {
+    public function relations()
+    {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
@@ -71,7 +71,8 @@ class UserHasRoom extends CActiveRecord {
     /**
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'id' => 'ID',
             'user_id' => Yii::t('app', 'Lehrer'),
@@ -80,7 +81,8 @@ class UserHasRoom extends CActiveRecord {
         );
     }
 
-    public function validateDateAndRoom($attribute, $params) {
+    public function validateDateAndRoom($attribute, $params)
+    {
         $u = UserHasRoom::model()->findByAttributes(array('date_id' => $this->date_id, 'room_id' => $this->room_id));
         if (is_null($u) || ($u->user_id == $this->user_id && $u->date_id == $this->date_id)) {
             return true;
@@ -89,7 +91,8 @@ class UserHasRoom extends CActiveRecord {
         return false;
     }
 
-    public function altSearch() {
+    public function altSearch()
+    {
         $criteria = new CDbCriteria;
         $criteria->with = array('room', 'date');
         $criteria->together = true;
@@ -105,7 +108,8 @@ class UserHasRoom extends CActiveRecord {
         ));
     }
 
-    public function search() {
+    public function search()
+    {
         $criteria = new CDbCriteria;
         $criteria->with = array('room', 'user' => array('select' => array('id', 'firstname', 'lastname')));
         $criteria->together = true;
@@ -132,8 +136,8 @@ class UserHasRoom extends CActiveRecord {
      * @param string $className active record class name.
      * @return UserHasRoom the static model class
      */
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
-
 }

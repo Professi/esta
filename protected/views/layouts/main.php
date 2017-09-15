@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -111,15 +111,19 @@ $menu = array(//icon,label,url,visible(bool)
     <section role="main" class="content-wrapper">
         <div class="row hide-on-print">
             <div class="small-12 columns small-centered">
-                <?php if (Yii::app()->user->hasFlash('success')) { ?>
+                <?php if (Yii::app()->user->hasFlash('success')) {
+                ?>
                     <div data-alert class="alert-box" tabindex="0" aria-live="assertive" role="dialogalert">
                         <?php echo Yii::app()->user->getFlash('success'); ?>
                     </div>
-                <?php } if (Yii::app()->user->hasFlash('failMsg')) { ?>
+                <?php
+            } if (Yii::app()->user->hasFlash('failMsg')) {
+                ?>
                     <div data-alert class="alert-box alert" tabindex="0" aria-live="assertive" role="dialogalert">
                         <?php echo Yii::app()->user->getFlash('failMsg'); ?>            
                     </div>
-                <?php } ?>
+                <?php
+            } ?>
             </div>
         </div>
         <?php echo $content; ?>

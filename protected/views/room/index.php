@@ -11,7 +11,7 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
 <div class="row">
     <div class="small-12 columns">
         <fieldset>
-            <legend><?= Yii::app()->user->isTeacher() ? Yii::t('app', 'Räume' ): Yii::t('app', 'Raum & Lehrer verknüpfen') ?></legend>
+            <legend><?= Yii::app()->user->isTeacher() ? Yii::t('app', 'Räume'): Yii::t('app', 'Raum & Lehrer verknüpfen') ?></legend>
 
             <div class="row collapse" <?php echo Yii::app()->user->isTeacher() ? 'style="display: none;"' :'';?>>
                 <div class="small-4 columns">

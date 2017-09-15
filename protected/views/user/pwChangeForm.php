@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,9 +18,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * @var $this UserController 
- * @var $model NewPw 
- * @var $form CActiveForm 
+ * @var $this UserController
+ * @var $model NewPw
+ * @var $form CActiveForm
  */
 $this->setPageTitle(Yii::t('app', 'Passwort ändern'));
 ?>
@@ -62,7 +62,7 @@ $this->setPageTitle(Yii::t('app', 'Passwort ändern'));
                     ?>
                 </div>
             </div>
-            <?php echo CHtml::submitButton(Yii::t('app','Absenden'), array('class' => 'small button')); ?>
+            <?php echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('class' => 'small button')); ?>
         </fieldset>
         <?php $this->endWidget(); ?>
     </div>

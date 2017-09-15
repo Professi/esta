@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -20,13 +20,13 @@
 /* @var $this DateController */
 /* @var $model Date */
 $this->setPageTitle(Yii::t('app', 'Elternsprechtag anlegen'));
-Yii::app()->clientScript->registerCssFile( $this->assetsDir."/css/select2.min.css");
+Yii::app()->clientScript->registerCssFile($this->assetsDir."/css/select2.min.css");
 $this->breadcrumbs = array(
     'Dates' => array('index'),
     'Create',
 );
 $this->menu = array(
-    array(  'label' => Yii::t('app', 'Elternsprechtage verwalten'), 
+    array(  'label' => Yii::t('app', 'Elternsprechtage verwalten'),
             'url' => array('admin'),
             'linkOptions' => array('class' => 'small button')),
 );

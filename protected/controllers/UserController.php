@@ -9,7 +9,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,7 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-class UserController extends Controller {
+class UserController extends Controller
+{
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -30,7 +31,8 @@ class UserController extends Controller {
      * Filtermethode
      * @return array action filters
      */
-    public function filters() {
+    public function filters()
+    {
         return array(
             'accessControl', // perform access control for CRUD operations
         );
@@ -40,7 +42,8 @@ class UserController extends Controller {
      * Captchagenerator
      * @return array Actions
      */
-    public function actions() {
+    public function actions()
+    {
         return array(
             'captcha' => array(
                 'class' => 'CCaptchaAction',
@@ -54,7 +57,8 @@ class UserController extends Controller {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() {
+    public function accessRules()
+    {
         return array(
             array('allow',
                 'actions' => array('update', 'account', 'search'),
@@ -82,7 +86,8 @@ class UserController extends Controller {
      * Löscht alles außer den Admin Account
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function actionDeleteAll() {
+    public function actionDeleteAll()
+    {
         Appointment::model()->deleteAll();
         DateAndTime::model()->deleteAll();
         ParentChild::model()->deleteAll();
@@ -104,7 +109,8 @@ class UserController extends Controller {
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
@@ -114,7 +120,8 @@ class UserController extends Controller {
      * rendert das Profilview des Users
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function actionAccount() {
+    public function actionAccount()
+    {
         $model = $this->loadModel(Yii::app()->user->getId());
         if (isset($_POST['User']['tan'])) {
             $model->tan = $_POST['User']['tan'];
@@ -132,16 +139,17 @@ class UserController extends Controller {
      * @param string $activationKey Aktivierungsschlüssel in sha1 als string
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function actionActivate($activationKey) {
+    public function actionActivate($activationKey)
+    {
         $user = User::model()->findByAttributes(array('activationKey' => $activationKey));
-        if ($user != NULL) {
+        if ($user != null) {
             if ($user->state == NOT_ACTIVE) {
                 $user->setAttribute('state', ACTIVE);
                 $user->update();
                 Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Benutzerkonto wurde erfolgreich aktiviert. Sie können Sich nun einloggen.'));
-            } else if ($user->state == ACTIVE) {
+            } elseif ($user->state == ACTIVE) {
                 Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Ihr Benutzerkonto wurde bereits aktiviert.'));
-            } else if ($user->state == BLOCKED) {
+            } elseif ($user->state == BLOCKED) {
                 Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Ihr Benutzerkonto konnte nicht aktiviert werden, weil er bereits gesperrt wurde. Sollten Sie Fragen haben füllen Sie bitte das Kontaktformular aus.'));
             }
         } else {
@@ -153,9 +161,10 @@ class UserController extends Controller {
     /**
      * Falls die CSV Datei hochgeladen wurde, wird diese geparsed und sofern eine E-Mail Adresse vorhanden ist eingefügt
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
-     * 
+     *
      */
-    public function actionImportTeachers() {
+    public function actionImportTeachers()
+    {
         $model = new CsvUpload();
         if (isset($_POST['CsvUpload'])) {
             $model->attributes = $_POST['CsvUpload'];
@@ -176,7 +185,8 @@ class UserController extends Controller {
         $this->render('importTeacher', array('model' => $model,));
     }
 
-    public function actionCreateDummy() {
+    public function actionCreateDummy()
+    {
         $model = new DummyUserForm();
         $model->unsetAttributes();
         if (isset($_POST['DummyUserForm'])) {
@@ -195,7 +205,8 @@ class UserController extends Controller {
      * Action um ein neues Passwort zu setzen
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function actionNewPw() {
+    public function actionNewPw()
+    {
         $model = new NewPw();
         $model->unsetAttributes();
         $user = null;
@@ -217,7 +228,7 @@ class UserController extends Controller {
                 $this->render('pwChangeForm', array('model' => $model));
             }
             $this->render('pwChangeForm', array('model' => $model));
-        } else if (!empty($user)) {
+        } elseif (!empty($user)) {
             $model->activationKey = $_GET['activationKey'];
             $this->render('pwChangeForm', array('model' => $model));
         } else {
@@ -230,7 +241,8 @@ class UserController extends Controller {
      * Action um ein neues Passwort anzufordern
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function actionChangePwd() {
+    public function actionChangePwd()
+    {
         $model = new ChangePwd;
         if (isset($_POST['ChangePwd'])) {
             $model->attributes = $_POST['ChangePwd'];
@@ -240,7 +252,7 @@ class UserController extends Controller {
                     $time = time();
                     if ($user->state == 2 && $user->bannedUntil > $time) {
                         Yii::app()->user->setFlash('failMsg', Yii::t('app', "Ihr Benutzerkonto ist noch für {sekunden} Sekunden gesperrt.", array('{sekunden}' => ($user->bannedUntil - $time))) . ' ' . Yii::t('app', 'Sie können im Anschluss Ihr Passwort zurücksetzen.'));
-                    } else if ($user->state == 1 || ($user->state == 2 && $user->bannedUntil < $time)) {
+                    } elseif ($user->state == 1 || ($user->state == 2 && $user->bannedUntil < $time)) {
                         $user->activationKey = $user->generateActivationKey();
                         $user->update();
                         $mail = new Mail();
@@ -263,7 +275,8 @@ class UserController extends Controller {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         if ((!Yii::app()->params['lockRegistration'] && Yii::app()->user->isGuest()) || Yii::app()->user->checkAccess(MANAGEMENT)) {
             $model = new User;
             if (isset($_POST['User'])) {
@@ -298,7 +311,8 @@ class UserController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->loadModel($id);
         if ((!Yii::app()->user->isAdmin() && $model->role != ADMIN) || Yii::app()->user->isAdmin()) {
             $model->password = '';
@@ -336,16 +350,19 @@ class UserController extends Controller {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->loadModel($id)->delete();
-        if (!isset($_GET['ajax']))
+        if (!isset($_GET['ajax'])) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        }
     }
 
     /**
      * Manages all models.
      */
-    public function actionAdmin() {
+    public function actionAdmin()
+    {
         $model = new User('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['User'])) {
@@ -363,7 +380,8 @@ class UserController extends Controller {
      * @return User the loaded model with Role
      * @throws CHttpException
      */
-    public function loadModel($id) {
+    public function loadModel($id)
+    {
         $model = User::model()->findByPk($id);
         if ($model === null) {
             $this->throwFourNullFour();
@@ -389,7 +407,8 @@ class UserController extends Controller {
      * Performs the AJAX validation.
      * @param User $model the model to be validated
      */
-    protected function performAjaxValidation($model) {
+    protected function performAjaxValidation($model)
+    {
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'user-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
@@ -399,7 +418,8 @@ class UserController extends Controller {
     /**
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function actionUserHasGroupAdmin() {
+    public function actionUserHasGroupAdmin()
+    {
         $model = new \UserHasGroup('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['UserHasGroup'])) {
@@ -411,14 +431,15 @@ class UserController extends Controller {
 
     /**
      * Autocomplete suche anhand des Nachnamen
-     * Wenn Eltern suchen wird nur nach Lehrern gesucht und 
+     * Wenn Eltern suchen wird nur nach Lehrern gesucht und
      * falls Gruppen aktiviert sind wird auch nur nach Lehrern entsprechend der Gruppen gesucht
      * echos JSON
      * @param integer $role Rollen ID
      * @param string $term Suchstring
      * @author Christian Ehringfeld <c.ehringfeld@t-onlined.e>
      */
-    public function actionSearch($role, $term) {
+    public function actionSearch($role, $term)
+    {
         $dataProvider = new User();
         $dataProvider->unsetAttributes();
         $dataProvider->lastname = $term;
@@ -428,11 +449,11 @@ class UserController extends Controller {
         }
         if (Yii::app()->user->isParent()) {
             $dataProvider->role = TEACHER;
-        } else if (Yii::app()->user->checkAccess('1')) {
+        } elseif (Yii::app()->user->checkAccess('1')) {
             $dataProvider->role = $role;
-        } else if (Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments'] && !Yii::app()->params['teacherAllowBlockTeacherApps']) {
+        } elseif (Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments'] && !Yii::app()->params['teacherAllowBlockTeacherApps']) {
             $dataProvider->role = PARENTS;
-        } else if (Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments'] && Yii::app()->params['teacherAllowBlockTeacherApps']) {
+        } elseif (Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments'] && Yii::app()->params['teacherAllowBlockTeacherApps']) {
             if ($role > 1) {
                 $dataProvider->role = $role;
             } else {
@@ -449,5 +470,4 @@ class UserController extends Controller {
         }
         echo CJSON::encode($a_rc);
     }
-
 }

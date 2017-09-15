@@ -6,7 +6,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -29,14 +29,16 @@
  * @property ParentChild $parentChild
  * @property User $user
  */
-class Appointment extends CActiveRecord {
+class Appointment extends CActiveRecord
+{
 
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
      * @return Appointment the static model class
      */
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
@@ -44,7 +46,8 @@ class Appointment extends CActiveRecord {
      * Tabellenname
      * @return string the associated database table name
      */
-    public function tableName() {
+    public function tableName()
+    {
         return 'appointment';
     }
 
@@ -52,7 +55,8 @@ class Appointment extends CActiveRecord {
      * Regeln für die Validierung
      * @return array Regeln
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('dateAndTime_id, parent_child_id, user_id', 'required'),
             array('dateAndTime_id, parent_child_id', 'numerical', 'integerOnly' => true),
@@ -65,7 +69,8 @@ class Appointment extends CActiveRecord {
      * Relationen (dateAndTime, parentChild, user)
      * @return array relational rules.
      */
-    public function relations() {
+    public function relations()
+    {
         return array(
             'dateandtime' => array(self::BELONGS_TO, 'DateAndTime', 'dateAndTime_id'),
             'parentchild' => array(self::BELONGS_TO, 'ParentChild', 'parent_child_id'),
@@ -77,7 +82,8 @@ class Appointment extends CActiveRecord {
      * Attributlabels
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'id' => 'ID',
             'parent_child_id' => Yii::t('app', 'Erziehungsberechtigte/r'),
@@ -88,7 +94,8 @@ class Appointment extends CActiveRecord {
         );
     }
 
-    public static function getAllAppointments() {
+    public static function getAllAppointments()
+    {
         $criteria = new CDbCriteria();
         $criteria->order = '`dateAndTime_id` ASC';
         $pC = ParentChild::model()->findAllByAttributes(array('user_id' => Yii::app()->user->id));
@@ -107,7 +114,8 @@ class Appointment extends CActiveRecord {
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
-    public function search() {
+    public function search()
+    {
         $criteria = new CDbCriteria;
         $criteria->with = array('parentchild' => array('with' => array('user' => array('alias' => 'pc_user', 'select' => array('id', 'firstname', 'lastname')))), 'dateandtime', 'user' => array('select' => array('id', 'firstname', 'lastname')));
         $criteria->together = true;
@@ -136,7 +144,8 @@ class Appointment extends CActiveRecord {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return CActiveDataProvider gibt Datensätze mit der user_id aus
      */
-    public function customSearch() {
+    public function customSearch()
+    {
         $criteria = new CDbCriteria();
         $criteria->addCondition(array('user_id=:user_id'));
         $criteria->params = array(':user_id' => $this->user_id);
@@ -161,7 +170,8 @@ class Appointment extends CActiveRecord {
      * @param boolean $clearErrors
      * @return boolean
      */
-    public function validate($attributes = null, $clearErrors = true) {
+    public function validate($attributes = null, $clearErrors = true)
+    {
         $rc = true;
         if (parent::validate($attributes, $clearErrors)) {
             $date = $this->dateandtime->date;
@@ -170,7 +180,7 @@ class Appointment extends CActiveRecord {
                     $rc = false;
                     Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie können für diesen Tag keine Termine mehr buchen.'));
                 }
-            } else if (!Yii::app()->user->isGuest() && time() <= $date->date) {
+            } elseif (!Yii::app()->user->isGuest() && time() <= $date->date) {
                 Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Dieser Elternsprechtag ist bereits vorbei.'));
                 $rc = false;
                 $this->addError('date', Yii::t('app', 'Elternsprechtag bereits vorrüber.'));
@@ -184,18 +194,18 @@ class Appointment extends CActiveRecord {
     /**
      * Prüft ob der Lehrer vorhanden ist, ob der vermeintlich gewählte Lehrer überhaupt die Rolle hat und prüft ob die Elternkindverknüpfung existiert.
      * Prüft ebenfalls ob bereits ein Termin bei diesem Lehrer besteht
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean
      */
-    public function afterValidate() {
+    public function afterValidate()
+    {
         $rc = parent::afterValidate();
         if ($rc && User::model()->countByAttributes(array('role' => TEACHER, 'id' => $this->user_id)) > 0) {
             $rc = false;
             Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Der ausgewählte Benutzer ist kein Lehrer.'));
-        } else if ($rc && Appointment::model()->countByAttributes(array('user_id' => $this->user_id, 'parent_child_id' => $this->parent_child_id)) >= 1) {
+        } elseif ($rc && Appointment::model()->countByAttributes(array('user_id' => $this->user_id, 'parent_child_id' => $this->parent_child_id)) >= 1) {
             Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Leider haben Sie bereits einen Termin bei diesem Lehrer gebucht. Daher können Sie keinen weiteren buchen.'));
             $rc = false;
-        } else if ($rc && ParentChild::model()->countByAttributes(array('id' => $this->parent_child_id)) != '1') {
+        } elseif ($rc && ParentChild::model()->countByAttributes(array('id' => $this->parent_child_id)) != '1') {
             $rc = false;
             Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie müssen ein Kind angeben.'));
         }
@@ -210,7 +220,8 @@ class Appointment extends CActiveRecord {
         return $rc;
     }
 
-    protected function beforeValidate() {
+    protected function beforeValidate()
+    {
         if (Yii::app()->user->isTeacher() && !Yii::app()->params['teacherAllowBlockTeacherApps']) {
             $this->user_id = Yii::app()->user->getId();
         }
@@ -219,10 +230,10 @@ class Appointment extends CActiveRecord {
 
     /**
      * Prüft ob die maximal Anzahl von Terminen überschritten wurde und ob der Benutzer bereits zu dieser Uhrzeit einen Termin hat
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean
      */
-    public function beforeSave() {
+    public function beforeSave()
+    {
         $rc = parent::beforeSave();
         if ($rc && Appointment::model()->countByAttributes(array('dateAndTime_id' => $this->dateAndTime_id, 'user_id' => $this->user_id)) > 0) {
             $rc = false;
@@ -251,13 +262,14 @@ class Appointment extends CActiveRecord {
         }
         if ($rc) {
             Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Termin wurde erfolgreich gebucht.'));
-        } else if (!$rc && !Yii::app()->user->hasFlash('failMsg')) {
+        } elseif (!$rc && !Yii::app()->user->hasFlash('failMsg')) {
             Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Leider konnte ihr Termin nicht gebucht werden.'));
         }
         return $rc;
     }
 
-    private function getCriteriaForAppCount() {
+    private function getCriteriaForAppCount()
+    {
         $crit = new CDbCriteria();
         $crit->with = array('parentchild');
         $crit->compare('parentchild.user_id', $this->parentchild->user->id);
@@ -267,16 +279,16 @@ class Appointment extends CActiveRecord {
 
     /**
      * Prüft ob der Benutzer die Berechtigung zum löschen von dem Termin hat
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return boolean
      */
-    public function beforeDelete() {
+    public function beforeDelete()
+    {
         $rc = parent::beforeDelete();
         if ($rc && Yii::app()->user->checkAccessNotAdmin(TEACHER)) {
             if ($this->user_id != Yii::app()->user->getId()) {
                 $rc = false;
             }
-        } else if ($rc && Yii::app()->user->checkAccessNotAdmin(PARENTS)) {
+        } elseif ($rc && Yii::app()->user->checkAccessNotAdmin(PARENTS)) {
             if ($this->parentchild->user_id != Yii::app()->user->id) {
                 $rc = false;
             }
@@ -289,12 +301,11 @@ class Appointment extends CActiveRecord {
 
     /**
      * Nach dem der Termin gelöscht wurde, wird eine Infomail an die Eltern versendet.
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
-    public function afterDelete() {
+    public function afterDelete()
+    {
         Yii::trace($this->parentchild->user->email . ' ' . $this->dateandtime->time . ' ' . $this->parentchild->child->firstname . ' ' . $this->dateandtime->date->date, 'application.models.appointment');
         Yii::app()->user->setFlash('success', Yii::t('app', 'Benutzer erfolgreich entfernt.'));
         return parent::afterDelete();
     }
-
 }

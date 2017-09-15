@@ -1,7 +1,7 @@
 <?php
 /**
  * application file.
- * 
+ *
  * Description of application file
  *
  * @author Sergey Malyshev <malyshev.php@gmail.com>
@@ -22,7 +22,7 @@ $index = 1;
                 <div data-ydtb-accordion-heading="">
                     <i data-ydtb-icon="s"></i>
                     <span><?php echo YiiDebug::t('Context')?> <?php echo CHtml::encode(get_class($item['context']))?></span>
-                    <?php // echo $this->getFileAlias($item['sourceFile']) ?>
+                    <?php // echo $this->getFileAlias($item['sourceFile'])?>
                     <i data-ydtb-icon="q"></i>
                     <i data-ydtb-icon="t"></i>
                     <div class="clear clearfix"></div>
@@ -47,7 +47,7 @@ $index = 1;
                                     <th>Context properties</th>
                                     <td>
                                         <ul>
-                                            <?php if ($item['contextProperties']) : foreach($item['contextProperties'] as $key=>$value) : ?>
+                                            <?php if ($item['contextProperties']) : foreach ($item['contextProperties'] as $key=>$value) : ?>
                                             <li>
                                                 <label><?php YiiDebug::dump($key, 1) ?></label>
                                                 &nbsp;=>&nbsp;
@@ -61,7 +61,7 @@ $index = 1;
                                     </td>
                                 </tr>
                         
-                                <?php if(null!==$item['action']): ?>
+                                <?php if (null!==$item['action']): ?>
                                 <tr>
                                     <th>Route</th>
                                     <td><?php echo $item['route'] ?></td>
@@ -75,7 +75,7 @@ $index = 1;
                                     <th>Action params</th>
                                     <td>
                                         <ul>
-                                            <?php if ($item['actionParams']) : foreach($item['actionParams'] as $key=>$value) : ?>
+                                            <?php if ($item['actionParams']) : foreach ($item['actionParams'] as $key=>$value) : ?>
                                             <li>
                                                 <label><?php YiiDebug::dump($key, 1) ?></label>
                                                 &nbsp;=>&nbsp;
@@ -97,12 +97,12 @@ $index = 1;
                                     <td><?php echo $this->getFilePath($item['sourceFile']) ?></td>
                                 </tr>
                         
-                                <?php if(!(1===count($item['data']) && isset($item['data']['content']))): ?>
+                                <?php if (!(1===count($item['data']) && isset($item['data']['content']))): ?>
                                 <tr>
                                     <th>View data</th>
                                     <td>
                                         <ul>
-                                            <?php if ($item['data']) : foreach($item['data'] as $key=>$value) : ?>
+                                            <?php if ($item['data']) : foreach ($item['data'] as $key=>$value) : ?>
                                             <li>
                                                 <label><?php YiiDebug::dump($key, 1) ?></label>
                                                 &nbsp;=>&nbsp;

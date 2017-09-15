@@ -6,8 +6,8 @@
 
 
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'room-form',
-	'enableAjaxValidation'=>false,
+    'id'=>'room-form',
+    'enableAjaxValidation'=>false,
         'enableAjaxValidation' => false,
         'errorMessageCssClass' => 'error',
         'skin' => false,

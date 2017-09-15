@@ -15,7 +15,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -25,14 +25,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class Group extends CActiveRecord {
+class Group extends CActiveRecord
+{
 
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
      * @return Date the static model class
      */
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
@@ -40,23 +42,25 @@ class Group extends CActiveRecord {
      * Tabellenname
      * @return string the associated database table name
      */
-    public function tableName() {
+    public function tableName()
+    {
         return 'group';
     }
 
     /**
      * Regeln für Validierung
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('groupname', 'required'),
             array('groupname', 'length', 'max' => 255, 'min' => 1),
         );
     }
 
-    public function relations() {
+    public function relations()
+    {
         return array(
             'tan' => array(self::HAS_ONE, 'Tan', 'group_id'),
             'datehasgroup' => array(self::MANY_MANY, 'DateHasGroup', 'date_has_group(group_id,date_id)'),
@@ -66,10 +70,10 @@ class Group extends CActiveRecord {
 
     /**
      * Attributlabels
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'id' => 'ID',
             'groupname' => Yii::t('app', 'Gruppenname'),
@@ -80,7 +84,8 @@ class Group extends CActiveRecord {
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
-    public function search() {
+    public function search()
+    {
         $criteria = new CDbCriteria;
         $criteria->compare('id', $this->id);
         $criteria->compare('groupname', $this->groupname, true);
@@ -91,16 +96,17 @@ class Group extends CActiveRecord {
 
     /**
      * Liefert alle Gruppen zurück
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param integer $max Limit an Gruppen
-     * @return array 
+     * @return array
      */
-    public function getAllGroups($sort = "") {
+    public function getAllGroups($sort = "")
+    {
         $a_result = Group::model()->findAll(array('order' => '`groupname` ' + $sort));
         return self::formatGroups($a_result, $sort);
     }
 
-    public static function formatGroups($groups, $sort = '') {
+    public static function formatGroups($groups, $sort = '')
+    {
         $a_temp = null;
         if (!empty($groups)) {
             foreach ($groups as $object) {
@@ -109,7 +115,4 @@ class Group extends CActiveRecord {
         }
         return $a_temp;
     }
-
 }
-
-?>

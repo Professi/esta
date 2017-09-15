@@ -5,7 +5,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -15,7 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-class GroupController extends Controller {
+class GroupController extends Controller
+{
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -27,7 +28,8 @@ class GroupController extends Controller {
      * Filter
      * @return array action filters
      */
-    public function filters() {
+    public function filters()
+    {
         return array(
             'accessControl', // perform access control for CRUD operations
         );
@@ -38,7 +40,8 @@ class GroupController extends Controller {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() {
+    public function accessRules()
+    {
         return array(
             array('allow',
                 'roles' => array(MANAGEMENT)),
@@ -53,7 +56,8 @@ class GroupController extends Controller {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->loadModel($id)->delete();
         $this->redirectUrl();
     }
@@ -62,7 +66,8 @@ class GroupController extends Controller {
      * action for deleting usergroup
      * @param integer $id
      */
-    public function actionDeleteUserGroup($id) {
+    public function actionDeleteUserGroup($id)
+    {
         $this->loadModelUserGroup($id)->delete();
         $this->redirectUrl();
     }
@@ -71,15 +76,17 @@ class GroupController extends Controller {
      * action to delete DateGroup
      * @param integer $id
      */
-    public function actionDeleteDateGroup($id) {
+    public function actionDeleteDateGroup($id)
+    {
         $this->loadModelDateGroup($id)->delete();
         $this->redirectUrl();
     }
 
     /**
-     * redirect Url 
+     * redirect Url
      */
-    public function redirectUrl() {
+    public function redirectUrl()
+    {
         if (!isset($_GET['ajax'])) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
         }
@@ -91,7 +98,8 @@ class GroupController extends Controller {
      * @param integer $id the ID of the model to be loaded
      * @return Date the loaded model
      */
-    public function loadModel($id) {
+    public function loadModel($id)
+    {
         $model = Group::model()->findByPk($id);
         $this->checkModelNull($model);
         return $model;
@@ -102,7 +110,8 @@ class GroupController extends Controller {
      * @param integer $id
      * @return DateHasGroup
      */
-    public function loadModelDateGroup($id) {
+    public function loadModelDateGroup($id)
+    {
         $model = DateHasGroup::model()->findByPk($id);
         $this->checkModelNull($model);
         return $model;
@@ -113,17 +122,19 @@ class GroupController extends Controller {
      * @param integer $id
      * @return UserHasGroup
      */
-    public function loadModelUserGroup($id) {
+    public function loadModelUserGroup($id)
+    {
         $model = UserHasGroup::model()->findByPk($id);
         $this->checkModelNull($model);
         return $model;
     }
 
     /**
-     * checks if model for null 
+     * checks if model for null
      * @param Object $model
      */
-    public function checkModelNull($model) {
+    public function checkModelNull($model)
+    {
         if ($model == null) {
             $this->throwFourNullFour();
         }
@@ -133,7 +144,8 @@ class GroupController extends Controller {
      * Performs the AJAX validation.
      * @param Date $model the model to be validated
      */
-    protected function performAjaxValidation($model) {
+    protected function performAjaxValidation($model)
+    {
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'date-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
@@ -144,7 +156,8 @@ class GroupController extends Controller {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new Group;
         if (isset($_POST['Group'])) {
             $model->attributes = $_POST['Group'];
@@ -162,7 +175,8 @@ class GroupController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         $model = $this->loadModel($id);
         if (isset($_POST['Group'])) {
             $model->attributes = $_POST['Group'];
@@ -178,24 +192,27 @@ class GroupController extends Controller {
     /**
      * Manages all models.
      */
-    public function actionAdmin() {
+    public function actionAdmin()
+    {
         $this->render('admin');
     }
 
-    public function actionOverview() {
+    public function actionOverview()
+    {
         $model = new Group('search');
         $model->unsetAttributes();  // clear any default values
         if (isset($_GET['Group'])) {
             $model->attributes = $_GET['Group'];
         }
         $this->renderPartial('overview', array(
-            'model' => $model),false,true);
+            'model' => $model), false, true);
     }
 
     /**
      * echo CJSON for groups with their ids over $_GET['ids']
      */
-    public function actionGetGroupsByIds() {
+    public function actionGetGroupsByIds()
+    {
         $groups = Group::model()->findAll("id IN (" . $_GET['ids'] . ")");
         $results = array();
         foreach ($groups as $g) {
@@ -208,11 +225,12 @@ class GroupController extends Controller {
         Yii::app()->end();
     }
     
-    public function actionAssign($id = null) {
-        if(isset($_POST['user']) && isset($_POST['group'])) {
+    public function actionAssign($id = null)
+    {
+        if (isset($_POST['user']) && isset($_POST['group'])) {
             $deletes = isset($_POST['delete']) ? $_POST['delete'] : array();
-            if($this->iterateOverGroups($_POST['group'],$_POST['user'],$deletes)) {
-                Yii::app()->user->setFlash('success', Yii::t('app','Gruppen wurden erfolgreich zugewiesen.'));
+            if ($this->iterateOverGroups($_POST['group'], $_POST['user'], $deletes)) {
+                Yii::app()->user->setFlash('success', Yii::t('app', 'Gruppen wurden erfolgreich zugewiesen.'));
             } else {
                 Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Nicht alle Gruppen konnten erfolgreich zugewiesen werden.'));
             }
@@ -226,19 +244,19 @@ class GroupController extends Controller {
             $crit->addCondition('role = :role1', 'OR');
             $crit->addCondition('role = :role2', 'OR');
             $crit->params = array(':role1'=>TEACHER,':role2'=>PARENTS);
-            foreach(User::model()->findAll($crit) as $user) {
+            foreach (User::model()->findAll($crit) as $user) {
                 $desc = (empty($user->title)) ? '' : "{$user->title} ";
                 $desc .= "{$user->firstname} {$user->lastname}";
                 $users[$user->id] = $desc;
             }
-            foreach(Group::model()->findAll() as $group) {
+            foreach (Group::model()->findAll() as $group) {
                 $groups[$group->id] = $group->groupname;
             }
-            if($id !== null) {
+            if ($id !== null) {
                 $critGroup = new CDbCriteria();
                 $critGroup->addCondition('group_id = :group_id');
                 $critGroup->params = array(':group_id' => $id );
-                foreach(UserHasGroup::model()->findAll($critGroup) as $relation) {
+                foreach (UserHasGroup::model()->findAll($critGroup) as $relation) {
                     $assignedUsers[] = array(
                         'user_id' => $relation->user_id,
                         'user' => $users[$relation->user_id],
@@ -248,13 +266,14 @@ class GroupController extends Controller {
             }
             $this->render('assign', array(
                 'model' => $model,
-                'groups' => $groups, 
-                'users' => $users, 
+                'groups' => $groups,
+                'users' => $users,
                 'assignedUsers' => $assignedUsers));
         }
     }
     
-    private function iterateOverGroups($groups,$users,$delete) {
+    private function iterateOverGroups($groups, $users, $delete)
+    {
         $ok = true;
         $crit = new CDbCriteria();
         $crit->addCondition('user_id = :user_id');
@@ -263,10 +282,10 @@ class GroupController extends Controller {
         foreach ($groups as $i => $group) {
             $crit->params = array(':user_id' => $users[$i], ':group_id' => $groups[$i]);
             if (isset($users[$i]) && isset($groups[$i])) {
-                if(isset($delete[$i])) {
+                if (isset($delete[$i])) {
                     $relation = UserHasGroup::model()->find($crit);
                     $relation->delete();
-                } else if(UserHasGroup::model()->find($crit) === null) {
+                } elseif (UserHasGroup::model()->find($crit) === null) {
                     $relation = new UserHasGroup();
                     //$relation->user = User::model()->findByPk($users[$i]);
                     //$relation->group = Group::model()->findByPk($groups[$i]);
@@ -275,11 +294,8 @@ class GroupController extends Controller {
 
                     $ok = $relation->save() && $ok;
                 }
-            } 
+            }
         }
         return $ok;
     }
-
 }
-
-?>

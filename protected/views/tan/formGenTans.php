@@ -8,7 +8,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /**
- * @var $this TanController 
- * @var $model tan 
+ * @var $this TanController
+ * @var $model tan
  */
 $this->setPageTitle(Yii::t('app', 'TAN Generierung'));
 Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.css");
@@ -44,8 +44,7 @@ $this->menu = array(
                 'id' => 'tan-form',
                 'errorMessageCssClass' => 'error',
                 'skin' => false,
-            ));
-            ?>        <fieldset>
+            )); ?>        <fieldset>
                 <div class="row collapse">
                     <div class="small-3 columns">
                         <span class="prefix"><?php echo Yii::t('app', 'Anzahl TANs'); ?></span>
@@ -56,8 +55,7 @@ $this->menu = array(
                             'min' => 0,
                             'max' => Yii::app()->params['maxTanGen'],
                         ));
-                        echo $form->error($model, 'tan_count');
-                        ?>
+            echo $form->error($model, 'tan_count'); ?>
                     </div>
                 </div>
                 <?php
@@ -69,22 +67,26 @@ $this->menu = array(
                         </div>
                         <div class="small-9 columns">
                             <?php
-                            echo Select2::activeDropDownList($model, 'group_id', $groups, array(
+                            echo Select2::activeDropDownList(
+                        $model,
+                        'group_id',
+                        $groups,
+                        array(
                                 'prompt' => Yii::t('app', 'Hier können Sie eine Gruppe auswählen...'))
                             );
-                            echo $form->error($model, 'group_id');
-                            ?>
+                    echo $form->error($model, 'group_id'); ?>
                         </div>
                     </div>
-                <?php } echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('name' => 'submit', 'class' => 'small button')); ?>
+                <?php
+                }
+            echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('name' => 'submit', 'class' => 'small button')); ?>
                 &nbsp;&nbsp;
                 <?php echo CHtml::submitButton(Yii::t('app', 'CSV Datei generieren'), array('name' => 'csv', 'class' => 'small button')); ?>
             </fieldset>
             <?php
             $this->endWidget();
-        } else if (!Yii::app()->params['allowParentsToManageChilds']) {
-            echo CHtml::beginForm();
-            ?>
+        } elseif (!Yii::app()->params['allowParentsToManageChilds']) {
+            echo CHtml::beginForm(); ?>
             <fieldset>
                 <?php
                 foreach ($model as $i => $tanObj) {
@@ -97,8 +99,7 @@ $this->menu = array(
                             <div class="small-9 columns">
                                 <?php
                                 echo CHtml::activeTextField($tanObj, "[$i]childFirstname");
-                                echo CHtml::error($tanObj, "[$i]childFirstname");
-                                ?>
+                    echo CHtml::error($tanObj, "[$i]childFirstname"); ?>
                             </div>
                         </div>
                         <div class="row collapse">
@@ -108,8 +109,7 @@ $this->menu = array(
                             <div class="small-9 columns">
                                 <?php
                                 echo CHtml::activeTextField($tanObj, "[$i]childLastname", array('size' => 60));
-                                echo CHtml::error($tanObj, "[$i]childLastname");
-                                ?>
+                    echo CHtml::error($tanObj, "[$i]childLastname"); ?>
                             </div>
                         </div>
                         <?php
@@ -121,15 +121,20 @@ $this->menu = array(
                                 </div>
                                 <div class="small-9 columns">
                                     <?php
-                                    echo Select2::activeDropDownList($tanObj, "[$i]group_id", $groups, array(
+                                    echo Select2::activeDropDownList(
+                                $tanObj,
+                                "[$i]group_id",
+                                $groups,
+                                array(
                                         'prompt' => Yii::t('app', 'Hier können Sie eine Gruppe auswählen...'))
-                                    );
-                                    ?>
+                                    ); ?>
                                 </div>
                             </div>
-                        <?php } ?>
+                        <?php
+                        } ?>
                     </div>
-                <?php } ?>
+                <?php
+                } ?>
                 <div class="tiny button add-child-tan">+</div>
                 <div>
                     <?php echo CHtml::submitButton(Yii::t('app', 'Absenden'), array('name' => 'submit', 'class' => 'small button')); ?>

@@ -276,7 +276,7 @@
                     roomValue = room.val(),
                     date = $('#room-assign-date').val(),
                     data = {'r': 'room/assignajaxteacher', 'teacher': teacherId, 'room': roomValue, 'date': date},
-            statusElement = $('#room-assign-status'),
+                    statusElement = $('#room-assign-status'),
                     inputs = [teacher, room];
             useAjax(data, statusElement, inputs);
         });
@@ -289,7 +289,7 @@
                     roomValue = room.val(),
                     date = $('#room-assign-date').val(),
                     data = {'r': 'room/assignajax', 'teacher': teacherId, 'room': roomValue, 'date': date},
-            statusElement = $('#room-assign-status'),
+                    statusElement = $('#room-assign-status'),
                     inputs = [teacher, room];
             useAjax(data, statusElement, inputs);
         });
@@ -325,7 +325,7 @@
                             room = $(element).find('input[id*="room."]'),
                             roomValue = room.val(),
                             data = {'r': 'room/assignajax', 'teacher': teacherId, 'room': roomValue, 'date': date.val()},
-                    statusElement = $(element).find('div[id*="status."]'),
+                            statusElement = $(element).find('div[id*="status."]'),
                             inputs = [];
                     useAjax(data, statusElement, inputs);
                 });
@@ -477,6 +477,17 @@
         });
         $('.customChild:last').after($(div));
         $(div).find('select').select2();
+    });
+
+    function blockDefaultAction(e) {
+        e.preventDefault();
+    }
+    $('#red-button').on('click', function (e) {
+        blockDefaultAction(e);
+        $answer = confirm('Alles löschen?');
+        if ($answer) {
+            window.location.href = "index.php?r=user/deleteAll";
+        }
     });
 
 })(jQuery);

@@ -5,7 +5,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -50,12 +50,14 @@ $this->breadcrumbs = array(
                     <td><?php echo Yii::t('app', 'Freie Termine');?></td>
                     <td><?php echo $freeApps;?></td>
                 </tr>
-                <?php if (!Yii::app()->user->isGuest()) { ?>
+                <?php if (!Yii::app()->user->isGuest()) {
+    ?>
                 <tr>
-                    <td><?php echo Yii::t('app', 'Generierte TANs');?></td>
-                    <td><?php echo Tan::model()->count();?></td>
+                    <td><?php echo Yii::t('app', 'Generierte TANs'); ?></td>
+                    <td><?php echo Tan::model()->count(); ?></td>
                 </tr>
-                <?php } ?>
+                <?php
+} ?>
             </tbody>
         </table>
         

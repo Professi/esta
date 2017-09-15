@@ -6,7 +6,7 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -16,13 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * Description of TimeSpan
- *
- * @author Christian Ehringfeld <c.ehringfeld[at]t-online.de>
- */
-class TimeSpan extends CFormModel {
-
+class TimeSpan extends CFormModel
+{
     public $begin;
     public $end;
     public $duration;
@@ -32,7 +27,8 @@ class TimeSpan extends CFormModel {
      * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
             array('begin, end, duration', 'required'),
             array('begin, end', 'date', 'format' => 'H:m'),
@@ -42,7 +38,8 @@ class TimeSpan extends CFormModel {
         );
     }
 
-    public function validate($attributes = null, $clearErrors = true) {
+    public function validate($attributes = null, $clearErrors = true)
+    {
         $rc = parent::validate($attributes, $clearErrors);
         if (!is_numeric((strtotime($this->end) - strtotime($this->begin)) / 60 / $this->duration)) {
             $rc = false;
@@ -51,12 +48,12 @@ class TimeSpan extends CFormModel {
         return $rc;
     }
 
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'begin' => Yii::t('app', 'Anfang'),
             'end' => Yii::t('app', 'Ende'),
             'duration' => Yii::t('app', 'Dauer eines Termins'),
         );
     }
-
 }

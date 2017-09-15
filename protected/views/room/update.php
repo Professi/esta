@@ -3,19 +3,19 @@
 /* @var $model Room */
 $this->setPageTitle(Yii::t('app', 'Raum bearbeiten'));
 $this->breadcrumbs=array(
-	'Rooms'=>array('index'),
-	$model->name=>array('view','id'=>$model->id),
-	'Update',
+    'Rooms'=>array('index'),
+    $model->name=>array('view','id'=>$model->id),
+    'Update',
 );
 
 $this->menu = array(
-    array(  'label' => Yii::t('app', 'Raum anlegen'), 
+    array(  'label' => Yii::t('app', 'Raum anlegen'),
             'url' => array('create'),
             'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Raum anzeigen'), 
+    array(  'label' => Yii::t('app', 'Raum anzeigen'),
             'url' => array('view', 'id' => $model->id),
             'linkOptions' => array('class' => 'small button')),
-    array(  'label' => Yii::t('app', 'Räume verwalten'), 
+    array(  'label' => Yii::t('app', 'Räume verwalten'),
             'url' => array('admin'),
             'linkOptions' => array('class' => 'small button')),
 );
