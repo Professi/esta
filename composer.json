@@ -19,9 +19,13 @@
     "require": {
         "php": ">=5.4",
         "yiisoft/yii": "^1",
-        "phpmailer/phpmailer": "5.*"
+        "phpmailer/phpmailer": "5.*",
+        "malyshev/yii-debug-toolbar": "@dev"
     },
     "autoload": {
-        "classmap": ["protected/"]
+        "classmap": ["protected/"],
+        "psr-0": {
+            "config": "./"
+        }
     }
 }

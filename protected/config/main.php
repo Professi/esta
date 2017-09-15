@@ -22,6 +22,7 @@ return array(
     'sourceLanguage' => 'de',
     'preload' => array('log'),
     'import' => array(
+        'application.vendor.*',
         'application.models.*',
         'application.models.forms.*',
         'application.components.*',

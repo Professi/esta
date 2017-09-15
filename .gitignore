@@ -6,3 +6,4 @@
 /.generate-functional-coverage
 /composer.phar
 /.env.local
+/composer.lock
