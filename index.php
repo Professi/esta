@@ -21,6 +21,8 @@
 
 use SebastianBergmann\CodeCoverage;
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 require_once dirname(__FILE__) . '/protected/components/globals.php';
 $yii = dirname(__FILE__) . '/framework/yii.php';
 $config = dirname(__FILE__) . '/protected/config/main.php';

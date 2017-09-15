@@ -4,3 +4,4 @@
 /vendor
 /build
 /.generate-functional-coverage
+/composer.phar
