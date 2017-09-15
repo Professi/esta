@@ -6,6 +6,11 @@
     <property file="${basedir}/.env.local" />
     <property file="${basedir}/.env" />
 
+    <property name="database.host" value="${databaseHost}" />
+    <property name="database.name" value="${databaseName}" />
+    <property name="database.user" value="${databaseUsername}" />
+    <property name="database.password" value="${databasePassword}" />
+
     <!--
         Import main target defintions (extension points)
     -->
@@ -20,6 +25,7 @@
     <import file="${basedir}/ant/modules/pdepend.xml" />
     <import file="${basedir}/ant/modules/phpcpd.xml" />
     <import file="${basedir}/ant/modules/phpmd.xml" />
+    <import file="${basedir}/ant/modules/dbdeploy.xml" />
 
     <import file="${basedir}/protected/ant/database.xml" />
 </project>
