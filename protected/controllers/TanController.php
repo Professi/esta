@@ -259,36 +259,39 @@ class TanController extends Controller
      */
     private function iterateOverTans($tans, &$validate)
     {
-        $model = array();
+        $model = [];
         foreach ($tans as $i => $oneTan) {
-            $ok = true;
-            if (isset($_POST['Tan'][$i])) {
-                $tan = new Tan();
-                if (array_key_exists('group_id', $_POST['Tan'][$i])) {
-                    $tan->group_id = $_POST['Tan'][$i]['group_id'];
-                }
-                $firstname = trim($_POST['Tan'][$i]['childFirstname']);
-                $lastname = trim($_POST['Tan'][$i]['childLastname']);
-                if (!Yii::app()->params['allowParentsToManageChilds'] && !empty($firstname) && !empty($lastname)) {
-                    $tan->childFirstname = $firstname;
-                    $tan->childLastname = $lastname;
-                } else {
-                    $ok = false;
-                }
-                if ($ok) {
-                    $tan->tan_count = 1;
-                    $tan->generateTan();
-                    $model[] = $tan;
-                } else {
-                    $validate = false;
-                }
-            }
+            $model = $this->generateNewTan($i);
         }
-        if (empty($model) || !$validate) {
+        if (empty($model)) {
             $model = $this->getEmptyTanModel();
-            $validate = false;
         }
         return $model;
+    }
+
+    private function generateNewTan($i)
+    {
+        $ok = true;
+        $tan = null;
+        if (isset($_POST['Tan'][$i])) {
+            $tan = new Tan();
+            if (array_key_exists('group_id', $_POST['Tan'][$i])) {
+                $tan->group_id = $_POST['Tan'][$i]['group_id'];
+            }
+            $firstname = trim($_POST['Tan'][$i]['childFirstname']);
+            $lastname = trim($_POST['Tan'][$i]['childLastname']);
+            if (!Yii::app()->params['allowParentsToManageChilds'] && !empty($firstname) && !empty($lastname)) {
+                $tan->childFirstname = $firstname;
+                $tan->childLastname = $lastname;
+            } else {
+                $ok = false;
+            }
+            if ($ok) {
+                $tan->tan_count = 1;
+                $tan->generateTan();
+            }
+        }
+        return $tan;
     }
 
     /**

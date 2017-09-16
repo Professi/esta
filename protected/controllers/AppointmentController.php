@@ -173,26 +173,31 @@ class AppointmentController extends Controller
             $this->throwFourNullNull();
         }
         if (isset($_POST['BlockedAppointment']) && isset($_POST['BlockedAppointment']['user_id']) && isset($_POST['BlockedAppointment']['reason']) && !empty($_POST['BlockedAppointment']['user_id']) && !empty($_POST['BlockedAppointment']['reason'])) {
-            $dateAndTime = DateAndTime::model()->findByPk($_POST['BlockedAppointment']['dateAndTime_id']);
-            $date = $dateAndTime->date;
-            $userId = $_POST['BlockedAppointment']['user_id'];
-            $reason = $_POST['BlockedAppointment']['reason'];
-            foreach ($date->dateAndTimes as $dateAndTime) {
-                $model = new BlockedAppointment();
-                $model->unsetAttributes();
-                $model->setAttributes([
-                    'dateAndTime_id' => $dateAndTime->id,
-                    'user_id' => $userId,
-                    'reason' => $reason
-                ]);
-                if ($model->save()) {
-                    Yii::app()->user->setFlash('success', Yii::t('app', 'Termin erfolgreich geblockt.'));
-                }
-            }
+            $this->saveBlockedAppointments();
         } else {
             $this->actionCreateBlockApp();
         }
         $this->redirect(array('admin'));
+    }
+
+    private function saveBlockedAppointments()
+    {
+        $dateAndTime = DateAndTime::model()->findByPk($_POST['BlockedAppointment']['dateAndTime_id']);
+        $date = $dateAndTime->date;
+        $userId = $_POST['BlockedAppointment']['user_id'];
+        $reason = $_POST['BlockedAppointment']['reason'];
+        foreach ($date->dateAndTimes as $dateAndTime) {
+            $model = new BlockedAppointment();
+            $model->unsetAttributes();
+            $model->setAttributes([
+                'dateAndTime_id' => $dateAndTime->id,
+                'user_id' => $userId,
+                'reason' => $reason
+            ]);
+            if ($model->save()) {
+                Yii::app()->user->setFlash('success', Yii::t('app', 'Termin erfolgreich geblockt.'));
+            }
+        }
     }
 
     /**

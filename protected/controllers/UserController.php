@@ -102,7 +102,7 @@ class UserController extends Controller
         User::model()->deleteUsersWithRole(PARENTS);
         User::model()->deleteUsersWithRole(TEACHER);
         Yii::app()->user->setFlash('success', Yii::t('app', 'Alle Daten gelöscht, einzig die Verwaltungs- und Administrationskonten wurden nicht gelöscht')) .
-                $this->redirect(array('account'));
+            $this->redirect(array('account'));
     }
 
     /**
@@ -318,30 +318,34 @@ class UserController extends Controller
             $model->password = '';
             $model->password_repeat = '';
             if (isset($_POST['User'])) {
-                $model->setAttributes($_POST['User']);
-                $model->updateGroups = true;
-                if ($model->save()) {
-                    if (Yii::app()->user->checkAccess(MANAGEMENT)) {
-                        Yii::app()->user->setFlash("success", Yii::t('app', "Benutzer wurde aktualisiert."));
-                        $this->redirect(array('view&id=' . $id), false);
-                    } else {
-                        Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Benutzerkonto wurde aktualisiert.'));
-                        $this->redirect(array('account'));
-                    }
-                } else {
-                    Yii::app()->user->setFlash("failMsg", Yii::t('app', "Benutzer konnte nicht aktualisiert werden"));
-                }
+                $this->saveUserModel($id, $model);
             }
         } else {
             Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie können keine Administratorkonten bearbeiten.'));
         }
         if ((Yii::app()->user->checkAccessRole(TEACHER, PARENTS) && Yii::app()->user->id == $id) || Yii::app()->user->checkAccess(MANAGEMENT)) {
-            $this->render('update', array(
-                'model' => $model,
+            return $this->render('update', array(
+                    'model' => $model,
             ));
+        }
+        Yii::app()->user->getFlash('failMsg');
+        $this->throwFourNullThree();
+    }
+
+    private function saveUserModel($id, $model)
+    {
+        $model->setAttributes($_POST['User']);
+        $model->updateGroups = true;
+        if ($model->save()) {
+            if (Yii::app()->user->checkAccess(MANAGEMENT)) {
+                Yii::app()->user->setFlash("success", Yii::t('app', "Benutzer wurde aktualisiert."));
+                $this->redirect(array('view&id=' . $id), false);
+            } else {
+                Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Benutzerkonto wurde aktualisiert.'));
+                $this->redirect(array('account'));
+            }
         } else {
-            Yii::app()->user->getFlash('failMsg');
-            $this->throwFourNullThree();
+            Yii::app()->user->setFlash("failMsg", Yii::t('app', "Benutzer konnte nicht aktualisiert werden"));
         }
     }
 
@@ -447,27 +451,28 @@ class UserController extends Controller
             $dataProvider->groups = Yii::app()->user->getGroups();
             $dataProvider->state = true;
         }
-        if (Yii::app()->user->isParent()) {
-            $dataProvider->role = TEACHER;
-        } elseif (Yii::app()->user->checkAccess('1')) {
-            $dataProvider->role = $role;
-        } elseif (Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments'] && !Yii::app()->params['teacherAllowBlockTeacherApps']) {
-            $dataProvider->role = PARENTS;
-        } elseif (Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments'] && Yii::app()->params['teacherAllowBlockTeacherApps']) {
-            if ($role > 1) {
-                $dataProvider->role = $role;
-            } else {
-                $dataProvider->role = PARENTS;
-            }
-        }
+        $dataProvider->role = $this->getSearchRole($role);
         $criteria = $dataProvider->searchCriteriaTeacherAutoComplete();
-        $a_rc = array();
+        $a_rc = [];
         $a_data = User::model()->findAll($criteria);
         foreach ($a_data as $record) {
-            $a_rc[] = array('label' => $record->title . " "
+            $a_rc[] = ['label' => $record->title . " "
                 . $record->firstname . " " . $record->lastname
-                , 'value' => $record->id);
+                , 'value' => $record->id];
         }
         echo CJSON::encode($a_rc);
+    }
+
+    private function getSearchRole($role)
+    {
+        $searchRole = PARENTS;
+        if (Yii::app()->user->isParent()) {
+            $searchRole = TEACHER;
+        } elseif (Yii::app()->user->isManager()) {
+            $searchRole = $role;
+        } elseif (Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments'] && Yii::app()->params['teacherAllowBlockTeacherApps'] && $role >= TEACHER) {
+            $$searchRole = $role;
+        }
+        return $searchRole;
     }
 }

@@ -107,7 +107,7 @@ class WebUser extends CWebUser
     {
         return $this->checkRole(TEACHER);
     }
-
+    
     private function checkRole($roleId)
     {
         if (is_numeric($this->id) && $this->getState('role') == $roleId) {
