@@ -1,5 +1,4 @@
 <?php
-
 /* Copyright (C) 2013-2014  Christian Ehringfeld, David Mock, Matthias Unterbusch
  *
  * This program is free software: you can redistribute it and/or modify
@@ -199,25 +198,52 @@ class Appointment extends CActiveRecord
     public function afterValidate()
     {
         $rc = parent::afterValidate();
-        if ($rc && User::model()->countByAttributes(array('role' => TEACHER, 'id' => $this->user_id)) > 0) {
-            $rc = false;
-            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Der ausgewählte Benutzer ist kein Lehrer.'));
-        } elseif ($rc && Appointment::model()->countByAttributes(array('user_id' => $this->user_id, 'parent_child_id' => $this->parent_child_id)) >= 1) {
-            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Leider haben Sie bereits einen Termin bei diesem Lehrer gebucht. Daher können Sie keinen weiteren buchen.'));
-            $rc = false;
-        } elseif ($rc && ParentChild::model()->countByAttributes(array('id' => $this->parent_child_id)) != '1') {
-            $rc = false;
-            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie müssen ein Kind angeben.'));
-        }
-        if ($rc && DateAndTime::model()->countByAttributes(array('dateAndTime_id' => $this->dateAndTime_id)) != '1') {
-            $rc = false;
-            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Der angegebene Termin existiert nicht.'));
-        }
+        $this->choosenUserIsNotATeacher($rc);
+        $this->alreadyBookedAppointment($rc);
+        $this->chooseChild($rc);
+        $this->appointmentNotExisting($rc);
+        $this->childParentConnectingNotExisting($rc);
+        return $rc;
+    }
+
+    private function childParentConnectingNotExisting(&$rc)
+    {
         if ($rc && ParentChild::model()->countByAttributes(array('parent_child_id' => $this->parent_child_id)) != '1') {
             $rc = false;
             Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Die angegebene Elternkindverknüpfung existiert nicht.'));
         }
-        return $rc;
+    }
+
+    private function appointmentNotExisting(&$rc)
+    {
+        if ($rc && DateAndTime::model()->countByAttributes(array('dateAndTime_id' => $this->dateAndTime_id)) != '1') {
+            $rc = false;
+            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Der angegebene Termin existiert nicht.'));
+        }
+    }
+
+    private function chooseChild(&$rc)
+    {
+        if ($rc && ParentChild::model()->countByAttributes(array('id' => $this->parent_child_id)) != '1') {
+            $rc = false;
+            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie müssen ein Kind angeben.'));
+        }
+    }
+
+    private function alreadyBookedAppointment(&$rc)
+    {
+        if ($rc && Appointment::model()->countByAttributes(array('user_id' => $this->user_id, 'parent_child_id' => $this->parent_child_id)) >= 1) {
+            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Leider haben Sie bereits einen Termin bei diesem Lehrer gebucht. Daher können Sie keinen weiteren buchen.'));
+            $rc = false;
+        }
+    }
+
+    private function choosenUserIsNotATeacher(&$rc)
+    {
+        if ($rc && User::model()->countByAttributes(array('role' => TEACHER, 'id' => $this->user_id)) > 0) {
+            $rc = false;
+            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Der ausgewählte Benutzer ist kein Lehrer.'));
+        }
     }
 
     protected function beforeValidate()
@@ -235,23 +261,28 @@ class Appointment extends CActiveRecord
     public function beforeSave()
     {
         $rc = parent::beforeSave();
-        if ($rc && Appointment::model()->countByAttributes(array('dateAndTime_id' => $this->dateAndTime_id, 'user_id' => $this->user_id)) > 0) {
-            $rc = false;
-            if (Yii::app()->user->checkAccess(MANAGEMENT)) {
-                $this->addError('dateAndTime_id', Yii::t('app', 'Diese/r Lehrer/in hat bereits zu dieser Uhrzeit einen Termin.'));
-            }
+        $this->teacherAlreadyBooked($rc);
+        $this->maxAppointmentsReached($rc);
+        $this->onlyOneAppointmentPerTeacher($rc);
+        $this->alreadyBookedAppointmentAtTime($rc);
+        $this->appointmentCouldntBooked($rc);
+        return $rc;
+    }
+
+    protected function afterSave()
+    {
+        Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Termin wurde erfolgreich gebucht.'));
+    }
+
+    private function appointmentCouldntBooked($rc)
+    {
+        if (!$rc && !Yii::app()->user->hasFlash('failMsg')) {
+            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Leider konnte Ihr Termin nicht gebucht werden.'));
         }
-        if (!Yii::app()->user->checkAccess(MANAGEMENT) && $rc) {
-            if (Appointment::model()->countByAttributes(array('parent_child_id' => $this->parent_child_id)) >= Yii::app()->params['maxAppointmentsPerChild']) {
-                $rc = false;
-                Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Leider konnte Ihr Termin nicht gebucht haben, da Sie die maximale Anzahl von {maxApp} Terminen überschritten haben.', array('{maxApp}' => Yii::app()->params['maxAppointmentsPerChild'])));
-                $this->addError('parent_child_id', Yii::t('app', 'Sie haben die maximale Anzahl an Terminen überschritten.'));
-            }
-        }
-        if ($rc && Appointment::model()->countByAttributes(array('user_id' => $this->user_id, 'parent_child_id' => $this->parent_child_id)) >= '1') {
-            $rc = false;
-            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie können nur einen Termin bei diesem Lehrer pro Kind buchen.'));
-        }
+    }
+
+    private function alreadyBookedAppointmentAtTime(&$rc)
+    {
         if ($rc && Appointment::model()->count($this->getCriteriaForAppCount()) > 0) {
             $rc = false;
             if (Yii::app()->user->checkAccess(MANAGEMENT)) {
@@ -260,12 +291,35 @@ class Appointment extends CActiveRecord
                 $this->addError('dateAndTime_id', Yii::t('app', 'Sie haben bereits einen Termin zu dieser Uhrzeit.'));
             }
         }
-        if ($rc) {
-            Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Termin wurde erfolgreich gebucht.'));
-        } elseif (!$rc && !Yii::app()->user->hasFlash('failMsg')) {
-            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Leider konnte ihr Termin nicht gebucht werden.'));
+    }
+
+    private function onlyOneAppointmentPerTeacher(&$rc)
+    {
+        if ($rc && Appointment::model()->countByAttributes(array('user_id' => $this->user_id, 'parent_child_id' => $this->parent_child_id)) >= '1') {
+            $rc = false;
+            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie können nur einen Termin bei diesem Lehrer pro Kind buchen.'));
         }
-        return $rc;
+    }
+
+    private function maxAppointmentsReached(&$rc)
+    {
+        if (!Yii::app()->user->checkAccess(MANAGEMENT) && $rc) {
+            if (Appointment::model()->countByAttributes(array('parent_child_id' => $this->parent_child_id)) >= Yii::app()->params['maxAppointmentsPerChild']) {
+                $rc = false;
+                Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Leider konnte Ihr Termin nicht gebucht haben, da Sie die maximale Anzahl von {maxApp} Terminen überschritten haben.', array('{maxApp}' => Yii::app()->params['maxAppointmentsPerChild'])));
+                $this->addError('parent_child_id', Yii::t('app', 'Sie haben die maximale Anzahl an Terminen überschritten.'));
+            }
+        }
+    }
+
+    private function teacherAlreadyBooked(&$rc)
+    {
+        if ($rc && Appointment::model()->countByAttributes(array('dateAndTime_id' => $this->dateAndTime_id, 'user_id' => $this->user_id)) > 0) {
+            $rc = false;
+            if (Yii::app()->user->checkAccess(MANAGEMENT)) {
+                $this->addError('dateAndTime_id', Yii::t('app', 'Diese/r Lehrer/in hat bereits zu dieser Uhrzeit einen Termin.'));
+            }
+        }
     }
 
     private function getCriteriaForAppCount()
@@ -305,7 +359,7 @@ class Appointment extends CActiveRecord
     public function afterDelete()
     {
         Yii::trace($this->parentchild->user->email . ' ' . $this->dateandtime->time . ' ' . $this->parentchild->child->firstname . ' ' . $this->dateandtime->date->date, 'application.models.appointment');
-        Yii::app()->user->setFlash('success', Yii::t('app', 'Benutzer erfolgreich entfernt.'));
+        Yii::app()->user->setFlash('success', Yii::t('app', 'Termin wurde erfolgreich entfernt.'));
         return parent::afterDelete();
     }
 }

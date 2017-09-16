@@ -468,7 +468,7 @@ class UserController extends Controller
         $searchRole = PARENTS;
         if (Yii::app()->user->isParent()) {
             $searchRole = TEACHER;
-        } elseif (Yii::app()->user->isManager()) {
+        } elseif (Yii::app()->user->isManager() || Yii::app()->user->isAdmin()) {
             $searchRole = $role;
         } elseif (Yii::app()->user->isTeacher() && Yii::app()->params['allowTeachersToCreateAppointments'] && Yii::app()->params['teacherAllowBlockTeacherApps'] && $role >= TEACHER) {
             $$searchRole = $role;
