@@ -31,7 +31,7 @@ if (file_exists(__DIR__ . $_SERVER['REQUEST_URI']) &&
     return false;
 }
 
-if ($config['env'] == 'dev') {
+if (isset($config['env']) && $config['env'] == 'dev') {
     define('YII_DEBUG', true);
 } else {
     define('YII_DEBUG', false);

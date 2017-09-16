@@ -1,5 +1,4 @@
 <?php
-
 /**
  * UserIdentity repräsentiert die Daten die nötig sind um einen Benutzer zu identifizieren.
  */
@@ -26,6 +25,7 @@
 
 class UserIdentity extends CUserIdentity
 {
+
     const ERROR_ACCOUNT_NOT_ACTIVATED = 3;
     const ERROR_ACCOUNT_BANNED = 4;
 
@@ -39,7 +39,7 @@ class UserIdentity extends CUserIdentity
      */
     public function authenticate()
     {
-        $criteria = new CDbCriteria(array('together'=>false,'with'=>false));
+        $criteria = new CDbCriteria(array('together' => false, 'with' => false));
         $user = User::model()->findByAttributes(array('email' => $this->username), $criteria);
         if ($user === null) {
             $this->errorCode = self::ERROR_USERNAME_INVALID;
@@ -50,23 +50,28 @@ class UserIdentity extends CUserIdentity
         } elseif ($user->state == ACTIVE && !$user->verifyPassword($this->password)) {
             $this->invalidPassword($user);
         } elseif ($user->state == BLOCKED) {
-            if (empty($user->bannedUntil) || $user->bannedUntil == 0) {
-                $this->errorCode = self::ERROR_ACCOUNT_BANNED;
-                $this->errorMessage = Yii::t('app', "Ihr Benutzerkonto wurde gesperrt. Bitte wenden Sie sich an die Schulverwaltung.");
-            } else {
-                $time = time();
-                if ($user->bannedUntil > $time) {
-                    $this->errorCode = self::ERROR_ACCOUNT_BANNED;
-                    $this->errorMessage = Yii::t('app', "Ihr Benutzerkonto ist noch für {sekunden} Sekunden gesperrt.", array('{sekunden}' => ($user->bannedUntil - $time)));
-                } else {
-                    $this->unbanUser($user);
-                }
-            }
+            $this->blockedUserState($user);
         }
         if (empty($this->errorMessage)) {
             $this->login($user);
         }
         return $this->errorCode;
+    }
+
+    protected function blockedUserState($user)
+    {
+        if (empty($user->bannedUntil) || $user->bannedUntil == 0) {
+            $this->errorCode = self::ERROR_ACCOUNT_BANNED;
+            $this->errorMessage = Yii::t('app', "Ihr Benutzerkonto wurde gesperrt. Bitte wenden Sie sich an die Schulverwaltung.");
+        } else {
+            $time = time();
+            if ($user->bannedUntil > $time) {
+                $this->errorCode = self::ERROR_ACCOUNT_BANNED;
+                $this->errorMessage = Yii::t('app', "Ihr Benutzerkonto ist noch für {sekunden} Sekunden gesperrt.", array('{sekunden}' => ($user->bannedUntil - $time)));
+            } else {
+                $this->unbanUser($user);
+            }
+        }
     }
 
     /**
@@ -113,8 +118,8 @@ class UserIdentity extends CUserIdentity
                 $this->errorMessage = Yii::t('app', "Falsches Passwort!") . ' ' . Yii::t('app', "Ihr Benutzerkonto wurde für {n} Minuten gesperrt.", array(Yii::app()->params['durationTempBans']));
             } else {
                 $this->errorMessage = Yii::t('app', "Falsches Passwort!") . ' '
-                        . Yii::t('app', "n==1#Ihnen verbleibt noch ein Versuch.|n>1#Ihnen verbleiben noch {n} Versuche.", array((Yii::app()->params['maxAttemptsForLogin'] - $user->badLogins))) . ' '
-                        . Yii::t('app', "Sobald alle Versuche aufgebraucht sind, wird Ihr Konto temporär gesperrt.");
+                    . Yii::t('app', "n==1#Ihnen verbleibt noch ein Versuch.|n>1#Ihnen verbleiben noch {n} Versuche.", array((Yii::app()->params['maxAttemptsForLogin'] - $user->badLogins))) . ' '
+                    . Yii::t('app', "Sobald alle Versuche aufgebraucht sind, wird Ihr Konto temporär gesperrt.");
             }
             $user->update();
         }

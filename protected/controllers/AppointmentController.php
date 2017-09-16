@@ -101,30 +101,41 @@ class AppointmentController extends Controller
     public function actionCreateBlockApp()
     {
         if (Yii::app()->params['allowBlockingAppointments'] &&
-                !(Yii::app()->user->checkAccessNotAdmin(TEACHER) &&
-                Yii::app()->params['allowBlockingOnlyForManagement'])) {
-            $model = new BlockedAppointment();
-            $model->unsetAttributes();
-            $appId = '';
-            $teacherLabel = $this->getInformationWithTeacherId($appId);
-            if (Yii::app()->user->isTeacher()) {
-                $model->user_id = Yii::app()->user->getId();
-            }
-            if (isset($_POST['BlockedAppointment'])) {
-                $model->setAttributes($_POST['BlockedAppointment']);
-                if (!empty($model->attributes['user_id'])) {
-                    $t = User::model()->findByPk($model->attributes['user_id']);
-                    $teacherLabel = $this->teacherLabel($t);
-                }
-                if ($model->save()) {
-                    Yii::app()->user->setFlash('success', Yii::t('app', 'Termin erfolgreich geblockt.'));
-                    $this->redirect(Yii::app()->user->isTeacher() ? array('index') : array('admin'));
-                }
-            }
-            $this->render('createBlockApp', array('model' => $model, 'teacherLabel' => $teacherLabel));
+            !(Yii::app()->user->checkAccessNotAdmin(TEACHER) &&
+            Yii::app()->params['allowBlockingOnlyForManagement'])) {
+            $this->blockAppointment();
         } else {
             $this->throwFourNullThree();
         }
+    }
+
+    protected function blockAppointment()
+    {
+        $model = new BlockedAppointment();
+        $model->unsetAttributes();
+        $appId = '';
+        $teacherLabel = $this->getInformationWithTeacherId($appId);
+        if (Yii::app()->user->isTeacher()) {
+            $model->user_id = Yii::app()->user->getId();
+        }
+        if (isset($_POST['BlockedAppointment'])) {
+            $teacherLabel = $this->saveBlockAppointment($model, $teacherLabel);
+        }
+        $this->render('createBlockApp', array('model' => $model, 'teacherLabel' => $teacherLabel));
+    }
+
+    protected function saveBlockAppointment($model, $teacherLabel)
+    {
+        $model->setAttributes($_POST['BlockedAppointment']);
+        if (!empty($model->attributes['user_id'])) {
+            $t = User::model()->findByPk($model->attributes['user_id']);
+            $teacherLabel = $this->teacherLabel($t);
+        }
+        if ($model->save()) {
+            Yii::app()->user->setFlash('success', Yii::t('app', 'Termin erfolgreich geblockt.'));
+            $this->redirect(Yii::app()->user->isTeacher() ? array('index') : array('admin'));
+        }
+        return $teacherLabel;
     }
 
     /**
@@ -234,7 +245,7 @@ class AppointmentController extends Controller
             }
             if ($model->save()) {
                 $this->redirect(Yii::app()->user->isTeacher() ?
-                                array('appointment/index') : array('view', 'id' => $model->id));
+                        array('appointment/index') : array('view', 'id' => $model->id));
             }
         }
         $this->render('create', array(
@@ -343,21 +354,27 @@ class AppointmentController extends Controller
             if (empty($teacherGroups)) {
                 $badRequest = false;
             } else {
-                if (is_array($userGroups) && is_array($teacherGroups)) {
-                    foreach ($teacherGroups as $group) {
-                        foreach ($userGroups as $userGroup) {
-                            if ($group->group->id == $userGroup->id) {
-                                $badRequest = false;
-                                break;
-                            }
-                        }
-                    }
-                }
+                $badRequest = $this->frictionUserTeacherGroup($userGroups, $teacherGroups, $badRequest);
             }
             if ($badRequest) {
                 $this->throwFourNullThree();
             }
         }
+    }
+
+    protected function frictionUserTeacherGroup($userGroups, $teacherGroups, $badRequest)
+    {
+        if (is_array($userGroups) && is_array($teacherGroups)) {
+            foreach ($teacherGroups as $group) {
+                foreach ($userGroups as $userGroup) {
+                    if ($group->group->id == $userGroup->id) {
+                        $badRequest = false;
+                        break;
+                    }
+                }
+            }
+        }
+        return $badRequest;
     }
 
     /**
@@ -431,8 +448,8 @@ class AppointmentController extends Controller
             $this->render('indexTeacher', $arr);
         } elseif (Yii::app()->user->isParent()) {
             $no_children = ParentChild::model()->countByAttributes(
-                            array('user_id' => Yii::app()->user->getId())
-            ) == '0' ? true : false;
+                    array('user_id' => Yii::app()->user->getId())
+                ) == '0' ? true : false;
             $this->render('index', array(
                 'dataProvider' => Appointment::getAllAppointments(),
                 'no_children' => $no_children,
@@ -558,12 +575,12 @@ class AppointmentController extends Controller
         $rc = array(Yii::t('app', "BELEGT"), false);
         $check = false;
         if (Appointment::model()->countByAttributes(array('user_id' => $teacher,
-                    'dateAndTime_id' => $dateAndTimeId)) == '0') {
+                'dateAndTime_id' => $dateAndTimeId)) == '0') {
             $check = true;
         }
         if ($check && Yii::app()->params['allowBlockingAppointments'] &&
-                BlockedAppointment::model()->countByAttributes(array('user_id' => $teacher,
-                    'dateAndTime_id' => $dateAndTimeId)) != '0') {
+            BlockedAppointment::model()->countByAttributes(array('user_id' => $teacher,
+                'dateAndTime_id' => $dateAndTimeId)) != '0') {
             if (Yii::app()->user->checkAccess('1') || $overrideAccess) {
                 $rc = array(Yii::t('app', "BLOCKIERT"), false);
             }
@@ -640,8 +657,8 @@ class AppointmentController extends Controller
             $dataProvider->unsetAttributes();
             $a_parentChild = ParentChild::model()->findAllByAttributes(array('user_id' => $userId), array('with' => array('user', 'child'), 'select' => '*'));
             $selectContent = (empty($a_parentChild)) ? array('prompt' => Yii::t('app', 'Bitte legen Sie mindestens ein Kind an bevor Sie fortfahren')) : CHtml::listData($a_parentChild, 'id', function ($post) {
-                return $post->child->firstname . ' ' . $post->child->lastname;
-            });
+                    return $post->child->firstname . ' ' . $post->child->lastname;
+                });
             $a_optionsInner[$selectedChild] = array('selected' => true);
             $a_options = array('options' => $a_optionsInner);
         }
@@ -739,30 +756,48 @@ class AppointmentController extends Controller
             $this->throwFourNullFour();
         }
         foreach ($dateData as $date) {
-            $temp = array();
-            $time = $this->isAppointmentAvailable($id, $date->id, true);
-            $temp['time'] = Yii::app()->dateFormatter->formatDateTime(strtotime($date->time), null, 'short');
-            $temp['status'] = $time[0];
-            if (!$time[1] && $time[0] !== Yii::t('app', "BLOCKIERT")) {
-                foreach ($appointments as $appointment) {
-                    if ($date->id === $appointment->dateAndTime_id) {
-                        $parent = $appointment->parentchild->user;
-                        $child = $appointment->parentchild->child;
-                        $temp['text'] = "{$parent->title} {$parent->firstname} {$parent->lastname} ({$child->firstname} {$child->lastname})";
-                    }
-                }
-            } elseif (!$time[1] && $time[0] === Yii::t('app', "BLOCKIERT")) {
-                foreach ($blockedAppointments as $appointment) {
-                    if ($date->id === $appointment->dateAndTime_id) {
-                        $temp['text'] = $appointment->reason;
-                    }
-                }
-            } else {
-                $temp['text'] = '';
-            }
-            $data[] = $temp;
+            $data[] = $this->overviewDataText($id, $date, $appointments, $blockedAppointments);
         }
         return $data;
+    }
+
+    private function overviewDataText($id, $date, $appointments, $blockedAppointments)
+    {
+        $temp = array();
+        $time = $this->isAppointmentAvailable($id, $date->id, true);
+        $temp['time'] = Yii::app()->dateFormatter->formatDateTime(strtotime($date->time), null, 'short');
+        $temp['status'] = $time[0];
+        $temp['text'] = '';
+        if (!$time[1] && $time[0] !== Yii::t('app', "BLOCKIERT")) {
+            $temp['text'] = $this->generateAppointmentText($date, $appointments);
+        } elseif (!$time[1] && $time[0] === Yii::t('app', "BLOCKIERT")) {
+            $temp['text'] = $this->generateBlockedAppointmentText($date, $blockedAppointments);
+        }
+        return $temp;
+    }
+
+    private function generateAppointmentText($date, $appointments)
+    {
+        $text = '';
+        foreach ($appointments as $appointment) {
+            if ($date->id === $appointment->dateAndTime_id) {
+                $parent = $appointment->parentchild->user;
+                $child = $appointment->parentchild->child;
+                $text = "{$parent->title} {$parent->firstname} {$parent->lastname} ({$child->firstname} {$child->lastname})";
+            }
+        }
+        return $text;
+    }
+
+    private function generateBlockedAppointmentText($date, $blockedAppointments)
+    {
+        $text = '';
+        foreach ($blockedAppointments as $appointment) {
+            if ($date->id === $appointment->dateAndTime_id) {
+                $text = $appointment->reason;
+            }
+        }
+        return $text;
     }
 
     private function getDateWithTimes($date)
@@ -781,8 +816,8 @@ class AppointmentController extends Controller
         }
         $dates = $this->generateIcsData();
         $ical = "BEGIN:VCALENDAR" . PHP_EOL
-                . "VERSION:2.0" . PHP_EOL
-                . "PRODID:http://" . Yii::app()->params['schoolWebsiteLink'] . PHP_EOL;
+            . "VERSION:2.0" . PHP_EOL
+            . "PRODID:http://" . Yii::app()->params['schoolWebsiteLink'] . PHP_EOL;
         foreach ($dates as $date) {
             $with = Yii::app()->user->checkAccess('2') ? $date['parent'] : $date['teacher'];
 
@@ -793,12 +828,12 @@ class AppointmentController extends Controller
             $dtEnd = $dateTime->format('Ymd\THis\Z');
 
             $ical .= "BEGIN:VEVENT" . PHP_EOL
-                    . "UID:" . md5(uniqid(mt_rand(), true)) . "@" . Yii::app()->params['schoolWebsiteLink'] . PHP_EOL
-                    . "DTSTAMP:" . date('Ymd\THis\Z') . PHP_EOL
-                    . "DTSTART:" . $dtStart . PHP_EOL
-                    . "DTEND:" . $dtEnd . PHP_EOL
-                    . "SUMMARY:" . Yii::t('app', 'Ihr Termin mit {with} für {child}', array('{with}' => $with, '{child}' => $date['child']))
-                    . PHP_EOL . "END:VEVENT" . PHP_EOL;
+                . "UID:" . md5(uniqid(mt_rand(), true)) . "@" . Yii::app()->params['schoolWebsiteLink'] . PHP_EOL
+                . "DTSTAMP:" . date('Ymd\THis\Z') . PHP_EOL
+                . "DTSTART:" . $dtStart . PHP_EOL
+                . "DTEND:" . $dtEnd . PHP_EOL
+                . "SUMMARY:" . Yii::t('app', 'Ihr Termin mit {with} für {child}', array('{with}' => $with, '{child}' => $date['child']))
+                . PHP_EOL . "END:VEVENT" . PHP_EOL;
         }
         $ical .= "END:VCALENDAR" . PHP_EOL;
         $user = User::model()->findByPk(Yii::app()->user->getId());
