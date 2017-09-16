@@ -14,7 +14,8 @@ abstract class FeatureTest extends \PHPUnit_Framework_TestCase
     {
         $yii = __DIR__ . '/../../../vendor/yiisoft/yii/framework/yii.php';
         require_once($yii);
-        if (empty(YiiBase::app())) {
+        $app = YiiBase::app();
+        if (empty($app)) {
             $config = __DIR__ . '/../../../protected/config/test.php';
             $this->app = Yii::createConsoleApplication($config);
         } else {
