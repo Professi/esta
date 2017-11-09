@@ -116,7 +116,7 @@ class Appointment extends CActiveRecord
     public function search()
     {
         $criteria = new CDbCriteria;
-        $criteria->with = array('parentchild' => array('with' => array('user' => array('alias' => 'pc_user', 'select' => array('id', 'firstname', 'lastname')))), 'dateandtime', 'user' => array('select' => array('id', 'firstname', 'lastname')));
+        $criteria->with = array('parentchild' => array('with' => array('user' => array('alias' => 'pc_user', 'select' => array('id', 'firstname', 'lastname')))), 'dateandtime','dateandtime.date', 'user' => array('select' => array('id', 'firstname', 'lastname')));
         $criteria->together = true;
         if ($this->parent_child_id != '') {
             $criteria->compare('parentchild.user_id', ParentChild::model()->searchParentID($this->parent_child_id), true);
@@ -129,10 +129,7 @@ class Appointment extends CActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'sort' => array(
-                'defaultOrder' => array(
-                    'user_id' => CSort::SORT_ASC,
-                    'dateAndTime_id' => CSort::SORT_ASC,
-                ),
+                'defaultOrder' =>  'user.id, date.date ASC, dateandtime.time ASC',
                 'multiSort' => true,
             )
         ));
@@ -148,17 +145,20 @@ class Appointment extends CActiveRecord
         $criteria = new CDbCriteria();
         $criteria->addCondition(array('user_id=:user_id'));
         $criteria->params = array(':user_id' => $this->user_id);
-        $criteria->with = array('user');
-        $sort = new CSort;
-        $sort->defaultOrder = 'dateAndTime_id desc';
+        $criteria->with = array('user','dateandtime','dateandtime.date');
+        $criteria->together = true;
+        $sort = new CSort();
+                $sort->defaultOrder = 'date.date ASC, dateandtime.time ASC';
+        $sort->multiSort = true;
         $sort->attributes = array(
             'dateAndTime_id' => array(
                 'asc' => 'dateAndTime_id',
-                'desc' => 'dateAndTime_id desc'),
+                'desc' => 'dateAndTime_id desc'
+                ),
             'user_id' => array(
                 'asc' => 'user.lastname',
                 'desc' => 'user.lastname desc'),
-        );
+        ) ;
         return new CActiveDataProvider($this, array('criteria' => $criteria,
             'sort' => $sort));
     }

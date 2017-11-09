@@ -30,7 +30,6 @@ if (file_exists(__DIR__ . $_SERVER['REQUEST_URI']) &&
     // together with PHPs internal webserver.
     return false;
 }
-
 if (isset($config['env']) && $config['env'] == 'dev') {
     define('YII_DEBUG', true);
 } else {

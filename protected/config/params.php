@@ -19,8 +19,8 @@ $envConfiguration = array_merge(
     array(
         'databaseHost' => 'localhost',
         'databaseName' => 'esta',
-        'databaseUsername' => 'esta',
-        'databasePassword' => 'esta',
+        'databaseUsername' => 'root',
+        'databasePassword' => 'test',
         'databasePort' => '3306',
         'languages'=>array('de'=>'Deutsch','en'=>'Englisch'),
     ),
