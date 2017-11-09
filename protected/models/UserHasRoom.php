@@ -49,7 +49,6 @@ class UserHasRoom extends CActiveRecord
             array('id, user_id, room_id, date_id', 'numerical', 'integerOnly' => true),
             array('user_id', 'exist', 'attributeName' => 'id', 'className' => 'User'),
             array('room_id', 'exist', 'attributeName' => 'id', 'className' => 'Room'),
-            array('date_id', 'validateDateAndRoom'),
             array('id, user_id, room_id, date_id', 'safe', 'on' => 'search'),
         );
     }
@@ -79,16 +78,6 @@ class UserHasRoom extends CActiveRecord
             'room_id' => Yii::t('app', 'Raum'),
             'date_id' => Yii::t('app', 'Elternsprechtag'),
         );
-    }
-
-    public function validateDateAndRoom($attribute, $params)
-    {
-        $u = UserHasRoom::model()->findByAttributes(array('date_id' => $this->date_id, 'room_id' => $this->room_id));
-        if (is_null($u) || ($u->user_id == $this->user_id && $u->date_id == $this->date_id)) {
-            return true;
-        }
-        $this->addError('room_id', Yii::t('app', 'Raum wurde an diesem Elternsprechtag bereits vergeben'));
-        return false;
     }
 
     public function altSearch()
