@@ -85,7 +85,7 @@ class UserHasRoom extends CActiveRecord
         $criteria = new CDbCriteria;
         $criteria->with = array('room', 'date');
         $criteria->together = true;
-        $criteria->compare('user_id', $this->user_id, true);
+        $criteria->compare('user_id', $this->user_id, false);
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
             'sort' => array(
