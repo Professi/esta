@@ -43,9 +43,9 @@ $this->menu = array(
                 ),
                 array('name' => 'parent_child_id',
                     'value' => '$data->parentchild->user->firstname." ".$data->parentchild->user->lastname'),
-                array('name' => 'child','header'=>'Kind',
+                array('name' => 'child',
                     'value' => '$data->parentchild->child->firstname." ".$data->parentchild->child->lastname'),
-                                array('name' => 'Kontakt',
+                                array('name' => 'contact',
                     'value' => '$data->parentchild->user->email'),
                 array(
                     'class' => 'CustomButtonColumn',

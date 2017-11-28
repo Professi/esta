@@ -86,6 +86,8 @@ class Appointment extends CActiveRecord
         return array(
             'id' => 'ID',
             'parent_child_id' => Yii::t('app', 'Erziehungsberechtigte/r'),
+            'child' => Yii::t('app', 'Kind'),
+            'contact' => Yii::t('app', 'Kontakt'),
             'user_id' => Yii::t('app', 'Lehrer'),
             'dateAndTime_id' => Yii::t('app', 'Termin'),
             'time' => Yii::t('app', 'Zeit'),
