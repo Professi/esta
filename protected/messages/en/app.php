@@ -287,7 +287,7 @@ return array(
   'Kinder müssen auch gelöscht werden.' => 'Children must also be deleted.',
   'Klasse' => 'Class',
   'Klicken Sie auf einen Buchstaben um sich alle Lehrer, deren Name mit diesem Buchstaben beginnt, anzeigen zu lassen.' => 'Click a letter to display all teachers whose name starts with that letter.',
-  'Klicken Sie einfach auf ein Feld mit "Verfügbar" und bestätigen Sie am Ende der Seite den Termin.' => 'Just click a Cell with "Avaiable" and confirm the appointment at the end of the site.',
+  'Klicken Sie zuerst auf ein Datum und dann einfach auf ein Feld mit "Verfügbar" und bestätigen Sie am Ende der Seite den Termin.' => 'Just click a Cell with "Avaiable" and confirm the appointment at the end of the site.',
   'Klicken Sie hier.' => 'Click here',
   'Klicken Sie {here} um Kinder anzulegen.' => 'Click {here} to register children.',
   'Komplett' => 'Complete',

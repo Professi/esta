@@ -45,8 +45,8 @@ $this->menu = array(
                     'value' => '$data->parentchild->user->firstname." ".$data->parentchild->user->lastname'),
                 array('name' => 'child',
                     'value' => '$data->parentchild->child->firstname." ".$data->parentchild->child->lastname'),
-                                array('name' => 'contact',
-                    'value' => '$data->parentchild->user->email'),
+                                array('name' => 'contact', 'type'=>'raw',
+                    'value' => '$data->parentchild->user->mailTo()'),
                 array(
                     'class' => 'CustomButtonColumn',
                     'template' => '{delete}'

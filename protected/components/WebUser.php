@@ -25,7 +25,7 @@
  */
 class WebUser extends CWebUser
 {
-
+    
     /**
      * Überschreibt eine Yii Methode, welche für die Zugriffsberechtigung
      *  in Controllern verwendet wird (accessRules)
@@ -34,7 +34,7 @@ class WebUser extends CWebUser
      * @param mixed $params (opt) Muss gesetzt werden durch Vererbung
      * @return bool Permission granted?
      */
-    public function checkAccess($role, $params = array())
+    public function checkAccess($role, $params = array(),$allowCaching = true)
     {
         if (!is_numeric($this->id)) {
             return false;

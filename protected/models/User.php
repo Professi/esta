@@ -179,7 +179,11 @@ class User extends CActiveRecord
             'role' => Yii::t('app', 'Benutzerrolle'),
         );
     }
-
+    
+    public function mailTo() {
+        return '<a href ="mailto:' . $this->email . '">' . $this->email . '</a>';
+        
+    }
     /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.

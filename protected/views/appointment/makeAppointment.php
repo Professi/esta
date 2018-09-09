@@ -44,7 +44,7 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
         ?>
             <div class="paper panel js_show hide-for-print">
                 <?php echo Yii::t('app', 'Hier können Sie Termine mit dem Lehrer vereinbaren.'); ?>
-                <?php echo Yii::t('app', 'Klicken Sie einfach auf ein Feld mit "Verfügbar" und bestätigen Sie am Ende der Seite den Termin.'); ?>
+                <?php echo Yii::t('app', 'Klicken Sie zuerst auf ein Datum und dann einfach auf ein Feld mit "Verfügbar" und bestätigen Sie am Ende der Seite den Termin.'); ?>
                 <?php if (sizeof($dates) > 1) {
             ?>
                 <?php echo Yii::t('app', 'Achten Sie darauf, dass der korrekte Elternsprechtag ausgewählt ist. Der aktive Elterntag ist weiß und blau hinterlegt, andere Auswahlmöglichkeiten erscheinen grau und sind klickbar.'); ?>
