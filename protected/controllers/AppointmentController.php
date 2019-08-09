@@ -723,11 +723,16 @@ class AppointmentController extends Controller
      * @param string $app der Elternsprechtag
      * return string
      */
-    public function formatAppointmentTitle($app)
-    {
+    public function formatAppointmentTitle($app, $user = null) {
         $string = Yii::app()->dateFormatter->formatDateTime(strtotime($app->date), "short", null);
         if (!empty($app->title)) {
             $string .= " ({$app->title})";
+        }
+        if (is_object($user)) {
+            $userroom = UserHasRoom::model()->findByAttributes(['date_id' => $app->id, 'user_id' => $user->id]);
+            if (!empty($userroom)) {
+                $string .= ' - ' . Yii::t('app', 'Raum') . ' ' . $userroom->room->name;
+            }
         }
         return $string;
     }
