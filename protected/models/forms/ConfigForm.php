@@ -62,6 +62,7 @@ class ConfigForm extends CFormModel
     public $schoolWebsiteLink;
     public $allowTeachersToCreateAppointments;
     public $allowTeachersToManageOwnRooms;
+    public $teacherInfoMail;
 
     public function rules()
     {
@@ -83,7 +84,7 @@ class ConfigForm extends CFormModel
             array('defaultTeacherPassword', 'length', 'min' => 5),
             array('randomTeacherPassword,banUsers,allowBlockingAppointments,allowTeachersToManageOwnRooms,' .
                 'useSchoolEmailForContactForm,allowBlockingOnlyForManagement,lockRegistration,' .
-                'allowParentsToManageChilds,allowGroups,teacherAllowBlockTeacherApps,smtpAuth,allowTeachersToCreateAppointments',
+                'allowParentsToManageChilds,allowGroups,teacherAllowBlockTeacherApps,smtpAuth,allowTeachersToCreateAppointments,teacherInfoMail',
                 'boolean'),
             array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,'
                 . 'durationTempBans,maxAttemptsForLogin,appointmentBlocksPerDate,'
@@ -96,7 +97,7 @@ class ConfigForm extends CFormModel
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
                 'durationTempBans,maxAttemptsForLogin,allowTeachersToCreateAppointments' .
                 'allowBlockingAppointments,appointmentBlocksPerDate,hashCost,' .
-                'lengthReasonAppointmentBlocked,smtpAuth,smtpSecure,smtpPort,smtpPassword,tanSize,schoolWebsiteLink', 'safe'),
+                'lengthReasonAppointmentBlocked,smtpAuth,smtpSecure,smtpPort,smtpPassword,tanSize,schoolWebsiteLink,teacherInfoMail', 'safe'),
         );
     }
 
@@ -147,7 +148,8 @@ class ConfigForm extends CFormModel
             'allowTeachersToCreateAppointments' => Yii::t('app', 'Dürfen Lehrer Termine anlegen?'),
             'teacherAllowBlockTeacherApps' => Yii::t('app', 'Dürfen Lehrer Termine von/für Lehrer blockieren oder anlegen?'),
             'allowTeachersToManageOwnRooms' => Yii::t('app', 'Dürfen Lehrer die eigenen Räume verwalten?'),
-            'schoolWebsiteLink' => Yii::t('app', 'Schullink')
+            'schoolWebsiteLink' => Yii::t('app', 'Schullink'),
+            'teacherInfoMail' => Yii::t('app', 'Sollen LehrerInnen eine Info-Mail erhalten, wenn ein Termin bei ihnen gebucht wurde?'),
         );
     }
 

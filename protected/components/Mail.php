@@ -24,7 +24,6 @@ class Mail
 
     /**
      * sends a mail
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param string $subject Betreff einer E-Mail
      * @param string $message Nachricht einer E-Mail
      * @param string $to Empfänger der Nachricht
@@ -68,7 +67,6 @@ class Mail
 
     /**
      * sends activation link to change password
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $email E-Mail des Empfängers
      * @param type $activationKey Aktivierungsschlüssel
      */
@@ -87,7 +85,6 @@ class Mail
 
     /**
      * sends testmail
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $email E-Mail des Empfängers
      */
     public function sendTestMail($email)
@@ -110,7 +107,6 @@ class Mail
 
     /**
      * sends a mail to recipient that a parent teacher day has changed.
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $email E-Mail des Empfängers
      */
     public function sendDateChangeMail($email, $oldDate, $date)
@@ -129,7 +125,6 @@ class Mail
 
     /**
      * sends activation link
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $email E-Mail des Empfängers
      * @param type $activationKey  Aktivierungsschlüssel
      */
@@ -155,7 +150,6 @@ class Mail
     /**
      * Sendet eine Benachrichtungsemail dass ein Termin gelöscht wurde.
      * sends a notification mail that a appointment were deleted
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      * @param type $email E-Mail Adresse des zu Informierenden
      * @param type $teacher Lehrer
      * @param type $time Uhrzeit
@@ -172,13 +166,34 @@ class Mail
         $body .= $this->mailFooter();
         $this->send(Yii::t('app', "Einer Ihrer Termine bei {appname} wurde gelöscht", array('{appname}' => Yii::app()->name)), $body, $email);
     }
+    
+        /**
+     * Sendet eine Benachrichtungsemail dass ein Termin gebucht wurde.
+     * sends a notification mail that a appointment was booked
+     * @param type $email E-Mail Adresse des zu Informierenden
+     * @param type $time Uhrzeit
+     * @param type $child Kind
+     * @param type $date Datum
+     */
+    public function sendAppointmentBooked($email, $parent, $time, $child, $date)
+    {
+        $body = $this->mailHeader();
+        $body .= "<body><p>" . Yii::t('app', "Hallo,") . "</p><p>" . Yii::t('app', "hiermit informieren wir Sie darüber, dass ein Termin am {date} um {time} ", array('{date}' => "<b>" . Yii::app()->dateFormatter->formatDateTime($date, 'short', null), '{time}' => Yii::app()->dateFormatter->formatDateTime($time, null, 'medium'))) . "</b><br>";
+        $body .= " " . Yii::t('app', "bei Ihnen von ") . " <b>" . $parent->title . " " . $parent->firstname . " " . $parent->lastname . "</b><br>";
+        $body .= Yii::t('app', "mit dem Kind") . " <b>" . $child->firstname . " " . $child->lastname . "</b> <br/>" . Yii::t('app', "bei Ihnen gebucht wurde.") . "</p>";
+        $this->addInfo($body);
+        $body .= $this->mailFooter();
+        $this->send(Yii::t('app', "Termin bei {appname} wurde gebucht", array('{appname}' => Yii::app()->name)), $body, $email);
+    }
+    
+    
+    
 
     /**
      * sends random user password
      * @param string $email
      * @param string $password
      * @param boolean $isTeacher
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     public function sendRandomUserPassword($email, $password, $isTeacher = true)
     {
@@ -213,7 +228,6 @@ class Mail
      * @param string $subject
      * @param string $body
      * @param string $email
-     * @author Christian Ehringfeld <c.ehringfeld@t-online.de>
      */
     private function send($subject, &$body, $email)
     {
