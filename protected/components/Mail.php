@@ -49,6 +49,9 @@ class Mail
         $mailer->CharSet = "UTF-8";
         $mailer->SMTPSecure = Yii::app()->params['smtpSecure'];
         $mailer->Port = Yii::app()->params['smtpPort'];
+        if(strpos($from,'@') === false) {
+            $from .= '@' . Yii::app()->params['fromMailHost'];
+        }
         $mailer->SetFrom($from, $fromName);
         $mailer->AddAddress($to);
         $mailer->Subject = $subject;
