@@ -114,6 +114,7 @@ INSERT INTO `configs` (`key`, `value`) VALUES
 ('language','de'),
 ('teacherAllowBlockTeacherApps', '0'),
 ('allowTeachersToCreateAppointments', '0'),
+('teacherInfoMail', '0'),
 ('allowParentsToManageChilds','1');
 
 -- --------------------------------------------------------

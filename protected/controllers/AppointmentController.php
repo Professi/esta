@@ -330,6 +330,8 @@ class AppointmentController extends Controller
                 }
                 if ($model->save()) {
                     Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Termin wurde erfolgreich gebucht.'));
+                    $mail = new Mail();
+                    $mail->sendAppointmentBooked($model->user->email, $model->parentchild->user, $model->dateandtime->time, $model->parentchild->child, $model->dateandtime->date->date);
                     $this->redirect(array('index'));
                 }
             }
