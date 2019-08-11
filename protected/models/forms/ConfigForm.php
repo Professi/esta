@@ -159,8 +159,12 @@ class ConfigForm extends CFormModel
             $properties = $reflectionClass->getProperties();
             foreach ($properties as $prop) {
                 $entry = ConfigEntry::model()->findByPk($prop->getName());
+                if(empty($entry)) {
+                    $entry = new ConfigEntry();
+                    $entry->key = $prop->getName();
+                }
                 $entry->value = $prop->getValue($this);
-                $entry->update();
+                $entry->save();
             }
             Yii::app()->user->setFlash('success', Yii::t('app', 'Konfiguration aktualisiert.'));
         }
