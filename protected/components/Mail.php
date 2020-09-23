@@ -156,15 +156,23 @@ class Mail
      * @param type $child Kind
      * @param type $date Datum
      */
-    public function sendAppointmentDeleted($email, $teacher, $time, $child, $date)
+    public function sendAppointmentDeleted($email, $teacher, $time, $child, $date, $informTeacher = false)
     {
-        $body = $this->mailHeader();
-        $body .= "<body><p>" . Yii::t('app', "Hallo,") . "</p><p>" . Yii::t('app', "leider müssen wir Sie darüber informieren, dass Ihr Termin am {date} um {time} ", array('{date}' => "<b>" . Yii::app()->dateFormatter->formatDateTime($date, 'short', null), '{time}' => Yii::app()->dateFormatter->formatDateTime($time, null, 'medium'))) . "</b><br>";
-        $body .= " " . Yii::t('app', "bei") . " <b>" . $teacher->title . " " . $teacher->firstname . " " . $teacher->lastname . "</b><br>";
+        $startBody = $this->mailHeader();
+        $subject = Yii::t('app', "Einer Ihrer Termine bei {appname} wurde gelöscht", array('{appname}' => Yii::app()->name));
+        $startBody .= "<body><p>" . Yii::t('app', "Hallo,") . "</p><p>" . Yii::t('app', "leider müssen wir Sie darüber informieren, dass Ihr Termin am {date} um {time} ", array('{date}' => "<b>" . Yii::app()->dateFormatter->formatDateTime($date, 'short', null), '{time}' => Yii::app()->dateFormatter->formatDateTime($time, null, 'medium'))) . "</b><br>";
+        $body = $startBody . " " . Yii::t('app', "bei") . " <b>" . $teacher->title . " " . $teacher->firstname . " " . $teacher->lastname . "</b><br>";
         $body .= Yii::t('app', "mit ihrem Kind") . " <b>" . $child->firstname . " " . $child->lastname . "</b> <br/>" . Yii::t('app', "abgesagt wurde.") . "</p>";
         $this->addInfo($body);
         $body .= $this->mailFooter();
-        $this->send(Yii::t('app', "Einer Ihrer Termine bei {appname} wurde gelöscht", array('{appname}' => Yii::app()->name)), $body, $email);
+        $this->send($subject, $body, $email);
+        if($informTeacher) {
+            $body = $startBody . Yii::t('app', "mit") . " <b>" . $child->firstname . " " . $child->lastname . "</b> <br/>" . Yii::t('app', "gelöscht wurde.") . "</p>";
+            $this->addInfo($body);
+            $body .= $this->mailFooter();
+            $this->send($subject, $body, $teacher->email);
+        }
+        
     }
     
         /**
@@ -186,9 +194,6 @@ class Mail
         $this->send(Yii::t('app', "Termin bei {appname} wurde gebucht", array('{appname}' => Yii::app()->name)), $body, $email);
     }
     
-    
-    
-
     /**
      * sends random user password
      * @param string $email

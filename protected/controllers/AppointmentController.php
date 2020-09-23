@@ -331,7 +331,9 @@ class AppointmentController extends Controller
                 if ($model->save()) {
                     Yii::app()->user->setFlash('success', Yii::t('app', 'Ihr Termin wurde erfolgreich gebucht.'));
                     $mail = new Mail();
-                    $mail->sendAppointmentBooked($model->user->email, $model->parentchild->user, $model->dateandtime->time, $model->parentchild->child, $model->dateandtime->date->date);
+                    if(Yii::app()->params['teacherInfoMail']) {
+                        $mail->sendAppointmentBooked($model->user->email, $model->parentchild->user, $model->dateandtime->time, $model->parentchild->child, $model->dateandtime->date->date);#
+                    }
                     $this->redirect(array('index'));
                 }
             }
@@ -420,7 +422,7 @@ class AppointmentController extends Controller
             if ($this->loadModel($id)->delete()) {
                 if (!Yii::app()->user->checkAccessNotAdmin(PARENTS)) {
                     $mail = new Mail();
-                    $mail->sendAppointmentDeleted($model->parentchild->user->email, $model->user, $model->dateandtime->time, $model->parentchild->child, $model->dateandtime->date->date);
+                    $mail->sendAppointmentDeleted($model->parentchild->user->email, $model->user, $model->dateandtime->time, $model->parentchild->child, $model->dateandtime->date->date, Yii::app()->params['teacherInfoMail']);
                 }
                 Yii::app()->user->setFlash('success', Yii::t('app', 'Termin erfolgreich entfernt.'));
                 if (Yii::app()->user->checkAccess(MANAGEMENT)) {
