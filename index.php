@@ -23,13 +23,15 @@ require_once __DIR__ . '/vendor/autoload.php';
 require_once dirname(__FILE__) . '/protected/components/globals.php';
 $config = dirname(__FILE__) . '/protected/config/main.php';
 
+/*
 if (file_exists(__DIR__ . $_SERVER['REQUEST_URI']) &&
     ($_SERVER['REQUEST_URI'] !== '/index.php') &&
     is_file(__DIR__ . $_SERVER['REQUEST_URI'])) {
     // Do not try to server static files – this is only important, if used
     // together with PHPs internal webserver.
     return false;
-}
+} 
+ */
 if (isset($config['env']) && $config['env'] == 'dev') {
     define('YII_DEBUG', true);
 } else {
