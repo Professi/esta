@@ -128,12 +128,26 @@ class Appointment extends CActiveRecord
             $criteria->params = array('time' => $this->dateAndTime_id);
         }
         $criteria->compare('user.lastname', ucfirst($this->user_id), true);
+        $sort = new CSort();
+        $sort->defaultOrder = 'user.lastname, date.date ASC, dateandtime.time ASC';
+        $sort->multiSort = true;
+                $sort->attributes = array(
+            'dateAndTime_id' => array(
+                'asc' => 'dateAndTime_id',
+                'desc' => 'dateAndTime_id desc'
+                ),
+            'user_id' => array(
+                'asc' => 'user.lastname',
+                'desc' => 'user.lastname desc'),
+                    'parent_child_id' => array(
+                        'asc' => 'pc_user.lastname',
+                        'desc' => 'pc_user.lastname desc',
+                    ),
+        ) ;
+        
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
-            'sort' => array(
-                'defaultOrder' =>  'user.id, date.date ASC, dateandtime.time ASC',
-                'multiSort' => true,
-            )
+            'sort' => $sort,
         ));
     }
 
