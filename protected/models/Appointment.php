@@ -139,10 +139,9 @@ class Appointment extends CActiveRecord
             'user_id' => array(
                 'asc' => 'user.lastname',
                 'desc' => 'user.lastname desc'),
-                    'parent_child_id' => array(
-                        'asc' => 'pc_user.lastname',
-                        'desc' => 'pc_user.lastname desc',
-                    ),
+            'parent_child_id' => array(
+                'asc' => 'pc_user.lastname',
+                'desc' => 'pc_user.lastname desc'),
         ) ;
         
         return new CActiveDataProvider($this, array(
