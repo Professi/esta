@@ -103,7 +103,7 @@ class User extends CActiveRecord
                 'min' => Yii::app()->params['tanSize'],
                 'max' => Yii::app()->params['tanSize'],),
             array('tan', 'numerical', 'integerOnly' => true,
-                'allowEmpty' => !$this->isNewRecord || !Yii::app()->user->isGuest
+                'allowEmpty' => !$this->isNewRecord || !Yii::app()->user->isGuest || Yii::app()->params['allowParentsToManageChilds']
             ),
             array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat'),
             array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
