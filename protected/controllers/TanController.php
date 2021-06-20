@@ -103,7 +103,7 @@ class TanController extends Controller
             if ($csv) {
                 $this->generateCSVFile($model, false);
             } else {
-                $dataProvider = new CArrayDataProvider($model);
+                $dataProvider = new CArrayDataProvider($model);   
                 $this->render('showGenTans', array('dataProvider' => $dataProvider));
             }
         } else {
@@ -261,10 +261,10 @@ class TanController extends Controller
     {
         $model = [];
         foreach ($tans as $i => $oneTan) {
-            $model = $this->generateNewTan($i);
+            $model[] = $this->generateNewTan($i);
         }
         if (empty($model)) {
-            $model = $this->getEmptyTanModel();
+            $model[] = $this->getEmptyTanModel();
         }
         return $model;
     }
