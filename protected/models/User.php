@@ -290,7 +290,7 @@ class User extends CActiveRecord
      */
     public function deleteUsersWithRole($role)
     {
-        if (is_int($role)) {
+        if (is_numeric($role)) {
             $a_delete = User::model()->findAllByAttributes(array('role' => $role), array('select' => 'id'));
             foreach ($a_delete as $record) {
                 $record->delete();
@@ -688,7 +688,7 @@ class User extends CActiveRecord
     public static function hasRole($userId, $roleId)
     {
         $rc = false;
-        if (is_int($userId) && is_int($roleId) && User::model()->countByAttributes(
+        if (is_numeric($userId) && is_numeric($roleId) && User::model()->countByAttributes(
                         array('id' => $userId, 'role' => $roleId)
         ) == 1) {
             $rc = true;
