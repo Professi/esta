@@ -165,7 +165,9 @@ class Mail
         $body .= Yii::t('app', "mit ihrem Kind") . " <b>" . $child->firstname . " " . $child->lastname . "</b> <br/>" . Yii::t('app', "abgesagt wurde.") . "</p>";
         $this->addInfo($body);
         $body .= $this->mailFooter();
-        $this->send($subject, $body, $email);
+        if(!Yii::app()->user->checkAccessNotAdmin(PARENTS)) {
+            $this->send($subject, $body, $email);
+        }
         if($informTeacher) {
             $body = $startBody . Yii::t('app', "mit") . " <b>" . $child->firstname . " " . $child->lastname . "</b> <br/>" . Yii::t('app', "gelöscht wurde.") . "</p>";
             $this->addInfo($body);
@@ -188,7 +190,7 @@ class Mail
         $body = $this->mailHeader();
         $body .= "<body><p>" . Yii::t('app', "Hallo,") . "</p><p>" . Yii::t('app', "hiermit informieren wir Sie darüber, dass ein Termin am {date} um {time} ", array('{date}' => "<b>" . Yii::app()->dateFormatter->formatDateTime($date, 'short', null), '{time}' => Yii::app()->dateFormatter->formatDateTime($time, null, 'medium'))) . "</b><br>";
         $body .= " " . Yii::t('app', "bei Ihnen von ") . " <b>" . $parent->title . " " . $parent->firstname . " " . $parent->lastname . "</b><br>";
-        $body .= Yii::t('app', "mit dem Kind") . " <b>" . $child->firstname . " " . $child->lastname . "</b> <br/>" . Yii::t('app', "bei Ihnen gebucht wurde.") . "</p>";
+        $body .= Yii::t('app', "mit dem Kind") . " <b>" . $child->firstname . " " . $child->lastname . "</b> <br/>" . Yii::t('app', "gebucht wurde.") . "</p>";
         $this->addInfo($body);
         $body .= $this->mailFooter();
         $this->send(Yii::t('app', "Termin bei {appname} wurde gebucht", array('{appname}' => Yii::app()->name)), $body, $email);
