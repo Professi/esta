@@ -19,6 +19,8 @@
 /**
  * Mail ist eine Klasse um Mails zu versenden die die Extension EMailer verwendet
  */
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 class Mail
 {
 
@@ -32,7 +34,7 @@ class Mail
      */
     public function sendMail($subject, $message, $to, $from, $fromName)
     {
-        $mailer = Yii::createComponent('application.extensions.mailer.EMailer');
+        $mailer = new PHPMailer();
         $mailer->isSMTP();
         $mailer->SMTPAuth = Yii::app()->params['smtpAuth'];
         //$mailer->SMTPKeepAlive = true; // SMTP connection will not close after each email sent, reduces SMTP overhead
@@ -58,8 +60,6 @@ class Mail
         $mailer->AltBody = Yii::t('app', 'Benutzen Sie bitte ein HTML kompatibles E-Mail Programm!');
         try {
             $mailer->send();
-        } catch (phpmailerException $e) {
-            throw new CException($e->errorMessage());
         } catch (Exception $e) {
             throw new CException($e->getMessage());
         }
