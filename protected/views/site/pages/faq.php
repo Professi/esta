@@ -24,10 +24,10 @@ $this->breadcrumbs = array(
     'FAQ',
 );
 ?>
+
 <div class="row">
-    <div class="small-12 columns">
-        <h2 class="subheader"><?php echo Yii::t('app', 'Fragen'); ?></h2>
-        <hr>
+    <div class="small-12 columns small-centered">
+        <h2><?php echo Yii::t('app', 'Fragen'); ?></h2>
         <ul class="faq-ul">
             <li><a href="#Q1"><?php echo Yii::t('app', 'Wie registriere ich mich?'); ?></a></li>
             <li><a href="#Q2"><?php echo Yii::t('app', 'Was mache ich, wenn ich mein Passwort vergessen habe?'); ?></a></li>
@@ -109,4 +109,3 @@ $this->breadcrumbs = array(
         </p>
     </div>
 </div>
-
