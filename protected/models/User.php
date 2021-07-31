@@ -51,9 +51,6 @@ class User extends CActiveRecord
     /** @var string StatusName */
     public $stateName = null;
 
-    /** @var string Sicherheitscode */
-    public $verifyCode = null;
-
     /** @var string TAN Nummer bei Registrierung */
     public $tan = null;
 
@@ -103,10 +100,9 @@ class User extends CActiveRecord
                 'min' => Yii::app()->params['tanSize'],
                 'max' => Yii::app()->params['tanSize'],),
             array('tan', 'numerical', 'integerOnly' => true,
-                'allowEmpty' => !$this->isNewRecord || !Yii::app()->user->isGuest
+                'allowEmpty' => !$this->isNewRecord || !Yii::app()->user->isGuest || (isset(Yii::app()->params['tansActive']) || !Yii::app()->params['tansActive'])
             ),
             array('password', 'compare', "on" => array("insert", "update"), 'compareAttribute' => 'password_repeat'),
-            array('verifyCode', 'captcha', 'allowEmpty' => !Yii::app()->user->isGuest || !$this->isNewRecord || !CCaptcha::checkRequirements()),
             array('id, firstname, state, lastname, email, role, stateName, title, groupIds, password_repeat', 'safe'),
             array('groups,activationKey', 'safe', 'on' => 'update'),
         );
@@ -171,7 +167,6 @@ class User extends CActiveRecord
             'lastLogin' => Yii::t('app', 'Zuletzt eingeloggt'),
             'email' => Yii::t('app', 'E-Mail'),
             'createtime' => Yii::t('app', 'Registrierungsdatum'),
-            'verifyCode' => Yii::t('app', 'Sicherheitscode'),
             'tan' => Yii::t('app', 'TAN'),
             'title' => Yii::t('app', 'Titel'),
             'groups' => Yii::t('app', 'Gruppen'),
@@ -371,7 +366,7 @@ class User extends CActiveRecord
     {
         if ($this->isNewRecord) {
             $this->saveNewRecord();
-            if (Yii::app()->user->isGuest()) {
+            if (Yii::app()->user->isGuest() && (!isset(Yii::app()->params['tansActive']) || Yii::app()->params['tansActive'])) {
                 $this->tanManagement($this->tan);
             }
         } else {
@@ -580,6 +575,9 @@ class User extends CActiveRecord
     public function validateTan(&$errorMsg = "")
     {
         $rc = true;
+        if(isset(Yii::app()->params['tansActive']) || !Yii::app()->params['tansActive']) {
+            return $rc;
+        }
         $tan = Tan::model()->findByAttributes(array('tan' => $this->tan instanceof Tan ? $this->tan->tan : $this->tan));
         if ($tan !== null) {
             if ($tan->used) {

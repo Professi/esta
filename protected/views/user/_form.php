@@ -166,8 +166,10 @@ $form = $this->beginWidget('CActiveForm', array(
         }
     }
         }
-if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) {
+if (Yii::app()->user->isGuest) {
     ?>
+
+<?php if(!isset(Yii::app()->params['tansActive']) || (isset(Yii::app()->params['tansActive']) && Yii::app()->params['tansActive'])) {?>
     <div class="row collapse">
         <div class="small-3 columns">
             <span class="prefix"><?php echo $form->label($model, 'tan'); ?></span>
@@ -178,23 +180,7 @@ if (Yii::app()->user->isGuest && CCaptcha::checkRequirements()) {
     echo $form->error($model, 'tan'); ?>
         </div>
     </div>
-    <div class="row ">
-        <div class="small-3 columns"></div>
-        <div class="small-9 columns">
-            <?php $this->widget('CCaptcha'); ?>
-        </div>
-    </div>
-    <div class="row collapse">
-        <div class="small-3 columns">
-            <span class="prefix"><?php echo $form->label($model, 'verifyCode'); ?></span>
-        </div>
-        <div class="small-9 columns mobile-input">
-            <?php
-            echo $form->textField($model, 'verifyCode');
-    echo $form->error($model, 'verifyCode'); ?>
-            <div class="hint">&nbsp;<?php echo Yii::t('app', 'Bitte geben Sie den im Bild angezeigten Sicherheitscode ein.'); ?></div>
-        </div>
-    </div>
+<?php } ?>
     <?php
 } echo CHtml::submitButton($model->isNewRecord && Yii::app()->user->isGuest() ? Yii::t('app', 'Registrieren') : Yii::t('app', 'Speichern'), array('class' => 'button'));
 $this->endWidget();

@@ -152,8 +152,8 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                     <div class="infotext">
                         <i class="fi-info"></i>
                         <?php
-                        echo Yii::t('app', 'Mit dieser Option können Sie Gruppen aktivieren.');
-                        echo Yii::t('app', 'Für jeden Elternsprechtag und Benutzer können bestimmte Gruppen festgelegt werden.');
+                        echo Yii::t('app', 'Mit dieser Option können Sie Gruppen aktivieren.') . ' ';
+                        echo Yii::t('app', 'Für jeden Elternsprechtag und Benutzer können bestimmte Gruppen festgelegt werden.') . ' ';
                         echo Yii::t('app', 'Damit kann der Zugriff von Benutzern auf Elternsprechtage beschränkt werden. Jeder TAN kann eine bestimmte Gruppe zugewiesen werden. Elternsprechtage ohne Gruppen sind frei zugänglich für registrierte Benutzer. Benutzer ohne Gruppe können an jedem Elternsprechtag Termine buchen.');
                         ?>
                     </div>
@@ -520,6 +520,17 @@ $this->setPageTitle(Yii::t('app', 'Konfiguration'));
                     <?php
                     echo $form->textField($model, 'tanSize', $optionsBans);
                     echo $form->error($model, 'tanSize');
+                    ?>
+                </div>
+            </div>
+                        <div class="row collapse">
+                <div class="small-8 columns">
+                    <span class="prefix"><?php echo $form->label($model, 'tansActive'); ?></span>
+                </div>
+                <div class="small-4 columns">
+                    <?php
+                    echo Select2::activeDropDownList($model, 'tansActive', Controller::getYesOrNo(), array('select2Options' => array('minimumResultsForSearch' => 10)));
+                    echo $form->error($model, 'tansActive');
                     ?>
                 </div>
             </div>

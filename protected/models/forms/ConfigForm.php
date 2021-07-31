@@ -38,6 +38,7 @@ class ConfigForm extends CFormModel
     public $banUsers;
     public $durationTempBans;
     public $maxAttemptsForLogin;
+    public $tansActive;
     public $allowBlockingAppointments;
     public $appointmentBlocksPerDate;
     public $lengthReasonAppointmentBlocked;
@@ -84,7 +85,7 @@ class ConfigForm extends CFormModel
             array('defaultTeacherPassword', 'length', 'min' => 5),
             array('randomTeacherPassword,banUsers,allowBlockingAppointments,allowTeachersToManageOwnRooms,' .
                 'useSchoolEmailForContactForm,allowBlockingOnlyForManagement,lockRegistration,' .
-                'allowParentsToManageChilds,allowGroups,teacherAllowBlockTeacherApps,smtpAuth,allowTeachersToCreateAppointments,teacherInfoMail',
+                'allowParentsToManageChilds,allowGroups,teacherAllowBlockTeacherApps,smtpAuth,allowTeachersToCreateAppointments,teacherInfoMail,tansActive',
                 'boolean'),
             array('maxChild,maxAppointmentsPerChild,minLengthPerAppointment,'
                 . 'durationTempBans,maxAttemptsForLogin,appointmentBlocksPerDate,'
@@ -97,7 +98,7 @@ class ConfigForm extends CFormModel
                 'defaultTeacherPassword,minLengthPerAppointment,banUsers,' .
                 'durationTempBans,maxAttemptsForLogin,allowTeachersToCreateAppointments' .
                 'allowBlockingAppointments,appointmentBlocksPerDate,hashCost,' .
-                'lengthReasonAppointmentBlocked,smtpAuth,smtpSecure,smtpPort,smtpPassword,tanSize,schoolWebsiteLink,teacherInfoMail', 'safe'),
+                'lengthReasonAppointmentBlocked,smtpAuth,smtpSecure,smtpPort,smtpPassword,tanSize,schoolWebsiteLink,teacherInfoMail,tansActive', 'safe'),
         );
     }
 
@@ -126,6 +127,7 @@ class ConfigForm extends CFormModel
             'allowBlockingAppointments' => Yii::t('app', 'Blockieren von Terminen erlauben?'),
             'appointmentBlocksPerDate' => Yii::t('app', 'Anzahl der Termine die blockiert werden dürfen'),
             'lengthReasonAppointmentBlocked' => Yii::t('app', 'Minimallänge eines Grundes um einen Termin zu blocken'),
+            'tansActive' => Yii::t('app','TANs aktiv'),
             'schoolStreet' => Yii::t('app', 'Straße'),
             'schoolCity' => Yii::t('app', 'Postleitzahl, Ort'),
             'schoolTele' => Yii::t('app', 'Telefonnummer'),
