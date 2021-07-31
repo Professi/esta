@@ -67,7 +67,7 @@ $menu = array(//icon,label,url,visible(bool)
         </ul>
         <section class="top-bar-section">
             <ul class="right">
-                <li class="hide-for-small"><a href="<?php echo $this->createUrl('/site/page', array('view' => 'faq')) ?>">FAQ</a></li>
+                <li class="hide-for-small"><a href="<?php echo $this->createUrl('/site/faq') ?>">FAQ</a></li>
                 <li class="hide-for-small"><a href="<?php echo $this->createUrl('/site/contact') ?>">Kontakt</a></li>
                 <li>
                     <a href="http://<?php echo Yii::app()->params['schoolWebsiteLink']; ?>" target="_blank">

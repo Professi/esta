@@ -57,6 +57,13 @@ class SiteController extends Controller
             $this->throwFourNullThree();
         }
     }
+    
+    public function actionFaq() {
+        //silly js workaround
+        $model = new ContactForm;
+        $this->render('pages/faq', array('model' => $model));
+    }
+    
 
     public function actionSendTestMail()
     {
