@@ -96,6 +96,15 @@ class ParentChild extends CActiveRecord
                 }
             }
         }
+        if ($rc && User::model()->countByAttributes(array('id' => $this->user_id)) != '1') {
+            $rc = false;
+            $this->addError('user_id', Yii::t('app', 'Der angegebene Benutzer existiert nicht.'));
+        }
+        if (($rc && Yii::app()->params['allowParentsToManageChilds']) && (int) ParentChild::model()->countByAttributes(array('user_id' => $this->user_id)) > (int) Yii::app()->params['maxChild']) {
+            $rc = false;
+            $this->addError('child_id', Yii::t('app', 'Maximale Kinderanzahl erreicht.'));
+            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie haben die Anzahl der maximal eintragbaren Kinder überschritten.'));
+        }
         return $rc;
     }
 
@@ -224,26 +233,4 @@ class ParentChild extends CActiveRecord
         return $a_data;
     }
 
-    /**
-     * Prüft ob der angegebene Benutzer überhaupt existiert
-<<<<<<< HEAD
-     * @return boolean
-=======
-     * @return boolean 
->>>>>>> testIntegration
-     */
-    public function afterValidate()
-    {
-        $rc = parent::afterValidate();
-        if ($rc && User::model()->countByAttributes(array('user_id' => $this->user_id)) != '1') {
-            $rc = false;
-            $this->addError('user_id', Yii::t('app', 'Der angegebene Benutzer existiert nicht.'));
-        }
-        if ($rc && ParentChild::model()->countByAttributes(array('user_id' => $this->user_id)) > Yii::app()->params['maxChild'] && Yii::app()->params['allowParentsToManageChilds']) {
-            $rc = false;
-            $this->addError('child_id', Yii::t('app', 'Maximale Kinderanzahl erreicht.'));
-            Yii::app()->user->setFlash('failMsg', Yii::t('app', 'Sie haben die Anzahl der maximal eintragbaren Kinder überschritten.'));
-        }
-        return $rc;
-    }
 }

@@ -439,26 +439,31 @@ class AppointmentController extends Controller
     public function actionIndex()
     {
         if (Yii::app()->user->checkAccessNotAdmin(TEACHER)) {
-            $dataProvider = new Appointment('customSearch');
-            $dataProvider->user_id = Yii::app()->user->getId();
+            $appSearch = new Appointment('customSearch');
+            $appSearch->user_id = Yii::app()->user->getId();
+           
             $blockedApp = new BlockedAppointment();
             $blockedApp->unsetAttributes();
             $dates = Date::model()->findAll();
             $rooms = new UserHasRoom('altSearch');
             $rooms->user_id = Yii::app()->user->getId();
-            $arr = array('dataProvider' => $dataProvider->customSearch(),
+            $dataProvider = $appSearch->customSearch();
+            $dataProvider->pagination = false;
+            $arr = array('dataProvider' => $dataProvider,
                 'rooms' => $rooms->altSearch(),
                 'dates' => $dates);
             if (Yii::app()->params['allowBlockingAppointments']) {
                 $arr['blockedApp'] = $blockedApp->search();
             }
             $this->render('indexTeacher', $arr);
-        } elseif (Yii::app()->user->isParent()) {
+        } else if (Yii::app()->user->isParent()) {
             $no_children = ParentChild::model()->countByAttributes(
                     array('user_id' => Yii::app()->user->getId())
                 ) == '0' ? true : false;
+            $dataProvider = Appointment::getAllAppointments();
+            $dataProvider->pagination = false;
             $this->render('index', array(
-                'dataProvider' => Appointment::getAllAppointments(),
+                'dataProvider' => $dataProvider,
                 'no_children' => $no_children,
             ));
         } else {
