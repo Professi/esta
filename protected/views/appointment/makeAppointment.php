@@ -56,7 +56,7 @@ Yii::app()->clientScript->registerCssFile($this->assetsDir . "/css/select2.min.c
                 echo '';
         $tabs = array();
         foreach ($dates as $date) {
-            $tabs[$this->formatAppointmentTitle($date[0]->date)] = $this->renderPartial(
+            $tabs[$this->formatAppointmentTitle($date[0]->date,$model->user)] = $this->renderPartial(
                             'dateTable',
                         array('date' => $date,
                         'model' => $model,
