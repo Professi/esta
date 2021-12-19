@@ -169,7 +169,7 @@ class AppointmentController extends Controller
      */
     public function actionCreateBlockDay()
     {
-        if (!(Yii::app()->params['allowBlockingAppointments']) || !Yii::app()->user->isAdmin()) {
+        if (!(Yii::app()->params['allowBlockingAppointments']) || !(Yii::app()->user->isAdmin() || Yii::app()->user->isManager())) {
             $this->throwFourNullNull();
         }
         if (isset($_POST['BlockedAppointment']) && isset($_POST['BlockedAppointment']['user_id']) && isset($_POST['BlockedAppointment']['reason']) && !empty($_POST['BlockedAppointment']['user_id']) && !empty($_POST['BlockedAppointment']['reason'])) {
